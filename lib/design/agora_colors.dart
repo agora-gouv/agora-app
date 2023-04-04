@@ -18,6 +18,7 @@ class AgoraColors {
   static const Color turquoise = Color(0xFF51C0A6);
   static const Color blueFrance = Color(0xFF000091);
   static const Color transparent = Color(0x00000000);
+  static const Color divider = Color(0x1A000000);
 
   // couleur de pastille
   static const Color lightGreen = Color(0xFFCFFCD9);

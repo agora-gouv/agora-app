@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AgoraToolbar extends StatelessWidget {
+  final VoidCallback? onBackClick;
+
+  const AgoraToolbar({super.key, this.onBackClick});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,7 +16,13 @@ class AgoraToolbar extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              if (onBackClick != null) {
+                onBackClick!();
+              } else {
+                Navigator.pop(context);
+              }
+            },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

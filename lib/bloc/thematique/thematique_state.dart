@@ -11,6 +11,9 @@ class ThematiqueSuccessState extends ThematiqueState {
   final List<ThematiqueViewModel> viewModel;
 
   ThematiqueSuccessState(this.viewModel);
+
+  @override
+  List<Object?> get props => [viewModel];
 }
 
 class ThematiqueErrorState extends ThematiqueState {}

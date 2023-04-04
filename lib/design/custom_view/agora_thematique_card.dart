@@ -4,13 +4,11 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:flutter/material.dart';
 
 class AgoraThematiqueCard extends StatelessWidget {
-  final int id;
   final String picto;
   final String label;
   final int color;
 
   AgoraThematiqueCard({
-    required this.id,
     required this.picto,
     required this.label,
     required this.color,

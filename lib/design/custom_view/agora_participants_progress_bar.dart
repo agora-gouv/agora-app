@@ -4,44 +4,45 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:flutter/material.dart';
 
 class AgoraParticipantsProgressBar extends StatelessWidget {
+  final int currentNbParticipants;
+  final int objectiveNbParticipants;
+  final double? minusPadding;
+
   const AgoraParticipantsProgressBar({
     Key? key,
-    required this.nbParticipantActuel,
-    required this.nbParticipantObjectif,
+    required this.currentNbParticipants,
+    required this.objectiveNbParticipants,
+    this.minusPadding,
   }) : super(key: key);
 
-  final int nbParticipantActuel;
-  final int nbParticipantObjectif;
-
   static const _barHeight = AgoraSpacings.x0_5;
-  static const _barPadding = 0.0; //CustomSpacings.base;
 
   @override
   Widget build(BuildContext context) {
-    final totalWidth = MediaQuery.of(context).size.width - (2 * _barPadding);
-    final participantsPourcentage = nbParticipantActuel / nbParticipantObjectif;
-    return Padding(
-      padding: const EdgeInsets.all(_barPadding),
-      child: Stack(
-        children: [
-          AgoraRoundedCard(
-            cardColor: AgoraColors.grey,
-            padding: null,
-            child: SizedBox(
-              height: _barHeight,
-              width: totalWidth,
-            ),
+    double totalWidth = MediaQuery.of(context).size.width;
+    if (minusPadding != null) {
+      totalWidth = totalWidth - minusPadding!;
+    }
+    final participantsPercentage = currentNbParticipants / objectiveNbParticipants;
+    return Stack(
+      children: [
+        AgoraRoundedCard(
+          cardColor: AgoraColors.grey,
+          padding: null,
+          child: SizedBox(
+            height: _barHeight,
+            width: totalWidth,
           ),
-          AgoraRoundedCard(
-            cardColor: AgoraColors.turquoise,
-            padding: null,
-            child: SizedBox(
-              height: _barHeight,
-              width: totalWidth * participantsPourcentage,
-            ),
+        ),
+        AgoraRoundedCard(
+          cardColor: AgoraColors.turquoise,
+          padding: null,
+          child: SizedBox(
+            height: _barHeight,
+            width: totalWidth * participantsPercentage,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

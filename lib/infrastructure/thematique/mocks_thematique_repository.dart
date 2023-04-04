@@ -13,7 +13,7 @@ class MockThematiqueSuccessRepository extends ThematiqueRepository {
         Thematique(id: 5, picto: "\ud83c\udf93", label: "Education", color: "#FFFCE7CF"),
         Thematique(id: 6, picto: "\ud83c\udf0f", label: "International", color: "#FFE8CFFC"),
         Thematique(id: 7, picto: "\ud83d\ude8a", label: "Transports", color: "#FFFCF7CF"),
-        Thematique(id: 9, picto: "\ud83d\ude94", label: "Sécurité", color: "#FFE1E7F3"),
+        Thematique(id: 8, picto: "\ud83d\ude94", label: "Sécurité", color: "#FFE1E7F3"),
       ],
     );
   }
