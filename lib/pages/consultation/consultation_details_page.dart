@@ -15,6 +15,7 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/string/consultation_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -142,7 +143,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                           ),
                           SizedBox(height: AgoraSpacings.base),
                           AgoraButton(
-                            label: "Commencer",
+                            label: ConsultationString.beginButton,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
                               // TODO
