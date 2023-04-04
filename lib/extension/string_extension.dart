@@ -7,3 +7,9 @@ extension ColorExtension on String {
     return int.parse("0x$hexColor");
   }
 }
+
+extension StringExtension on String {
+  String format(String to) {
+    return replaceFirst("%s", to);
+  }
+}

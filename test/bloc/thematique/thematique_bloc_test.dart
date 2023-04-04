@@ -19,7 +19,7 @@ void main() {
           ThematiqueViewModel(id: 5, picto: "\ud83c\udf93", label: "Education", color: 0xFFFCE7CF),
           ThematiqueViewModel(id: 6, picto: "\ud83c\udf0f", label: "International", color: 0xFFE8CFFC),
           ThematiqueViewModel(id: 7, picto: "\ud83d\ude8a", label: "Transports", color: 0xFFFCF7CF),
-          ThematiqueViewModel(id: 9, picto: "\ud83d\ude94", label: "Sécurité", color: 0xFFE1E7F3),
+          ThematiqueViewModel(id: 8, picto: "\ud83d\ude94", label: "Sécurité", color: 0xFFE1E7F3),
         ],
       )
     ],

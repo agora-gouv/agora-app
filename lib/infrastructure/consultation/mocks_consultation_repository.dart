@@ -1,6 +1,28 @@
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 
+class FakeConsultationSuccessRepository extends ConsultationRepository {
+  @override
+  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails(String consultationId) async {
+    return GetConsultationDetailsSucceedResponse(
+      consultationDetails: ConsultationDetails(
+        id: 1,
+        title: "Développer le covoiturage au quotidien",
+        cover: "imageEnBase64",
+        thematiqueId: 7,
+        endDate: DateTime(2023, 3, 3),
+        questionCount: "5 à 10 questions",
+        estimatedTime: "5 minutes",
+        participantCount: 15035,
+        participantCountGoal: 30000,
+        description:
+            "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
+        tipsDescription: "<body>Qui peut aussi être du texte <i>riche</i></body>",
+      ),
+    );
+  }
+}
+
 class MockConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails(String consultationId) async {

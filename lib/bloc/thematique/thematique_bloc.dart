@@ -1,7 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_action.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/domain/thematique/thematique.dart';
-import 'package:agora/extension/color_extension.dart';
+import 'package:agora/extension/string_extension.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

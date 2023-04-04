@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:agora/bloc/consultation/details/consultation_details_action.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
@@ -15,6 +17,7 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/string/consultation_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +48,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AgoraToolbar(onBackClick: () => SystemNavigator.pop()),
-                    Image.memory(state.viewModel.cover),
+                    Image.memory(Base64Decoder().convert(state.viewModel.cover)),
                     Padding(
                       padding: const EdgeInsets.all(columnPadding),
                       child: Column(
@@ -142,7 +145,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                           ),
                           SizedBox(height: AgoraSpacings.base),
                           AgoraButton(
-                            label: "Commencer",
+                            label: ConsultationString.beginButton,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
                               // TODO

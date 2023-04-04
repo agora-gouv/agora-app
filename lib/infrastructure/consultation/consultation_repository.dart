@@ -45,6 +45,9 @@ class GetConsultationDetailsSucceedResponse extends GetConsultationDetailsReposi
   final ConsultationDetails consultationDetails;
 
   GetConsultationDetailsSucceedResponse({required this.consultationDetails});
+
+  @override
+  List<Object> get props => [consultationDetails];
 }
 
 class GetConsultationDetailsFailedResponse extends GetConsultationDetailsRepositoryResponse {}
