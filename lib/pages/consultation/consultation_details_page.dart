@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:agora/bloc/consultation/details/consultation_details_action.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
@@ -46,7 +48,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AgoraToolbar(onBackClick: () => SystemNavigator.pop()),
-                    Image.memory(state.viewModel.cover),
+                    Image.memory(Base64Decoder().convert(state.viewModel.cover)),
                     Padding(
                       padding: const EdgeInsets.all(columnPadding),
                       child: Column(

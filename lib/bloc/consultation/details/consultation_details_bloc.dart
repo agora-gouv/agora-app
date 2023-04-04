@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:agora/bloc/consultation/details/consultation_details_action.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/extension/string_extension.dart';
@@ -27,7 +25,7 @@ class ConsultationDetailsBloc extends Bloc<FetchConsultationDetailsEvent, Consul
           ConsultationDetailsViewModel(
             id: response.consultationDetails.id,
             title: response.consultationDetails.title,
-            cover: Base64Decoder().convert(response.consultationDetails.cover),
+            cover: response.consultationDetails.cover,
             thematiqueId: response.consultationDetails.thematiqueId,
             endDate: ConsultationString.endDate.format(
               DateFormat("dd MMMM").format(response.consultationDetails.endDate),

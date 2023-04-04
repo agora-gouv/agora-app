@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationDetailsState extends Equatable {
@@ -17,7 +15,7 @@ class ConsultationDetailsFetchedState extends ConsultationDetailsState {
   ConsultationDetailsFetchedState(this.viewModel);
 
   @override
-  List<Object?> get props => [viewModel];
+  List<Object> get props => [viewModel];
 }
 
 class ConsultationDetailsErrorState extends ConsultationDetailsState {}
@@ -25,7 +23,7 @@ class ConsultationDetailsErrorState extends ConsultationDetailsState {}
 class ConsultationDetailsViewModel extends Equatable {
   final int id;
   final String title;
-  final Uint8List cover;
+  final String cover;
   final int thematiqueId;
   final String endDate;
   final String questionCount;
@@ -64,6 +62,8 @@ class ConsultationDetailsViewModel extends Equatable {
         estimatedTime,
         participantCount,
         participantCountGoal,
+        participantCountText,
+        participantCountGoalText,
         description,
         tipsDescription,
       ];
