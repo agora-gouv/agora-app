@@ -27,7 +27,7 @@ class AgoraQuestionsProgressBar extends StatelessWidget {
       widgets.add(SizedBox(width: AgoraSpacings.x0_5));
     }
     for (int i = nbQuestionsRepondues; i < nbQuestionsTotales; i++) {
-      widgets.add(_buildBox(AgoraColors.grey));
+      widgets.add(_buildBox(AgoraColors.orochimaru));
       widgets.add(SizedBox(width: AgoraSpacings.x0_5));
     }
     widgets.removeLast();

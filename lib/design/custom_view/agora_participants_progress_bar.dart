@@ -27,7 +27,7 @@ class AgoraParticipantsProgressBar extends StatelessWidget {
     return Stack(
       children: [
         AgoraRoundedCard(
-          cardColor: AgoraColors.grey,
+          cardColor: AgoraColors.orochimaru,
           padding: null,
           child: SizedBox(
             height: _barHeight,
@@ -35,7 +35,7 @@ class AgoraParticipantsProgressBar extends StatelessWidget {
           ),
         ),
         AgoraRoundedCard(
-          cardColor: AgoraColors.turquoise,
+          cardColor: AgoraColors.mountainLakeAzure,
           padding: null,
           child: SizedBox(
             height: _barHeight,

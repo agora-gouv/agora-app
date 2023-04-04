@@ -9,9 +9,9 @@ class AgoraButtonStyle {
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.yellow;
+          return AgoraColors.stereotypicalDuck;
         } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.yellow;
+          return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.primaryGreen;
         }
@@ -29,11 +29,11 @@ class AgoraButtonStyle {
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.yellow;
+          return AgoraColors.stereotypicalDuck;
         } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.yellow;
+          return AgoraColors.stereotypicalDuck;
         } else {
-          return AgoraColors.lightGrey;
+          return AgoraColors.cascadingWhite;
         }
       },
     ),

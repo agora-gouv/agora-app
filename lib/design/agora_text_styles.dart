@@ -113,6 +113,6 @@ class AgoraTextStyles {
     fontFamily: marianne,
     fontWeight: medium,
     fontSize: 16.0,
-    foreground: Paint()..color = AgoraColors.darkGrey,
+    foreground: Paint()..color = AgoraColors.potBlack,
   );
 }
