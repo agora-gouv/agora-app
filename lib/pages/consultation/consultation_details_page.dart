@@ -17,6 +17,7 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/pages/question/question_page.dart';
 import 'package:agora/string/consultation_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -150,7 +151,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                             label: ConsultationString.beginButton,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
-                              // TODO
+                              Navigator.pushNamed(context, QuestionPage.routeName);
                             },
                           ),
                         ],

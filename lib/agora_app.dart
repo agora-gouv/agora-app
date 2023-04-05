@@ -9,7 +9,8 @@ class AgoraApp extends StatelessWidget {
     return MaterialApp(
       title: "Agora",
       initialRoute: LoadingPage.routeName,
-      onGenerateRoute: (RouteSettings settings) => AgoraAppRouter.handleAgoraRoute(settings),
+      routes: AgoraAppRouter.handleAgoraRoute(),
+      onGenerateRoute: (RouteSettings settings) => AgoraAppRouter.handleAgoraGenerateRoute(settings),
       theme: ThemeData(
         colorScheme: ColorScheme.light(
           primary: AgoraColors.primaryGreen,
