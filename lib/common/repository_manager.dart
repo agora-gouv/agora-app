@@ -8,7 +8,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-class SingletonManager {
+class RepositoryManager {
   static Dio getDio() {
     if (GetIt.instance.isRegistered<Dio>()) {
       return GetIt.instance.get<Dio>();
@@ -38,14 +38,14 @@ class SingletonManager {
     if (GetIt.instance.isRegistered<AgoraDioHttpClient>()) {
       return GetIt.instance.get<AgoraDioHttpClient>();
     }
-    final agoraDioHttpClient = AgoraDioHttpClient(dio: SingletonManager.getDio());
+    final agoraDioHttpClient = AgoraDioHttpClient(dio: RepositoryManager.getDio());
     GetIt.instance.registerSingleton(agoraDioHttpClient);
     return agoraDioHttpClient;
   }
 
   static ThematiqueRepository getThematiqueRepository() {
-    if (GetIt.instance.isRegistered<ThematiqueRepository>()) {
-      return GetIt.instance.get<ThematiqueRepository>();
+    if (GetIt.instance.isRegistered<MockThematiqueSuccessRepository>()) {
+      return GetIt.instance.get<MockThematiqueSuccessRepository>();
     }
     final repository = MockThematiqueSuccessRepository();
     // final repository = ThematiqueDioRepository(httpClient: SingletonManager.getAgoraDioHttpClient());
@@ -54,8 +54,8 @@ class SingletonManager {
   }
 
   static ConsultationRepository getConsultationRepository() {
-    if (GetIt.instance.isRegistered<ConsultationRepository>()) {
-      return GetIt.instance.get<ConsultationRepository>();
+    if (GetIt.instance.isRegistered<MockConsultationSuccessRepository>()) {
+      return GetIt.instance.get<MockConsultationSuccessRepository>();
     }
     final repository = MockConsultationSuccessRepository();
     // final repository = ConsultationDioRepository(httpClient: SingletonManager.getAgoraDioHttpClient());

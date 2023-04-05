@@ -20,7 +20,7 @@ class ThematiqueDioRepository extends ThematiqueRepository {
       final thematiques = (response.data["thematiques"] as List)
           .map(
             (thematique) => Thematique(
-              id: thematique["id"] as int,
+              id: thematique["id"] as String,
               picto: thematique["picto"] as String,
               label: thematique["label"] as String,
               color: thematique["color"] as String,

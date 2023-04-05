@@ -20,13 +20,13 @@ void main() {
           {
             "thematiques": [
               {
-                "id": 1,
+                "id": "1",
                 "label": "Travail & emploi",
                 "picto": "\uD83D\uDCBC",
                 "color": "#FFCFDEFC",
               },
               {
-                "id": 2,
+                "id": "2",
                 "label": "Transition écologique",
                 "picto": "\uD83D\uDCBC",
                 "color": "#FFCFFCD9",
@@ -46,8 +46,8 @@ void main() {
         response,
         GetThematiqueSucceedResponse(
           thematiques: [
-            Thematique(id: 1, picto: "\uD83D\uDCBC", label: "Travail & emploi", color: "#FFCFDEFC"),
-            Thematique(id: 2, picto: "\uD83D\uDCBC", label: "Transition écologique", color: "#FFCFFCD9"),
+            Thematique(id: "1", picto: "\uD83D\uDCBC", label: "Travail & emploi", color: "#FFCFDEFC"),
+            Thematique(id: "2", picto: "\uD83D\uDCBC", label: "Transition écologique", color: "#FFCFFCD9"),
           ],
         ),
       );

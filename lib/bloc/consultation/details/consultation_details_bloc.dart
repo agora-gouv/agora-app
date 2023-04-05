@@ -18,7 +18,7 @@ class ConsultationDetailsBloc extends Bloc<FetchConsultationDetailsEvent, Consul
     Emitter<ConsultationDetailsState> emit,
   ) async {
     emit(ConsultationDetailsLoadingState());
-    final response = await consultationRepository.fetchConsultationDetails("1");
+    final response = await consultationRepository.fetchConsultationDetails(consultationId: event.consultationId);
     if (response is GetConsultationDetailsSucceedResponse) {
       emit(
         ConsultationDetailsFetchedState(

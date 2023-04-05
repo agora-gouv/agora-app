@@ -1,37 +1,21 @@
 import 'package:agora/domain/consultation/details/consultation_details.dart';
+import 'package:agora/domain/consultation/questions/consultation_question.dart';
+import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
+import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 
-class FakeConsultationSuccessRepository extends ConsultationRepository {
-  @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails(String consultationId) async {
-    return GetConsultationDetailsSucceedResponse(
-      consultationDetails: ConsultationDetails(
-        id: 1,
-        title: "Développer le covoiturage au quotidien",
-        cover: "imageEnBase64",
-        thematiqueId: 7,
-        endDate: DateTime(2023, 3, 3),
-        questionCount: "5 à 10 questions",
-        estimatedTime: "5 minutes",
-        participantCount: 15035,
-        participantCountGoal: 30000,
-        description:
-            "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
-        tipsDescription: "<body>Qui peut aussi être du texte <i>riche</i></body>",
-      ),
-    );
-  }
-}
-
+// TODO suppress when debouncing is done
 class MockConsultationSuccessRepository extends ConsultationRepository {
   @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails(String consultationId) async {
+  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
+    required String consultationId,
+  }) async {
     return GetConsultationDetailsSucceedResponse(
       consultationDetails: ConsultationDetails(
-        id: 1,
+        id: "1",
         title: "Développer le covoiturage au quotidien",
         cover: _getImage(),
-        thematiqueId: 7,
+        thematiqueId: "7",
         endDate: DateTime(2023, 3, 3),
         questionCount: "5 à 10 questions",
         estimatedTime: "5 minutes",
@@ -43,12 +27,39 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
       ),
     );
   }
-}
 
-class MockConsultationFailureRepository extends ConsultationRepository {
   @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails(String consultationId) async {
-    return GetConsultationDetailsFailedResponse();
+  Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
+    required String consultationId,
+  }) async {
+    return GetConsultationQuestionsSucceedResponse(
+      consultationQuestions: [
+        ConsultationQuestion(
+          id: "questionIdB",
+          label:
+              "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros. Etes-vous intéressé(e) pour vous lancer ?",
+          order: 2,
+          type: ConsultationQuestionType.unique,
+          responseChoices: [
+            ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2),
+            ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
+          ],
+        ),
+        ConsultationQuestion(
+          id: "questionIdA",
+          label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
+          order: 1,
+          type: ConsultationQuestionType.unique,
+          responseChoices: [
+            ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 4),
+            ConsultationQuestionResponseChoice(id: "choiceB", label: "En co-voiturage", order: 2),
+            ConsultationQuestionResponseChoice(id: "choiceC", label: "En transports en commun", order: 3),
+            ConsultationQuestionResponseChoice(id: "choiceD", label: "Je ne suis pas concerné", order: 5),
+            ConsultationQuestionResponseChoice(id: "choiceE", label: "En voiture, seul(e)", order: 1),
+          ],
+        ),
+      ],
+    );
   }
 }
 

@@ -21,10 +21,10 @@ class ConsultationDetailsFetchedState extends ConsultationDetailsState {
 class ConsultationDetailsErrorState extends ConsultationDetailsState {}
 
 class ConsultationDetailsViewModel extends Equatable {
-  final int id;
+  final String id;
   final String title;
   final String cover;
-  final int thematiqueId;
+  final String thematiqueId;
   final String endDate;
   final String questionCount;
   final String estimatedTime;

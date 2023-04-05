@@ -1,9 +1,14 @@
 import 'package:agora/common/agora_http_client.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
+import 'package:agora/domain/consultation/questions/consultation_question.dart';
+import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
+import 'package:agora/extension/string_extension.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails(String consultationId);
+  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({required String consultationId});
+
+  Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({required String consultationId});
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -12,15 +17,17 @@ class ConsultationDioRepository extends ConsultationRepository {
   ConsultationDioRepository({required this.httpClient});
 
   @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails(String consultationId) async {
+  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
+    required String consultationId,
+  }) async {
     try {
       final response = await httpClient.get("/consultations/$consultationId");
       return GetConsultationDetailsSucceedResponse(
         consultationDetails: ConsultationDetails(
-          id: response.data["id"] as int,
+          id: response.data["id"] as String,
           title: response.data["title"] as String,
           cover: response.data["cover"] as String,
-          thematiqueId: response.data["thematique_id"] as int,
+          thematiqueId: response.data["thematique_id"] as String,
           endDate: DateTime.parse(response.data["end_date"] as String),
           questionCount: response.data["question_count"] as String,
           estimatedTime: response.data["estimated_time"] as String,
@@ -32,6 +39,37 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
     } catch (e) {
       return GetConsultationDetailsFailedResponse();
+    }
+  }
+
+  @override
+  Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
+    required String consultationId,
+  }) async {
+    try {
+      final response = await httpClient.get("/consultations/$consultationId/questions");
+      final questions = (response.data["questions"] as List)
+          .map(
+            (question) => ConsultationQuestion(
+              id: question["id"] as String,
+              label: question["label"] as String,
+              order: question["order"] as int,
+              type: (question["type"] as String).toConsultationQuestionType(),
+              responseChoices: (question["possible_choices"] as List)
+                  .map(
+                    (responseChoice) => ConsultationQuestionResponseChoice(
+                      id: responseChoice["id"] as String,
+                      label: responseChoice["label"] as String,
+                      order: responseChoice["order"] as int,
+                    ),
+                  )
+                  .toList(),
+            ),
+          )
+          .toList();
+      return GetConsultationQuestionsSucceedResponse(consultationQuestions: questions);
+    } catch (e) {
+      return GetConsultationQuestionsFailedResponse();
     }
   }
 }
@@ -51,3 +89,19 @@ class GetConsultationDetailsSucceedResponse extends GetConsultationDetailsReposi
 }
 
 class GetConsultationDetailsFailedResponse extends GetConsultationDetailsRepositoryResponse {}
+
+abstract class GetConsultationQuestionsRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetConsultationQuestionsSucceedResponse extends GetConsultationQuestionsRepositoryResponse {
+  final List<ConsultationQuestion> consultationQuestions;
+
+  GetConsultationQuestionsSucceedResponse({required this.consultationQuestions});
+
+  @override
+  List<Object> get props => [consultationQuestions];
+}
+
+class GetConsultationQuestionsFailedResponse extends GetConsultationQuestionsRepositoryResponse {}

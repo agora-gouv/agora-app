@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class ConsultationDetails extends Equatable {
-  final int id;
+  final String id;
   final String title;
   final String cover;
-  final int thematiqueId;
+  final String thematiqueId;
   final DateTime endDate;
   final String questionCount;
   final String estimatedTime;
