@@ -5,7 +5,7 @@ import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/common/singleton_manager.dart';
+import 'package:agora/common/repository_manager.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
@@ -17,7 +17,7 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/pages/question/question_page.dart';
+import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:agora/string/consultation_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,11 +31,12 @@ class ConsultationDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const consultationId = "1";
     return BlocProvider(
       create: (BuildContext context) {
         return ConsultationDetailsBloc(
-          consultationRepository: SingletonManager.getConsultationRepository(),
-        )..add(FetchConsultationDetailsEvent());
+          consultationRepository: RepositoryManager.getConsultationRepository(),
+        )..add(FetchConsultationDetailsEvent(consultationId: consultationId));
       },
       child: AgoraScaffold(
         popAction: () {
@@ -151,7 +152,8 @@ class ConsultationDetailsPage extends StatelessWidget {
                             label: ConsultationString.beginButton,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
-                              Navigator.pushNamed(context, QuestionPage.routeName);
+                              Navigator.pushNamed(context, ConsultationQuestionPage.routeName,
+                                  arguments: consultationId);
                             },
                           ),
                         ],
@@ -171,7 +173,7 @@ class ConsultationDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildThematiqueCard(BuildContext context, int thematiqueId) {
+  Widget _buildThematiqueCard(BuildContext context, String thematiqueId) {
     final thematiqueState = context.read<ThematiqueBloc>().state;
     if (thematiqueState is ThematiqueSuccessState) {
       final thematique = thematiqueState.viewModel.firstWhere((thematique) => thematique.id == thematiqueId);

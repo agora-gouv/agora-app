@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Thematique extends Equatable {
-  final int id;
+  final String id;
   final String picto;
   final String label;
   final String color;

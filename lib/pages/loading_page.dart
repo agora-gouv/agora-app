@@ -1,7 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_action.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/common/singleton_manager.dart';
+import 'package:agora/common/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ThematiqueBloc(
-        repository: SingletonManager.getThematiqueRepository(),
+        repository: RepositoryManager.getThematiqueRepository(),
       )..add(FetchThematiqueEvent()),
       child: AgoraScaffold(
         child: BlocConsumer<ThematiqueBloc, ThematiqueState>(
