@@ -26,6 +26,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ConsultationDetailsPage extends StatelessWidget {
+  static const routeName = "/consultationDetailsPage";
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -157,8 +159,10 @@ class ConsultationDetailsPage extends StatelessWidget {
                   ],
                 ),
               );
+            } else if (state is ConsultationDetailsInitialState || state is ConsultationDetailsLoadingState) {
+              return Center(child: CircularProgressIndicator());
             } else {
-              return Container();
+              return Center(child: Text("An error occurred"));
             }
           },
         ),

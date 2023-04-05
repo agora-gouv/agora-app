@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoadingPage extends StatelessWidget {
+  static const routeName = "/";
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -18,14 +20,10 @@ class LoadingPage extends StatelessWidget {
         child: BlocConsumer<ThematiqueBloc, ThematiqueState>(
           listener: (context, state) {
             if (state is ThematiqueSuccessState) {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: BlocProvider.of<ThematiqueBloc>(context),
-                    child: ConsultationDetailsPage(),
-                  ),
-                ),
+                ConsultationDetailsPage.routeName,
+                arguments: BlocProvider.of<ThematiqueBloc>(context),
               );
             }
           },
@@ -33,7 +31,7 @@ class LoadingPage extends StatelessWidget {
             if (state is ThematiqueInitialState) {
               return Center(child: CircularProgressIndicator());
             } else if (state is ThematiqueErrorState) {
-              return Center(child: Text("An error occured"));
+              return Center(child: Text("An error occurred"));
             } else {
               return Container();
             }
