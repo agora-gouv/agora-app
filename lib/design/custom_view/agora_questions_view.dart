@@ -46,7 +46,7 @@ class AgoraQuestionsView extends StatelessWidget {
                 ),
                 SizedBox(height: AgoraSpacings.x0_75),
                 Text(
-                  ConsultationString.question.format2(currentQuestionOrder.toString(), totalQuestions.toString()),
+                  ConsultationStrings.question.format2(currentQuestionOrder.toString(), totalQuestions.toString()),
                   style: AgoraTextStyles.medium16,
                 ),
                 SizedBox(height: AgoraSpacings.base),
@@ -106,7 +106,7 @@ class AgoraQuestionsView extends StatelessWidget {
                     SizedBox(width: AgoraSpacings.base),
                     Expanded(
                       child: Text(
-                        ConsultationString.previousQuestion,
+                        ConsultationStrings.previousQuestion,
                         style: AgoraTextStyles.light16.copyWith(color: AgoraColors.blueFrance),
                       ),
                     ),

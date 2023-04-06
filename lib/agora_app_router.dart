@@ -11,7 +11,6 @@ class AgoraAppRouter {
     return {
       LoadingPage.routeName: (context) => LoadingPage(),
       ConsultationQuestionPage.routeName: (context) => ConsultationQuestionPage(),
-      ConsultationQuestionConfirmationPage.routeName: (context) => ConsultationQuestionConfirmationPage(),
     };
   }
 
@@ -22,6 +21,13 @@ class AgoraAppRouter {
         currentRoute = BlocProvider.value(
           value: settings.arguments as ThematiqueBloc,
           child: ConsultationDetailsPage(),
+        );
+        break;
+      case ConsultationQuestionConfirmationPage.routeName:
+        final arguments = settings.arguments as ConsultationQuestionConfirmationArguments;
+        currentRoute = BlocProvider.value(
+          value: arguments.consultationQuestionsResponsesBloc,
+          child: ConsultationQuestionConfirmationPage(consultationId: arguments.consultationId),
         );
         break;
       default:

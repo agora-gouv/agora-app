@@ -2,6 +2,7 @@ import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
+import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 
 // TODO suppress when debouncing is done
@@ -90,6 +91,14 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
         ),
       ],
     );
+  }
+
+  @override
+  Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
+    required String consultationId,
+    required List<ConsultationQuestionResponse> questionsResponses,
+  }) async {
+    return SendConsultationResponsesSucceedResponse();
   }
 }
 

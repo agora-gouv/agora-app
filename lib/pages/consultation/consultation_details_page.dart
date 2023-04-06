@@ -12,6 +12,7 @@ import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_html_styles.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
+import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -149,7 +150,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                           ),
                           SizedBox(height: AgoraSpacings.base),
                           AgoraButton(
-                            label: ConsultationString.beginButton,
+                            label: ConsultationStrings.beginButton,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
                               Navigator.pushNamed(context, ConsultationQuestionPage.routeName,
@@ -165,7 +166,7 @@ class ConsultationDetailsPage extends StatelessWidget {
             } else if (state is ConsultationDetailsInitialState || state is ConsultationDetailsLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else {
-              return Center(child: Text("An error occurred"));
+              return Center(child: AgoraErrorView());
             }
           },
         ),

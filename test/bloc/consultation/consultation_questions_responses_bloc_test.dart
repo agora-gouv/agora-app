@@ -1,70 +1,48 @@
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_action.dart';
 import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_bloc.dart';
+import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_event.dart';
 import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_state.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/consultation/fakes_consultation_repository.dart';
+
 void main() {
-  group("AddConsultationQuestionsResponseEvent", () {
+  group("SendConsultationQuestionsResponsesEvent", () {
     blocTest(
-      "when add response - should update state with the new response",
-      build: () => ConsultationQuestionsResponsesBloc(),
+      "when repository succeed - should emit success state",
+      build: () => ConsultationQuestionsResponsesBloc(consultationRepository: FakeConsultationSuccessRepository()),
       act: (bloc) => bloc
         ..add(
-          AddConsultationQuestionsResponseEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
-          ),
-        )
-        ..add(
-          AddConsultationQuestionsResponseEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
+          SendConsultationQuestionsResponsesEvent(
+            consultationId: "consultationId",
+            questionsResponses: [
+              ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
+            ],
           ),
         ),
       expect: () => [
-        ConsultationQuestionsResponsesState(
-          questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
-          ],
-        ),
-        ConsultationQuestionsResponsesState(
-          questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
-            ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
-          ],
-        ),
+        SendConsultationQuestionsResponsesLoadingState(),
+        SendConsultationQuestionsResponsesSuccessState(),
       ],
       wait: const Duration(milliseconds: 5),
     );
 
     blocTest(
-      "when remove response - should remove the last response of the state",
-      build: () => ConsultationQuestionsResponsesBloc(),
+      "when repository failed - should emit failure state",
+      build: () => ConsultationQuestionsResponsesBloc(consultationRepository: FakeConsultationFailureRepository()),
       act: (bloc) => bloc
         ..add(
-          AddConsultationQuestionsResponseEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
+          SendConsultationQuestionsResponsesEvent(
+            consultationId: "consultationId",
+            questionsResponses: [
+              ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
+            ],
           ),
-        )
-        ..add(
-          AddConsultationQuestionsResponseEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
-          ),
-        )
-        ..add(RemoveConsultationQuestionsResponseEvent()),
-      skip: 1,
+        ),
       expect: () => [
-        ConsultationQuestionsResponsesState(
-          questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
-            ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
-          ],
-        ),
-        ConsultationQuestionsResponsesState(
-          questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
-          ],
-        ),
+        SendConsultationQuestionsResponsesLoadingState(),
+        SendConsultationQuestionsResponsesFailureState(),
       ],
       wait: const Duration(milliseconds: 5),
     );

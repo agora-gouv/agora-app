@@ -14,7 +14,7 @@ void main() {
     test("when success should return thematiques", () async {
       // Given
       dioAdapter.onGet(
-        "todo/thematique",
+        "/thematiques",
         (server) => server.reply(
           HttpStatus.ok,
           {
@@ -56,7 +56,7 @@ void main() {
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
-        "todo/thematique",
+        "/thematiques",
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {"accept": "application/json"},
       );

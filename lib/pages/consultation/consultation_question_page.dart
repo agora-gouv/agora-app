@@ -1,9 +1,10 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_action.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_bloc.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_action.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_bloc.dart';
+import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_stock_event.dart';
 import 'package:agora/common/repository_manager.dart';
+import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_questions_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -24,8 +25,8 @@ class ConsultationQuestionPage extends StatelessWidget {
             consultationRepository: RepositoryManager.getConsultationRepository(),
           )..add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
         ),
-        BlocProvider<ConsultationQuestionsResponsesBloc>(
-          create: (BuildContext context) => ConsultationQuestionsResponsesBloc(),
+        BlocProvider<ConsultationQuestionsResponsesStockBloc>(
+          create: (BuildContext context) => ConsultationQuestionsResponsesStockBloc(),
         ),
       ],
       child: AgoraScaffold(
@@ -33,7 +34,14 @@ class ConsultationQuestionPage extends StatelessWidget {
         child: BlocConsumer<ConsultationQuestionsBloc, ConsultationQuestionsState>(
           listener: (context, state) {
             if (state is ConsultationQuestionsFinishState) {
-              Navigator.pushNamed(context, ConsultationQuestionConfirmationPage.routeName);
+              Navigator.pushNamed(
+                context,
+                ConsultationQuestionConfirmationPage.routeName,
+                arguments: ConsultationQuestionConfirmationArguments(
+                  consultationId: consultationId,
+                  consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -45,8 +53,8 @@ class ConsultationQuestionPage extends StatelessWidget {
                 totalQuestions: state.viewModels.length,
                 responses: state.viewModels[state.currentQuestionIndex].responseChoicesViewModels,
                 onResponseTap: (questionId, responseId) {
-                  context.read<ConsultationQuestionsResponsesBloc>().add(
-                        AddConsultationQuestionsResponseEvent(
+                  context.read<ConsultationQuestionsResponsesStockBloc>().add(
+                        AddConsultationQuestionsResponseStockEvent(
                           questionResponse: ConsultationQuestionResponse(
                             questionId: questionId,
                             responseId: responseId,
@@ -56,14 +64,16 @@ class ConsultationQuestionPage extends StatelessWidget {
                   context.read<ConsultationQuestionsBloc>().add(ConsultationNextQuestionEvent());
                 },
                 onBackTap: () {
-                  context.read<ConsultationQuestionsResponsesBloc>().add(RemoveConsultationQuestionsResponseEvent());
+                  context
+                      .read<ConsultationQuestionsResponsesStockBloc>()
+                      .add(RemoveConsultationQuestionsResponseStockEvent());
                   context.read<ConsultationQuestionsBloc>().add(ConsultationPreviousQuestionEvent());
                 },
               );
             } else if (state is ConsultationQuestionsInitialState || state is ConsultationQuestionsLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else if (state is ConsultationQuestionsErrorState) {
-              return Center(child: Text("An error occurred"));
+              return Center(child: AgoraErrorView());
             } else {
               return Center(child: CircularProgressIndicator());
             }

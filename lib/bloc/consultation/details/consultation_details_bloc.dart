@@ -27,17 +27,17 @@ class ConsultationDetailsBloc extends Bloc<FetchConsultationDetailsEvent, Consul
             title: response.consultationDetails.title,
             cover: response.consultationDetails.cover,
             thematiqueId: response.consultationDetails.thematiqueId,
-            endDate: ConsultationString.endDate.format(
+            endDate: ConsultationStrings.endDate.format(
               DateFormat("dd MMMM").format(response.consultationDetails.endDate),
             ),
             questionCount: response.consultationDetails.questionCount,
             estimatedTime: response.consultationDetails.estimatedTime,
             participantCount: response.consultationDetails.participantCount,
             participantCountGoal: response.consultationDetails.participantCountGoal,
-            participantCountText: ConsultationString.participantCount.format(
+            participantCountText: ConsultationStrings.participantCount.format(
               response.consultationDetails.participantCount.toString(),
             ),
-            participantCountGoalText: ConsultationString.participantCountGoal.format(
+            participantCountGoalText: ConsultationStrings.participantCountGoal.format(
               response.consultationDetails.participantCountGoal.toString(),
             ),
             description: response.consultationDetails.description,
