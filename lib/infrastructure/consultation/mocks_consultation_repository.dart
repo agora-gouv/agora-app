@@ -58,6 +58,36 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
             ConsultationQuestionResponseChoice(id: "choiceE", label: "En voiture, seul(e)", order: 1),
           ],
         ),
+        ConsultationQuestion(
+          id: "questionIdC",
+          label: "Pour quelle raison principale ?",
+          order: 3,
+          type: ConsultationQuestionType.unique,
+          responseChoices: [
+            ConsultationQuestionResponseChoice(
+              id: "choiceAAA",
+              label: "Je veux être tranquille dans ma voiture",
+              order: 4,
+            ),
+            ConsultationQuestionResponseChoice(
+              id: "choiceBBB",
+              label: "Je fais des trajets différents chaque jour",
+              order: 2,
+            ),
+            ConsultationQuestionResponseChoice(
+              id: "choiceCCC",
+              label: "Je crains de ne pas être à l’heure en co-voiturant",
+              order: 3,
+            ),
+            ConsultationQuestionResponseChoice(id: "choiceDDD", label: "Je crains pour ma sécurité", order: 5),
+            ConsultationQuestionResponseChoice(
+              id: "choiceEEE",
+              label: "Je veux être flexible en cas d’imprévu",
+              order: 1,
+            ),
+            ConsultationQuestionResponseChoice(id: "choiceFFF", label: "Autre", order: 6),
+          ],
+        ),
       ],
     );
   }

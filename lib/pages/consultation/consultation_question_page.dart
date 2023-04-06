@@ -1,9 +1,12 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_action.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_bloc.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
+import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_action.dart';
+import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_bloc.dart';
 import 'package:agora/common/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_questions_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,14 +16,19 @@ class ConsultationQuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final consultationId = ModalRoute.of(context)!.settings.arguments as String;
-    return BlocProvider(
-      create: (BuildContext context) {
-        return ConsultationQuestionsBloc(
-          consultationRepository: RepositoryManager.getConsultationRepository(),
-        )..add(FetchConsultationQuestionsEvent(consultationId: consultationId));
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ConsultationQuestionsBloc>(
+          create: (BuildContext context) => ConsultationQuestionsBloc(
+            consultationRepository: RepositoryManager.getConsultationRepository(),
+          )..add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
+        ),
+        BlocProvider<ConsultationQuestionsResponsesBloc>(
+          create: (BuildContext context) => ConsultationQuestionsResponsesBloc(),
+        ),
+      ],
       child: AgoraScaffold(
-        //shouldPop: false,
+        // shouldPop: false, // TODO shouldPop need to be false when new screen with go back to menu button will be add
         child: BlocBuilder<ConsultationQuestionsBloc, ConsultationQuestionsState>(
           builder: (context, state) {
             if (state is ConsultationQuestionsFetchedState) {
@@ -31,11 +39,18 @@ class ConsultationQuestionPage extends StatelessWidget {
                 totalQuestions: state.viewModels.length,
                 responses: state.viewModels[state.currentQuestionIndex].responseChoicesViewModels,
                 onResponseTap: (questionId, responseId) {
-                  // TODO store response
+                  context.read<ConsultationQuestionsResponsesBloc>().add(
+                        AddConsultationQuestionsResponseEvent(
+                          questionResponse: ConsultationQuestionResponse(
+                            questionId: questionId,
+                            responseId: responseId,
+                          ),
+                        ),
+                      );
                   context.read<ConsultationQuestionsBloc>().add(ConsultationNextQuestionEvent());
                 },
-                onBackTap: (questionId) {
-                  // TODO delete response
+                onBackTap: () {
+                  context.read<ConsultationQuestionsResponsesBloc>().add(RemoveConsultationQuestionsResponseEvent());
                   context.read<ConsultationQuestionsBloc>().add(ConsultationPreviousQuestionEvent());
                 },
               );
