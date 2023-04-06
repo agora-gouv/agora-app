@@ -16,7 +16,7 @@ class AgoraQuestionsView extends StatelessWidget {
   final int totalQuestions;
   final List<ConsultationQuestionResponseChoiceViewModel> responses;
   final Function(String, String) onResponseTap;
-  final Function(String) onBackTap;
+  final VoidCallback onBackTap;
 
   AgoraQuestionsView({
     Key? key,
@@ -92,7 +92,7 @@ class AgoraQuestionsView extends StatelessWidget {
       return [
         SizedBox(height: AgoraSpacings.x1_5),
         InkWell(
-          onTap: () => onBackTap(questionId),
+          onTap: () => onBackTap(),
           child: SizedBox(
             width: 200,
             child: Column(
