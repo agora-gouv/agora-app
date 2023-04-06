@@ -15,41 +15,44 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraScaffold(
       shouldPop: false,
-      child: Column(
-        children: [
-          AgoraTopDiagonal(),
-          Image.asset("assets/ic_question_confirmation.png"),
-          Padding(
-            padding: const EdgeInsets.all(AgoraSpacings.x1_5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  ConsultationString.confirmationTitle,
-                  style: AgoraTextStyles.medium19,
-                ),
-                SizedBox(height: AgoraSpacings.base),
-                Text(
-                  ConsultationString.confirmationDescription,
-                  style: AgoraTextStyles.light16,
-                ),
-                SizedBox(height: AgoraSpacings.x1_5),
-                AgoraButton(
-                  label: ConsultationString.goToResult,
-                  style: AgoraButtonStyle.primaryButtonStyle,
-                  onPressed: () {
-                    // TODO next ticket go to result
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      LoadingPage.routeName,
-                      (route) => false,
-                    );
-                  },
-                )
-              ],
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            AgoraTopDiagonal(),
+            Image.asset("assets/ic_question_confirmation.png"),
+            Padding(
+              padding: const EdgeInsets.all(AgoraSpacings.x1_5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ConsultationString.confirmationTitle,
+                    style: AgoraTextStyles.medium19,
+                  ),
+                  SizedBox(height: AgoraSpacings.base),
+                  Text(
+                    ConsultationString.confirmationDescription,
+                    style: AgoraTextStyles.light16,
+                  ),
+                  SizedBox(height: AgoraSpacings.x1_5),
+                  AgoraButton(
+                    label: ConsultationString.goToResult,
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      // TODO next ticket go to result
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        LoadingPage.routeName,
+                        (route) => false,
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
