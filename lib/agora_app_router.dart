@@ -1,5 +1,6 @@
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
+import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class AgoraAppRouter {
     return {
       LoadingPage.routeName: (context) => LoadingPage(),
       ConsultationQuestionPage.routeName: (context) => ConsultationQuestionPage(),
+      ConsultationQuestionConfirmationPage.routeName: (context) => ConsultationQuestionConfirmationPage(),
     };
   }
 

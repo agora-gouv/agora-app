@@ -7,6 +7,7 @@ import 'package:agora/common/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_questions_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
+import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,8 +29,13 @@ class ConsultationQuestionPage extends StatelessWidget {
         ),
       ],
       child: AgoraScaffold(
-        // shouldPop: false, // TODO shouldPop need to be false when new screen with go back to menu button will be add
-        child: BlocBuilder<ConsultationQuestionsBloc, ConsultationQuestionsState>(
+        shouldPop: false,
+        child: BlocConsumer<ConsultationQuestionsBloc, ConsultationQuestionsState>(
+          listener: (context, state) {
+            if (state is ConsultationQuestionsFinishState) {
+              Navigator.pushNamed(context, ConsultationQuestionConfirmationPage.routeName);
+            }
+          },
           builder: (context, state) {
             if (state is ConsultationQuestionsFetchedState) {
               return AgoraQuestionsView(
@@ -59,7 +65,7 @@ class ConsultationQuestionPage extends StatelessWidget {
             } else if (state is ConsultationQuestionsErrorState) {
               return Center(child: Text("An error occurred"));
             } else {
-              return Center(child: Text("Vous avez fini de répondre à ce questionnaire"));
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),
