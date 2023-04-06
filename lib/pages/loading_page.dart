@@ -2,6 +2,7 @@ import 'package:agora/bloc/thematique/thematique_action.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/common/repository_manager.dart';
+import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class LoadingPage extends StatelessWidget {
             if (state is ThematiqueInitialState) {
               return Center(child: CircularProgressIndicator());
             } else if (state is ThematiqueErrorState) {
-              return Center(child: Text("An error occurred"));
+              return Center(child: AgoraErrorView());
             } else {
               return Container();
             }

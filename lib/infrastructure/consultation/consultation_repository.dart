@@ -2,6 +2,7 @@ import 'package:agora/common/agora_http_client.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
+import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/extension/string_extension.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,6 +10,11 @@ abstract class ConsultationRepository {
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({required String consultationId});
 
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({required String consultationId});
+
+  Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
+    required String consultationId,
+    required List<ConsultationQuestionResponse> questionsResponses,
+  });
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -72,6 +78,35 @@ class ConsultationDioRepository extends ConsultationRepository {
       return GetConsultationQuestionsFailedResponse();
     }
   }
+
+  @override
+  Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
+    required String consultationId,
+    required List<ConsultationQuestionResponse> questionsResponses,
+  }) async {
+    try {
+      await httpClient.post(
+        "/consultations/$consultationId/responses",
+        data: {
+          "id_consultation": consultationId,
+          "responses": questionsResponses
+              .map(
+                (questionResponse) => {
+                  "id_question": questionResponse.questionId,
+                  "id_choice": [
+                    questionResponse.responseId,
+                  ],
+                  "response_text": "",
+                },
+              )
+              .toList(),
+        },
+      );
+      return SendConsultationResponsesSucceedResponse();
+    } catch (e) {
+      return SendConsultationResponsesFailureResponse();
+    }
+  }
 }
 
 abstract class GetConsultationDetailsRepositoryResponse extends Equatable {
@@ -105,3 +140,12 @@ class GetConsultationQuestionsSucceedResponse extends GetConsultationQuestionsRe
 }
 
 class GetConsultationQuestionsFailedResponse extends GetConsultationQuestionsRepositoryResponse {}
+
+abstract class SendConsultationResponsesRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class SendConsultationResponsesSucceedResponse extends SendConsultationResponsesRepositoryResponse {}
+
+class SendConsultationResponsesFailureResponse extends SendConsultationResponsesRepositoryResponse {}

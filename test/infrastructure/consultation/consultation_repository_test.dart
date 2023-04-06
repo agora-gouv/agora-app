@@ -4,6 +4,7 @@ import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
+import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -186,6 +187,75 @@ void main() {
 
       // Then
       expect(response, GetConsultationQuestionsFailedResponse());
+    });
+  });
+
+  group("Send consultation responses", () {
+    test("when success should return consultation questions", () async {
+      // Given
+      dioAdapter.onPost(
+        "/consultations/$consultationId/responses",
+        (server) => server.reply(HttpStatus.ok, {}),
+        headers: {"accept": "application/json"},
+        data: {
+          "id_consultation": consultationId,
+          "responses": [
+            {
+              "id_question": "questionId1",
+              "id_choice": ["responseId1"],
+              "response_text": "",
+            },
+            {
+              "id_question": "questionId2",
+              "id_choice": ["responseId2"],
+              "response_text": "",
+            },
+            {
+              "id_question": "questionId3",
+              "id_choice": ["responseId3"],
+              "response_text": "",
+            }
+          ],
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.sendConsultationResponses(
+        consultationId: consultationId,
+        questionsResponses: [
+          ConsultationQuestionResponse(questionId: "questionId1", responseId: "responseId1"),
+          ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
+          ConsultationQuestionResponse(questionId: "questionId3", responseId: "responseId3"),
+        ],
+      );
+
+      // Then
+      expect(response, SendConsultationResponsesSucceedResponse());
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onPost(
+        "/consultations/$consultationId/responses",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {"accept": "application/json"},
+        data: {},
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.sendConsultationResponses(
+        consultationId: consultationId,
+        questionsResponses: [
+          ConsultationQuestionResponse(questionId: "questionId1", responseId: "questionId1"),
+          ConsultationQuestionResponse(questionId: "questionId2", responseId: "questionId2"),
+          ConsultationQuestionResponse(questionId: "questionId3", responseId: "questionId3"),
+        ],
+      );
+
+      // Then
+      expect(response, SendConsultationResponsesFailureResponse());
     });
   });
 }

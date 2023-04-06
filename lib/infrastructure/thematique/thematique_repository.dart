@@ -14,9 +14,7 @@ class ThematiqueDioRepository extends ThematiqueRepository {
   @override
   Future<ThematiqueRepositoryResponse> fetchThematiques() async {
     try {
-      final response = await httpClient.get(
-        "todo/thematique",
-      );
+      final response = await httpClient.get("/thematiques");
       final thematiques = (response.data["thematiques"] as List)
           .map(
             (thematique) => Thematique(
