@@ -1,5 +1,5 @@
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_stock_event.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_stock_state.dart';
+import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_event.dart';
+import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationQuestionsResponsesStockBloc

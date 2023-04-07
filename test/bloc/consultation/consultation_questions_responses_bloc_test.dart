@@ -1,6 +1,6 @@
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_bloc.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_event.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_state.dart';
+import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_bloc.dart';
+import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
+import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';

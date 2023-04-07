@@ -1,9 +1,9 @@
-import 'package:agora/common/agora_http_client.dart';
+import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/extension/string_extension.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {

@@ -1,4 +1,4 @@
-import 'package:agora/common/agora_http_client.dart';
+import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 

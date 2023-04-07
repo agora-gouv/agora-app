@@ -1,4 +1,4 @@
-import 'package:agora/string/generic_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:flutter/material.dart';
 
 class AgoraErrorView extends StatelessWidget {

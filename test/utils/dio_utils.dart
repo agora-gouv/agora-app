@@ -1,4 +1,4 @@
-import 'package:agora/common/agora_http_client.dart';
+import 'package:agora/common/client/agora_http_client.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 
