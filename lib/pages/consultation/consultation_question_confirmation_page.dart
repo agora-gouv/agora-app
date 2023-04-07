@@ -11,7 +11,7 @@ import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
-import 'package:agora/pages/loading_page.dart';
+import 'package:agora/pages/consultation/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,11 +75,9 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                             label: ConsultationStrings.goToResult,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
-                              // TODO next ticket go to result
-                              Navigator.pushNamedAndRemoveUntil(
+                              Navigator.pushNamed(
                                 context,
-                                LoadingPage.routeName,
-                                (route) => false,
+                                ConsultationSummaryPage.routeName,
                               );
                             },
                           )
