@@ -82,6 +82,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                                   ],
                                 ),
                               ),
+                              SizedBox(width: AgoraSpacings.x0_5),
                               Flexible(
                                 child: Column(
                                   children: [

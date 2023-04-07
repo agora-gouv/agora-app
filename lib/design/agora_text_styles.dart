@@ -20,6 +20,14 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle medium20 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 20.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle medium19 = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
@@ -56,14 +64,6 @@ class AgoraTextStyles {
     fontFamily: marianne,
     fontWeight: medium,
     fontSize: 12.0,
-    color: AgoraColors.primaryGrey,
-    height: height,
-  );
-
-  static const TextStyle medium20 = TextStyle(
-    fontFamily: marianne,
-    fontWeight: medium,
-    fontSize: 20.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );
