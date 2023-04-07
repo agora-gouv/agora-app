@@ -1,7 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_action.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/common/repository_manager.dart';
+import 'package:agora/common/client/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';

@@ -1,4 +1,4 @@
-import 'package:agora/common/agora_http_client.dart';
+import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/mocks_consultation_repository.dart';
 import 'package:agora/infrastructure/thematique/mocks_thematique_repository.dart';

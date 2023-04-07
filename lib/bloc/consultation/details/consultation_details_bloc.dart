@@ -1,8 +1,8 @@
 import 'package:agora/bloc/consultation/details/consultation_details_action.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
-import 'package:agora/extension/string_extension.dart';
+import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
-import 'package:agora/string/consultation_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 

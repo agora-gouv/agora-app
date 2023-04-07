@@ -1,8 +1,9 @@
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_bloc.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_event.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_state.dart';
-import 'package:agora/bloc/consultation/question/response/consultation_questions_responses_stock_bloc.dart';
-import 'package:agora/common/repository_manager.dart';
+import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_bloc.dart';
+import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
+import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
+import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/common/client/repository_manager.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_spacings.dart';
@@ -11,7 +12,6 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/pages/loading_page.dart';
-import 'package:agora/string/consultation_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
