@@ -16,7 +16,7 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
         id: "1",
         title: "Développer le covoiturage au quotidien",
         cover: _getImage(),
-        thematiqueId: "7",
+        thematiqueId: "0f644115-08f3-46ff-b776-51f19c65fdd1",
         endDate: DateTime(2023, 3, 3),
         questionCount: "5 à 10 questions",
         estimatedTime: "5 minutes",

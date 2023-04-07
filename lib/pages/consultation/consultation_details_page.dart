@@ -69,13 +69,13 @@ class ConsultationDetailsPage extends StatelessWidget {
                               Flexible(
                                 child: Column(
                                   children: [
-                                    _buildInfomrmationItem(
+                                    _buildInformationItem(
                                       image: "ic_calendar.svg",
                                       text: state.viewModel.endDate,
                                       textStyle: AgoraTextStyles.regularItalic14,
                                     ),
                                     SizedBox(height: AgoraSpacings.x1_5),
-                                    _buildInfomrmationItem(
+                                    _buildInformationItem(
                                       image: "ic_query.svg",
                                       text: state.viewModel.questionCount,
                                     ),
@@ -85,7 +85,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                               Flexible(
                                 child: Column(
                                   children: [
-                                    _buildInfomrmationItem(
+                                    _buildInformationItem(
                                       image: "ic_timer.svg",
                                       text: state.viewModel.estimatedTime,
                                     ),
@@ -177,14 +177,18 @@ class ConsultationDetailsPage extends StatelessWidget {
   Widget _buildThematiqueCard(BuildContext context, String thematiqueId) {
     final thematiqueState = context.read<ThematiqueBloc>().state;
     if (thematiqueState is ThematiqueSuccessState) {
-      final thematique = thematiqueState.viewModel.firstWhere((thematique) => thematique.id == thematiqueId);
-      return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, color: thematique.color);
+      try {
+        final thematique = thematiqueState.viewModel.firstWhere((thematique) => thematique.id == thematiqueId);
+        return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, color: thematique.color);
+      } catch (e) {
+        return Container();
+      }
     } else {
       return Container();
     }
   }
 
-  Widget _buildInfomrmationItem({
+  Widget _buildInformationItem({
     required String image,
     required String text,
     TextStyle textStyle = AgoraTextStyles.light14,

@@ -1,13 +1,14 @@
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/infrastructure/thematique/mocks_thematique_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
+
+import '../../fakes/thematique/fakes_thematique_repository.dart';
 
 void main() {
   blocTest(
     "fetchThematiqueEvent - when repository succeed - should emit success state",
-    build: () => ThematiqueBloc(repository: MockThematiqueSuccessRepository()),
+    build: () => ThematiqueBloc(repository: FakeThematiqueSuccessRepository()),
     act: (bloc) => bloc.add(FetchThematiqueEvent()),
     expect: () => [
       ThematiqueSuccessState(
@@ -28,7 +29,7 @@ void main() {
 
   blocTest(
     "fetchThematiqueEvent - when repository failed - should emit failure state",
-    build: () => ThematiqueBloc(repository: MockThematiqueFailureRepository()),
+    build: () => ThematiqueBloc(repository: FakeThematiqueFailureRepository()),
     act: (bloc) => bloc.add(FetchThematiqueEvent()),
     expect: () => [ThematiqueErrorState()],
     wait: const Duration(milliseconds: 5),

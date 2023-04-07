@@ -1,7 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/mocks_consultation_repository.dart';
-import 'package:agora/infrastructure/thematique/mocks_thematique_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -13,7 +12,7 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<Dio>()) {
       return GetIt.instance.get<Dio>();
     }
-    final dio = Dio();
+    final dio = Dio(BaseOptions(baseUrl: "https://agora-dev.osc-secnum-fr1.scalingo.io"));
     final dioLoggerInterceptor = PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
@@ -44,11 +43,10 @@ class RepositoryManager {
   }
 
   static ThematiqueRepository getThematiqueRepository() {
-    if (GetIt.instance.isRegistered<MockThematiqueSuccessRepository>()) {
-      return GetIt.instance.get<MockThematiqueSuccessRepository>();
+    if (GetIt.instance.isRegistered<ThematiqueDioRepository>()) {
+      return GetIt.instance.get<ThematiqueDioRepository>();
     }
-    final repository = MockThematiqueSuccessRepository();
-    // final repository = ThematiqueDioRepository(httpClient: SingletonManager.getAgoraDioHttpClient());
+    final repository = ThematiqueDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
@@ -58,7 +56,7 @@ class RepositoryManager {
       return GetIt.instance.get<MockConsultationSuccessRepository>();
     }
     final repository = MockConsultationSuccessRepository();
-    // final repository = ConsultationDioRepository(httpClient: SingletonManager.getAgoraDioHttpClient());
+    // final repository = ConsultationDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }

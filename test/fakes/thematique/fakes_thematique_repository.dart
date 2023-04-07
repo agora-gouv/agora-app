@@ -1,8 +1,7 @@
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 
-// TODO rename to FakeThematiqueSuccessRepository and move to /test
-class MockThematiqueSuccessRepository extends ThematiqueRepository {
+class FakeThematiqueSuccessRepository extends ThematiqueRepository {
   @override
   Future<ThematiqueRepositoryResponse> fetchThematiques() async {
     return GetThematiqueSucceedResponse(
@@ -20,8 +19,7 @@ class MockThematiqueSuccessRepository extends ThematiqueRepository {
   }
 }
 
-// TODO rename to FakeThematiqueFailureRepository and move to /test
-class MockThematiqueFailureRepository extends ThematiqueRepository {
+class FakeThematiqueFailureRepository extends ThematiqueRepository {
   @override
   Future<ThematiqueRepositoryResponse> fetchThematiques() async {
     return GetThematiqueFailedResponse();
