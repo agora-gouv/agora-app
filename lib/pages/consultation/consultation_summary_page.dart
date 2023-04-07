@@ -1,7 +1,10 @@
+import 'package:agora/design/agora_button.dart';
+import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationSummaryPage extends StatefulWidget {
@@ -58,15 +61,28 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 200,
                     width: MediaQuery.of(context).size.width,
-                    color: AgoraColors.bolognaSausage,
                   ),
-                  Container(
+                  SizedBox(
                     height: 200,
                     width: MediaQuery.of(context).size.width,
-                    color: AgoraColors.primaryGreen,
+                    child: Column(
+                      children: [
+                        AgoraButton(
+                          label: "Revenir au menu",
+                          style: AgoraButtonStyle.primaryButtonStyle,
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              LoadingPage.routeName,
+                              (route) => false,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
