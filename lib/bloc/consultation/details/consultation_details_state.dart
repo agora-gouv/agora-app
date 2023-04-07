@@ -5,9 +5,7 @@ abstract class ConsultationDetailsState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ConsultationDetailsInitialState extends ConsultationDetailsState {}
-
-class ConsultationDetailsLoadingState extends ConsultationDetailsState {}
+class ConsultationDetailsInitialLoadingState extends ConsultationDetailsState {}
 
 class ConsultationDetailsFetchedState extends ConsultationDetailsState {
   final ConsultationDetailsViewModel viewModel;

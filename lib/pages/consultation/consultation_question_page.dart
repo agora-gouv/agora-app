@@ -1,5 +1,5 @@
-import 'package:agora/bloc/consultation/question/consultation_questions_action.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_bloc.dart';
+import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_event.dart';
@@ -70,7 +70,7 @@ class ConsultationQuestionPage extends StatelessWidget {
                   context.read<ConsultationQuestionsBloc>().add(ConsultationPreviousQuestionEvent());
                 },
               );
-            } else if (state is ConsultationQuestionsInitialState || state is ConsultationQuestionsLoadingState) {
+            } else if (state is ConsultationQuestionsInitialLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else if (state is ConsultationQuestionsErrorState) {
               return Center(child: AgoraErrorView());

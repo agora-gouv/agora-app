@@ -1,5 +1,5 @@
-import 'package:agora/bloc/consultation/question/consultation_questions_action.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_bloc.dart';
+import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:bloc_test/bloc_test.dart';
@@ -39,7 +39,6 @@ void main() {
       build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationSuccessRepository()),
       act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
       expect: () => [
-        ConsultationQuestionsLoadingState(),
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 0,
           totalQuestion: 2,
@@ -54,7 +53,6 @@ void main() {
       build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationFailureRepository()),
       act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
       expect: () => [
-        ConsultationQuestionsLoadingState(),
         ConsultationQuestionsErrorState(),
       ],
       wait: const Duration(milliseconds: 5),
@@ -68,7 +66,7 @@ void main() {
       act: (bloc) => bloc
         ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
         ..add(ConsultationNextQuestionEvent()),
-      skip: 2,
+      skip: 1,
       expect: () => [
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 1,
@@ -86,7 +84,7 @@ void main() {
         ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
         ..add(ConsultationNextQuestionEvent())
         ..add(ConsultationNextQuestionEvent()),
-      skip: 3,
+      skip: 2,
       expect: () => [
         ConsultationQuestionsFinishState(),
       ],
@@ -102,7 +100,7 @@ void main() {
         ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
         ..add(ConsultationNextQuestionEvent())
         ..add(ConsultationPreviousQuestionEvent()),
-      skip: 3,
+      skip: 2,
       expect: () => [
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 0,

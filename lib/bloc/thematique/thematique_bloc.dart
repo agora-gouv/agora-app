@@ -1,14 +1,14 @@
-import 'package:agora/bloc/thematique/thematique_action.dart';
+import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ThematiqueBloc extends Bloc<ThematiqueEvent, ThematiqueState> {
+class ThematiqueBloc extends Bloc<FetchThematiqueEvent, ThematiqueState> {
   final ThematiqueRepository repository;
 
-  ThematiqueBloc({required this.repository}) : super(ThematiqueInitialState()) {
+  ThematiqueBloc({required this.repository}) : super(ThematiqueInitialLoadingState()) {
     on<FetchThematiqueEvent>(_handleThematiqueEvent);
   }
 

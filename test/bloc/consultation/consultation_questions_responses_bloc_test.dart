@@ -22,7 +22,6 @@ void main() {
           ),
         ),
       expect: () => [
-        SendConsultationQuestionsResponsesLoadingState(),
         SendConsultationQuestionsResponsesSuccessState(),
       ],
       wait: const Duration(milliseconds: 5),
@@ -41,7 +40,6 @@ void main() {
           ),
         ),
       expect: () => [
-        SendConsultationQuestionsResponsesLoadingState(),
         SendConsultationQuestionsResponsesFailureState(),
       ],
       wait: const Duration(milliseconds: 5),

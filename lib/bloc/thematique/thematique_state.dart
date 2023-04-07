@@ -5,7 +5,7 @@ abstract class ThematiqueState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ThematiqueInitialState extends ThematiqueState {}
+class ThematiqueInitialLoadingState extends ThematiqueState {}
 
 class ThematiqueSuccessState extends ThematiqueState {
   final List<ThematiqueViewModel> viewModel;

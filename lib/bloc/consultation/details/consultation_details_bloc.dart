@@ -1,4 +1,4 @@
-import 'package:agora/bloc/consultation/details/consultation_details_action.dart';
+import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 class ConsultationDetailsBloc extends Bloc<FetchConsultationDetailsEvent, ConsultationDetailsState> {
   final ConsultationRepository consultationRepository;
 
-  ConsultationDetailsBloc({required this.consultationRepository}) : super(ConsultationDetailsInitialState()) {
+  ConsultationDetailsBloc({required this.consultationRepository}) : super(ConsultationDetailsInitialLoadingState()) {
     on<FetchConsultationDetailsEvent>(_handleConsultationDetails);
   }
 
@@ -17,7 +17,6 @@ class ConsultationDetailsBloc extends Bloc<FetchConsultationDetailsEvent, Consul
     FetchConsultationDetailsEvent event,
     Emitter<ConsultationDetailsState> emit,
   ) async {
-    emit(ConsultationDetailsLoadingState());
     final response = await consultationRepository.fetchConsultationDetails(consultationId: event.consultationId);
     if (response is GetConsultationDetailsSucceedResponse) {
       emit(

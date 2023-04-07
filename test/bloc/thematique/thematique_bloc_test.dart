@@ -1,5 +1,5 @@
-import 'package:agora/bloc/thematique/thematique_action.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
+import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/infrastructure/thematique/mocks_thematique_repository.dart';
 import 'package:bloc_test/bloc_test.dart';

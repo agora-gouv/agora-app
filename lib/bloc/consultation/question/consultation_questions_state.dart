@@ -6,9 +6,7 @@ abstract class ConsultationQuestionsState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ConsultationQuestionsInitialState extends ConsultationQuestionsState {}
-
-class ConsultationQuestionsLoadingState extends ConsultationQuestionsState {}
+class ConsultationQuestionsInitialLoadingState extends ConsultationQuestionsState {}
 
 class ConsultationQuestionsFetchedState extends ConsultationQuestionsState {
   final int currentQuestionIndex;
