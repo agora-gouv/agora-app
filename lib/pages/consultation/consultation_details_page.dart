@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
@@ -32,7 +30,7 @@ class ConsultationDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const consultationId = "1";
+    const consultationId = "c29255f2-10ca-4be5-aab1-801ea173337c";
     return BlocProvider(
       create: (BuildContext context) {
         return ConsultationDetailsBloc(
@@ -53,7 +51,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AgoraToolbar(onBackClick: () => SystemNavigator.pop()),
-                    Image.memory(Base64Decoder().convert(state.viewModel.cover)),
+                    SvgPicture.network(state.viewModel.cover, height: 150),
                     Padding(
                       padding: const EdgeInsets.all(columnPadding),
                       child: Column(
@@ -154,8 +152,11 @@ class ConsultationDetailsPage extends StatelessWidget {
                             label: ConsultationStrings.beginButton,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
-                              Navigator.pushNamed(context, ConsultationQuestionPage.routeName,
-                                  arguments: consultationId);
+                              Navigator.pushNamed(
+                                context,
+                                ConsultationQuestionPage.routeName,
+                                arguments: consultationId,
+                              );
                             },
                           ),
                         ],

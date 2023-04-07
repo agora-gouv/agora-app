@@ -55,7 +55,7 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockConsultationSuccessRepository>()) {
       return GetIt.instance.get<MockConsultationSuccessRepository>();
     }
-    final repository = MockConsultationSuccessRepository();
+    final repository = MockConsultationSuccessRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     // final repository = ConsultationDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     GetIt.instance.registerSingleton(repository);
     return repository;
