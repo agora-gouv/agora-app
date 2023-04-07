@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:agora/bloc/consultation/details/consultation_details_action.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
+import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
@@ -163,7 +163,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                   ],
                 ),
               );
-            } else if (state is ConsultationDetailsInitialState || state is ConsultationDetailsLoadingState) {
+            } else if (state is ConsultationDetailsInitialLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else {
               return Center(child: AgoraErrorView());

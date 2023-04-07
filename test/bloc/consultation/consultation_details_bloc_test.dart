@@ -1,5 +1,5 @@
-import 'package:agora/bloc/consultation/details/consultation_details_action.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
+import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -17,7 +17,6 @@ void main() {
     build: () => ConsultationDetailsBloc(consultationRepository: FakeConsultationSuccessRepository()),
     act: (bloc) => bloc.add(FetchConsultationDetailsEvent(consultationId: consultationId)),
     expect: () => [
-      ConsultationDetailsLoadingState(),
       ConsultationDetailsFetchedState(
         ConsultationDetailsViewModel(
           id: consultationId,
@@ -44,7 +43,6 @@ void main() {
     build: () => ConsultationDetailsBloc(consultationRepository: FakeConsultationFailureRepository()),
     act: (bloc) => bloc.add(FetchConsultationDetailsEvent(consultationId: consultationId)),
     expect: () => [
-      ConsultationDetailsLoadingState(),
       ConsultationDetailsErrorState(),
     ],
     wait: const Duration(milliseconds: 5),

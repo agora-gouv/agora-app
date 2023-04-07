@@ -5,9 +5,7 @@ abstract class SendConsultationQuestionsResponsesState extends Equatable {
   List<Object?> get props => [];
 }
 
-class SendConsultationQuestionsResponsesInitialState extends SendConsultationQuestionsResponsesState {}
-
-class SendConsultationQuestionsResponsesLoadingState extends SendConsultationQuestionsResponsesState {}
+class SendConsultationQuestionsResponsesInitialLoadingState extends SendConsultationQuestionsResponsesState {}
 
 class SendConsultationQuestionsResponsesSuccessState extends SendConsultationQuestionsResponsesState {}
 

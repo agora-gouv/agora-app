@@ -1,4 +1,4 @@
-import 'package:agora/bloc/consultation/question/consultation_questions_action.dart';
+import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
 import 'package:agora/infrastructure/consultation/consultation_questions_presenter.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
@@ -7,7 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ConsultationQuestionsBloc extends Bloc<ConsultationQuestionsEvent, ConsultationQuestionsState> {
   final ConsultationRepository consultationRepository;
 
-  ConsultationQuestionsBloc({required this.consultationRepository}) : super(ConsultationQuestionsInitialState()) {
+  ConsultationQuestionsBloc({required this.consultationRepository})
+      : super(ConsultationQuestionsInitialLoadingState()) {
     on<FetchConsultationQuestionsEvent>(_handleConsultationQuestions);
     on<ConsultationNextQuestionEvent>(_handleConsultationNextQuestion);
     on<ConsultationPreviousQuestionEvent>(_handleConsultationPreviousQuestion);
@@ -17,7 +18,6 @@ class ConsultationQuestionsBloc extends Bloc<ConsultationQuestionsEvent, Consult
     FetchConsultationQuestionsEvent event,
     Emitter<ConsultationQuestionsState> emit,
   ) async {
-    emit(ConsultationQuestionsLoadingState());
     final response = await consultationRepository.fetchConsultationQuestions(consultationId: event.consultationId);
     if (response is GetConsultationQuestionsSucceedResponse) {
       final consultationQuestionViewModels = ConsultationQuestionsPresenter.present(response.consultationQuestions);

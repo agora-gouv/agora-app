@@ -89,8 +89,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                   ],
                 ),
               );
-            } else if (state is SendConsultationQuestionsResponsesInitialState ||
-                state is SendConsultationQuestionsResponsesLoadingState) {
+            } else if (state is SendConsultationQuestionsResponsesInitialLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else {
               return Center(child: AgoraErrorView());

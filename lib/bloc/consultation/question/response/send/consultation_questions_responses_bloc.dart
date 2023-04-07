@@ -8,7 +8,7 @@ class ConsultationQuestionsResponsesBloc
   final ConsultationRepository consultationRepository;
 
   ConsultationQuestionsResponsesBloc({required this.consultationRepository})
-      : super(SendConsultationQuestionsResponsesInitialState()) {
+      : super(SendConsultationQuestionsResponsesInitialLoadingState()) {
     on<SendConsultationQuestionsResponsesEvent>(_handleSendConsultationQuestionsResponses);
   }
 
@@ -16,7 +16,6 @@ class ConsultationQuestionsResponsesBloc
     SendConsultationQuestionsResponsesEvent event,
     Emitter<SendConsultationQuestionsResponsesState> emit,
   ) async {
-    emit(SendConsultationQuestionsResponsesLoadingState());
     final response = await consultationRepository.sendConsultationResponses(
       consultationId: event.consultationId,
       questionsResponses: event.questionsResponses,
