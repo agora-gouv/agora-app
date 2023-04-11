@@ -1,9 +1,12 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
@@ -15,6 +18,8 @@ abstract class ConsultationRepository {
     required String consultationId,
     required List<ConsultationQuestionResponse> questionsResponses,
   });
+
+  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({required String consultationId});
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -107,6 +112,41 @@ class ConsultationDioRepository extends ConsultationRepository {
       return SendConsultationResponsesFailureResponse();
     }
   }
+
+  @override
+  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
+    required String consultationId,
+  }) async {
+    try {
+      final response = await httpClient.get("/consultations/$consultationId/responses");
+      final summary = ConsultationSummary(
+        title: response.data["title"] as String,
+        participantCount: response.data["participant_count"] as int,
+        results: (response.data["results"] as List)
+            .map(
+              (result) => ConsultationSummaryResults(
+                questionTitle: result["question_title"] as String,
+                responses: (result["responses"] as List)
+                    .map(
+                      (response) => ConsultationSummaryResponse(
+                        label: response["label"] as String,
+                        ratio: response["ratio"] as int,
+                      ),
+                    )
+                    .toList(),
+              ),
+            )
+            .toList(),
+        etEnsuite: ConsultationSummaryEtEnsuite(
+          step: response.data["et_ensuite"]["step"] as int,
+          description: response.data["et_ensuite"]["description"] as String,
+        ),
+      );
+      return GetConsultationSummarySucceedResponse(consultationSummary: summary);
+    } catch (e) {
+      return GetConsultationSummaryFailedResponse();
+    }
+  }
 }
 
 abstract class GetConsultationDetailsRepositoryResponse extends Equatable {
@@ -149,3 +189,19 @@ abstract class SendConsultationResponsesRepositoryResponse extends Equatable {
 class SendConsultationResponsesSucceedResponse extends SendConsultationResponsesRepositoryResponse {}
 
 class SendConsultationResponsesFailureResponse extends SendConsultationResponsesRepositoryResponse {}
+
+abstract class GetConsultationSummaryRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetConsultationSummarySucceedResponse extends GetConsultationSummaryRepositoryResponse {
+  final ConsultationSummary consultationSummary;
+
+  GetConsultationSummarySucceedResponse({required this.consultationSummary});
+
+  @override
+  List<Object> get props => [consultationSummary];
+}
+
+class GetConsultationSummaryFailedResponse extends GetConsultationSummaryRepositoryResponse {}

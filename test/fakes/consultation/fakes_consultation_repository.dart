@@ -3,6 +3,9 @@ import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
@@ -64,6 +67,36 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   }) async {
     return SendConsultationResponsesSucceedResponse();
   }
+
+  @override
+  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
+    required String consultationId,
+  }) async {
+    return GetConsultationSummarySucceedResponse(
+      consultationSummary: ConsultationSummary(
+        title: "Développer le covoiturage au quotidien",
+        participantCount: 15035,
+        results: [
+          ConsultationSummaryResults(
+            questionTitle: "Les déplacements professionnels en covoiturage",
+            responses: [
+              ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
+              ConsultationSummaryResponse(label: "En transports en commun, vélo, à pied", ratio: 17),
+              ConsultationSummaryResponse(label: "Autres", ratio: 18),
+            ],
+          ),
+          ConsultationSummaryResults(
+            questionTitle: "Pour quelle raison principale ?",
+            responses: [
+              ConsultationSummaryResponse(label: "Je veux être tranquille dans ma voiture", ratio: 42),
+              ConsultationSummaryResponse(label: "Autres", ratio: 58),
+            ],
+          ),
+        ],
+        etEnsuite: ConsultationSummaryEtEnsuite(step: 1, description: "textRiche"),
+      ),
+    );
+  }
 }
 
 class FakeConsultationFailureRepository extends ConsultationRepository {
@@ -87,5 +120,12 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
     required List<ConsultationQuestionResponse> questionsResponses,
   }) async {
     return SendConsultationResponsesFailureResponse();
+  }
+
+  @override
+  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
+    required String consultationId,
+  }) async {
+    return GetConsultationSummaryFailedResponse();
   }
 }

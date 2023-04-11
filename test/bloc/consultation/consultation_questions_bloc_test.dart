@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_bloc.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
+import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';

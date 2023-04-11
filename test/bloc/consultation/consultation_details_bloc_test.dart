@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
+import 'package:agora/bloc/consultation/details/consultation_details_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';

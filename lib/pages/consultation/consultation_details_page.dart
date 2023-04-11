@@ -43,7 +43,7 @@ class ConsultationDetailsPage extends StatelessWidget {
         },
         child: BlocBuilder<ConsultationDetailsBloc, ConsultationDetailsState>(
           builder: (context, state) {
-            const columnPadding = AgoraSpacings.x1_5;
+            const columnPadding = AgoraSpacings.horizontalPadding;
             const spacing = AgoraSpacings.x0_5;
             const icPersonIconSize = 21;
             if (state is ConsultationDetailsFetchedState) {
@@ -51,7 +51,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AgoraToolbar(onBackClick: () => SystemNavigator.pop()),
-                    SvgPicture.network(state.viewModel.cover, height: 150),
+                    Image.network(state.viewModel.cover),
                     Padding(
                       padding: const EdgeInsets.all(columnPadding),
                       child: Column(

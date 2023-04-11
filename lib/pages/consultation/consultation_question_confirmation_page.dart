@@ -57,7 +57,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                     AgoraTopDiagonal(),
                     Image.asset("assets/ic_question_confirmation.png"),
                     Padding(
-                      padding: const EdgeInsets.all(AgoraSpacings.x1_5),
+                      padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -78,6 +78,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                               Navigator.pushNamed(
                                 context,
                                 ConsultationSummaryPage.routeName,
+                                arguments: consultationId,
                               );
                             },
                           )

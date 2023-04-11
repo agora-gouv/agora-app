@@ -1,6 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
+import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 
 import '../../fakes/thematique/fakes_thematique_repository.dart';

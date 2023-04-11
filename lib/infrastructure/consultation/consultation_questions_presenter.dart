@@ -1,4 +1,4 @@
-import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
+import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 
