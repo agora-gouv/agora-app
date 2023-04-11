@@ -9,4 +9,7 @@ class ConsultationStrings {
   static const String confirmationDescription =
       "Vous pouvez maintenant consulter les résultats de cette consultation et suivre l’avancée des propositions.";
   static const String goToResult = "Voir les résultats";
+  static const String summaryTabResult = "Résultats";
+  static const String summaryTabEtEnsuite = "Et ensuite ?";
+  static const String percentage = "%s %";
 }

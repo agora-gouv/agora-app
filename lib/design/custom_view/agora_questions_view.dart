@@ -1,4 +1,4 @@
-import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
+import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_colors.dart';
@@ -36,7 +36,10 @@ class AgoraQuestionsView extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x1_5),
+            padding: const EdgeInsets.symmetric(
+              vertical: AgoraSpacings.x0_75,
+              horizontal: AgoraSpacings.horizontalPadding,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,9 +63,9 @@ class AgoraQuestionsView extends StatelessWidget {
           Flexible(
             child: Container(
               width: double.infinity,
-              color: AgoraColors.whiteSmoke,
+              color: AgoraColors.background,
               child: Padding(
-                padding: const EdgeInsets.all(AgoraSpacings.x1_5),
+                padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: _buildResponse() + _buildBackButton(),

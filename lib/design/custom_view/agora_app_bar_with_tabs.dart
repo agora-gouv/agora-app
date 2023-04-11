@@ -28,7 +28,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
   final GlobalKey _backBarChildKey = GlobalKey();
   final GlobalKey _contentChildKey = GlobalKey();
   bool isHeightCalculated = false;
-  double height = kToolbarHeight;
+  double height = kToolbarHeight * 2;
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,13 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
                 child: Padding(
                   key: _contentChildKey,
                   padding: widget.needToolbar == true
-                      ? EdgeInsets.symmetric(horizontal: AgoraSpacings.base)
-                      : EdgeInsets.only(left: AgoraSpacings.base, right: AgoraSpacings.base, top: AgoraSpacings.base),
-                  child: widget.topChild,
+                      ? EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding)
+                      : EdgeInsets.only(
+                          left: AgoraSpacings.horizontalPadding,
+                          right: AgoraSpacings.horizontalPadding,
+                          top: AgoraSpacings.base,
+                        ),
+                  child: isHeightCalculated ? widget.topChild : Center(child: CircularProgressIndicator()),
                 ),
               ),
             ),
@@ -93,7 +97,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
 
   void _calculateToolbarHeight(BuildContext context) {
     final contentHeight = (_contentChildKey.currentContext?.findRenderObject() as RenderBox).size.height;
-    const addSpacingBetweenContentAndTabBar = AgoraSpacings.base;
+    const addSpacingBetweenContentAndTabBar = AgoraSpacings.x0_5;
     setState(() {
       isHeightCalculated = true;
       height = contentHeight;

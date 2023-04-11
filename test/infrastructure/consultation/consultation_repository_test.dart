@@ -5,6 +5,9 @@ import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -256,6 +259,88 @@ void main() {
 
       // Then
       expect(response, SendConsultationResponsesFailureResponse());
+    });
+  });
+
+  group("Fetch consultation summary", () {
+    test("when success should return consultation questions", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/$consultationId/responses",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "title": "Développer le covoiturage au quotidien",
+            "participant_count": 15035,
+            "results": [
+              {
+                "question_title": "Les déplacements professionnels en covoiturage",
+                "responses": [
+                  {
+                    "label": "En voiture seul",
+                    "ratio": 65,
+                  },
+                  {
+                    "label": "Autre",
+                    "ratio": 35,
+                  },
+                ]
+              }
+            ],
+            "et_ensuite": {
+              "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
+              "description":
+                  "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
+            }
+          },
+        ),
+        headers: {"accept": "application/json"},
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.fetchConsultationSummary(consultationId: consultationId);
+
+      // Then
+      expect(
+        response,
+        GetConsultationSummarySucceedResponse(
+          consultationSummary: ConsultationSummary(
+            title: "Développer le covoiturage au quotidien",
+            participantCount: 15035,
+            results: [
+              ConsultationSummaryResults(
+                questionTitle: "Les déplacements professionnels en covoiturage",
+                responses: [
+                  ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
+                  ConsultationSummaryResponse(label: "Autre", ratio: 35),
+                ],
+              ),
+            ],
+            etEnsuite: ConsultationSummaryEtEnsuite(
+              step: 1,
+              description:
+                  "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
+            ),
+          ),
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/$consultationId/responses",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {"accept": "application/json"},
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.fetchConsultationSummary(consultationId: consultationId);
+
+      // Then
+      expect(response, GetConsultationSummaryFailedResponse());
     });
   });
 }

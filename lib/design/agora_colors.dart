@@ -11,12 +11,14 @@ class AgoraColors {
   static const Color whiteEdgar = Color(0xFFEDEDED);
   static const Color cascadingWhite = Color(0xFFF6F6F6);
   static const Color superSilver = Color(0xFFEEEEEE);
-  static const Color whiteSmoke = Color(0xFFF5F5F5);
+  static const Color background = Color(0xFFF5F5F5);
   static const Color invertedBlueFrance = Color(0xFFF5F5FE);
   static const Color fluorescentRed = Color(0xFFFF5655);
   static const Color primaryGreen = Color(0xFF27A658);
+  static const Color primaryGreenOpacity15 = Color(0x2627A658);
   static const Color mountainLakeAzure = Color(0xFF51C0A6);
   static const Color blueFrance = Color(0xFF000091);
+  static const Color blueFranceOpacity10 = Color(0x1A000091);
   static const Color transparent = Color(0x00000000);
   static const Color divider = Color(0x1A000000);
 
