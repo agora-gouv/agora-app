@@ -15,33 +15,36 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        color: AgoraColors.background,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AgoraSpacings.horizontalPadding,
-            vertical: AgoraSpacings.x1_5,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-                  Row(
-                    children: [
-                      SvgPicture.asset("assets/ic_person.svg"),
-                      SizedBox(width: AgoraSpacings.x0_5),
-                      Text(participantCount, style: AgoraTextStyles.light14),
-                    ],
-                  ),
-                  SizedBox(height: AgoraSpacings.base),
-                ] +
-                results
-                    .map(
-                      (result) => AgoraConsultationResultView(
-                        questionTitle: result.questionTitle,
-                        responses: result.responses,
-                      ),
-                    )
-                    .toList(),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+        child: Container(
+          color: AgoraColors.background,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AgoraSpacings.horizontalPadding,
+              vertical: AgoraSpacings.x1_5,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                    Row(
+                      children: [
+                        SvgPicture.asset("assets/ic_person.svg"),
+                        SizedBox(width: AgoraSpacings.x0_5),
+                        Text(participantCount, style: AgoraTextStyles.light14),
+                      ],
+                    ),
+                    SizedBox(height: AgoraSpacings.base),
+                  ] +
+                  results
+                      .map(
+                        (result) => AgoraConsultationResultView(
+                          questionTitle: result.questionTitle,
+                          responses: result.responses,
+                        ),
+                      )
+                      .toList(),
+            ),
           ),
         ),
       ),

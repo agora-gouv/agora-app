@@ -34,7 +34,12 @@ void main() {
               ],
             ),
           ],
-          etEnsuite: ConsultationSummaryEtEnsuiteViewModel(step: 1, description: "textRiche"),
+          etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
+            step: "Étape 1/3",
+            image: "assets/ic_consultation_step1.png",
+            title: "Consultation en cours",
+            description: "<body>textRiche</body>",
+          ),
         ),
       ),
     ],

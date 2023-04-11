@@ -54,7 +54,7 @@ class AgoraConsultationCard extends StatelessWidget {
               ),
               Spacer(),
               AgoraButton(
-                icon: "ic_partager.svg",
+                icon: "ic_share.svg",
                 label: "Partager",
                 style: AgoraButtonStyle.lightGreyButtonStyle,
                 onPressed: () {

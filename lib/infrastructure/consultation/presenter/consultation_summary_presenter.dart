@@ -24,9 +24,37 @@ class ConsultationSummaryPresenter {
           )
           .toList(),
       etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
-        step: consultationSummary.etEnsuite.step,
+        step: ConsultationStrings.step.format(consultationSummary.etEnsuite.step.toString()),
+        image: _getImageAsset(consultationSummary.etEnsuite.step),
+        title: _buildTitle(consultationSummary.etEnsuite.step),
         description: consultationSummary.etEnsuite.description,
       ),
     );
+  }
+
+  static String _buildTitle(int step) {
+    switch (step) {
+      case 1:
+        return ConsultationStrings.step1;
+      case 2:
+        return ConsultationStrings.step2;
+      case 3:
+        return ConsultationStrings.step3;
+      default:
+        throw Exception("Consultation Step not exist");
+    }
+  }
+
+  static String _getImageAsset(int step) {
+    switch (step) {
+      case 1:
+        return "assets/ic_consultation_step1.png";
+      case 2:
+        return "assets/ic_consultation_step2.png";
+      case 3:
+        return "assets/ic_consultation_step3.png";
+      default:
+        throw Exception("Consultation Step not exist");
+    }
   }
 }
