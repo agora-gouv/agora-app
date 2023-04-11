@@ -7,7 +7,7 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:flutter/material.dart';
 
-class CustomConsultationCard extends StatelessWidget {
+class AgoraConsultationCard extends StatelessWidget {
   final String image;
   final Thematique thematique;
   final String titre;
@@ -16,7 +16,7 @@ class CustomConsultationCard extends StatelessWidget {
   final VoidCallback onPartipationClick;
   final VoidCallback onPartagerClick;
 
-  CustomConsultationCard({
+  AgoraConsultationCard({
     required this.image,
     required this.thematique,
     required this.titre,

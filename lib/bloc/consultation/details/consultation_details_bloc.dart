@@ -1,7 +1,7 @@
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
-import 'package:agora/infrastructure/consultation/consultation_details_presenter.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
+import 'package:agora/infrastructure/consultation/presenter/consultation_details_presenter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationDetailsBloc extends Bloc<FetchConsultationDetailsEvent, ConsultationDetailsState> {
