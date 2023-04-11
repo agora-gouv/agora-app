@@ -113,20 +113,3 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
     });
   }
 }
-
-class TopDiagonalClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final diagonalPath = Path();
-    const double initialX = 0;
-    const double initialY = 0;
-    diagonalPath.lineTo(initialX, initialY);
-    diagonalPath.lineTo(initialX, size.height);
-    diagonalPath.lineTo(size.width, size.height * 0.5);
-    diagonalPath.lineTo(size.width, initialY);
-    return diagonalPath;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
-}

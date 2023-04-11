@@ -49,14 +49,18 @@ class ConsultationSummaryResponseViewModel extends Equatable {
 }
 
 class ConsultationSummaryEtEnsuiteViewModel extends Equatable {
-  final int step;
+  final String step;
+  final String image;
+  final String title;
   final String description;
 
   ConsultationSummaryEtEnsuiteViewModel({
     required this.step,
+    required this.image,
+    required this.title,
     required this.description,
   });
 
   @override
-  List<Object> get props => [step, description];
+  List<Object> get props => [step, image, title, description];
 }

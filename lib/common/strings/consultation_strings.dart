@@ -12,4 +12,12 @@ class ConsultationStrings {
   static const String summaryTabResult = "Résultats";
   static const String summaryTabEtEnsuite = "Et ensuite ?";
   static const String percentage = "%s %";
+  static const String step = "Étape %s/3";
+  static const String step1 = "Consultation en cours";
+  static const String step2 = "Engagements politiques";
+  static const String step3 = "Mise en oeuvre";
+  static const String returnToHome = "Revenir au menu";
+  static const String share = "Partager";
+  static const String notificationInformation = "Vous serez tenu(e) au courant des prochaines étapes !";
+  static const String refuseNotification = "Ne pas recevoir de notifications";
 }

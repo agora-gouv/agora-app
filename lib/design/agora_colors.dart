@@ -5,8 +5,10 @@ class AgoraColors {
   static const Color primaryGreyOpacity80 = Color(0xCC1A1A1A);
   static const Color potBlack = Color(0xFF161616);
   static const Color border = Color(0x30000000);
+  static const Color stoicWhite = Color(0x80DFE6FF);
   static const Color orochimaruOpacity60 = Color(0x99D9D9D9);
   static const Color orochimaru = Color(0xFFD9D9D9);
+  static const Color steam = Color(0xFFDDDDDD);
   static const Color white = Color(0xFFFFFFFF);
   static const Color whiteEdgar = Color(0xFFEDEDED);
   static const Color cascadingWhite = Color(0xFFF6F6F6);

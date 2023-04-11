@@ -24,14 +24,18 @@ class AgoraConsultationResultBar extends StatefulWidget {
 
 class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar> {
   final GlobalKey _barChildKey = GlobalKey();
+  bool isHeightCalculated = false;
   double barHeight = AgoraSpacings.x2_5;
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        barHeight = (_barChildKey.currentContext?.findRenderObject() as RenderBox).size.height;
-      });
+      if (!isHeightCalculated) {
+        setState(() {
+          isHeightCalculated = true;
+          barHeight = (_barChildKey.currentContext?.findRenderObject() as RenderBox).size.height;
+        });
+      }
     });
     double totalWidth = MediaQuery.of(context).size.width;
     if (widget.minusPadding != null) {

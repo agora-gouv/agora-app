@@ -93,7 +93,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             ],
           ),
         ],
-        etEnsuite: ConsultationSummaryEtEnsuite(step: 1, description: "textRiche"),
+        etEnsuite: ConsultationSummaryEtEnsuite(step: 1, description: "<body>textRiche</body>"),
       ),
     );
   }
