@@ -29,15 +29,15 @@ void main() {
           {
             "id": consultationId,
             "title": "Développer le covoiturage",
-            "cover": "<imageByteEncodéeBase64>",
-            "thematique_id": "2",
-            "end_date": "2023-03-21",
-            "question_count": "5 à 10 questions",
-            "estimated_time": "5 minutes",
-            "participant_count": 15035,
-            "participant_count_goal": 30000,
+            "coverUrl": "<imageByteEncodéeBase64>",
+            "thematiqueId": "2",
+            "endDate": "2023-03-21",
+            "questionCount": "5 à 10 questions",
+            "estimatedTime": "5 minutes",
+            "participantCount": 15035,
+            "participantCountGoal": 30000,
             "description": "La description avec textes <b>en gras</b>",
-            "tips_description": "Qui peut aussi être du texte <i>riche</i>",
+            "tipsDescription": "Qui peut aussi être du texte <i>riche</i>",
           },
         ),
         headers: {"accept": "application/json"},
@@ -99,7 +99,7 @@ void main() {
                 "label": "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros...",
                 "order": 2,
                 "type": "unique",
-                "possible_choices": [
+                "possibleChoices": [
                   {
                     "id": "choiceAA",
                     "label": "non",
@@ -117,7 +117,7 @@ void main() {
                 "label": "Comment vous rendez-vous généralement sur votre lieu de travail ?",
                 "order": 1,
                 "type": "unique",
-                "possible_choices": [
+                "possibleChoices": [
                   {
                     "id": "choiceA",
                     "label": "En vélo ou à pied",
@@ -201,22 +201,22 @@ void main() {
         (server) => server.reply(HttpStatus.ok, {}),
         headers: {"accept": "application/json"},
         data: {
-          "id_consultation": consultationId,
+          "consultationId": consultationId,
           "responses": [
             {
-              "id_question": "questionId1",
-              "id_choice": ["responseId1"],
-              "response_text": "",
+              "questionId": "questionId1",
+              "choiceIds": ["responseId1"],
+              "responseText": "",
             },
             {
-              "id_question": "questionId2",
-              "id_choice": ["responseId2"],
-              "response_text": "",
+              "questionId": "questionId2",
+              "choiceIds": ["responseId2"],
+              "responseText": "",
             },
             {
-              "id_question": "questionId3",
-              "id_choice": [],
-              "response_text": "opened response",
+              "questionId": "questionId3",
+              "choiceIds": [],
+              "responseText": "opened response",
             }
           ],
         },
@@ -244,22 +244,22 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {"accept": "application/json"},
         data: {
-          "id_consultation": consultationId,
+          "consultationId": consultationId,
           "responses": [
             {
-              "id_question": "questionId1",
-              "id_choice": ["responseId1"],
-              "response_text": "",
+              "questionId": "questionId1",
+              "choiceIds": ["responseId1"],
+              "responseText": "",
             },
             {
-              "id_question": "questionId2",
-              "id_choice": ["responseId2"],
-              "response_text": "",
+              "questionId": "questionId2",
+              "choiceIds": ["responseId2"],
+              "responseText": "",
             },
             {
-              "id_question": "questionId3",
-              "id_choice": [],
-              "response_text": "opened response",
+              "questionId": "questionId3",
+              "choiceIds": [],
+              "responseText": "opened response",
             }
           ],
         },
@@ -290,10 +290,10 @@ void main() {
           HttpStatus.ok,
           {
             "title": "Développer le covoiturage au quotidien",
-            "participant_count": 15035,
+            "participantCount": 15035,
             "results": [
               {
-                "question_title": "Les déplacements professionnels en covoiturage",
+                "questionTitle": "Les déplacements professionnels en covoiturage",
                 "responses": [
                   {
                     "label": "En voiture seul",
@@ -306,7 +306,7 @@ void main() {
                 ]
               }
             ],
-            "et_ensuite": {
+            "etEnsuite": {
               "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
               "description":
                   "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",

@@ -25,15 +25,15 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
         consultationDetails: ConsultationDetails(
           id: response.data["id"] as String,
           title: response.data["title"] as String,
-          cover: response.data["cover"] as String,
-          thematiqueId: response.data["thematique_id"] as String,
-          endDate: DateTime.parse(response.data["end_date"] as String),
-          questionCount: response.data["question_count"] as String,
-          estimatedTime: response.data["estimated_time"] as String,
-          participantCount: response.data["participant_count"] as int,
-          participantCountGoal: response.data["participant_count_goal"] as int,
+          cover: response.data["coverUrl"] as String,
+          thematiqueId: response.data["thematiqueId"] as String,
+          endDate: DateTime.parse(response.data["endDate"] as String),
+          questionCount: response.data["questionCount"] as String,
+          estimatedTime: response.data["estimatedTime"] as String,
+          participantCount: response.data["participantCount"] as int,
+          participantCountGoal: response.data["participantCountGoal"] as int,
           description: response.data["description"] as String,
-          tipsDescription: response.data["tips_description"] as String,
+          tipsDescription: response.data["tipsDescription"] as String,
         ),
       );
     } catch (e) {

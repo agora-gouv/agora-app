@@ -37,15 +37,15 @@ class ConsultationDioRepository extends ConsultationRepository {
         consultationDetails: ConsultationDetails(
           id: response.data["id"] as String,
           title: response.data["title"] as String,
-          cover: response.data["cover"] as String,
-          thematiqueId: response.data["thematique_id"] as String,
-          endDate: DateTime.parse(response.data["end_date"] as String),
-          questionCount: response.data["question_count"] as String,
-          estimatedTime: response.data["estimated_time"] as String,
-          participantCount: response.data["participant_count"] as int,
-          participantCountGoal: response.data["participant_count_goal"] as int,
+          cover: response.data["coverUrl"] as String,
+          thematiqueId: response.data["thematiqueId"] as String,
+          endDate: DateTime.parse(response.data["endDate"] as String),
+          questionCount: response.data["questionCount"] as String,
+          estimatedTime: response.data["estimatedTime"] as String,
+          participantCount: response.data["participantCount"] as int,
+          participantCountGoal: response.data["participantCountGoal"] as int,
           description: response.data["description"] as String,
-          tipsDescription: response.data["tips_description"] as String,
+          tipsDescription: response.data["tipsDescription"] as String,
         ),
       );
     } catch (e) {
@@ -66,7 +66,7 @@ class ConsultationDioRepository extends ConsultationRepository {
               label: question["label"] as String,
               order: question["order"] as int,
               type: (question["type"] as String).toConsultationQuestionType(),
-              responseChoices: (question["possible_choices"] as List)
+              responseChoices: (question["possibleChoices"] as List)
                   .map(
                     (responseChoice) => ConsultationQuestionResponseChoice(
                       id: responseChoice["id"] as String,
@@ -93,13 +93,13 @@ class ConsultationDioRepository extends ConsultationRepository {
       await httpClient.post(
         "/consultations/$consultationId/responses",
         data: {
-          "id_consultation": consultationId,
+          "consultationId": consultationId,
           "responses": questionsResponses
               .map(
                 (questionResponse) => {
-                  "id_question": questionResponse.questionId,
-                  "id_choice": questionResponse.responseIds,
-                  "response_text": questionResponse.responseText,
+                  "questionId": questionResponse.questionId,
+                  "choiceIds": questionResponse.responseIds,
+                  "responseText": questionResponse.responseText,
                 },
               )
               .toList(),
@@ -119,11 +119,11 @@ class ConsultationDioRepository extends ConsultationRepository {
       final response = await httpClient.get("/consultations/$consultationId/responses");
       final summary = ConsultationSummary(
         title: response.data["title"] as String,
-        participantCount: response.data["participant_count"] as int,
+        participantCount: response.data["participantCount"] as int,
         results: (response.data["results"] as List)
             .map(
               (result) => ConsultationSummaryResults(
-                questionTitle: result["question_title"] as String,
+                questionTitle: result["questionTitle"] as String,
                 responses: (result["responses"] as List)
                     .map(
                       (response) => ConsultationSummaryResponse(
@@ -136,8 +136,8 @@ class ConsultationDioRepository extends ConsultationRepository {
             )
             .toList(),
         etEnsuite: ConsultationSummaryEtEnsuite(
-          step: response.data["et_ensuite"]["step"] as int,
-          description: response.data["et_ensuite"]["description"] as String,
+          step: response.data["etEnsuite"]["step"] as int,
+          description: response.data["etEnsuite"]["description"] as String,
         ),
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);
