@@ -4,6 +4,7 @@ import 'package:agora/bloc/consultation/details/consultation_details_state.dart'
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/common/client/repository_manager.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
@@ -19,11 +20,9 @@ import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ConsultationDetailsPage extends StatelessWidget {
   static const routeName = "/consultationDetailsPage";
@@ -38,9 +37,6 @@ class ConsultationDetailsPage extends StatelessWidget {
         )..add(FetchConsultationDetailsEvent(consultationId: consultationId));
       },
       child: AgoraScaffold(
-        popAction: () {
-          SystemNavigator.pop();
-        },
         child: BlocBuilder<ConsultationDetailsBloc, ConsultationDetailsState>(
           builder: (context, state) {
             const columnPadding = AgoraSpacings.horizontalPadding;
@@ -50,7 +46,7 @@ class ConsultationDetailsPage extends StatelessWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    AgoraToolbar(onBackClick: () => SystemNavigator.pop()),
+                    AgoraToolbar(),
                     Image.network(state.viewModel.cover),
                     Padding(
                       padding: const EdgeInsets.all(columnPadding),
@@ -125,18 +121,10 @@ class ConsultationDetailsPage extends StatelessWidget {
                           Divider(height: AgoraSpacings.x1_5, color: AgoraColors.divider, thickness: 1),
                           Html(
                             data: state.viewModel.description,
-                            onLinkTap: (url, _, __, ___) async {
-                              if (url != null) {
-                                final uri = Uri.parse(url);
-                                if (await canLaunchUrl(uri)) {
-                                  await launchUrl(
-                                    uri,
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                }
-                              }
-                            },
                             style: AgoraHtmlStyles.htmlStyle,
+                            onLinkTap: (url, _, __, ___) async {
+                              LaunchUrlHelper.launch(url);
+                            },
                           ),
                           SizedBox(height: AgoraSpacings.base),
                           AgoraRoundedCard(
