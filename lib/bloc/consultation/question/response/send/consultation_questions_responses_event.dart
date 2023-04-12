@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class SendConsultationQuestionsResponsesEvent extends Equatable {
   final String consultationId;
-  final List<ConsultationQuestionResponse> questionsResponses;
+  final List<ConsultationQuestionResponses> questionsResponses;
 
   SendConsultationQuestionsResponsesEvent({required this.consultationId, required this.questionsResponses});
 

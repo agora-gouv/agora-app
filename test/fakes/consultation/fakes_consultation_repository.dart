@@ -63,7 +63,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required List<ConsultationQuestionResponse> questionsResponses,
+    required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     return SendConsultationResponsesSucceedResponse();
   }
@@ -117,7 +117,7 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required List<ConsultationQuestionResponse> questionsResponses,
+    required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     return SendConsultationResponsesFailureResponse();
   }

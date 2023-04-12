@@ -16,7 +16,7 @@ abstract class ConsultationRepository {
 
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required List<ConsultationQuestionResponse> questionsResponses,
+    required List<ConsultationQuestionResponses> questionsResponses,
   });
 
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({required String consultationId});
@@ -87,7 +87,7 @@ class ConsultationDioRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required List<ConsultationQuestionResponse> questionsResponses,
+    required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     try {
       await httpClient.post(

@@ -7,12 +7,10 @@ abstract class ConsultationQuestionsResponsesStockEvent extends Equatable {
 }
 
 class AddConsultationQuestionsResponseStockEvent extends ConsultationQuestionsResponsesStockEvent {
-  final ConsultationQuestionResponse questionResponse;
+  final ConsultationQuestionResponses questionResponse;
 
   AddConsultationQuestionsResponseStockEvent({required this.questionResponse});
 
   @override
   List<Object> get props => [questionResponse];
 }
-
-class RemoveConsultationQuestionsResponseStockEvent extends ConsultationQuestionsResponsesStockEvent {}

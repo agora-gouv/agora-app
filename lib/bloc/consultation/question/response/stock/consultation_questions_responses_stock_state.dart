@@ -2,7 +2,7 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:equatable/equatable.dart';
 
 class ConsultationQuestionsResponsesStockState extends Equatable {
-  final List<ConsultationQuestionResponse> questionsResponses;
+  final List<ConsultationQuestionResponses> questionsResponses;
 
   ConsultationQuestionsResponsesStockState({required this.questionsResponses});
 

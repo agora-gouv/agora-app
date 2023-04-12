@@ -13,7 +13,7 @@ void main() {
       act: (bloc) => bloc
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(
+            questionResponse: ConsultationQuestionResponses(
               questionId: "questionId",
               responseIds: ["responseId"],
               responseText: "",
@@ -22,7 +22,7 @@ void main() {
         )
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(
+            questionResponse: ConsultationQuestionResponses(
               questionId: "questionId2",
               responseIds: [],
               responseText: "opened response",
@@ -32,55 +32,66 @@ void main() {
       expect: () => [
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
         ),
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
-            ConsultationQuestionResponse(questionId: "questionId2", responseIds: [], responseText: "opened response"),
+            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(questionId: "questionId2", responseIds: [], responseText: "opened response"),
           ],
         ),
       ],
       wait: const Duration(milliseconds: 5),
     );
-  });
 
-  group("RemoveConsultationQuestionsResponseStockEvent", () {
     blocTest(
-      "when remove response - should remove the last response of the state",
+      "when add response for a specific questionId and this questionId already exists - should replace the previous one",
       build: () => ConsultationQuestionsResponsesStockBloc(),
       act: (bloc) => bloc
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(
+            questionResponse: ConsultationQuestionResponses(
               questionId: "questionId",
-              responseIds: ["responseId"],
+              responseIds: ["responseId1"],
               responseText: "",
             ),
           ),
         )
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(
+            questionResponse: ConsultationQuestionResponses(
               questionId: "questionId2",
               responseIds: [],
               responseText: "opened response",
             ),
           ),
         )
-        ..add(RemoveConsultationQuestionsResponseStockEvent()),
-      skip: 1,
+        ..add(
+          AddConsultationQuestionsResponseStockEvent(
+            questionResponse: ConsultationQuestionResponses(
+              questionId: "questionId",
+              responseIds: ["responseId2"],
+              responseText: "",
+            ),
+          ),
+        ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
-            ConsultationQuestionResponse(questionId: "questionId2", responseIds: [], responseText: "opened response"),
+            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId1"], responseText: ""),
           ],
         ),
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId1"], responseText: ""),
+            ConsultationQuestionResponses(questionId: "questionId2", responseIds: [], responseText: "opened response"),
+          ],
+        ),
+        ConsultationQuestionsResponsesStockState(
+          questionsResponses: [
+            ConsultationQuestionResponses(questionId: "questionId2", responseIds: [], responseText: "opened response"),
+            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId2"], responseText: ""),
           ],
         ),
       ],

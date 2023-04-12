@@ -227,9 +227,9 @@ void main() {
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
         questionsResponses: [
-          ConsultationQuestionResponse(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
-          ConsultationQuestionResponse(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
-          ConsultationQuestionResponse(questionId: "questionId3", responseIds: [], responseText: "opened response"),
+          ConsultationQuestionResponses(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
+          ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
+          ConsultationQuestionResponses(questionId: "questionId3", responseIds: [], responseText: "opened response"),
         ],
       );
 
@@ -270,9 +270,9 @@ void main() {
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
         questionsResponses: [
-          ConsultationQuestionResponse(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
-          ConsultationQuestionResponse(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
-          ConsultationQuestionResponse(questionId: "questionId3", responseIds: [], responseText: "opened response"),
+          ConsultationQuestionResponses(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
+          ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
+          ConsultationQuestionResponses(questionId: "questionId3", responseIds: [], responseText: "opened response"),
         ],
       );
 

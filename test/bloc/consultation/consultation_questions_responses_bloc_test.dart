@@ -17,7 +17,7 @@ void main() {
           SendConsultationQuestionsResponsesEvent(
             consultationId: "consultationId",
             questionsResponses: [
-              ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+              ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
             ],
           ),
         ),
@@ -35,7 +35,7 @@ void main() {
           SendConsultationQuestionsResponsesEvent(
             consultationId: "consultationId",
             questionsResponses: [
-              ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+              ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
             ],
           ),
         ),
