@@ -25,6 +25,8 @@ extension ConsultationQuestionTypeExtension on String {
     switch (this) {
       case "unique":
         return ConsultationQuestionType.unique;
+      case "ouverte":
+        return ConsultationQuestionType.ouverte;
       default:
         throw Exception("Question type doesn't exist: $this}");
     }

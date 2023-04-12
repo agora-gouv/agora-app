@@ -48,6 +48,20 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
     return GetConsultationQuestionsSucceedResponse(
       consultationQuestions: [
         ConsultationQuestion(
+          id: "questionIdD",
+          label: "Donnez un feedback",
+          order: 3,
+          type: ConsultationQuestionType.ouverte,
+          responseChoices: [],
+        ),
+        ConsultationQuestion(
+          id: "questionIdE",
+          label: "Avez vous des conseilles à ajouter?",
+          order: 5,
+          type: ConsultationQuestionType.ouverte,
+          responseChoices: [],
+        ),
+        ConsultationQuestion(
           id: "questionIdB",
           label:
               "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros. Etes-vous intéressé(e) pour vous lancer ?",
@@ -74,7 +88,7 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
         ConsultationQuestion(
           id: "questionIdC",
           label: "Pour quelle raison principale ?",
-          order: 3,
+          order: 4,
           type: ConsultationQuestionType.unique,
           responseChoices: [
             ConsultationQuestionResponseChoice(

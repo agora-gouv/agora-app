@@ -215,8 +215,8 @@ void main() {
             },
             {
               "id_question": "questionId3",
-              "id_choice": ["responseId3"],
-              "response_text": "",
+              "id_choice": [],
+              "response_text": "opened response",
             }
           ],
         },
@@ -227,9 +227,9 @@ void main() {
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
         questionsResponses: [
-          ConsultationQuestionResponse(questionId: "questionId1", responseId: "responseId1"),
-          ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
-          ConsultationQuestionResponse(questionId: "questionId3", responseId: "responseId3"),
+          ConsultationQuestionResponse(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
+          ConsultationQuestionResponse(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
+          ConsultationQuestionResponse(questionId: "questionId3", responseIds: [], responseText: "opened response"),
         ],
       );
 
@@ -243,7 +243,26 @@ void main() {
         "/consultations/$consultationId/responses",
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {"accept": "application/json"},
-        data: {},
+        data: {
+          "id_consultation": consultationId,
+          "responses": [
+            {
+              "id_question": "questionId1",
+              "id_choice": ["responseId1"],
+              "response_text": "",
+            },
+            {
+              "id_question": "questionId2",
+              "id_choice": ["responseId2"],
+              "response_text": "",
+            },
+            {
+              "id_question": "questionId3",
+              "id_choice": [],
+              "response_text": "opened response",
+            }
+          ],
+        },
       );
 
       // When
@@ -251,9 +270,9 @@ void main() {
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
         questionsResponses: [
-          ConsultationQuestionResponse(questionId: "questionId1", responseId: "questionId1"),
-          ConsultationQuestionResponse(questionId: "questionId2", responseId: "questionId2"),
-          ConsultationQuestionResponse(questionId: "questionId3", responseId: "questionId3"),
+          ConsultationQuestionResponse(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
+          ConsultationQuestionResponse(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
+          ConsultationQuestionResponse(questionId: "questionId3", responseIds: [], responseText: "opened response"),
         ],
       );
 

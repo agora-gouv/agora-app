@@ -16,6 +16,7 @@ class ConsultationQuestionsResponsesStockBloc
     // [...x] clone list x
     final questionsResponses = [...state.questionsResponses];
     questionsResponses.add(event.questionResponse);
+    print(questionsResponses);
     emit(ConsultationQuestionsResponsesStockState(questionsResponses: questionsResponses));
   }
 

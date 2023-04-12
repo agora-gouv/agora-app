@@ -1,3 +1,1 @@
-enum ConsultationQuestionType {
-  unique,
-}
+enum ConsultationQuestionType { unique, ouverte }
