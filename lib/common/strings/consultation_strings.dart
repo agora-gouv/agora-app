@@ -20,4 +20,9 @@ class ConsultationStrings {
   static const String share = "Partager";
   static const String notificationInformation = "Vous serez tenu(e) au courant des prochaines étapes !";
   static const String refuseNotification = "Ne pas recevoir de notifications";
+  static const String openedQuestionNotice =
+      "Attention à ne pas indiquer de données personnelles qui pourraient vous identifier.";
+  static const String nextQuestion = "Question suivante";
+  static const String validate = "Valider";
+  static const String hintText = "Saisissez votre réponse\n\n\n\n\n\n";
 }

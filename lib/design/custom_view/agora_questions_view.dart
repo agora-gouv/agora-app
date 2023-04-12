@@ -123,6 +123,8 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
   List<Widget> _buildOpenedChoiceResponse() {
     final previousResponseText = widget.previousSelectedResponses?.responseText;
     return [
+      Text(ConsultationStrings.openedQuestionNotice, style: AgoraTextStyles.medium14),
+      SizedBox(height: AgoraSpacings.base),
       SizedBox(
         width: double.infinity,
         height: 200,
@@ -144,7 +146,7 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1, color: AgoraColors.primaryGreen),
             ),
-            hintText: "Saisissez votre réponse\n\n\n\n\n\n",
+            hintText: ConsultationStrings.hintText,
             hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.orochimaru),
           ),
           onChanged: (openedResponseInput) {
@@ -154,7 +156,9 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
       ),
       SizedBox(height: AgoraSpacings.base),
       AgoraButton(
-        label: "Question suivante",
+        label: widget.currentQuestionOrder == widget.totalQuestions
+            ? ConsultationStrings.validate
+            : ConsultationStrings.nextQuestion,
         style: AgoraButtonStyle.primaryButtonStyle,
         onPressed: () {
           widget.onOpenedResponseInput(widget.questionId, openedResponse);
