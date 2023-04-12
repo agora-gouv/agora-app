@@ -50,14 +50,28 @@ class ConsultationQuestionPage extends StatelessWidget {
                 questionId: state.viewModels[state.currentQuestionIndex].id,
                 questionText: state.viewModels[state.currentQuestionIndex].label,
                 currentQuestionOrder: state.viewModels[state.currentQuestionIndex].order,
+                currentQuestionType: state.viewModels[state.currentQuestionIndex].type,
                 totalQuestions: state.viewModels.length,
                 responses: state.viewModels[state.currentQuestionIndex].responseChoicesViewModels,
-                onResponseTap: (questionId, responseId) {
+                onUniqueResponseTap: (questionId, responseId) {
                   context.read<ConsultationQuestionsResponsesStockBloc>().add(
                         AddConsultationQuestionsResponseStockEvent(
                           questionResponse: ConsultationQuestionResponse(
                             questionId: questionId,
-                            responseId: responseId,
+                            responseIds: [responseId],
+                            responseText: "",
+                          ),
+                        ),
+                      );
+                  context.read<ConsultationQuestionsBloc>().add(ConsultationNextQuestionEvent());
+                },
+                onOpenedResponseInput: (questionId, responseText) {
+                  context.read<ConsultationQuestionsResponsesStockBloc>().add(
+                        AddConsultationQuestionsResponseStockEvent(
+                          questionResponse: ConsultationQuestionResponse(
+                            questionId: questionId,
+                            responseIds: [],
+                            responseText: responseText,
                           ),
                         ),
                       );

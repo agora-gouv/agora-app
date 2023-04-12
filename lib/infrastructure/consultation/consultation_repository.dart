@@ -98,10 +98,8 @@ class ConsultationDioRepository extends ConsultationRepository {
               .map(
                 (questionResponse) => {
                   "id_question": questionResponse.questionId,
-                  "id_choice": [
-                    questionResponse.responseId,
-                  ],
-                  "response_text": "",
+                  "id_choice": questionResponse.responseIds,
+                  "response_text": questionResponse.responseText,
                 },
               )
               .toList(),

@@ -13,24 +13,32 @@ void main() {
       act: (bloc) => bloc
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
+            questionResponse: ConsultationQuestionResponse(
+              questionId: "questionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
           ),
         )
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
+            questionResponse: ConsultationQuestionResponse(
+              questionId: "questionId2",
+              responseIds: [],
+              responseText: "opened response",
+            ),
           ),
         ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
+            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
         ),
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
-            ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
+            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponse(questionId: "questionId2", responseIds: [], responseText: "opened response"),
           ],
         ),
       ],
@@ -45,12 +53,20 @@ void main() {
       act: (bloc) => bloc
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
+            questionResponse: ConsultationQuestionResponse(
+              questionId: "questionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
           ),
         )
         ..add(
           AddConsultationQuestionsResponseStockEvent(
-            questionResponse: ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
+            questionResponse: ConsultationQuestionResponse(
+              questionId: "questionId2",
+              responseIds: [],
+              responseText: "opened response",
+            ),
           ),
         )
         ..add(RemoveConsultationQuestionsResponseStockEvent()),
@@ -58,13 +74,13 @@ void main() {
       expect: () => [
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
-            ConsultationQuestionResponse(questionId: "questionId2", responseId: "responseId2"),
+            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponse(questionId: "questionId2", responseIds: [], responseText: "opened response"),
           ],
         ),
         ConsultationQuestionsResponsesStockState(
           questionsResponses: [
-            ConsultationQuestionResponse(questionId: "questionId", responseId: "responseId"),
+            ConsultationQuestionResponse(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
         ),
       ],

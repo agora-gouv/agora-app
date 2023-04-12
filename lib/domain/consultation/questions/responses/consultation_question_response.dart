@@ -2,10 +2,15 @@ import 'package:equatable/equatable.dart';
 
 class ConsultationQuestionResponse extends Equatable {
   final String questionId;
-  final String responseId;
+  final List<String> responseIds;
+  final String responseText;
 
-  ConsultationQuestionResponse({required this.questionId, required this.responseId});
+  ConsultationQuestionResponse({
+    required this.questionId,
+    required this.responseIds,
+    required this.responseText,
+  });
 
   @override
-  List<Object> get props => [questionId, responseId];
+  List<Object> get props => [questionId, responseIds, responseText];
 }
