@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class ConsultationQuestionResponse extends Equatable {
+class ConsultationQuestionResponses extends Equatable {
   final String questionId;
   final List<String> responseIds;
   final String responseText;
 
-  ConsultationQuestionResponse({
+  ConsultationQuestionResponses({
     required this.questionId,
     required this.responseIds,
     required this.responseText,

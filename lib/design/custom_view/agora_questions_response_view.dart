@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 class AgoraQuestionsResponseView extends StatelessWidget {
   final String responseId;
   final String response;
+  final bool isSelected;
   final Function(String) onTap;
 
   const AgoraQuestionsResponseView({
     Key? key,
     required this.responseId,
     required this.response,
+    required this.isSelected,
     required this.onTap,
   }) : super(key: key);
 
@@ -19,6 +21,7 @@ class AgoraQuestionsResponseView extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
+      cardColor: isSelected ? AgoraColors.stoicWhite : AgoraColors.white,
       onTap: () => onTap(responseId),
       child: SizedBox(
         width: double.infinity,

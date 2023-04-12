@@ -10,6 +10,7 @@ import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_questions_response_view.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
+import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,6 +21,7 @@ class AgoraQuestionsView extends StatefulWidget {
   final ConsultationQuestionType currentQuestionType;
   final int totalQuestions;
   final List<ConsultationQuestionResponseChoiceViewModel> responses;
+  final ConsultationQuestionResponses? previousSelectedResponses;
   final Function(String, String) onUniqueResponseTap;
   final Function(String, String) onOpenedResponseInput;
   final VoidCallback onBackTap;
@@ -32,6 +34,7 @@ class AgoraQuestionsView extends StatefulWidget {
     required this.currentQuestionType,
     required this.totalQuestions,
     required this.responses,
+    required this.previousSelectedResponses,
     required this.onUniqueResponseTap,
     required this.onOpenedResponseInput,
     required this.onBackTap,
@@ -103,6 +106,7 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
         AgoraQuestionsResponseView(
           responseId: response.id,
           response: response.label,
+          isSelected: _isResponseSelectedPreviously(response.id),
           onTap: (responseId) => widget.onUniqueResponseTap(widget.questionId, responseId),
         ),
       );
@@ -111,7 +115,13 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
     return responseWidgets;
   }
 
+  bool _isResponseSelectedPreviously(String responseId) {
+    final previousSelectedResponses = widget.previousSelectedResponses;
+    return previousSelectedResponses == null ? false : previousSelectedResponses.responseIds.contains(responseId);
+  }
+
   List<Widget> _buildOpenedChoiceResponse() {
+    final previousResponseText = widget.previousSelectedResponses?.responseText;
     return [
       SizedBox(
         width: double.infinity,
@@ -123,6 +133,7 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
           maxLength: 400,
           keyboardType: TextInputType.multiline,
           style: AgoraTextStyles.light14,
+          controller: previousResponseText != null ? TextEditingController(text: previousResponseText) : null,
           decoration: InputDecoration(
             isDense: true,
             contentPadding: EdgeInsets.all(AgoraSpacings.base),

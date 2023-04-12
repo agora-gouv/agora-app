@@ -6,7 +6,6 @@ class ConsultationQuestionsResponsesStockBloc
     extends Bloc<ConsultationQuestionsResponsesStockEvent, ConsultationQuestionsResponsesStockState> {
   ConsultationQuestionsResponsesStockBloc() : super(ConsultationQuestionsResponsesStockState(questionsResponses: [])) {
     on<AddConsultationQuestionsResponseStockEvent>(_handleAddConsultationQuestionsStockResponse);
-    on<RemoveConsultationQuestionsResponseStockEvent>(_handleRemoveConsultationQuestionsStockResponse);
   }
 
   Future<void> _handleAddConsultationQuestionsStockResponse(
@@ -15,17 +14,10 @@ class ConsultationQuestionsResponsesStockBloc
   ) async {
     // [...x] clone list x
     final questionsResponses = [...state.questionsResponses];
+    questionsResponses.removeWhere(
+      (questionResponse) => questionResponse.questionId == event.questionResponse.questionId,
+    );
     questionsResponses.add(event.questionResponse);
-    print(questionsResponses);
-    emit(ConsultationQuestionsResponsesStockState(questionsResponses: questionsResponses));
-  }
-
-  Future<void> _handleRemoveConsultationQuestionsStockResponse(
-    RemoveConsultationQuestionsResponseStockEvent event,
-    Emitter<ConsultationQuestionsResponsesStockState> emit,
-  ) async {
-    final questionsResponses = [...state.questionsResponses];
-    questionsResponses.removeLast();
     emit(ConsultationQuestionsResponsesStockState(questionsResponses: questionsResponses));
   }
 }
