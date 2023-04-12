@@ -1,4 +1,5 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
@@ -63,6 +64,9 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                     Html(
                       data: etEnsuiteViewModel.description,
                       style: AgoraHtmlStyles.htmlStyle,
+                      onLinkTap: (url, _, __, ___) async {
+                        LaunchUrlHelper.launch(url);
+                      },
                     ),
                     SizedBox(height: AgoraSpacings.x2),
                     Row(
