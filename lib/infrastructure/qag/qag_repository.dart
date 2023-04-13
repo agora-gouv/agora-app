@@ -1,4 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:equatable/equatable.dart';
 
@@ -23,7 +24,7 @@ class QagDioRepository extends QagRepository {
           thematiqueId: response.data["thematiqueId"] as String,
           title: response.data["title"] as String,
           description: response.data["description"] as String,
-          date: DateTime.parse(response.data["date"] as String),
+          date: (response.data["date"] as String).parseToDateTime(),
           username: response.data["username"] as String,
           supportCount: response.data["supportCount"] as int,
         ),
