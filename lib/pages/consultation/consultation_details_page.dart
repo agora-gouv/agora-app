@@ -1,10 +1,9 @@
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
-import 'package:agora/bloc/thematique/thematique_bloc.dart';
-import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/common/client/repository_manager.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
@@ -16,7 +15,6 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +51,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _buildThematiqueCard(context, state.viewModel.thematiqueId),
+                          ThematiqueHelper.buildCard(context, state.viewModel.thematiqueId),
                           SizedBox(height: AgoraSpacings.x0_75),
                           Text(state.viewModel.title, style: AgoraTextStyles.medium19),
                           SizedBox(height: AgoraSpacings.x1_5),
@@ -162,20 +160,6 @@ class ConsultationDetailsPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildThematiqueCard(BuildContext context, String thematiqueId) {
-    final thematiqueState = context.read<ThematiqueBloc>().state;
-    if (thematiqueState is ThematiqueSuccessState) {
-      try {
-        final thematique = thematiqueState.viewModel.firstWhere((thematique) => thematique.id == thematiqueId);
-        return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, color: thematique.color);
-      } catch (e) {
-        return Container();
-      }
-    } else {
-      return Container();
-    }
   }
 
   Widget _buildInformationItem({
