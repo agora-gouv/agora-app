@@ -139,6 +139,8 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
           decoration: InputDecoration(
             isDense: true,
             contentPadding: EdgeInsets.all(AgoraSpacings.base),
+            filled: true,
+            fillColor: AgoraColors.white,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(4)),
               borderSide: BorderSide(width: 1, color: AgoraColors.border),
