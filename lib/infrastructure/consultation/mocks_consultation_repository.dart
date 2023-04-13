@@ -54,6 +54,7 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
               label: question["label"] as String,
               order: question["order"] as int,
               type: (question["type"] as String).toConsultationQuestionType(),
+              maxChoices: question["maxChoices"] as int?,
               responseChoices: (question["possibleChoices"] as List)
                   .map(
                     (responseChoice) => ConsultationQuestionResponseChoice(

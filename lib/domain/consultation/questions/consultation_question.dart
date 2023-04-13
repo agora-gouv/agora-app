@@ -7,6 +7,7 @@ class ConsultationQuestion extends Equatable {
   final String label;
   final int order;
   final ConsultationQuestionType type;
+  final int? maxChoices;
   final List<ConsultationQuestionResponseChoice> responseChoices;
 
   ConsultationQuestion({
@@ -14,15 +15,17 @@ class ConsultationQuestion extends Equatable {
     required this.label,
     required this.order,
     required this.type,
+    required this.maxChoices,
     required this.responseChoices,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         label,
         order,
         type,
+        maxChoices,
         responseChoices,
       ];
 }

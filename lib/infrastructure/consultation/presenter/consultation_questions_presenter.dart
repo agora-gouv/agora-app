@@ -11,6 +11,7 @@ class ConsultationQuestionsPresenter {
             label: consultationQuestion.label,
             order: consultationQuestion.order,
             type: consultationQuestion.type,
+            maxChoices: consultationQuestion.maxChoices,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
           ),
         )

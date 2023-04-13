@@ -99,6 +99,7 @@ void main() {
                 "label": "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros...",
                 "order": 2,
                 "type": "unique",
+                "maxChoices": null,
                 "possibleChoices": [
                   {
                     "id": "choiceAA",
@@ -117,6 +118,7 @@ void main() {
                 "label": "Comment vous rendez-vous généralement sur votre lieu de travail ?",
                 "order": 1,
                 "type": "unique",
+                "maxChoices": null,
                 "possibleChoices": [
                   {
                     "id": "choiceA",
@@ -131,6 +133,30 @@ void main() {
                   {
                     "id": "choiceC",
                     "label": "En voiture, seul(e)",
+                    "order": 1,
+                  }
+                ]
+              },
+              {
+                "id": "questionIdC",
+                "label": "QuestionC",
+                "order": 3,
+                "type": "multiple",
+                "maxChoices": 2,
+                "possibleChoices": [
+                  {
+                    "id": "choiceAAA",
+                    "label": "Réponse1",
+                    "order": 3,
+                  },
+                  {
+                    "id": "choiceBBB",
+                    "label": "Réponse2",
+                    "order": 2,
+                  },
+                  {
+                    "id": "choiceCCC",
+                    "label": "Réponse3",
                     "order": 1,
                   }
                 ]
@@ -155,6 +181,7 @@ void main() {
               label: "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros...",
               order: 2,
               type: ConsultationQuestionType.unique,
+              maxChoices: null,
               responseChoices: [
                 ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2),
                 ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
@@ -165,10 +192,23 @@ void main() {
               label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
               order: 1,
               type: ConsultationQuestionType.unique,
+              maxChoices: null,
               responseChoices: [
                 ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 3),
                 ConsultationQuestionResponseChoice(id: "choiceB", label: "En transports en commun", order: 2),
                 ConsultationQuestionResponseChoice(id: "choiceC", label: "En voiture, seul(e)", order: 1),
+              ],
+            ),
+            ConsultationQuestion(
+              id: "questionIdC",
+              label: "QuestionC",
+              order: 3,
+              type: ConsultationQuestionType.multiple,
+              maxChoices: 2,
+              responseChoices: [
+                ConsultationQuestionResponseChoice(id: "choiceAAA", label: "Réponse1", order: 3),
+                ConsultationQuestionResponseChoice(id: "choiceBBB", label: "Réponse2", order: 2),
+                ConsultationQuestionResponseChoice(id: "choiceCCC", label: "Réponse3", order: 1),
               ],
             ),
           ],

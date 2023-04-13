@@ -17,6 +17,7 @@ void main() {
       label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
       order: 1,
       type: ConsultationQuestionType.unique,
+      maxChoices: null,
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(id: "choiceA", label: "En vélo ou à pied", order: 1),
         ConsultationQuestionResponseChoiceViewModel(id: "choiceC", label: "En transports en commun", order: 2),
@@ -27,12 +28,26 @@ void main() {
       label: "Si vous vous lancez dans le co-voiturage, ...",
       order: 2,
       type: ConsultationQuestionType.unique,
+      maxChoices: null,
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(id: "choiceBB", label: "oui", order: 1),
         ConsultationQuestionResponseChoiceViewModel(id: "choiceAA", label: "non", order: 2),
       ],
     ),
+    ConsultationQuestionViewModel(
+      id: "questionIdC",
+      label: "Question C ?",
+      order: 3,
+      type: ConsultationQuestionType.multiple,
+      maxChoices: 2,
+      responseChoicesViewModels: [
+        ConsultationQuestionResponseChoiceViewModel(id: "choiceAAA", label: "En vélo ou à pied", order: 1),
+        ConsultationQuestionResponseChoiceViewModel(id: "choiceBBB", label: "En voiture", order: 2),
+        ConsultationQuestionResponseChoiceViewModel(id: "choiceCCC", label: "En transports en commun", order: 3),
+      ],
+    ),
   ];
+  final expectedTotalQuestion = responseChoiceViewModelsSortedByOrder.length;
 
   group("FetchConsultationQuestionsEvent", () {
     blocTest(
@@ -42,7 +57,7 @@ void main() {
       expect: () => [
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 0,
-          totalQuestion: 2,
+          totalQuestion: expectedTotalQuestion,
           viewModels: responseChoiceViewModelsSortedByOrder,
         ),
       ],
@@ -71,7 +86,7 @@ void main() {
       expect: () => [
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 1,
-          totalQuestion: 2,
+          totalQuestion: expectedTotalQuestion,
           viewModels: responseChoiceViewModelsSortedByOrder,
         ),
       ],
@@ -84,8 +99,9 @@ void main() {
       act: (bloc) => bloc
         ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
         ..add(ConsultationNextQuestionEvent())
+        ..add(ConsultationNextQuestionEvent())
         ..add(ConsultationNextQuestionEvent()),
-      skip: 2,
+      skip: expectedTotalQuestion,
       expect: () => [
         ConsultationQuestionsFinishState(),
       ],
@@ -105,7 +121,7 @@ void main() {
       expect: () => [
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 0,
-          totalQuestion: 2,
+          totalQuestion: expectedTotalQuestion,
           viewModels: responseChoiceViewModelsSortedByOrder,
         ),
       ],
