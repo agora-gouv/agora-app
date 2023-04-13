@@ -8,6 +8,7 @@ import 'package:agora/common/client/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_questions_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
 import 'package:flutter/material.dart';
@@ -56,34 +57,35 @@ class ConsultationQuestionPage extends StatelessWidget {
                     currentQuestionOrder: currentQuestion.order,
                     currentQuestionType: currentQuestion.type,
                     totalQuestions: questionsState.viewModels.length,
+                    maxChoices: _buildMaxChoices(currentQuestion.type, currentQuestion.maxChoices),
                     responses: currentQuestion.responseChoicesViewModels,
                     previousSelectedResponses: _getPreviousResponses(
                       questionId: currentQuestion.id,
                       inStockResponses: responsesStockState.questionsResponses,
                     ),
                     onUniqueResponseTap: (questionId, responseId) {
-                      context.read<ConsultationQuestionsResponsesStockBloc>().add(
-                            AddConsultationQuestionsResponseStockEvent(
-                              questionResponse: ConsultationQuestionResponses(
-                                questionId: questionId,
-                                responseIds: [responseId],
-                                responseText: "",
-                              ),
-                            ),
-                          );
-                      context.read<ConsultationQuestionsBloc>().add(ConsultationNextQuestionEvent());
+                      _saveAndNextQuestion(
+                        context: context,
+                        questionId: questionId,
+                        responsesIds: [responseId],
+                        openedResponse: "",
+                      );
                     },
                     onOpenedResponseInput: (questionId, responseText) {
-                      context.read<ConsultationQuestionsResponsesStockBloc>().add(
-                            AddConsultationQuestionsResponseStockEvent(
-                              questionResponse: ConsultationQuestionResponses(
-                                questionId: questionId,
-                                responseIds: [],
-                                responseText: responseText,
-                              ),
-                            ),
-                          );
-                      context.read<ConsultationQuestionsBloc>().add(ConsultationNextQuestionEvent());
+                      _saveAndNextQuestion(
+                        context: context,
+                        questionId: questionId,
+                        responsesIds: [],
+                        openedResponse: responseText,
+                      );
+                    },
+                    onMultipleResponseTap: (questionId, responseIds) {
+                      _saveAndNextQuestion(
+                        context: context,
+                        questionId: questionId,
+                        responsesIds: responseIds,
+                        openedResponse: "",
+                      );
                     },
                     onBackTap: () {
                       context.read<ConsultationQuestionsBloc>().add(ConsultationPreviousQuestionEvent());
@@ -102,6 +104,32 @@ class ConsultationQuestionPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _saveAndNextQuestion({
+    required BuildContext context,
+    required String questionId,
+    required List<String> responsesIds,
+    required String openedResponse,
+  }) {
+    context.read<ConsultationQuestionsResponsesStockBloc>().add(
+          AddConsultationQuestionsResponseStockEvent(
+            questionResponse: ConsultationQuestionResponses(
+              questionId: questionId,
+              responseIds: responsesIds,
+              responseText: openedResponse,
+            ),
+          ),
+        );
+    context.read<ConsultationQuestionsBloc>().add(ConsultationNextQuestionEvent());
+  }
+
+  int _buildMaxChoices(ConsultationQuestionType type, int? maxChoices) {
+    if (type == ConsultationQuestionType.multiple) {
+      return maxChoices ?? (throw Exception("max choices for multiple choices question not define"));
+    } else {
+      return -1; // value not important
+    }
   }
 
   ConsultationQuestionResponses? _getPreviousResponses({
