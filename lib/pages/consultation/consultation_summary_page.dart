@@ -10,6 +10,7 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/pages/consultation/consultation_summary_et_ensuite_tab_content.dart';
 import 'package:agora/pages/consultation/consultation_summary_results_tab_content.dart';
+import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,6 +57,9 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
+                      onToolbarBackClick: () {
+                        Navigator.pushNamedAndRemoveUntil(context, LoadingPage.routeName, (route) => false);
+                      },
                       topChild: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
