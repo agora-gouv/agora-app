@@ -1,5 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/extension/consultation_question_type_extension.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';

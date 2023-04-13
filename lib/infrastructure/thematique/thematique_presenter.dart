@@ -1,5 +1,5 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
-import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/extension/color_extension.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 
 class ThematiquePresenter {
