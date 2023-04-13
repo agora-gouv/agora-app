@@ -5,6 +5,8 @@ extension ConsultationQuestionTypeExtension on String {
     switch (this) {
       case "unique":
         return ConsultationQuestionType.unique;
+      case "multiple":
+        return ConsultationQuestionType.multiple;
       case "ouverte":
         return ConsultationQuestionType.ouverte;
       default:

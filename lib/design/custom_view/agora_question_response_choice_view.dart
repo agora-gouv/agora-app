@@ -3,13 +3,13 @@ import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:flutter/material.dart';
 
-class AgoraQuestionsResponseView extends StatelessWidget {
+class AgoraQuestionResponseChoiceView extends StatelessWidget {
   final String responseId;
   final String response;
   final bool isSelected;
   final Function(String) onTap;
 
-  const AgoraQuestionsResponseView({
+  const AgoraQuestionResponseChoiceView({
     Key? key,
     required this.responseId,
     required this.response,
@@ -21,7 +21,7 @@ class AgoraQuestionsResponseView extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
-      cardColor: isSelected ? AgoraColors.stoicWhite : AgoraColors.white,
+      cardColor: isSelected ? AgoraColors.primaryGreenOpacity15 : AgoraColors.white,
       onTap: () => onTap(responseId),
       child: SizedBox(
         width: double.infinity,

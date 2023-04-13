@@ -6,8 +6,8 @@ import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
+import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
-import 'package:agora/design/custom_view/agora_questions_response_view.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -20,10 +20,12 @@ class AgoraQuestionsView extends StatefulWidget {
   final int currentQuestionOrder;
   final ConsultationQuestionType currentQuestionType;
   final int totalQuestions;
+  final int maxChoices;
   final List<ConsultationQuestionResponseChoiceViewModel> responses;
   final ConsultationQuestionResponses? previousSelectedResponses;
   final Function(String, String) onUniqueResponseTap;
   final Function(String, String) onOpenedResponseInput;
+  final Function(String, List<String>) onMultipleResponseTap;
   final VoidCallback onBackTap;
 
   AgoraQuestionsView({
@@ -33,10 +35,12 @@ class AgoraQuestionsView extends StatefulWidget {
     required this.currentQuestionOrder,
     required this.currentQuestionType,
     required this.totalQuestions,
+    required this.maxChoices,
     required this.responses,
     required this.previousSelectedResponses,
     required this.onUniqueResponseTap,
     required this.onOpenedResponseInput,
+    required this.onMultipleResponseTap,
     required this.onBackTap,
   }) : super(key: key);
 
@@ -46,9 +50,12 @@ class AgoraQuestionsView extends StatefulWidget {
 
 class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
   String openedResponse = "";
+  final List<String> currentResponseIds = [];
+  bool shouldResetPreviousResponses = true;
 
   @override
   Widget build(BuildContext context) {
+    _resetPreviousResponses();
     return AgoraSingleScrollView(
       child: Column(
         children: [
@@ -86,10 +93,7 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
                 padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: (widget.currentQuestionType == ConsultationQuestionType.unique
-                          ? _buildUniqueChoiceResponse()
-                          : _buildOpenedChoiceResponse()) +
-                      _buildBackButton(),
+                  children: _buildTypeChoiceResponse() + _buildBackButton(),
                 ),
               ),
             ),
@@ -99,25 +103,47 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
     );
   }
 
+  void _resetPreviousResponses() {
+    if (shouldResetPreviousResponses) {
+      openedResponse = "";
+      currentResponseIds.clear();
+      final previousSelectedResponses = widget.previousSelectedResponses;
+      if (previousSelectedResponses != null) {
+        openedResponse = previousSelectedResponses.responseText;
+        currentResponseIds.addAll(previousSelectedResponses.responseIds);
+      }
+      shouldResetPreviousResponses = false;
+    }
+  }
+
+  List<Widget> _buildTypeChoiceResponse() {
+    switch (widget.currentQuestionType) {
+      case ConsultationQuestionType.unique:
+        return _buildUniqueChoiceResponse();
+      case ConsultationQuestionType.ouverte:
+        return _buildOpenedChoiceResponse();
+      case ConsultationQuestionType.multiple:
+        return _buildMultipleChoiceResponse();
+    }
+  }
+
   List<Widget> _buildUniqueChoiceResponse() {
     final List<Widget> responseWidgets = [];
     for (final response in widget.responses) {
       responseWidgets.add(
-        AgoraQuestionsResponseView(
+        AgoraQuestionResponseChoiceView(
           responseId: response.id,
           response: response.label,
-          isSelected: _isResponseSelectedPreviously(response.id),
-          onTap: (responseId) => widget.onUniqueResponseTap(widget.questionId, responseId),
+          isSelected: _isResponseAlreadySelected(response.id),
+          onTap: (responseId) {
+            widget.onUniqueResponseTap(widget.questionId, responseId);
+            shouldResetPreviousResponses = true;
+          },
         ),
       );
       responseWidgets.add(SizedBox(height: AgoraSpacings.base));
     }
     return responseWidgets;
-  }
-
-  bool _isResponseSelectedPreviously(String responseId) {
-    final previousSelectedResponses = widget.previousSelectedResponses;
-    return previousSelectedResponses == null ? false : previousSelectedResponses.responseIds.contains(responseId);
   }
 
   List<Widget> _buildOpenedChoiceResponse() {
@@ -158,15 +184,67 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
       ),
       SizedBox(height: AgoraSpacings.base),
       AgoraButton(
-        label: widget.currentQuestionOrder == widget.totalQuestions
-            ? ConsultationStrings.validate
-            : ConsultationStrings.nextQuestion,
+        label: _buildNextButtonLabel(),
         style: AgoraButtonStyle.primaryButtonStyle,
         onPressed: () {
           widget.onOpenedResponseInput(widget.questionId, openedResponse);
+          shouldResetPreviousResponses = true;
         },
       ),
     ];
+  }
+
+  List<Widget> _buildMultipleChoiceResponse() {
+    final List<Widget> responseWidgets = [
+      Text(
+        ConsultationStrings.maxChoices.format(widget.maxChoices.toString()),
+        style: AgoraTextStyles.medium14,
+      ),
+      SizedBox(height: AgoraSpacings.base),
+    ];
+    for (final response in widget.responses) {
+      responseWidgets.add(
+        AgoraQuestionResponseChoiceView(
+          responseId: response.id,
+          response: response.label,
+          isSelected: _isResponseAlreadySelected(response.id),
+          onTap: (responseId) {
+            setState(() {
+              if (currentResponseIds.contains(responseId)) {
+                currentResponseIds.remove(responseId);
+              } else if (currentResponseIds.length < widget.maxChoices) {
+                currentResponseIds.add(responseId);
+              }
+            });
+          },
+        ),
+      );
+      responseWidgets.add(SizedBox(height: AgoraSpacings.base));
+    }
+
+    responseWidgets.add(
+      AgoraButton(
+        label: _buildNextButtonLabel(),
+        style: AgoraButtonStyle.primaryButtonStyle,
+        onPressed: () {
+          if (currentResponseIds.isNotEmpty) {
+            widget.onMultipleResponseTap(widget.questionId, [...currentResponseIds]);
+            shouldResetPreviousResponses = true;
+          }
+        },
+      ),
+    );
+    return responseWidgets;
+  }
+
+  bool _isResponseAlreadySelected(String responseId) {
+    return currentResponseIds.contains(responseId);
+  }
+
+  String _buildNextButtonLabel() {
+    return widget.currentQuestionOrder == widget.totalQuestions
+        ? ConsultationStrings.validate
+        : ConsultationStrings.nextQuestion;
   }
 
   List<Widget> _buildBackButton() {
@@ -174,7 +252,10 @@ class _AgoraQuestionsViewState extends State<AgoraQuestionsView> {
       return [
         SizedBox(height: AgoraSpacings.x1_5),
         InkWell(
-          onTap: () => widget.onBackTap(),
+          onTap: () {
+            widget.onBackTap();
+            shouldResetPreviousResponses = true;
+          },
           child: SizedBox(
             width: 200,
             child: Column(

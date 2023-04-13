@@ -6,6 +6,7 @@ class ConsultationQuestionViewModel extends Equatable {
   final String label;
   final int order;
   final ConsultationQuestionType type;
+  final int? maxChoices;
   final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
 
   ConsultationQuestionViewModel({
@@ -13,15 +14,17 @@ class ConsultationQuestionViewModel extends Equatable {
     required this.label,
     required this.order,
     required this.type,
+    required this.maxChoices,
     required this.responseChoicesViewModels,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         label,
         order,
         type,
+        maxChoices,
         responseChoicesViewModels,
       ];
 }

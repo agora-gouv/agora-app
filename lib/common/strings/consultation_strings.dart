@@ -25,4 +25,5 @@ class ConsultationStrings {
   static const String nextQuestion = "Question suivante";
   static const String validate = "Valider";
   static const String hintText = "Saisissez votre réponse\n\n\n\n\n\n";
+  static const String maxChoices = "Vous pouvez choisir jusqu’à %s réponses.";
 }
