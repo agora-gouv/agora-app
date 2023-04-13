@@ -48,6 +48,14 @@ class LoadingPage extends StatelessWidget {
                             );
                           },
                         ),
+                        SizedBox(height: AgoraSpacings.x0_5),
+                        AgoraButton(
+                          label: "Détails d'une question au gouvernement",
+                          style: AgoraButtonStyle.primaryButtonStyle,
+                          onPressed: () {
+                            // TODO
+                          },
+                        ),
                         SizedBox(height: AgoraSpacings.x3),
                       ],
                 ),

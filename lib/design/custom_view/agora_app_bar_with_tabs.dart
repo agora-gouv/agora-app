@@ -11,6 +11,7 @@ class AgoraAppBarWithTabs extends StatefulWidget {
   final List<Widget> tabChild;
   final bool needTopDiagonal;
   final bool needToolbar;
+  final VoidCallback? onToolbarBackClick;
 
   AgoraAppBarWithTabs({
     required this.topChild,
@@ -18,6 +19,7 @@ class AgoraAppBarWithTabs extends StatefulWidget {
     required this.tabController,
     this.needTopDiagonal = true,
     this.needToolbar = false,
+    this.onToolbarBackClick,
   });
 
   @override
@@ -45,7 +47,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (widget.needTopDiagonal) AgoraTopDiagonal(),
-            if (widget.needToolbar) AgoraToolbar(key: _backBarChildKey),
+            if (widget.needToolbar) AgoraToolbar(key: _backBarChildKey, onBackClick: widget.onToolbarBackClick),
             NotificationListener<SizeChangedLayoutNotification>(
               onNotification: (notification) {
                 _buildToolbarSizeOnContentChanged(context);
