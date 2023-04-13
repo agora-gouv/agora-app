@@ -44,6 +44,9 @@ flutter:
           weight: 800
         - asset: fonts/Marianne/normal/Marianne-Medium.otf
           weight: 700
+        - asset: fonts/Marianne/italic/Marianne-MediumItalic.otf
+          weight: 700
+          style: italic
         - asset: fonts/Marianne/normal/Marianne-Regular.otf
           weight: 500
         - asset: fonts/Marianne/italic/Marianne-RegularItalic.otf

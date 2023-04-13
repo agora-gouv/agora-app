@@ -4,6 +4,7 @@ import 'package:agora/pages/consultation/consultation_question_confirmation_page
 import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:agora/pages/consultation/consultation_summary_page.dart';
 import 'package:agora/pages/loading_page.dart';
+import 'package:agora/pages/qag/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,6 +31,12 @@ class AgoraAppRouter {
         currentRoute = BlocProvider.value(
           value: arguments.consultationQuestionsResponsesBloc,
           child: ConsultationQuestionConfirmationPage(consultationId: arguments.consultationId),
+        );
+        break;
+      case QagDetailsPage.routeName:
+        currentRoute = BlocProvider.value(
+          value: settings.arguments as ThematiqueBloc,
+          child: QagDetailsPage(),
         );
         break;
       default:

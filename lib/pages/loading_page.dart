@@ -10,6 +10,7 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
+import 'package:agora/pages/qag/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,7 +54,11 @@ class LoadingPage extends StatelessWidget {
                           label: "Détails d'une question au gouvernement",
                           style: AgoraButtonStyle.primaryButtonStyle,
                           onPressed: () {
-                            // TODO
+                            Navigator.pushNamed(
+                              context,
+                              QagDetailsPage.routeName,
+                              arguments: BlocProvider.of<ThematiqueBloc>(context),
+                            );
                           },
                         ),
                         SizedBox(height: AgoraSpacings.x3),

@@ -1,6 +1,8 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/mocks_consultation_repository.dart';
+import 'package:agora/infrastructure/qag/mocks_qag_repository.dart';
+import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
@@ -57,6 +59,16 @@ class RepositoryManager {
     }
     final repository = MockConsultationSuccessRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     // final repository = ConsultationDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static QagRepository getQagRepository() {
+    if (GetIt.instance.isRegistered<MockQagSuccessRepository>()) {
+      return GetIt.instance.get<MockQagSuccessRepository>();
+    }
+    final repository = MockQagSuccessRepository();
+    // final repository = QagDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }

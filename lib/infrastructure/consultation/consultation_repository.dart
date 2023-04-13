@@ -1,5 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/extension/consultation_question_type_extension.dart';
+import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
@@ -39,7 +40,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           title: response.data["title"] as String,
           cover: response.data["coverUrl"] as String,
           thematiqueId: response.data["thematiqueId"] as String,
-          endDate: DateTime.parse(response.data["endDate"] as String),
+          endDate: (response.data["endDate"] as String).parseToDateTime(),
           questionCount: response.data["questionCount"] as String,
           estimatedTime: response.data["estimatedTime"] as String,
           participantCount: response.data["participantCount"] as int,

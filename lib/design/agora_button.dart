@@ -1,4 +1,3 @@
-import 'package:agora/design/agora_spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,22 +20,21 @@ class AgoraButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isLoading) {
       return Center(child: CircularProgressIndicator());
-    } else {
-      Widget child = Text(label, textAlign: TextAlign.center);
-      if (icon != null) {
-        child = Row(
-          children: [
-            SvgPicture.asset("assets/$icon"),
-            SizedBox(width: AgoraSpacings.x0_5),
-            child,
-          ],
-        );
-      }
-      return ElevatedButton(
+    }
+
+    final buttonLabel = Text(label, textAlign: TextAlign.center);
+    if (icon != null) {
+      return ElevatedButton.icon(
         style: style,
         onPressed: onPressed,
-        child: child,
+        icon: SvgPicture.asset("assets/$icon"),
+        label: buttonLabel,
       );
     }
+    return ElevatedButton(
+      style: style,
+      onPressed: onPressed,
+      child: buttonLabel,
+    );
   }
 }
