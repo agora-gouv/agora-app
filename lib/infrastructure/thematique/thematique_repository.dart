@@ -1,4 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
@@ -27,6 +28,7 @@ class ThematiqueDioRepository extends ThematiqueRepository {
           .toList();
       return GetThematiqueSucceedResponse(thematiques: thematiques);
     } catch (e) {
+      Log.e("fetchThematiques failed", e);
       return GetThematiqueFailedResponse();
     }
   }

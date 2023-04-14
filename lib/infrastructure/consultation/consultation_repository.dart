@@ -1,6 +1,7 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/consultation_question_type_extension.dart';
 import 'package:agora/common/extension/date_extension.dart';
+import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
@@ -51,6 +52,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         ),
       );
     } catch (e) {
+      Log.e("fetchConsultationDetails failed", e);
       return GetConsultationDetailsFailedResponse();
     }
   }
@@ -84,6 +86,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       ).toList();
       return GetConsultationQuestionsSucceedResponse(consultationQuestions: questions);
     } catch (e) {
+      Log.e("fetchConsultationQuestions failed", e);
       return GetConsultationQuestionsFailedResponse();
     }
   }
@@ -111,6 +114,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       return SendConsultationResponsesSucceedResponse();
     } catch (e) {
+      Log.e("sendConsultationResponses failed", e);
       return SendConsultationResponsesFailureResponse();
     }
   }
@@ -146,6 +150,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);
     } catch (e) {
+      Log.e("fetchConsultationSummary failed", e);
       return GetConsultationSummaryFailedResponse();
     }
   }
