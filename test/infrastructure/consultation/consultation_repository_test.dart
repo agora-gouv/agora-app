@@ -181,7 +181,7 @@ void main() {
               label: "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros...",
               order: 2,
               type: ConsultationQuestionType.unique,
-              maxChoices: null,
+              maxChoices: -1,
               responseChoices: [
                 ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2),
                 ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
@@ -192,7 +192,7 @@ void main() {
               label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
               order: 1,
               type: ConsultationQuestionType.unique,
-              maxChoices: null,
+              maxChoices: -1,
               responseChoices: [
                 ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 3),
                 ConsultationQuestionResponseChoice(id: "choiceB", label: "En transports en commun", order: 2),
@@ -214,6 +214,42 @@ void main() {
           ],
         ),
       );
+    });
+
+    test("when success but max choices is null for multiple question type should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/$consultationId/questions",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "questions": [
+              {
+                "id": "questionIdA",
+                "label": "Question A",
+                "order": 1,
+                "type": "multiple",
+                "maxChoices": null,
+                "possibleChoices": [
+                  {
+                    "id": "choiceA",
+                    "label": "Réponse A",
+                    "order": 1,
+                  }
+                ]
+              },
+            ]
+          },
+        ),
+        headers: {"accept": "application/json"},
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
+
+      // Then
+      expect(response, GetConsultationQuestionsFailedResponse());
     });
 
     test("when failure should return failed", () async {

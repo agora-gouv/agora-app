@@ -52,7 +52,7 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
           label: "Donnez un feedback",
           order: 3,
           type: ConsultationQuestionType.ouverte,
-          maxChoices: null,
+          maxChoices: -1,
           responseChoices: [],
         ),
         ConsultationQuestion(
@@ -60,7 +60,7 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
           label: "Avez vous des conseilles à ajouter?",
           order: 5,
           type: ConsultationQuestionType.ouverte,
-          maxChoices: null,
+          maxChoices: -1,
           responseChoices: [],
         ),
         ConsultationQuestion(
@@ -69,7 +69,7 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
               "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros. Etes-vous intéressé(e) pour vous lancer ?",
           order: 2,
           type: ConsultationQuestionType.unique,
-          maxChoices: null,
+          maxChoices: -1,
           responseChoices: [
             ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2),
             ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
@@ -80,7 +80,7 @@ class MockConsultationSuccessRepository extends ConsultationRepository {
           label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
           order: 1,
           type: ConsultationQuestionType.unique,
-          maxChoices: null,
+          maxChoices: -1,
           responseChoices: [
             ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 4),
             ConsultationQuestionResponseChoice(id: "choiceB", label: "En co-voiturage", order: 2),

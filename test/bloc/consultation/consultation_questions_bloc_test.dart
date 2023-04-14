@@ -17,7 +17,7 @@ void main() {
       label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
       order: 1,
       type: ConsultationQuestionType.unique,
-      maxChoices: null,
+      maxChoices: -1,
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(id: "choiceA", label: "En vélo ou à pied", order: 1),
         ConsultationQuestionResponseChoiceViewModel(id: "choiceC", label: "En transports en commun", order: 2),
@@ -28,7 +28,7 @@ void main() {
       label: "Si vous vous lancez dans le co-voiturage, ...",
       order: 2,
       type: ConsultationQuestionType.unique,
-      maxChoices: null,
+      maxChoices: -1,
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(id: "choiceBB", label: "oui", order: 1),
         ConsultationQuestionResponseChoiceViewModel(id: "choiceAA", label: "non", order: 2),
