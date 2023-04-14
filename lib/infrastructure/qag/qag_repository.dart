@@ -1,5 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
+import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:equatable/equatable.dart';
 
@@ -30,6 +31,7 @@ class QagDioRepository extends QagRepository {
         ),
       );
     } catch (e) {
+      Log.e("fetchQagDetails failed", e);
       return GetQagDetailsFailedResponse();
     }
   }
