@@ -1,32 +1,80 @@
-import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:equatable/equatable.dart';
 
-class ConsultationQuestionViewModel extends Equatable {
+abstract class ConsultationQuestionViewModel extends Equatable {
   final String id;
-  final String label;
+  final String title;
   final int order;
-  final ConsultationQuestionType type;
-  final int maxChoices;
-  final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
 
   ConsultationQuestionViewModel({
     required this.id,
-    required this.label,
+    required this.title,
     required this.order,
-    required this.type,
+  });
+
+  @override
+  List<Object> get props => [id, title, order];
+}
+
+class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel {
+  final String questionProgress;
+  final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
+
+  ConsultationQuestionUniqueViewModel({
+    required super.id,
+    required super.title,
+    required super.order,
+    required this.questionProgress,
+    required this.responseChoicesViewModels,
+  });
+
+  @override
+  List<Object> get props => [id, title, order, questionProgress, responseChoicesViewModels];
+}
+
+class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewModel {
+  final String questionProgress;
+  final int maxChoices;
+  final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
+
+  ConsultationQuestionMultipleViewModel({
+    required super.id,
+    required super.title,
+    required super.order,
+    required this.questionProgress,
     required this.maxChoices,
     required this.responseChoicesViewModels,
   });
 
   @override
-  List<Object> get props => [
-        id,
-        label,
-        order,
-        type,
-        maxChoices,
-        responseChoicesViewModels,
-      ];
+  List<Object> get props => [id, title, order, questionProgress, maxChoices, responseChoicesViewModels];
+}
+
+class ConsultationQuestionOpenedViewModel extends ConsultationQuestionViewModel {
+  final String questionProgress;
+
+  ConsultationQuestionOpenedViewModel({
+    required super.id,
+    required super.title,
+    required super.order,
+    required this.questionProgress,
+  });
+
+  @override
+  List<Object> get props => [id, title, order, questionProgress];
+}
+
+class ConsultationQuestionChapterViewModel extends ConsultationQuestionViewModel {
+  final String description;
+
+  ConsultationQuestionChapterViewModel({
+    required super.id,
+    required super.title,
+    required super.order,
+    required this.description,
+  });
+
+  @override
+  List<Object> get props => [id, title, order, description];
 }
 
 class ConsultationQuestionResponseChoiceViewModel extends Equatable {

@@ -1,8 +1,8 @@
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
 import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
-import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:agora/pages/consultation/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/qag/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/qag_details_page.dart';

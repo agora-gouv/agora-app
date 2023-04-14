@@ -1,7 +1,6 @@
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
-import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
@@ -36,39 +35,39 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   }) async {
     return GetConsultationQuestionsSucceedResponse(
       consultationQuestions: [
-        ConsultationQuestion(
+        ConsultationQuestionUnique(
           id: "questionIdB",
-          label: "Si vous vous lancez dans le co-voiturage, ...",
+          title: "Si vous vous lancez dans le co-voiturage, ...",
           order: 2,
-          type: ConsultationQuestionType.unique,
-          maxChoices: -1,
+          questionProgress: "Question 2/3",
           responseChoices: [
             ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2),
             ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
           ],
         ),
-        ConsultationQuestion(
+        ConsultationQuestionOpened(
+          id: "questionIdC",
+          title: "Question C ?",
+          order: 4,
+          questionProgress: "Question 3/3",
+        ),
+        ConsultationQuestionMultiple(
           id: "questionIdA",
-          label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
+          title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
           order: 1,
-          type: ConsultationQuestionType.unique,
-          maxChoices: -1,
+          questionProgress: "Question 1/3",
+          maxChoices: 2,
           responseChoices: [
-            ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 1),
+            ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 3),
+            ConsultationQuestionResponseChoice(id: "choiceB", label: "En voiture", order: 1),
             ConsultationQuestionResponseChoice(id: "choiceC", label: "En transports en commun", order: 2),
           ],
         ),
-        ConsultationQuestion(
-          id: "questionIdC",
-          label: "Question C ?",
+        ConsultationChapter(
+          id: "chapiter1",
+          title: "titre du chapitre",
           order: 3,
-          type: ConsultationQuestionType.multiple,
-          maxChoices: 2,
-          responseChoices: [
-            ConsultationQuestionResponseChoice(id: "choiceAAA", label: "En vélo ou à pied", order: 1),
-            ConsultationQuestionResponseChoice(id: "choiceCCC", label: "En transports en commun", order: 3),
-            ConsultationQuestionResponseChoice(id: "choiceBBB", label: "En voiture", order: 2),
-          ],
+          description: "description du chapitre",
         ),
       ],
     );
