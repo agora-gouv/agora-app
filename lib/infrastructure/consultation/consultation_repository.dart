@@ -4,6 +4,7 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
+import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
@@ -60,26 +61,27 @@ class ConsultationDioRepository extends ConsultationRepository {
   }) async {
     try {
       final response = await httpClient.get("/consultations/$consultationId/questions");
-      final questions = (response.data["questions"] as List)
-          .map(
-            (question) => ConsultationQuestion(
-              id: question["id"] as String,
-              label: question["label"] as String,
-              order: question["order"] as int,
-              type: (question["type"] as String).toConsultationQuestionType(),
-              maxChoices: question["maxChoices"] as int?,
-              responseChoices: (question["possibleChoices"] as List)
-                  .map(
-                    (responseChoice) => ConsultationQuestionResponseChoice(
-                      id: responseChoice["id"] as String,
-                      label: responseChoice["label"] as String,
-                      order: responseChoice["order"] as int,
-                    ),
-                  )
-                  .toList(),
-            ),
-          )
-          .toList();
+      final questions = (response.data["questions"] as List).map(
+        (question) {
+          final questionType = (question["type"] as String).toConsultationQuestionType();
+          return ConsultationQuestion(
+            id: question["id"] as String,
+            label: question["label"] as String,
+            order: question["order"] as int,
+            type: questionType,
+            maxChoices: _buildMaxChoices(question["maxChoices"] as int?, questionType),
+            responseChoices: (question["possibleChoices"] as List)
+                .map(
+                  (responseChoice) => ConsultationQuestionResponseChoice(
+                    id: responseChoice["id"] as String,
+                    label: responseChoice["label"] as String,
+                    order: responseChoice["order"] as int,
+                  ),
+                )
+                .toList(),
+          );
+        },
+      ).toList();
       return GetConsultationQuestionsSucceedResponse(consultationQuestions: questions);
     } catch (e) {
       return GetConsultationQuestionsFailedResponse();
@@ -146,6 +148,13 @@ class ConsultationDioRepository extends ConsultationRepository {
     } catch (e) {
       return GetConsultationSummaryFailedResponse();
     }
+  }
+
+  int _buildMaxChoices(int? maxChoicesResponse, ConsultationQuestionType questionType) {
+    if (questionType == ConsultationQuestionType.multiple) {
+      return maxChoicesResponse ?? (throw Exception("Max choices for multiple question type not defined"));
+    }
+    return -1; // value not important
   }
 }
 
