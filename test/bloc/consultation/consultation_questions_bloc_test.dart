@@ -2,7 +2,6 @@ import 'package:agora/bloc/consultation/question/consultation_questions_bloc.dar
 import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
-import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,39 +11,39 @@ void main() {
   const consultationId = "consultationId";
 
   final responseChoiceViewModelsSortedByOrder = [
-    ConsultationQuestionViewModel(
+    ConsultationQuestionMultipleViewModel(
       id: "questionIdA",
-      label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
+      title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
       order: 1,
-      type: ConsultationQuestionType.unique,
-      maxChoices: -1,
+      questionProgress: "Question 1/3",
+      maxChoices: 2,
       responseChoicesViewModels: [
-        ConsultationQuestionResponseChoiceViewModel(id: "choiceA", label: "En vélo ou à pied", order: 1),
+        ConsultationQuestionResponseChoiceViewModel(id: "choiceB", label: "En voiture", order: 1),
         ConsultationQuestionResponseChoiceViewModel(id: "choiceC", label: "En transports en commun", order: 2),
+        ConsultationQuestionResponseChoiceViewModel(id: "choiceA", label: "En vélo ou à pied", order: 3),
       ],
     ),
-    ConsultationQuestionViewModel(
+    ConsultationQuestionUniqueViewModel(
       id: "questionIdB",
-      label: "Si vous vous lancez dans le co-voiturage, ...",
+      title: "Si vous vous lancez dans le co-voiturage, ...",
       order: 2,
-      type: ConsultationQuestionType.unique,
-      maxChoices: -1,
+      questionProgress: "Question 2/3",
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(id: "choiceBB", label: "oui", order: 1),
         ConsultationQuestionResponseChoiceViewModel(id: "choiceAA", label: "non", order: 2),
       ],
     ),
-    ConsultationQuestionViewModel(
-      id: "questionIdC",
-      label: "Question C ?",
+    ConsultationQuestionChapterViewModel(
+      id: "chapiter1",
+      title: "titre du chapitre",
       order: 3,
-      type: ConsultationQuestionType.multiple,
-      maxChoices: 2,
-      responseChoicesViewModels: [
-        ConsultationQuestionResponseChoiceViewModel(id: "choiceAAA", label: "En vélo ou à pied", order: 1),
-        ConsultationQuestionResponseChoiceViewModel(id: "choiceBBB", label: "En voiture", order: 2),
-        ConsultationQuestionResponseChoiceViewModel(id: "choiceCCC", label: "En transports en commun", order: 3),
-      ],
+      description: "description du chapitre",
+    ),
+    ConsultationQuestionOpenedViewModel(
+      id: "questionIdC",
+      title: "Question C ?",
+      order: 4,
+      questionProgress: "Question 3/3",
     ),
   ];
   final expectedTotalQuestion = responseChoiceViewModelsSortedByOrder.length;
@@ -98,6 +97,7 @@ void main() {
       build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationSuccessRepository()),
       act: (bloc) => bloc
         ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
+        ..add(ConsultationNextQuestionEvent())
         ..add(ConsultationNextQuestionEvent())
         ..add(ConsultationNextQuestionEvent())
         ..add(ConsultationNextQuestionEvent()),

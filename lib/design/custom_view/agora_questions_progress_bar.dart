@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 class AgoraQuestionsProgressBar extends StatelessWidget {
   const AgoraQuestionsProgressBar({
     Key? key,
-    required this.currentQuestion,
+    required this.currentQuestionOrder,
     required this.totalQuestions,
   }) : super(key: key);
 
-  final int currentQuestion;
+  final int currentQuestionOrder;
   final int totalQuestions;
 
   static const _barHeight = 10.0;
@@ -22,11 +22,11 @@ class AgoraQuestionsProgressBar extends StatelessWidget {
 
   List<Widget> _buildProgressBar() {
     final List<Widget> widgets = List.empty(growable: true);
-    for (int i = 0; i < currentQuestion; i++) {
+    for (int i = 0; i < currentQuestionOrder; i++) {
       widgets.add(_buildBox(AgoraColors.primaryGreen));
       widgets.add(SizedBox(width: AgoraSpacings.x0_5));
     }
-    for (int i = currentQuestion; i < totalQuestions; i++) {
+    for (int i = currentQuestionOrder; i < totalQuestions; i++) {
       widgets.add(_buildBox(AgoraColors.orochimaru));
       widgets.add(SizedBox(width: AgoraSpacings.x0_5));
     }

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
-import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
@@ -93,75 +92,63 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
-            "questions": [
+            "questionsUniqueChoice": [
               {
-                "id": "questionIdB",
-                "label": "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros...",
-                "order": 2,
-                "type": "unique",
-                "maxChoices": null,
+                "id": "question1",
+                "titre": "quel est la fréquence d'utilisation de transport...",
+                "order": 4,
+                "questionProgress": "Question 3/3",
                 "possibleChoices": [
                   {
-                    "id": "choiceAA",
-                    "label": "non",
-                    "order": 2,
-                  },
-                  {
-                    "id": "choiceBB",
-                    "label": "oui",
+                    "id": "choice1",
+                    "label": "une à deux fois par semaine",
                     "order": 1,
                   }
-                ]
+                ],
               },
+            ],
+            "questionsOpened": [
               {
-                "id": "questionIdA",
-                "label": "Comment vous rendez-vous généralement sur votre lieu de travail ?",
-                "order": 1,
-                "type": "unique",
-                "maxChoices": null,
-                "possibleChoices": [
-                  {
-                    "id": "choiceA",
-                    "label": "En vélo ou à pied",
-                    "order": 3,
-                  },
-                  {
-                    "id": "choiceB",
-                    "label": "En transports en commun",
-                    "order": 2,
-                  },
-                  {
-                    "id": "choiceC",
-                    "label": "En voiture, seul(e)",
-                    "order": 1,
-                  }
-                ]
-              },
-              {
-                "id": "questionIdC",
-                "label": "QuestionC",
+                "id": "question2",
+                "titre": "Donnez un feedback",
                 "order": 3,
-                "type": "multiple",
+                "questionProgress": "Question 2/3",
+              },
+            ],
+            "questionsMultipleChoices": [
+              {
+                "id": "question3",
+                "titre": "Quel types de transports utilisez-vous le plus ?",
+                "order": 1,
+                "questionProgress": "Question 1/3",
                 "maxChoices": 2,
                 "possibleChoices": [
                   {
-                    "id": "choiceAAA",
-                    "label": "Réponse1",
-                    "order": 3,
+                    "id": "choice1",
+                    "label": "Train",
+                    "order": 1,
                   },
                   {
-                    "id": "choiceBBB",
-                    "label": "Réponse2",
+                    "id": "choice2",
+                    "label": "Tram",
                     "order": 2,
                   },
                   {
-                    "id": "choiceCCC",
-                    "label": "Réponse3",
-                    "order": 1,
-                  }
-                ]
+                    "id": "choice3",
+                    "label": "Voiture",
+                    "order": 3,
+                  },
+                ],
               },
-            ]
+            ],
+            "chapters": [
+              {
+                "id": "chapitre1",
+                "titre": "titre du chapitre",
+                "order": 2,
+                "description": "texte riche",
+              },
+            ],
           },
         ),
         headers: {"accept": "application/json"},
@@ -176,80 +163,42 @@ void main() {
         response,
         GetConsultationQuestionsSucceedResponse(
           consultationQuestions: [
-            ConsultationQuestion(
-              id: "questionIdB",
-              label: "Si vous vous lancez dans le co-voiturage, vous pouvez bénéficier d’une prime de 100 euros...",
-              order: 2,
-              type: ConsultationQuestionType.unique,
-              maxChoices: -1,
+            ConsultationQuestionUnique(
+              id: "question1",
+              title: "quel est la fréquence d'utilisation de transport...",
+              order: 4,
+              questionProgress: "Question 3/3",
               responseChoices: [
-                ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2),
-                ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
+                ConsultationQuestionResponseChoice(id: "choice1", label: "une à deux fois par semaine", order: 1),
               ],
             ),
-            ConsultationQuestion(
-              id: "questionIdA",
-              label: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
-              order: 1,
-              type: ConsultationQuestionType.unique,
-              maxChoices: -1,
-              responseChoices: [
-                ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 3),
-                ConsultationQuestionResponseChoice(id: "choiceB", label: "En transports en commun", order: 2),
-                ConsultationQuestionResponseChoice(id: "choiceC", label: "En voiture, seul(e)", order: 1),
-              ],
-            ),
-            ConsultationQuestion(
-              id: "questionIdC",
-              label: "QuestionC",
+            ConsultationQuestionOpened(
+              id: "question2",
+              title: "Donnez un feedback",
               order: 3,
-              type: ConsultationQuestionType.multiple,
+              questionProgress: "Question 2/3",
+            ),
+            ConsultationQuestionMultiple(
+              id: "question3",
+              title: "Quel types de transports utilisez-vous le plus ?",
+              order: 1,
+              questionProgress: "Question 1/3",
               maxChoices: 2,
               responseChoices: [
-                ConsultationQuestionResponseChoice(id: "choiceAAA", label: "Réponse1", order: 3),
-                ConsultationQuestionResponseChoice(id: "choiceBBB", label: "Réponse2", order: 2),
-                ConsultationQuestionResponseChoice(id: "choiceCCC", label: "Réponse3", order: 1),
+                ConsultationQuestionResponseChoice(id: "choice1", label: "Train", order: 1),
+                ConsultationQuestionResponseChoice(id: "choice2", label: "Tram", order: 2),
+                ConsultationQuestionResponseChoice(id: "choice3", label: "Voiture", order: 3),
               ],
+            ),
+            ConsultationChapter(
+              id: "chapitre1",
+              title: "titre du chapitre",
+              order: 2,
+              description: "texte riche",
             ),
           ],
         ),
       );
-    });
-
-    test("when success but max choices is null for multiple question type should return failed", () async {
-      // Given
-      dioAdapter.onGet(
-        "/consultations/$consultationId/questions",
-        (server) => server.reply(
-          HttpStatus.ok,
-          {
-            "questions": [
-              {
-                "id": "questionIdA",
-                "label": "Question A",
-                "order": 1,
-                "type": "multiple",
-                "maxChoices": null,
-                "possibleChoices": [
-                  {
-                    "id": "choiceA",
-                    "label": "Réponse A",
-                    "order": 1,
-                  }
-                ]
-              },
-            ]
-          },
-        ),
-        headers: {"accept": "application/json"},
-      );
-
-      // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
-
-      // Then
-      expect(response, GetConsultationQuestionsFailedResponse());
     });
 
     test("when failure should return failed", () async {

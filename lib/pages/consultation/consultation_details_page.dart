@@ -15,7 +15,7 @@ import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/pages/consultation/consultation_question_page.dart';
+import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';

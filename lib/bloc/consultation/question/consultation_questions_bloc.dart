@@ -40,6 +40,7 @@ class ConsultationQuestionsBloc extends Bloc<ConsultationQuestionsEvent, Consult
     if (state is ConsultationQuestionsFetchedState) {
       final currentState = state as ConsultationQuestionsFetchedState;
       final nextQuestion = currentState.currentQuestionIndex + 1;
+
       if (nextQuestion == currentState.totalQuestion) {
         emit(ConsultationQuestionsFinishState());
       } else {
