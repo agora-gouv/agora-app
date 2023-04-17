@@ -1,6 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/infrastructure/consultation/consultation_repository.dart';
-import 'package:agora/infrastructure/consultation/mocks_consultation_repository.dart';
 import 'package:agora/infrastructure/qag/mocks_qag_repository.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
@@ -54,11 +53,10 @@ class RepositoryManager {
   }
 
   static ConsultationRepository getConsultationRepository() {
-    if (GetIt.instance.isRegistered<MockConsultationSuccessRepository>()) {
-      return GetIt.instance.get<MockConsultationSuccessRepository>();
+    if (GetIt.instance.isRegistered<ConsultationDioRepository>()) {
+      return GetIt.instance.get<ConsultationDioRepository>();
     }
-    final repository = MockConsultationSuccessRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
-    // final repository = ConsultationDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
+    final repository = ConsultationDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
