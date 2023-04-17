@@ -3,17 +3,17 @@ import 'package:agora/design/agora_corners.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:flutter/material.dart';
 
-class AgoraThematiquesDropDown<T> extends StatefulWidget {
+class QagThematiquesDropDown<T> extends StatefulWidget {
   final List<T> elements;
   final Function(T) onSelected;
 
-  const AgoraThematiquesDropDown({super.key, required this.elements, required this.onSelected});
+  const QagThematiquesDropDown({super.key, required this.elements, required this.onSelected});
 
   @override
-  State<AgoraThematiquesDropDown<T>> createState() => _AgoraThematiquesDropDownState<T>();
+  State<QagThematiquesDropDown<T>> createState() => _QagThematiquesDropDownState<T>();
 }
 
-class _AgoraThematiquesDropDownState<T> extends State<AgoraThematiquesDropDown<T>> {
+class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
   T? dropdownValue;
 
   @override

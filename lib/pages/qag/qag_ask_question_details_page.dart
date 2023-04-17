@@ -4,10 +4,10 @@ import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/agora_drop_down.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/pages/qag/qag_thematiques_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 
@@ -59,7 +59,7 @@ class _QagAskQuestionDetailsPageState extends State<QagAskQuestionDetailsPage> {
                   ),
                   SizedBox(height: AgoraSpacings.x0_5),
                   Text("Choisissez votre thématiques", style: AgoraTextStyles.medium18),
-                  AgoraThematiquesDropDown(
+                  QagThematiquesDropDown(
                     elements: thematiqueViewModels,
                     onSelected: (value) {
                       thematique = value.label;

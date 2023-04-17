@@ -1,15 +1,13 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
-import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_html_styles.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
+import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
@@ -61,13 +59,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Html(
-                      data: etEnsuiteViewModel.description,
-                      style: AgoraHtmlStyles.htmlStyle,
-                      onLinkTap: (url, _, __, ___) async {
-                        LaunchUrlHelper.launch(url);
-                      },
-                    ),
+                    AgoraHtml(data: etEnsuiteViewModel.description),
                     SizedBox(height: AgoraSpacings.x2),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
