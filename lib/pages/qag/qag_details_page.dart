@@ -44,7 +44,7 @@ class QagDetailsPage extends StatelessWidget {
                       ),
                       child: AgoraButton(
                         icon: "ic_share.svg",
-                        label: "Partager",
+                        label: QagStrings.share,
                         style: AgoraButtonStyle.whiteButtonStyle,
                         onPressed: () {
                           // TODO
