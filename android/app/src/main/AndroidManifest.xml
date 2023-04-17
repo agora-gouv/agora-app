@@ -3,22 +3,26 @@
 
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>
-        <!-- If your app opens https URLs -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https" />
         </intent>
-        <!-- If your app opens http URLs -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="http" />
         </intent>
-<!--        &lt;!&ndash; If your app checks for SMS support &ndash;&gt;-->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
 <!--        <intent>-->
 <!--            <action android:name="android.intent.action.VIEW" />-->
 <!--            <data android:scheme="sms" />-->
 <!--        </intent>-->
-<!--        &lt;!&ndash; If your app checks for call support &ndash;&gt;-->
 <!--        <intent>-->
 <!--            <action android:name="android.intent.action.VIEW" />-->
 <!--            <data android:scheme="tel" />-->

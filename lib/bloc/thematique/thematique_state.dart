@@ -9,12 +9,12 @@ abstract class ThematiqueState extends Equatable {
 class ThematiqueInitialLoadingState extends ThematiqueState {}
 
 class ThematiqueSuccessState extends ThematiqueState {
-  final List<ThematiqueViewModel> viewModel;
+  final List<ThematiqueViewModel> thematiqueViewModels;
 
-  ThematiqueSuccessState(this.viewModel);
+  ThematiqueSuccessState(this.thematiqueViewModels);
 
   @override
-  List<Object?> get props => [viewModel];
+  List<Object?> get props => [thematiqueViewModels];
 }
 
 class ThematiqueErrorState extends ThematiqueState {}
