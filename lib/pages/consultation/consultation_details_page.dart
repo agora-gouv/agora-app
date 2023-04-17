@@ -2,16 +2,15 @@ import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/common/client/repository_manager.dart';
-import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_html_styles.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -19,7 +18,6 @@ import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationDetailsPage extends StatelessWidget {
@@ -117,21 +115,12 @@ class ConsultationDetailsPage extends StatelessWidget {
                             ],
                           ),
                           Divider(height: AgoraSpacings.x1_5, color: AgoraColors.divider, thickness: 1),
-                          Html(
-                            data: state.viewModel.description,
-                            style: AgoraHtmlStyles.htmlStyle,
-                            onLinkTap: (url, _, __, ___) async {
-                              LaunchUrlHelper.launch(url);
-                            },
-                          ),
+                          AgoraHtml(data: state.viewModel.description),
                           SizedBox(height: AgoraSpacings.base),
                           AgoraRoundedCard(
                             cardColor: AgoraColors.cascadingWhite,
                             padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-                            child: Html(
-                              data: state.viewModel.tipsDescription,
-                              style: AgoraHtmlStyles.htmlStyle,
-                            ),
+                            child: AgoraHtml(data: state.viewModel.tipsDescription),
                           ),
                           SizedBox(height: AgoraSpacings.base),
                           AgoraButton(
