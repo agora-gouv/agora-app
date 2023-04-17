@@ -93,4 +93,24 @@ class AgoraButtonStyle {
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
   );
+
+  static ButtonStyle whiteButtonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.resolveWith(
+      (states) {
+        if (states.contains(MaterialState.disabled)) {
+          return AgoraColors.stereotypicalDuck;
+        } else if (states.contains(MaterialState.pressed)) {
+          return AgoraColors.stereotypicalDuck;
+        } else {
+          return AgoraColors.white;
+        }
+      },
+    ),
+    textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
+    elevation: MaterialStateProperty.all(0),
+    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    padding: MaterialStateProperty.all(
+      EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+    ),
+  );
 }
