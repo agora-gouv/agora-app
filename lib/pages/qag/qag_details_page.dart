@@ -33,67 +33,91 @@ class QagDetailsPage extends StatelessWidget {
           builder: (context, state) {
             if (state is QagDetailsFetchedState) {
               final viewModel = state.viewModel;
-              return Column(
+              return Stack(
                 children: [
-                  AgoraToolbar(),
-                  Padding(
-                    padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ThematiqueHelper.buildCard(context, viewModel.thematiqueId),
-                        SizedBox(height: AgoraSpacings.base),
-                        Text(viewModel.title, style: AgoraTextStyles.medium18),
-                        SizedBox(height: AgoraSpacings.base),
-                        Text(viewModel.description, style: AgoraTextStyles.light14),
-                        SizedBox(height: AgoraSpacings.base),
-                        RichText(
-                          text: TextSpan(
-                            style: AgoraTextStyles.regularItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                            children: [
-                              TextSpan(text: QagStrings.by),
-                              WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                              TextSpan(
-                                text: viewModel.username,
-                                style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                              ),
-                              WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                              TextSpan(text: QagStrings.at),
-                              WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                              TextSpan(
-                                text: viewModel.date,
-                                style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: AgoraSpacings.x3),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AgoraSpacings.horizontalPadding,
+                        vertical: AgoraSpacings.x0_5,
+                      ),
+                      child: AgoraButton(
+                        icon: "ic_share.svg",
+                        label: "Partager",
+                        style: AgoraButtonStyle.whiteButtonStyle,
+                        onPressed: () {
+                          // TODO
+                        },
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      AgoraToolbar(),
+                      Padding(
+                        padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Flexible(
-                              child: AgoraButton(
-                                icon: "ic_thumb_white.svg",
-                                label: "Soutenir cette question",
-                                style: AgoraButtonStyle.primaryButtonStyle,
-                                onPressed: () {
-                                  // TODO
-                                },
+                            ThematiqueHelper.buildCard(context, viewModel.thematiqueId),
+                            SizedBox(height: AgoraSpacings.base),
+                            Text(viewModel.title, style: AgoraTextStyles.medium18),
+                            SizedBox(height: AgoraSpacings.base),
+                            Text(viewModel.description, style: AgoraTextStyles.light14),
+                            SizedBox(height: AgoraSpacings.base),
+                            RichText(
+                              text: TextSpan(
+                                style:
+                                    AgoraTextStyles.regularItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                                children: [
+                                  TextSpan(text: QagStrings.by),
+                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                  TextSpan(
+                                    text: viewModel.username,
+                                    style: AgoraTextStyles.mediumItalic14
+                                        .copyWith(color: AgoraColors.primaryGreyOpacity80),
+                                  ),
+                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                  TextSpan(text: QagStrings.at),
+                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                  TextSpan(
+                                    text: viewModel.date,
+                                    style: AgoraTextStyles.mediumItalic14
+                                        .copyWith(color: AgoraColors.primaryGreyOpacity80),
+                                  )
+                                ],
                               ),
                             ),
+                            SizedBox(height: AgoraSpacings.x3),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(width: AgoraSpacings.base),
-                                SvgPicture.asset("assets/ic_thumb_blue.svg"),
-                                SizedBox(width: AgoraSpacings.x0_25),
-                                Text(viewModel.supportCount.toString(), style: AgoraTextStyles.medium14),
-                                SizedBox(width: AgoraSpacings.x0_5),
+                                Flexible(
+                                  child: AgoraButton(
+                                    icon: "ic_thumb_white.svg",
+                                    label: "Soutenir cette question",
+                                    style: AgoraButtonStyle.primaryButtonStyle,
+                                    onPressed: () {
+                                      // TODO
+                                    },
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(width: AgoraSpacings.base),
+                                    SvgPicture.asset("assets/ic_heard.svg"),
+                                    SizedBox(width: AgoraSpacings.x0_25),
+                                    Text(viewModel.supportCount.toString(), style: AgoraTextStyles.medium14),
+                                    SizedBox(width: AgoraSpacings.x0_5),
+                                  ],
+                                ),
                               ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               );
