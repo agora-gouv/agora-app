@@ -10,6 +10,7 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
+import 'package:agora/pages/qag/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +36,7 @@ class LoadingPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildThematiques(state.viewModel) +
+                  children: _buildThematiques(state.thematiqueViewModels) +
                       [
                         SizedBox(height: AgoraSpacings.x2),
                         AgoraButton(
@@ -58,6 +59,18 @@ class LoadingPage extends StatelessWidget {
                               context,
                               QagDetailsPage.routeName,
                               arguments: BlocProvider.of<ThematiqueBloc>(context),
+                            );
+                          },
+                        ),
+                        SizedBox(height: AgoraSpacings.x0_5),
+                        AgoraButton(
+                          label: "Poser une question au gouvernement",
+                          style: AgoraButtonStyle.primaryButtonStyle,
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              QagAskQuestionPage.routeName,
+                              arguments: state.thematiqueViewModels,
                             );
                           },
                         ),

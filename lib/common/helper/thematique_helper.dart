@@ -9,7 +9,8 @@ class ThematiqueHelper {
     final thematiqueState = context.read<ThematiqueBloc>().state;
     if (thematiqueState is ThematiqueSuccessState) {
       try {
-        final thematique = thematiqueState.viewModel.firstWhere((thematique) => thematique.id == thematiqueId);
+        final thematique =
+            thematiqueState.thematiqueViewModels.firstWhere((thematique) => thematique.id == thematiqueId);
         return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, color: thematique.color);
       } catch (e) {
         return Container();
