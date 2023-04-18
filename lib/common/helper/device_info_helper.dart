@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 
-abstract class DeviceIdHelper {
-  Future<String?> get();
+abstract class DeviceInfoHelper {
+  Future<String?> getDeviceId();
+
+  Future<int> getAndroidSdk();
 }
 
-class UniqueDeviceIdHelper extends DeviceIdHelper {
+class DeviceInfoPluginHelper extends DeviceInfoHelper {
   @override
-  Future<String?> get() async {
+  Future<String?> getDeviceId() async {
     final deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       final iosDeviceInfo = await deviceInfo.iosInfo;
@@ -16,6 +18,17 @@ class UniqueDeviceIdHelper extends DeviceIdHelper {
     } else if (Platform.isAndroid) {
       final androidDeviceInfo = await deviceInfo.androidInfo;
       return androidDeviceInfo.id; // unique ID on Android
+    } else {
+      throw Exception("Platform not support");
+    }
+  }
+
+  @override
+  Future<int> getAndroidSdk() async {
+    final deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      final androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.version.sdkInt;
     } else {
       throw Exception("Platform not support");
     }

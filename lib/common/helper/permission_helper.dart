@@ -1,0 +1,21 @@
+import 'package:permission_handler/permission_handler.dart';
+
+abstract class PermissionHelper {
+  Future<bool> isDenied();
+
+  Future<bool> isPermanentlyDenied();
+}
+
+class PermissionImplHelper extends PermissionHelper {
+  final permission = Permission.notification;
+
+  @override
+  Future<bool> isDenied() async {
+    return await permission.isDenied;
+  }
+
+  @override
+  Future<bool> isPermanentlyDenied() async {
+    return await permission.isPermanentlyDenied;
+  }
+}
