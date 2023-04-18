@@ -65,7 +65,7 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockQagSuccessRepository>()) {
       return GetIt.instance.get<MockQagSuccessRepository>();
     }
-    final repository = MockQagSuccessRepository();
+    final repository = MockQagSuccessRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     // final repository = QagDioRepository(httpClient: RepositoryManager.getAgoraDioHttpClient());
     GetIt.instance.registerSingleton(repository);
     return repository;
