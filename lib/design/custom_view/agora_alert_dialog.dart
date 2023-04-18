@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 Future<T?> showAgoraDialog<T>({
   required BuildContext context,
   required List<Widget> columnChildren,
+  bool dismissible = false,
 }) {
   return showDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: dismissible,
     builder: (context) {
       return AlertDialog(
         scrollable: true,

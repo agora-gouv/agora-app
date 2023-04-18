@@ -1,12 +1,32 @@
-import 'package:agora/common/helper/device_id_helper.dart';
+import 'package:agora/common/helper/device_info_helper.dart';
+import 'package:agora/common/helper/permission_helper.dart';
+import 'package:agora/common/helper/platform_helper.dart';
 import 'package:get_it/get_it.dart';
 
 class HelperManager {
-  static DeviceIdHelper getDeviceIdHelper() {
-    if (GetIt.instance.isRegistered<UniqueDeviceIdHelper>()) {
-      return GetIt.instance.get<UniqueDeviceIdHelper>();
+  static DeviceInfoHelper getDeviceInfoHelper() {
+    if (GetIt.instance.isRegistered<DeviceInfoPluginHelper>()) {
+      return GetIt.instance.get<DeviceInfoPluginHelper>();
     }
-    final helper = UniqueDeviceIdHelper();
+    final helper = DeviceInfoPluginHelper();
+    GetIt.instance.registerSingleton(helper);
+    return helper;
+  }
+
+  static PlatformHelper getPlatformHelper() {
+    if (GetIt.instance.isRegistered<PlatformImplHelper>()) {
+      return GetIt.instance.get<PlatformImplHelper>();
+    }
+    final helper = PlatformImplHelper();
+    GetIt.instance.registerSingleton(helper);
+    return helper;
+  }
+
+  static PermissionHelper getPermissionHelper() {
+    if (GetIt.instance.isRegistered<PermissionImplHelper>()) {
+      return GetIt.instance.get<PermissionImplHelper>();
+    }
+    final helper = PermissionImplHelper();
     GetIt.instance.registerSingleton(helper);
     return helper;
   }

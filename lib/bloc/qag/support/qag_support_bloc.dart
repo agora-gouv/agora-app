@@ -1,12 +1,12 @@
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
-import 'package:agora/common/helper/device_id_helper.dart';
+import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
   final QagRepository qagRepository;
-  final DeviceIdHelper deviceIdHelper;
+  final DeviceInfoHelper deviceIdHelper;
 
   QagSupportBloc({
     required this.qagRepository,
@@ -21,7 +21,7 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     Emitter<QagSupportState> emit,
   ) async {
     emit(QagSupportLoadingState());
-    final deviceId = await deviceIdHelper.get();
+    final deviceId = await deviceIdHelper.getDeviceId();
     if (deviceId == null) {
       emit(QagSupportErrorState());
       return;
@@ -42,7 +42,7 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     Emitter<QagSupportState> emit,
   ) async {
     emit(QagDeleteSupportLoadingState());
-    final deviceId = await deviceIdHelper.get();
+    final deviceId = await deviceIdHelper.getDeviceId();
     if (deviceId == null) {
       emit(QagDeleteSupportErrorState());
       return;

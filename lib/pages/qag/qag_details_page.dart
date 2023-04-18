@@ -38,14 +38,14 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
           create: (BuildContext context) {
             return QagDetailsBloc(
               qagRepository: RepositoryManager.getQagRepository(),
-              deviceIdHelper: HelperManager.getDeviceIdHelper(),
+              deviceIdHelper: HelperManager.getDeviceInfoHelper(),
             )..add(FetchQagDetailsEvent(qagId: qagId));
           },
         ),
         BlocProvider(
           create: (BuildContext context) => QagSupportBloc(
             qagRepository: RepositoryManager.getQagRepository(),
-            deviceIdHelper: HelperManager.getDeviceIdHelper(),
+            deviceIdHelper: HelperManager.getDeviceInfoHelper(),
           ),
         )
       ],

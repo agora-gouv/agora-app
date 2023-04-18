@@ -1,13 +1,13 @@
 import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
-import 'package:agora/common/helper/device_id_helper.dart';
+import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_details_presenter.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagDetailsBloc extends Bloc<FetchQagDetailsEvent, QagDetailsState> {
   final QagRepository qagRepository;
-  final DeviceIdHelper deviceIdHelper;
+  final DeviceInfoHelper deviceIdHelper;
 
   QagDetailsBloc({
     required this.qagRepository,
@@ -20,7 +20,7 @@ class QagDetailsBloc extends Bloc<FetchQagDetailsEvent, QagDetailsState> {
     FetchQagDetailsEvent event,
     Emitter<QagDetailsState> emit,
   ) async {
-    final deviceId = await deviceIdHelper.get();
+    final deviceId = await deviceIdHelper.getDeviceId();
     if (deviceId == null) {
       emit(QagDetailsErrorState());
       return;
