@@ -18,19 +18,21 @@ void main() {
           title: "Développer le covoiturage au quotidien",
           participantCount: "15035 participants",
           results: [
-            ConsultationSummaryResultsViewModel(
-              questionTitle: "Les déplacements professionnels en covoiturage",
+            ConsultationSummaryMultipleChoicesResultsViewModel(
+              questionTitle: "Pour quelle raison principale ?",
+              order: 1,
               responses: [
-                ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65),
-                ConsultationSummaryResponseViewModel(label: "En transports en commun, vélo, à pied", ratio: 17),
-                ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18),
+                ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58),
+                ConsultationSummaryResponseViewModel(label: "Je veux être tranquille dans ma voiture", ratio: 42),
               ],
             ),
-            ConsultationSummaryResultsViewModel(
-              questionTitle: "Pour quelle raison principale ?",
+            ConsultationSummaryUniqueChoiceResultsViewModel(
+              questionTitle: "Les déplacements professionnels en covoiturage",
+              order: 2,
               responses: [
-                ConsultationSummaryResponseViewModel(label: "Je veux être tranquille dans ma voiture", ratio: 42),
-                ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58),
+                ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65),
+                ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18),
+                ConsultationSummaryResponseViewModel(label: "En transports en commun, vélo, à pied", ratio: 17),
               ],
             ),
           ],

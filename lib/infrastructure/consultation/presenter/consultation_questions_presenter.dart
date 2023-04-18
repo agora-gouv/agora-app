@@ -30,7 +30,7 @@ class ConsultationQuestionsPresenter {
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
           );
-        } else if (consultationQuestion is ConsultationChapter) {
+        } else if (consultationQuestion is ConsultationQuestionChapter) {
           return ConsultationQuestionChapterViewModel(
             id: consultationQuestion.id,
             title: consultationQuestion.title,

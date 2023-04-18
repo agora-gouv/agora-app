@@ -36,14 +36,25 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
                     ),
                     SizedBox(height: AgoraSpacings.base),
                   ] +
-                  results
-                      .map(
-                        (result) => AgoraConsultationResultView(
+                  results.map(
+                    (result) {
+                      if (result is ConsultationSummaryUniqueChoiceResultsViewModel) {
+                        return AgoraConsultationResultView(
                           questionTitle: result.questionTitle,
                           responses: result.responses,
-                        ),
-                      )
-                      .toList(),
+                          isMultipleChoice: false,
+                        );
+                      } else if (result is ConsultationSummaryMultipleChoicesResultsViewModel) {
+                        return AgoraConsultationResultView(
+                          questionTitle: result.questionTitle,
+                          responses: result.responses,
+                          isMultipleChoice: true,
+                        );
+                      } else {
+                        throw Exception("Results view model doesn't exists $result");
+                      }
+                    },
+                  ).toList(),
             ),
           ),
         ),
