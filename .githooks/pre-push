@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NO_COLOR='\033[0m'
+
+run_analyze() {
+  echo -e "\n${GREEN}Running flutter analyze${NO_COLOR}\n"
+  make flutter-analyze
+  RESULT_ANALYZE=$?
+
+  if [ "$RESULT_ANALYZE" -eq "0" ]
+  then
+    echo -e "\n${GREEN}Code successfully analyzed!${NO_COLOR}\n"
+  else
+    echo -e "\n${RED}Code analyze failed...${NO_COLOR}\n"
+    exit $RESULT_ANALYZE
+  fi
+}
+
+run_test() {
+  echo -e "\n${GREEN}Running flutter test${NO_COLOR}\n"
+  make flutter-test
+
+  RESULT_MOBILE=$?
+  if [ "$RESULT_MOBILE" -eq "0" ]
+  then
+    echo -e "\n${GREEN} Tests all green!${NO_COLOR}\n"
+  else
+    echo -e "\n${RED} Tests failed...${NO_COLOR}\n"
+    exit $RESULT_MOBILE
+  fi
+}
+
+run_check() {
+    run_analyze
+    run_test
+}
+
+run_check
