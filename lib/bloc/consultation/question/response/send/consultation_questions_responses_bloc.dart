@@ -1,6 +1,6 @@
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
-import 'package:agora/infrastructure/consultation/consultation_repository.dart';
+import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationQuestionsResponsesBloc

@@ -7,7 +7,7 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
-import 'package:agora/infrastructure/consultation/consultation_repository.dart';
+import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -190,7 +190,7 @@ void main() {
                 ConsultationQuestionResponseChoice(id: "choice3", label: "Voiture", order: 3),
               ],
             ),
-            ConsultationChapter(
+            ConsultationQuestionChapter(
               id: "chapitre1",
               title: "titre du chapitre",
               order: 2,
@@ -307,7 +307,7 @@ void main() {
   });
 
   group("Fetch consultation summary", () {
-    test("when success should return consultation questions", () async {
+    test("when success should return consultation results", () async {
       // Given
       dioAdapter.onGet(
         "/consultations/$consultationId/responses",
@@ -316,9 +316,10 @@ void main() {
           {
             "title": "Développer le covoiturage au quotidien",
             "participantCount": 15035,
-            "results": [
+            "resultsUniqueChoice": [
               {
                 "questionTitle": "Les déplacements professionnels en covoiturage",
+                "order": 1,
                 "responses": [
                   {
                     "label": "En voiture seul",
@@ -327,6 +328,22 @@ void main() {
                   {
                     "label": "Autre",
                     "ratio": 35,
+                  },
+                ]
+              }
+            ],
+            "resultsMultipleChoice": [
+              {
+                "questionTitle": "Question B",
+                "order": 2,
+                "responses": [
+                  {
+                    "label": "Réponse A",
+                    "ratio": 30,
+                  },
+                  {
+                    "label": "Réponse B",
+                    "ratio": 80,
                   },
                 ]
               }
@@ -353,11 +370,20 @@ void main() {
             title: "Développer le covoiturage au quotidien",
             participantCount: 15035,
             results: [
-              ConsultationSummaryResults(
+              ConsultationSummaryUniqueChoiceResults(
                 questionTitle: "Les déplacements professionnels en covoiturage",
+                order: 1,
                 responses: [
                   ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
                   ConsultationSummaryResponse(label: "Autre", ratio: 35),
+                ],
+              ),
+              ConsultationSummaryMultipleChoicesResults(
+                questionTitle: "Question B",
+                order: 2,
+                responses: [
+                  ConsultationSummaryResponse(label: "Réponse A", ratio: 30),
+                  ConsultationSummaryResponse(label: "Réponse B", ratio: 80),
                 ],
               ),
             ],

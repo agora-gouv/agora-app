@@ -1,7 +1,7 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
-import 'package:agora/infrastructure/consultation/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/presenter/consultation_questions_presenter.dart';
+import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationQuestionsBloc extends Bloc<ConsultationQuestionsEvent, ConsultationQuestionsState> {

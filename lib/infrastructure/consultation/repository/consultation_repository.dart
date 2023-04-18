@@ -3,11 +3,11 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
-import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
+import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
+import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
@@ -61,14 +61,14 @@ class ConsultationDioRepository extends ConsultationRepository {
   }) async {
     try {
       final response = await httpClient.get("/consultations/$consultationId/questions");
-
-      final List<ConsultationQuestion> questions = [];
-      _buildUniqueChoiceQuestions(response.data["questionsUniqueChoice"] as List, questions);
-      _buildOpenedQuestions(response.data["questionsOpened"] as List, questions);
-      _buildMultipleChoicesQuestions(response.data["questionsMultipleChoices"] as List, questions);
-      _buildChapters(response.data["chapters"] as List, questions);
-
-      return GetConsultationQuestionsSucceedResponse(consultationQuestions: questions);
+      return GetConsultationQuestionsSucceedResponse(
+        consultationQuestions: ConsultationQuestionsBuilder.buildQuestions(
+          uniqueChoiceQuestions: response.data["questionsUniqueChoice"] as List,
+          openedQuestions: response.data["questionsOpened"] as List,
+          multipleChoicesQuestions: response.data["questionsMultipleChoices"] as List,
+          chapters: response.data["chapters"] as List,
+        ),
+      );
     } catch (e) {
       Log.e("fetchConsultationQuestions failed", e);
       return GetConsultationQuestionsFailedResponse();
@@ -109,24 +109,14 @@ class ConsultationDioRepository extends ConsultationRepository {
   }) async {
     try {
       final response = await httpClient.get("/consultations/$consultationId/responses");
+
       final summary = ConsultationSummary(
         title: response.data["title"] as String,
         participantCount: response.data["participantCount"] as int,
-        results: (response.data["results"] as List)
-            .map(
-              (result) => ConsultationSummaryResults(
-                questionTitle: result["questionTitle"] as String,
-                responses: (result["responses"] as List)
-                    .map(
-                      (response) => ConsultationSummaryResponse(
-                        label: response["label"] as String,
-                        ratio: response["ratio"] as int,
-                      ),
-                    )
-                    .toList(),
-              ),
-            )
-            .toList(),
+        results: ConsultationResponsesBuilder.buildResults(
+          uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
+          multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
+        ),
         etEnsuite: ConsultationSummaryEtEnsuite(
           step: response.data["etEnsuite"]["step"] as int,
           description: response.data["etEnsuite"]["description"] as String,
@@ -136,77 +126,6 @@ class ConsultationDioRepository extends ConsultationRepository {
     } catch (e) {
       Log.e("fetchConsultationSummary failed", e);
       return GetConsultationSummaryFailedResponse();
-    }
-  }
-
-  void _buildUniqueChoiceQuestions(List<dynamic> questionsUniqueChoice, List<ConsultationQuestion> questions) {
-    for (final questionUniqueChoice in questionsUniqueChoice) {
-      questions.add(
-        ConsultationQuestionUnique(
-          id: questionUniqueChoice["id"] as String,
-          title: questionUniqueChoice["titre"] as String,
-          order: questionUniqueChoice["order"] as int,
-          questionProgress: questionUniqueChoice["questionProgress"] as String,
-          responseChoices: (questionUniqueChoice["possibleChoices"] as List)
-              .map(
-                (responseChoice) => ConsultationQuestionResponseChoice(
-                  id: responseChoice["id"] as String,
-                  label: responseChoice["label"] as String,
-                  order: responseChoice["order"] as int,
-                ),
-              )
-              .toList(),
-        ),
-      );
-    }
-  }
-
-  void _buildOpenedQuestions(List<dynamic> questionsOpened, List<ConsultationQuestion> questions) {
-    for (final questionOpened in questionsOpened) {
-      questions.add(
-        ConsultationQuestionOpened(
-          id: questionOpened["id"] as String,
-          title: questionOpened["titre"] as String,
-          order: questionOpened["order"] as int,
-          questionProgress: questionOpened["questionProgress"] as String,
-        ),
-      );
-    }
-  }
-
-  void _buildMultipleChoicesQuestions(List<dynamic> questionsMultipleChoices, List<ConsultationQuestion> questions) {
-    for (final questionMultipleChoices in questionsMultipleChoices) {
-      questions.add(
-        ConsultationQuestionMultiple(
-          id: questionMultipleChoices["id"] as String,
-          title: questionMultipleChoices["titre"] as String,
-          order: questionMultipleChoices["order"] as int,
-          questionProgress: questionMultipleChoices["questionProgress"] as String,
-          maxChoices: questionMultipleChoices["maxChoices"] as int,
-          responseChoices: (questionMultipleChoices["possibleChoices"] as List)
-              .map(
-                (responseChoice) => ConsultationQuestionResponseChoice(
-                  id: responseChoice["id"] as String,
-                  label: responseChoice["label"] as String,
-                  order: responseChoice["order"] as int,
-                ),
-              )
-              .toList(),
-        ),
-      );
-    }
-  }
-
-  void _buildChapters(List<dynamic> chapters, List<ConsultationQuestion> questions) {
-    for (final chapter in chapters) {
-      questions.add(
-        ConsultationChapter(
-          id: chapter["id"] as String,
-          title: chapter["titre"] as String,
-          order: chapter["order"] as int,
-          description: chapter["description"] as String,
-        ),
-      );
     }
   }
 }

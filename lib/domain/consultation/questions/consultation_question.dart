@@ -64,10 +64,10 @@ class ConsultationQuestionOpened extends ConsultationQuestion {
   List<Object> get props => [id, title, order, questionProgress];
 }
 
-class ConsultationChapter extends ConsultationQuestion {
+class ConsultationQuestionChapter extends ConsultationQuestion {
   final String description;
 
-  ConsultationChapter({
+  ConsultationQuestionChapter({
     required super.id,
     required super.title,
     required super.order,

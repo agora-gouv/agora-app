@@ -5,7 +5,7 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
-import 'package:agora/infrastructure/consultation/consultation_repository.dart';
+import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
@@ -63,7 +63,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             ConsultationQuestionResponseChoice(id: "choiceC", label: "En transports en commun", order: 2),
           ],
         ),
-        ConsultationChapter(
+        ConsultationQuestionChapter(
           id: "chapiter1",
           title: "titre du chapitre",
           order: 3,
@@ -90,16 +90,18 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         title: "Développer le covoiturage au quotidien",
         participantCount: 15035,
         results: [
-          ConsultationSummaryResults(
+          ConsultationSummaryUniqueChoiceResults(
             questionTitle: "Les déplacements professionnels en covoiturage",
+            order: 2,
             responses: [
               ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
               ConsultationSummaryResponse(label: "En transports en commun, vélo, à pied", ratio: 17),
               ConsultationSummaryResponse(label: "Autres", ratio: 18),
             ],
           ),
-          ConsultationSummaryResults(
+          ConsultationSummaryMultipleChoicesResults(
             questionTitle: "Pour quelle raison principale ?",
+            order: 1,
             responses: [
               ConsultationSummaryResponse(label: "Je veux être tranquille dans ma voiture", ratio: 42),
               ConsultationSummaryResponse(label: "Autres", ratio: 58),

@@ -22,17 +22,43 @@ class ConsultationSummaryViewModel extends Equatable {
       ];
 }
 
-class ConsultationSummaryResultsViewModel extends Equatable {
+abstract class ConsultationSummaryResultsViewModel extends Equatable {
   final String questionTitle;
-  final List<ConsultationSummaryResponseViewModel> responses;
+  final int order;
 
   ConsultationSummaryResultsViewModel({
     required this.questionTitle,
+    required this.order,
+  });
+
+  @override
+  List<Object> get props => [questionTitle, order];
+}
+
+class ConsultationSummaryUniqueChoiceResultsViewModel extends ConsultationSummaryResultsViewModel {
+  final List<ConsultationSummaryResponseViewModel> responses;
+
+  ConsultationSummaryUniqueChoiceResultsViewModel({
+    required super.questionTitle,
+    required super.order,
     required this.responses,
   });
 
   @override
-  List<Object> get props => [questionTitle, responses];
+  List<Object> get props => [questionTitle, order, responses];
+}
+
+class ConsultationSummaryMultipleChoicesResultsViewModel extends ConsultationSummaryResultsViewModel {
+  final List<ConsultationSummaryResponseViewModel> responses;
+
+  ConsultationSummaryMultipleChoicesResultsViewModel({
+    required super.questionTitle,
+    required super.order,
+    required this.responses,
+  });
+
+  @override
+  List<Object> get props => [questionTitle, order, responses];
 }
 
 class ConsultationSummaryResponseViewModel extends Equatable {

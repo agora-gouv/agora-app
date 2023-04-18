@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 class AgoraConsultationResultView extends StatelessWidget {
   final String questionTitle;
   final List<ConsultationSummaryResponseViewModel> responses;
+  final bool isMultipleChoice;
 
   AgoraConsultationResultView({
     Key? key,
     required this.questionTitle,
     required this.responses,
+    required this.isMultipleChoice,
   }) : super(key: key);
 
   @override
@@ -40,6 +42,9 @@ class AgoraConsultationResultView extends StatelessWidget {
         ),
       );
       responseWidgets.add(SizedBox(height: AgoraSpacings.x0_75));
+    }
+    if (isMultipleChoice) {
+      responseWidgets.add(Text("Plusieurs réponses possibles.", style: AgoraTextStyles.medium14));
     }
     return responseWidgets;
   }
