@@ -95,7 +95,7 @@ void main() {
             "questionsUniqueChoice": [
               {
                 "id": "question1",
-                "titre": "quel est la fréquence d'utilisation de transport...",
+                "title": "quel est la fréquence d'utilisation de transport...",
                 "order": 4,
                 "questionProgress": "Question 3/3",
                 "possibleChoices": [
@@ -110,7 +110,7 @@ void main() {
             "questionsOpened": [
               {
                 "id": "question2",
-                "titre": "Donnez un feedback",
+                "title": "Donnez un feedback",
                 "order": 3,
                 "questionProgress": "Question 2/3",
               },
@@ -118,7 +118,7 @@ void main() {
             "questionsMultipleChoices": [
               {
                 "id": "question3",
-                "titre": "Quel types de transports utilisez-vous le plus ?",
+                "title": "Quel types de transports utilisez-vous le plus ?",
                 "order": 1,
                 "questionProgress": "Question 1/3",
                 "maxChoices": 2,
@@ -144,7 +144,7 @@ void main() {
             "chapters": [
               {
                 "id": "chapitre1",
-                "titre": "titre du chapitre",
+                "title": "titre du chapitre",
                 "order": 2,
                 "description": "texte riche",
               },

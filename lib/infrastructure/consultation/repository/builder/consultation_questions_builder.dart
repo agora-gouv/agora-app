@@ -20,7 +20,7 @@ class ConsultationQuestionsBuilder {
       questions.add(
         ConsultationQuestionUnique(
           id: questionUniqueChoice["id"] as String,
-          title: questionUniqueChoice["titre"] as String,
+          title: questionUniqueChoice["title"] as String,
           order: questionUniqueChoice["order"] as int,
           questionProgress: questionUniqueChoice["questionProgress"] as String,
           responseChoices: (questionUniqueChoice["possibleChoices"] as List)
@@ -44,7 +44,7 @@ class ConsultationQuestionsBuilder {
       questions.add(
         ConsultationQuestionOpened(
           id: questionOpened["id"] as String,
-          title: questionOpened["titre"] as String,
+          title: questionOpened["title"] as String,
           order: questionOpened["order"] as int,
           questionProgress: questionOpened["questionProgress"] as String,
         ),
@@ -59,7 +59,7 @@ class ConsultationQuestionsBuilder {
       questions.add(
         ConsultationQuestionMultiple(
           id: questionMultipleChoices["id"] as String,
-          title: questionMultipleChoices["titre"] as String,
+          title: questionMultipleChoices["title"] as String,
           order: questionMultipleChoices["order"] as int,
           questionProgress: questionMultipleChoices["questionProgress"] as String,
           maxChoices: questionMultipleChoices["maxChoices"] as int,
@@ -84,7 +84,7 @@ class ConsultationQuestionsBuilder {
       questions.add(
         ConsultationQuestionChapter(
           id: chapter["id"] as String,
-          title: chapter["titre"] as String,
+          title: chapter["title"] as String,
           order: chapter["order"] as int,
           description: chapter["description"] as String,
         ),
