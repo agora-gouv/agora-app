@@ -11,7 +11,12 @@ class QagDetailsPresenter {
       description: qagDetails.description,
       date: qagDetails.date.formatToDayMonth(),
       username: qagDetails.username,
-      supportCount: qagDetails.supportCount,
+      support: qagDetails.support != null
+          ? QagDetailsSupportViewModel(
+              count: qagDetails.support!.count,
+              isSupported: qagDetails.support!.isSupported,
+            )
+          : null,
     );
   }
 }

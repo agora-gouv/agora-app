@@ -6,6 +6,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import '../../fakes/qag/fake_device_id_helper.dart';
 import '../../fakes/qag/fakes_qag_repository.dart';
 
 void main() {
@@ -14,8 +15,11 @@ void main() {
 
   const qagId = "qagId";
   blocTest(
-    "fetchQagDetailsEvent - when repository succeed - should emit success state",
-    build: () => QagDetailsBloc(qagRepository: FakeQagSuccessRepository()),
+    "fetchQagDetailsEvent - when repository succeed and support is not null - should emit success state",
+    build: () => QagDetailsBloc(
+      qagRepository: FakeQagSuccessRepository(),
+      deviceIdHelper: FakeDeviceIdHelper(),
+    ),
     act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
     expect: () => [
       QagDetailsFetchedState(
@@ -26,7 +30,30 @@ void main() {
           description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
           date: "23 janvier",
           username: "CollectifSauvonsLaRetraite",
-          supportCount: 112,
+          support: QagDetailsSupportViewModel(count: 112, isSupported: true),
+        ),
+      ),
+    ],
+    wait: const Duration(milliseconds: 5),
+  );
+
+  blocTest(
+    "fetchQagDetailsEvent - when repository succeed and support is null - should emit success state",
+    build: () => QagDetailsBloc(
+      qagRepository: FakeQagSuccessWithSupportNullRepository(),
+      deviceIdHelper: FakeDeviceIdHelper(),
+    ),
+    act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
+    expect: () => [
+      QagDetailsFetchedState(
+        QagDetailsViewModel(
+          id: qagId,
+          thematiqueId: "1f3dbdc6-cff7-4d6a-88b5-c5ec84c55d15",
+          title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+          description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
+          date: "23 janvier",
+          username: "CollectifSauvonsLaRetraite",
+          support: null,
         ),
       ),
     ],
@@ -35,7 +62,10 @@ void main() {
 
   blocTest(
     "fetchQagDetailsEvent - when repository failed - should emit failure state",
-    build: () => QagDetailsBloc(qagRepository: FakeQagFailureRepository()),
+    build: () => QagDetailsBloc(
+      qagRepository: FakeQagFailureRepository(),
+      deviceIdHelper: FakeDeviceIdHelper(),
+    ),
     act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
     expect: () => [
       QagDetailsErrorState(),

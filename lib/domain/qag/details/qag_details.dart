@@ -7,7 +7,7 @@ class QagDetails extends Equatable {
   final String description;
   final DateTime date;
   final String username;
-  final int supportCount;
+  final QagDetailsSupport? support;
 
   QagDetails({
     required this.id,
@@ -16,17 +16,30 @@ class QagDetails extends Equatable {
     required this.description,
     required this.date,
     required this.username,
-    required this.supportCount,
+    required this.support,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         thematiqueId,
         title,
         description,
         date,
         username,
-        supportCount,
+        support,
+      ];
+}
+
+class QagDetailsSupport extends Equatable {
+  final int count;
+  final bool isSupported;
+
+  QagDetailsSupport({required this.count, required this.isSupported});
+
+  @override
+  List<Object?> get props => [
+        count,
+        isSupported,
       ];
 }

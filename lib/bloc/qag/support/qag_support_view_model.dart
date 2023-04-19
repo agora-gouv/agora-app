@@ -7,7 +7,7 @@ class QagDetailsViewModel extends Equatable {
   final String description;
   final String username;
   final String date;
-  final QagDetailsSupportViewModel? support;
+  final int supportCount;
 
   QagDetailsViewModel({
     required this.id,
@@ -16,30 +16,17 @@ class QagDetailsViewModel extends Equatable {
     required this.description,
     required this.username,
     required this.date,
-    required this.support,
+    required this.supportCount,
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         id,
         thematiqueId,
         title,
         description,
         username,
         date,
-        support,
-      ];
-}
-
-class QagDetailsSupportViewModel extends Equatable {
-  final int count;
-  final bool isSupported;
-
-  QagDetailsSupportViewModel({required this.count, required this.isSupported});
-
-  @override
-  List<Object> get props => [
-        count,
-        isSupported,
+        supportCount,
       ];
 }
