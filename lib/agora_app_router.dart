@@ -4,7 +4,6 @@ import 'package:agora/pages/consultation/consultation_question_confirmation_page
 import 'package:agora/pages/consultation/consultation_question_page.dart';
 import 'package:agora/pages/consultation/consultation_summary_page.dart';
 import 'package:agora/pages/loading_page.dart';
-import 'package:agora/pages/qag/qag_ask_question_details_page.dart';
 import 'package:agora/pages/qag/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/qag_details_page.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ class AgoraAppRouter {
       ConsultationQuestionPage.routeName: (context) => ConsultationQuestionPage(),
       ConsultationSummaryPage.routeName: (context) => ConsultationSummaryPage(),
       QagAskQuestionPage.routeName: (context) => QagAskQuestionPage(),
-      QagAskQuestionDetailsPage.routeName: (context) => QagAskQuestionDetailsPage(),
     };
   }
 

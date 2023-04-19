@@ -1,76 +1,157 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/pages/qag/qag_ask_question_details_page.dart';
+import 'package:agora/pages/qag/qag_thematiques_drop_down.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
-class QagAskQuestionPage extends StatelessWidget {
+class QagAskQuestionPage extends StatefulWidget {
   static const routeName = "/qagAskQuestionPage";
 
   @override
+  State<QagAskQuestionPage> createState() => _QagAskQuestionPageState();
+}
+
+class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
+  String question = "";
+  String details = "";
+  String username = "";
+  String? thematique;
+
+  @override
   Widget build(BuildContext context) {
+    final thematiqueViewModels = ModalRoute.of(context)!.settings.arguments as List<ThematiqueViewModel>;
+    if (thematique == "") {
+      thematique = thematiqueViewModels.first.label;
+    }
+
     return AgoraScaffold(
-      child: Column(
-        children: [
-          AgoraToolbar(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Poser une question au gouvernement", style: AgoraTextStyles.medium18),
-                SizedBox(height: AgoraSpacings.base),
-                Text(
-                  "Durant la phase d’expérimentation, nous vous proposons d’envoyer votre question par email. Elle apparaîtra dans les 48h sur l’application.",
-                  style: AgoraTextStyles.light14,
-                ),
-                SizedBox(height: AgoraSpacings.base),
-                AgoraButton(
-                  label: "Lire la charte",
-                  style: AgoraButtonStyle.lightGreyButtonStyle,
-                  onPressed: () {
-                    showAgoraDialog(
-                      context: context,
-                      columnChildren: [
-                        Text(
-                          "Les questions posées doivent respecter la charte de participation : ",
-                          style: AgoraTextStyles.medium16,
-                        ),
-                        SizedBox(height: AgoraSpacings.x0_5),
-                        Text("\u2022 Porter sur un sujet d’intérêt général,", style: AgoraTextStyles.light14),
-                        SizedBox(height: AgoraSpacings.x0_5),
-                        Text("\u2022 Avoir un ton respectueux.", style: AgoraTextStyles.light14),
-                        SizedBox(height: AgoraSpacings.base),
-                        AgoraButton(
-                          label: "C'est compris",
-                          style: AgoraButtonStyle.primaryButtonStyle,
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                AgoraButton(
-                  label: "Poser ma question",
-                  style: AgoraButtonStyle.primaryButtonStyle,
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      QagAskQuestionDetailsPage.routeName,
-                      arguments: ModalRoute.of(context)!.settings.arguments as List<ThematiqueViewModel>,
-                    );
-                  },
-                ),
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            AgoraToolbar(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(QagStrings.askQuestionTitle, style: AgoraTextStyles.medium18),
+                  SizedBox(height: AgoraSpacings.base),
+                  Text(QagStrings.askQuestionDescription, style: AgoraTextStyles.light14),
+                  SizedBox(height: AgoraSpacings.base),
+                  AgoraButton(
+                    label: QagStrings.readNotice,
+                    style: AgoraButtonStyle.lightGreyButtonStyle,
+                    onPressed: () {
+                      showAgoraDialog(
+                        context: context,
+                        columnChildren: [
+                          Text(QagStrings.noticeTitle, style: AgoraTextStyles.medium16),
+                          SizedBox(height: AgoraSpacings.x0_5),
+                          Text(QagStrings.noticeDescription, style: AgoraTextStyles.light14),
+                          SizedBox(height: AgoraSpacings.x0_5),
+                          AgoraButton(
+                            label: QagStrings.agree,
+                            style: AgoraButtonStyle.primaryButtonStyle,
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.base),
+                  Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
+                  SizedBox(height: AgoraSpacings.x0_75),
+                  AgoraTextField(
+                    maxLength: 200,
+                    hintText: QagStrings.questionHint,
+                    onChanged: (input) {
+                      question = input;
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_75),
+                  Text(QagStrings.detailsTitle, style: AgoraTextStyles.medium18),
+                  SizedBox(height: AgoraSpacings.x0_75),
+                  AgoraTextField(
+                    maxLength: 400,
+                    hintText: QagStrings.detailsHint,
+                    onChanged: (input) {
+                      details = input;
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_75),
+                  Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  QagThematiquesDropDown(
+                    firstValue: null,
+                    elements: thematiqueViewModels,
+                    hintText: QagStrings.thematiqueDescription,
+                    onSelected: (value) {
+                      thematique = value?.label;
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x1_5),
+                  Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
+                  SizedBox(height: AgoraSpacings.x0_75),
+                  AgoraTextField(
+                    maxLength: 50,
+                    hintText: QagStrings.yourNameHint,
+                    onChanged: (input) {
+                      username = input;
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.base),
+                  Text(QagStrings.askQuestionInformation, style: AgoraTextStyles.light14),
+                  SizedBox(height: AgoraSpacings.base),
+                  AgoraButton(
+                    label: QagStrings.sendByEmail,
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () async {
+                      if (_couldSend()) {
+                        final email = Email(
+                          body:
+                              "Question : $question \n\nDétails : $details\n\nThématique : $thematique\n\nPrénom : $username\n\n",
+                          subject: QagStrings.askQuestionMailSubject,
+                          recipients: ["ziyu.ye@octo.com"],
+                          isHTML: false,
+                        );
+                        try {
+                          await FlutterEmailSender.send(email);
+                        } catch (error) {
+                          showAgoraDialog(
+                            context: context,
+                            columnChildren: [
+                              Text(QagStrings.askQuestionConfigureMail, style: AgoraTextStyles.medium16),
+                              SizedBox(height: AgoraSpacings.base),
+                              AgoraButton(
+                                label: QagStrings.agree,
+                                style: AgoraButtonStyle.primaryButtonStyle,
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
+                          );
+                        }
+                      }
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x2),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  bool _couldSend() {
+    return question.isNotEmpty && details.isNotEmpty && username.isNotEmpty && thematique != null;
   }
 }
