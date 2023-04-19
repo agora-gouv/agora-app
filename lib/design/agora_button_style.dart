@@ -25,6 +25,27 @@ class AgoraButtonStyle {
     ),
   );
 
+  static ButtonStyle whiteButtonWithGreenBorderStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.resolveWith(
+      (states) {
+        if (states.contains(MaterialState.disabled)) {
+          return AgoraColors.stereotypicalDuck;
+        } else if (states.contains(MaterialState.pressed)) {
+          return AgoraColors.stereotypicalDuck;
+        } else {
+          return AgoraColors.white;
+        }
+      },
+    ),
+    textStyle: MaterialStateProperty.all(AgoraTextStyles.greenTextButton),
+    elevation: MaterialStateProperty.all(0),
+    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    side: MaterialStateProperty.all(BorderSide(color: AgoraColors.primaryGreen, width: 1.0, style: BorderStyle.solid)),
+    padding: MaterialStateProperty.all(
+      EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+    ),
+  );
+
   static ButtonStyle greyButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
