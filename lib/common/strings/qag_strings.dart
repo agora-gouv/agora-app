@@ -14,7 +14,7 @@ class QagStrings {
   static const String detailsTitle = "Détails supplémentaires";
   static const String detailsHint = "Ajoutez davantage d’informations ou de contexte si vous le souhaitez.\n";
   static const String thematiqueTitle = "Thématique";
-  static const String thematiqueDescription = "Choisissez votre thématique";
+  static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Votre prénom";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
