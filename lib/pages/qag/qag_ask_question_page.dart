@@ -1,4 +1,5 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
@@ -92,7 +93,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                   QagThematiquesDropDown(
                     firstValue: null,
                     elements: thematiqueViewModels,
-                    hintText: QagStrings.thematiqueDescription,
+                    hintText: QagStrings.thematiqueHint,
                     onSelected: (value) {
                       thematique = value?.label;
                     },
@@ -152,6 +153,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   }
 
   bool _couldSend() {
-    return question.isNotEmpty && details.isNotEmpty && username.isNotEmpty && thematique != null;
+    return question.isNotBlank() && username.isNotBlank() && thematique != null;
   }
 }
