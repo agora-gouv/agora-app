@@ -119,7 +119,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                           body:
                               "Question : $question \n\nDétails : $details\n\nThématique : $thematique\n\nPrénom : $username\n\n",
                           subject: QagStrings.askQuestionMailSubject,
-                          recipients: ["ziyu.ye@octo.com"],
+                          recipients: ["penelope.liot@beta.gouv.fr"],
                           isHTML: false,
                         );
                         try {
