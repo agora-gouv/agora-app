@@ -28,6 +28,7 @@ class QagDioRepository extends QagRepository {
         headers: {"deviceId": deviceId},
       );
       final qagDetailsSupport = response.data["support"] as Map?;
+      final qagDetailsResponse = response.data["response"] as Map?;
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
@@ -40,6 +41,16 @@ class QagDioRepository extends QagRepository {
               ? QagDetailsSupport(
                   count: qagDetailsSupport["count"] as int,
                   isSupported: qagDetailsSupport["isSupported"] as bool,
+                )
+              : null,
+          response: qagDetailsResponse != null
+              ? QagDetailsResponse(
+                  author: qagDetailsResponse["author"] as String,
+                  authorDescription: qagDetailsResponse["authorDescription"] as String,
+                  responseDate: (qagDetailsResponse["responseDate"] as String).parseToDateTime(),
+                  videoUrl: qagDetailsResponse["videoUrl"] as String,
+                  transcription: qagDetailsResponse["transcription"] as String,
+                  feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool?,
                 )
               : null,
         ),

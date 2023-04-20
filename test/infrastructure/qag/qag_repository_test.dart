@@ -14,7 +14,7 @@ void main() {
   const deviceId = "deviceId";
 
   group("Fetch qag details", () {
-    test("when success and support is not null should return qag details", () async {
+    test("when success and support/response are not null should return qag details", () async {
       // Given
       dioAdapter.onGet(
         "/qags/$qagId",
@@ -27,7 +27,15 @@ void main() {
             "description": "Description textuelle",
             "date": "2024-01-23",
             "username": "Henri J.",
-            "support": {"count": 112, "isSupported": true}
+            "support": {"count": 112, "isSupported": true},
+            "response": {
+              "author": "Olivier Véran",
+              "authorDescription": "Ministre délégué auprès de...",
+              "responseDate": "2024-02-20",
+              "videoUrl": "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+              "transcription": "Blablabla",
+              "feedbackStatus": true
+            }
           },
         ),
         headers: {"accept": "application/json", "deviceId": deviceId},
@@ -49,12 +57,20 @@ void main() {
             date: DateTime(2024, 1, 23),
             username: "Henri J.",
             support: QagDetailsSupport(count: 112, isSupported: true),
+            response: QagDetailsResponse(
+              author: "Olivier Véran",
+              authorDescription: "Ministre délégué auprès de...",
+              responseDate: DateTime(2024, 2, 20),
+              videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+              transcription: "Blablabla",
+              feedbackStatus: true,
+            ),
           ),
         ),
       );
     });
 
-    test("when success and support is null should return qag details", () async {
+    test("when success and response is not null and feedbackStatus null should return qag details", () async {
       // Given
       dioAdapter.onGet(
         "/qags/$qagId",
@@ -67,7 +83,15 @@ void main() {
             "description": "Description textuelle",
             "date": "2024-01-23",
             "username": "Henri J.",
-            "support": null
+            "support": null,
+            "response": {
+              "author": "Olivier Véran",
+              "authorDescription": "Ministre délégué auprès de...",
+              "responseDate": "2024-02-20",
+              "videoUrl": "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+              "transcription": "Blablabla",
+              "feedbackStatus": null
+            }
           },
         ),
         headers: {"accept": "application/json", "deviceId": deviceId},
@@ -89,6 +113,56 @@ void main() {
             date: DateTime(2024, 1, 23),
             username: "Henri J.",
             support: null,
+            response: QagDetailsResponse(
+              author: "Olivier Véran",
+              authorDescription: "Ministre délégué auprès de...",
+              responseDate: DateTime(2024, 2, 20),
+              videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+              transcription: "Blablabla",
+              feedbackStatus: null,
+            ),
+          ),
+        ),
+      );
+    });
+
+    test("when success and support/response are null should return qag details", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/$qagId",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "id": "qagId",
+            "thematiqueId": "thematiqueId",
+            "title": "Titre de la QaG",
+            "description": "Description textuelle",
+            "date": "2024-01-23",
+            "username": "Henri J.",
+            "support": null,
+            "response": null,
+          },
+        ),
+        headers: {"accept": "application/json", "deviceId": deviceId},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQagDetails(qagId: qagId, deviceId: deviceId);
+
+      // Then
+      expect(
+        response,
+        GetQagDetailsSucceedResponse(
+          qagDetails: QagDetails(
+            id: qagId,
+            thematiqueId: "thematiqueId",
+            title: "Titre de la QaG",
+            description: "Description textuelle",
+            date: DateTime(2024, 1, 23),
+            username: "Henri J.",
+            support: null,
+            response: null,
           ),
         ),
       );
