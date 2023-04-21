@@ -19,9 +19,11 @@ import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/agora_video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:video_player/video_player.dart';
 
 class QagDetailsPage extends StatefulWidget {
   static const routeName = "/qagDetailsPage";
@@ -31,6 +33,14 @@ class QagDetailsPage extends StatefulWidget {
 }
 
 class _QagDetailsPageState extends State<QagDetailsPage> {
+  VideoPlayerController? controller;
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     const qagId = "f29c5d6f-9838-4c57-a7ec-0612145bb0c8";
@@ -183,7 +193,9 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17),
-              SizedBox(height: AgoraSpacings.x1_5),
+              SizedBox(height: AgoraSpacings.base),
+              AgoraVideoView(videoUrl: response.videoUrl),
+              SizedBox(height: AgoraSpacings.base),
               RichText(
                 text: TextSpan(
                   style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),

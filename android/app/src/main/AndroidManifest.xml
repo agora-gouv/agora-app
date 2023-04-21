@@ -2,6 +2,7 @@
     package="fr.social.gouv.agora.agora">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>
