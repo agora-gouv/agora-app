@@ -43,7 +43,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    const qagId = "f29c5d6f-9838-4c57-a7ec-0612145bb0c8";
+    // const qagId = "f29c5d6f-9838-4c57-a7ec-0612145bb0c8"; // sans réponse
+    const qagId = "889b41ad-321b-4338-8596-df745c546919"; // avec réponse
     return MultiBlocProvider(
       providers: [
         BlocProvider(
