@@ -15,6 +15,7 @@ import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
@@ -240,7 +241,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                 ),
               ),
               SizedBox(height: AgoraSpacings.x1_5),
-              Text(response.transcription, style: AgoraTextStyles.light14),
+              AgoraReadMoreText(response.transcription),
               SizedBox(height: AgoraSpacings.x2),
               Text(QagStrings.questionUtilsTitle, style: AgoraTextStyles.medium18),
               SizedBox(height: AgoraSpacings.base),

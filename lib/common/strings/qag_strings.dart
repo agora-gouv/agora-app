@@ -31,4 +31,6 @@ class QagStrings {
   static const String questionUtilsTitle = "Le ministre a-t-il répondu à votre question ?";
   static const String utils = "Oui !";
   static const String notUtils = "Non !";
+  static const String readMore = "Lire la suite";
+  static const String readLess = "Lire moins";
 }
