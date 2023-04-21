@@ -2,6 +2,7 @@ import 'package:flutter/painting.dart';
 
 class AgoraColors {
   static const Color primaryGrey = Color(0xFF1A1A1A);
+  static const Color primaryGreyOpacity90 = Color(0xE61A1A1A);
   static const Color primaryGreyOpacity80 = Color(0xCC1A1A1A);
   static const Color potBlack = Color(0xFF161616);
   static const Color border = Color(0x30000000);
