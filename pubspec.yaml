@@ -28,6 +28,7 @@ dependencies:
   device_info_plus: ^8.2.0
   permission_handler: ^10.2.0
   video_player: ^2.6.1
+  chewie: ^1.4.0
 
 dev_dependencies:
   flutter_test:
