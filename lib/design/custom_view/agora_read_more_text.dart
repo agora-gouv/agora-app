@@ -63,7 +63,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
     final double minWidth = MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding;
     final double maxWidth = MediaQuery.of(context).size.width;
 
-    final data = "${widget.data}\n\n";
+    final data = widget.data;
     final text = TextSpan(style: textStyle, text: data);
 
     final TextPainter textPainter = TextPainter(
@@ -114,7 +114,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
         if (textPainter.didExceedMaxLines) {
           textSpan = TextSpan(
             style: textStyle,
-            text: _readMore ? "${data.substring(0, endIndex)} ...\n\n" : data,
+            text: _readMore ? "${data.substring(0, endIndex)} ...\n\n" : "$data\n\n",
             children: <TextSpan>[readMoreButton],
           );
         } else {

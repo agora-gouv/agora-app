@@ -5,6 +5,7 @@ import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
+import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/common/client/helper_manager.dart';
 import 'package:agora/common/client/repository_manager.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
@@ -23,28 +24,28 @@ import 'package:agora/design/custom_view/agora_video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:video_player/video_player.dart';
+
+class QagDetailsArguments {
+  final ThematiqueBloc thematiqueBloc;
+  final String qagId;
+
+  QagDetailsArguments({required this.thematiqueBloc, required this.qagId});
+}
 
 class QagDetailsPage extends StatefulWidget {
   static const routeName = "/qagDetailsPage";
+  final String qagId;
+
+  const QagDetailsPage({super.key, required this.qagId});
 
   @override
   State<QagDetailsPage> createState() => _QagDetailsPageState();
 }
 
 class _QagDetailsPageState extends State<QagDetailsPage> {
-  VideoPlayerController? controller;
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    // const qagId = "f29c5d6f-9838-4c57-a7ec-0612145bb0c8"; // sans réponse
-    const qagId = "889b41ad-321b-4338-8596-df745c546919"; // avec réponse
+    final qagId = widget.qagId;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
