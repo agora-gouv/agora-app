@@ -25,4 +25,12 @@ class QagStrings {
 
   static const String supportQuestion = "Soutenir cette question";
   static const String questionSupported = "Question soutenue";
+
+  static const String governmentResponseTitle = "Réponse au gouvernement";
+  static const String answerTo = "En réponse à";
+  static const String questionUtilsTitle = "Le ministre a-t-il répondu à votre question ?";
+  static const String utils = "Oui !";
+  static const String notUtils = "Non !";
+  static const String readMore = "Lire la suite";
+  static const String readLess = "Lire moins";
 }
