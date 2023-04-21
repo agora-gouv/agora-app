@@ -16,6 +16,8 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
   late VideoPlayerController videoPlayerController;
   late ChewieController chewieController;
 
+  final aspectRatio = 1080 / 1920;
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +28,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       autoPlay: false,
       allowedScreenSleep: false,
       allowFullScreen: true,
-      aspectRatio: 1080 / 1920,
+      aspectRatio: aspectRatio,
       showControls: true,
     );
   }
@@ -43,7 +45,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
     return Container(
       color: AgoraColors.potBlack,
       child: AspectRatio(
-        aspectRatio: videoPlayerController.value.aspectRatio,
+        aspectRatio: aspectRatio,
         child: Chewie(controller: chewieController),
       ),
     );

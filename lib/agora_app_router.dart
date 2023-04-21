@@ -36,9 +36,10 @@ class AgoraAppRouter {
         );
         break;
       case QagDetailsPage.routeName:
+        final arguments = settings.arguments as QagDetailsArguments;
         currentRoute = BlocProvider.value(
-          value: settings.arguments as ThematiqueBloc,
-          child: QagDetailsPage(),
+          value: arguments.thematiqueBloc,
+          child: QagDetailsPage(qagId: arguments.qagId),
         );
         break;
       default:
