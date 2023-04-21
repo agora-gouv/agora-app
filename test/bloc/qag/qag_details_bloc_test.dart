@@ -15,7 +15,7 @@ void main() {
 
   const qagId = "qagId";
   blocTest(
-    "fetchQagDetailsEvent - when repository succeed and support is not null - should emit success state",
+    "fetchQagDetailsEvent - when repository succeed with support not null and response null - should emit success state",
     build: () => QagDetailsBloc(
       qagRepository: FakeQagSuccessRepository(),
       deviceIdHelper: FakeDeviceInfoHelper(),
@@ -31,6 +31,7 @@ void main() {
           date: "23 janvier",
           username: "CollectifSauvonsLaRetraite",
           support: QagDetailsSupportViewModel(count: 112, isSupported: true),
+          response: null,
         ),
       ),
     ],
@@ -38,9 +39,9 @@ void main() {
   );
 
   blocTest(
-    "fetchQagDetailsEvent - when repository succeed and support is null - should emit success state",
+    "fetchQagDetailsEvent - when repository succeed with support null and response not null - should emit success state",
     build: () => QagDetailsBloc(
-      qagRepository: FakeQagSuccessWithSupportNullRepository(),
+      qagRepository: FakeQagSuccessWithSupportNullAndResponseNotNullRepository(),
       deviceIdHelper: FakeDeviceInfoHelper(),
     ),
     act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
@@ -54,6 +55,14 @@ void main() {
           date: "23 janvier",
           username: "CollectifSauvonsLaRetraite",
           support: null,
+          response: QagDetailsResponseViewModel(
+            author: "Olivier Véran",
+            authorDescription: "Ministre délégué auprès de...",
+            responseDate: "20 février",
+            videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+            transcription: "Blablabla",
+            feedbackStatus: true,
+          ),
         ),
       ),
     ],

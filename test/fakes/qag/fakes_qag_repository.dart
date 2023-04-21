@@ -15,10 +15,8 @@ class FakeQagSuccessRepository extends QagRepository {
         description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
         date: DateTime(2024, 1, 23),
         username: "CollectifSauvonsLaRetraite",
-        support: QagDetailsSupport(
-          count: 112,
-          isSupported: true,
-        ),
+        support: QagDetailsSupport(count: 112, isSupported: true),
+        response: null,
       ),
     );
   }
@@ -34,7 +32,7 @@ class FakeQagSuccessRepository extends QagRepository {
   }
 }
 
-class FakeQagSuccessWithSupportNullRepository extends FakeQagSuccessRepository {
+class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagSuccessRepository {
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
@@ -49,6 +47,14 @@ class FakeQagSuccessWithSupportNullRepository extends FakeQagSuccessRepository {
         date: DateTime(2024, 1, 23),
         username: "CollectifSauvonsLaRetraite",
         support: null,
+        response: QagDetailsResponse(
+          author: "Olivier Véran",
+          authorDescription: "Ministre délégué auprès de...",
+          responseDate: DateTime(2024, 2, 20),
+          videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+          transcription: "Blablabla",
+          feedbackStatus: true,
+        ),
       ),
     );
   }
