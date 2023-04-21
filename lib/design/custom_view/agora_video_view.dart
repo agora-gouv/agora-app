@@ -26,7 +26,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       autoPlay: false,
       allowedScreenSleep: false,
       allowFullScreen: true,
-      aspectRatio: 16 / 9,
+      aspectRatio: 1080 / 1920,
       showControls: true,
     );
   }
