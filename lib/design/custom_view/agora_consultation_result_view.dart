@@ -1,4 +1,5 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
@@ -33,6 +34,10 @@ class AgoraConsultationResultView extends StatelessWidget {
 
   List<Widget> _buildResponses() {
     final List<Widget> responseWidgets = [];
+    if (isMultipleChoice) {
+      responseWidgets.add(Text(ConsultationStrings.severalResponsePossible, style: AgoraTextStyles.medium14));
+      responseWidgets.add(SizedBox(height: AgoraSpacings.x0_75));
+    }
     for (var response in responses) {
       responseWidgets.add(
         AgoraConsultationResultBar(
@@ -42,9 +47,6 @@ class AgoraConsultationResultView extends StatelessWidget {
         ),
       );
       responseWidgets.add(SizedBox(height: AgoraSpacings.x0_75));
-    }
-    if (isMultipleChoice) {
-      responseWidgets.add(Text("Plusieurs réponses possibles.", style: AgoraTextStyles.medium14));
     }
     return responseWidgets;
   }
