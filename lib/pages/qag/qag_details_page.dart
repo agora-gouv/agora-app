@@ -2,6 +2,9 @@ import 'package:agora/bloc/qag/details/qag_details_bloc.dart';
 import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
 import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
+import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
+import 'package:agora/bloc/qag/feedback/qag_feedback_event.dart';
+import 'package:agora/bloc/qag/feedback/qag_feedback_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
@@ -45,7 +48,6 @@ class QagDetailsPage extends StatefulWidget {
 class _QagDetailsPageState extends State<QagDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    final qagId = widget.qagId;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -53,7 +55,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
             return QagDetailsBloc(
               qagRepository: RepositoryManager.getQagRepository(),
               deviceIdHelper: HelperManager.getDeviceInfoHelper(),
-            )..add(FetchQagDetailsEvent(qagId: qagId));
+            )..add(FetchQagDetailsEvent(qagId: widget.qagId));
           },
         ),
         BlocProvider(
@@ -61,7 +63,13 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
             qagRepository: RepositoryManager.getQagRepository(),
             deviceIdHelper: HelperManager.getDeviceInfoHelper(),
           ),
-        )
+        ),
+        BlocProvider(
+          create: (BuildContext context) => QagFeedbackBloc(
+            qagRepository: RepositoryManager.getQagRepository(),
+            deviceIdHelper: HelperManager.getDeviceInfoHelper(),
+          ),
+        ),
       ],
       child: AgoraScaffold(
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
@@ -128,7 +136,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                                   ),
                                 ),
                                 SizedBox(height: AgoraSpacings.x3),
-                                _buildSupportView(support, qagId),
+                                _buildSupportView(support),
                               ],
                             ],
                           ),
@@ -150,34 +158,43 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     );
   }
 
-  Widget _buildSupportView(QagDetailsSupportViewModel support, String qagId) {
+  Widget _buildSupportView(QagDetailsSupportViewModel support) {
     return BlocBuilder<QagSupportBloc, QagSupportState>(
       builder: (context, supportState) {
         final isSupported = support.isSupported;
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-              child: AgoraButton(
-                icon: _buildIcon(isSupported, supportState),
-                label: _buildLabel(isSupported, supportState),
-                style: _buildButtonStyle(isSupported, supportState),
-                isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
-                onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
-              ),
-            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(width: AgoraSpacings.base),
-                SvgPicture.asset("assets/ic_heard.svg"),
-                SizedBox(width: AgoraSpacings.x0_25),
-                Text(
-                  _buildCount(support, supportState),
-                  style: AgoraTextStyles.medium14,
+                Flexible(
+                  child: AgoraButton(
+                    icon: _buildIcon(isSupported, supportState),
+                    label: _buildLabel(isSupported, supportState),
+                    style: _buildButtonStyle(isSupported, supportState),
+                    isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
+                    onPressed: () => _buildOnPressed(context, widget.qagId, isSupported, supportState),
+                  ),
                 ),
-                SizedBox(width: AgoraSpacings.x0_5),
+                Row(
+                  children: [
+                    SizedBox(width: AgoraSpacings.base),
+                    SvgPicture.asset("assets/ic_heard.svg"),
+                    SizedBox(width: AgoraSpacings.x0_25),
+                    Text(
+                      _buildCount(support, supportState),
+                      style: AgoraTextStyles.medium14,
+                    ),
+                    SizedBox(width: AgoraSpacings.x0_5),
+                  ],
+                ),
               ],
             ),
+            if (supportState is QagSupportErrorState || supportState is QagDeleteSupportErrorState) ...[
+              SizedBox(height: AgoraSpacings.base),
+              AgoraErrorView(),
+            ]
           ],
         );
       },
@@ -259,26 +276,48 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
               SizedBox(height: AgoraSpacings.x2),
               Text(QagStrings.questionUtilsTitle, style: AgoraTextStyles.medium18),
               SizedBox(height: AgoraSpacings.base),
-              Row(
-                children: [
-                  AgoraButton(
-                    icon: "ic_thumb_white.svg",
-                    label: QagStrings.utils,
-                    style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () {
-                      // TODO
-                    },
-                  ),
-                  SizedBox(width: AgoraSpacings.base),
-                  AgoraButton(
-                    icon: "ic_thumb_down_white.svg",
-                    label: QagStrings.notUtils,
-                    style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () {
-                      // TODO
-                    },
-                  ),
-                ],
+              BlocBuilder<QagFeedbackBloc, QagFeedbackState>(
+                builder: (context, feedbackState) {
+                  final qagFeedbackBloc = context.read<QagFeedbackBloc>();
+                  bool isThumbUpClicked = true;
+                  return feedbackState is QagFeedbackSuccessState ||
+                          (feedbackState is QagFeedbackInitialState && response.feedbackStatus)
+                      ? Text(QagStrings.feedback)
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                AgoraButton(
+                                  icon: "ic_thumb_white.svg",
+                                  label: QagStrings.utils,
+                                  style: AgoraButtonStyle.primaryButtonStyle,
+                                  isLoading: feedbackState is QagFeedbackLoadingState && isThumbUpClicked,
+                                  onPressed: () {
+                                    isThumbUpClicked = true;
+                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: true));
+                                  },
+                                ),
+                                SizedBox(width: AgoraSpacings.base),
+                                AgoraButton(
+                                  icon: "ic_thumb_down_white.svg",
+                                  label: QagStrings.notUtils,
+                                  style: AgoraButtonStyle.primaryButtonStyle,
+                                  isLoading: feedbackState is QagFeedbackLoadingState && !isThumbUpClicked,
+                                  onPressed: () {
+                                    isThumbUpClicked = false;
+                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: false));
+                                  },
+                                ),
+                              ],
+                            ),
+                            if (feedbackState is QagFeedbackErrorState) ...[
+                              SizedBox(height: AgoraSpacings.base),
+                              AgoraErrorView(),
+                            ]
+                          ],
+                        );
+                },
               ),
             ],
           ),

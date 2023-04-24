@@ -196,4 +196,40 @@ void main() {
       expect(response, DeleteSupportQagFailedResponse());
     });
   });
+
+  group("Give qag feedback", () {
+    test("when success should return success", () async {
+      // Given
+      dioAdapter.onPost(
+        "/qags/$qagId/feedback",
+        (server) => server.reply(HttpStatus.ok, null),
+        headers: {"accept": "application/json", "deviceId": deviceId},
+        data: {"isHelpful": true},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.giveQagResponseFeedback(qagId: qagId, deviceId: deviceId, isHelpful: true);
+
+      // Then
+      expect(response, QagFeedbackSuccessResponse());
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onPost(
+        "/qags/$qagId/feedback",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {"accept": "application/json"},
+        data: {"isHelpful": true},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.giveQagResponseFeedback(qagId: qagId, deviceId: deviceId, isHelpful: true);
+
+      // Then
+      expect(response, QagFeedbackFailedResponse());
+    });
+  });
 }
