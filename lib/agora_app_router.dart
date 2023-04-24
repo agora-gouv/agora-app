@@ -1,4 +1,3 @@
-import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
 import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/consultation_summary_page.dart';
@@ -23,9 +22,10 @@ class AgoraAppRouter {
     Widget currentRoute;
     switch (settings.name) {
       case ConsultationDetailsPage.routeName:
+        final arguments = settings.arguments as ConsultationDetailsArguments;
         currentRoute = BlocProvider.value(
-          value: settings.arguments as ThematiqueBloc,
-          child: ConsultationDetailsPage(),
+          value: arguments.thematiqueBloc,
+          child: ConsultationDetailsPage(consultationId: arguments.consultationId),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:

@@ -1,6 +1,9 @@
+import 'package:agora/bloc/deeplink/deeplink_event.dart';
+import 'package:agora/bloc/deeplink/deeplink_state.dart';
 import 'package:agora/bloc/notification/notification_bloc.dart';
 import 'package:agora/bloc/notification/notification_event.dart';
 import 'package:agora/bloc/notification/notification_state.dart';
+import 'package:agora/bloc/qag/details/deeplink_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
@@ -31,23 +34,8 @@ class LoadingPage extends StatefulWidget {
   State<LoadingPage> createState() => _LoadingPageState();
 }
 
-class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
-  bool hasOpenSetting = false;
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (state == AppLifecycleState.resumed) {
-      final notificationStorage = StorageManager.getNotificationStorageClient();
-      if (hasOpenSetting) {
-        hasOpenSetting = false;
-        if (await Permission.notification.isGranted) {
-          notificationStorage.save(true);
-        } else {
-          notificationStorage.delete();
-        }
-      }
-    }
-  }
+class _LoadingPageState extends State<LoadingPage> {
+  bool isFirstTimeInitDeepLinkListener = true;
 
   @override
   Widget build(BuildContext context) {
@@ -66,99 +54,127 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
           )..add(RequestNotificationPermissionEvent()),
         ),
+        BlocProvider(create: (context) => DeeplinkBloc(deeplinkHelper: HelperManager.getDeepLinkHelper())),
       ],
       child: AgoraScaffold(
         child: BlocListener<NotificationBloc, NotificationState>(
-          listener: (context, state) async {
-            if (state is AskNotificationConsentState) {
+          listener: (context, notificationState) async {
+            if (notificationState is AskNotificationConsentState) {
               _showNotificationDialog(context);
-            } else if (state is AutoAskNotificationConsentState) {
+            } else if (notificationState is AutoAskNotificationConsentState) {
               await Permission.notification.request();
             }
           },
-          child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
-            builder: (context, state) {
-              if (state is ThematiqueInitialLoadingState) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is ThematiqueErrorState) {
-                return Center(child: AgoraErrorView());
-              } else if (state is ThematiqueSuccessState) {
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AgoraSpacings.horizontalPadding,
-                      vertical: AgoraSpacings.x2,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: _buildThematiques(state.thematiqueViewModels) +
-                          [
-                            SizedBox(height: AgoraSpacings.x2),
-                            AgoraButton(
-                              label: "Détails d'une consultation",
-                              style: AgoraButtonStyle.primaryButtonStyle,
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  ConsultationDetailsPage.routeName,
-                                  arguments: BlocProvider.of<ThematiqueBloc>(context),
-                                );
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.x0_5),
-                            AgoraButton(
-                              label: "Détails d'une question au gouvernement sans réponse",
-                              style: AgoraButtonStyle.primaryButtonStyle,
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  QagDetailsPage.routeName,
-                                  arguments: QagDetailsArguments(
-                                    thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                                    qagId: "f29c5d6f-9838-4c57-a7ec-0612145bb0c8",
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.x0_5),
-                            AgoraButton(
-                              label: "Détails d'une question au gouvernement avec réponse",
-                              style: AgoraButtonStyle.primaryButtonStyle,
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  QagDetailsPage.routeName,
-                                  arguments: QagDetailsArguments(
-                                    thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                                    qagId: "889b41ad-321b-4338-8596-df745c546919",
-                                  ),
-                                );
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.x0_5),
-                            AgoraButton(
-                              label: "Poser une question au gouvernement",
-                              style: AgoraButtonStyle.primaryButtonStyle,
-                              onPressed: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  QagAskQuestionPage.routeName,
-                                  arguments: state.thematiqueViewModels,
-                                );
-                              },
-                            ),
-                          ],
-                    ),
-                  ),
-                );
-              } else {
-                return Container();
+          child: BlocConsumer<ThematiqueBloc, ThematiqueState>(
+            listener: (context, thematiqueState) {
+              if (isFirstTimeInitDeepLinkListener) {
+                context.read<DeeplinkBloc>().add(InitDeeplinkListenerEvent());
+                isFirstTimeInitDeepLinkListener = false;
               }
+            },
+            builder: (context, thematiqueState) {
+              return BlocListener<DeeplinkBloc, DeeplinkState>(
+                listener: (context, deeplinkState) {
+                  if (deeplinkState is ConsultationDeeplinkState) {
+                    Navigator.pushNamed(
+                      context,
+                      ConsultationDetailsPage.routeName,
+                      arguments: ConsultationDetailsArguments(
+                        thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
+                        consultationId: deeplinkState.consultationId,
+                      ),
+                    );
+                  }
+                },
+                child: buildView(context, thematiqueState),
+              );
             },
           ),
         ),
       ),
     );
+  }
+
+  Widget buildView(BuildContext context, ThematiqueState thematiqueState) {
+    if (thematiqueState is ThematiqueInitialLoadingState) {
+      return Center(child: CircularProgressIndicator());
+    } else if (thematiqueState is ThematiqueErrorState) {
+      return Center(child: AgoraErrorView());
+    } else if (thematiqueState is ThematiqueSuccessState) {
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AgoraSpacings.horizontalPadding,
+            vertical: AgoraSpacings.x2,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _buildThematiques(thematiqueState.thematiqueViewModels) +
+                [
+                  SizedBox(height: AgoraSpacings.x2),
+                  AgoraButton(
+                    label: "Détails d'une consultation",
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        ConsultationDetailsPage.routeName,
+                        arguments: ConsultationDetailsArguments(
+                          thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
+                          consultationId: "c29255f2-10ca-4be5-aab1-801ea173337c",
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  AgoraButton(
+                    label: "Détails d'une question au gouvernement sans réponse",
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        QagDetailsPage.routeName,
+                        arguments: QagDetailsArguments(
+                          thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
+                          qagId: "f29c5d6f-9838-4c57-a7ec-0612145bb0c8",
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  AgoraButton(
+                    label: "Détails d'une question au gouvernement avec réponse",
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        QagDetailsPage.routeName,
+                        arguments: QagDetailsArguments(
+                          thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
+                          qagId: "889b41ad-321b-4338-8596-df745c546919",
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  AgoraButton(
+                    label: "Poser une question au gouvernement",
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        QagAskQuestionPage.routeName,
+                        arguments: thematiqueState.thematiqueViewModels,
+                      );
+                    },
+                  ),
+                ],
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   void _showNotificationDialog(BuildContext context) {
