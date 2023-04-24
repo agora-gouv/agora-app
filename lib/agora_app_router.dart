@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AgoraAppRouter {
-  static Map<String, WidgetBuilder> handleAgoraRoute() {
+  static Map<String, WidgetBuilder> handleAgoraRoutes() {
     return {
       LoadingPage.routeName: (context) => LoadingPage(),
       ConsultationQuestionPage.routeName: (context) => ConsultationQuestionPage(),
