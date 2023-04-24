@@ -10,6 +10,12 @@ abstract class QagRepository {
   Future<SupportQagRepositoryResponse> supportQag({required String qagId, required String deviceId});
 
   Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId});
+
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required String deviceId,
+    required bool isHelpful,
+  });
 }
 
 class QagDioRepository extends QagRepository {
@@ -91,6 +97,25 @@ class QagDioRepository extends QagRepository {
       return DeleteSupportQagFailedResponse();
     }
   }
+
+  @override
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required String deviceId,
+    required bool isHelpful,
+  }) async {
+    try {
+      await httpClient.post(
+        "/qags/$qagId/feedback",
+        headers: {"deviceId": deviceId},
+        data: {"isHelpful": isHelpful},
+      );
+      return QagFeedbackSuccessResponse();
+    } catch (e) {
+      Log.e("giveQagResponseFeedback failed", e);
+      return QagFeedbackFailedResponse();
+    }
+  }
 }
 
 abstract class GetQagDetailsRepositoryResponse extends Equatable {
@@ -126,3 +151,12 @@ abstract class DeleteSupportQagRepositoryResponse extends Equatable {
 class DeleteSupportQagSucceedResponse extends DeleteSupportQagRepositoryResponse {}
 
 class DeleteSupportQagFailedResponse extends DeleteSupportQagRepositoryResponse {}
+
+abstract class QagFeedbackRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class QagFeedbackSuccessResponse extends QagFeedbackRepositoryResponse {}
+
+class QagFeedbackFailedResponse extends QagFeedbackRepositoryResponse {}

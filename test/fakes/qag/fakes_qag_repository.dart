@@ -30,6 +30,15 @@ class FakeQagSuccessRepository extends QagRepository {
   Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId}) async {
     return DeleteSupportQagSucceedResponse();
   }
+
+  @override
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required String deviceId,
+    required bool isHelpful,
+  }) async {
+    return QagFeedbackSuccessResponse();
+  }
 }
 
 class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagSuccessRepository {
@@ -87,5 +96,14 @@ class FakeQagFailureRepository extends QagRepository {
   @override
   Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId}) async {
     return DeleteSupportQagFailedResponse();
+  }
+
+  @override
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required String deviceId,
+    required bool isHelpful,
+  }) async {
+    return QagFeedbackFailedResponse();
   }
 }
