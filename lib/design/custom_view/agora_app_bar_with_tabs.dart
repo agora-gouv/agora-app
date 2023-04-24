@@ -20,7 +20,7 @@ class AgoraAppBarWithTabs extends StatefulWidget {
     this.needTopDiagonal = true,
     this.needToolbar = false,
     this.onToolbarBackClick,
-  });
+  }) : assert(onToolbarBackClick == null || needToolbar);
 
   @override
   State<AgoraAppBarWithTabs> createState() => _AgoraAppBarWithTabsState();
