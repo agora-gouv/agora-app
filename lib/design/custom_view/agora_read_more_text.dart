@@ -29,7 +29,7 @@ class AgoraReadMoreText extends StatefulWidget {
     this.trimCollapsedText = QagStrings.readLess,
     this.colorClickableText = AgoraColors.blueFrance,
     this.trimLength = 240,
-    this.trimLines = 8,
+    this.trimLines = 12,
     this.trimMode = AgoraTrimMode.line,
     this.style = AgoraTextStyles.light14,
     this.textAlign = TextAlign.start,
@@ -54,18 +54,20 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
     final textStyle = widget.style;
     final colorClickableText = widget.colorClickableText;
 
-    final TextSpan readMoreButton = TextSpan(
+    const double minWidth = 0;
+    final double maxWidth = MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2;
+
+    const ellipsisText = " ...";
+    final data = widget.data;
+    final text = TextSpan(style: textStyle, text: data);
+
+    final readMoreButton = TextSpan(
       text: _readMore ? widget.trimExpandedText : widget.trimCollapsedText,
       style: textStyle.copyWith(color: colorClickableText),
       recognizer: TapGestureRecognizer()..onTap = _onReadMoreLink,
     );
 
-    final double minWidth = MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding;
-    final double maxWidth = MediaQuery.of(context).size.width;
-
-    final data = widget.data;
-    final text = TextSpan(style: textStyle, text: data);
-
+    // calculate "Lire la suite" text size
     final TextPainter textPainter = TextPainter(
       text: readMoreButton,
       textAlign: textAlign,
@@ -76,6 +78,12 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
     textPainter.layout(minWidth: minWidth, maxWidth: maxWidth);
     final linkSize = textPainter.size;
 
+    // calculate " ..." text size
+    textPainter.text = TextSpan(style: textStyle, text: ellipsisText);
+    textPainter.layout(minWidth: minWidth, maxWidth: maxWidth);
+    final ellipsisSize = textPainter.size;
+
+    // calculate data text size
     textPainter.text = text;
     textPainter.layout(minWidth: minWidth, maxWidth: maxWidth);
     final textSize = textPainter.size;
@@ -84,7 +92,8 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
     if (linkSize.width < maxWidth) {
       final pos = textPainter.getPositionForOffset(
         Offset(
-          textSize.width - linkSize.width,
+          textSize.width - ellipsisSize.width,
+          // textSize.width - ellipsisSize.width - linkSize.width, // need this when "Lire la suite" is at the end of the text (not in new line)
           textSize.height,
         ),
       );
@@ -114,7 +123,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
         if (textPainter.didExceedMaxLines) {
           textSpan = TextSpan(
             style: textStyle,
-            text: _readMore ? "${data.substring(0, endIndex)} ...\n\n" : "$data\n\n",
+            text: _readMore ? "${data.substring(0, endIndex)}$ellipsisText\n\n" : "$data\n\n",
             children: <TextSpan>[readMoreButton],
           );
         } else {
