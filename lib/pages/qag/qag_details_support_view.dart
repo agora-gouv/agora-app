@@ -26,21 +26,22 @@ class QagDetailsSupportView extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Stack(
+              alignment: Alignment.centerLeft,
               children: [
-                Flexible(
-                  child: AgoraButton(
-                    icon: _buildIcon(isSupported, supportState),
-                    label: _buildLabel(isSupported, supportState),
-                    style: _buildButtonStyle(isSupported, supportState),
-                    isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
-                    onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
-                  ),
+                AgoraButton(
+                  icon: _buildIcon(isSupported, supportState),
+                  label: _buildLabel(isSupported, supportState),
+                  style: _buildButtonStyle(isSupported, supportState),
+                  isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
+                  needFixSize: true,
+                  fixSize: 40,
+                  onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SizedBox(width: AgoraSpacings.base),
                     SvgPicture.asset("assets/ic_heard.svg"),
                     SizedBox(width: AgoraSpacings.x0_25),
                     Text(
