@@ -7,6 +7,8 @@ class AgoraButton extends StatelessWidget {
   final String? icon;
   final ButtonStyle style;
   final VoidCallback? onPressed;
+  final bool needFixSize;
+  final double? fixSize;
 
   AgoraButton({
     this.isLoading = false,
@@ -14,27 +16,35 @@ class AgoraButton extends StatelessWidget {
     this.icon,
     required this.style,
     required this.onPressed,
-  });
+    this.needFixSize = false,
+    this.fixSize,
+  }) : assert(needFixSize == false || (needFixSize == true && fixSize != null));
 
   @override
   Widget build(BuildContext context) {
+    Widget child;
     if (isLoading) {
-      return Center(child: CircularProgressIndicator());
+      child = Center(child: CircularProgressIndicator());
+    } else {
+      final buttonLabel = Text(label, textAlign: TextAlign.center);
+      if (icon != null) {
+        child = ElevatedButton.icon(
+          style: style,
+          onPressed: onPressed,
+          icon: SvgPicture.asset("assets/$icon"),
+          label: buttonLabel,
+        );
+      } else {
+        child = ElevatedButton(
+          style: style,
+          onPressed: onPressed,
+          child: buttonLabel,
+        );
+      }
     }
-
-    final buttonLabel = Text(label, textAlign: TextAlign.center);
-    if (icon != null) {
-      return ElevatedButton.icon(
-        style: style,
-        onPressed: onPressed,
-        icon: SvgPicture.asset("assets/$icon"),
-        label: buttonLabel,
-      );
+    if (needFixSize) {
+      return SizedBox(height: fixSize!, child: child);
     }
-    return ElevatedButton(
-      style: style,
-      onPressed: onPressed,
-      child: buttonLabel,
-    );
+    return child;
   }
 }
