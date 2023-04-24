@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
+import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/common/client/repository_manager.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -20,12 +21,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class ConsultationDetailsArguments {
+  final ThematiqueBloc thematiqueBloc;
+  final String consultationId;
+
+  ConsultationDetailsArguments({required this.thematiqueBloc, required this.consultationId});
+}
+
 class ConsultationDetailsPage extends StatelessWidget {
   static const routeName = "/consultationDetailsPage";
+  final String consultationId;
+
+  const ConsultationDetailsPage({super.key, required this.consultationId});
 
   @override
   Widget build(BuildContext context) {
-    const consultationId = "c29255f2-10ca-4be5-aab1-801ea173337c";
     return BlocProvider(
       create: (BuildContext context) {
         return ConsultationDetailsBloc(
