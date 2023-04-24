@@ -50,7 +50,7 @@ class QagDioRepository extends QagRepository {
                   responseDate: (qagDetailsResponse["responseDate"] as String).parseToDateTime(),
                   videoUrl: qagDetailsResponse["videoUrl"] as String,
                   transcription: qagDetailsResponse["transcription"] as String,
-                  feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool?,
+                  feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool,
                 )
               : null,
         ),
