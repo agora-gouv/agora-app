@@ -24,7 +24,7 @@ void main() {
           title: "Développer le covoiturage au quotidien",
           cover: "imageEnBase64",
           thematiqueId: "7",
-          endDate: "jusqu'au 03 mars",
+          endDate: "jusqu'au 3 mars",
           questionCount: "5 à 10 questions",
           estimatedTime: "5 minutes",
           participantCount: 15035,

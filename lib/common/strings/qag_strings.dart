@@ -18,7 +18,7 @@ class QagStrings {
   static const String yourNameTitle = "Votre prénom";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
-      "Durant la phase d’expérimentation, nous vous proposons d’envoyer votre question par email. Elle apparaîtra dans les 48h sur l’application.";
+      "Durant la phase d’expérimentation, nous vous proposons d’envoyer votre question par e-mail. Elle apparaîtra dans les 48h sur l’application.";
   static const String askQuestionConfigureMail = "Veuillez configurer l'application Mail par défaut de votre appareil.";
   static const String askQuestionMailSubject = "Ma question au gouvernement";
   static const String sendByEmail = "Envoyer par e-mail";
@@ -26,7 +26,7 @@ class QagStrings {
   static const String supportQuestion = "Soutenir cette question";
   static const String questionSupported = "Question soutenue";
 
-  static const String governmentResponseTitle = "Réponse au gouvernement";
+  static const String governmentResponseTitle = "Réponse du gouvernement";
   static const String answerTo = "En réponse à";
   static const String questionUtilsTitle = "Le ministre a-t-il répondu à votre question ?";
   static const String utils = "Oui !";
