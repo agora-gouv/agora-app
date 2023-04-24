@@ -109,6 +109,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                                 Text(viewModel.description, style: AgoraTextStyles.light14)
                               else
                                 AgoraReadMoreText(viewModel.description, trimLines: 3),
+                              SizedBox(height: AgoraSpacings.base),
                               if (support != null) ...[
                                 RichText(
                                   text: TextSpan(
