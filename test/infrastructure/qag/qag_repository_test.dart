@@ -14,7 +14,7 @@ void main() {
   const deviceId = "deviceId";
 
   group("Fetch qag details", () {
-    test("when success and support/response are not null should return qag details", () async {
+    test("when success with support not null and response null should return qag details", () async {
       // Given
       dioAdapter.onGet(
         "/qags/$qagId",
@@ -28,6 +28,48 @@ void main() {
             "date": "2024-01-23",
             "username": "Henri J.",
             "support": {"count": 112, "isSupported": true},
+            "response": null
+          },
+        ),
+        headers: {"accept": "application/json", "deviceId": deviceId},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQagDetails(qagId: qagId, deviceId: deviceId);
+
+      // Then
+      expect(
+        response,
+        GetQagDetailsSucceedResponse(
+          qagDetails: QagDetails(
+            id: qagId,
+            thematiqueId: "thematiqueId",
+            title: "Titre de la QaG",
+            description: "Description textuelle",
+            date: DateTime(2024, 1, 23),
+            username: "Henri J.",
+            support: QagDetailsSupport(count: 112, isSupported: true),
+            response: null,
+          ),
+        ),
+      );
+    });
+
+    test("when success with support null and response not null should return qag details", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/$qagId",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "id": "qagId",
+            "thematiqueId": "thematiqueId",
+            "title": "Titre de la QaG",
+            "description": "Description textuelle",
+            "date": "2024-01-23",
+            "username": "Henri J.",
+            "support": null,
             "response": {
               "author": "Olivier Véran",
               "authorDescription": "Ministre délégué auprès de...",
@@ -56,7 +98,7 @@ void main() {
             description: "Description textuelle",
             date: DateTime(2024, 1, 23),
             username: "Henri J.",
-            support: QagDetailsSupport(count: 112, isSupported: true),
+            support: null,
             response: QagDetailsResponse(
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",
@@ -65,104 +107,6 @@ void main() {
               transcription: "Blablabla",
               feedbackStatus: true,
             ),
-          ),
-        ),
-      );
-    });
-
-    test("when success and response is not null and feedbackStatus null should return qag details", () async {
-      // Given
-      dioAdapter.onGet(
-        "/qags/$qagId",
-        (server) => server.reply(
-          HttpStatus.ok,
-          {
-            "id": "qagId",
-            "thematiqueId": "thematiqueId",
-            "title": "Titre de la QaG",
-            "description": "Description textuelle",
-            "date": "2024-01-23",
-            "username": "Henri J.",
-            "support": null,
-            "response": {
-              "author": "Olivier Véran",
-              "authorDescription": "Ministre délégué auprès de...",
-              "responseDate": "2024-02-20",
-              "videoUrl": "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
-              "transcription": "Blablabla",
-              "feedbackStatus": null
-            }
-          },
-        ),
-        headers: {"accept": "application/json", "deviceId": deviceId},
-      );
-
-      // When
-      final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQagDetails(qagId: qagId, deviceId: deviceId);
-
-      // Then
-      expect(
-        response,
-        GetQagDetailsSucceedResponse(
-          qagDetails: QagDetails(
-            id: qagId,
-            thematiqueId: "thematiqueId",
-            title: "Titre de la QaG",
-            description: "Description textuelle",
-            date: DateTime(2024, 1, 23),
-            username: "Henri J.",
-            support: null,
-            response: QagDetailsResponse(
-              author: "Olivier Véran",
-              authorDescription: "Ministre délégué auprès de...",
-              responseDate: DateTime(2024, 2, 20),
-              videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
-              transcription: "Blablabla",
-              feedbackStatus: null,
-            ),
-          ),
-        ),
-      );
-    });
-
-    test("when success and support/response are null should return qag details", () async {
-      // Given
-      dioAdapter.onGet(
-        "/qags/$qagId",
-        (server) => server.reply(
-          HttpStatus.ok,
-          {
-            "id": "qagId",
-            "thematiqueId": "thematiqueId",
-            "title": "Titre de la QaG",
-            "description": "Description textuelle",
-            "date": "2024-01-23",
-            "username": "Henri J.",
-            "support": null,
-            "response": null,
-          },
-        ),
-        headers: {"accept": "application/json", "deviceId": deviceId},
-      );
-
-      // When
-      final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQagDetails(qagId: qagId, deviceId: deviceId);
-
-      // Then
-      expect(
-        response,
-        GetQagDetailsSucceedResponse(
-          qagDetails: QagDetails(
-            id: qagId,
-            thematiqueId: "thematiqueId",
-            title: "Titre de la QaG",
-            description: "Description textuelle",
-            date: DateTime(2024, 1, 23),
-            username: "Henri J.",
-            support: null,
-            response: null,
           ),
         ),
       );

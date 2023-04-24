@@ -53,7 +53,7 @@ class QagDetailsResponse extends Equatable {
   final DateTime responseDate;
   final String videoUrl;
   final String transcription;
-  final bool? feedbackStatus;
+  final bool feedbackStatus;
 
   QagDetailsResponse({
     required this.author,
@@ -65,7 +65,7 @@ class QagDetailsResponse extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         author,
         authorDescription,
         responseDate,
