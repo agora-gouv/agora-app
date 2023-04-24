@@ -64,17 +64,20 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        AgoraButton(
-                          label: ConsultationStrings.returnToHome,
-                          style: AgoraButtonStyle.lightGreyWithBorderButtonStyle,
-                          onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              LoadingPage.routeName,
-                              (route) => false,
-                            );
-                          },
+                        Flexible(
+                          child: AgoraButton(
+                            label: ConsultationStrings.returnToHome,
+                            style: AgoraButtonStyle.lightGreyWithBorderButtonStyle,
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                LoadingPage.routeName,
+                                (route) => false,
+                              );
+                            },
+                          ),
                         ),
+                        SizedBox(width: AgoraSpacings.base),
                         AgoraButton(
                           label: ConsultationStrings.share,
                           icon: "ic_share_white.svg",

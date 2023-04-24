@@ -83,10 +83,12 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
               } else if (state is ThematiqueErrorState) {
                 return Center(child: AgoraErrorView());
               } else if (state is ThematiqueSuccessState) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                return SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AgoraSpacings.horizontalPadding,
+                      vertical: AgoraSpacings.x2,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: _buildThematiques(state.thematiqueViewModels) +
@@ -145,7 +147,6 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
                                 );
                               },
                             ),
-                            SizedBox(height: AgoraSpacings.x3),
                           ],
                     ),
                   ),
