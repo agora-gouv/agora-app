@@ -34,7 +34,10 @@ class AgoraReadMoreText extends StatefulWidget {
     this.style = AgoraTextStyles.light14,
     this.textAlign = TextAlign.start,
     this.textDirection = TextDirection.ltr,
-  }) : super(key: key);
+  })  : assert(
+          (trimMode == AgoraTrimMode.line && trimLines > 0) || (trimMode == AgoraTrimMode.length && trimLength > 0),
+        ),
+        super(key: key);
 
   @override
   AgoraReadMoreTextState createState() => AgoraReadMoreTextState();
