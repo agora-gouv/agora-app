@@ -87,7 +87,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                           icon: "ic_share_white.svg",
                           style: AgoraButtonStyle.primaryButtonStyle,
                           onPressed: () async {
-                            Share.share('Consultation $title agora://consultation.gouv.fr/$consultationId');
+                            Share.share('Consultation : $title\nagora://consultation.gouv.fr/$consultationId');
                           },
                         ),
                       ],
