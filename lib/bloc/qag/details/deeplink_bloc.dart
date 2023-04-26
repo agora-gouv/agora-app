@@ -20,7 +20,7 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
     InitDeeplinkListenerEvent event,
     Emitter<DeeplinkState> emit,
   ) async {
-    final uri = await deeplinkHelper.getInitialUri();
+    final uri = await deeplinkHelper.getInitUri();
     if (uri != null) {
       Log.d("deeplink initiate uri : $uri");
       emit(DeeplinkLoadingState());
@@ -29,7 +29,6 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
           _handleConsultationDeeplink(uri, emit, "deeplink initiate uri no consultation id match");
           break;
         case DeeplinkImplHelper.qagHost:
-          emit(ConsultationDeeplinkState(consultationId: "c29255f2-10ca-4be5-aab1-801ea173337c")); // TODO
           break;
       }
     }
@@ -37,7 +36,7 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
     await emit.onEach(
       deeplinkHelper.getUriLinkStream(),
       onData: (uri) {
-        Log.d("agora: deeplink listen uri : $uri");
+        Log.d("deeplink listen uri : $uri");
         emit(DeeplinkLoadingState());
         if (uri != null) {
           switch (uri.host) {
@@ -45,7 +44,6 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
               _handleConsultationDeeplink(uri, emit, "deeplink listen uri no consultation id match");
               break;
             case DeeplinkImplHelper.qagHost:
-              emit(ConsultationDeeplinkState(consultationId: "c29255f2-10ca-4be5-aab1-801ea173337c")); // TODO modify
               break;
           }
         }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:uni_links/uni_links.dart';
 
 abstract class DeeplinkHelper {
-  Future<Uri?> getInitialUri();
+  Future<Uri?> getInitUri();
 
   Stream<Uri?> getUriLinkStream();
 }
@@ -13,7 +13,7 @@ class DeeplinkImplHelper extends DeeplinkHelper {
   static const String qagHost = "qag.gouv.fr";
 
   @override
-  Future<Uri?> getInitialUri() async {
+  Future<Uri?> getInitUri() async {
     return await getInitialUri();
   }
 

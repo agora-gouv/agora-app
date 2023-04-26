@@ -27,15 +27,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class LoadingPage extends StatefulWidget {
+class LoadingPage extends StatelessWidget {
   static const routeName = "/";
-
-  @override
-  State<LoadingPage> createState() => _LoadingPageState();
-}
-
-class _LoadingPageState extends State<LoadingPage> {
-  bool isFirstTimeInitDeepLinkListener = true;
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +60,9 @@ class _LoadingPageState extends State<LoadingPage> {
           },
           child: BlocConsumer<ThematiqueBloc, ThematiqueState>(
             listener: (context, thematiqueState) {
-              if (isFirstTimeInitDeepLinkListener) {
+              final deeplinkState = context.read<DeeplinkBloc>().state;
+              if (deeplinkState is DeeplinkInitialState) {
                 context.read<DeeplinkBloc>().add(InitDeeplinkListenerEvent());
-                isFirstTimeInitDeepLinkListener = false;
               }
             },
             builder: (context, thematiqueState) {

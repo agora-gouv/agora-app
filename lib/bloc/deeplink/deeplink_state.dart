@@ -17,5 +17,3 @@ class ConsultationDeeplinkState extends DeeplinkState {
   @override
   List<Object?> get props => [consultationId];
 }
-
-class DeeplinkErrorState extends DeeplinkState {}

@@ -58,7 +58,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       needTopDiagonal: false,
                       needToolbar: true,
                       onToolbarBackClick: () {
-                        Navigator.pushNamedAndRemoveUntil(context, LoadingPage.routeName, (route) => false);
+                        Navigator.popUntil(context, ModalRoute.withName(LoadingPage.routeName));
                       },
                       topChild: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +86,11 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                             participantCount: viewModel.participantCount,
                             results: viewModel.results,
                           ),
-                          ConsultationSummaryEtEnsuiteTabContent(etEnsuiteViewModel: viewModel.etEnsuite),
+                          ConsultationSummaryEtEnsuiteTabContent(
+                            title: viewModel.title,
+                            consultationId: consultationId,
+                            etEnsuiteViewModel: viewModel.etEnsuite,
+                          ),
                         ],
                       ),
                     ),
