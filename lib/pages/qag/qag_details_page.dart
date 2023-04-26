@@ -22,6 +22,7 @@ import 'package:agora/pages/qag/qag_details_response_view.dart';
 import 'package:agora/pages/qag/qag_details_support_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 
 class QagDetailsArguments {
   final ThematiqueBloc thematiqueBloc;
@@ -88,7 +89,9 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                           label: QagStrings.share,
                           style: AgoraButtonStyle.lightGreyButtonStyle,
                           onPressed: () {
-                            // TODO
+                            Share.share(
+                              'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${widget.qagId}',
+                            );
                           },
                         ),
                       ),
