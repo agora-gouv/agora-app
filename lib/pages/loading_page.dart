@@ -77,6 +77,15 @@ class LoadingPage extends StatelessWidget {
                         consultationId: deeplinkState.consultationId,
                       ),
                     );
+                  } else if (deeplinkState is QagDeeplinkState) {
+                    Navigator.pushNamed(
+                      context,
+                      QagDetailsPage.routeName,
+                      arguments: QagDetailsArguments(
+                        thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
+                        qagId: deeplinkState.qagId,
+                      ),
+                    );
                   }
                 },
                 child: buildView(context, thematiqueState),

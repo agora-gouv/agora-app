@@ -17,3 +17,14 @@ class ConsultationDeeplinkState extends DeeplinkState {
   @override
   List<Object?> get props => [consultationId];
 }
+
+class QagDeeplinkState extends DeeplinkState {
+  final String qagId;
+
+  QagDeeplinkState({required this.qagId});
+
+  @override
+  List<Object?> get props => [qagId];
+}
+
+class DeeplinkEmptyState extends DeeplinkState {}
