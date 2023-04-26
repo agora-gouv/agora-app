@@ -52,7 +52,6 @@ class DeeplinkBloc extends Bloc<DeeplinkEvent, DeeplinkState> {
           break;
       }
     } else {
-      Log.e("deeplink initiate uri : null uri error");
       emit(DeeplinkEmptyState());
     }
 
