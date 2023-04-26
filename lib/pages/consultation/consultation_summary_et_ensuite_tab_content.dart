@@ -9,11 +9,19 @@ import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
+  final String title;
+  final String consultationId;
   final ConsultationSummaryEtEnsuiteViewModel etEnsuiteViewModel;
 
-  const ConsultationSummaryEtEnsuiteTabContent({super.key, required this.etEnsuiteViewModel});
+  const ConsultationSummaryEtEnsuiteTabContent({
+    super.key,
+    required this.title,
+    required this.consultationId,
+    required this.etEnsuiteViewModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +77,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                             label: ConsultationStrings.returnToHome,
                             style: AgoraButtonStyle.lightGreyWithBorderButtonStyle,
                             onPressed: () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                LoadingPage.routeName,
-                                (route) => false,
-                              );
+                              Navigator.popUntil(context, ModalRoute.withName(LoadingPage.routeName));
                             },
                           ),
                         ),
@@ -82,8 +86,8 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                           label: ConsultationStrings.share,
                           icon: "ic_share_white.svg",
                           style: AgoraButtonStyle.primaryButtonStyle,
-                          onPressed: () {
-                            // TODO share
+                          onPressed: () async {
+                            Share.share('Consultation $title agora://consultation.gouv.fr/$consultationId');
                           },
                         ),
                       ],
