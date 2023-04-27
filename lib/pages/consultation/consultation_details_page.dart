@@ -2,7 +2,7 @@ import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
-import 'package:agora/common/client/repository_manager.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';

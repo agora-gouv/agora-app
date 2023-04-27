@@ -1,7 +1,7 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_bloc.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_event.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_state.dart';
-import 'package:agora/common/client/repository_manager.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_text_styles.dart';

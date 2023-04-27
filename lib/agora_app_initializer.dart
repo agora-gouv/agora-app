@@ -1,5 +1,5 @@
 import 'package:agora/agora_app.dart';
-import 'package:agora/common/client/service_manager.dart';
+import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
