@@ -1,4 +1,4 @@
-package fr.social.gouv.agora.agora
+package fr.social.gouv.agora
 
 import io.flutter.embedding.android.FlutterActivity
 
