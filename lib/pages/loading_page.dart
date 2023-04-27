@@ -10,6 +10,7 @@ import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/client/helper_manager.dart';
 import 'package:agora/common/client/repository_manager.dart';
+import 'package:agora/common/client/service_manager.dart';
 import 'package:agora/common/client/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/agora_button.dart';
@@ -32,6 +33,7 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ServiceManager.getPushNotificationService().getMessagingToken();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
