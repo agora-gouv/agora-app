@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:agora/common/client/service_manager.dart';
 import 'package:agora/common/log/log.dart';
+import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

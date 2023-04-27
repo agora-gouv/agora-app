@@ -5,7 +5,7 @@ import 'package:agora/bloc/consultation/question/consultation_questions_view_mod
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_event.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_state.dart';
-import 'package:agora/common/client/repository_manager.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';

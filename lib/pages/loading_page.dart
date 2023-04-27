@@ -1,17 +1,20 @@
+import 'package:agora/bloc/deeplink/deeplink_bloc.dart';
 import 'package:agora/bloc/deeplink/deeplink_event.dart';
 import 'package:agora/bloc/deeplink/deeplink_state.dart';
+import 'package:agora/bloc/login/login_bloc.dart';
+import 'package:agora/bloc/login/login_event.dart';
+import 'package:agora/bloc/login/login_state.dart';
 import 'package:agora/bloc/notification/notification_bloc.dart';
 import 'package:agora/bloc/notification/notification_event.dart';
 import 'package:agora/bloc/notification/notification_state.dart';
-import 'package:agora/bloc/qag/details/deeplink_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
-import 'package:agora/common/client/helper_manager.dart';
-import 'package:agora/common/client/repository_manager.dart';
-import 'package:agora/common/client/service_manager.dart';
-import 'package:agora/common/client/storage_manager.dart';
+import 'package:agora/common/manager/helper_manager.dart';
+import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/service_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
@@ -33,7 +36,6 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ServiceManager.getPushNotificationService().getMessagingToken();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -50,61 +52,73 @@ class LoadingPage extends StatelessWidget {
           )..add(RequestNotificationPermissionEvent()),
         ),
         BlocProvider(create: (context) => DeeplinkBloc(deeplinkHelper: HelperManager.getDeepLinkHelper())),
+        BlocProvider(
+          create: (context) => LoginBloc(
+            repository: RepositoryManager.getLoginRepository(),
+            loginStorageClient: StorageManager.getLoginStorageClient(),
+            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
+            pushNotificationService: ServiceManager.getPushNotificationService(),
+          )..add(CheckLoginEvent()),
+        ),
       ],
       child: AgoraScaffold(
-        child: BlocListener<NotificationBloc, NotificationState>(
-          listener: (context, notificationState) async {
-            if (notificationState is AskNotificationConsentState) {
-              _showNotificationDialog(context);
-            } else if (notificationState is AutoAskNotificationConsentState) {
-              await Permission.notification.request();
-            }
-          },
-          child: BlocConsumer<ThematiqueBloc, ThematiqueState>(
-            listener: (context, thematiqueState) {
-              final deeplinkState = context.read<DeeplinkBloc>().state;
-              if (deeplinkState is DeeplinkInitialState) {
-                context.read<DeeplinkBloc>().add(InitDeeplinkListenerEvent());
-              }
-            },
-            builder: (context, thematiqueState) {
-              return BlocListener<DeeplinkBloc, DeeplinkState>(
-                listener: (context, deeplinkState) {
-                  if (deeplinkState is ConsultationDeeplinkState) {
-                    Navigator.pushNamed(
-                      context,
-                      ConsultationDetailsPage.routeName,
-                      arguments: ConsultationDetailsArguments(
-                        thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                        consultationId: deeplinkState.consultationId,
-                      ),
-                    );
-                  } else if (deeplinkState is QagDeeplinkState) {
-                    Navigator.pushNamed(
-                      context,
-                      QagDetailsPage.routeName,
-                      arguments: QagDetailsArguments(
-                        thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                        qagId: deeplinkState.qagId,
-                      ),
-                    );
+        child: BlocBuilder<LoginBloc, LoginState>(
+          builder: (context, loginState) {
+            return BlocListener<NotificationBloc, NotificationState>(
+              listener: (context, notificationState) async {
+                if (notificationState is AskNotificationConsentState) {
+                  _showNotificationDialog(context);
+                } else if (notificationState is AutoAskNotificationConsentState) {
+                  await Permission.notification.request();
+                }
+              },
+              child: BlocConsumer<ThematiqueBloc, ThematiqueState>(
+                listener: (context, thematiqueState) {
+                  final deeplinkState = context.read<DeeplinkBloc>().state;
+                  if (deeplinkState is DeeplinkInitialState) {
+                    context.read<DeeplinkBloc>().add(InitDeeplinkListenerEvent());
                   }
                 },
-                child: buildView(context, thematiqueState),
-              );
-            },
-          ),
+                builder: (context, thematiqueState) {
+                  return BlocListener<DeeplinkBloc, DeeplinkState>(
+                    listener: (context, deeplinkState) {
+                      if (deeplinkState is ConsultationDeeplinkState) {
+                        Navigator.pushNamed(
+                          context,
+                          ConsultationDetailsPage.routeName,
+                          arguments: ConsultationDetailsArguments(
+                            thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
+                            consultationId: deeplinkState.consultationId,
+                          ),
+                        );
+                      } else if (deeplinkState is QagDeeplinkState) {
+                        Navigator.pushNamed(
+                          context,
+                          QagDetailsPage.routeName,
+                          arguments: QagDetailsArguments(
+                            thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
+                            qagId: deeplinkState.qagId,
+                          ),
+                        );
+                      }
+                    },
+                    child: buildView(context, thematiqueState, loginState),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget buildView(BuildContext context, ThematiqueState thematiqueState) {
-    if (thematiqueState is ThematiqueInitialLoadingState) {
+  Widget buildView(BuildContext context, ThematiqueState thematiqueState, LoginState loginState) {
+    if (thematiqueState is ThematiqueInitialLoadingState || loginState is LoginInitialLoadingState) {
       return Center(child: CircularProgressIndicator());
-    } else if (thematiqueState is ThematiqueErrorState) {
+    } else if (thematiqueState is ThematiqueErrorState || loginState is LoginErrorState) {
       return Center(child: AgoraErrorView());
-    } else if (thematiqueState is ThematiqueSuccessState) {
+    } else if (thematiqueState is ThematiqueSuccessState && loginState is LoginSuccessState) {
       return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
