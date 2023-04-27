@@ -21,3 +21,10 @@
 ```shell
   git config core.hooksPath .githooks/
 ```
+
+## Firebase
+Add following file to path 
+- /ios/firebase_app_id_file.json
+- /ios/Runner/GoogleService-Info.plist
+- /lib/firebase_options.dart 
+- /android/app/google-services.json
