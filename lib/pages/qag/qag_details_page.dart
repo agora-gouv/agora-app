@@ -3,7 +3,6 @@ import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
-import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -25,25 +24,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
 
 class QagDetailsArguments {
-  final ThematiqueBloc thematiqueBloc;
   final String qagId;
 
-  QagDetailsArguments({required this.thematiqueBloc, required this.qagId});
+  QagDetailsArguments({required this.qagId});
 }
 
-class QagDetailsPage extends StatefulWidget {
+class QagDetailsPage extends StatelessWidget {
   static const routeName = "/qagDetailsPage";
-  final String qagId;
 
-  const QagDetailsPage({super.key, required this.qagId});
-
-  @override
-  State<QagDetailsPage> createState() => _QagDetailsPageState();
-}
-
-class _QagDetailsPageState extends State<QagDetailsPage> {
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as QagDetailsArguments;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -51,7 +42,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
             return QagDetailsBloc(
               qagRepository: RepositoryManager.getQagRepository(),
               deviceIdHelper: HelperManager.getDeviceInfoHelper(),
-            )..add(FetchQagDetailsEvent(qagId: widget.qagId));
+            )..add(FetchQagDetailsEvent(qagId: arguments.qagId));
           },
         ),
         BlocProvider(
@@ -90,7 +81,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                           style: AgoraButtonStyle.lightGreyButtonStyle,
                           onPressed: () {
                             Share.share(
-                              'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${widget.qagId}',
+                              'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${arguments.qagId}',
                             );
                           },
                         ),
@@ -104,7 +95,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ThematiqueHelper.buildCard(context, viewModel.thematiqueId),
+                              ThematiqueHelper.buildCard(context, viewModel.thematique),
                               SizedBox(height: AgoraSpacings.base),
                               Text(viewModel.title, style: AgoraTextStyles.medium18),
                               SizedBox(height: AgoraSpacings.base),
@@ -138,12 +129,13 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                                   ),
                                 ),
                                 SizedBox(height: AgoraSpacings.x3),
-                                QagDetailsSupportView(qagId: widget.qagId, support: support),
+                                QagDetailsSupportView(qagId: arguments.qagId, support: support),
                               ],
                             ],
                           ),
                         ),
-                        if (response != null) QagDetailsResponseView(qagId: widget.qagId, detailsViewModel: viewModel),
+                        if (response != null)
+                          QagDetailsResponseView(qagId: arguments.qagId, detailsViewModel: viewModel),
                       ],
                     ),
                   ],

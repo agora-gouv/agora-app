@@ -5,6 +5,7 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
@@ -17,7 +18,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         id: "consultationId",
         title: "Développer le covoiturage au quotidien",
         cover: "imageEnBase64",
-        thematiqueId: "7",
+        thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
         endDate: DateTime(2023, 3, 3),
         questionCount: "5 à 10 questions",
         estimatedTime: "5 minutes",

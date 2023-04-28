@@ -1,10 +1,11 @@
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
 class ConsultationDetails extends Equatable {
   final String id;
   final String title;
   final String cover;
-  final String thematiqueId;
+  final Thematique thematique;
   final DateTime endDate;
   final String questionCount;
   final String estimatedTime;
@@ -17,7 +18,7 @@ class ConsultationDetails extends Equatable {
     required this.id,
     required this.title,
     required this.cover,
-    required this.thematiqueId,
+    required this.thematique,
     required this.endDate,
     required this.questionCount,
     required this.estimatedTime,
@@ -32,7 +33,7 @@ class ConsultationDetails extends Equatable {
         id,
         title,
         cover,
-        thematiqueId,
+        thematique,
         endDate,
         questionCount,
         estimatedTime,

@@ -7,6 +7,7 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -29,7 +30,7 @@ void main() {
             "id": consultationId,
             "title": "Développer le covoiturage",
             "coverUrl": "<imageByteEncodéeBase64>",
-            "thematiqueId": "2",
+            "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
             "endDate": "2023-03-21",
             "questionCount": "5 à 10 questions",
             "estimatedTime": "5 minutes",
@@ -54,7 +55,7 @@ void main() {
             id: consultationId,
             title: "Développer le covoiturage",
             cover: "<imageByteEncodéeBase64>",
-            thematiqueId: "2",
+            thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
             endDate: DateTime(2023, 3, 21),
             questionCount: "5 à 10 questions",
             estimatedTime: "5 minutes",

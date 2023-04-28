@@ -1,9 +1,8 @@
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
-import 'package:agora/bloc/thematique/thematique_bloc.dart';
-import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
@@ -22,25 +21,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationDetailsArguments {
-  final ThematiqueBloc thematiqueBloc;
   final String consultationId;
 
-  ConsultationDetailsArguments({required this.thematiqueBloc, required this.consultationId});
+  ConsultationDetailsArguments({required this.consultationId});
 }
 
 class ConsultationDetailsPage extends StatelessWidget {
   static const routeName = "/consultationDetailsPage";
-  final String consultationId;
-
-  const ConsultationDetailsPage({super.key, required this.consultationId});
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as ConsultationDetailsArguments;
     return BlocProvider(
       create: (BuildContext context) {
         return ConsultationDetailsBloc(
           consultationRepository: RepositoryManager.getConsultationRepository(),
-        )..add(FetchConsultationDetailsEvent(consultationId: consultationId));
+        )..add(FetchConsultationDetailsEvent(consultationId: arguments.consultationId));
       },
       child: AgoraScaffold(
         child: BlocBuilder<ConsultationDetailsBloc, ConsultationDetailsState>(
@@ -59,7 +55,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ThematiqueHelper.buildCard(context, state.viewModel.thematiqueId),
+                          ThematiqueHelper.buildCard(context, state.viewModel.thematique),
                           SizedBox(height: AgoraSpacings.x0_75),
                           Text(state.viewModel.title, style: AgoraTextStyles.medium19),
                           SizedBox(height: AgoraSpacings.x1_5),
@@ -140,7 +136,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                               Navigator.pushNamed(
                                 context,
                                 ConsultationQuestionPage.routeName,
-                                arguments: consultationId,
+                                arguments: arguments.consultationId,
                               );
                             },
                           ),

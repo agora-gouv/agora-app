@@ -1,4 +1,4 @@
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ThematiqueState extends Equatable {
@@ -9,7 +9,7 @@ abstract class ThematiqueState extends Equatable {
 class ThematiqueInitialLoadingState extends ThematiqueState {}
 
 class ThematiqueSuccessState extends ThematiqueState {
-  final List<ThematiqueViewModel> thematiqueViewModels;
+  final List<ThematiqueWithIdViewModel> thematiqueViewModels;
 
   ThematiqueSuccessState(this.thematiqueViewModels);
 

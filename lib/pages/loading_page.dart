@@ -10,7 +10,7 @@ import 'package:agora/bloc/notification/notification_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
@@ -39,11 +39,6 @@ class LoadingPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ThematiqueBloc(
-            repository: RepositoryManager.getThematiqueRepository(),
-          )..add(FetchThematiqueEvent()),
-        ),
-        BlocProvider(
           create: (context) => NotificationBloc(
             firstConnectionStorageClient: StorageManager.getFirstConnectionStorageClient(),
             permissionHelper: HelperManager.getPermissionHelper(),
@@ -51,7 +46,11 @@ class LoadingPage extends StatelessWidget {
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
           )..add(RequestNotificationPermissionEvent()),
         ),
-        BlocProvider(create: (context) => DeeplinkBloc(deeplinkHelper: HelperManager.getDeepLinkHelper())),
+        BlocProvider(
+          create: (context) => DeeplinkBloc(
+            deeplinkHelper: HelperManager.getDeepLinkHelper(),
+          )..add(InitDeeplinkListenerEvent()),
+        ),
         BlocProvider(
           create: (context) => LoginBloc(
             repository: RepositoryManager.getLoginRepository(),
@@ -60,54 +59,47 @@ class LoadingPage extends StatelessWidget {
             pushNotificationService: ServiceManager.getPushNotificationService(),
           )..add(CheckLoginEvent()),
         ),
+        BlocProvider(
+          create: (context) => ThematiqueBloc(
+            repository: RepositoryManager.getThematiqueRepository(),
+          )..add(FetchThematiqueEvent()),
+        ),
       ],
       child: AgoraScaffold(
-        child: BlocBuilder<LoginBloc, LoginState>(
-          builder: (context, loginState) {
-            return BlocListener<NotificationBloc, NotificationState>(
-              listener: (context, notificationState) async {
-                if (notificationState is AskNotificationConsentState) {
-                  _showNotificationDialog(context);
-                } else if (notificationState is AutoAskNotificationConsentState) {
-                  await Permission.notification.request();
-                }
-              },
-              child: BlocConsumer<ThematiqueBloc, ThematiqueState>(
-                listener: (context, thematiqueState) {
-                  final deeplinkState = context.read<DeeplinkBloc>().state;
-                  if (deeplinkState is DeeplinkInitialState) {
-                    context.read<DeeplinkBloc>().add(InitDeeplinkListenerEvent());
-                  }
-                },
-                builder: (context, thematiqueState) {
-                  return BlocListener<DeeplinkBloc, DeeplinkState>(
-                    listener: (context, deeplinkState) {
-                      if (deeplinkState is ConsultationDeeplinkState) {
-                        Navigator.pushNamed(
-                          context,
-                          ConsultationDetailsPage.routeName,
-                          arguments: ConsultationDetailsArguments(
-                            thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                            consultationId: deeplinkState.consultationId,
-                          ),
-                        );
-                      } else if (deeplinkState is QagDeeplinkState) {
-                        Navigator.pushNamed(
-                          context,
-                          QagDetailsPage.routeName,
-                          arguments: QagDetailsArguments(
-                            thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                            qagId: deeplinkState.qagId,
-                          ),
-                        );
-                      }
-                    },
-                    child: buildView(context, thematiqueState, loginState),
-                  );
-                },
-              ),
-            );
+        child: BlocListener<NotificationBloc, NotificationState>(
+          listener: (context, notificationState) async {
+            if (notificationState is AskNotificationConsentState) {
+              _showNotificationDialog(context);
+            } else if (notificationState is AutoAskNotificationConsentState) {
+              await Permission.notification.request();
+            }
           },
+          child: BlocListener<DeeplinkBloc, DeeplinkState>(
+            listener: (context, deeplinkState) {
+              if (deeplinkState is ConsultationDeeplinkState) {
+                Navigator.pushNamed(
+                  context,
+                  ConsultationDetailsPage.routeName,
+                  arguments: ConsultationDetailsArguments(consultationId: deeplinkState.consultationId),
+                );
+              } else if (deeplinkState is QagDeeplinkState) {
+                Navigator.pushNamed(
+                  context,
+                  QagDetailsPage.routeName,
+                  arguments: QagDetailsArguments(qagId: deeplinkState.qagId),
+                );
+              }
+            },
+            child: BlocBuilder<LoginBloc, LoginState>(
+              builder: (context, loginState) {
+                return BlocBuilder<ThematiqueBloc, ThematiqueState>(
+                  builder: (context, thematiqueState) {
+                    return buildView(context, thematiqueState, loginState);
+                  },
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
@@ -137,10 +129,7 @@ class LoadingPage extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         ConsultationDetailsPage.routeName,
-                        arguments: ConsultationDetailsArguments(
-                          thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                          consultationId: "c29255f2-10ca-4be5-aab1-801ea173337c",
-                        ),
+                        arguments: ConsultationDetailsArguments(consultationId: "c29255f2-10ca-4be5-aab1-801ea173337c"),
                       );
                     },
                   ),
@@ -152,10 +141,7 @@ class LoadingPage extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         QagDetailsPage.routeName,
-                        arguments: QagDetailsArguments(
-                          thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                          qagId: "f29c5d6f-9838-4c57-a7ec-0612145bb0c8",
-                        ),
+                        arguments: QagDetailsArguments(qagId: "f29c5d6f-9838-4c57-a7ec-0612145bb0c8"),
                       );
                     },
                   ),
@@ -167,10 +153,7 @@ class LoadingPage extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         QagDetailsPage.routeName,
-                        arguments: QagDetailsArguments(
-                          thematiqueBloc: BlocProvider.of<ThematiqueBloc>(context),
-                          qagId: "889b41ad-321b-4338-8596-df745c546919",
-                        ),
+                        arguments: QagDetailsArguments(qagId: "889b41ad-321b-4338-8596-df745c546919"),
                       );
                     },
                   ),
@@ -224,7 +207,7 @@ class LoadingPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildThematiques(List<ThematiqueViewModel> thematiqueViewModels) {
+  List<Widget> _buildThematiques(List<ThematiqueWithIdViewModel> thematiqueViewModels) {
     final List<Widget> widgets = [];
     for (var thematiqueViewModel in thematiqueViewModels) {
       widgets.add(

@@ -1,12 +1,12 @@
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/common/extension/color_extension.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/domain/thematique/thematique_with_id.dart';
 
 class ThematiquePresenter {
-  static List<ThematiqueViewModel> present(List<Thematique> thematiques) {
+  static List<ThematiqueWithIdViewModel> present(List<ThematiqueWithId> thematiques) {
     return thematiques
         .map(
-          (thematique) => ThematiqueViewModel(
+          (thematique) => ThematiqueWithIdViewModel(
             id: thematique.id,
             picto: thematique.picto,
             label: thematique.label,
