@@ -17,6 +17,7 @@ class RepositoryManager {
       return GetIt.instance.get<Dio>();
     }
     final dio = Dio(BaseOptions(baseUrl: "https://agora-dev.osc-secnum-fr1.scalingo.io"));
+    //final dio = Dio(BaseOptions(baseUrl: "https://agora-dev-pr43.osc-secnum-fr1.scalingo.io"));
     final dioLoggerInterceptor = PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
