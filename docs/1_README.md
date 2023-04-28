@@ -23,8 +23,14 @@
 ```
 
 ## Firebase
-Add following file to path 
+- Download and install [Firebase CLI](https://firebase.google.com/docs/cli)
+- run `firebase login`
+- run `dart pub global activate flutterfire_cli`
+- add `flutterfire` to your path running `export PATH="$PATH":"$HOME/.pub-cache/bin"` (you can also put it on your default in your .zshrc)
+- run `flutterfire configure --project=agora-dev-6c6bd`
+
+This should generate the following files:
 - /ios/firebase_app_id_file.json
 - /ios/Runner/GoogleService-Info.plist
-- /lib/firebase_options.dart 
+- /lib/firebase_options.dart
 - /android/app/google-services.json
