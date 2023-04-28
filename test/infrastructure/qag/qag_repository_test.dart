@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -22,7 +23,7 @@ void main() {
           HttpStatus.ok,
           {
             "id": "qagId",
-            "thematiqueId": "thematiqueId",
+            "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
             "title": "Titre de la QaG",
             "description": "Description textuelle",
             "date": "2024-01-23",
@@ -44,7 +45,7 @@ void main() {
         GetQagDetailsSucceedResponse(
           qagDetails: QagDetails(
             id: qagId,
-            thematiqueId: "thematiqueId",
+            thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
             title: "Titre de la QaG",
             description: "Description textuelle",
             date: DateTime(2024, 1, 23),
@@ -64,7 +65,7 @@ void main() {
           HttpStatus.ok,
           {
             "id": "qagId",
-            "thematiqueId": "thematiqueId",
+            "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
             "title": "Titre de la QaG",
             "description": "Description textuelle",
             "date": "2024-01-23",
@@ -93,7 +94,7 @@ void main() {
         GetQagDetailsSucceedResponse(
           qagDetails: QagDetails(
             id: qagId,
-            thematiqueId: "thematiqueId",
+            thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
             title: "Titre de la QaG",
             description: "Description textuelle",
             date: DateTime(2024, 1, 23),

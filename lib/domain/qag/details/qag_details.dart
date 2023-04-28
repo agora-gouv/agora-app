@@ -1,8 +1,9 @@
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
 class QagDetails extends Equatable {
   final String id;
-  final String thematiqueId;
+  final Thematique thematique;
   final String title;
   final String description;
   final DateTime date;
@@ -12,7 +13,7 @@ class QagDetails extends Equatable {
 
   QagDetails({
     required this.id,
-    required this.thematiqueId,
+    required this.thematique,
     required this.title,
     required this.description,
     required this.date,
@@ -24,7 +25,7 @@ class QagDetails extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        thematiqueId,
+        thematique,
         title,
         description,
         date,

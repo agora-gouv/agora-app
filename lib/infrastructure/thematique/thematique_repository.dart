@@ -1,6 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/log/log.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/domain/thematique/thematique_with_id.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ThematiqueRepository {
@@ -18,7 +18,7 @@ class ThematiqueDioRepository extends ThematiqueRepository {
       final response = await httpClient.get("/thematiques");
       final thematiques = (response.data["thematiques"] as List)
           .map(
-            (thematique) => Thematique(
+            (thematique) => ThematiqueWithId(
               id: thematique["id"] as String,
               picto: thematique["picto"] as String,
               label: thematique["label"] as String,
@@ -40,7 +40,7 @@ abstract class ThematiqueRepositoryResponse extends Equatable {
 }
 
 class GetThematiqueSucceedResponse extends ThematiqueRepositoryResponse {
-  final List<Thematique> thematiques;
+  final List<ThematiqueWithId> thematiques;
 
   GetThematiqueSucceedResponse({required this.thematiques});
 

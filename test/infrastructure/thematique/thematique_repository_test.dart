@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/domain/thematique/thematique_with_id.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -46,8 +46,8 @@ void main() {
         response,
         GetThematiqueSucceedResponse(
           thematiques: [
-            Thematique(id: "1", picto: "\uD83D\uDCBC", label: "Travail & emploi", color: "#FFCFDEFC"),
-            Thematique(id: "2", picto: "\uD83D\uDCBC", label: "Transition écologique", color: "#FFCFFCD9"),
+            ThematiqueWithId(id: "1", picto: "\uD83D\uDCBC", label: "Travail & emploi", color: "#FFCFDEFC"),
+            ThematiqueWithId(id: "2", picto: "\uD83D\uDCBC", label: "Transition écologique", color: "#FFCFFCD9"),
           ],
         ),
       );

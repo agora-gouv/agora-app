@@ -2,6 +2,7 @@ import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_view_model.dart';
+import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +24,7 @@ void main() {
           id: consultationId,
           title: "Développer le covoiturage au quotidien",
           cover: "imageEnBase64",
-          thematiqueId: "7",
+          thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
           endDate: "jusqu'au 3 mars",
           questionCount: "5 à 10 questions",
           estimatedTime: "5 minutes",

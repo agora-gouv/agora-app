@@ -1,4 +1,4 @@
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_corners.dart';
 import 'package:agora/design/agora_spacings.dart';
@@ -54,7 +54,7 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
           });
         },
         items: widget.elements.map<DropdownMenuItem<T>>((T value) {
-          final thematique = value as ThematiqueViewModel;
+          final thematique = value as ThematiqueWithIdViewModel;
           return DropdownMenuItem<T>(
             value: value,
             child: AgoraThematiqueCard(

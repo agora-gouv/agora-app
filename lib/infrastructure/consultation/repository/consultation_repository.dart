@@ -6,6 +6,7 @@ import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
 import 'package:equatable/equatable.dart';
@@ -34,12 +35,19 @@ class ConsultationDioRepository extends ConsultationRepository {
   }) async {
     try {
       final response = await httpClient.get("/consultations/$consultationId");
+      final thematique = response.data["thematique"] as Map?;
       return GetConsultationDetailsSucceedResponse(
         consultationDetails: ConsultationDetails(
           id: response.data["id"] as String,
           title: response.data["title"] as String,
           cover: response.data["coverUrl"] as String,
-          thematiqueId: response.data["thematiqueId"] as String,
+          thematique: thematique != null
+              ? Thematique(
+                  picto: thematique["picto"] as String,
+                  label: thematique["label"] as String,
+                  color: thematique["color"] as String,
+                )
+              : Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
           endDate: (response.data["endDate"] as String).parseToDateTime(),
           questionCount: response.data["questionCount"] as String,
           estimatedTime: response.data["estimatedTime"] as String,

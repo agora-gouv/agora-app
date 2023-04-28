@@ -12,8 +12,10 @@ class AgoraAppRouter {
   static Map<String, WidgetBuilder> handleAgoraRoutes() {
     return {
       LoadingPage.routeName: (context) => LoadingPage(),
+      ConsultationDetailsPage.routeName: (context) => ConsultationDetailsPage(),
       ConsultationQuestionPage.routeName: (context) => ConsultationQuestionPage(),
       ConsultationSummaryPage.routeName: (context) => ConsultationSummaryPage(),
+      QagDetailsPage.routeName: (context) => QagDetailsPage(),
       QagAskQuestionPage.routeName: (context) => QagAskQuestionPage(),
     };
   }
@@ -21,25 +23,11 @@ class AgoraAppRouter {
   static MaterialPageRoute<dynamic> handleAgoraGenerateRoute(RouteSettings settings) {
     Widget currentRoute;
     switch (settings.name) {
-      case ConsultationDetailsPage.routeName:
-        final arguments = settings.arguments as ConsultationDetailsArguments;
-        currentRoute = BlocProvider.value(
-          value: arguments.thematiqueBloc,
-          child: ConsultationDetailsPage(consultationId: arguments.consultationId),
-        );
-        break;
       case ConsultationQuestionConfirmationPage.routeName:
         final arguments = settings.arguments as ConsultationQuestionConfirmationArguments;
         currentRoute = BlocProvider.value(
           value: arguments.consultationQuestionsResponsesBloc,
           child: ConsultationQuestionConfirmationPage(consultationId: arguments.consultationId),
-        );
-        break;
-      case QagDetailsPage.routeName:
-        final arguments = settings.arguments as QagDetailsArguments;
-        currentRoute = BlocProvider.value(
-          value: arguments.thematiqueBloc,
-          child: QagDetailsPage(qagId: arguments.qagId),
         );
         break;
       default:

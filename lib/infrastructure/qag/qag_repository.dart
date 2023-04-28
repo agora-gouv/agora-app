@@ -2,6 +2,7 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
@@ -35,10 +36,17 @@ class QagDioRepository extends QagRepository {
       );
       final qagDetailsSupport = response.data["support"] as Map?;
       final qagDetailsResponse = response.data["response"] as Map?;
+      final thematique = response.data["thematique"] as Map?;
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
-          thematiqueId: response.data["thematiqueId"] as String,
+          thematique: thematique != null
+              ? Thematique(
+                  picto: thematique["picto"] as String,
+                  label: thematique["label"] as String,
+                  color: thematique["color"] as String,
+                )
+              : Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
           title: response.data["title"] as String,
           description: response.data["description"] as String,
           date: (response.data["date"] as String).parseToDateTime(),

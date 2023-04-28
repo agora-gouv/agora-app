@@ -2,6 +2,7 @@ import 'package:agora/bloc/qag/details/qag_details_bloc.dart';
 import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
 import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
+import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +26,7 @@ void main() {
       QagDetailsFetchedState(
         QagDetailsViewModel(
           id: qagId,
-          thematiqueId: "1f3dbdc6-cff7-4d6a-88b5-c5ec84c55d15",
+          thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
           title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
           description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
           date: "23 janvier",
@@ -49,7 +50,7 @@ void main() {
       QagDetailsFetchedState(
         QagDetailsViewModel(
           id: qagId,
-          thematiqueId: "1f3dbdc6-cff7-4d6a-88b5-c5ec84c55d15",
+          thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
           title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
           description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
           date: "23 janvier",

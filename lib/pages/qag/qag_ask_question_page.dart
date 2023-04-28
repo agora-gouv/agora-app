@@ -1,4 +1,4 @@
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/agora_button.dart';
@@ -28,7 +28,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final thematiqueViewModels = ModalRoute.of(context)!.settings.arguments as List<ThematiqueViewModel>;
+    final thematiqueViewModels = ModalRoute.of(context)!.settings.arguments as List<ThematiqueWithIdViewModel>;
     if (thematique == "") {
       thematique = thematiqueViewModels.first.label;
     }
