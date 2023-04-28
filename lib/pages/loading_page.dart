@@ -162,11 +162,7 @@ class LoadingPage extends StatelessWidget {
                     label: "Poser une question au gouvernement",
                     style: AgoraButtonStyle.primaryButtonStyle,
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        QagAskQuestionPage.routeName,
-                        arguments: thematiqueState.thematiqueViewModels,
-                      );
+                      Navigator.pushNamed(context, QagAskQuestionPage.routeName);
                     },
                   ),
                 ],
