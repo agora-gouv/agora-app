@@ -5,6 +5,7 @@ import 'package:agora/bloc/consultation/question/consultation_questions_view_mod
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_event.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_state.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -28,6 +29,7 @@ class ConsultationQuestionPage extends StatelessWidget {
         BlocProvider<ConsultationQuestionsBloc>(
           create: (BuildContext context) => ConsultationQuestionsBloc(
             consultationRepository: RepositoryManager.getConsultationRepository(),
+            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
           )..add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
         ),
         BlocProvider<ConsultationQuestionsResponsesStockBloc>(

@@ -48,7 +48,7 @@ class QagDetailsPage extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) => QagSupportBloc(
             qagRepository: RepositoryManager.getQagRepository(),
-            deviceIdHelper: HelperManager.getDeviceInfoHelper(),
+            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
           ),
         ),
         BlocProvider(

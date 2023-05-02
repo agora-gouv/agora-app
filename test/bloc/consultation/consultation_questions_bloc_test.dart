@@ -6,6 +6,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../fakes/consultation/fakes_consultation_repository.dart';
+import '../../fakes/qag/fake_device_id_helper.dart';
 
 void main() {
   const consultationId = "consultationId";
@@ -51,7 +52,10 @@ void main() {
   group("FetchConsultationQuestionsEvent", () {
     blocTest(
       "when repository succeed - should emit success state",
-      build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationSuccessRepository()),
+      build: () => ConsultationQuestionsBloc(
+        consultationRepository: FakeConsultationSuccessRepository(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+      ),
       act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
       expect: () => [
         ConsultationQuestionsFetchedState(
@@ -64,8 +68,24 @@ void main() {
     );
 
     blocTest(
+      "when device id is null - should emit failure state",
+      build: () => ConsultationQuestionsBloc(
+        consultationRepository: FakeConsultationSuccessRepository(),
+        deviceInfoHelper: FakeDeviceIdNullHelper(),
+      ),
+      act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
+      expect: () => [
+        ConsultationQuestionsErrorState(),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest(
       "when repository failed - should emit failure state",
-      build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationFailureRepository()),
+      build: () => ConsultationQuestionsBloc(
+        consultationRepository: FakeConsultationFailureRepository(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+      ),
       act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
       expect: () => [
         ConsultationQuestionsErrorState(),
@@ -75,13 +95,18 @@ void main() {
   });
 
   group("ConsultationNextQuestionEvent", () {
-    blocTest(
+    blocTest<ConsultationQuestionsBloc, ConsultationQuestionsState>(
       "when next question - should update index to currentQuestionIndex + 1",
-      build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationSuccessRepository()),
-      act: (bloc) => bloc
-        ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
-        ..add(ConsultationNextQuestionEvent()),
-      skip: 1,
+      build: () => ConsultationQuestionsBloc(
+        consultationRepository: FakeConsultationSuccessRepository(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+      ),
+      seed: () => ConsultationQuestionsFetchedState(
+        currentQuestionIndex: 0,
+        totalQuestion: expectedTotalQuestion,
+        viewModels: responseChoiceViewModelsSortedByOrder,
+      ),
+      act: (bloc) => bloc.add(ConsultationNextQuestionEvent()),
       expect: () => [
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 1,
@@ -92,16 +117,18 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
 
-    blocTest(
+    blocTest<ConsultationQuestionsBloc, ConsultationQuestionsState>(
       "when next question index is equals to total question - should update to finish question state",
-      build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationSuccessRepository()),
-      act: (bloc) => bloc
-        ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
-        ..add(ConsultationNextQuestionEvent())
-        ..add(ConsultationNextQuestionEvent())
-        ..add(ConsultationNextQuestionEvent())
-        ..add(ConsultationNextQuestionEvent()),
-      skip: expectedTotalQuestion,
+      build: () => ConsultationQuestionsBloc(
+        consultationRepository: FakeConsultationSuccessRepository(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+      ),
+      seed: () => ConsultationQuestionsFetchedState(
+        currentQuestionIndex: 3,
+        totalQuestion: expectedTotalQuestion,
+        viewModels: responseChoiceViewModelsSortedByOrder,
+      ),
+      act: (bloc) => bloc.add(ConsultationNextQuestionEvent()),
       expect: () => [
         ConsultationQuestionsFinishState(),
       ],
@@ -110,14 +137,18 @@ void main() {
   });
 
   group("ConsultationPreviousQuestionEvent", () {
-    blocTest(
+    blocTest<ConsultationQuestionsBloc, ConsultationQuestionsState>(
       "when previous question - should update currentQuestionIndex - 1",
-      build: () => ConsultationQuestionsBloc(consultationRepository: FakeConsultationSuccessRepository()),
-      act: (bloc) => bloc
-        ..add(FetchConsultationQuestionsEvent(consultationId: consultationId))
-        ..add(ConsultationNextQuestionEvent())
-        ..add(ConsultationPreviousQuestionEvent()),
-      skip: 2,
+      build: () => ConsultationQuestionsBloc(
+        consultationRepository: FakeConsultationSuccessRepository(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+      ),
+      seed: () => ConsultationQuestionsFetchedState(
+        currentQuestionIndex: 1,
+        totalQuestion: expectedTotalQuestion,
+        viewModels: responseChoiceViewModelsSortedByOrder,
+      ),
+      act: (bloc) => bloc.add(ConsultationPreviousQuestionEvent()),
       expect: () => [
         ConsultationQuestionsFetchedState(
           currentQuestionIndex: 0,

@@ -12,6 +12,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
+    required String deviceId,
   }) async {
     return GetConsultationDetailsSucceedResponse(
       consultationDetails: ConsultationDetails(
@@ -33,6 +34,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
+    required String deviceId,
   }) async {
     return GetConsultationQuestionsSucceedResponse(
       consultationQuestions: [
@@ -77,6 +79,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
+    required String deviceId,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     return SendConsultationResponsesSucceedResponse();
@@ -85,6 +88,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
+    required String deviceId,
   }) async {
     return GetConsultationSummarySucceedResponse(
       consultationSummary: ConsultationSummary(
@@ -119,6 +123,7 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
+    required String deviceId,
   }) async {
     return GetConsultationDetailsFailedResponse();
   }
@@ -126,6 +131,7 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
+    required String deviceId,
   }) async {
     return GetConsultationQuestionsFailedResponse();
   }
@@ -133,6 +139,7 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
+    required String deviceId,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     return SendConsultationResponsesFailureResponse();
@@ -141,6 +148,7 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
+    required String deviceId,
   }) async {
     return GetConsultationSummaryFailedResponse();
   }

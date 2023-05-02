@@ -26,7 +26,7 @@ void main() {
     );
 
     blocTest(
-      "when repository succeed and device id is null - should emit failure state",
+      "when device id is null - should emit failure state",
       build: () => QagFeedbackBloc(
         qagRepository: FakeQagSuccessRepository(),
         deviceIdHelper: FakeDeviceIdNullHelper(),

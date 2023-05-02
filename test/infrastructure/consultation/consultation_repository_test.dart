@@ -18,6 +18,7 @@ void main() {
   final httpClient = DioUtils.agoraDioHttpClient();
 
   const consultationId = "consultationId";
+  const deviceId = "deviceId";
 
   group("Fetch consultation details", () {
     test("when success should return consultation details", () async {
@@ -40,12 +41,18 @@ void main() {
             "tipsDescription": "Qui peut aussi être du texte <i>riche</i>",
           },
         ),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationDetails(consultationId: consultationId);
+      final response = await repository.fetchConsultationDetails(
+        consultationId: consultationId,
+        deviceId: deviceId,
+      );
 
       // Then
       expect(
@@ -73,12 +80,18 @@ void main() {
       dioAdapter.onGet(
         "/consultations/$consultationId",
         (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationDetails(consultationId: consultationId);
+      final response = await repository.fetchConsultationDetails(
+        consultationId: consultationId,
+        deviceId: deviceId,
+      );
 
       // Then
       expect(response, GetConsultationDetailsFailedResponse());
@@ -152,12 +165,18 @@ void main() {
             ],
           },
         ),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
+      final response = await repository.fetchConsultationQuestions(
+        consultationId: consultationId,
+        deviceId: deviceId,
+      );
 
       // Then
       expect(
@@ -207,12 +226,18 @@ void main() {
       dioAdapter.onGet(
         "/consultations/$consultationId/questions",
         (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
+      final response = await repository.fetchConsultationQuestions(
+        consultationId: consultationId,
+        deviceId: deviceId,
+      );
 
       // Then
       expect(response, GetConsultationQuestionsFailedResponse());
@@ -225,7 +250,10 @@ void main() {
       dioAdapter.onPost(
         "/consultations/$consultationId/responses",
         (server) => server.reply(HttpStatus.ok, {}),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
         data: {
           "consultationId": consultationId,
           "responses": [
@@ -252,6 +280,7 @@ void main() {
       final repository = ConsultationDioRepository(httpClient: httpClient);
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
+        deviceId: deviceId,
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
           ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
@@ -268,7 +297,10 @@ void main() {
       dioAdapter.onPost(
         "/consultations/$consultationId/responses",
         (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
         data: {
           "consultationId": consultationId,
           "responses": [
@@ -295,6 +327,7 @@ void main() {
       final repository = ConsultationDioRepository(httpClient: httpClient);
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
+        deviceId: deviceId,
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
           ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
@@ -356,12 +389,18 @@ void main() {
             }
           },
         ),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationSummary(consultationId: consultationId);
+      final response = await repository.fetchConsultationSummary(
+        consultationId: consultationId,
+        deviceId: deviceId,
+      );
 
       // Then
       expect(
@@ -403,12 +442,18 @@ void main() {
       dioAdapter.onGet(
         "/consultations/$consultationId/responses",
         (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationSummary(consultationId: consultationId);
+      final response = await repository.fetchConsultationSummary(
+        consultationId: consultationId,
+        deviceId: deviceId,
+      );
 
       // Then
       expect(response, GetConsultationSummaryFailedResponse());
