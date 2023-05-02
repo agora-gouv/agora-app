@@ -1,3 +1,4 @@
+import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
@@ -10,6 +11,25 @@ import 'package:agora/infrastructure/consultation/repository/consultation_reposi
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
+  Future<GetConsultationsRepositoryResponse> fetchConsultations({
+    required String consultationId,
+    required String deviceId,
+  }) async {
+    return GetConsultationsSucceedResponse(
+      consultations: [
+        ConsultationOngoing(
+          id: "consultationId",
+          title: "Développer le covoiturage au quotidien",
+          coverUrl: "coverUrl",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          endDate: DateTime(2024, 1, 23),
+          hasAnswered: false,
+        )
+      ],
+    );
+  }
+
+  @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
     required String deviceId,
@@ -18,7 +38,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       consultationDetails: ConsultationDetails(
         id: "consultationId",
         title: "Développer le covoiturage au quotidien",
-        cover: "imageEnBase64",
+        coverUrl: "coverUrl",
         thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
         endDate: DateTime(2023, 3, 3),
         questionCount: "5 à 10 questions",
@@ -120,6 +140,14 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
 }
 
 class FakeConsultationFailureRepository extends ConsultationRepository {
+  @override
+  Future<GetConsultationsRepositoryResponse> fetchConsultations({
+    required String consultationId,
+    required String deviceId,
+  }) async {
+    return GetConsultationsFailedResponse();
+  }
+
   @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,

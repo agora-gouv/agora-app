@@ -1,6 +1,7 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/log/log.dart';
+import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -12,6 +13,11 @@ import 'package:agora/infrastructure/consultation/repository/builder/consultatio
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations({
+    required String consultationId,
+    required String deviceId,
+  });
+
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
     required String deviceId,
@@ -40,6 +46,40 @@ class ConsultationDioRepository extends ConsultationRepository {
   ConsultationDioRepository({required this.httpClient});
 
   @override
+  Future<GetConsultationsRepositoryResponse> fetchConsultations({
+    required String consultationId,
+    required String deviceId,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/consultations",
+        headers: {"deviceId": deviceId},
+      );
+      final ongoingConsultations = response.data["ongoing"] as List;
+      return GetConsultationsSucceedResponse(
+        consultations: ongoingConsultations.map((ongoingConsultation) {
+          final thematique = ongoingConsultation["thematique"] as Map;
+          return ConsultationOngoing(
+            id: ongoingConsultation["id"] as String,
+            title: ongoingConsultation["title"] as String,
+            coverUrl: ongoingConsultation["coverUrl"] as String,
+            thematique: Thematique(
+              picto: thematique["picto"] as String,
+              label: thematique["label"] as String,
+              color: thematique["color"] as String,
+            ),
+            endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
+            hasAnswered: ongoingConsultation["hasAnswered"] as bool,
+          );
+        }).toList(),
+      );
+    } catch (e) {
+      Log.e("fetchConsultations failed", e);
+      return GetConsultationsFailedResponse();
+    }
+  }
+
+  @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
     required String deviceId,
@@ -54,7 +94,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         consultationDetails: ConsultationDetails(
           id: response.data["id"] as String,
           title: response.data["title"] as String,
-          cover: response.data["coverUrl"] as String,
+          coverUrl: response.data["coverUrl"] as String,
           thematique: thematique != null
               ? Thematique(
                   picto: thematique["picto"] as String,
@@ -160,6 +200,22 @@ class ConsultationDioRepository extends ConsultationRepository {
     }
   }
 }
+
+abstract class GetConsultationsRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetConsultationsSucceedResponse extends GetConsultationsRepositoryResponse {
+  final List<Consultation> consultations;
+
+  GetConsultationsSucceedResponse({required this.consultations});
+
+  @override
+  List<Object> get props => [consultations];
+}
+
+class GetConsultationsFailedResponse extends GetConsultationsRepositoryResponse {}
 
 abstract class GetConsultationDetailsRepositoryResponse extends Equatable {
   @override

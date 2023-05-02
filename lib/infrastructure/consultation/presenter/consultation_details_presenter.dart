@@ -10,7 +10,7 @@ class ConsultationDetailsPresenter {
     return ConsultationDetailsViewModel(
       id: consultationDetails.id,
       title: consultationDetails.title,
-      cover: consultationDetails.cover,
+      cover: consultationDetails.coverUrl,
       thematique: ThematiqueHelper.convertToThematiqueViewModel(consultationDetails.thematique),
       endDate: ConsultationStrings.endDate.format(consultationDetails.endDate.formatToDayMonth()),
       questionCount: consultationDetails.questionCount,
