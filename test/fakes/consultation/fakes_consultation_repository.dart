@@ -12,7 +12,6 @@ import 'package:agora/infrastructure/consultation/repository/consultation_reposi
 class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String consultationId,
     required String deviceId,
   }) async {
     return GetConsultationsSucceedResponse(
@@ -142,7 +141,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
 class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String consultationId,
     required String deviceId,
   }) async {
     return GetConsultationsFailedResponse();

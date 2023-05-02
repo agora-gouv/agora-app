@@ -8,7 +8,6 @@ class MockConsultationSuccessRepository extends ConsultationDioRepository {
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String consultationId,
     required String deviceId,
   }) async {
     return GetConsultationsSucceedResponse(

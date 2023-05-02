@@ -51,7 +51,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AgoraToolbar(),
-                    Image.network(state.viewModel.cover),
+                    Image.network(state.viewModel.coverUrl),
                     Padding(
                       padding: const EdgeInsets.all(columnPadding),
                       child: Column(

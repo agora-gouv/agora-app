@@ -14,7 +14,6 @@ import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
   Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String consultationId,
     required String deviceId,
   });
 
@@ -47,7 +46,6 @@ class ConsultationDioRepository extends ConsultationRepository {
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String consultationId,
     required String deviceId,
   }) async {
     try {

@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 class ConsultationDetailsViewModel extends Equatable {
   final String id;
   final String title;
-  final String cover;
+  final String coverUrl;
   final ThematiqueViewModel thematique;
   final String endDate;
   final String questionCount;
@@ -19,7 +19,7 @@ class ConsultationDetailsViewModel extends Equatable {
   ConsultationDetailsViewModel({
     required this.id,
     required this.title,
-    required this.cover,
+    required this.coverUrl,
     required this.thematique,
     required this.endDate,
     required this.questionCount,
@@ -36,7 +36,7 @@ class ConsultationDetailsViewModel extends Equatable {
   List<Object> get props => [
         id,
         title,
-        cover,
+        coverUrl,
         thematique,
         endDate,
         questionCount,

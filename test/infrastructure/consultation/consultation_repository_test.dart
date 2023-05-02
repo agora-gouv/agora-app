@@ -25,7 +25,7 @@ void main() {
     test("when success should return consultations", () async {
       // Given
       dioAdapter.onGet(
-        "/consultations/",
+        "/consultations",
         (server) => server.reply(HttpStatus.ok, {
           "ongoing": [
             {
@@ -46,10 +46,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultations(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultations(deviceId: deviceId);
 
       // Then
       expect(
@@ -72,7 +69,7 @@ void main() {
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
-        "/consultations/",
+        "/consultations",
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
@@ -82,10 +79,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultations(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultations(deviceId: deviceId);
 
       // Then
       expect(response, GetConsultationsFailedResponse());
