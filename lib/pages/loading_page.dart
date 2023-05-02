@@ -25,6 +25,7 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
+import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/qag/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/qag_details_page.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,7 @@ class LoadingPage extends StatelessWidget {
     } else if (thematiqueState is ThematiqueErrorState || loginState is LoginErrorState) {
       return Center(child: AgoraErrorView());
     } else if (thematiqueState is ThematiqueSuccessState && loginState is LoginSuccessState) {
+      Navigator.pushNamed(context, ConsultationsPage.routeName);
       return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(

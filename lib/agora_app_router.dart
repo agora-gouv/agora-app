@@ -1,10 +1,13 @@
 import 'package:agora/pages/consultation/consultation_details_page.dart';
 import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
+import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/qag/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/qag_details_page.dart';
+import 'package:agora/pages/qag/qag_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,9 +15,14 @@ class AgoraAppRouter {
   static Map<String, WidgetBuilder> handleAgoraRoutes() {
     return {
       LoadingPage.routeName: (context) => LoadingPage(),
+      // Consultation
+      ConsultationsPage.routeName: (context) =>
+          MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
       ConsultationDetailsPage.routeName: (context) => ConsultationDetailsPage(),
       ConsultationQuestionPage.routeName: (context) => ConsultationQuestionPage(),
       ConsultationSummaryPage.routeName: (context) => ConsultationSummaryPage(),
+      // Question au gouvernement
+      QagPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
       QagDetailsPage.routeName: (context) => QagDetailsPage(),
       QagAskQuestionPage.routeName: (context) => QagAskQuestionPage(),
     };
