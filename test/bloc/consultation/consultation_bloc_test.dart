@@ -31,11 +31,24 @@ void main() {
               title: "Développer le covoiturage au quotidien",
               coverUrl: "coverUrl",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
-              endDate: "Jusqu'au 23 janvier",
+              endDate: "23 janvier",
               hasAnswered: false,
             )
           ],
         ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest(
+      "when repository succeed and consultations are empty - should emit empty state",
+      build: () => ConsultationBloc(
+        consultationRepository: FakeConsultationEmptyRepository(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+      ),
+      act: (bloc) => bloc.add(FetchConsultationsEvent()),
+      expect: () => [
+        ConsultationEmptyState(),
       ],
       wait: const Duration(milliseconds: 5),
     );

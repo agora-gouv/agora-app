@@ -112,7 +112,6 @@ class LoadingPage extends StatelessWidget {
     } else if (thematiqueState is ThematiqueErrorState || loginState is LoginErrorState) {
       return Center(child: AgoraErrorView());
     } else if (thematiqueState is ThematiqueSuccessState && loginState is LoginSuccessState) {
-      Navigator.pushNamed(context, ConsultationsPage.routeName);
       return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -165,6 +164,14 @@ class LoadingPage extends StatelessWidget {
                     style: AgoraButtonStyle.primaryButtonStyle,
                     onPressed: () {
                       Navigator.pushNamed(context, QagAskQuestionPage.routeName);
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  AgoraButton(
+                    label: "Consultation List",
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(context, ConsultationsPage.routeName);
                     },
                   ),
                 ],

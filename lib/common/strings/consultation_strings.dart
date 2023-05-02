@@ -1,6 +1,8 @@
 class ConsultationStrings {
+  static const String participate = "Participer";
   static const String beginButton = "Commencer";
   static const String endDate = "Jusqu'au %s";
+  static const String endDateVariation = "Jusqu'au";
   static const String participantCount = "%s participants";
   static const String participantCountGoal = "Prochain objectif : %s !";
   static const String previousQuestion = "Question précédente";

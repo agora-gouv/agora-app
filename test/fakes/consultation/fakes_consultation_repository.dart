@@ -138,6 +138,15 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   }
 }
 
+class FakeConsultationEmptyRepository extends FakeConsultationSuccessRepository {
+  @override
+  Future<GetConsultationsRepositoryResponse> fetchConsultations({
+    required String deviceId,
+  }) async {
+    return GetConsultationsSucceedResponse(consultations: []);
+  }
+}
+
 class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations({

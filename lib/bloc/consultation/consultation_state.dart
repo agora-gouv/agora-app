@@ -17,4 +17,6 @@ class ConsultationsFetchedState extends ConsultationState {
   List<Object> get props => [viewModels];
 }
 
+class ConsultationEmptyState extends ConsultationState {}
+
 class ConsultationErrorState extends ConsultationState {}
