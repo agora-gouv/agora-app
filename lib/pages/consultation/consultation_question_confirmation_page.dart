@@ -2,6 +2,7 @@ import 'package:agora/bloc/consultation/question/response/send/consultation_ques
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/agora_button.dart';
@@ -38,6 +39,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
       create: (BuildContext context) {
         return ConsultationQuestionsResponsesBloc(
           consultationRepository: RepositoryManager.getConsultationRepository(),
+          deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
         )..add(
             SendConsultationQuestionsResponsesEvent(
               consultationId: consultationId,

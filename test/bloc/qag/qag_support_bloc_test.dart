@@ -15,7 +15,7 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => QagSupportBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceIdHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId)),
       expect: () => [
@@ -26,10 +26,10 @@ void main() {
     );
 
     blocTest(
-      "when repository succeed and device id is null - should emit failure state",
+      "when device id is null - should emit failure state",
       build: () => QagSupportBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceIdHelper: FakeDeviceIdNullHelper(),
+        deviceInfoHelper: FakeDeviceIdNullHelper(),
       ),
       act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId)),
       expect: () => [
@@ -43,7 +43,7 @@ void main() {
       "when repository failed - should emit failure state",
       build: () => QagSupportBloc(
         qagRepository: FakeQagFailureRepository(),
-        deviceIdHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId)),
       expect: () => [
@@ -59,7 +59,7 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => QagSupportBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceIdHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId)),
       expect: () => [
@@ -70,10 +70,10 @@ void main() {
     );
 
     blocTest(
-      "when repository succeed and device id is null - should emit failure state",
+      "when device id is null - should emit failure state",
       build: () => QagSupportBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceIdHelper: FakeDeviceIdNullHelper(),
+        deviceInfoHelper: FakeDeviceIdNullHelper(),
       ),
       act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId)),
       expect: () => [
@@ -87,7 +87,7 @@ void main() {
       "when repository failed - should emit failure state",
       build: () => QagSupportBloc(
         qagRepository: FakeQagFailureRepository(),
-        deviceIdHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId)),
       expect: () => [

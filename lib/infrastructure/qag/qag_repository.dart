@@ -6,11 +6,20 @@ import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
-  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({required String qagId, required String deviceId});
+  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
+    required String qagId,
+    required String deviceId,
+  });
 
-  Future<SupportQagRepositoryResponse> supportQag({required String qagId, required String deviceId});
+  Future<SupportQagRepositoryResponse> supportQag({
+    required String qagId,
+    required String deviceId,
+  });
 
-  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId});
+  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({
+    required String qagId,
+    required String deviceId,
+  });
 
   Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
     required String qagId,

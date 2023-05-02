@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
   final QagRepository qagRepository;
-  final DeviceInfoHelper deviceIdHelper;
+  final DeviceInfoHelper deviceInfoHelper;
 
   QagSupportBloc({
     required this.qagRepository,
-    required this.deviceIdHelper,
+    required this.deviceInfoHelper,
   }) : super(QagSupportInitialState()) {
     on<SupportQagEvent>(_handleQagSupport);
     on<DeleteSupportQagEvent>(_handleDeleteQagSupport);
@@ -21,7 +21,7 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     Emitter<QagSupportState> emit,
   ) async {
     emit(QagSupportLoadingState());
-    final deviceId = await deviceIdHelper.getDeviceId();
+    final deviceId = await deviceInfoHelper.getDeviceId();
     if (deviceId == null) {
       emit(QagSupportErrorState());
       return;
@@ -42,7 +42,7 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     Emitter<QagSupportState> emit,
   ) async {
     emit(QagDeleteSupportLoadingState());
-    final deviceId = await deviceIdHelper.getDeviceId();
+    final deviceId = await deviceInfoHelper.getDeviceId();
     if (deviceId == null) {
       emit(QagDeleteSupportErrorState());
       return;
