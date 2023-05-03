@@ -48,6 +48,7 @@ class AgoraQagResponseCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: AgoraSpacings.x0_25),
+            Spacer(),
             AgoraRoundedCard(
               cardColor: AgoraColors.whiteEdgar,
               padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
