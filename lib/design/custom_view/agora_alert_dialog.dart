@@ -1,4 +1,4 @@
-import 'package:agora/design/agora_corners.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:flutter/material.dart';
 
 Future<T?> showAgoraDialog<T>({

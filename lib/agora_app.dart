@@ -1,5 +1,5 @@
 import 'package:agora/agora_app_router.dart';
-import 'package:agora/design/agora_colors.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 

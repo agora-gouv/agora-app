@@ -1,8 +1,8 @@
-import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_spacings.dart';
-import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
+import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AgoraAppBarWithTabs extends StatefulWidget {

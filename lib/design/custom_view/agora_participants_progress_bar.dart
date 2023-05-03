@@ -1,6 +1,6 @@
-import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
 class AgoraParticipantsProgressBar extends StatelessWidget {

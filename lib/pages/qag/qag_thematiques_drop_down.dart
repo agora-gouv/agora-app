@@ -1,10 +1,10 @@
 import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
-import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_corners.dart';
-import 'package:agora/design/agora_spacings.dart';
-import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
+import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class QagThematiquesDropDown<T> extends StatefulWidget {
