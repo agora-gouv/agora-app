@@ -124,6 +124,14 @@ class LoadingPage extends StatelessWidget {
                 [
                   SizedBox(height: AgoraSpacings.x2),
                   AgoraButton(
+                    label: "Page principale",
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(context, ConsultationsPage.routeName);
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  AgoraButton(
                     label: "Détails d'une consultation",
                     style: AgoraButtonStyle.primaryButtonStyle,
                     onPressed: () {
@@ -167,13 +175,6 @@ class LoadingPage extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: AgoraSpacings.x0_5),
-                  AgoraButton(
-                    label: "Consultation List",
-                    style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () {
-                      Navigator.pushNamed(context, ConsultationsPage.routeName);
-                    },
-                  ),
                 ],
           ),
         ),

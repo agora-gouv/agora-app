@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,6 +14,68 @@ void main() {
 
   const qagId = "qagId";
   const deviceId = "deviceId";
+
+  group("Fetch qags", () {
+    test("when success should return qags", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "responses": [
+              {
+                "qagId": "qagId",
+                "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                "title": "Pourquoi ... ?",
+                "author": "Olivier Véran",
+                "authorPortraitUrl": "authorPortraitUrl",
+                "responseDate": "2023-01-23"
+              }
+            ],
+          },
+        ),
+        headers: {"accept": "application/json", "deviceId": deviceId},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQags(deviceId: deviceId);
+
+      // Then
+      expect(
+        response,
+        GetQagsSucceedResponse(
+          qagResponses: [
+            QagResponse(
+              qagId: "qagId",
+              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              title: "Pourquoi ... ?",
+              author: "Olivier Véran",
+              authorPortraitUrl: "authorPortraitUrl",
+              responseDate: DateTime(2023, 1, 23),
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {"accept": "application/json", "deviceId": deviceId},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQags(deviceId: deviceId);
+
+      // Then
+      expect(response, GetQagsFailedResponse());
+    });
+  });
 
   group("Fetch qag details", () {
     test("when success with support not null and response null should return qag details", () async {

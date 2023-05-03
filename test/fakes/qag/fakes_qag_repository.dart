@@ -1,8 +1,27 @@
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 
 class FakeQagSuccessRepository extends QagRepository {
+  @override
+  Future<GetQagsRepositoryResponse> fetchQags({
+    required String deviceId,
+  }) async {
+    return GetQagsSucceedResponse(
+      qagResponses: [
+        QagResponse(
+          qagId: "qagId",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+          author: "author",
+          authorPortraitUrl: "authorPortraitUrl",
+          responseDate: DateTime(2024, 1, 23),
+        ),
+      ],
+    );
+  }
+
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
@@ -81,6 +100,13 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
 }
 
 class FakeQagFailureRepository extends QagRepository {
+  @override
+  Future<GetQagsRepositoryResponse> fetchQags({
+    required String deviceId,
+  }) async {
+    return GetQagsFailedResponse();
+  }
+
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,

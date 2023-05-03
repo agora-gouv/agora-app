@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagFeedbackBloc extends Bloc<QagFeedbackEvent, QagFeedbackState> {
   final QagRepository qagRepository;
-  final DeviceInfoHelper deviceIdHelper;
+  final DeviceInfoHelper deviceInfoHelper;
 
   QagFeedbackBloc({
     required this.qagRepository,
-    required this.deviceIdHelper,
+    required this.deviceInfoHelper,
   }) : super(QagFeedbackInitialState()) {
     on<QagFeedbackEvent>(_handleQagFeedback);
   }
@@ -20,7 +20,7 @@ class QagFeedbackBloc extends Bloc<QagFeedbackEvent, QagFeedbackState> {
     Emitter<QagFeedbackState> emit,
   ) async {
     emit(QagFeedbackLoadingState());
-    final deviceId = await deviceIdHelper.getDeviceId();
+    final deviceId = await deviceInfoHelper.getDeviceId();
     if (deviceId == null) {
       emit(QagFeedbackErrorState());
       return;
