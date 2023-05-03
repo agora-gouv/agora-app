@@ -1,6 +1,6 @@
-import 'package:agora/design/agora_spacings.dart';
-import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AgoraThematiqueCard extends StatelessWidget {

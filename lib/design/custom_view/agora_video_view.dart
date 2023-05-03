@@ -1,4 +1,4 @@
-import 'package:agora/design/agora_colors.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';

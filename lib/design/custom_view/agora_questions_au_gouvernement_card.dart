@@ -1,7 +1,7 @@
-import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_spacings.dart';
-import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

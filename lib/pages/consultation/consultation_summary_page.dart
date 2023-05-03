@@ -4,11 +4,11 @@ import 'package:agora/bloc/consultation/summary/consultation_summary_state.dart'
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultation_summary_et_ensuite_tab_content.dart';
 import 'package:agora/pages/consultation/consultation_summary_results_tab_content.dart';
 import 'package:agora/pages/loading_page.dart';

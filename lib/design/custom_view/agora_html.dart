@@ -1,5 +1,5 @@
 import 'package:agora/common/helper/launch_url_helper.dart';
-import 'package:agora/design/agora_html_styles.dart';
+import 'package:agora/design/style/agora_html_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
