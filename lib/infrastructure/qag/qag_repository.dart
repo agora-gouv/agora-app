@@ -2,10 +2,15 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
+  Future<GetQagsRepositoryResponse> fetchQags({
+    required String deviceId,
+  });
+
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
     required String deviceId,
@@ -32,6 +37,39 @@ class QagDioRepository extends QagRepository {
   final AgoraDioHttpClient httpClient;
 
   QagDioRepository({required this.httpClient});
+
+  @override
+  Future<GetQagsRepositoryResponse> fetchQags({
+    required String deviceId,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/qags",
+        headers: {"deviceId": deviceId},
+      );
+      final qagResponses = response.data["responses"] as List;
+      return GetQagsSucceedResponse(
+        qagResponses: qagResponses.map((qagResponse) {
+          final thematique = qagResponse["thematique"] as Map;
+          return QagResponse(
+            qagId: qagResponse["qagId"] as String,
+            thematique: Thematique(
+              picto: thematique["picto"] as String,
+              label: thematique["label"] as String,
+              color: thematique["color"] as String,
+            ),
+            title: qagResponse["title"] as String,
+            author: qagResponse["author"] as String,
+            authorPortraitUrl: qagResponse["authorPortraitUrl"] as String,
+            responseDate: (qagResponse["responseDate"] as String).parseToDateTime(),
+          );
+        }).toList(),
+      );
+    } catch (e) {
+      Log.e("fetchQags failed", e);
+      return GetQagsFailedResponse();
+    }
+  }
 
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
@@ -134,6 +172,22 @@ class QagDioRepository extends QagRepository {
     }
   }
 }
+
+abstract class GetQagsRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
+  final List<QagResponse> qagResponses;
+
+  GetQagsSucceedResponse({required this.qagResponses});
+
+  @override
+  List<Object> get props => [qagResponses];
+}
+
+class GetQagsFailedResponse extends GetQagsRepositoryResponse {}
 
 abstract class GetQagDetailsRepositoryResponse extends Equatable {
   @override
