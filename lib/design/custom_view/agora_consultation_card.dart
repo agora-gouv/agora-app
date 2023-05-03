@@ -1,13 +1,13 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_icon_button.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class AgoraConsultationCard extends StatelessWidget {
