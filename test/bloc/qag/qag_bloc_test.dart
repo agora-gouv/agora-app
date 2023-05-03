@@ -20,7 +20,7 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => QagBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceIdHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagsEvent()),
       expect: () => [
@@ -44,7 +44,7 @@ void main() {
       "when device id is null - should emit failure state",
       build: () => QagBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceIdHelper: FakeDeviceIdNullHelper(),
+        deviceInfoHelper: FakeDeviceIdNullHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagsEvent()),
       expect: () => [
@@ -57,7 +57,7 @@ void main() {
       "when repository failed - should emit failure state",
       build: () => QagBloc(
         qagRepository: FakeQagFailureRepository(),
-        deviceIdHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagsEvent()),
       expect: () => [

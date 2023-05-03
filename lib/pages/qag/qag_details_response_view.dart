@@ -6,23 +6,29 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_video_view.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class QagDetailsResponseView extends StatelessWidget {
+class QagDetailsResponseView extends StatefulWidget {
   final String qagId;
   final QagDetailsViewModel detailsViewModel;
 
   const QagDetailsResponseView({super.key, required this.qagId, required this.detailsViewModel});
 
   @override
+  State<QagDetailsResponseView> createState() => _QagDetailsResponseViewState();
+}
+
+class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
+  bool isThumbUpClicked = true;
+
+  @override
   Widget build(BuildContext context) {
-    final response = detailsViewModel.response!;
+    final response = widget.detailsViewModel.response!;
     return Flexible(
       child: Container(
         width: double.infinity,
@@ -65,7 +71,7 @@ class QagDetailsResponseView extends StatelessWidget {
                     TextSpan(text: QagStrings.at),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(
-                      text: detailsViewModel.date,
+                      text: widget.detailsViewModel.date,
                       style: AgoraTextStyles.mediumItalic16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                     )
                   ],
@@ -79,14 +85,14 @@ class QagDetailsResponseView extends StatelessWidget {
                     TextSpan(text: QagStrings.answerTo),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(
-                      text: detailsViewModel.username,
+                      text: widget.detailsViewModel.username,
                       style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
                     ),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(text: QagStrings.at),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(
-                      text: detailsViewModel.date,
+                      text: widget.detailsViewModel.date,
                       style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
                     )
                   ],
@@ -100,7 +106,6 @@ class QagDetailsResponseView extends StatelessWidget {
               BlocBuilder<QagFeedbackBloc, QagFeedbackState>(
                 builder: (context, feedbackState) {
                   final qagFeedbackBloc = context.read<QagFeedbackBloc>();
-                  bool isThumbUpClicked = true;
                   return feedbackState is QagFeedbackSuccessState ||
                           (feedbackState is QagFeedbackInitialState && response.feedbackStatus)
                       ? Text(QagStrings.feedback)
@@ -109,25 +114,25 @@ class QagDetailsResponseView extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                AgoraButton(
+                                AgoraRoundedButton(
                                   icon: "ic_thumb_white.svg",
                                   label: QagStrings.utils,
-                                  style: AgoraButtonStyle.primaryButtonStyle,
+                                  padding: AgoraRoundedButtonPadding.short,
                                   isLoading: feedbackState is QagFeedbackLoadingState && isThumbUpClicked,
                                   onPressed: () {
-                                    isThumbUpClicked = true;
-                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: qagId, isHelpful: true));
+                                    setState(() => isThumbUpClicked = true);
+                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: true));
                                   },
                                 ),
                                 SizedBox(width: AgoraSpacings.base),
-                                AgoraButton(
+                                AgoraRoundedButton(
                                   icon: "ic_thumb_down_white.svg",
                                   label: QagStrings.notUtils,
-                                  style: AgoraButtonStyle.primaryButtonStyle,
+                                  padding: AgoraRoundedButtonPadding.short,
                                   isLoading: feedbackState is QagFeedbackLoadingState && !isThumbUpClicked,
                                   onPressed: () {
-                                    isThumbUpClicked = false;
-                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: qagId, isHelpful: false));
+                                    setState(() => isThumbUpClicked = false);
+                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: false));
                                   },
                                 ),
                               ],

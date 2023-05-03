@@ -3,7 +3,7 @@ import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
-enum AgoraRoundedCorner { topRounded, allRounded }
+enum AgoraRoundedCorner { topRounded, bottomRounded, allRounded }
 
 class AgoraRoundedCard extends StatelessWidget {
   final Color cardColor;
@@ -71,6 +71,8 @@ class AgoraRoundedCard extends StatelessWidget {
         return BorderRadius.all(cornerRadius);
       case AgoraRoundedCorner.topRounded:
         return BorderRadius.vertical(top: cornerRadius);
+      case AgoraRoundedCorner.bottomRounded:
+        return BorderRadius.vertical(bottom: cornerRadius);
     }
   }
 }

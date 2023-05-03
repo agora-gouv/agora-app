@@ -1,4 +1,11 @@
 class QagStrings {
+  static const String toolbarPart1 = "Questions";
+  static const String toolbarPart2 = "au gouvernement";
+  static const String qagResponsePart1 = "Les réponses";
+  static const String qagResponsePart2 = "à vos questions";
+  static const String allQagPart1 = "Toutes vos";
+  static const String allQagPart2 = "questions";
+  static const String askQuestion = "Poser ma question";
   static const String by = "Par";
   static const String at = "le";
   static const String share = "Partager";

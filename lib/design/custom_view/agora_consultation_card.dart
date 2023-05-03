@@ -34,7 +34,7 @@ class AgoraConsultationCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Image.network(imageUrl)),
+          Image.network(imageUrl, height: 200),
           SizedBox(height: AgoraSpacings.base),
           ThematiqueHelper.buildCard(context, thematique),
           SizedBox(height: AgoraSpacings.x0_5),
