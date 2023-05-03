@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 class ConsultationDetails extends Equatable {
   final String id;
   final String title;
-  final String cover;
+  final String coverUrl;
   final Thematique thematique;
   final DateTime endDate;
   final String questionCount;
@@ -17,7 +17,7 @@ class ConsultationDetails extends Equatable {
   ConsultationDetails({
     required this.id,
     required this.title,
-    required this.cover,
+    required this.coverUrl,
     required this.thematique,
     required this.endDate,
     required this.questionCount,
@@ -32,7 +32,7 @@ class ConsultationDetails extends Equatable {
   List<Object> get props => [
         id,
         title,
-        cover,
+        coverUrl,
         thematique,
         endDate,
         questionCount,

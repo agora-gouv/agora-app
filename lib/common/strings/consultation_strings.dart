@@ -1,6 +1,13 @@
 class ConsultationStrings {
+  static const String toolbarPart1 = "Participer aux";
+  static const String toolbarPart2 = "consultations";
+  static const String ongoingConsultationPart1 = "Consultations";
+  static const String ongoingConsultationPart2 = "en cours";
+  static const String consultationEmpty = "Vous n'avez pas encore de consultations.";
+  static const String participate = "Participer";
   static const String beginButton = "Commencer";
-  static const String endDate = "jusqu'au %s";
+  static const String endDate = "Jusqu'au %s";
+  static const String endDateVariation = "Jusqu'au";
   static const String participantCount = "%s participants";
   static const String participantCountGoal = "Prochain objectif : %s !";
   static const String previousQuestion = "Question précédente";

@@ -1,11 +1,11 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
-import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_html_styles.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/pages/consultation/question/consultation_question_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';

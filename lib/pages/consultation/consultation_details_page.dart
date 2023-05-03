@@ -5,7 +5,6 @@ import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_spacings.dart';
@@ -16,6 +15,7 @@ import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +51,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AgoraToolbar(),
-                    Image.network(state.viewModel.cover),
+                    Image.network(state.viewModel.coverUrl),
                     Padding(
                       padding: const EdgeInsets.all(columnPadding),
                       child: Column(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
@@ -20,6 +21,71 @@ void main() {
   const consultationId = "consultationId";
   const deviceId = "deviceId";
 
+  group("Fetch consultations", () {
+    test("when success should return consultations", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations",
+        (server) => server.reply(HttpStatus.ok, {
+          "ongoing": [
+            {
+              "id": consultationId,
+              "title": "Développer le covoiturage",
+              "coverUrl": "coverUrl",
+              "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+              "endDate": "2023-03-21",
+              "hasAnswered": false
+            }
+          ],
+        }),
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.fetchConsultations(deviceId: deviceId);
+
+      // Then
+      expect(
+        response,
+        GetConsultationsSucceedResponse(
+          consultations: [
+            ConsultationOngoing(
+              id: consultationId,
+              title: "Développer le covoiturage",
+              coverUrl: "coverUrl",
+              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              endDate: DateTime(2023, 3, 21),
+              hasAnswered: false,
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.fetchConsultations(deviceId: deviceId);
+
+      // Then
+      expect(response, GetConsultationsFailedResponse());
+    });
+  });
+
   group("Fetch consultation details", () {
     test("when success should return consultation details", () async {
       // Given
@@ -30,7 +96,7 @@ void main() {
           {
             "id": consultationId,
             "title": "Développer le covoiturage",
-            "coverUrl": "<imageByteEncodéeBase64>",
+            "coverUrl": "coverUrl",
             "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
             "endDate": "2023-03-21",
             "questionCount": "5 à 10 questions",
@@ -61,7 +127,7 @@ void main() {
           consultationDetails: ConsultationDetails(
             id: consultationId,
             title: "Développer le covoiturage",
-            cover: "<imageByteEncodéeBase64>",
+            coverUrl: "coverUrl",
             thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
             endDate: DateTime(2023, 3, 21),
             questionCount: "5 à 10 questions",

@@ -3,7 +3,6 @@ import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_event.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_state.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_colors.dart';
 import 'package:agora/design/agora_spacings.dart';
@@ -11,6 +10,7 @@ import 'package:agora/design/agora_text_styles.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_video_view.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

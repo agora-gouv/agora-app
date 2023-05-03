@@ -16,7 +16,6 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/design/agora_button.dart';
 import 'package:agora/design/agora_button_style.dart';
 import 'package:agora/design/agora_spacings.dart';
 import 'package:agora/design/agora_text_styles.dart';
@@ -24,7 +23,9 @@ import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
+import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/qag/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/qag_details_page.dart';
 import 'package:flutter/material.dart';
@@ -163,6 +164,14 @@ class LoadingPage extends StatelessWidget {
                     style: AgoraButtonStyle.primaryButtonStyle,
                     onPressed: () {
                       Navigator.pushNamed(context, QagAskQuestionPage.routeName);
+                    },
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  AgoraButton(
+                    label: "Consultation List",
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pushNamed(context, ConsultationsPage.routeName);
                     },
                   ),
                 ],
