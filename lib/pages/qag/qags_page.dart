@@ -14,7 +14,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
-import 'package:agora/pages/qag/qags_tab_bar.dart';
+import 'package:agora/pages/qag/qags_section.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,7 +80,12 @@ class QagsPage extends StatelessWidget {
         QagsResponseSection(qagResponseViewModels: state.qagResponseViewModels),
         QagsAskQuestionSectionPage(),
         QagsThematiqueSection(),
-        QagsTabBar(defaultSelected: QagTab.popular),
+        QagsSection(
+          defaultSelected: QagTab.popular,
+          popularViewModels: state.popularViewModels,
+          latestViewModels: state.latestViewModels,
+          supportingViewModels: state.supportingViewModels,
+        ),
       ];
     } else if (state is QagInitialLoadingState) {
       return [

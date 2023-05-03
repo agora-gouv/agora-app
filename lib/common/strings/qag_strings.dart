@@ -5,9 +5,13 @@ class QagStrings {
   static const String qagResponsePart2 = "à vos questions";
   static const String allQagPart1 = "Toutes vos";
   static const String allQagPart2 = "questions";
+  static const String popular = "Populaires";
+  static const String latest = "Récentes";
+  static const String supporting = "Soutenues";
   static const String askQuestion = "Poser ma question";
   static const String by = "Par";
   static const String at = "le";
+  static const String de = "De";
   static const String share = "Partager";
   static const String askQuestionTitle = "Poser une question au gouvernement";
   static const String askQuestionDescription =
@@ -42,4 +46,5 @@ class QagStrings {
   static const String readLess = "Lire moins";
   static const String feedback = "Merci pour votre réponse.";
   static const String answeredAt = "a répondu le %s";
+  static const String emptyList = "La liste est vide.";
 }
