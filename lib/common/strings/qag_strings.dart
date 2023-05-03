@@ -34,4 +34,5 @@ class QagStrings {
   static const String readMore = "Lire la suite";
   static const String readLess = "Lire moins";
   static const String feedback = "Merci pour votre réponse.";
+  static const String answeredAt = "a répondu le %s";
 }
