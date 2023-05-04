@@ -28,15 +28,20 @@ class QagsResponseSection extends StatelessWidget {
           children: [
             _buildQagResponseHeader(context),
             SizedBox(height: AgoraSpacings.x0_75),
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _buildQagResponseCard(context, qagResponseViewModels),
-                ),
-              ),
+            LayoutBuilder(
+              builder: (context, constraint) {
+                return SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraint.maxWidth),
+                    child: IntrinsicHeight(
+                      // IntrinsicHeight : make all card same height
+                      child: Row(children: _buildQagResponseCard(context, qagResponseViewModels)),
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
