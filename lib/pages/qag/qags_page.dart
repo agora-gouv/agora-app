@@ -9,8 +9,8 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
 import 'package:agora/pages/qag/qags_section.dart';
@@ -46,17 +46,12 @@ class QagsPage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   AgoraMainToolbar(
-                    title: RichText(
-                      text: TextSpan(
-                        style: AgoraTextStyles.light24.copyWith(height: 1.2),
-                        children: [
-                          TextSpan(
-                            text: "${QagStrings.toolbarPart1}\n",
-                            style: AgoraTextStyles.bold24.copyWith(height: 1.2),
-                          ),
-                          TextSpan(text: QagStrings.toolbarPart2),
-                        ],
-                      ),
+                    title: AgoraRichText(
+                      policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                      items: [
+                        AgoraRichTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
+                        AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
+                      ],
                     ),
                   ),
                   Column(

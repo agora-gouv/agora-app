@@ -1,7 +1,7 @@
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:flutter/material.dart';
 
@@ -19,17 +19,11 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: RichText(
-                  text: TextSpan(
-                    style: AgoraTextStyles.light18.copyWith(height: 1.2),
-                    children: [
-                      TextSpan(text: "${QagStrings.allQagPart1}\n"),
-                      TextSpan(
-                        text: QagStrings.allQagPart2,
-                        style: AgoraTextStyles.bold18.copyWith(height: 1.2),
-                      ),
-                    ],
-                  ),
+                child: AgoraRichText(
+                  items: [
+                    AgoraRichTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
+                    AgoraRichTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
+                  ],
                 ),
               ),
               AgoraRoundedButton(
