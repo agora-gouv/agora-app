@@ -8,10 +8,11 @@ class AgoraColors {
   static const Color border = Color(0x30000000);
   static const Color stoicWhite = Color(0x80DFE6FF);
   static const Color orochimaruOpacity60 = Color(0x99D9D9D9);
+  static const Color gravelFint = Color(0xFFBBBBBB);
   static const Color orochimaru = Color(0xFFD9D9D9);
   static const Color steam = Color(0xFFDDDDDD);
   static const Color white = Color(0xFFFFFFFF);
-  static const Color whiteEdgar = Color(0xFFEDEDED);
+  static const Color doctor = Color(0xFFF9F9F9);
   static const Color cascadingWhite = Color(0xFFF6F6F6);
   static const Color superSilver = Color(0xFFEEEEEE);
   static const Color background = Color(0xFFF5F5F5);

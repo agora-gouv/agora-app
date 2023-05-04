@@ -54,10 +54,7 @@ class QagsPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _handleQagState(context, state),
-                  ),
+                  Column(children: _handleQagState(context, state)),
                 ],
               ),
             );

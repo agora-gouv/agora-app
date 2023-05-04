@@ -16,7 +16,7 @@ class QagsThematiqueSection extends StatelessWidget {
       children: [
         SizedBox(height: AgoraSpacings.x1_25),
         Container(
-          color: AgoraColors.whiteEdgar,
+          color: AgoraColors.doctor,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: AgoraSpacings.base,

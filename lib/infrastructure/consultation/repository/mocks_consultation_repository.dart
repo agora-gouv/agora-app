@@ -23,10 +23,24 @@ class MockConsultationSuccessRepository extends ConsultationDioRepository {
       finishedConsultations: [
         ConsultationFinished(
           id: "c29255f2-10ca-4be5-aab1-801ea173337c",
+          title: "Développer le covoiturage",
+          coverUrl: "https://betagouv.github.io/agora-content/covoiturage.png",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          step: 1,
+        ),
+        ConsultationFinished(
+          id: "c29255f2-10ca-4be5-aab1-801ea173337c",
           title: "Développer le covoiturage au quotidien",
           coverUrl: "https://betagouv.github.io/agora-content/covoiturage.png",
           thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
           step: 2,
+        ),
+        ConsultationFinished(
+          id: "c29255f2-10ca-4be5-aab1-801ea173337c",
+          title: "Développer",
+          coverUrl: "https://betagouv.github.io/agora-content/covoiturage.png",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          step: 3,
         ),
       ],
     );

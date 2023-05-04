@@ -1,8 +1,8 @@
-import 'package:agora/pages/consultation/consultation_details_page.dart';
-import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
-import 'package:agora/pages/consultation/consultation_summary_page.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
+import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
+import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';

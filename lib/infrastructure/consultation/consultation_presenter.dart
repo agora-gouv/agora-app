@@ -5,7 +5,8 @@ import 'package:agora/domain/consultation/consultation.dart';
 
 class ConsultationPresenter {
   static List<ConsultationOngoingViewModel> presentOngoingConsultations(
-      List<ConsultationOngoing> ongoingConsultations) {
+    List<ConsultationOngoing> ongoingConsultations,
+  ) {
     return ongoingConsultations.map((consultation) {
       return ConsultationOngoingViewModel(
         id: consultation.id,
