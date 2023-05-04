@@ -27,12 +27,14 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     }
     final response = await consultationRepository.fetchConsultations(deviceId: deviceId);
     if (response is GetConsultationsSucceedResponse) {
-      if (response.ongoingConsultations.isEmpty) {
-        emit(ConsultationEmptyState());
-      } else {
-        final consultationsViewModel = ConsultationPresenter.present(response.ongoingConsultations);
-        emit(ConsultationsFetchedState(consultationsViewModel));
-      }
+      final ongoingViewModels = ConsultationPresenter.presentOngoingConsultations(response.ongoingConsultations);
+      final finishedViewModels = ConsultationPresenter.presentFinishedConsultations(response.finishedConsultations);
+      emit(
+        ConsultationsFetchedState(
+          ongoingViewModels: ongoingViewModels,
+          finishedViewModels: finishedViewModels,
+        ),
+      );
     } else {
       emit(ConsultationErrorState());
     }

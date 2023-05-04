@@ -10,13 +10,15 @@ class ConsultationInitialLoadingState extends ConsultationState {}
 
 class ConsultationsFetchedState extends ConsultationState {
   final List<ConsultationOngoingViewModel> ongoingViewModels;
+  final List<ConsultationFinishedViewModel> finishedViewModels;
 
-  ConsultationsFetchedState(this.ongoingViewModels);
+  ConsultationsFetchedState({
+    required this.ongoingViewModels,
+    required this.finishedViewModels,
+  });
 
   @override
-  List<Object> get props => [ongoingViewModels];
+  List<Object> get props => [ongoingViewModels, finishedViewModels];
 }
-
-class ConsultationEmptyState extends ConsultationState {}
 
 class ConsultationErrorState extends ConsultationState {}
