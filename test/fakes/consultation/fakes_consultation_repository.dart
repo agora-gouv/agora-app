@@ -147,6 +147,27 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   }
 }
 
+class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
+  @override
+  Future<GetConsultationsRepositoryResponse> fetchConsultations({
+    required String deviceId,
+  }) async {
+    return GetConsultationsSucceedResponse(
+      ongoingConsultations: [
+        ConsultationOngoing(
+          id: "consultationId",
+          title: "Développer le covoiturage au quotidien",
+          coverUrl: "coverUrl",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          endDate: DateTime(2024, 1, 23),
+          hasAnswered: false,
+        )
+      ],
+      finishedConsultations: [],
+    );
+  }
+}
+
 class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations({

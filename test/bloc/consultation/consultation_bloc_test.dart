@@ -50,6 +50,39 @@ void main() {
     );
 
     blocTest(
+      "when repository succeed and finished consultation is empty - should emit success state",
+      build: () => ConsultationBloc(
+        consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+      ),
+      act: (bloc) => bloc.add(FetchConsultationsEvent()),
+      expect: () => [
+        ConsultationsFetchedState(
+          ongoingViewModels: [
+            ConsultationOngoingViewModel(
+              id: "consultationId",
+              title: "Développer le covoiturage au quotidien",
+              coverUrl: "coverUrl",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              endDate: "23 janvier",
+              hasAnswered: false,
+            )
+          ],
+          finishedViewModels: [
+            ConsultationFinishedViewModel(
+              id: "consultationId",
+              title: "Développer le covoiturage au quotidien",
+              coverUrl: "coverUrl",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              step: 1,
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest(
       "when device id is null - should emit failure state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessRepository(),

@@ -28,7 +28,10 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     final response = await consultationRepository.fetchConsultations(deviceId: deviceId);
     if (response is GetConsultationsSucceedResponse) {
       final ongoingViewModels = ConsultationPresenter.presentOngoingConsultations(response.ongoingConsultations);
-      final finishedViewModels = ConsultationPresenter.presentFinishedConsultations(response.finishedConsultations);
+      final finishedViewModels = ConsultationPresenter.presentFinishedConsultations(
+        response.ongoingConsultations,
+        response.finishedConsultations,
+      );
       emit(
         ConsultationsFetchedState(
           ongoingViewModels: ongoingViewModels,
