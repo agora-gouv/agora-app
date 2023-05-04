@@ -35,4 +35,10 @@ class ConsultationStrings {
   static const String hintText = "Saisissez votre réponse\n\n\n\n\n\n";
   static const String maxChoices = "Vous pouvez choisir jusqu’à %s réponses.";
   static const String severalResponsePossible = "Plusieurs réponses possibles.";
+
+  static const String inProgress = "En cours";
+  static const String coming = "A venir";
+  static const String engagement = "Engagements";
+  static const String implementation = "Mise en œuvre";
+  static const String shortly = "Prochainement";
 }

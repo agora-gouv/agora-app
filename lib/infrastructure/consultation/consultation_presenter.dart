@@ -20,16 +20,29 @@ class ConsultationPresenter {
   }
 
   static List<ConsultationFinishedViewModel> presentFinishedConsultations(
+    List<ConsultationOngoing> ongoingConsultations,
     List<ConsultationFinished> finishedConsultations,
   ) {
-    return finishedConsultations.map((consultation) {
-      return ConsultationFinishedViewModel(
-        id: consultation.id,
-        title: consultation.title,
-        coverUrl: consultation.coverUrl,
-        thematique: consultation.thematique.toThematiqueViewModel(),
-        step: consultation.step,
-      );
-    }).toList();
+    if (finishedConsultations.isNotEmpty) {
+      return finishedConsultations.map((consultation) {
+        return ConsultationFinishedViewModel(
+          id: consultation.id,
+          title: consultation.title,
+          coverUrl: consultation.coverUrl,
+          thematique: consultation.thematique.toThematiqueViewModel(),
+          step: consultation.step,
+        );
+      }).toList();
+    } else {
+      return ongoingConsultations.map((consultation) {
+        return ConsultationFinishedViewModel(
+          id: consultation.id,
+          title: consultation.title,
+          coverUrl: consultation.coverUrl,
+          thematique: consultation.thematique.toThematiqueViewModel(),
+          step: 1,
+        );
+      }).toList();
+    }
   }
 }

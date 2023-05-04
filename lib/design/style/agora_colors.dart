@@ -7,7 +7,6 @@ class AgoraColors {
   static const Color potBlack = Color(0xFF161616);
   static const Color border = Color(0x30000000);
   static const Color stoicWhite = Color(0x80DFE6FF);
-  static const Color orochimaruOpacity60 = Color(0x99D9D9D9);
   static const Color gravelFint = Color(0xFFBBBBBB);
   static const Color orochimaru = Color(0xFFD9D9D9);
   static const Color steam = Color(0xFFDDDDDD);
@@ -17,8 +16,8 @@ class AgoraColors {
   static const Color superSilver = Color(0xFFEEEEEE);
   static const Color background = Color(0xFFF5F5F5);
   static const Color invertedBlueFrance = Color(0xFFF5F5FE);
-  static const Color fluorescentRed = Color(0xFFFF5655);
   static const Color primaryGreen = Color(0xFF27A658);
+  static const Color primaryGreenOpacity90 = Color(0xE627A658);
   static const Color primaryGreenOpacity15 = Color(0x2627A658);
   static const Color mountainLakeAzure = Color(0xFF51C0A6);
   static const Color blueFrance = Color(0xFF000091);
