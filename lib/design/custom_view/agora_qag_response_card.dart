@@ -30,7 +30,7 @@ class AgoraQagResponseCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.5,
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
-        cardColor: AgoraColors.background,
+        cardColor: AgoraColors.white,
         padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
         onTap: () => onClick(),
         child: Column(

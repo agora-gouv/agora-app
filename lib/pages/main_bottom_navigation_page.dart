@@ -1,8 +1,10 @@
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum MainBottomNavigationPages { consultation, qag }
 
@@ -17,9 +19,15 @@ class MainBottomNavigationPage extends StatelessWidget {
       MainBottomNavigationPages.consultation,
       MainBottomNavigationPages.qag,
     ];
-    return MainBottomNavigationContent(
-      pages: pages,
-      firstDisplayedPageIndex: pages.indexWhere((page) => page == startPage),
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return false;
+      },
+      child: MainBottomNavigationContent(
+        pages: pages,
+        firstDisplayedPageIndex: pages.indexWhere((page) => page == startPage),
+      ),
     );
   }
 }
@@ -46,6 +54,11 @@ class _MainBottomNavigationContentState extends State<MainBottomNavigationConten
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AgoraColors.primaryGreen,
+        toolbarHeight: 0,
+        elevation: 0,
+      ),
       bottomNavigationBar: AgoraBottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (newIndex) => setState(() => _currentIndex = newIndex),
