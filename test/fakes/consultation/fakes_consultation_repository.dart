@@ -15,7 +15,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     required String deviceId,
   }) async {
     return GetConsultationsSucceedResponse(
-      consultations: [
+      ongoingConsultations: [
         ConsultationOngoing(
           id: "consultationId",
           title: "Développer le covoiturage au quotidien",
@@ -24,6 +24,15 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           endDate: DateTime(2024, 1, 23),
           hasAnswered: false,
         )
+      ],
+      finishedConsultations: [
+        ConsultationFinished(
+          id: "consultationId2",
+          title: "Quelles solutions pour les déserts médicaux ?",
+          coverUrl: "coverUrl",
+          thematique: Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
+          step: 2,
+        ),
       ],
     );
   }
@@ -135,15 +144,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         etEnsuite: ConsultationSummaryEtEnsuite(step: 1, description: "<body>textRiche</body>"),
       ),
     );
-  }
-}
-
-class FakeConsultationEmptyRepository extends FakeConsultationSuccessRepository {
-  @override
-  Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String deviceId,
-  }) async {
-    return GetConsultationsSucceedResponse(consultations: []);
   }
 }
 

@@ -3,7 +3,9 @@ class ConsultationStrings {
   static const String toolbarPart2 = "consultations";
   static const String ongoingConsultationPart1 = "Consultations";
   static const String ongoingConsultationPart2 = "en cours";
-  static const String consultationEmpty = "Vous n'avez pas encore de consultations.";
+  static const String finishConsultationPart1 = "Ça a été fait";
+  static const String finishConsultationPart2 = "grâce à vous";
+  static const String consultationEmpty = "La liste est vide.";
   static const String participate = "Participer";
   static const String beginButton = "Commencer";
   static const String endDate = "Jusqu'au %s";

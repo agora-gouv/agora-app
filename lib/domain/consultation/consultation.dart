@@ -1,17 +1,21 @@
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class Consultation extends Equatable {
+class ConsultationOngoing extends Equatable {
   final String id;
   final String title;
   final String coverUrl;
   final Thematique thematique;
+  final bool hasAnswered;
+  final DateTime endDate;
 
-  Consultation({
+  ConsultationOngoing({
     required this.id,
     required this.title,
     required this.coverUrl,
     required this.thematique,
+    required this.endDate,
+    required this.hasAnswered,
   });
 
   @override
@@ -20,19 +24,32 @@ abstract class Consultation extends Equatable {
         title,
         coverUrl,
         thematique,
+        endDate,
+        hasAnswered,
       ];
 }
 
-class ConsultationOngoing extends Consultation {
-  final bool hasAnswered;
-  final DateTime endDate;
+class ConsultationFinished extends Equatable {
+  final String id;
+  final String title;
+  final String coverUrl;
+  final Thematique thematique;
+  final int step;
 
-  ConsultationOngoing({
-    required super.id,
-    required super.title,
-    required super.coverUrl,
-    required super.thematique,
-    required this.endDate,
-    required this.hasAnswered,
+  ConsultationFinished({
+    required this.id,
+    required this.title,
+    required this.coverUrl,
+    required this.thematique,
+    required this.step,
   });
+
+  @override
+  List<Object> get props => [
+        id,
+        title,
+        coverUrl,
+        thematique,
+        step,
+      ];
 }

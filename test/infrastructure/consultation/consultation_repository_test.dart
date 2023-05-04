@@ -29,13 +29,22 @@ void main() {
         (server) => server.reply(HttpStatus.ok, {
           "ongoing": [
             {
-              "id": consultationId,
+              "id": "consultationId1",
               "title": "Développer le covoiturage",
               "coverUrl": "coverUrl",
               "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
               "endDate": "2023-03-21",
-              "hasAnswered": false
+              "hasAnswered": false,
             }
+          ],
+          "finished": [
+            {
+              "id": "consultationId2",
+              "title": "Quelles solutions pour les déserts médicaux ?",
+              "coverUrl": "coverUrl",
+              "thematique": {"label": "Santé", "picto": "🩺", "color": "#FFFCCFDD"},
+              "step": 2
+            },
           ],
         }),
         headers: {
@@ -52,14 +61,23 @@ void main() {
       expect(
         response,
         GetConsultationsSucceedResponse(
-          consultations: [
+          ongoingConsultations: [
             ConsultationOngoing(
-              id: consultationId,
+              id: "consultationId1",
               title: "Développer le covoiturage",
               coverUrl: "coverUrl",
               thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
               endDate: DateTime(2023, 3, 21),
               hasAnswered: false,
+            ),
+          ],
+          finishedConsultations: [
+            ConsultationFinished(
+              id: "consultationId2",
+              title: "Quelles solutions pour les déserts médicaux ?",
+              coverUrl: "coverUrl",
+              thematique: Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
+              step: 2,
             ),
           ],
         ),

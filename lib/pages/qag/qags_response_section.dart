@@ -3,9 +3,9 @@ import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
+import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,17 +54,11 @@ class QagsResponseSection extends StatelessWidget {
   Widget _buildQagResponseHeader(BuildContext context) {
     return Row(
       children: [
-        RichText(
-          text: TextSpan(
-            style: AgoraTextStyles.light18.copyWith(height: 1.2),
-            children: [
-              TextSpan(
-                text: "${QagStrings.qagResponsePart1}\n",
-                style: AgoraTextStyles.bold18.copyWith(height: 1.2),
-              ),
-              TextSpan(text: QagStrings.qagResponsePart2),
-            ],
-          ),
+        AgoraRichText(
+          items: [
+            AgoraRichTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
+            AgoraRichTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
+          ],
         ),
         SizedBox(width: AgoraSpacings.x0_75),
         GestureDetector(

@@ -10,7 +10,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/pages/consultation/consultation_question_confirmation_page.dart';
+import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/question/question_type_view/consultation_question_chapter_view.dart';
 import 'package:agora/pages/consultation/question/question_type_view/consultation_question_multiple_choices_view.dart';
 import 'package:agora/pages/consultation/question/question_type_view/consultation_question_opened_view.dart';

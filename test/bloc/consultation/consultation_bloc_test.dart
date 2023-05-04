@@ -25,7 +25,7 @@ void main() {
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
         ConsultationsFetchedState(
-          [
+          ongoingViewModels: [
             ConsultationOngoingViewModel(
               id: "consultationId",
               title: "Développer le covoiturage au quotidien",
@@ -35,20 +35,16 @@ void main() {
               hasAnswered: false,
             )
           ],
+          finishedViewModels: [
+            ConsultationFinishedViewModel(
+              id: "consultationId2",
+              title: "Quelles solutions pour les déserts médicaux ?",
+              coverUrl: "coverUrl",
+              thematique: ThematiqueViewModel(picto: "🩺", label: "Santé", color: 0xFFFCCFDD),
+              step: 2,
+            ),
+          ],
         ),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
-
-    blocTest(
-      "when repository succeed and consultations are empty - should emit empty state",
-      build: () => ConsultationBloc(
-        consultationRepository: FakeConsultationEmptyRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
-      ),
-      act: (bloc) => bloc.add(FetchConsultationsEvent()),
-      expect: () => [
-        ConsultationEmptyState(),
       ],
       wait: const Duration(milliseconds: 5),
     );

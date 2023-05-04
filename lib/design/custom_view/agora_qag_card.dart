@@ -72,7 +72,7 @@ class AgoraQagCard extends StatelessWidget {
             children: [
               Expanded(
                 child: AgoraRoundedCard(
-                  cardColor: AgoraColors.whiteEdgar,
+                  cardColor: AgoraColors.doctor,
                   padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
                   roundedCorner: AgoraRoundedCorner.bottomRounded,
                   child: RichText(
