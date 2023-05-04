@@ -5,7 +5,7 @@ import 'package:agora/bloc/consultation/consultation_view_model.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/design/custom_view/agora_consultation_card.dart';
+import 'package:agora/design/custom_view/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -70,7 +70,7 @@ class ConsultationsPage extends StatelessWidget {
 
   List<Widget> _handleConsultationsState(BuildContext context, ConsultationState state) {
     if (state is ConsultationsFetchedState) {
-      return _buildConsultations(context, state.viewModels);
+      return _buildConsultations(context, state.ongoingViewModels);
     } else if (state is ConsultationInitialLoadingState) {
       return [
         SizedBox(height: AgoraSpacings.base),
@@ -93,31 +93,28 @@ class ConsultationsPage extends StatelessWidget {
     return [];
   }
 
-  List<Widget> _buildConsultations(BuildContext context, List<ConsultationViewModel> consultations) {
-    final List<Widget> consultationsWidget = List.empty(growable: true);
-    var firstTimeAddOngoingConsultation = true;
-    for (var consultation in consultations) {
-      if (consultation is ConsultationOngoingViewModel) {
-        if (firstTimeAddOngoingConsultation) {
-          consultationsWidget.add(
-            RichText(
-              text: TextSpan(
-                style: AgoraTextStyles.light18.copyWith(height: 1.2),
-                children: [
-                  TextSpan(text: "${ConsultationStrings.ongoingConsultationPart1}\n"),
-                  TextSpan(
-                    text: ConsultationStrings.ongoingConsultationPart2,
-                    style: AgoraTextStyles.bold18.copyWith(height: 1.2),
-                  ),
-                ],
+  List<Widget> _buildConsultations(BuildContext context, List<ConsultationOngoingViewModel> ongoingConsultations) {
+    final List<Widget> ongoingConsultationsWidget = List.empty(growable: true);
+    if (ongoingConsultations.isNotEmpty) {
+      ongoingConsultationsWidget.add(
+        RichText(
+          text: TextSpan(
+            style: AgoraTextStyles.light18.copyWith(height: 1.2),
+            children: [
+              TextSpan(text: "${ConsultationStrings.ongoingConsultationPart1}\n"),
+              TextSpan(
+                text: ConsultationStrings.ongoingConsultationPart2,
+                style: AgoraTextStyles.bold18.copyWith(height: 1.2),
               ),
-            ),
-          );
-          consultationsWidget.add(SizedBox(height: AgoraSpacings.base));
-          firstTimeAddOngoingConsultation = false;
-        }
-        consultationsWidget.add(
-          AgoraConsultationCard(
+            ],
+          ),
+        ),
+      );
+      ongoingConsultationsWidget.add(SizedBox(height: AgoraSpacings.base));
+
+      for (final consultation in ongoingConsultations) {
+        ongoingConsultationsWidget.add(
+          AgoraConsultationOngoingCard(
             imageUrl: consultation.coverUrl,
             thematique: consultation.thematique,
             title: consultation.title,
@@ -134,11 +131,9 @@ class ConsultationsPage extends StatelessWidget {
             },
           ),
         );
-      } else {
-        throw Exception("Consultation view model doesn't exists $consultation");
+        ongoingConsultationsWidget.add(SizedBox(height: AgoraSpacings.base));
       }
-      consultationsWidget.add(SizedBox(height: AgoraSpacings.base));
     }
-    return consultationsWidget;
+    return ongoingConsultationsWidget;
   }
 }

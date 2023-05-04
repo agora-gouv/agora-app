@@ -52,7 +52,7 @@ void main() {
       expect(
         response,
         GetConsultationsSucceedResponse(
-          consultations: [
+          ongoingConsultations: [
             ConsultationOngoing(
               id: consultationId,
               title: "Développer le covoiturage",

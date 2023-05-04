@@ -27,10 +27,10 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     }
     final response = await consultationRepository.fetchConsultations(deviceId: deviceId);
     if (response is GetConsultationsSucceedResponse) {
-      if (response.consultations.isEmpty) {
+      if (response.ongoingConsultations.isEmpty) {
         emit(ConsultationEmptyState());
       } else {
-        final consultationsViewModel = ConsultationPresenter.present(response.consultations);
+        final consultationsViewModel = ConsultationPresenter.present(response.ongoingConsultations);
         emit(ConsultationsFetchedState(consultationsViewModel));
       }
     } else {

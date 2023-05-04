@@ -15,7 +15,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     required String deviceId,
   }) async {
     return GetConsultationsSucceedResponse(
-      consultations: [
+      ongoingConsultations: [
         ConsultationOngoing(
           id: "consultationId",
           title: "Développer le covoiturage au quotidien",
@@ -143,7 +143,7 @@ class FakeConsultationEmptyRepository extends FakeConsultationSuccessRepository 
   Future<GetConsultationsRepositoryResponse> fetchConsultations({
     required String deviceId,
   }) async {
-    return GetConsultationsSucceedResponse(consultations: []);
+    return GetConsultationsSucceedResponse(ongoingConsultations: []);
   }
 }
 

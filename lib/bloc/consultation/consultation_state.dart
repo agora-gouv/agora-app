@@ -9,12 +9,12 @@ abstract class ConsultationState extends Equatable {
 class ConsultationInitialLoadingState extends ConsultationState {}
 
 class ConsultationsFetchedState extends ConsultationState {
-  final List<ConsultationViewModel> viewModels;
+  final List<ConsultationOngoingViewModel> ongoingViewModels;
 
-  ConsultationsFetchedState(this.viewModels);
+  ConsultationsFetchedState(this.ongoingViewModels);
 
   @override
-  List<Object> get props => [viewModels];
+  List<Object> get props => [ongoingViewModels];
 }
 
 class ConsultationEmptyState extends ConsultationState {}

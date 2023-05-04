@@ -10,7 +10,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class AgoraConsultationCard extends StatelessWidget {
+class AgoraConsultationOngoingCard extends StatelessWidget {
   final String imageUrl;
   final ThematiqueViewModel thematique;
   final String title;
@@ -18,7 +18,7 @@ class AgoraConsultationCard extends StatelessWidget {
   final VoidCallback onParticipationClick;
   final VoidCallback onShareClick;
 
-  AgoraConsultationCard({
+  AgoraConsultationOngoingCard({
     required this.imageUrl,
     required this.thematique,
     required this.title,

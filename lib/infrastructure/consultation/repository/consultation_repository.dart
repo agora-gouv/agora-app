@@ -55,7 +55,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       final ongoingConsultations = response.data["ongoing"] as List;
       return GetConsultationsSucceedResponse(
-        consultations: ongoingConsultations.map((ongoingConsultation) {
+        ongoingConsultations: ongoingConsultations.map((ongoingConsultation) {
           final thematique = ongoingConsultation["thematique"] as Map;
           return ConsultationOngoing(
             id: ongoingConsultation["id"] as String,
@@ -205,12 +205,12 @@ abstract class GetConsultationsRepositoryResponse extends Equatable {
 }
 
 class GetConsultationsSucceedResponse extends GetConsultationsRepositoryResponse {
-  final List<Consultation> consultations;
+  final List<ConsultationOngoing> ongoingConsultations;
 
-  GetConsultationsSucceedResponse({required this.consultations});
+  GetConsultationsSucceedResponse({required this.ongoingConsultations});
 
   @override
-  List<Object> get props => [consultations];
+  List<Object> get props => [ongoingConsultations];
 }
 
 class GetConsultationsFailedResponse extends GetConsultationsRepositoryResponse {}
