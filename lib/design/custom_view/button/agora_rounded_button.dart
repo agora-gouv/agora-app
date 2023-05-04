@@ -6,7 +6,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum AgoraRoundedButtonStyle { primaryButton, lightGreyButton }
+enum AgoraRoundedButtonStyle { primaryButton, whiteButton }
 
 enum AgoraRoundedButtonPadding { normal, short }
 
@@ -56,7 +56,7 @@ class AgoraRoundedButton extends StatelessWidget {
     switch (style) {
       case AgoraRoundedButtonStyle.primaryButton:
         return null;
-      case AgoraRoundedButtonStyle.lightGreyButton:
+      case AgoraRoundedButtonStyle.whiteButton:
         return AgoraColors.orochimaru;
     }
   }
@@ -65,8 +65,8 @@ class AgoraRoundedButton extends StatelessWidget {
     switch (style) {
       case AgoraRoundedButtonStyle.primaryButton:
         return AgoraColors.primaryGreen;
-      case AgoraRoundedButtonStyle.lightGreyButton:
-        return AgoraColors.background;
+      case AgoraRoundedButtonStyle.whiteButton:
+        return AgoraColors.white;
     }
   }
 
@@ -74,7 +74,7 @@ class AgoraRoundedButton extends StatelessWidget {
     switch (style) {
       case AgoraRoundedButtonStyle.primaryButton:
         return AgoraTextStyles.medium14.copyWith(color: AgoraColors.white);
-      case AgoraRoundedButtonStyle.lightGreyButton:
+      case AgoraRoundedButtonStyle.whiteButton:
         return AgoraTextStyles.medium14;
     }
   }

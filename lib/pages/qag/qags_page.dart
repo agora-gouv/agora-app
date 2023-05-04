@@ -9,7 +9,6 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
@@ -41,7 +40,6 @@ class QagsPage extends StatelessWidget {
         ),
       ],
       child: AgoraScaffold(
-        backgroundColor: AgoraColors.background,
         child: BlocBuilder<QagBloc, QagState>(
           builder: (context, state) {
             return SingleChildScrollView(

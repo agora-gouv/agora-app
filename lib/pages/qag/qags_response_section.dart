@@ -80,7 +80,7 @@ class QagsResponseSection extends StatelessWidget {
         Spacer(),
         AgoraRoundedButton(
           label: GenericStrings.all,
-          style: AgoraRoundedButtonStyle.lightGreyButton,
+          style: AgoraRoundedButtonStyle.whiteButton,
           onPressed: () {
             // TODO
           },

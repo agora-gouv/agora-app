@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui' show lerpDouble;
 
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
@@ -24,7 +25,8 @@ class AgoraBottomNavigationBar extends StatefulWidget {
 }
 
 class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
-  final double _bottomBarHeight = 60;
+  final double _iosBottomBarHeight = 75;
+  final double _androidBottomBarHeight = 60;
   final double _indicatorHeight = 2;
 
   final Color _activeLabelColor = AgoraColors.primaryGrey;
@@ -50,7 +52,9 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
     return Container(
-      height: _bottomBarHeight + MediaQuery.of(context).viewPadding.bottom,
+      height: Platform.isIOS
+          ? _iosBottomBarHeight //+ MediaQuery.of(context).viewPadding.bottom,// utils for ios
+          : _androidBottomBarHeight,
       width: _width,
       decoration: BoxDecoration(color: _inactiveIndicatorColor),
       child: Stack(
@@ -104,13 +108,14 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget _buildItemWidget(int selectedIndex, AgoraBottomNavigationBarItem item) {
     return Container(
       color: selectedIndex == _currentSelectedIndex ? _activeBgColor : _inactiveBgColor,
-      height: _bottomBarHeight,
+      height: Platform.isIOS ? _iosBottomBarHeight : _androidBottomBarHeight,
       width: _width / _items.length,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: Platform.isIOS ? MainAxisAlignment.start : MainAxisAlignment.center,
         children: <Widget>[
+          if (Platform.isIOS) SizedBox(height: AgoraSpacings.x0_75),
           _setIcon(selectedIndex, item),
-          SizedBox(width: AgoraSpacings.x0_25),
+          SizedBox(height: AgoraSpacings.x0_25),
           _setLabel(selectedIndex, item),
         ],
       ),

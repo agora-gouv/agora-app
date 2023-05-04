@@ -9,7 +9,6 @@ import 'package:agora/design/custom_view/agora_consultation_card.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultation_details_page.dart';
@@ -30,7 +29,6 @@ class ConsultationsPage extends StatelessWidget {
         )..add(FetchConsultationsEvent());
       },
       child: AgoraScaffold(
-        backgroundColor: AgoraColors.background,
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
           builder: (context, state) {
             return SingleChildScrollView(
