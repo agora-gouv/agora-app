@@ -1,4 +1,5 @@
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -17,6 +18,39 @@ class FakeQagSuccessRepository extends QagRepository {
           author: "author",
           authorPortraitUrl: "authorPortraitUrl",
           responseDate: DateTime(2024, 1, 23),
+        ),
+      ],
+      qagPopular: [
+        Qag(
+          id: "id1",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          title: "title1",
+          username: "username1",
+          date: DateTime(2024, 1, 23),
+          supportCount: 7,
+          isSupported: true,
+        ),
+      ],
+      qagLatest: [
+        Qag(
+          id: "id2",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          title: "title2",
+          username: "username2",
+          date: DateTime(2024, 2, 23),
+          supportCount: 8,
+          isSupported: false,
+        ),
+      ],
+      qagSupporting: [
+        Qag(
+          id: "id3",
+          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          title: "title3",
+          username: "username3",
+          date: DateTime(2024, 3, 23),
+          supportCount: 9,
+          isSupported: true,
         ),
       ],
     );

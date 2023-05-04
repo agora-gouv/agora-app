@@ -24,6 +24,7 @@ class QagResponse extends Equatable {
         thematique,
         title,
         author,
+        authorPortraitUrl,
         responseDate,
       ];
 }

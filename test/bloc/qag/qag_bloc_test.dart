@@ -25,7 +25,7 @@ void main() {
       act: (bloc) => bloc.add(FetchQagsEvent()),
       expect: () => [
         QagFetchedState(
-          [
+          qagResponseViewModels: [
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
@@ -33,6 +33,39 @@ void main() {
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: "a répondu le 23 janvier",
+            ),
+          ],
+          popularViewModels: [
+            QagViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              title: "title1",
+              username: "username1",
+              date: "23 janvier",
+              supportCount: 7,
+              isSupported: true,
+            ),
+          ],
+          latestViewModels: [
+            QagViewModel(
+              id: "id2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              title: "title2",
+              username: "username2",
+              date: "23 février",
+              supportCount: 8,
+              isSupported: false,
+            ),
+          ],
+          supportingViewModels: [
+            QagViewModel(
+              id: "id3",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              title: "title3",
+              username: "username3",
+              date: "23 mars",
+              supportCount: 9,
+              isSupported: true,
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -33,6 +34,47 @@ void main() {
                 "responseDate": "2023-01-23"
               }
             ],
+            "qags": {
+              "popular": [
+                {
+                  "qagId": "id1",
+                  "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                  "title": "title1",
+                  "username": "username1",
+                  "date": "2023-01-01",
+                  "support": {
+                    "count": 116,
+                    "isSupported": true,
+                  }
+                },
+              ],
+              "latest": [
+                {
+                  "qagId": "id2",
+                  "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                  "title": "title2",
+                  "username": "username2",
+                  "date": "2023-02-01",
+                  "support": {
+                    "count": 11,
+                    "isSupported": false,
+                  }
+                },
+              ],
+              "supporting": [
+                {
+                  "qagId": "id3",
+                  "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                  "title": "title3",
+                  "username": "username3",
+                  "date": "2023-03-01",
+                  "support": {
+                    "count": 2,
+                    "isSupported": true,
+                  },
+                }
+              ],
+            }
           },
         ),
         headers: {"accept": "application/json", "deviceId": deviceId},
@@ -54,6 +96,39 @@ void main() {
               author: "Olivier Véran",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: DateTime(2023, 1, 23),
+            ),
+          ],
+          qagPopular: [
+            Qag(
+              id: "id1",
+              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              title: "title1",
+              username: "username1",
+              date: DateTime(2023, 1, 1),
+              supportCount: 116,
+              isSupported: true,
+            ),
+          ],
+          qagLatest: [
+            Qag(
+              id: "id2",
+              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              title: "title2",
+              username: "username2",
+              date: DateTime(2023, 2, 1),
+              supportCount: 11,
+              isSupported: false,
+            ),
+          ],
+          qagSupporting: [
+            Qag(
+              id: "id3",
+              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              title: "title3",
+              username: "username3",
+              date: DateTime(2023, 3, 1),
+              supportCount: 2,
+              isSupported: true,
             ),
           ],
         ),

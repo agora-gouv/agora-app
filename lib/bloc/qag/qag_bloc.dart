@@ -27,8 +27,18 @@ class QagBloc extends Bloc<FetchQagsEvent, QagState> {
     }
     final response = await qagRepository.fetchQags(deviceId: deviceId);
     if (response is GetQagsSucceedResponse) {
-      final qagViewModel = QagPresenter.present(response.qagResponses);
-      emit(QagFetchedState(qagViewModel));
+      final qagResponseViewModels = QagPresenter.presentQagResponse(response.qagResponses);
+      final qagPopularViewModels = QagPresenter.presentQag(response.qagPopular);
+      final qagLatestViewModels = QagPresenter.presentQag(response.qagLatest);
+      final qagSupportingViewModels = QagPresenter.presentQag(response.qagSupporting);
+      emit(
+        QagFetchedState(
+          qagResponseViewModels: qagResponseViewModels,
+          popularViewModels: qagPopularViewModels,
+          latestViewModels: qagLatestViewModels,
+          supportingViewModels: qagSupportingViewModels,
+        ),
+      );
     } else {
       emit(QagErrorState());
     }

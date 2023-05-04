@@ -2,6 +2,7 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
@@ -48,6 +49,7 @@ class QagDioRepository extends QagRepository {
         headers: {"deviceId": deviceId},
       );
       final qagResponses = response.data["responses"] as List;
+      final qags = response.data["qags"] as Map;
       return GetQagsSucceedResponse(
         qagResponses: qagResponses.map((qagResponse) {
           final thematique = qagResponse["thematique"] as Map;
@@ -64,6 +66,9 @@ class QagDioRepository extends QagRepository {
             responseDate: (qagResponse["responseDate"] as String).parseToDateTime(),
           );
         }).toList(),
+        qagPopular: _transformToQagList(qags["popular"] as List),
+        qagLatest: _transformToQagList(qags["latest"] as List),
+        qagSupporting: _transformToQagList(qags["supporting"] as List),
       );
     } catch (e) {
       Log.e("fetchQags failed", e);
@@ -171,6 +176,26 @@ class QagDioRepository extends QagRepository {
       return QagFeedbackFailedResponse();
     }
   }
+
+  List<Qag> _transformToQagList(List<dynamic> qags) {
+    return qags.map((qag) {
+      final thematique = qag["thematique"] as Map;
+      final support = qag["support"] as Map;
+      return Qag(
+        id: qag["qagId"] as String,
+        thematique: Thematique(
+          picto: thematique["picto"] as String,
+          label: thematique["label"] as String,
+          color: thematique["color"] as String,
+        ),
+        title: qag["title"] as String,
+        username: qag["username"] as String,
+        date: (qag["date"] as String).parseToDateTime(),
+        supportCount: support["count"] as int,
+        isSupported: support["isSupported"] as bool,
+      );
+    }).toList();
+  }
 }
 
 abstract class GetQagsRepositoryResponse extends Equatable {
@@ -180,11 +205,24 @@ abstract class GetQagsRepositoryResponse extends Equatable {
 
 class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
   final List<QagResponse> qagResponses;
+  final List<Qag> qagPopular;
+  final List<Qag> qagLatest;
+  final List<Qag> qagSupporting;
 
-  GetQagsSucceedResponse({required this.qagResponses});
+  GetQagsSucceedResponse({
+    required this.qagResponses,
+    required this.qagPopular,
+    required this.qagLatest,
+    required this.qagSupporting,
+  });
 
   @override
-  List<Object> get props => [qagResponses];
+  List<Object> get props => [
+        qagResponses,
+        qagPopular,
+        qagLatest,
+        qagSupporting,
+      ];
 }
 
 class GetQagsFailedResponse extends GetQagsRepositoryResponse {}
