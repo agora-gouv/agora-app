@@ -33,7 +33,10 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
           : Stack(
               children: [
                 _buildFinishedConsultationCard(context),
-                Container(color: AgoraColors.primaryGreenOpacity90),
+                AgoraRoundedCard(
+                  cardColor: AgoraColors.primaryGreenOpacity90,
+                  child: Container(),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: AgoraSpacings.x0_75,
