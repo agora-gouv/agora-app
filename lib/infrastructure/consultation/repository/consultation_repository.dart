@@ -54,6 +54,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         headers: {"deviceId": deviceId},
       );
       final ongoingConsultations = response.data["ongoing"] as List;
+      final finishedConsultations = response.data["finished"] as List;
       return GetConsultationsSucceedResponse(
         ongoingConsultations: ongoingConsultations.map((ongoingConsultation) {
           final thematique = ongoingConsultation["thematique"] as Map;
@@ -68,6 +69,20 @@ class ConsultationDioRepository extends ConsultationRepository {
             ),
             endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
             hasAnswered: ongoingConsultation["hasAnswered"] as bool,
+          );
+        }).toList(),
+        finishedConsultations: finishedConsultations.map((finishedConsultation) {
+          final thematique = finishedConsultation["thematique"] as Map;
+          return ConsultationFinished(
+            id: finishedConsultation["id"] as String,
+            title: finishedConsultation["title"] as String,
+            coverUrl: finishedConsultation["coverUrl"] as String,
+            thematique: Thematique(
+              picto: thematique["picto"] as String,
+              label: thematique["label"] as String,
+              color: thematique["color"] as String,
+            ),
+            step: finishedConsultation["step"] as int,
           );
         }).toList(),
       );
@@ -206,11 +221,18 @@ abstract class GetConsultationsRepositoryResponse extends Equatable {
 
 class GetConsultationsSucceedResponse extends GetConsultationsRepositoryResponse {
   final List<ConsultationOngoing> ongoingConsultations;
+  final List<ConsultationFinished> finishedConsultations;
 
-  GetConsultationsSucceedResponse({required this.ongoingConsultations});
+  GetConsultationsSucceedResponse({
+    required this.ongoingConsultations,
+    required this.finishedConsultations,
+  });
 
   @override
-  List<Object> get props => [ongoingConsultations];
+  List<Object> get props => [
+        ongoingConsultations,
+        finishedConsultations,
+      ];
 }
 
 class GetConsultationsFailedResponse extends GetConsultationsRepositoryResponse {}
