@@ -36,11 +36,14 @@ class ConsultationsPage extends StatelessWidget {
                     title: AgoraRichText(
                       policeStyle: AgoraRichTextPoliceStyle.toolbar,
                       items: [
-                        AgoraRichTextItem(
+                        AgoraRichTextTextItem(
                           text: "${ConsultationStrings.toolbarPart1}\n",
                           style: AgoraRichTextItemStyle.regular,
                         ),
-                        AgoraRichTextItem(text: ConsultationStrings.toolbarPart2, style: AgoraRichTextItemStyle.bold),
+                        AgoraRichTextTextItem(
+                          text: ConsultationStrings.toolbarPart2,
+                          style: AgoraRichTextItemStyle.bold,
+                        ),
                       ],
                     ),
                   ),
@@ -59,6 +62,32 @@ class ConsultationsPage extends StatelessWidget {
       return [
         ConsultationsOngoingSection(ongoingViewModels: state.ongoingViewModels),
         ConsultationsFinishedSection(finishedViewModels: state.finishedViewModels),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: AgoraSpacings.horizontalPadding,
+            right: AgoraSpacings.horizontalPadding,
+            top: AgoraSpacings.x1_5,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(width: double.infinity),
+              AgoraRichText(
+                items: [
+                  AgoraRichTextTextItem(
+                    text: ConsultationStrings.answeredConsultationPart1,
+                    style: AgoraRichTextItemStyle.regular,
+                  ),
+                  AgoraRichTextSpaceItem(),
+                  AgoraRichTextTextItem(
+                    text: ConsultationStrings.answeredConsultationPart2,
+                    style: AgoraRichTextItemStyle.bold,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ];
     } else if (state is ConsultationInitialLoadingState) {
       return [

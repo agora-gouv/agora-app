@@ -7,3 +7,13 @@ extension ThematiqueExtension on Thematique {
     return ThematiqueViewModel(picto: picto, label: label, color: color.toColorInt());
   }
 }
+
+extension ConvertMapToThematiqueExtension on Map<dynamic, dynamic> {
+  Thematique toThematique() {
+    return Thematique(
+      picto: this["picto"] as String,
+      label: this["label"] as String,
+      color: this["color"] as String,
+    );
+  }
+}

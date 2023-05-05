@@ -31,7 +31,7 @@ void main() {
             {
               "id": "consultationId1",
               "title": "Développer le covoiturage",
-              "coverUrl": "coverUrl",
+              "coverUrl": "coverUrl1",
               "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
               "endDate": "2023-03-21",
               "hasAnswered": false,
@@ -41,11 +41,20 @@ void main() {
             {
               "id": "consultationId2",
               "title": "Quelles solutions pour les déserts médicaux ?",
-              "coverUrl": "coverUrl",
+              "coverUrl": "coverUrl2",
               "thematique": {"label": "Santé", "picto": "🩺", "color": "#FFFCCFDD"},
               "step": 2
             },
           ],
+          "answered": [
+            {
+              "id": "consultationId3",
+              "title": "Quand commencer ?",
+              "coverUrl": "coverUrl3",
+              "thematique": {"label": "Santé", "picto": "🩺", "color": "#FFFCCFDD"},
+              "step": 3
+            },
+          ]
         }),
         headers: {
           "accept": "application/json",
@@ -65,7 +74,7 @@ void main() {
             ConsultationOngoing(
               id: "consultationId1",
               title: "Développer le covoiturage",
-              coverUrl: "coverUrl",
+              coverUrl: "coverUrl1",
               thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
               endDate: DateTime(2023, 3, 21),
               hasAnswered: false,
@@ -75,9 +84,18 @@ void main() {
             ConsultationFinished(
               id: "consultationId2",
               title: "Quelles solutions pour les déserts médicaux ?",
-              coverUrl: "coverUrl",
+              coverUrl: "coverUrl2",
               thematique: Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
               step: 2,
+            ),
+          ],
+          answeredConsultations: [
+            ConsultationAnswered(
+              id: "consultationId3",
+              title: "Quand commencer ?",
+              coverUrl: "coverUrl3",
+              thematique: Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
+              step: 3,
             ),
           ],
         ),

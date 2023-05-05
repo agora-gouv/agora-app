@@ -1,5 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
+import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
@@ -55,34 +56,34 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       final ongoingConsultations = response.data["ongoing"] as List;
       final finishedConsultations = response.data["finished"] as List;
+      final answeredConsultations = response.data["answered"] as List;
       return GetConsultationsSucceedResponse(
         ongoingConsultations: ongoingConsultations.map((ongoingConsultation) {
-          final thematique = ongoingConsultation["thematique"] as Map;
           return ConsultationOngoing(
             id: ongoingConsultation["id"] as String,
             title: ongoingConsultation["title"] as String,
             coverUrl: ongoingConsultation["coverUrl"] as String,
-            thematique: Thematique(
-              picto: thematique["picto"] as String,
-              label: thematique["label"] as String,
-              color: thematique["color"] as String,
-            ),
+            thematique: (ongoingConsultation["thematique"] as Map).toThematique(),
             endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
             hasAnswered: ongoingConsultation["hasAnswered"] as bool,
           );
         }).toList(),
         finishedConsultations: finishedConsultations.map((finishedConsultation) {
-          final thematique = finishedConsultation["thematique"] as Map;
           return ConsultationFinished(
             id: finishedConsultation["id"] as String,
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
-            thematique: Thematique(
-              picto: thematique["picto"] as String,
-              label: thematique["label"] as String,
-              color: thematique["color"] as String,
-            ),
+            thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             step: finishedConsultation["step"] as int,
+          );
+        }).toList(),
+        answeredConsultations: answeredConsultations.map((answeredConsultation) {
+          return ConsultationAnswered(
+            id: answeredConsultation["id"] as String,
+            title: answeredConsultation["title"] as String,
+            coverUrl: answeredConsultation["coverUrl"] as String,
+            thematique: (answeredConsultation["thematique"] as Map).toThematique(),
+            step: answeredConsultation["step"] as int,
           );
         }).toList(),
       );
@@ -109,11 +110,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           title: response.data["title"] as String,
           coverUrl: response.data["coverUrl"] as String,
           thematique: thematique != null
-              ? Thematique(
-                  picto: thematique["picto"] as String,
-                  label: thematique["label"] as String,
-                  color: thematique["color"] as String,
-                )
+              ? thematique.toThematique()
               : Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
           endDate: (response.data["endDate"] as String).parseToDateTime(),
           questionCount: response.data["questionCount"] as String,
@@ -222,16 +219,19 @@ abstract class GetConsultationsRepositoryResponse extends Equatable {
 class GetConsultationsSucceedResponse extends GetConsultationsRepositoryResponse {
   final List<ConsultationOngoing> ongoingConsultations;
   final List<ConsultationFinished> finishedConsultations;
+  final List<ConsultationAnswered> answeredConsultations;
 
   GetConsultationsSucceedResponse({
     required this.ongoingConsultations,
     required this.finishedConsultations,
+    required this.answeredConsultations,
   });
 
   @override
   List<Object> get props => [
         ongoingConsultations,
         finishedConsultations,
+        answeredConsultations,
       ];
 }
 

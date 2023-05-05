@@ -1,5 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
+import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/qag.dart';
@@ -52,14 +53,9 @@ class QagDioRepository extends QagRepository {
       final qags = response.data["qags"] as Map;
       return GetQagsSucceedResponse(
         qagResponses: qagResponses.map((qagResponse) {
-          final thematique = qagResponse["thematique"] as Map;
           return QagResponse(
             qagId: qagResponse["qagId"] as String,
-            thematique: Thematique(
-              picto: thematique["picto"] as String,
-              label: thematique["label"] as String,
-              color: thematique["color"] as String,
-            ),
+            thematique: (qagResponse["thematique"] as Map).toThematique(),
             title: qagResponse["title"] as String,
             author: qagResponse["author"] as String,
             authorPortraitUrl: qagResponse["authorPortraitUrl"] as String,
@@ -93,11 +89,7 @@ class QagDioRepository extends QagRepository {
         qagDetails: QagDetails(
           id: response.data["id"] as String,
           thematique: thematique != null
-              ? Thematique(
-                  picto: thematique["picto"] as String,
-                  label: thematique["label"] as String,
-                  color: thematique["color"] as String,
-                )
+              ? thematique.toThematique()
               : Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
           title: response.data["title"] as String,
           description: response.data["description"] as String,
@@ -179,15 +171,10 @@ class QagDioRepository extends QagRepository {
 
   List<Qag> _transformToQagList(List<dynamic> qags) {
     return qags.map((qag) {
-      final thematique = qag["thematique"] as Map;
       final support = qag["support"] as Map;
       return Qag(
         id: qag["qagId"] as String,
-        thematique: Thematique(
-          picto: thematique["picto"] as String,
-          label: thematique["label"] as String,
-          color: thematique["color"] as String,
-        ),
+        thematique: (qag["thematique"] as Map).toThematique(),
         title: qag["title"] as String,
         username: qag["username"] as String,
         date: (qag["date"] as String).parseToDateTime(),

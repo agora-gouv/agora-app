@@ -34,6 +34,15 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           step: 2,
         ),
       ],
+      answeredConsultations: [
+        ConsultationAnswered(
+          id: "consultationId3",
+          title: "Quand commencer ?",
+          coverUrl: "coverUrl3",
+          thematique: Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
+          step: 3,
+        ),
+      ],
     );
   }
 
@@ -164,6 +173,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
         )
       ],
       finishedConsultations: [],
+      answeredConsultations: [],
     );
   }
 }
