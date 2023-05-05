@@ -4,8 +4,7 @@ import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -29,14 +28,18 @@ class QagDetailsSupportView extends StatelessWidget {
             Stack(
               alignment: Alignment.centerLeft,
               children: [
-                AgoraButton(
-                  icon: _buildIcon(isSupported, supportState),
-                  label: _buildLabel(isSupported, supportState),
-                  style: _buildButtonStyle(isSupported, supportState),
-                  isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
-                  needFixSize: true,
-                  fixSize: 40,
-                  onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
+                Row(
+                  children: [
+                    AgoraRoundedButton(
+                      icon: _buildIcon(isSupported, supportState),
+                      label: _buildLabel(isSupported, supportState),
+                      style: _buildButtonStyle(isSupported, supportState),
+                      isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
+                      onPressed: () {
+                        _buildOnPressed(context, qagId, isSupported, supportState);
+                      },
+                    ),
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -108,21 +111,21 @@ class QagDetailsSupportView extends StatelessWidget {
     return ""; // value not important
   }
 
-  ButtonStyle _buildButtonStyle(bool isSupported, QagSupportState supportState) {
+  AgoraRoundedButtonStyle _buildButtonStyle(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
-        return AgoraButtonStyle.whiteButtonWithGreenBorderStyle;
+        return AgoraRoundedButtonStyle.secondaryButton;
       } else {
-        return AgoraButtonStyle.primaryButtonStyle;
+        return AgoraRoundedButtonStyle.primaryButton;
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return AgoraButtonStyle.whiteButtonWithGreenBorderStyle;
+        return AgoraRoundedButtonStyle.secondaryButton;
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
-        return AgoraButtonStyle.primaryButtonStyle;
+        return AgoraRoundedButtonStyle.primaryButton;
       }
     }
-    return AgoraButtonStyle.whiteButtonStyle; // value not important
+    return AgoraRoundedButtonStyle.secondaryButton; // value not important
   }
 
   void _buildOnPressed(BuildContext context, String qagId, bool isSupported, QagSupportState supportState) {
