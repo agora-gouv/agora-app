@@ -9,6 +9,7 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/pages/consultation/consultations_answered_section.dart';
 import 'package:agora/pages/consultation/consultations_finished_section.dart';
 import 'package:agora/pages/consultation/consultations_ongoing_section.dart';
 import 'package:flutter/material.dart';
@@ -62,32 +63,7 @@ class ConsultationsPage extends StatelessWidget {
       return [
         ConsultationsOngoingSection(ongoingViewModels: state.ongoingViewModels),
         ConsultationsFinishedSection(finishedViewModels: state.finishedViewModels),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: AgoraSpacings.horizontalPadding,
-            right: AgoraSpacings.horizontalPadding,
-            top: AgoraSpacings.x1_5,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(width: double.infinity),
-              AgoraRichText(
-                items: [
-                  AgoraRichTextTextItem(
-                    text: ConsultationStrings.answeredConsultationPart1,
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                  AgoraRichTextSpaceItem(),
-                  AgoraRichTextTextItem(
-                    text: ConsultationStrings.answeredConsultationPart2,
-                    style: AgoraRichTextItemStyle.bold,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        ConsultationsAnsweredSection(answeredViewModels: state.answeredViewModels),
       ];
     } else if (state is ConsultationInitialLoadingState) {
       return [
