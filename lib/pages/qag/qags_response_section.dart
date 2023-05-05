@@ -56,8 +56,8 @@ class QagsResponseSection extends StatelessWidget {
       children: [
         AgoraRichText(
           items: [
-            AgoraRichTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
-            AgoraRichTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
+            AgoraRichTextTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
+            AgoraRichTextTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
           ],
         ),
         SizedBox(width: AgoraSpacings.x0_75),

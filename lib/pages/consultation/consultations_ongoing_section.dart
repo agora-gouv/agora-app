@@ -22,50 +22,48 @@ class ConsultationsOngoingSection extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: _buildOngoingConsultations(context, ongoingViewModels),
+        children: _buildOngoingConsultations(context),
       ),
     );
   }
 
-  List<Widget> _buildOngoingConsultations(
-    BuildContext context,
-    List<ConsultationOngoingViewModel> ongoingConsultations,
-  ) {
+  List<Widget> _buildOngoingConsultations(BuildContext context) {
     final List<Widget> ongoingConsultationsWidgets = List.empty(growable: true);
     ongoingConsultationsWidgets.add(
       AgoraRichText(
         items: [
-          AgoraRichTextItem(
+          AgoraRichTextTextItem(
             text: "${ConsultationStrings.ongoingConsultationPart1}\n",
             style: AgoraRichTextItemStyle.regular,
           ),
-          AgoraRichTextItem(text: ConsultationStrings.ongoingConsultationPart2, style: AgoraRichTextItemStyle.bold),
+          AgoraRichTextTextItem(text: ConsultationStrings.ongoingConsultationPart2, style: AgoraRichTextItemStyle.bold),
         ],
       ),
     );
     ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
 
-    if (ongoingConsultations.isEmpty) {
-      ongoingConsultationsWidgets.add(Text(ConsultationStrings.consultationEmpty));
+    if (ongoingViewModels.isEmpty) {
+      ongoingConsultationsWidgets.add(Container(width: double.infinity));
+      ongoingConsultationsWidgets.add(Center(child: Text(ConsultationStrings.consultationEmpty)));
       ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
     }
-    for (final ongoingConsultation in ongoingConsultations) {
+    for (final ongoingViewModel in ongoingViewModels) {
       ongoingConsultationsWidgets.add(
         AgoraConsultationOngoingCard(
-          imageUrl: ongoingConsultation.coverUrl,
-          thematique: ongoingConsultation.thematique,
-          title: ongoingConsultation.title,
-          endDate: ongoingConsultation.endDate,
+          imageUrl: ongoingViewModel.coverUrl,
+          thematique: ongoingViewModel.thematique,
+          title: ongoingViewModel.title,
+          endDate: ongoingViewModel.endDate,
           onParticipationClick: () {
             Navigator.pushNamed(
               context,
               ConsultationDetailsPage.routeName,
-              arguments: ConsultationDetailsArguments(consultationId: ongoingConsultation.id),
+              arguments: ConsultationDetailsArguments(consultationId: ongoingViewModel.id),
             );
           },
           onShareClick: () {
             Share.share(
-              'Consultation : ${ongoingConsultation.title}\nagora://consultation.gouv.fr/${ongoingConsultation.id}',
+              'Consultation : ${ongoingViewModel.title}\nagora://consultation.gouv.fr/${ongoingViewModel.id}',
             );
           },
         ),

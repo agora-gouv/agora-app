@@ -31,11 +31,11 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   children: [
                     AgoraRichText(
                       items: [
-                        AgoraRichTextItem(
+                        AgoraRichTextTextItem(
                           text: "${ConsultationStrings.finishConsultationPart1}\n",
                           style: AgoraRichTextItemStyle.regular,
                         ),
-                        AgoraRichTextItem(
+                        AgoraRichTextTextItem(
                           text: ConsultationStrings.finishConsultationPart2,
                           style: AgoraRichTextItemStyle.bold,
                         ),
