@@ -96,7 +96,7 @@ class QagDetailsPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ThematiqueHelper.buildCard(context, viewModel.thematique),
-                              SizedBox(height: AgoraSpacings.base),
+                              SizedBox(height: AgoraSpacings.x0_5),
                               Text(viewModel.title, style: AgoraTextStyles.medium18),
                               SizedBox(height: AgoraSpacings.base),
                               if (response == null)

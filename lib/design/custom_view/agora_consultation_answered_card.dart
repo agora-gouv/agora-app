@@ -50,21 +50,15 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
               children: [
                 AgoraRoundedImage(imageUrl: imageUrl, size: 70),
                 SizedBox(width: AgoraSpacings.x0_75),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ThematiqueHelper.buildCard(context, thematique),
-                    SizedBox(height: AgoraSpacings.x0_25),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - // minus all horizontal spacing and image width
-                          (AgoraSpacings.horizontalPadding * 2) -
-                          75 -
-                          (AgoraSpacings.x0_75 * 3) -
-                          2,
-                      child: Text(title, style: AgoraTextStyles.regular16),
-                    ),
-                    SizedBox(height: AgoraSpacings.x0_25),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ThematiqueHelper.buildCard(context, thematique),
+                      Text(title, style: AgoraTextStyles.regular16),
+                      SizedBox(height: AgoraSpacings.x0_25),
+                    ],
+                  ),
                 ),
               ],
             ),

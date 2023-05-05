@@ -37,7 +37,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
           Image.network(imageUrl, height: 200),
           SizedBox(height: AgoraSpacings.base),
           ThematiqueHelper.buildCard(context, thematique),
-          SizedBox(height: AgoraSpacings.x0_5),
+          SizedBox(height: AgoraSpacings.x0_25),
           Text(title, style: AgoraTextStyles.medium22),
           SizedBox(height: AgoraSpacings.x0_5),
           RichText(

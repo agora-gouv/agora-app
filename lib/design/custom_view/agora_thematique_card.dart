@@ -1,5 +1,5 @@
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
-import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +17,9 @@ class AgoraThematiqueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
-      cardColor: Color(color),
-      padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_25, horizontal: AgoraSpacings.x0_5),
-      child: Text("$picto $label", style: AgoraTextStyles.medium14),
+      cardColor: AgoraColors.transparent,
+      padding: null,
+      child: Text("$picto $label", style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen)),
     );
   }
 }

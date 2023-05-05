@@ -58,7 +58,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ThematiqueHelper.buildCard(context, state.viewModel.thematique),
-                          SizedBox(height: AgoraSpacings.x0_75),
+                          SizedBox(height: AgoraSpacings.x0_5),
                           Text(state.viewModel.title, style: AgoraTextStyles.medium19),
                           SizedBox(height: AgoraSpacings.x1_5),
                           Row(
