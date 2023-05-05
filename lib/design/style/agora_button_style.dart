@@ -10,13 +10,12 @@ class AgoraButtonStyle {
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
-        } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.primaryGreen;
         }
       },
     ),
+    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
     textStyle: MaterialStateProperty.all(AgoraTextStyles.primaryButton),
     elevation: MaterialStateProperty.all(0),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
@@ -30,13 +29,12 @@ class AgoraButtonStyle {
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
-        } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.white;
         }
       },
     ),
+    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
     textStyle: MaterialStateProperty.all(AgoraTextStyles.greenTextButton),
     elevation: MaterialStateProperty.all(0),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
@@ -51,13 +49,12 @@ class AgoraButtonStyle {
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
-        } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.steam;
         }
       },
     ),
+    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
     textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
     elevation: MaterialStateProperty.all(0),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
@@ -71,13 +68,12 @@ class AgoraButtonStyle {
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
-        } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.cascadingWhite;
         }
       },
     ),
+    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
     textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
     elevation: MaterialStateProperty.all(0),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
@@ -91,13 +87,12 @@ class AgoraButtonStyle {
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
-        } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.cascadingWhite;
         }
       },
     ),
+    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
     textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
     elevation: MaterialStateProperty.all(0),
     shape: MaterialStateProperty.all(
@@ -120,13 +115,12 @@ class AgoraButtonStyle {
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
-        } else if (states.contains(MaterialState.pressed)) {
-          return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.white;
         }
       },
     ),
+    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
     textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
     elevation: MaterialStateProperty.all(0),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
