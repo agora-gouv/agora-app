@@ -52,20 +52,28 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AgoraSpacings.base),
-                LayoutBuilder(
-                  builder: (context, constraint) {
-                    return SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(minWidth: constraint.maxWidth),
-                        child: IntrinsicHeight(
-                          child: Row(children: _buildFinishedConsultations(context, finishedViewModels)),
-                        ),
+                finishedViewModels.isEmpty
+                    ? Column(
+                        children: [
+                          SizedBox(height: AgoraSpacings.x0_5),
+                          Text(ConsultationStrings.consultationEmpty),
+                          SizedBox(height: AgoraSpacings.base),
+                        ],
+                      )
+                    : LayoutBuilder(
+                        builder: (context, constraint) {
+                          return SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(minWidth: constraint.maxWidth),
+                              child: IntrinsicHeight(
+                                child: Row(children: _buildFinishedConsultations(context)),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ],
             ),
           ),
@@ -74,10 +82,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildFinishedConsultations(
-    BuildContext context,
-    List<ConsultationFinishedViewModel> finishedViewModels,
-  ) {
+  List<Widget> _buildFinishedConsultations(BuildContext context) {
     final List<Widget> finishedConsultationsWidget = List.empty(growable: true);
     for (final finishedViewModel in finishedViewModels) {
       finishedConsultationsWidget.add(

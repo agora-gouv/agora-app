@@ -93,7 +93,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     _getStepString(),
-                    style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.primaryGreen),
+                    style: AgoraTextStyles.regular12.copyWith(color: AgoraColors.primaryGreen),
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.x0_25),

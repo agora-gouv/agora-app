@@ -2,6 +2,7 @@ import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/agora_rounded_image.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -26,30 +27,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
-      child: step != 1
-          ? _buildFinishedConsultationCard(context)
-          : Stack(
-              children: [
-                _buildFinishedConsultationCard(context),
-                AgoraRoundedCard(
-                  cardColor: AgoraColors.primaryGreenOpacity90,
-                  child: Container(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AgoraSpacings.x0_75,
-                    vertical: AgoraSpacings.x0_5,
-                  ),
-                  child: Text(
-                    ConsultationStrings.shortly,
-                    style: AgoraTextStyles.bold18.copyWith(color: AgoraColors.white),
-                  ),
-                ),
-              ],
-            ),
-    );
+    return _buildFinishedConsultationCard(context);
   }
 
   Widget _buildFinishedConsultationCard(BuildContext context) {
@@ -66,22 +44,32 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
       },
       child: Column(
         children: [
-          Image.network(imageUrl, height: 125),
           Padding(
             padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Container(width: double.infinity),
-                ThematiqueHelper.buildCard(context, thematique),
-                SizedBox(height: AgoraSpacings.x0_25),
-                Text(title, style: AgoraTextStyles.medium18),
-                SizedBox(height: AgoraSpacings.x0_25),
+                AgoraRoundedImage(imageUrl: imageUrl, size: 70),
+                SizedBox(width: AgoraSpacings.x0_75),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ThematiqueHelper.buildCard(context, thematique),
+                    SizedBox(height: AgoraSpacings.x0_25),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - // minus all horizontal spacing and image width
+                          (AgoraSpacings.horizontalPadding * 2) -
+                          75 -
+                          (AgoraSpacings.x0_75 * 3) -
+                          2,
+                      child: Text(title, style: AgoraTextStyles.regular16),
+                    ),
+                    SizedBox(height: AgoraSpacings.x0_25),
+                  ],
+                ),
               ],
             ),
           ),
           SizedBox(height: AgoraSpacings.x0_25),
-          Spacer(),
           AgoraRoundedCard(
             cardColor: AgoraColors.doctor,
             padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
@@ -93,7 +81,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     _getStepString(),
-                    style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.primaryGreen),
+                    style: AgoraTextStyles.regular12.copyWith(color: AgoraColors.primaryGreen),
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.x0_25),
@@ -109,7 +97,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
   String _getIcon() {
     switch (step) {
       case 1:
-        return "assets/ic_consultation_step2_finished.svg";
+        return "assets/ic_consultation_step1_ongoing.svg";
       case 2:
         return "assets/ic_consultation_step2_finished.svg";
       case 3:
@@ -122,7 +110,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
   String _getStepString() {
     switch (step) {
       case 1:
-        return ConsultationStrings.coming;
+        return ConsultationStrings.inProgress;
       case 2:
         return ConsultationStrings.engagement;
       case 3:
