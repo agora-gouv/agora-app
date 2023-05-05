@@ -29,7 +29,7 @@ void main() {
             ConsultationOngoingViewModel(
               id: "consultationId",
               title: "Développer le covoiturage au quotidien",
-              coverUrl: "coverUrl",
+              coverUrl: "coverUrl1",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
               endDate: "23 janvier",
               hasAnswered: false,
@@ -39,9 +39,18 @@ void main() {
             ConsultationFinishedViewModel(
               id: "consultationId2",
               title: "Quelles solutions pour les déserts médicaux ?",
-              coverUrl: "coverUrl",
+              coverUrl: "coverUrl2",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé", color: 0xFFFCCFDD),
               step: 2,
+            ),
+          ],
+          answeredViewModels: [
+            ConsultationAnsweredViewModel(
+              id: "consultationId3",
+              title: "Quand commencer ?",
+              coverUrl: "coverUrl3",
+              thematique: ThematiqueViewModel(picto: "🩺", label: "Santé", color: 0xFFFCCFDD),
+              step: 3,
             ),
           ],
         ),
@@ -77,6 +86,7 @@ void main() {
               step: 1,
             ),
           ],
+          answeredViewModels: [],
         ),
       ],
       wait: const Duration(milliseconds: 5),
