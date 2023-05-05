@@ -12,6 +12,7 @@ import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -59,6 +60,7 @@ class QagDetailsPage extends StatelessWidget {
         ),
       ],
       child: AgoraScaffold(
+        appBarColor: AgoraColors.primaryGreen,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
             if (detailsState is QagDetailsFetchedState) {
@@ -73,7 +75,7 @@ class QagDetailsPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: AgoraSpacings.horizontalPadding,
-                          vertical: AgoraSpacings.x0_5,
+                          vertical: AgoraSpacings.x1_25,
                         ),
                         child: AgoraButton(
                           icon: "ic_share.svg",
@@ -89,6 +91,7 @@ class QagDetailsPage extends StatelessWidget {
                     ),
                     Column(
                       children: [
+                        AgoraTopDiagonal(),
                         AgoraToolbar(),
                         Padding(
                           padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
@@ -107,23 +110,20 @@ class QagDetailsPage extends StatelessWidget {
                               if (support != null) ...[
                                 RichText(
                                   text: TextSpan(
-                                    style: AgoraTextStyles.regularItalic14
-                                        .copyWith(color: AgoraColors.primaryGreyOpacity80),
+                                    style: AgoraTextStyles.medium14,
                                     children: [
-                                      TextSpan(text: QagStrings.by),
+                                      TextSpan(text: QagStrings.de),
                                       WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                                       TextSpan(
                                         text: viewModel.username,
-                                        style: AgoraTextStyles.mediumItalic14
-                                            .copyWith(color: AgoraColors.primaryGreyOpacity80),
+                                        style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
                                       ),
                                       WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                                       TextSpan(text: QagStrings.at),
                                       WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                                       TextSpan(
                                         text: viewModel.date,
-                                        style: AgoraTextStyles.mediumItalic14
-                                            .copyWith(color: AgoraColors.primaryGreyOpacity80),
+                                        style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
                                       )
                                     ],
                                   ),

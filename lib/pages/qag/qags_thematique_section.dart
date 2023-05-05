@@ -50,13 +50,17 @@ class QagsThematiqueSection extends StatelessWidget {
         Column(
           children: [
             AgoraRoundedCard(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AgoraSpacings.x1_25,
+                vertical: AgoraSpacings.base,
+              ),
               borderColor: AgoraColors.border,
               onTap: () {
                 // TODO
               },
               child: Text(
                 thematique.picto,
-                style: AgoraTextStyles.medium30,
+                style: AgoraTextStyles.medium30.copyWith(height: 0),
               ),
             ),
             SizedBox(height: AgoraSpacings.x0_5),
