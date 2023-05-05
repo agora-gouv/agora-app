@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class AgoraScaffold extends StatelessWidget {
   final Widget child;
+  final Color appBarColor;
   final Color backgroundColor;
   final bool shouldPop;
   final VoidCallback? popAction;
 
   const AgoraScaffold({
     super.key,
+    this.appBarColor = AgoraColors.white,
     this.backgroundColor = AgoraColors.white,
     required this.child,
     this.shouldPop = true,
@@ -38,7 +40,7 @@ class AgoraScaffold extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: backgroundColor,
+        backgroundColor: appBarColor,
         toolbarHeight: 0,
         elevation: 0,
       ),
