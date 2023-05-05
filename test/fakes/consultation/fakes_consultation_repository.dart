@@ -19,7 +19,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         ConsultationOngoing(
           id: "consultationId",
           title: "Développer le covoiturage au quotidien",
-          coverUrl: "coverUrl",
+          coverUrl: "coverUrl1",
           thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
           endDate: DateTime(2024, 1, 23),
           hasAnswered: false,
@@ -29,9 +29,18 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         ConsultationFinished(
           id: "consultationId2",
           title: "Quelles solutions pour les déserts médicaux ?",
-          coverUrl: "coverUrl",
+          coverUrl: "coverUrl2",
           thematique: Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
           step: 2,
+        ),
+      ],
+      answeredConsultations: [
+        ConsultationAnswered(
+          id: "consultationId3",
+          title: "Quand commencer ?",
+          coverUrl: "coverUrl3",
+          thematique: Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
+          step: 3,
         ),
       ],
     );
@@ -164,6 +173,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
         )
       ],
       finishedConsultations: [],
+      answeredConsultations: [],
     );
   }
 }

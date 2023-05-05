@@ -53,3 +53,28 @@ class ConsultationFinishedViewModel extends Equatable {
         step,
       ];
 }
+
+class ConsultationAnsweredViewModel extends Equatable {
+  final String id;
+  final String title;
+  final String coverUrl;
+  final ThematiqueViewModel thematique;
+  final int step;
+
+  ConsultationAnsweredViewModel({
+    required this.id,
+    required this.title,
+    required this.coverUrl,
+    required this.thematique,
+    required this.step,
+  });
+
+  @override
+  List<Object> get props => [
+        id,
+        title,
+        coverUrl,
+        thematique,
+        step,
+      ];
+}

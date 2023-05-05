@@ -45,4 +45,18 @@ class ConsultationPresenter {
       }).toList();
     }
   }
+
+  static List<ConsultationAnsweredViewModel> presentAnsweredConsultations(
+    List<ConsultationAnswered> answeredConsultations,
+  ) {
+    return answeredConsultations.map((consultation) {
+      return ConsultationAnsweredViewModel(
+        id: consultation.id,
+        title: consultation.title,
+        coverUrl: consultation.coverUrl,
+        thematique: consultation.thematique.toThematiqueViewModel(),
+        step: consultation.step,
+      );
+    }).toList();
+  }
 }

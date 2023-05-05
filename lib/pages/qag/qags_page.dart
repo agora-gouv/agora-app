@@ -49,8 +49,8 @@ class QagsPage extends StatelessWidget {
                     title: AgoraRichText(
                       policeStyle: AgoraRichTextPoliceStyle.toolbar,
                       items: [
-                        AgoraRichTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
-                        AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
+                        AgoraRichTextTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
+                        AgoraRichTextTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
                       ],
                     ),
                   ),

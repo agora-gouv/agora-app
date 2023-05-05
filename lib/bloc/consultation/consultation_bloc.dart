@@ -32,10 +32,12 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
         response.ongoingConsultations,
         response.finishedConsultations,
       );
+      final answeredViewModels = ConsultationPresenter.presentAnsweredConsultations(response.answeredConsultations);
       emit(
         ConsultationsFetchedState(
           ongoingViewModels: ongoingViewModels,
           finishedViewModels: finishedViewModels,
+          answeredViewModels: answeredViewModels,
         ),
       );
     } else {

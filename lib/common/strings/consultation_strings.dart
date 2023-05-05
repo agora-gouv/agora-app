@@ -5,6 +5,8 @@ class ConsultationStrings {
   static const String ongoingConsultationPart2 = "en cours";
   static const String finishConsultationPart1 = "Ça a été fait";
   static const String finishConsultationPart2 = "grâce à vous";
+  static const String answeredConsultationPart1 = "Mes";
+  static const String answeredConsultationPart2 = "consultations";
   static const String consultationEmpty = "La liste est vide.";
   static const String participate = "Participer";
   static const String beginButton = "Commencer";

@@ -1,3 +1,4 @@
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -5,11 +6,15 @@ enum AgoraRichTextPoliceStyle { toolbar, section }
 
 enum AgoraRichTextItemStyle { bold, regular }
 
-class AgoraRichTextItem {
+abstract class AgoraRichTextItem {}
+
+class AgoraRichTextSpaceItem extends AgoraRichTextItem {}
+
+class AgoraRichTextTextItem extends AgoraRichTextItem {
   final String text;
   final AgoraRichTextItemStyle style;
 
-  AgoraRichTextItem({
+  AgoraRichTextTextItem({
     required this.text,
     required this.style,
   });
@@ -30,11 +35,15 @@ class AgoraRichText extends StatelessWidget {
       text: TextSpan(
         style: _buildRegularStyle(),
         children: items.map((item) {
-          switch (item.style) {
-            case AgoraRichTextItemStyle.regular:
-              return TextSpan(text: item.text);
-            case AgoraRichTextItemStyle.bold:
-              return TextSpan(text: item.text, style: _buildBoldStyle());
+          if (item is AgoraRichTextTextItem) {
+            switch (item.style) {
+              case AgoraRichTextItemStyle.regular:
+                return TextSpan(text: item.text);
+              case AgoraRichTextItemStyle.bold:
+                return TextSpan(text: item.text, style: _buildBoldStyle());
+            }
+          } else {
+            return WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25));
           }
         }).toList(),
       ),

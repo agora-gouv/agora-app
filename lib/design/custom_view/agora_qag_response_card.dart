@@ -55,7 +55,7 @@ class AgoraQagResponseCard extends StatelessWidget {
               roundedCorner: AgoraRoundedCorner.bottomRounded,
               child: Row(
                 children: [
-                  AgoraRoundedImage(imageUrl: authorImageUrl),
+                  AgoraRoundedImage(imageUrl: authorImageUrl, size: 27),
                   SizedBox(width: AgoraSpacings.x0_5),
                   Expanded(
                     child: Column(

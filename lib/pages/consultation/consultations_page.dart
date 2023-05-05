@@ -9,6 +9,7 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/pages/consultation/consultations_answered_section.dart';
 import 'package:agora/pages/consultation/consultations_finished_section.dart';
 import 'package:agora/pages/consultation/consultations_ongoing_section.dart';
 import 'package:flutter/material.dart';
@@ -36,11 +37,14 @@ class ConsultationsPage extends StatelessWidget {
                     title: AgoraRichText(
                       policeStyle: AgoraRichTextPoliceStyle.toolbar,
                       items: [
-                        AgoraRichTextItem(
+                        AgoraRichTextTextItem(
                           text: "${ConsultationStrings.toolbarPart1}\n",
                           style: AgoraRichTextItemStyle.regular,
                         ),
-                        AgoraRichTextItem(text: ConsultationStrings.toolbarPart2, style: AgoraRichTextItemStyle.bold),
+                        AgoraRichTextTextItem(
+                          text: ConsultationStrings.toolbarPart2,
+                          style: AgoraRichTextItemStyle.bold,
+                        ),
                       ],
                     ),
                   ),
@@ -59,6 +63,7 @@ class ConsultationsPage extends StatelessWidget {
       return [
         ConsultationsOngoingSection(ongoingViewModels: state.ongoingViewModels),
         ConsultationsFinishedSection(finishedViewModels: state.finishedViewModels),
+        ConsultationsAnsweredSection(answeredViewModels: state.answeredViewModels),
       ];
     } else if (state is ConsultationInitialLoadingState) {
       return [

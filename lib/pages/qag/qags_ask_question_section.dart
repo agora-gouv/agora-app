@@ -21,8 +21,8 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
               Expanded(
                 child: AgoraRichText(
                   items: [
-                    AgoraRichTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
-                    AgoraRichTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
+                    AgoraRichTextTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
+                    AgoraRichTextTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
                   ],
                 ),
               ),
