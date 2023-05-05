@@ -74,7 +74,6 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
               children: [
                 Container(width: double.infinity),
                 ThematiqueHelper.buildCard(context, thematique),
-                SizedBox(height: AgoraSpacings.x0_25),
                 Text(title, style: AgoraTextStyles.medium18),
                 SizedBox(height: AgoraSpacings.x0_25),
               ],
