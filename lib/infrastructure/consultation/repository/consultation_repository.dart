@@ -8,7 +8,6 @@ import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
-import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
 import 'package:equatable/equatable.dart';
@@ -103,15 +102,13 @@ class ConsultationDioRepository extends ConsultationRepository {
         "/consultations/$consultationId",
         headers: {"deviceId": deviceId},
       );
-      final thematique = response.data["thematique"] as Map?;
+      final thematique = response.data["thematique"] as Map;
       return GetConsultationDetailsSucceedResponse(
         consultationDetails: ConsultationDetails(
           id: response.data["id"] as String,
           title: response.data["title"] as String,
           coverUrl: response.data["coverUrl"] as String,
-          thematique: thematique != null
-              ? thematique.toThematique()
-              : Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
+          thematique: thematique.toThematique(),
           endDate: (response.data["endDate"] as String).parseToDateTime(),
           questionCount: response.data["questionCount"] as String,
           estimatedTime: response.data["estimatedTime"] as String,
