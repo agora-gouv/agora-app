@@ -15,12 +15,14 @@ void main() {
 
   const qagId = "qagId";
   const deviceId = "deviceId";
+  const thematiqueId = "thematiqueId";
 
   group("Fetch qags", () {
     test("when success should return qags", () async {
       // Given
       dioAdapter.onGet(
         "/qags",
+        queryParameters: {"thematiqueId": thematiqueId},
         (server) => server.reply(
           HttpStatus.ok,
           {
@@ -82,7 +84,7 @@ void main() {
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQags(deviceId: deviceId);
+      final response = await repository.fetchQags(deviceId: deviceId, thematiqueId: thematiqueId);
 
       // Then
       expect(
@@ -145,7 +147,7 @@ void main() {
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQags(deviceId: deviceId);
+      final response = await repository.fetchQags(deviceId: deviceId, thematiqueId: thematiqueId);
 
       // Then
       expect(response, GetQagsFailedResponse());

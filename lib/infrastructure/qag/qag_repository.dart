@@ -10,6 +10,7 @@ import 'package:equatable/equatable.dart';
 abstract class QagRepository {
   Future<GetQagsRepositoryResponse> fetchQags({
     required String deviceId,
+    required String? thematiqueId,
   });
 
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
@@ -42,10 +43,12 @@ class QagDioRepository extends QagRepository {
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
     required String deviceId,
+    required String? thematiqueId,
   }) async {
     try {
       final response = await httpClient.get(
         "/qags",
+        queryParameters: {"thematiqueId": thematiqueId},
         headers: {"deviceId": deviceId},
       );
       final qagResponses = response.data["responses"] as List;
@@ -101,10 +104,8 @@ class QagDioRepository extends QagRepository {
           response: qagDetailsResponse != null
               ? QagDetailsResponse(
                   author: qagDetailsResponse["author"] as String,
-                  authorDescription:
-                      qagDetailsResponse["authorDescription"] as String,
-                  responseDate: (qagDetailsResponse["responseDate"] as String)
-                      .parseToDateTime(),
+                  authorDescription: qagDetailsResponse["authorDescription"] as String,
+                  responseDate: (qagDetailsResponse["responseDate"] as String).parseToDateTime(),
                   videoUrl: qagDetailsResponse["videoUrl"] as String,
                   transcription: qagDetailsResponse["transcription"] as String,
                   feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool,

@@ -10,6 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsThematiqueSection extends StatelessWidget {
+  final Function(String) onThematiqueIdSelected;
+
+  const QagsThematiqueSection({
+    super.key,
+    required this.onThematiqueIdSelected,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,7 +63,7 @@ class QagsThematiqueSection extends StatelessWidget {
               ),
               borderColor: AgoraColors.border,
               onTap: () {
-                // TODO
+                onThematiqueIdSelected(thematique.id);
               },
               child: Text(
                 thematique.picto,

@@ -30,7 +30,7 @@ class QagsPage extends StatelessWidget {
             return QagBloc(
               qagRepository: RepositoryManager.getQagRepository(),
               deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-            )..add(FetchQagsEvent());
+            )..add(FetchQagsEvent(thematiqueId: null));
           },
         ),
         BlocProvider(
@@ -69,7 +69,10 @@ class QagsPage extends StatelessWidget {
       return [
         QagsResponseSection(qagResponseViewModels: state.qagResponseViewModels),
         QagsAskQuestionSectionPage(),
-        QagsThematiqueSection(),
+        QagsThematiqueSection(
+          onThematiqueIdSelected: (String thematiqueId) =>
+              {context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: thematiqueId))},
+        ),
         QagsSection(
           defaultSelected: QagTab.popular,
           popularViewModels: state.popularViewModels,

@@ -22,7 +22,7 @@ void main() {
         qagRepository: FakeQagSuccessRepository(),
         deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
-      act: (bloc) => bloc.add(FetchQagsEvent()),
+      act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: null)),
       expect: () => [
         QagFetchedState(
           qagResponseViewModels: [
@@ -79,7 +79,7 @@ void main() {
         qagRepository: FakeQagSuccessRepository(),
         deviceInfoHelper: FakeDeviceIdNullHelper(),
       ),
-      act: (bloc) => bloc.add(FetchQagsEvent()),
+      act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: "thematiqueId")),
       expect: () => [
         QagErrorState(),
       ],
@@ -92,7 +92,7 @@ void main() {
         qagRepository: FakeQagFailureRepository(),
         deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
-      act: (bloc) => bloc.add(FetchQagsEvent()),
+      act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: "anotherThematiqueId")),
       expect: () => [
         QagErrorState(),
       ],
