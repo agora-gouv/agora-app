@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 class AgoraThematiqueCard extends StatelessWidget {
   final String picto;
   final String label;
-  final int color;
 
   AgoraThematiqueCard({
     required this.picto,
     required this.label,
-    required this.color,
   });
 
   @override

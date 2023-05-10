@@ -31,7 +31,7 @@ void main() {
             id: consultationId,
             title: "Développer le covoiturage au quotidien",
             coverUrl: "coverUrl",
-            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
             endDate: "Jusqu'au 3 mars",
             questionCount: "5 à 10 questions",
             estimatedTime: "5 minutes",

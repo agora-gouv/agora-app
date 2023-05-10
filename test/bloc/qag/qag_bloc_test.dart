@@ -28,7 +28,7 @@ void main() {
           qagResponseViewModels: [
             QagResponseViewModel(
               qagId: "qagId",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
@@ -38,7 +38,7 @@ void main() {
           popularViewModels: [
             QagViewModel(
               id: "id1",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               title: "title1",
               username: "username1",
               date: "23 janvier",
@@ -49,7 +49,7 @@ void main() {
           latestViewModels: [
             QagViewModel(
               id: "id2",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               title: "title2",
               username: "username2",
               date: "23 février",
@@ -60,7 +60,7 @@ void main() {
           supportingViewModels: [
             QagViewModel(
               id: "id3",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               title: "title3",
               username: "username3",
               date: "23 mars",

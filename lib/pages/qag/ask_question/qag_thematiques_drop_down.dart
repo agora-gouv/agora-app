@@ -60,7 +60,6 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
             child: AgoraThematiqueCard(
               picto: thematique.picto,
               label: thematique.label,
-              color: thematique.color,
             ),
           );
         }).toList(),

@@ -1,5 +1,4 @@
 import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
-import 'package:agora/common/extension/color_extension.dart';
 import 'package:agora/domain/thematique/thematique_with_id.dart';
 
 class ThematiquePresenter {
@@ -10,7 +9,6 @@ class ThematiquePresenter {
             id: thematique.id,
             picto: thematique.picto,
             label: thematique.label,
-            color: thematique.color.toColorInt(),
           ),
         )
         .toList();

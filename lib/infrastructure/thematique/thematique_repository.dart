@@ -22,7 +22,6 @@ class ThematiqueDioRepository extends ThematiqueRepository {
               id: thematique["id"] as String,
               picto: thematique["picto"] as String,
               label: thematique["label"] as String,
-              color: thematique["color"] as String,
             ),
           )
           .toList();

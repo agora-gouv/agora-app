@@ -4,6 +4,6 @@ import 'package:flutter/material.dart';
 
 class ThematiqueHelper {
   static Widget buildCard(BuildContext context, ThematiqueViewModel thematique) {
-    return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, color: thematique.color);
+    return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label);
   }
 }

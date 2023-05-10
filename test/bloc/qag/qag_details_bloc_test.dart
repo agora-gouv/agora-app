@@ -29,7 +29,7 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel(
             id: qagId,
-            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
             title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
             description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
             date: "23 janvier",
@@ -53,7 +53,7 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel(
             id: qagId,
-            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports", color: 0xFFFCF7CF),
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
             title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
             description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
             date: "23 janvier",

@@ -46,8 +46,8 @@ void main() {
         response,
         GetThematiqueSucceedResponse(
           thematiques: [
-            ThematiqueWithId(id: "1", picto: "\uD83D\uDCBC", label: "Travail & emploi", color: "#FFCFDEFC"),
-            ThematiqueWithId(id: "2", picto: "\uD83D\uDCBC", label: "Transition écologique", color: "#FFCFFCD9"),
+            ThematiqueWithId(id: "1", picto: "\uD83D\uDCBC", label: "Travail & emploi"),
+            ThematiqueWithId(id: "2", picto: "\uD83D\uDCBC", label: "Transition écologique"),
           ],
         ),
       );
