@@ -14,9 +14,14 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   AgoraDioHttpClient({required this.dio});
 
   @override
-  Future<Response<T>> get<T>(String path, {Map<String, dynamic> headers = const {}}) async {
+  Future<Response<T>> get<T>(
+    String path, {
+    Map<String, dynamic>? queryParameters = const {},
+    Map<String, dynamic> headers = const {},
+  }) async {
     return dio.get<T>(
       path,
+      queryParameters: queryParameters,
       options: Options(
         headers: {
           "accept": "application/json",

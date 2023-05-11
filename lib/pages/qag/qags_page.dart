@@ -18,8 +18,15 @@ import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class QagsPage extends StatelessWidget {
+class QagsPage extends StatefulWidget {
   static const routeName = "/qagsPage";
+
+  @override
+  State<QagsPage> createState() => _QagsPageState();
+}
+
+class _QagsPageState extends State<QagsPage> {
+  String? currentThematiqueId;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +37,7 @@ class QagsPage extends StatelessWidget {
             return QagBloc(
               qagRepository: RepositoryManager.getQagRepository(),
               deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-            )..add(FetchQagsEvent());
+            )..add(FetchQagsEvent(thematiqueId: currentThematiqueId));
           },
         ),
         BlocProvider(
@@ -69,7 +76,19 @@ class QagsPage extends StatelessWidget {
       return [
         QagsResponseSection(qagResponseViewModels: state.qagResponseViewModels),
         QagsAskQuestionSectionPage(),
-        QagsThematiqueSection(),
+        QagsThematiqueSection(
+          currentThematiqueId: currentThematiqueId,
+          onThematiqueIdSelected: (String thematiqueId) {
+            setState(() {
+              if (thematiqueId == currentThematiqueId) {
+                currentThematiqueId = null;
+              } else {
+                currentThematiqueId = thematiqueId;
+              }
+              context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
+            });
+          },
+        ),
         QagsSection(
           defaultSelected: QagTab.popular,
           popularViewModels: state.popularViewModels,

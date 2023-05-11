@@ -25,7 +25,7 @@ class QagBloc extends Bloc<FetchQagsEvent, QagState> {
       emit(QagErrorState());
       return;
     }
-    final response = await qagRepository.fetchQags(deviceId: deviceId);
+    final response = await qagRepository.fetchQags(deviceId: deviceId, thematiqueId: event.thematiqueId);
     if (response is GetQagsSucceedResponse) {
       final qagResponseViewModels = QagPresenter.presentQagResponse(response.qagResponses);
       final qagPopularViewModels = QagPresenter.presentQag(response.qagPopular);

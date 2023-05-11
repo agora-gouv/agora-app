@@ -8,6 +8,7 @@ class FakeQagSuccessRepository extends QagRepository {
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
     required String deviceId,
+    required String? thematiqueId,
   }) async {
     return GetQagsSucceedResponse(
       qagResponses: [
@@ -137,6 +138,7 @@ class FakeQagFailureRepository extends QagRepository {
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
     required String deviceId,
+    required String? thematiqueId,
   }) async {
     return GetQagsFailedResponse();
   }

@@ -5,12 +5,12 @@ import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
   Future<GetQagsRepositoryResponse> fetchQags({
     required String deviceId,
+    required String? thematiqueId,
   });
 
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
@@ -43,10 +43,12 @@ class QagDioRepository extends QagRepository {
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
     required String deviceId,
+    required String? thematiqueId,
   }) async {
     try {
       final response = await httpClient.get(
         "/qags",
+        queryParameters: {"thematiqueId": thematiqueId},
         headers: {"deviceId": deviceId},
       );
       final qagResponses = response.data["responses"] as List;
@@ -84,13 +86,11 @@ class QagDioRepository extends QagRepository {
       );
       final qagDetailsSupport = response.data["support"] as Map?;
       final qagDetailsResponse = response.data["response"] as Map?;
-      final thematique = response.data["thematique"] as Map?;
+      final thematique = response.data["thematique"] as Map;
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
-          thematique: thematique != null
-              ? thematique.toThematique()
-              : Thematique(picto: "🩺", label: "Santé", color: "#FFFCCFDD"),
+          thematique: thematique.toThematique(),
           title: response.data["title"] as String,
           description: response.data["description"] as String,
           date: (response.data["date"] as String).parseToDateTime(),
