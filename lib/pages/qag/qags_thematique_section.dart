@@ -2,7 +2,7 @@ import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/agora_thematique_toggle_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -10,10 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsThematiqueSection extends StatelessWidget {
+  final String? currentThematiqueId;
   final Function(String) onThematiqueIdSelected;
 
   const QagsThematiqueSection({
     super.key,
+    required this.currentThematiqueId,
     required this.onThematiqueIdSelected,
   });
 
@@ -56,19 +58,10 @@ class QagsThematiqueSection extends StatelessWidget {
       thematiqueWidgets.add(
         Column(
           children: [
-            AgoraRoundedCard(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AgoraSpacings.x1_25,
-                vertical: AgoraSpacings.base,
-              ),
-              borderColor: AgoraColors.border,
-              onTap: () {
-                onThematiqueIdSelected(thematique.id);
-              },
-              child: Text(
-                thematique.picto,
-                style: AgoraTextStyles.medium30.copyWith(height: 0),
-              ),
+            AgoraToggleButton(
+              isSelected: thematique.id == currentThematiqueId,
+              text: thematique.picto,
+              onClicked: () => {onThematiqueIdSelected(thematique.id)},
             ),
             SizedBox(height: AgoraSpacings.x0_5),
             SizedBox(
