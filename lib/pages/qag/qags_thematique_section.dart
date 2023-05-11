@@ -28,7 +28,7 @@ class QagsThematiqueSection extends StatelessWidget {
           color: AgoraColors.doctor,
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: AgoraSpacings.base,
+              horizontal: 0.0,
               vertical: AgoraSpacings.x1_25,
             ),
             child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
@@ -53,33 +53,31 @@ class QagsThematiqueSection extends StatelessWidget {
   }
 
   Widget _buildThematiques(List<ThematiqueWithIdViewModel> thematiques) {
-    final List<Widget> thematiqueWidgets = [];
-    for (final thematique in thematiques) {
-      thematiqueWidgets.add(
-        Column(
-          children: [
-            AgoraToggleButton(
-              isSelected: thematique.id == currentThematiqueId,
-              text: thematique.picto,
-              onClicked: () => {onThematiqueIdSelected(thematique.id)},
+    final Iterable<Widget> thematiqueWidgets = thematiques.map(
+      (thematique) => Column(
+        children: [
+          AgoraToggleButton(
+            isSelected: thematique.id == currentThematiqueId,
+            text: thematique.picto,
+            onClicked: () => {onThematiqueIdSelected(thematique.id)},
+          ),
+          SizedBox(height: AgoraSpacings.x0_5),
+          SizedBox(
+            width: 80,
+            child: Text(
+              thematique.label,
+              style: AgoraTextStyles.medium12,
+              textAlign: TextAlign.center,
             ),
-            SizedBox(height: AgoraSpacings.x0_5),
-            SizedBox(
-              width: 80,
-              child: Text(
-                thematique.label,
-                style: AgoraTextStyles.medium12,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
-      );
-      thematiqueWidgets.add(SizedBox(width: AgoraSpacings.x0_25));
-    }
+          ),
+        ],
+      ),
+    );
+
+    final List<Widget> spacingSizedBox = [SizedBox(width: AgoraSpacings.base)];
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: thematiqueWidgets,
+      children: spacingSizedBox + thematiqueWidgets.toList() + spacingSizedBox,
     );
   }
 }
