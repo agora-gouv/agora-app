@@ -12,7 +12,6 @@ extension ConvertMapToThematiqueExtension on Map<dynamic, dynamic> {
     return Thematique(
       picto: this["picto"] as String,
       label: this["label"] as String,
-      color: this["color"] as String,
     );
   }
 }

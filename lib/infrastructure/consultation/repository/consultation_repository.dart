@@ -102,13 +102,12 @@ class ConsultationDioRepository extends ConsultationRepository {
         "/consultations/$consultationId",
         headers: {"deviceId": deviceId},
       );
-      final thematique = response.data["thematique"] as Map;
       return GetConsultationDetailsSucceedResponse(
         consultationDetails: ConsultationDetails(
           id: response.data["id"] as String,
           title: response.data["title"] as String,
           coverUrl: response.data["coverUrl"] as String,
-          thematique: thematique.toThematique(),
+          thematique: (response.data["thematique"] as Map).toThematique(),
           endDate: (response.data["endDate"] as String).parseToDateTime(),
           questionCount: response.data["questionCount"] as String,
           estimatedTime: response.data["estimatedTime"] as String,
