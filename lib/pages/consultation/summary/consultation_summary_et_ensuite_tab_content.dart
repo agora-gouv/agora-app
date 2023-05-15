@@ -42,7 +42,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Image.asset(etEnsuiteViewModel.image, width: 115),
+                      SvgPicture.asset(etEnsuiteViewModel.image, width: 115),
                       SizedBox(width: AgoraSpacings.base),
                       Expanded(
                         child: Column(

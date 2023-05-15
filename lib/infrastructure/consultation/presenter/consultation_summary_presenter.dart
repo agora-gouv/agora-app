@@ -68,11 +68,11 @@ class ConsultationSummaryPresenter {
   static String _getImageAsset(int step) {
     switch (step) {
       case 1:
-        return "assets/ic_summary_consultation_step1.png";
+        return "assets/ic_summary_consultation_step1.svg";
       case 2:
-        return "assets/ic_summary_consultation_step2.png";
+        return "assets/ic_summary_consultation_step2.svg";
       case 3:
-        return "assets/ic_summary_consultation_step3.png";
+        return "assets/ic_summary_consultation_step3.svg";
       default:
         throw Exception("Consultation Step not exist");
     }
