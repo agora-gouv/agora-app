@@ -86,11 +86,10 @@ class QagDioRepository extends QagRepository {
       );
       final qagDetailsSupport = response.data["support"] as Map?;
       final qagDetailsResponse = response.data["response"] as Map?;
-      final thematique = response.data["thematique"] as Map;
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
-          thematique: thematique.toThematique(),
+          thematique: (response.data["thematique"] as Map).toThematique(),
           title: response.data["title"] as String,
           description: response.data["description"] as String,
           date: (response.data["date"] as String).parseToDateTime(),

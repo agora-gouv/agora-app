@@ -14,7 +14,7 @@ class FakeQagSuccessRepository extends QagRepository {
       qagResponses: [
         QagResponse(
           qagId: "qagId",
-          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
           author: "author",
           authorPortraitUrl: "authorPortraitUrl",
@@ -24,7 +24,7 @@ class FakeQagSuccessRepository extends QagRepository {
       qagPopular: [
         Qag(
           id: "id1",
-          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title1",
           username: "username1",
           date: DateTime(2024, 1, 23),
@@ -35,7 +35,7 @@ class FakeQagSuccessRepository extends QagRepository {
       qagLatest: [
         Qag(
           id: "id2",
-          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title2",
           username: "username2",
           date: DateTime(2024, 2, 23),
@@ -46,7 +46,7 @@ class FakeQagSuccessRepository extends QagRepository {
       qagSupporting: [
         Qag(
           id: "id3",
-          thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+          thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title3",
           username: "username3",
           date: DateTime(2024, 3, 23),
@@ -65,7 +65,7 @@ class FakeQagSuccessRepository extends QagRepository {
     return GetQagDetailsSucceedResponse(
       qagDetails: QagDetails(
         id: qagId,
-        thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+        thematique: Thematique(picto: "🚊", label: "Transports"),
         title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
         description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
         date: DateTime(2024, 1, 23),
@@ -105,7 +105,7 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
     return GetQagDetailsSucceedResponse(
       qagDetails: QagDetails(
         id: qagId,
-        thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+        thematique: Thematique(picto: "🚊", label: "Transports"),
         title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
         description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
         date: DateTime(2024, 1, 23),

@@ -27,10 +27,7 @@ class QagsThematiqueSection extends StatelessWidget {
         Container(
           color: AgoraColors.doctor,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 0.0,
-              vertical: AgoraSpacings.x1_25,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x1_25),
             child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
               builder: (context, state) {
                 if (state is ThematiqueSuccessState) {
@@ -59,7 +56,7 @@ class QagsThematiqueSection extends StatelessWidget {
           AgoraToggleButton(
             isSelected: thematique.id == currentThematiqueId,
             text: thematique.picto,
-            onClicked: () => {onThematiqueIdSelected(thematique.id)},
+            onClicked: () => onThematiqueIdSelected(thematique.id),
           ),
           SizedBox(height: AgoraSpacings.x0_5),
           SizedBox(

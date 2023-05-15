@@ -29,7 +29,7 @@ void main() {
             "responses": [
               {
                 "qagId": "qagId",
-                "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                "thematique": {"label": "Transports", "picto": "🚊"},
                 "title": "Pourquoi ... ?",
                 "author": "Olivier Véran",
                 "authorPortraitUrl": "authorPortraitUrl",
@@ -40,7 +40,7 @@ void main() {
               "popular": [
                 {
                   "qagId": "id1",
-                  "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                  "thematique": {"label": "Transports", "picto": "🚊"},
                   "title": "title1",
                   "username": "username1",
                   "date": "2023-01-01",
@@ -53,7 +53,7 @@ void main() {
               "latest": [
                 {
                   "qagId": "id2",
-                  "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                  "thematique": {"label": "Transports", "picto": "🚊"},
                   "title": "title2",
                   "username": "username2",
                   "date": "2023-02-01",
@@ -66,7 +66,7 @@ void main() {
               "supporting": [
                 {
                   "qagId": "id3",
-                  "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+                  "thematique": {"label": "Transports", "picto": "🚊"},
                   "title": "title3",
                   "username": "username3",
                   "date": "2023-03-01",
@@ -93,7 +93,7 @@ void main() {
           qagResponses: [
             QagResponse(
               qagId: "qagId",
-              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "Pourquoi ... ?",
               author: "Olivier Véran",
               authorPortraitUrl: "authorPortraitUrl",
@@ -103,7 +103,7 @@ void main() {
           qagPopular: [
             Qag(
               id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
               username: "username1",
               date: DateTime(2023, 1, 1),
@@ -114,7 +114,7 @@ void main() {
           qagLatest: [
             Qag(
               id: "id2",
-              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title2",
               username: "username2",
               date: DateTime(2023, 2, 1),
@@ -125,7 +125,7 @@ void main() {
           qagSupporting: [
             Qag(
               id: "id3",
-              thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+              thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title3",
               username: "username3",
               date: DateTime(2023, 3, 1),
@@ -163,7 +163,7 @@ void main() {
           HttpStatus.ok,
           {
             "id": "qagId",
-            "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+            "thematique": {"label": "Transports", "picto": "🚊"},
             "title": "Titre de la QaG",
             "description": "Description textuelle",
             "date": "2024-01-23",
@@ -185,7 +185,7 @@ void main() {
         GetQagDetailsSucceedResponse(
           qagDetails: QagDetails(
             id: qagId,
-            thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+            thematique: Thematique(picto: "🚊", label: "Transports"),
             title: "Titre de la QaG",
             description: "Description textuelle",
             date: DateTime(2024, 1, 23),
@@ -205,7 +205,7 @@ void main() {
           HttpStatus.ok,
           {
             "id": "qagId",
-            "thematique": {"label": "Transports", "picto": "🚊", "color": "#FFFCF7CF"},
+            "thematique": {"label": "Transports", "picto": "🚊"},
             "title": "Titre de la QaG",
             "description": "Description textuelle",
             "date": "2024-01-23",
@@ -234,7 +234,7 @@ void main() {
         GetQagDetailsSucceedResponse(
           qagDetails: QagDetails(
             id: qagId,
-            thematique: Thematique(picto: "🚊", label: "Transports", color: "#FFFCF7CF"),
+            thematique: Thematique(picto: "🚊", label: "Transports"),
             title: "Titre de la QaG",
             description: "Description textuelle",
             date: DateTime(2024, 1, 23),
