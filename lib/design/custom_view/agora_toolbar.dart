@@ -1,3 +1,4 @@
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -32,16 +33,15 @@ class AgoraToolbar extends StatelessWidget {
                     padding: const EdgeInsets.only(
                       top: AgoraSpacings.x0_5,
                       bottom: AgoraSpacings.x0_5,
-                      right: AgoraSpacings.x0_5,
+                      right: AgoraSpacings.x0_75,
                     ),
-                    child: SvgPicture.asset("assets/ic_retour.svg"),
+                    child: SvgPicture.asset("assets/ic_back.svg"),
                   ),
                 ),
-                Text("Retour", style: AgoraTextStyles.medium16),
+                Text(GenericStrings.back, style: AgoraTextStyles.medium16),
               ],
             ),
           ),
-          Expanded(child: Container()),
         ],
       ),
     );

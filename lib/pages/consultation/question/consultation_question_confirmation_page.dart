@@ -16,6 +16,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationQuestionConfirmationArguments {
   final String consultationId;
@@ -59,7 +60,11 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AgoraTopDiagonal(),
-                    Image.asset("assets/ic_question_confirmation.png"),
+                    SizedBox(height: AgoraSpacings.base),
+                    SvgPicture.asset(
+                      "assets/ic_question_confirmation.svg",
+                      width: MediaQuery.of(context).size.width - AgoraSpacings.base,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
                       child: Column(

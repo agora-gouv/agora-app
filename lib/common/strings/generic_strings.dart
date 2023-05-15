@@ -6,4 +6,5 @@ class GenericStrings {
   static const String acceptNotificationPermissionButton = "Activer";
   static const String profil = "Profil";
   static const String all = "Toutes";
+  static const String back = "Retour";
 }
