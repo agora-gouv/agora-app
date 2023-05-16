@@ -351,7 +351,12 @@ void main() {
       // Given
       dioAdapter.onPost(
         "/consultations/$consultationId/responses",
-        (server) => server.reply(HttpStatus.ok, {}),
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "askDemographicInfo": true,
+          },
+        ),
         headers: {
           "accept": "application/json",
           "deviceId": deviceId,
@@ -391,7 +396,7 @@ void main() {
       );
 
       // Then
-      expect(response, SendConsultationResponsesSucceedResponse());
+      expect(response, SendConsultationResponsesSucceedResponse(shouldDisplayDemographicInformation: true));
     });
 
     test("when failure should return failed", () async {

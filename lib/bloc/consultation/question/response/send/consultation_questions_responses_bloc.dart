@@ -31,7 +31,11 @@ class ConsultationQuestionsResponsesBloc
       questionsResponses: event.questionsResponses,
     );
     if (response is SendConsultationResponsesSucceedResponse) {
-      emit(SendConsultationQuestionsResponsesSuccessState());
+      emit(
+        SendConsultationQuestionsResponsesSuccessState(
+          shouldDisplayDemographicInformation: response.shouldDisplayDemographicInformation,
+        ),
+      );
     } else {
       emit(SendConsultationQuestionsResponsesFailureState());
     }

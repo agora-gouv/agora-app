@@ -1,8 +1,8 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -70,36 +70,13 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
     return [
       Text(ConsultationStrings.openedQuestionNotice, style: AgoraTextStyles.medium14),
       SizedBox(height: AgoraSpacings.base),
-      SizedBox(
-        width: double.infinity,
-        height: 200,
-        child: TextField(
-          minLines: 1,
-          maxLines: 20,
-          scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3),
-          maxLength: 400,
-          keyboardType: TextInputType.multiline,
-          style: AgoraTextStyles.light14,
-          controller: TextEditingController(text: openedResponse),
-          decoration: InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.all(AgoraSpacings.base),
-            filled: true,
-            fillColor: AgoraColors.white,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              borderSide: BorderSide(width: 1, color: AgoraColors.border),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 1, color: AgoraColors.primaryGreen),
-            ),
-            hintText: ConsultationStrings.hintText,
-            hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.orochimaru),
-          ),
-          onChanged: (openedResponseInput) {
-            openedResponse = openedResponseInput;
-          },
-        ),
+      AgoraTextField(
+        hintText: ConsultationStrings.hintText,
+        controller: TextEditingController(text: openedResponse),
+        showCounterText: true,
+        onChanged: (openedResponseInput) {
+          openedResponse = openedResponseInput;
+        },
       ),
       SizedBox(height: AgoraSpacings.base),
       AgoraButton(

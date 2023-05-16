@@ -14,6 +14,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -86,7 +87,9 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
-                                ConsultationSummaryPage.routeName,
+                                state.shouldDisplayDemographicInformation
+                                    ? DemographicInformationPage.routeName
+                                    : ConsultationSummaryPage.routeName,
                                 arguments: consultationId,
                               );
                             },

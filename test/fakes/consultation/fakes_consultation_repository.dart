@@ -119,7 +119,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     required String deviceId,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
-    return SendConsultationResponsesSucceedResponse();
+    return SendConsultationResponsesSucceedResponse(shouldDisplayDemographicInformation: true);
   }
 
   @override

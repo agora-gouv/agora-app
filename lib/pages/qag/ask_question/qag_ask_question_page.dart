@@ -84,6 +84,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                           AgoraTextField(
                             maxLength: 200,
                             hintText: QagStrings.questionHint,
+                            showCounterText: true,
                             onChanged: (input) {
                               question = input;
                             },
@@ -94,6 +95,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                           AgoraTextField(
                             maxLength: 400,
                             hintText: QagStrings.detailsHint,
+                            showCounterText: true,
                             onChanged: (input) {
                               details = input;
                             },
@@ -115,6 +117,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                           AgoraTextField(
                             maxLength: 50,
                             hintText: QagStrings.yourNameHint,
+                            showCounterText: true,
                             onChanged: (input) {
                               firstname = input;
                             },

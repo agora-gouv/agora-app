@@ -154,7 +154,7 @@ class ConsultationDioRepository extends ConsultationRepository {
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     try {
-      await httpClient.post(
+      final response = await httpClient.post(
         "/consultations/$consultationId/responses",
         headers: {"deviceId": deviceId},
         data: {
@@ -170,7 +170,9 @@ class ConsultationDioRepository extends ConsultationRepository {
               .toList(),
         },
       );
-      return SendConsultationResponsesSucceedResponse();
+      return SendConsultationResponsesSucceedResponse(
+        shouldDisplayDemographicInformation: response.data["askDemographicInfo"] as bool,
+      );
     } catch (e) {
       Log.e("sendConsultationResponses failed", e);
       return SendConsultationResponsesFailureResponse();
@@ -270,7 +272,14 @@ abstract class SendConsultationResponsesRepositoryResponse extends Equatable {
   List<Object> get props => [];
 }
 
-class SendConsultationResponsesSucceedResponse extends SendConsultationResponsesRepositoryResponse {}
+class SendConsultationResponsesSucceedResponse extends SendConsultationResponsesRepositoryResponse {
+  final bool shouldDisplayDemographicInformation;
+
+  SendConsultationResponsesSucceedResponse({required this.shouldDisplayDemographicInformation});
+
+  @override
+  List<Object> get props => [shouldDisplayDemographicInformation];
+}
 
 class SendConsultationResponsesFailureResponse extends SendConsultationResponsesRepositoryResponse {}
 
