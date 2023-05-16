@@ -8,6 +8,7 @@ enum AgoraRoundedCorner { topRounded, bottomRounded, allRounded }
 class AgoraRoundedCard extends StatelessWidget {
   final Color cardColor;
   final Color? borderColor;
+  final double borderWidth;
   final VoidCallback? onTap;
   final Radius cornerRadius;
   final AgoraRoundedCorner roundedCorner;
@@ -18,6 +19,7 @@ class AgoraRoundedCard extends StatelessWidget {
     this.cardColor = AgoraColors.white,
     this.borderColor,
     this.onTap,
+    this.borderWidth = 1.0,
     this.cornerRadius = AgoraCorners.rounded,
     this.roundedCorner = AgoraRoundedCorner.allRounded,
     this.padding = const EdgeInsets.all(AgoraSpacings.base),
@@ -40,7 +42,7 @@ class AgoraRoundedCard extends StatelessWidget {
           border: Border.fromBorderSide(
             BorderSide(
               color: borderColor!,
-              width: 1.0,
+              width: borderWidth,
               style: BorderStyle.solid,
             ),
           ),

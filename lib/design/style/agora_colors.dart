@@ -4,6 +4,7 @@ class AgoraColors {
   static const Color primaryGrey = Color(0xFF1A1A1A);
   static const Color primaryGreyOpacity90 = Color(0xE61A1A1A);
   static const Color primaryGreyOpacity80 = Color(0xCC1A1A1A);
+  static const Color primaryGreyOpacity70 = Color(0xB31A1A1A);
   static const Color potBlack = Color(0xFF161616);
   static const Color border = Color(0x30000000);
   static const Color overlay = Color(0x80D6D6D6);
@@ -25,6 +26,7 @@ class AgoraColors {
   static const Color blueFranceOpacity10 = Color(0x1A000091);
   static const Color transparent = Color(0x00000000);
   static const Color divider = Color(0x1A000000);
+  static const Color fluorescentRed = Color(0xFFFF5655);
 
   // couleur de pastille
   static const Color mintZest = Color(0xFFCFFCD9);

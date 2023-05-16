@@ -25,7 +25,7 @@ void main() {
         ),
       ),
       expect: () => [
-        SendConsultationQuestionsResponsesSuccessState(),
+        SendConsultationQuestionsResponsesSuccessState(shouldDisplayDemographicInformation: true),
       ],
       wait: const Duration(milliseconds: 5),
     );
