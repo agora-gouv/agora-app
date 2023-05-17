@@ -1,14 +1,15 @@
+import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:equatable/equatable.dart';
 
 class DemographicResponse extends Equatable {
-  final String question;
+  final DemographicQuestionType questionType;
   final String response;
 
   DemographicResponse({
-    required this.question,
+    required this.questionType,
     required this.response,
   });
 
   @override
-  List<Object> get props => [question, response];
+  List<Object> get props => [questionType, response];
 }

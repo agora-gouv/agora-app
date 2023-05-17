@@ -1,7 +1,7 @@
-import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_bloc.dart';
-import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
-import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
-import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/bloc/demographic/send/demographic_responses_send_bloc.dart';
+import 'package:agora/bloc/demographic/send/demographic_responses_send_event.dart';
+import 'package:agora/bloc/demographic/send/demographic_responses_send_state.dart';
+import 'package:agora/bloc/demographic/stock/demographic_responses_stock_bloc.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -14,57 +14,46 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
-import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ConsultationQuestionConfirmationArguments {
-  final String consultationId;
-  final ConsultationQuestionsResponsesStockBloc consultationQuestionsResponsesBloc;
+class DemographicConfirmationArguments {
+  final String? consultationId;
+  final DemographicResponsesStockBloc demographicResponsesStockBloc;
 
-  ConsultationQuestionConfirmationArguments({
+  DemographicConfirmationArguments({
     required this.consultationId,
-    required this.consultationQuestionsResponsesBloc,
+    required this.demographicResponsesStockBloc,
   });
 }
 
-class ConsultationQuestionConfirmationPage extends StatelessWidget {
-  static const routeName = "/consultationQuestionConfirmationPage";
+class DemographicConfirmationPage extends StatelessWidget {
+  static const routeName = "/demographicConfirmationPage";
 
-  final String consultationId;
+  final String? consultationId;
 
-  ConsultationQuestionConfirmationPage({required this.consultationId});
+  DemographicConfirmationPage({required this.consultationId});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) {
-        return ConsultationQuestionsResponsesBloc(
-          consultationRepository: RepositoryManager.getConsultationRepository(),
+        return SendDemographicResponsesBloc(
+          demographicRepository: RepositoryManager.getDemographicRepository(),
           deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
         )..add(
-            SendConsultationQuestionsResponsesEvent(
-              consultationId: consultationId,
-              questionsResponses: context.read<ConsultationQuestionsResponsesStockBloc>().state.questionsResponses,
+            SendDemographicResponsesEvent(
+              demographicResponses: context.read<DemographicResponsesStockBloc>().state.responses,
             ),
           );
       },
       child: AgoraScaffold(
         shouldPop: false,
         appBarColor: AgoraColors.primaryGreen,
-        child: BlocConsumer<ConsultationQuestionsResponsesBloc, SendConsultationQuestionsResponsesState>(
-          listener: (context, state) {
-            if (_shouldDisplayDemographicQuiz(state)) {
-              Navigator.pushNamed(
-                context,
-                DemographicInformationPage.routeName,
-                arguments: consultationId,
-              );
-            }
-          },
+        child: BlocBuilder<SendDemographicResponsesBloc, SendDemographicResponsesState>(
           builder: (context, state) {
-            if (state is SendConsultationQuestionsResponsesSuccessState && !state.shouldDisplayDemographicInformation) {
+            if (state is SendDemographicResponsesSuccessState) {
               return SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Column(
@@ -94,11 +83,13 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                             label: ConsultationStrings.goToResult,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                ConsultationSummaryPage.routeName,
-                                arguments: consultationId,
-                              );
+                              if (consultationId != null) {
+                                Navigator.pushNamed(
+                                  context,
+                                  ConsultationSummaryPage.routeName,
+                                  arguments: consultationId,
+                                );
+                              }
                             },
                           )
                         ],
@@ -107,8 +98,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                   ],
                 ),
               );
-            } else if (state is SendConsultationQuestionsResponsesInitialLoadingState ||
-                _shouldDisplayDemographicQuiz(state)) {
+            } else if (state is SendDemographicResponsesInitialLoadingState) {
               return Center(child: CircularProgressIndicator());
             } else {
               return Center(child: AgoraErrorView());
@@ -117,9 +107,5 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  bool _shouldDisplayDemographicQuiz(SendConsultationQuestionsResponsesState state) {
-    return state is SendConsultationQuestionsResponsesSuccessState && state.shouldDisplayDemographicInformation;
   }
 }

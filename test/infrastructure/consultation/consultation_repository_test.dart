@@ -347,7 +347,7 @@ void main() {
   });
 
   group("Send consultation responses", () {
-    test("when success should return consultation questions", () async {
+    test("when success should return display demographic information", () async {
       // Given
       dioAdapter.onPost(
         "/consultations/$consultationId/responses",

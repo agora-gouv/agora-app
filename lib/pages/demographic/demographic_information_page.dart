@@ -10,6 +10,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class DemographicInformationPage extends StatefulWidget {
   static const routeName = "/demographicInformationPage";
@@ -132,11 +133,14 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                               ),
                             ],
                           ),
-                          SizedBox(height: AgoraSpacings.x1_25),
                         ],
                       ),
                     ),
-                    Image.asset("assets/ic_demographic_information.png"),
+                    SizedBox(height: AgoraSpacings.x3),
+                    SvgPicture.asset(
+                      "assets/ic_demographic_information.svg",
+                      width: MediaQuery.of(context).size.width,
+                    ),
                   ],
                 ),
               ),
