@@ -141,6 +141,14 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle regular18 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 18.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle regular16 = TextStyle(
     fontFamily: marianne,
     fontWeight: regular,

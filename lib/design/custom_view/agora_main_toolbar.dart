@@ -1,8 +1,9 @@
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/design/custom_view/agora_green_separator.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class AgoraMainToolbar extends StatelessWidget {
@@ -29,22 +30,18 @@ class AgoraMainToolbar extends StatelessWidget {
                 children: [
                   Expanded(child: title),
                   AgoraRoundedButton(
-                    icon: "ic_profil.svg",
+                    icon: "ic_profile.svg",
                     label: GenericStrings.profil,
                     style: AgoraRoundedButtonStyle.whiteButton,
                     padding: AgoraRoundedButtonPadding.short,
                     onPressed: () {
-                      // TODO
+                      Navigator.pushNamed(context, ProfilePage.routeName);
                     },
                   ),
                 ],
               ),
               SizedBox(height: AgoraSpacings.x1_25),
-              Container(
-                color: AgoraColors.primaryGreen,
-                height: 3,
-                width: MediaQuery.of(context).size.width * 0.15,
-              ),
+              AgoraGreenSeparator(),
             ],
           ),
         ),
