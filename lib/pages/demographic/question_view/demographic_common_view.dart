@@ -31,13 +31,13 @@ class DemographicCommonView extends StatelessWidget {
     final List<Widget> widgets = [];
     for (final responseChoice in responseChoices) {
       widgets.add(
-        AgoraDemographicSimpleView(
+        AgoraDemographicResponseCard(
           responseLabel: responseChoice.responseLabel,
           isSelected: oldResponse != null && responseChoice.responseCode == oldResponse!.response,
           onTap: () => onContinuePressed(responseChoice.responseCode),
         ),
       );
-      widgets.add(SizedBox(height: AgoraSpacings.base));
+      widgets.add(SizedBox(height: AgoraSpacings.x0_25));
     }
     widgets.add(SizedBox(height: AgoraSpacings.x1_25));
     widgets.add(DemographicHelper.buildIgnoreButton(onPressed: onIgnorePressed));

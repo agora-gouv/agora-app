@@ -53,7 +53,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
             });
           },
         ),
-        SizedBox(height: AgoraSpacings.x1_5),
+        SizedBox(height: AgoraSpacings.x0_75),
         Text(DemographicStrings.question6_2, style: AgoraTextStyles.medium18),
         SizedBox(height: AgoraSpacings.x0_25),
         Text(DemographicStrings.question6_2Description, style: AgoraTextStyles.light14),
@@ -70,7 +70,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
             });
           },
         ),
-        SizedBox(height: AgoraSpacings.x1_5),
+        SizedBox(height: AgoraSpacings.x0_75),
         Text(DemographicStrings.question6_3, style: AgoraTextStyles.medium18),
         SizedBox(height: AgoraSpacings.x0_25),
         Text(DemographicStrings.question6_3Description, style: AgoraTextStyles.light14),
@@ -87,7 +87,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
             });
           },
         ),
-        SizedBox(height: AgoraSpacings.x1_5),
+        SizedBox(height: AgoraSpacings.x0_75),
         voteFrequencyCode != null || publicMeetingFrequencyCode != null || consultationFrequencyCode != null
             ? AgoraButton(
                 label: DemographicStrings.send,
@@ -116,7 +116,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
     for (final responseChoice in responseChoices) {
       rowWidgets.add(
         Expanded(
-          child: AgoraDemographicSimpleView(
+          child: AgoraDemographicResponseCard(
             responseLabel: responseChoice.responseLabel,
             textAlign: TextAlign.center,
             isSelected: isSelected(questionType: questionType, responseChoice: responseChoice),

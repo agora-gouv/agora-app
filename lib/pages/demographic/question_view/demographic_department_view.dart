@@ -68,7 +68,7 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
 
     for (final findDepartment in findDepartments) {
       widgets.add(
-        AgoraDemographicSimpleView(
+        AgoraDemographicResponseCard(
           responseLabel: findDepartment.displayedName,
           isSelected: selectedDepartment == findDepartment,
           onTap: () {
@@ -82,7 +82,7 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
           },
         ),
       );
-      widgets.add(SizedBox(height: AgoraSpacings.base));
+      widgets.add(SizedBox(height: AgoraSpacings.x0_25));
     }
 
     widgets = widgets +
