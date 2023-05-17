@@ -7,14 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 enum DemographicSelectedIconPlace { right, centerBottom }
 
-class AgoraDemographicSimpleView extends StatelessWidget {
+class AgoraDemographicResponseCard extends StatelessWidget {
   final String responseLabel;
   final TextAlign textAlign;
   final bool isSelected;
   final VoidCallback onTap;
   final DemographicSelectedIconPlace iconPlace;
 
-  const AgoraDemographicSimpleView({
+  const AgoraDemographicResponseCard({
     Key? key,
     required this.responseLabel,
     this.textAlign = TextAlign.start,
@@ -25,18 +25,17 @@ class AgoraDemographicSimpleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return iconPlace == DemographicSelectedIconPlace.centerBottom && isSelected
-        ? Stack(
-            alignment: AlignmentDirectional.bottomCenter,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_75),
-                child: buildCard(),
-              ),
-              SvgPicture.asset("assets/ic_check.svg"),
-            ],
-          )
-        : buildCard();
+    return Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_75),
+          child: buildCard(),
+        ),
+        if (iconPlace == DemographicSelectedIconPlace.centerBottom && isSelected)
+          SvgPicture.asset("assets/ic_check.svg"),
+      ],
+    );
   }
 
   AgoraRoundedCard buildCard() {
