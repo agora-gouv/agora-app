@@ -1,6 +1,7 @@
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_bloc.dart';
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_event.dart';
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_state.dart';
+import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,7 +15,7 @@ void main() {
         ..add(
           AddDemographicResponseStockEvent(
             response: DemographicResponse(
-              question: "questionCode1",
+              questionType: DemographicQuestionType.gender,
               response: "responseCode1",
             ),
           ),
@@ -22,7 +23,7 @@ void main() {
         ..add(
           AddDemographicResponseStockEvent(
             response: DemographicResponse(
-              question: "questionCode2",
+              questionType: DemographicQuestionType.yearOfBirth,
               response: "responseCode2",
             ),
           ),
@@ -30,13 +31,13 @@ void main() {
       expect: () => [
         DemographicResponsesStockState(
           responses: [
-            DemographicResponse(question: "questionCode1", response: "responseCode1"),
+            DemographicResponse(questionType: DemographicQuestionType.gender, response: "responseCode1"),
           ],
         ),
         DemographicResponsesStockState(
           responses: [
-            DemographicResponse(question: "questionCode1", response: "responseCode1"),
-            DemographicResponse(question: "questionCode2", response: "responseCode2"),
+            DemographicResponse(questionType: DemographicQuestionType.gender, response: "responseCode1"),
+            DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "responseCode2"),
           ],
         ),
       ],
@@ -50,7 +51,7 @@ void main() {
         ..add(
           AddDemographicResponseStockEvent(
             response: DemographicResponse(
-              question: "questionCode1",
+              questionType: DemographicQuestionType.gender,
               response: "responseCode1",
             ),
           ),
@@ -58,7 +59,7 @@ void main() {
         ..add(
           AddDemographicResponseStockEvent(
             response: DemographicResponse(
-              question: "questionCode2",
+              questionType: DemographicQuestionType.yearOfBirth,
               response: "responseCode2",
             ),
           ),
@@ -66,7 +67,7 @@ void main() {
         ..add(
           AddDemographicResponseStockEvent(
             response: DemographicResponse(
-              question: "questionCode1",
+              questionType: DemographicQuestionType.gender,
               response: "responseCode3",
             ),
           ),
@@ -74,21 +75,59 @@ void main() {
       expect: () => [
         DemographicResponsesStockState(
           responses: [
-            DemographicResponse(question: "questionCode1", response: "responseCode1"),
+            DemographicResponse(questionType: DemographicQuestionType.gender, response: "responseCode1"),
           ],
         ),
         DemographicResponsesStockState(
           responses: [
-            DemographicResponse(question: "questionCode1", response: "responseCode1"),
-            DemographicResponse(question: "questionCode2", response: "responseCode2"),
+            DemographicResponse(questionType: DemographicQuestionType.gender, response: "responseCode1"),
+            DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "responseCode2"),
           ],
         ),
         DemographicResponsesStockState(
           responses: [
-            DemographicResponse(question: "questionCode2", response: "responseCode2"),
-            DemographicResponse(question: "questionCode1", response: "responseCode3"),
+            DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "responseCode2"),
+            DemographicResponse(questionType: DemographicQuestionType.gender, response: "responseCode3"),
           ],
         ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
+
+  group("DeleteDemographicResponseStockEvent", () {
+    blocTest<DemographicResponsesStockBloc, DemographicResponsesStockState>(
+      "when delete response - should update state with the new response",
+      build: () => DemographicResponsesStockBloc(),
+      seed: () => DemographicResponsesStockState(
+        responses: [
+          DemographicResponse(questionType: DemographicQuestionType.gender, response: "responseCode1"),
+          DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "responseCode2"),
+        ],
+      ),
+      act: (bloc) => bloc.add(DeleteDemographicResponseStockEvent(questionType: DemographicQuestionType.gender)),
+      expect: () => [
+        DemographicResponsesStockState(
+          responses: [
+            DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "responseCode2"),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<DemographicResponsesStockBloc, DemographicResponsesStockState>(
+      "when delete response and response not exists - should emit same state",
+      build: () => DemographicResponsesStockBloc(),
+      seed: () => DemographicResponsesStockState(
+        responses: [
+          DemographicResponse(questionType: DemographicQuestionType.gender, response: "responseCode1"),
+          DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "responseCode2"),
+        ],
+      ),
+      act: (bloc) => bloc..add(DeleteDemographicResponseStockEvent(questionType: DemographicQuestionType.cityType)),
+      expect: () => [
+        // when current state is same that previous state => state does not change
       ],
       wait: const Duration(milliseconds: 5),
     );

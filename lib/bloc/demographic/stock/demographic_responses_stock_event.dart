@@ -1,11 +1,23 @@
+import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:equatable/equatable.dart';
 
-class AddDemographicResponseStockEvent extends Equatable {
+abstract class DemographicResponseStockEvent extends Equatable {}
+
+class AddDemographicResponseStockEvent extends DemographicResponseStockEvent {
   final DemographicResponse response;
 
   AddDemographicResponseStockEvent({required this.response});
 
   @override
   List<Object> get props => [response];
+}
+
+class DeleteDemographicResponseStockEvent extends DemographicResponseStockEvent {
+  final DemographicQuestionType questionType;
+
+  DeleteDemographicResponseStockEvent({required this.questionType});
+
+  @override
+  List<Object> get props => [questionType];
 }

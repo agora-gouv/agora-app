@@ -19,8 +19,6 @@ extension DemographicQuestionTypeExtension on DemographicQuestionType {
         return "publicMeetingFrequency";
       case DemographicQuestionType.consultationFrequency:
         return "consultationFrequency";
-      default:
-        throw Exception("Demographic question type doesn't exist: $this}");
     }
   }
 }

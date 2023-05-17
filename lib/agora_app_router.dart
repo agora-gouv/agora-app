@@ -3,6 +3,7 @@ import 'package:agora/pages/consultation/details/consultation_details_page.dart'
 import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
 import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
@@ -44,6 +45,13 @@ class AgoraAppRouter {
         currentRoute = BlocProvider.value(
           value: arguments.consultationQuestionsResponsesBloc,
           child: ConsultationQuestionConfirmationPage(consultationId: arguments.consultationId),
+        );
+        break;
+      case DemographicConfirmationPage.routeName:
+        final arguments = settings.arguments as DemographicConfirmationArguments;
+        currentRoute = BlocProvider.value(
+          value: arguments.demographicResponsesStockBloc,
+          child: DemographicConfirmationPage(consultationId: arguments.consultationId),
         );
         break;
       default:
