@@ -13,29 +13,23 @@ import 'package:agora/infrastructure/consultation/repository/builder/consultatio
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
-  Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String deviceId,
-  });
+  Future<GetConsultationsRepositoryResponse> fetchConsultations();
 
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
-    required String deviceId,
   });
 
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
-    required String deviceId,
   });
 
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required String deviceId,
     required List<ConsultationQuestionResponses> questionsResponses,
   });
 
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
-    required String deviceId,
   });
 }
 
@@ -45,13 +39,10 @@ class ConsultationDioRepository extends ConsultationRepository {
   ConsultationDioRepository({required this.httpClient});
 
   @override
-  Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String deviceId,
-  }) async {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     try {
       final response = await httpClient.get(
         "/consultations",
-        headers: {"deviceId": deviceId},
       );
       final ongoingConsultations = response.data["ongoing"] as List;
       final finishedConsultations = response.data["finished"] as List;
@@ -95,12 +86,10 @@ class ConsultationDioRepository extends ConsultationRepository {
   @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
-    required String deviceId,
   }) async {
     try {
       final response = await httpClient.get(
         "/consultations/$consultationId",
-        headers: {"deviceId": deviceId},
       );
       return GetConsultationDetailsSucceedResponse(
         consultationDetails: ConsultationDetails(
@@ -126,12 +115,10 @@ class ConsultationDioRepository extends ConsultationRepository {
   @override
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
-    required String deviceId,
   }) async {
     try {
       final response = await httpClient.get(
         "/consultations/$consultationId/questions",
-        headers: {"deviceId": deviceId},
       );
       return GetConsultationQuestionsSucceedResponse(
         consultationQuestions: ConsultationQuestionsBuilder.buildQuestions(
@@ -150,13 +137,11 @@ class ConsultationDioRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required String deviceId,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     try {
       final response = await httpClient.post(
         "/consultations/$consultationId/responses",
-        headers: {"deviceId": deviceId},
         data: {
           "consultationId": consultationId,
           "responses": questionsResponses
@@ -182,12 +167,10 @@ class ConsultationDioRepository extends ConsultationRepository {
   @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
-    required String deviceId,
   }) async {
     try {
       final response = await httpClient.get(
         "/consultations/$consultationId/responses",
-        headers: {"deviceId": deviceId},
       );
       final summary = ConsultationSummary(
         title: response.data["title"] as String,

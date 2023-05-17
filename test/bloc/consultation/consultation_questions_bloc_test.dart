@@ -6,7 +6,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../fakes/consultation/fakes_consultation_repository.dart';
-import '../../fakes/qag/fake_device_id_helper.dart';
 
 void main() {
   const consultationId = "consultationId";
@@ -54,7 +53,6 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => ConsultationQuestionsBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
       expect: () => [
@@ -68,23 +66,9 @@ void main() {
     );
 
     blocTest(
-      "when device id is null - should emit failure state",
-      build: () => ConsultationQuestionsBloc(
-        consultationRepository: FakeConsultationSuccessRepository(),
-        deviceInfoHelper: FakeDeviceIdNullHelper(),
-      ),
-      act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
-      expect: () => [
-        ConsultationQuestionsErrorState(),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
-
-    blocTest(
       "when repository failed - should emit failure state",
       build: () => ConsultationQuestionsBloc(
         consultationRepository: FakeConsultationFailureRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
       expect: () => [
@@ -99,7 +83,6 @@ void main() {
       "when next question - should update index to currentQuestionIndex + 1",
       build: () => ConsultationQuestionsBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       seed: () => ConsultationQuestionsFetchedState(
         currentQuestionIndex: 0,
@@ -121,7 +104,6 @@ void main() {
       "when next question index is equals to total question - should update to finish question state",
       build: () => ConsultationQuestionsBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       seed: () => ConsultationQuestionsFetchedState(
         currentQuestionIndex: 3,
@@ -141,7 +123,6 @@ void main() {
       "when previous question - should update currentQuestionIndex - 1",
       build: () => ConsultationQuestionsBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       seed: () => ConsultationQuestionsFetchedState(
         currentQuestionIndex: 1,

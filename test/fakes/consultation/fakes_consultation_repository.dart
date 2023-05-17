@@ -11,9 +11,7 @@ import 'package:agora/infrastructure/consultation/repository/consultation_reposi
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
-  Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String deviceId,
-  }) async {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsSucceedResponse(
       ongoingConsultations: [
         ConsultationOngoing(
@@ -49,7 +47,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
-    required String deviceId,
   }) async {
     return GetConsultationDetailsSucceedResponse(
       consultationDetails: ConsultationDetails(
@@ -71,7 +68,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
-    required String deviceId,
   }) async {
     return GetConsultationQuestionsSucceedResponse(
       consultationQuestions: [
@@ -116,7 +112,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required String deviceId,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     return SendConsultationResponsesSucceedResponse(shouldDisplayDemographicInformation: true);
@@ -125,7 +120,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
-    required String deviceId,
   }) async {
     return GetConsultationSummarySucceedResponse(
       consultationSummary: ConsultationSummary(
@@ -158,9 +152,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
   @override
-  Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String deviceId,
-  }) async {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsSucceedResponse(
       ongoingConsultations: [
         ConsultationOngoing(
@@ -180,16 +172,13 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
 
 class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
-  Future<GetConsultationsRepositoryResponse> fetchConsultations({
-    required String deviceId,
-  }) async {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsFailedResponse();
   }
 
   @override
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
-    required String deviceId,
   }) async {
     return GetConsultationDetailsFailedResponse();
   }
@@ -197,7 +186,6 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
-    required String deviceId,
   }) async {
     return GetConsultationQuestionsFailedResponse();
   }
@@ -205,7 +193,6 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
-    required String deviceId,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     return SendConsultationResponsesFailureResponse();
@@ -214,7 +201,6 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
-    required String deviceId,
   }) async {
     return GetConsultationSummaryFailedResponse();
   }

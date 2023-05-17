@@ -1,7 +1,6 @@
 import 'package:agora/bloc/consultation/consultation_bloc.dart';
 import 'package:agora/bloc/consultation/consultation_event.dart';
 import 'package:agora/bloc/consultation/consultation_state.dart';
-import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -24,7 +23,6 @@ class ConsultationsPage extends StatelessWidget {
       create: (BuildContext context) {
         return ConsultationBloc(
           consultationRepository: RepositoryManager.getConsultationRepository(),
-          deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
         )..add(FetchConsultationsEvent());
       },
       child: AgoraScaffold(

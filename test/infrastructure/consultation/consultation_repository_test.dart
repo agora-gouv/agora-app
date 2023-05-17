@@ -19,7 +19,6 @@ void main() {
   final httpClient = DioUtils.agoraDioHttpClient();
 
   const consultationId = "consultationId";
-  const deviceId = "deviceId";
 
   group("Fetch consultations", () {
     test("when success should return consultations", () async {
@@ -58,13 +57,13 @@ void main() {
         }),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultations(deviceId: deviceId);
+      final response = await repository.fetchConsultations();
 
       // Then
       expect(
@@ -109,13 +108,13 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultations(deviceId: deviceId);
+      final response = await repository.fetchConsultations();
 
       // Then
       expect(response, GetConsultationsFailedResponse());
@@ -145,16 +144,13 @@ void main() {
         ),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationDetails(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultationDetails(consultationId: consultationId);
 
       // Then
       expect(
@@ -184,16 +180,13 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationDetails(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultationDetails(consultationId: consultationId);
 
       // Then
       expect(response, GetConsultationDetailsFailedResponse());
@@ -269,16 +262,13 @@ void main() {
         ),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationQuestions(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
       // Then
       expect(
@@ -330,16 +320,13 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationQuestions(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
       // Then
       expect(response, GetConsultationQuestionsFailedResponse());
@@ -359,7 +346,7 @@ void main() {
         ),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
         data: {
           "consultationId": consultationId,
@@ -387,7 +374,6 @@ void main() {
       final repository = ConsultationDioRepository(httpClient: httpClient);
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
-        deviceId: deviceId,
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
           ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
@@ -406,7 +392,7 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
         data: {
           "consultationId": consultationId,
@@ -434,7 +420,6 @@ void main() {
       final repository = ConsultationDioRepository(httpClient: httpClient);
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
-        deviceId: deviceId,
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId1", responseIds: ["responseId1"], responseText: ""),
           ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
@@ -498,16 +483,13 @@ void main() {
         ),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationSummary(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultationSummary(consultationId: consultationId);
 
       // Then
       expect(
@@ -551,16 +533,13 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = ConsultationDioRepository(httpClient: httpClient);
-      final response = await repository.fetchConsultationSummary(
-        consultationId: consultationId,
-        deviceId: deviceId,
-      );
+      final response = await repository.fetchConsultationSummary(consultationId: consultationId);
 
       // Then
       expect(response, GetConsultationSummaryFailedResponse());
