@@ -20,10 +20,10 @@ void main() {
       act: (bloc) => bloc.add(
         SendDemographicResponsesEvent(
           demographicResponses: [
-            DemographicResponse(questionType: DemographicQuestionType.gender, response: "M"),
-            DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "1999"),
-            DemographicResponse(questionType: DemographicQuestionType.cityType, response: "R"),
-            DemographicResponse(questionType: DemographicQuestionType.consultationFrequency, response: "P"),
+            DemographicResponse(demographicType: DemographicType.gender, response: "M"),
+            DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
+            DemographicResponse(demographicType: DemographicType.cityType, response: "R"),
+            DemographicResponse(demographicType: DemographicType.consultationFrequency, response: "P"),
           ],
         ),
       ),
@@ -42,10 +42,10 @@ void main() {
       act: (bloc) => bloc.add(
         SendDemographicResponsesEvent(
           demographicResponses: [
-            DemographicResponse(questionType: DemographicQuestionType.gender, response: "M"),
-            DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "1999"),
-            DemographicResponse(questionType: DemographicQuestionType.cityType, response: "R"),
-            DemographicResponse(questionType: DemographicQuestionType.consultationFrequency, response: "P"),
+            DemographicResponse(demographicType: DemographicType.gender, response: "M"),
+            DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
+            DemographicResponse(demographicType: DemographicType.cityType, response: "R"),
+            DemographicResponse(demographicType: DemographicType.consultationFrequency, response: "P"),
           ],
         ),
       ),
@@ -64,10 +64,10 @@ void main() {
       act: (bloc) => bloc.add(
         SendDemographicResponsesEvent(
           demographicResponses: [
-            DemographicResponse(questionType: DemographicQuestionType.gender, response: "M"),
-            DemographicResponse(questionType: DemographicQuestionType.yearOfBirth, response: "1999"),
-            DemographicResponse(questionType: DemographicQuestionType.cityType, response: "R"),
-            DemographicResponse(questionType: DemographicQuestionType.consultationFrequency, response: "P"),
+            DemographicResponse(demographicType: DemographicType.gender, response: "M"),
+            DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
+            DemographicResponse(demographicType: DemographicType.cityType, response: "R"),
+            DemographicResponse(demographicType: DemographicType.consultationFrequency, response: "P"),
           ],
         ),
       ),

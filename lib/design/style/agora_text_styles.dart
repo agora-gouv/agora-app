@@ -271,6 +271,13 @@ class AgoraTextStyles {
     foreground: Paint()..color = AgoraColors.primaryGreen,
   );
 
+  static TextStyle redTextButton = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 16.0,
+    foreground: Paint()..color = AgoraColors.red,
+  );
+
   static TextStyle lightGreyButton = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,

@@ -14,15 +14,15 @@ class Department extends Equatable {
 class DepartmentHelper {
   static List<Department> getDepartment() {
     return [
-      Department(code: "1", name: "Ain", displayedName: "01 - Ain"),
-      Department(code: "2", name: "Aisne", displayedName: "02 - Aisne"),
-      Department(code: "3", name: "Allier", displayedName: "03 - Allier"),
-      Department(code: "4", name: "Alpes-de-Haute-Provence", displayedName: "04 - Alpes-de-Haute-Provence"),
-      Department(code: "5", name: "Hautes-Alpes", displayedName: "05 - Hautes-Alpes"),
-      Department(code: "6", name: "Alpes-Maritimes", displayedName: "06 - Alpes-Maritimes"),
-      Department(code: "7", name: "Ardèche", displayedName: "07 - Ardèche"),
-      Department(code: "8", name: "Ardennes", displayedName: "08 - Ardennes"),
-      Department(code: "9", name: "Ariège", displayedName: "09 - Ariège"),
+      Department(code: "01", name: "Ain", displayedName: "01 - Ain"),
+      Department(code: "02", name: "Aisne", displayedName: "02 - Aisne"),
+      Department(code: "03", name: "Allier", displayedName: "03 - Allier"),
+      Department(code: "04", name: "Alpes-de-Haute-Provence", displayedName: "04 - Alpes-de-Haute-Provence"),
+      Department(code: "05", name: "Hautes-Alpes", displayedName: "05 - Hautes-Alpes"),
+      Department(code: "06", name: "Alpes-Maritimes", displayedName: "06 - Alpes-Maritimes"),
+      Department(code: "07", name: "Ardèche", displayedName: "07 - Ardèche"),
+      Department(code: "08", name: "Ardennes", displayedName: "08 - Ardennes"),
+      Department(code: "09", name: "Ariège", displayedName: "09 - Ariège"),
       Department(code: "10", name: "Aube", displayedName: "10 - Aube"),
       Department(code: "11", name: "Aude", displayedName: "11 - Aude"),
       Department(code: "12", name: "Aveyron", displayedName: "12 - Aveyron"),
@@ -115,7 +115,7 @@ class DepartmentHelper {
       Department(code: "973", name: "Guyane", displayedName: "973 - Guyane"),
       Department(code: "974", name: "La Réunion", displayedName: "974 - La Réunion"),
       Department(code: "976", name: "Mayotte", displayedName: "976 - Mayotte"),
-      Department(code: "Etranger", name: "hors de France", displayedName: "Etranger - hors de France"),
+      Department(code: "Etranger", name: "Hors de France", displayedName: "Etranger - Hors de France"),
     ];
   }
 }

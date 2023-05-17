@@ -5,6 +5,7 @@ import 'package:agora/pages/consultation/question/consultation_question_page.dar
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
 import 'package:agora/pages/demographic/demographic_information_page.dart';
+import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
@@ -34,6 +35,7 @@ class AgoraAppRouter {
       // Demographique
       DemographicInformationPage.routeName: (context) => DemographicInformationPage(),
       DemographicQuestionPage.routeName: (context) => DemographicQuestionPage(),
+      DemographicProfilePage.routeName: (context) => DemographicProfilePage(),
     };
   }
 
