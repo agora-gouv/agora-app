@@ -14,6 +14,8 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/demographic/demographic_profile_page.dart';
+import 'package:agora/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,9 +53,21 @@ class DemographicConfirmationPage extends StatelessWidget {
       child: AgoraScaffold(
         shouldPop: false,
         appBarColor: AgoraColors.primaryGreen,
-        child: BlocBuilder<SendDemographicResponsesBloc, SendDemographicResponsesState>(
+        child: BlocConsumer<SendDemographicResponsesBloc, SendDemographicResponsesState>(
+          listener: (context, state) {
+            if (_isProfileJourney(state)) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                DemographicProfilePage.routeName,
+                ModalRoute.withName(ProfilePage.routeName),
+                arguments: DemographicProfileArguments(
+                  modificationSuccess: state is SendDemographicResponsesSuccessState,
+                ),
+              );
+            }
+          },
           builder: (context, state) {
-            if (state is SendDemographicResponsesSuccessState) {
+            if (state is SendDemographicResponsesSuccessState && consultationId != null) {
               return SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Column(
@@ -83,13 +97,11 @@ class DemographicConfirmationPage extends StatelessWidget {
                             label: ConsultationStrings.goToResult,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
-                              if (consultationId != null) {
-                                Navigator.pushNamed(
-                                  context,
-                                  ConsultationSummaryPage.routeName,
-                                  arguments: consultationId,
-                                );
-                              }
+                              Navigator.pushNamed(
+                                context,
+                                ConsultationSummaryPage.routeName,
+                                arguments: consultationId,
+                              );
                             },
                           )
                         ],
@@ -98,7 +110,7 @@ class DemographicConfirmationPage extends StatelessWidget {
                   ],
                 ),
               );
-            } else if (state is SendDemographicResponsesInitialLoadingState) {
+            } else if (state is SendDemographicResponsesInitialLoadingState || _isProfileJourney(state)) {
               return Center(child: CircularProgressIndicator());
             } else {
               return Center(child: AgoraErrorView());
@@ -108,4 +120,8 @@ class DemographicConfirmationPage extends StatelessWidget {
       ),
     );
   }
+
+  bool _isProfileJourney(SendDemographicResponsesState state) =>
+      (state is SendDemographicResponsesSuccessState || state is SendDemographicResponsesFailureState) &&
+      consultationId == null;
 }

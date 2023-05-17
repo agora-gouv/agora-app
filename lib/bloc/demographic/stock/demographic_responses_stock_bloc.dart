@@ -13,7 +13,7 @@ class DemographicResponsesStockBloc extends Bloc<DemographicResponseStockEvent, 
     Emitter<DemographicResponsesStockState> emit,
   ) async {
     final responses = [...state.responses];
-    responses.removeWhere((response) => response.questionType == event.response.questionType);
+    responses.removeWhere((response) => response.demographicType == event.response.demographicType);
     responses.add(event.response);
     emit(DemographicResponsesStockState(responses: responses));
   }
@@ -23,7 +23,7 @@ class DemographicResponsesStockBloc extends Bloc<DemographicResponseStockEvent, 
     Emitter<DemographicResponsesStockState> emit,
   ) async {
     final responses = [...state.responses];
-    responses.removeWhere((response) => response.questionType == event.questionType);
+    responses.removeWhere((response) => response.demographicType == event.demographicType);
     emit(DemographicResponsesStockState(responses: responses));
   }
 }

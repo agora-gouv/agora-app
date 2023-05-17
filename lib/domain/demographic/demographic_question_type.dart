@@ -1,4 +1,4 @@
-enum DemographicQuestionType {
+enum DemographicType {
   gender,
   yearOfBirth,
   department,

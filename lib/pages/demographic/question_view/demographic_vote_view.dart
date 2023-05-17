@@ -42,7 +42,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
         Text(DemographicStrings.question6_1, style: AgoraTextStyles.medium18),
         SizedBox(height: AgoraSpacings.x0_75),
         _buildResponseRow(
-          questionType: DemographicQuestionType.voteFrequency,
+          demographicType: DemographicType.voteFrequency,
           onPressed: (responseCode) {
             setState(() {
               if (voteFrequencyCode == responseCode) {
@@ -59,7 +59,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
         Text(DemographicStrings.question6_2Description, style: AgoraTextStyles.light14),
         SizedBox(height: AgoraSpacings.x0_75),
         _buildResponseRow(
-          questionType: DemographicQuestionType.publicMeetingFrequency,
+          demographicType: DemographicType.publicMeetingFrequency,
           onPressed: (responseCode) {
             setState(() {
               if (publicMeetingFrequencyCode == responseCode) {
@@ -76,7 +76,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
         Text(DemographicStrings.question6_3Description, style: AgoraTextStyles.light14),
         SizedBox(height: AgoraSpacings.x0_75),
         _buildResponseRow(
-          questionType: DemographicQuestionType.consultationFrequency,
+          demographicType: DemographicType.consultationFrequency,
           onPressed: (responseCode) {
             setState(() {
               if (consultationFrequencyCode == responseCode) {
@@ -108,7 +108,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
   }
 
   Widget _buildResponseRow({
-    required DemographicQuestionType questionType,
+    required DemographicType demographicType,
     required Function(String) onPressed,
   }) {
     final responseChoices = DemographicResponseHelper.question6ResponseChoice();
@@ -119,7 +119,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
           child: AgoraDemographicResponseCard(
             responseLabel: responseChoice.responseLabel,
             textAlign: TextAlign.center,
-            isSelected: isSelected(questionType: questionType, responseChoice: responseChoice),
+            isSelected: isSelected(demographicType: demographicType, responseChoice: responseChoice),
             iconPlace: DemographicSelectedIconPlace.centerBottom,
             onTap: () => onPressed(responseChoice.responseCode),
           ),
@@ -134,15 +134,15 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
   }
 
   bool isSelected({
-    required DemographicQuestionType questionType,
+    required DemographicType demographicType,
     required DemographicResponseChoice responseChoice,
   }) {
-    switch (questionType) {
-      case DemographicQuestionType.voteFrequency:
+    switch (demographicType) {
+      case DemographicType.voteFrequency:
         return responseChoice.responseCode == voteFrequencyCode;
-      case DemographicQuestionType.publicMeetingFrequency:
+      case DemographicType.publicMeetingFrequency:
         return responseChoice.responseCode == publicMeetingFrequencyCode;
-      case DemographicQuestionType.consultationFrequency:
+      case DemographicType.consultationFrequency:
         return responseChoice.responseCode == consultationFrequencyCode;
       default:
         return false;

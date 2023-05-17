@@ -7,4 +7,7 @@ class GenericStrings {
   static const String profil = "Profil";
   static const String all = "Toutes";
   static const String back = "Retour";
+  static const String modify = "Modifier";
+  static const String close = "Fermer";
+  static const String modificationSuccess = "La modification a été prise en compte.";
 }

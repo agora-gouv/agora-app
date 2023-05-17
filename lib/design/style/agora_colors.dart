@@ -27,6 +27,7 @@ class AgoraColors {
   static const Color transparent = Color(0x00000000);
   static const Color divider = Color(0x1A000000);
   static const Color fluorescentRed = Color(0xFFFF5655);
+  static const Color red = Color(0xFFCE0500);
 
   // couleur de pastille
   static const Color mintZest = Color(0xFFCFFCD9);

@@ -34,4 +34,14 @@ class DemographicStrings {
   static const String yearOfBirthError = "L'année de naissance saisie n'est pas valide.";
   static const String yearOfBirthHint = "1995";
   static const String departmentHint = "Votre numéro ou nom de département";
+  static const String yours = "Vos";
+  static const String information = "informations";
+  static const String informationCapitalize = "Informations\n";
+  static const String general = "générales";
+  static const String demographicInformationNotice1 =
+      "Ces informations nous permettent d’analyser plus finement les résultats des consultations.";
+  static const String demographicInformationNotice2 =
+      "Conformation à la loi RGPD, vous avez la possibilité de consulter, modifier ou supprimer l’ensemble des informations vous concernant.";
+  static const String suppressMyInformation = "Supprimer mes informations";
+  static const String whatAbout = "De quoi s’agit-il ?";
 }

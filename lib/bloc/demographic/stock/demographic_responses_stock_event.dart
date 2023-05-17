@@ -14,10 +14,10 @@ class AddDemographicResponseStockEvent extends DemographicResponseStockEvent {
 }
 
 class DeleteDemographicResponseStockEvent extends DemographicResponseStockEvent {
-  final DemographicQuestionType questionType;
+  final DemographicType demographicType;
 
-  DeleteDemographicResponseStockEvent({required this.questionType});
+  DeleteDemographicResponseStockEvent({required this.demographicType});
 
   @override
-  List<Object> get props => [questionType];
+  List<Object> get props => [demographicType];
 }

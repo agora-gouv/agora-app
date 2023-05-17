@@ -106,24 +106,24 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         return DemographicCommonView(
           responseChoices: DemographicResponseHelper.question1ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
-            _stockResponse(context, DemographicQuestionType.gender, responseCode);
+            _stockResponse(context, DemographicType.gender, responseCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
-            _deleteResponse(context, DemographicQuestionType.gender);
+            _deleteResponse(context, DemographicType.gender);
             _nextStep(context);
           }),
-          oldResponse: _getOldResponse(DemographicQuestionType.gender, oldResponses),
+          oldResponse: _getOldResponse(DemographicType.gender, oldResponses),
         );
       case 2:
-        final oldResponse = _getOldResponse(DemographicQuestionType.yearOfBirth, oldResponses);
+        final oldResponse = _getOldResponse(DemographicType.yearOfBirth, oldResponses);
         return DemographicBirthView(
           onContinuePressed: (String inputYear) => setState(() {
-            _stockResponse(context, DemographicQuestionType.yearOfBirth, inputYear);
+            _stockResponse(context, DemographicType.yearOfBirth, inputYear);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
-            _deleteResponse(context, DemographicQuestionType.yearOfBirth);
+            _deleteResponse(context, DemographicType.yearOfBirth);
             _nextStep(context);
           }),
           controller: oldResponse != null ? TextEditingController(text: oldResponse.response) : null,
@@ -131,11 +131,11 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
       case 3:
         return DemographicDepartmentView(
           onContinuePressed: (departmentCode) => setState(() {
-            _stockResponse(context, DemographicQuestionType.department, departmentCode);
+            _stockResponse(context, DemographicType.department, departmentCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
-            _deleteResponse(context, DemographicQuestionType.department);
+            _deleteResponse(context, DemographicType.department);
             _nextStep(context);
           }),
         );
@@ -143,47 +143,48 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         return DemographicCommonView(
           responseChoices: DemographicResponseHelper.question4ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
-            _stockResponse(context, DemographicQuestionType.cityType, responseCode);
+            _stockResponse(context, DemographicType.cityType, responseCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
-            _deleteResponse(context, DemographicQuestionType.cityType);
+            _deleteResponse(context, DemographicType.cityType);
             _nextStep(context);
           }),
-          oldResponse: _getOldResponse(DemographicQuestionType.cityType, oldResponses),
+          oldResponse: _getOldResponse(DemographicType.cityType, oldResponses),
         );
       case 5:
         return DemographicCommonView(
           responseChoices: DemographicResponseHelper.question5ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
-            _stockResponse(context, DemographicQuestionType.jobCategory, responseCode);
+            _stockResponse(context, DemographicType.jobCategory, responseCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
-            _deleteResponse(context, DemographicQuestionType.jobCategory);
+            _deleteResponse(context, DemographicType.jobCategory);
             _nextStep(context);
           }),
-          oldResponse: _getOldResponse(DemographicQuestionType.jobCategory, oldResponses),
+          oldResponse: _getOldResponse(DemographicType.jobCategory, oldResponses),
+          showWhatAbout: true,
         );
       case 6:
         return DemographicVoteView(
           responseChoices: DemographicResponseHelper.question6ResponseChoice(),
           onContinuePressed: (voteFrequencyCode, publicMeetingFrequencyCode, consultationFrequencyCode) => setState(() {
             if (voteFrequencyCode != null) {
-              _stockResponse(context, DemographicQuestionType.voteFrequency, voteFrequencyCode);
+              _stockResponse(context, DemographicType.voteFrequency, voteFrequencyCode);
             }
             if (publicMeetingFrequencyCode != null) {
-              _stockResponse(context, DemographicQuestionType.publicMeetingFrequency, publicMeetingFrequencyCode);
+              _stockResponse(context, DemographicType.publicMeetingFrequency, publicMeetingFrequencyCode);
             }
             if (consultationFrequencyCode != null) {
-              _stockResponse(context, DemographicQuestionType.consultationFrequency, consultationFrequencyCode);
+              _stockResponse(context, DemographicType.consultationFrequency, consultationFrequencyCode);
             }
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
-            _deleteResponse(context, DemographicQuestionType.voteFrequency);
-            _deleteResponse(context, DemographicQuestionType.publicMeetingFrequency);
-            _deleteResponse(context, DemographicQuestionType.consultationFrequency);
+            _deleteResponse(context, DemographicType.voteFrequency);
+            _deleteResponse(context, DemographicType.publicMeetingFrequency);
+            _deleteResponse(context, DemographicType.consultationFrequency);
             _nextStep(context);
           }),
         );
@@ -207,24 +208,26 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
     }
   }
 
-  void _stockResponse(BuildContext context, DemographicQuestionType questionType, String responseCode) {
+  void _stockResponse(BuildContext context, DemographicType demographicType, String responseCode) {
     context.read<DemographicResponsesStockBloc>().add(
           AddDemographicResponseStockEvent(
             response: DemographicResponse(
-              questionType: questionType,
+              demographicType: demographicType,
               response: responseCode,
             ),
           ),
         );
   }
 
-  void _deleteResponse(BuildContext context, DemographicQuestionType questionType) {
-    context.read<DemographicResponsesStockBloc>().add(DeleteDemographicResponseStockEvent(questionType: questionType));
+  void _deleteResponse(BuildContext context, DemographicType demographicType) {
+    context
+        .read<DemographicResponsesStockBloc>()
+        .add(DeleteDemographicResponseStockEvent(demographicType: demographicType));
   }
 
-  DemographicResponse? _getOldResponse(DemographicQuestionType questionType, List<DemographicResponse> oldResponses) {
+  DemographicResponse? _getOldResponse(DemographicType demographicType, List<DemographicResponse> oldResponses) {
     try {
-      return oldResponses.firstWhere((oldResponse) => oldResponse.questionType == questionType);
+      return oldResponses.firstWhere((oldResponse) => oldResponse.demographicType == demographicType);
     } catch (e) {
       return null;
     }
