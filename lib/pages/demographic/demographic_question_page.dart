@@ -126,7 +126,6 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           },
           onIgnorePressed: () => setState(() => _nextStep()),
           controller: oldResponse != null ? TextEditingController(text: oldResponse.response) : null,
-          oldResponse: oldResponse?.response,
         );
       case 3:
         return DemographicDepartmentView(
