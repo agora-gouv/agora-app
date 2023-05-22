@@ -10,6 +10,7 @@ import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/qag/ask_question/qag_ask_question_confirmation_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
@@ -30,6 +31,7 @@ class AgoraAppRouter {
       QagsPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
       QagDetailsPage.routeName: (context) => QagDetailsPage(),
       QagAskQuestionPage.routeName: (context) => QagAskQuestionPage(),
+      QagAskQuestionConfirmationPage.routeName: (context) => QagAskQuestionConfirmationPage(),
       // Profile
       ProfilePage.routeName: (context) => ProfilePage(),
       // Demographique

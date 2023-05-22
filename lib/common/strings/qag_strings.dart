@@ -32,7 +32,7 @@ class QagStrings {
       "Durant la phase d’expérimentation, nous vous proposons d’envoyer votre question par e-mail. Elle apparaîtra dans les 48h sur l’application.";
   static const String askQuestionConfigureMail = "Veuillez configurer l'application Mail par défaut de votre appareil.";
   static const String askQuestionMailSubject = "Ma question au gouvernement";
-  static const String sendByEmail = "Envoyer par e-mail";
+  static const String send = "Envoyer";
 
   static const String supportQuestion = "Soutenir cette question";
   static const String questionSupported = "Question soutenue";

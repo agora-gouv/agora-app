@@ -8,6 +8,14 @@ import 'package:agora/domain/qag/qag_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
+  Future<CreateQagRepositoryResponse> createQag({
+    required String deviceId,
+    required String title,
+    required String description,
+    required String author,
+    required String thematiqueId,
+  });
+
   Future<GetQagsRepositoryResponse> fetchQags({
     required String deviceId,
     required String? thematiqueId,
@@ -39,6 +47,32 @@ class QagDioRepository extends QagRepository {
   final AgoraDioHttpClient httpClient;
 
   QagDioRepository({required this.httpClient});
+
+  @override
+  Future<CreateQagRepositoryResponse> createQag({
+    required String deviceId,
+    required String title,
+    required String description,
+    required String author,
+    required String thematiqueId,
+  }) async {
+    try {
+      await httpClient.post(
+        "/qags",
+        data: {
+          "title": title,
+          "description": description,
+          "author": author,
+          "thematiqueId": thematiqueId,
+        },
+        headers: {"deviceId": deviceId},
+      );
+      return CreateQagSucceedResponse();
+    } catch (e) {
+      Log.e("createQag failed", e);
+      return CreateQagFailedResponse();
+    }
+  }
 
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
@@ -183,6 +217,15 @@ class QagDioRepository extends QagRepository {
     }).toList();
   }
 }
+
+abstract class CreateQagRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class CreateQagSucceedResponse extends CreateQagRepositoryResponse {}
+
+class CreateQagFailedResponse extends CreateQagRepositoryResponse {}
 
 abstract class GetQagsRepositoryResponse extends Equatable {
   @override

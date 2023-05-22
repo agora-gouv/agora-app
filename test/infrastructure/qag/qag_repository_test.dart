@@ -17,6 +17,64 @@ void main() {
   const deviceId = "deviceId";
   const thematiqueId = "thematiqueId";
 
+  group("Create qag", () {
+    test("when success should return success", () async {
+      // Given
+      dioAdapter.onPost(
+        "/qags",
+        (server) => server.reply(HttpStatus.ok, {}),
+        data: {
+          "title": "qag title",
+          "description": "qag description",
+          "author": "qag author",
+          "thematiqueId": "thematiqueId",
+        },
+        headers: {"accept": "application/json", "deviceId": deviceId},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.createQag(
+        deviceId: deviceId,
+        title: "qag title",
+        description: "qag description",
+        author: "qag author",
+        thematiqueId: thematiqueId,
+      );
+
+      // Then
+      expect(response, CreateQagSucceedResponse());
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onPost(
+        "/qags",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        data: {
+          "title": "qag title",
+          "description": "qag description",
+          "author": "qag author",
+          "thematiqueId": "thematiqueId",
+        },
+        headers: {"accept": "application/json", "deviceId": deviceId},
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.createQag(
+        deviceId: deviceId,
+        title: "qag title",
+        description: "qag description",
+        author: "qag author",
+        thematiqueId: thematiqueId,
+      );
+
+      // Then
+      expect(response, CreateQagFailedResponse());
+    });
+  });
+
   group("Fetch qags", () {
     test("when success should return qags", () async {
       // Given
