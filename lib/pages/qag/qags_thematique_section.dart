@@ -1,11 +1,9 @@
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
+import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_thematique_toggle_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +32,11 @@ class QagsThematiqueSection extends StatelessWidget {
                   return SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    child: _buildThematiques(state.thematiqueViewModels),
+                    child: ThematiqueHelper.buildThematiques(
+                      thematiques: state.thematiqueViewModels,
+                      selectedThematiqueId: currentThematiqueId,
+                      onThematiqueIdSelected: onThematiqueIdSelected,
+                    ),
                   );
                 } else if (state is ThematiqueInitialLoadingState) {
                   return Center(child: CircularProgressIndicator());
@@ -46,35 +48,6 @@ class QagsThematiqueSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildThematiques(List<ThematiqueWithIdViewModel> thematiques) {
-    final Iterable<Widget> thematiqueWidgets = thematiques.map(
-      (thematique) => Column(
-        children: [
-          AgoraToggleButton(
-            isSelected: thematique.id == currentThematiqueId,
-            text: thematique.picto,
-            onClicked: () => onThematiqueIdSelected(thematique.id),
-          ),
-          SizedBox(height: AgoraSpacings.x0_5),
-          SizedBox(
-            width: 80,
-            child: Text(
-              thematique.label,
-              style: AgoraTextStyles.medium12,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-
-    final List<Widget> spacingSizedBox = [SizedBox(width: AgoraSpacings.base)];
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: spacingSizedBox + thematiqueWidgets.toList() + spacingSizedBox,
     );
   }
 }

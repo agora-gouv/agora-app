@@ -41,11 +41,11 @@ class AgoraQagCard extends StatelessWidget {
         );
       },
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(AgoraSpacings.base),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [

@@ -1,18 +1,22 @@
 import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
 
-enum QagTab { popular, lastest, supporting }
+enum QagTab { popular, latest, supporting }
 
 class QagsSection extends StatefulWidget {
   final QagTab defaultSelected;
   final List<QagViewModel> popularViewModels;
   final List<QagViewModel> latestViewModels;
   final List<QagViewModel> supportingViewModels;
+  final String? selectedThematiqueId;
 
   const QagsSection({
     super.key,
@@ -20,6 +24,7 @@ class QagsSection extends StatefulWidget {
     required this.popularViewModels,
     required this.latestViewModels,
     required this.supportingViewModels,
+    required this.selectedThematiqueId,
   });
 
   @override
@@ -55,15 +60,15 @@ class _QagsSectionState extends State<QagsSection> {
   Widget _buildQags() {
     switch (currentSelected) {
       case QagTab.popular:
-        return Column(children: _buildQagWidgets(widget.popularViewModels));
-      case QagTab.lastest:
-        return Column(children: _buildQagWidgets(widget.latestViewModels));
+        return Column(children: _buildQagWidgets(widget.popularViewModels, currentSelected));
+      case QagTab.latest:
+        return Column(children: _buildQagWidgets(widget.latestViewModels, currentSelected));
       case QagTab.supporting:
-        return Column(children: _buildQagWidgets(widget.supportingViewModels));
+        return Column(children: _buildQagWidgets(widget.supportingViewModels, currentSelected));
     }
   }
 
-  List<Widget> _buildQagWidgets(List<QagViewModel> qagViewModels) {
+  List<Widget> _buildQagWidgets(List<QagViewModel> qagViewModels, QagTab qagTab) {
     final List<Widget> qagsWidgets = [];
     if (qagViewModels.isNotEmpty) {
       for (final qagViewModel in qagViewModels) {
@@ -79,6 +84,20 @@ class _QagsSectionState extends State<QagsSection> {
           ),
         );
         qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
+      }
+      switch (qagTab) {
+        case QagTab.popular:
+          qagsWidgets.add(_buildAllButton(QagPaginatedInitialTab.popular));
+          qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
+          break;
+        case QagTab.latest:
+          qagsWidgets.add(_buildAllButton(QagPaginatedInitialTab.latest));
+          qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
+          break;
+        case QagTab.supporting:
+          qagsWidgets.add(_buildAllButton(QagPaginatedInitialTab.supporting));
+          qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
+          break;
       }
       return qagsWidgets;
     } else {
@@ -96,6 +115,25 @@ class _QagsSectionState extends State<QagsSection> {
         ),
       ];
     }
+  }
+
+  Row _buildAllButton(QagPaginatedInitialTab initialTab) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AgoraRoundedButton(
+          label: GenericStrings.all,
+          style: AgoraRoundedButtonStyle.primaryButton,
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              QagsPaginatedPage.routeName,
+              arguments: QagsPaginatedArguments(thematiqueId: widget.selectedThematiqueId, initialTab: initialTab),
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Widget _buildTabBar() {
@@ -116,9 +154,9 @@ class _QagsSectionState extends State<QagsSection> {
             Expanded(
               child: _buildTabButton(
                 label: QagStrings.latest,
-                isSelected: currentSelected == QagTab.lastest,
+                isSelected: currentSelected == QagTab.latest,
                 onTap: () {
-                  setState(() => currentSelected = QagTab.lastest);
+                  setState(() => currentSelected = QagTab.latest);
                 },
               ),
             ),
