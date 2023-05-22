@@ -14,7 +14,6 @@ void main() {
   final httpClient = DioUtils.agoraDioHttpClient();
 
   const qagId = "qagId";
-  const deviceId = "deviceId";
   const thematiqueId = "thematiqueId";
 
   group("Create qag", () {
@@ -137,12 +136,15 @@ void main() {
             }
           },
         ),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQags(deviceId: deviceId, thematiqueId: thematiqueId);
+      final response = await repository.fetchQags(thematiqueId: thematiqueId);
 
       // Then
       expect(
@@ -200,12 +202,15 @@ void main() {
       dioAdapter.onGet(
         "/qags",
         (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQags(deviceId: deviceId, thematiqueId: thematiqueId);
+      final response = await repository.fetchQags(thematiqueId: thematiqueId);
 
       // Then
       expect(response, GetQagsFailedResponse());
@@ -230,12 +235,15 @@ void main() {
             "response": null
           },
         ),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQagDetails(qagId: qagId, deviceId: deviceId);
+      final response = await repository.fetchQagDetails(qagId: qagId);
 
       // Then
       expect(
@@ -279,12 +287,15 @@ void main() {
             }
           },
         ),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQagDetails(qagId: qagId, deviceId: deviceId);
+      final response = await repository.fetchQagDetails(qagId: qagId);
 
       // Then
       expect(
@@ -316,12 +327,15 @@ void main() {
       dioAdapter.onGet(
         "/qags/$qagId",
         (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.fetchQagDetails(qagId: qagId, deviceId: deviceId);
+      final response = await repository.fetchQagDetails(qagId: qagId);
 
       // Then
       expect(response, GetQagDetailsFailedResponse());
@@ -334,12 +348,15 @@ void main() {
       dioAdapter.onPost(
         "/qags/$qagId/support",
         (server) => server.reply(HttpStatus.ok, null),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.supportQag(qagId: qagId, deviceId: deviceId);
+      final response = await repository.supportQag(qagId: qagId);
 
       // Then
       expect(response, SupportQagSucceedResponse());
@@ -355,7 +372,7 @@ void main() {
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.supportQag(qagId: qagId, deviceId: deviceId);
+      final response = await repository.supportQag(qagId: qagId);
 
       // Then
       expect(response, SupportQagFailedResponse());
@@ -368,12 +385,15 @@ void main() {
       dioAdapter.onDelete(
         "/qags/$qagId/support",
         (server) => server.reply(HttpStatus.ok, null),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.deleteSupportQag(qagId: qagId, deviceId: deviceId);
+      final response = await repository.deleteSupportQag(qagId: qagId);
 
       // Then
       expect(response, DeleteSupportQagSucceedResponse());
@@ -389,7 +409,7 @@ void main() {
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.deleteSupportQag(qagId: qagId, deviceId: deviceId);
+      final response = await repository.deleteSupportQag(qagId: qagId);
 
       // Then
       expect(response, DeleteSupportQagFailedResponse());
@@ -402,13 +422,16 @@ void main() {
       dioAdapter.onPost(
         "/qags/$qagId/feedback",
         (server) => server.reply(HttpStatus.ok, null),
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
         data: {"isHelpful": true},
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.giveQagResponseFeedback(qagId: qagId, deviceId: deviceId, isHelpful: true);
+      final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
       // Then
       expect(response, QagFeedbackSuccessResponse());
@@ -419,13 +442,16 @@ void main() {
       dioAdapter.onPost(
         "/qags/$qagId/feedback",
         (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {"accept": "application/json"},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
         data: {"isHelpful": true},
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
-      final response = await repository.giveQagResponseFeedback(qagId: qagId, deviceId: deviceId, isHelpful: true);
+      final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
       // Then
       expect(response, QagFeedbackFailedResponse());

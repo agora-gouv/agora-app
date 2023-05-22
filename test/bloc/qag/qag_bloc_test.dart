@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import '../../fakes/qag/fake_device_id_helper.dart';
 import '../../fakes/qag/fakes_qag_repository.dart';
 
 void main() {
@@ -20,7 +19,6 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => QagBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: null)),
       expect: () => [
@@ -74,23 +72,9 @@ void main() {
     );
 
     blocTest(
-      "when device id is null - should emit failure state",
-      build: () => QagBloc(
-        qagRepository: FakeQagSuccessRepository(),
-        deviceInfoHelper: FakeDeviceIdNullHelper(),
-      ),
-      act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: "thematiqueId")),
-      expect: () => [
-        QagErrorState(),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
-
-    blocTest(
       "when repository failed - should emit failure state",
       build: () => QagBloc(
         qagRepository: FakeQagFailureRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: "anotherThematiqueId")),
       expect: () => [
