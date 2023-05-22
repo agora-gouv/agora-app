@@ -1,7 +1,12 @@
+import 'package:agora/bloc/qag/create/qag_create_bloc.dart';
+import 'package:agora/bloc/qag/create/qag_create_event.dart';
+import 'package:agora/bloc/qag/create/qag_create_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
+import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
@@ -13,10 +18,10 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/qag/ask_question/qag_ask_question_confirmation_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_thematiques_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class QagAskQuestionPage extends StatefulWidget {
   static const routeName = "/qagAskQuestionPage";
@@ -29,14 +34,24 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   String question = "";
   String details = "";
   String firstname = "";
-  String? thematique;
+  ThematiqueWithIdViewModel? thematique;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ThematiqueBloc(
-        repository: RepositoryManager.getThematiqueRepository(),
-      )..add(FetchThematiqueEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ThematiqueBloc(
+            repository: RepositoryManager.getThematiqueRepository(),
+          )..add(FetchThematiqueEvent()),
+        ),
+        BlocProvider(
+          create: (context) => CreateQagBloc(
+            qagRepository: RepositoryManager.getQagRepository(),
+            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
+          ),
+        ),
+      ],
       child: AgoraScaffold(
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
@@ -108,7 +123,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                             elements: state.thematiqueViewModels,
                             hintText: QagStrings.thematiqueHint,
                             onSelected: (value) {
-                              thematique = value?.label;
+                              thematique = value;
                             },
                           ),
                           SizedBox(height: AgoraSpacings.x1_5),
@@ -125,35 +140,41 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                           SizedBox(height: AgoraSpacings.base),
                           Text(QagStrings.askQuestionInformation, style: AgoraTextStyles.light14),
                           SizedBox(height: AgoraSpacings.base),
-                          AgoraButton(
-                            label: QagStrings.sendByEmail,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () async {
-                              if (_couldSend()) {
-                                final email = Email(
-                                  body:
-                                      "Question : $question \n\nDétails : $details\n\nThématique : $thematique\n\nPrénom : $firstname\n\n",
-                                  subject: QagStrings.askQuestionMailSubject,
-                                  recipients: ["penelope.liot@beta.gouv.fr"],
-                                  isHTML: false,
-                                );
-                                try {
-                                  await FlutterEmailSender.send(email);
-                                } catch (error) {
-                                  showAgoraDialog(
-                                    context: context,
-                                    columnChildren: [
-                                      Text(QagStrings.askQuestionConfigureMail, style: AgoraTextStyles.medium16),
-                                      SizedBox(height: AgoraSpacings.base),
-                                      AgoraButton(
-                                        label: QagStrings.agree,
-                                        style: AgoraButtonStyle.primaryButtonStyle,
-                                        onPressed: () => Navigator.pop(context),
-                                      ),
-                                    ],
-                                  );
-                                }
+                          BlocConsumer<CreateQagBloc, CreateQagState>(
+                            listener: (context, createQagState) {
+                              if (createQagState is CreateQagSuccessState) {
+                                Navigator.pushNamed(context, QagAskQuestionConfirmationPage.routeName);
                               }
+                            },
+                            builder: (context, createQagState) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (createQagState is CreateQagErrorState) ...[
+                                    SizedBox(height: AgoraSpacings.base),
+                                    AgoraErrorView(),
+                                    SizedBox(height: AgoraSpacings.base),
+                                  ],
+                                  if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),
+                                  AgoraButton(
+                                    label: QagStrings.send,
+                                    isLoading: createQagState is CreateQagLoadingState,
+                                    style: AgoraButtonStyle.primaryButtonStyle,
+                                    onPressed: () async {
+                                      if (_couldSend()) {
+                                        context.read<CreateQagBloc>().add(
+                                              CreateQagEvent(
+                                                title: question,
+                                                description: details,
+                                                author: firstname,
+                                                thematiqueId: thematique!.id,
+                                              ),
+                                            );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              );
                             },
                           ),
                           SizedBox(height: AgoraSpacings.x2),
