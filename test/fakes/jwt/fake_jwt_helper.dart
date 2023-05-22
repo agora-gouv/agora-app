@@ -1,9 +1,6 @@
-abstract class JwtHelper {
-  String? getJwtToken();
-  void setJwtToken(String jwtToken);
-}
+import 'package:agora/common/helper/jwt_helper.dart';
 
-class JwtHelperImpl extends JwtHelper {
+class FakeJwtHelper extends JwtHelper {
   String? _jwtToken;
 
   @override

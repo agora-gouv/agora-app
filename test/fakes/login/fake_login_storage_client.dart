@@ -1,15 +1,15 @@
 import 'package:agora/infrastructure/login/login_storage_client.dart';
 
 class FakeLoginStorageClient extends LoginStorageClient {
-  String? userId;
+  String? loginToken;
 
   @override
-  void save(String userId) async {
-    this.userId = userId;
+  void save(String loginToken) async {
+    this.loginToken = loginToken;
   }
 
   @override
-  Future<String?> getUserId() async {
-    return userId;
+  Future<String?> getLoginToken() async {
+    return loginToken;
   }
 }

@@ -43,10 +43,10 @@ class HelperManager {
   }
 
   static JwtHelper getJwtHelper() {
-    if (GetIt.instance.isRegistered<JwtHelper>()) {
-      return GetIt.instance.get<JwtHelper>();
+    if (GetIt.instance.isRegistered<JwtHelperImpl>()) {
+      return GetIt.instance.get<JwtHelperImpl>();
     }
-    final helper = JwtHelper();
+    final helper = JwtHelperImpl();
     GetIt.instance.registerSingleton(helper);
     return helper;
   }

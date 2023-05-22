@@ -13,7 +13,7 @@ class DioUtils {
   static AgoraDioHttpClient agoraDioHttpClient() {
     return AgoraDioHttpClient(
       dio: _dio,
-      jwtHelper: JwtHelper()..setJwtToken("jwtToken"),
+      jwtHelper: JwtHelperImpl()..setJwtToken("jwtToken"),
     );
   }
 }
