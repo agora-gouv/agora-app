@@ -4,7 +4,6 @@ import 'package:agora/bloc/qag/details/qag_details_state.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
-import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -40,23 +39,15 @@ class QagDetailsPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (BuildContext context) {
-            return QagDetailsBloc(
-              qagRepository: RepositoryManager.getQagRepository(),
-              deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-            )..add(FetchQagDetailsEvent(qagId: arguments.qagId));
+            return QagDetailsBloc(qagRepository: RepositoryManager.getQagRepository())
+              ..add(FetchQagDetailsEvent(qagId: arguments.qagId));
           },
         ),
         BlocProvider(
-          create: (BuildContext context) => QagSupportBloc(
-            qagRepository: RepositoryManager.getQagRepository(),
-            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-          ),
+          create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) => QagFeedbackBloc(
-            qagRepository: RepositoryManager.getQagRepository(),
-            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-          ),
+          create: (BuildContext context) => QagFeedbackBloc(qagRepository: RepositoryManager.getQagRepository()),
         ),
       ],
       child: AgoraScaffold(

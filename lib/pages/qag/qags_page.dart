@@ -3,7 +3,6 @@ import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
-import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -34,10 +33,8 @@ class _QagsPageState extends State<QagsPage> {
       providers: [
         BlocProvider(
           create: (BuildContext context) {
-            return QagBloc(
-              qagRepository: RepositoryManager.getQagRepository(),
-              deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-            )..add(FetchQagsEvent(thematiqueId: currentThematiqueId));
+            return QagBloc(qagRepository: RepositoryManager.getQagRepository())
+              ..add(FetchQagsEvent(thematiqueId: currentThematiqueId));
           },
         ),
         BlocProvider(
