@@ -11,6 +11,7 @@ class AgoraAppBarWithTabs extends StatefulWidget {
   final List<Widget> tabChild;
   final bool needTopDiagonal;
   final bool needToolbar;
+  final double initialToolBarHeight;
   final VoidCallback? onToolbarBackClick;
 
   AgoraAppBarWithTabs({
@@ -20,6 +21,7 @@ class AgoraAppBarWithTabs extends StatefulWidget {
     this.needTopDiagonal = true,
     this.needToolbar = false,
     this.onToolbarBackClick,
+    this.initialToolBarHeight = 112,
   }) : assert(onToolbarBackClick == null || needToolbar);
 
   @override
@@ -30,11 +32,16 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
   final GlobalKey _backBarChildKey = GlobalKey();
   final GlobalKey _contentChildKey = GlobalKey();
   bool isHeightCalculated = false;
-  double height = kToolbarHeight * 2;
+  double height = 0;
+
+  @override
+  void initState() {
+    height = widget.initialToolBarHeight;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // calculate dynamically the toolbar size
     _buildToolbarHeightOnCreation(context);
     return SliverAppBar(
       pinned: true,
@@ -63,7 +70,12 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
                           right: AgoraSpacings.horizontalPadding,
                           top: AgoraSpacings.base,
                         ),
-                  child: isHeightCalculated ? widget.topChild : Center(child: CircularProgressIndicator()),
+                  child: isHeightCalculated
+                      ? widget.topChild
+                      : SizedBox(
+                          height: widget.initialToolBarHeight,
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
                 ),
               ),
             ),

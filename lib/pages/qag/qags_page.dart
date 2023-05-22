@@ -91,6 +91,7 @@ class _QagsPageState extends State<QagsPage> {
           popularViewModels: state.popularViewModels,
           latestViewModels: state.latestViewModels,
           supportingViewModels: state.supportingViewModels,
+          selectedThematiqueId: currentThematiqueId,
         ),
       ];
     } else if (state is QagInitialLoadingState) {

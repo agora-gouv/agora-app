@@ -13,6 +13,7 @@ import 'package:agora/pages/profile/profile_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_confirmation_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,6 +61,10 @@ class AgoraAppRouter {
           value: arguments.demographicResponsesStockBloc,
           child: DemographicConfirmationPage(consultationId: arguments.consultationId),
         );
+        break;
+      case QagsPaginatedPage.routeName:
+        final arguments = settings.arguments as QagsPaginatedArguments;
+        currentRoute = QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab);
         break;
       default:
         throw Exception("Route doesn't exist: ${settings.name}");

@@ -1,5 +1,7 @@
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/qag.dart';
+import 'package:agora/domain/qag/qag_paginated.dart';
+import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -64,6 +66,61 @@ class FakeQagSuccessRepository extends QagRepository {
         ),
       ],
     );
+  }
+
+  @override
+  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
+    required int pageNumber,
+    required String? thematiqueId,
+    required QagPaginatedFilter filter,
+  }) async {
+    switch (pageNumber) {
+      case 1:
+        return GetQagsPaginatedSucceedResponse(
+          maxPage: 3,
+          paginatedQags: [
+            QagPaginated(
+              id: "id1",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: DateTime(2024, 2, 23),
+              supportCount: 8,
+              isSupported: false,
+            ),
+          ],
+        );
+      case 2:
+        return GetQagsPaginatedSucceedResponse(
+          maxPage: 3,
+          paginatedQags: [
+            QagPaginated(
+              id: "id2",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title2",
+              username: "username2",
+              date: DateTime(2024, 3, 23),
+              supportCount: 9,
+              isSupported: true,
+            ),
+          ],
+        );
+      default:
+        return GetQagsPaginatedSucceedResponse(
+          maxPage: 3,
+          paginatedQags: [
+            QagPaginated(
+              id: "id3",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title3",
+              username: "username3",
+              date: DateTime(2024, 4, 23),
+              supportCount: 9,
+              isSupported: true,
+            ),
+          ],
+        );
+    }
   }
 
   @override
@@ -156,6 +213,15 @@ class FakeQagFailureRepository extends QagRepository {
     required String? thematiqueId,
   }) async {
     return GetQagsFailedResponse();
+  }
+
+  @override
+  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
+    required int pageNumber,
+    required String? thematiqueId,
+    required QagPaginatedFilter filter,
+  }) async {
+    return GetQagsPaginatedFailedResponse();
   }
 
   @override
