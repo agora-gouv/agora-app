@@ -5,7 +5,6 @@ class MockQagRepository extends QagDioRepository {
 
   @override
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,

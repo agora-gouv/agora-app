@@ -28,13 +28,15 @@ void main() {
           "author": "qag author",
           "thematiqueId": "thematiqueId",
         },
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
       final response = await repository.createQag(
-        deviceId: deviceId,
         title: "qag title",
         description: "qag description",
         author: "qag author",
@@ -56,13 +58,15 @@ void main() {
           "author": "qag author",
           "thematiqueId": "thematiqueId",
         },
-        headers: {"accept": "application/json", "deviceId": deviceId},
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
       );
 
       // When
       final repository = QagDioRepository(httpClient: httpClient);
       final response = await repository.createQag(
-        deviceId: deviceId,
         title: "qag title",
         description: "qag description",
         author: "qag author",

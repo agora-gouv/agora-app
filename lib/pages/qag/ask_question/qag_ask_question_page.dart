@@ -6,7 +6,6 @@ import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
-import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
@@ -46,10 +45,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           )..add(FetchThematiqueEvent()),
         ),
         BlocProvider(
-          create: (context) => CreateQagBloc(
-            qagRepository: RepositoryManager.getQagRepository(),
-            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-          ),
+          create: (context) => CreateQagBloc(qagRepository: RepositoryManager.getQagRepository()),
         ),
       ],
       child: AgoraScaffold(

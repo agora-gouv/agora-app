@@ -7,7 +7,6 @@ import 'package:agora/infrastructure/qag/qag_repository.dart';
 class FakeQagSuccessRepository extends QagRepository {
   @override
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,
@@ -144,7 +143,6 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
 class FakeQagFailureRepository extends QagRepository {
   @override
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,

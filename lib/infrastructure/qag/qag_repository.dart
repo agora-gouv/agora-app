@@ -9,7 +9,6 @@ import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,
@@ -45,7 +44,6 @@ class QagDioRepository extends QagRepository {
 
   @override
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,
@@ -60,7 +58,6 @@ class QagDioRepository extends QagRepository {
           "author": author,
           "thematiqueId": thematiqueId,
         },
-        headers: {"deviceId": deviceId},
       );
       return CreateQagSucceedResponse();
     } catch (e) {
