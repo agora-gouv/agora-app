@@ -12,8 +12,6 @@ void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
 
-  const deviceId = "deviceId";
-
   group("Get demographic information", () {
     test("when success should return information", () async {
       // Given
@@ -34,13 +32,13 @@ void main() {
         ),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = DemographicDioRepository(httpClient: httpClient);
-      final response = await repository.getDemographicResponses(deviceId: deviceId);
+      final response = await repository.getDemographicResponses();
 
       // Then
       expect(
@@ -67,13 +65,13 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
       );
 
       // When
       final repository = DemographicDioRepository(httpClient: httpClient);
-      final response = await repository.getDemographicResponses(deviceId: deviceId);
+      final response = await repository.getDemographicResponses();
 
       // Then
       expect(response, GetDemographicInformationFailureResponse());
@@ -88,7 +86,7 @@ void main() {
         (server) => server.reply(HttpStatus.ok, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
         data: {
           "gender": "M",
@@ -105,7 +103,6 @@ void main() {
       // When
       final repository = DemographicDioRepository(httpClient: httpClient);
       final response = await repository.sendDemographicResponses(
-        deviceId: deviceId,
         demographicResponses: [
           DemographicResponse(demographicType: DemographicType.gender, response: "M"),
           DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
@@ -125,7 +122,7 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
+          "Authorization": "Bearer jwtToken",
         },
         data: {
           "gender": "M",
@@ -142,7 +139,6 @@ void main() {
       // When
       final repository = DemographicDioRepository(httpClient: httpClient);
       final response = await repository.sendDemographicResponses(
-        deviceId: deviceId,
         demographicResponses: [
           DemographicResponse(demographicType: DemographicType.gender, response: "M"),
           DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),

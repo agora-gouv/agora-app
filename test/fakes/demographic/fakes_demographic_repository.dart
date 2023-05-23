@@ -5,7 +5,7 @@ import 'package:agora/infrastructure/demographic/demographic_repository.dart';
 
 class FakeDemographicSuccessRepository extends DemographicRepository {
   @override
-  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses({required String deviceId}) async {
+  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
     return GetDemographicInformationSucceedResponse(
       demographicInformations: [
         DemographicInformation(demographicType: DemographicType.gender, data: "M"),
@@ -22,7 +22,6 @@ class FakeDemographicSuccessRepository extends DemographicRepository {
 
   @override
   Future<SendDemographicResponsesRepositoryResponse> sendDemographicResponses({
-    required String deviceId,
     required List<DemographicResponse> demographicResponses,
   }) async {
     return SendDemographicResponsesSucceedResponse();
@@ -31,13 +30,12 @@ class FakeDemographicSuccessRepository extends DemographicRepository {
 
 class FakeDemographicFailureRepository extends DemographicRepository {
   @override
-  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses({required String deviceId}) async {
+  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
     return GetDemographicInformationFailureResponse();
   }
 
   @override
   Future<SendDemographicResponsesRepositoryResponse> sendDemographicResponses({
-    required String deviceId,
     required List<DemographicResponse> demographicResponses,
   }) async {
     return SendDemographicResponsesFailureResponse();

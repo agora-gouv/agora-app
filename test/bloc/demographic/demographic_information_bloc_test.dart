@@ -6,7 +6,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../fakes/demographic/fakes_demographic_repository.dart';
-import '../../fakes/qag/fake_device_id_helper.dart';
 
 void main() {
   group("GetDemographicInformationEvent", () {
@@ -14,7 +13,6 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => DemographicInformationBloc(
         demographicRepository: FakeDemographicSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(GetDemographicInformationEvent()),
       expect: () => [
@@ -35,23 +33,9 @@ void main() {
     );
 
     blocTest(
-      "when device id is null - should emit failure state",
-      build: () => DemographicInformationBloc(
-        demographicRepository: FakeDemographicSuccessRepository(),
-        deviceInfoHelper: FakeDeviceIdNullHelper(),
-      ),
-      act: (bloc) => bloc.add(GetDemographicInformationEvent()),
-      expect: () => [
-        GetDemographicInformationFailureState(),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
-
-    blocTest(
       "when repository failed - should emit failure state",
       build: () => DemographicInformationBloc(
         demographicRepository: FakeDemographicFailureRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(GetDemographicInformationEvent()),
       expect: () => [

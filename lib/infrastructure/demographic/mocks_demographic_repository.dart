@@ -7,9 +7,7 @@ class MockDemographicRepository extends DemographicDioRepository {
   MockDemographicRepository({required super.httpClient});
 
   @override
-  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses({
-    required String deviceId,
-  }) async {
+  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
     return GetDemographicInformationSucceedResponse(
       demographicInformations: [
         DemographicInformation(demographicType: DemographicType.gender, data: "F"),
@@ -26,7 +24,6 @@ class MockDemographicRepository extends DemographicDioRepository {
 
   @override
   Future<SendDemographicResponsesRepositoryResponse> sendDemographicResponses({
-    required String deviceId,
     required List<DemographicResponse> demographicResponses,
   }) async {
     return SendDemographicResponsesSucceedResponse();
