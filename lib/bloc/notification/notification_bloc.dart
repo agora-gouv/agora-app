@@ -3,17 +3,17 @@ import 'package:agora/bloc/notification/notification_state.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
-import 'package:agora/common/storage/first_connection_storage_client.dart';
+import 'package:agora/infrastructure/notification/notification_first_request_permission_storage_client.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationBloc extends Bloc<NotificationPermissionEvent, NotificationState> {
-  final FirstConnectionStorageClient firstConnectionStorageClient;
+  final NotificationFirstRequestPermissionStorageClient notificationFirstRequestPermissionStorageClient;
   final PermissionHelper permissionHelper;
   final DeviceInfoHelper deviceInfoHelper;
   final PlatformHelper platformHelper;
 
   NotificationBloc({
-    required this.firstConnectionStorageClient,
+    required this.notificationFirstRequestPermissionStorageClient,
     required this.permissionHelper,
     required this.platformHelper,
     required this.deviceInfoHelper,
@@ -29,9 +29,9 @@ class NotificationBloc extends Bloc<NotificationPermissionEvent, NotificationSta
     RequestNotificationPermissionEvent event,
     Emitter<NotificationState> emit,
   ) async {
-    final isFirstConnection = await firstConnectionStorageClient.isFirstConnection();
-    if (isFirstConnection) {
-      firstConnectionStorageClient.save(false);
+    final isFirstRequest = await notificationFirstRequestPermissionStorageClient.isFirstRequest();
+    if (isFirstRequest) {
+      notificationFirstRequestPermissionStorageClient.save(false);
       if (await permissionHelper.isDenied()) {
         if (platformHelper.isIOS()) {
           emit(AutoAskNotificationConsentState());

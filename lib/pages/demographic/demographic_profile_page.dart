@@ -52,7 +52,6 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
         ),
       ],
       child: AgoraScaffold(
-        shouldPop: false,
         child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
           builder: (context, state) {
             if (state is GetDemographicInformationSuccessState) {

@@ -47,10 +47,7 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _noAuthenticationHttpClient)) {
       return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _noAuthenticationHttpClient);
     }
-    final agoraDioHttpClient = AgoraDioHttpClient(
-      dio: _getDio(),
-      jwtHelper: null,
-    );
+    final agoraDioHttpClient = AgoraDioHttpClient(dio: _getDio());
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _noAuthenticationHttpClient);
     return agoraDioHttpClient;
   }
