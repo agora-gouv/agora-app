@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AgoraInitializer {
   static void initializeApp() async {
@@ -13,8 +14,9 @@ class AgoraInitializer {
     Intl.defaultLocale = "fr_FR";
     initializeDateFormatting('fr_FR', null);
 
+    final sharedPref = await SharedPreferences.getInstance();
     await _setupNotification();
-    runApp(AgoraApp());
+    runApp(AgoraApp(sharedPref: sharedPref));
   }
 
   static Future<void> _setupNotification() async {

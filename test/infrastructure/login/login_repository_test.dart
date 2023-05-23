@@ -72,7 +72,7 @@ void main() {
       // Given
       dioAdapter.onPost(
         "/login",
-            (server) => server.reply(
+        (server) => server.reply(
           HttpStatus.ok,
           {
             "jwtToken": "jwtToken",
@@ -103,7 +103,7 @@ void main() {
       // Given
       dioAdapter.onPost(
         "/login",
-            (server) => server.reply(HttpStatus.notFound, {}),
+        (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
           "deviceId": deviceId,

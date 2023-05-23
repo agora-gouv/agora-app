@@ -16,11 +16,11 @@ import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AgoraAppRouter {
   static Map<String, WidgetBuilder> handleAgoraRoutes() {
     return {
-      LoadingPage.routeName: (context) => LoadingPage(),
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
@@ -41,9 +41,12 @@ class AgoraAppRouter {
     };
   }
 
-  static MaterialPageRoute<dynamic> handleAgoraGenerateRoute(RouteSettings settings) {
+  static MaterialPageRoute<dynamic> handleAgoraGenerateRoute(RouteSettings settings, SharedPreferences sharedPref) {
     Widget currentRoute;
     switch (settings.name) {
+      case LoadingPage.routeName:
+        currentRoute = LoadingPage(sharedPref: sharedPref);
+        break;
       case ConsultationQuestionConfirmationPage.routeName:
         final arguments = settings.arguments as ConsultationQuestionConfirmationArguments;
         currentRoute = BlocProvider.value(

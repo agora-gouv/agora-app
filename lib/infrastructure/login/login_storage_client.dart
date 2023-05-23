@@ -1,25 +1,27 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:agora/common/storage/secure_storage_client.dart';
 
 abstract class LoginStorageClient {
+  final SecureStorageClient secureStorageClient;
+
+  LoginStorageClient({required this.secureStorageClient});
+
   void save(String loginToken);
 
   Future<String?> getLoginToken();
 }
 
 class LoginSharedPreferencesClient extends LoginStorageClient {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
   final loginTokenKey = "loginTokenKey";
+
+  LoginSharedPreferencesClient({required super.secureStorageClient});
 
   @override
   void save(String loginToken) async {
-    (await _prefs).setString(loginTokenKey, loginToken);
+    await secureStorageClient.write(key: loginTokenKey, value: loginToken);
   }
 
   @override
   Future<String?> getLoginToken() async {
-    final preferences = await _prefs;
-    await preferences.reload();
-    return preferences.getString(loginTokenKey);
+    return await secureStorageClient.read(key: loginTokenKey);
   }
 }
