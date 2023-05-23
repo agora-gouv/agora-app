@@ -24,9 +24,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     return dio.get<T>(
       path,
       queryParameters: queryParameters,
-      options: Options(
-        headers: buildInitialHeaders()..addAll(headers),
-      ),
+      options: Options(headers: buildInitialHeaders()..addAll(headers)),
     );
   }
 
@@ -34,9 +32,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   Future<Response<T>> post<T>(String path, {data, Map<String, dynamic> headers = const {}}) async {
     return dio.post<T>(
       path,
-      options: Options(
-        headers: buildInitialHeaders()..addAll(headers),
-      ),
+      options: Options(headers: buildInitialHeaders()..addAll(headers)),
       data: data,
     );
   }
@@ -45,9 +41,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   Future<Response<T>> delete<T>(String path, {data, Map<String, dynamic> headers = const {}}) async {
     return dio.delete<T>(
       path,
-      options: Options(
-        headers: buildInitialHeaders()..addAll(headers),
-      ),
+      options: Options(headers: buildInitialHeaders()..addAll(headers)),
       data: data,
     );
   }

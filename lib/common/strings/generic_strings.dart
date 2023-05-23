@@ -1,4 +1,5 @@
 class GenericStrings {
+  static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
   static const String errorMessage = "Une erreur est survenue.";
   static const String askNotificationPermissionMessage =
       "Activez vos notifications pour recevoir les actualités des consultations et questions au gouvernement.";

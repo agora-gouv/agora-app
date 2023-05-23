@@ -13,6 +13,7 @@ import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
+import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -24,9 +25,14 @@ import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoadingPage extends StatelessWidget {
   static const routeName = "/";
+
+  final SharedPreferences sharedPref;
+
+  const LoadingPage({super.key, required this.sharedPref});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,7 @@ class LoadingPage extends StatelessWidget {
         BlocProvider(
           create: (context) => LoginBloc(
             repository: RepositoryManager.getLoginRepository(),
-            loginStorageClient: StorageManager.getLoginStorageClient(),
+            loginStorageClient: StorageManager.getLoginStorageClient(sharedPref),
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
             pushNotificationService: ServiceManager.getPushNotificationService(),
             jwtHelper: HelperManager.getJwtHelper(),
@@ -88,7 +94,7 @@ class LoadingPage extends StatelessWidget {
               },
               builder: (context, loginState) {
                 if (loginState is LoginErrorState) {
-                  return Center(child: Text("Une erreur est survenue lors de votre authentification."));
+                  return Center(child: AgoraErrorView(errorMessage: GenericStrings.authenticationErrorMessage));
                 } else {
                   return Center(child: CircularProgressIndicator());
                 }
