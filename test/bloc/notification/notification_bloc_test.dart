@@ -4,20 +4,20 @@ import 'package:agora/bloc/notification/notification_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../fakes/common/fake_first_connection_storage_client.dart';
-import '../../fakes/common/fake_permission_helper.dart';
 import '../../fakes/common/fake_platform_helper.dart';
+import '../../fakes/notification/fake_notification_first_request_permission_storage_client.dart';
+import '../../fakes/notification/fake_permission_helper.dart';
 import '../../fakes/qag/fake_device_id_helper.dart';
 
 void main() {
   group("Request notification permission event", () {
-    final fakeFirstConnectionStorageClient = FakeFirstConnectionStorageClient();
+    final fakeNotificationFirstRequestPermissionStorageClient = FakeNotificationFirstRequestPermissionStorageClient();
 
     blocTest(
       "when is first connection with notification permission denied and ios platform - should emit auto ask state",
-      setUp: () => fakeFirstConnectionStorageClient.save(true),
+      setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
       build: () => NotificationBloc(
-        firstConnectionStorageClient: fakeFirstConnectionStorageClient,
+        notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsDeniedHelper(),
         platformHelper: FakePlatformIOSHelper(),
         deviceInfoHelper: FakeDeviceInfoHelper(),
@@ -28,15 +28,15 @@ void main() {
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () {
-        expect(fakeFirstConnectionStorageClient.isFirstConnectionStorage, false);
+        expect(fakeNotificationFirstRequestPermissionStorageClient.isFirstConnectionStorage, false);
       },
     );
 
     blocTest(
       "when is first connection with notification permission denied and android platform SDK above or equals 33 - should emit auto ask state",
-      setUp: () => fakeFirstConnectionStorageClient.save(true),
+      setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
       build: () => NotificationBloc(
-        firstConnectionStorageClient: fakeFirstConnectionStorageClient,
+        notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsDeniedHelper(),
         platformHelper: FakePlatformAndroidHelper(),
         deviceInfoHelper: FakeDeviceInfoHelper(),
@@ -47,15 +47,15 @@ void main() {
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () {
-        expect(fakeFirstConnectionStorageClient.isFirstConnectionStorage, false);
+        expect(fakeNotificationFirstRequestPermissionStorageClient.isFirstConnectionStorage, false);
       },
     );
 
     blocTest(
       "when is first connection with notification permission denied and android platform SDK below 33 - should emit ask state",
-      setUp: () => fakeFirstConnectionStorageClient.save(true),
+      setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
       build: () => NotificationBloc(
-        firstConnectionStorageClient: fakeFirstConnectionStorageClient,
+        notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsDeniedHelper(),
         platformHelper: FakePlatformAndroidHelper(),
         deviceInfoHelper: FakeAndroidSdkBelow33Helper(),
@@ -66,15 +66,15 @@ void main() {
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () {
-        expect(fakeFirstConnectionStorageClient.isFirstConnectionStorage, false);
+        expect(fakeNotificationFirstRequestPermissionStorageClient.isFirstConnectionStorage, false);
       },
     );
 
     blocTest(
       "when is first connection with notification permission permanently denied - should emit ask state",
-      setUp: () => fakeFirstConnectionStorageClient.save(true),
+      setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
       build: () => NotificationBloc(
-        firstConnectionStorageClient: fakeFirstConnectionStorageClient,
+        notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsPermanentlyDeniedHelper(),
         platformHelper: FakePlatformAndroidHelper(),
         deviceInfoHelper: FakeDeviceInfoHelper(),
@@ -85,7 +85,7 @@ void main() {
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () {
-        expect(fakeFirstConnectionStorageClient.isFirstConnectionStorage, false);
+        expect(fakeNotificationFirstRequestPermissionStorageClient.isFirstConnectionStorage, false);
       },
     );
   });

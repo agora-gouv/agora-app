@@ -1,5 +1,6 @@
 abstract class JwtHelper {
   String? getJwtToken();
+
   void setJwtToken(String jwtToken);
 }
 

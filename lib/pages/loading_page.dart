@@ -40,7 +40,7 @@ class LoadingPage extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => NotificationBloc(
-            firstConnectionStorageClient: StorageManager.getFirstConnectionStorageClient(),
+            notificationFirstRequestPermissionStorageClient: StorageManager.getFirstConnectionStorageClient(),
             permissionHelper: HelperManager.getPermissionHelper(),
             platformHelper: HelperManager.getPlatformHelper(),
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),

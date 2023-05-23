@@ -13,7 +13,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   final Dio dio;
   final JwtHelper? jwtHelper;
 
-  AgoraDioHttpClient({required this.dio, required this.jwtHelper});
+  AgoraDioHttpClient({required this.dio, this.jwtHelper});
 
   @override
   Future<Response<T>> get<T>(
