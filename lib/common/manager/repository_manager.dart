@@ -98,7 +98,7 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockLoginRepository>()) {
       return GetIt.instance.get<MockLoginRepository>();
     }
-    final repository = MockLoginRepository(httpClient: _getAgoraDioHttpClient());
+    final repository = MockLoginRepository(httpClient: getAgoraDioHttpClientWithoutAuthentication());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
