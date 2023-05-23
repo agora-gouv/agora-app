@@ -7,12 +7,9 @@ import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DemographicRepository {
-  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses({
-    required String deviceId,
-  });
+  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses();
 
   Future<SendDemographicResponsesRepositoryResponse> sendDemographicResponses({
-    required String deviceId,
     required List<DemographicResponse> demographicResponses,
   });
 }
@@ -23,11 +20,9 @@ class DemographicDioRepository extends DemographicRepository {
   DemographicDioRepository({required this.httpClient});
 
   @override
-  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses({
-    required String deviceId,
-  }) async {
+  Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
     try {
-      final response = await httpClient.get("/profile", headers: {"deviceId": deviceId});
+      final response = await httpClient.get("/profile");
       return GetDemographicInformationSucceedResponse(
         demographicInformations: DemographicType.values.map((demographicType) {
           return DemographicInformation(
@@ -44,7 +39,6 @@ class DemographicDioRepository extends DemographicRepository {
 
   @override
   Future<SendDemographicResponsesRepositoryResponse> sendDemographicResponses({
-    required String deviceId,
     required List<DemographicResponse> demographicResponses,
   }) async {
     try {
@@ -54,7 +48,6 @@ class DemographicDioRepository extends DemographicRepository {
       }
       await httpClient.post(
         "/profile",
-        headers: {"deviceId": deviceId},
         data: data,
       );
       return SendDemographicResponsesSucceedResponse();

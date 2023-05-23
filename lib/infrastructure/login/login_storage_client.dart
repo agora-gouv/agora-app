@@ -1,25 +1,25 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LoginStorageClient {
-  void save(String userId);
+  void save(String loginToken);
 
-  Future<String?> getUserId();
+  Future<String?> getLoginToken();
 }
 
 class LoginSharedPreferencesClient extends LoginStorageClient {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  final userIdKey = "userIdKey";
+  final loginTokenKey = "loginTokenKey";
 
   @override
-  void save(String userId) async {
-    (await _prefs).setString(userIdKey, userId);
+  void save(String loginToken) async {
+    (await _prefs).setString(loginTokenKey, loginToken);
   }
 
   @override
-  Future<String?> getUserId() async {
+  Future<String?> getLoginToken() async {
     final preferences = await _prefs;
     await preferences.reload();
-    return preferences.getString(userIdKey);
+    return preferences.getString(loginTokenKey);
   }
 }

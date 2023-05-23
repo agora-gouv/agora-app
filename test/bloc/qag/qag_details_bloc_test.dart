@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import '../../fakes/qag/fake_device_id_helper.dart';
 import '../../fakes/qag/fakes_qag_repository.dart';
 
 void main() {
@@ -22,7 +21,6 @@ void main() {
       "when repository succeed with support not null and response null - should emit success state",
       build: () => QagDetailsBloc(
         qagRepository: FakeQagSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
       expect: () => [
@@ -46,7 +44,6 @@ void main() {
       "when repository succeed with support null and response not null - should emit success state",
       build: () => QagDetailsBloc(
         qagRepository: FakeQagSuccessWithSupportNullAndResponseNotNullRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
       expect: () => [
@@ -74,23 +71,9 @@ void main() {
     );
 
     blocTest(
-      "when device id is null - should emit failure state",
-      build: () => QagDetailsBloc(
-        qagRepository: FakeQagSuccessRepository(),
-        deviceInfoHelper: FakeDeviceIdNullHelper(),
-      ),
-      act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
-      expect: () => [
-        QagDetailsErrorState(),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
-
-    blocTest(
       "when repository failed - should emit failure state",
       build: () => QagDetailsBloc(
         qagRepository: FakeQagFailureRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
       expect: () => [

@@ -7,7 +7,6 @@ import 'package:agora/infrastructure/qag/qag_repository.dart';
 class FakeQagSuccessRepository extends QagRepository {
   @override
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,
@@ -18,7 +17,6 @@ class FakeQagSuccessRepository extends QagRepository {
 
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
-    required String deviceId,
     required String? thematiqueId,
   }) async {
     return GetQagsSucceedResponse(
@@ -71,7 +69,6 @@ class FakeQagSuccessRepository extends QagRepository {
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
-    required String deviceId,
   }) async {
     return GetQagDetailsSucceedResponse(
       qagDetails: QagDetails(
@@ -88,19 +85,18 @@ class FakeQagSuccessRepository extends QagRepository {
   }
 
   @override
-  Future<SupportQagRepositoryResponse> supportQag({required String qagId, required String deviceId}) async {
+  Future<SupportQagRepositoryResponse> supportQag({required String qagId}) async {
     return SupportQagSucceedResponse();
   }
 
   @override
-  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId}) async {
+  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId}) async {
     return DeleteSupportQagSucceedResponse();
   }
 
   @override
   Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
     required String qagId,
-    required String deviceId,
     required bool isHelpful,
   }) async {
     return QagFeedbackSuccessResponse();
@@ -111,7 +107,6 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
-    required String deviceId,
   }) async {
     return GetQagDetailsSucceedResponse(
       qagDetails: QagDetails(
@@ -135,12 +130,12 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
   }
 
   @override
-  Future<SupportQagRepositoryResponse> supportQag({required String qagId, required String deviceId}) async {
+  Future<SupportQagRepositoryResponse> supportQag({required String qagId}) async {
     return SupportQagSucceedResponse();
   }
 
   @override
-  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId}) async {
+  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId}) async {
     return DeleteSupportQagSucceedResponse();
   }
 }
@@ -148,7 +143,6 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
 class FakeQagFailureRepository extends QagRepository {
   @override
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,
@@ -159,7 +153,6 @@ class FakeQagFailureRepository extends QagRepository {
 
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
-    required String deviceId,
     required String? thematiqueId,
   }) async {
     return GetQagsFailedResponse();
@@ -168,25 +161,23 @@ class FakeQagFailureRepository extends QagRepository {
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
-    required String deviceId,
   }) async {
     return GetQagDetailsFailedResponse();
   }
 
   @override
-  Future<SupportQagRepositoryResponse> supportQag({required String qagId, required String deviceId}) async {
+  Future<SupportQagRepositoryResponse> supportQag({required String qagId}) async {
     return SupportQagFailedResponse();
   }
 
   @override
-  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId}) async {
+  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId}) async {
     return DeleteSupportQagFailedResponse();
   }
 
   @override
   Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
     required String qagId,
-    required String deviceId,
     required bool isHelpful,
   }) async {
     return QagFeedbackFailedResponse();

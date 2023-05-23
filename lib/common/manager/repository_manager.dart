@@ -1,4 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/repository/mocks_consultation_repository.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
@@ -14,6 +15,9 @@ import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class RepositoryManager {
+  static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
+  static const String _authenticatedHttpClient = "authenticatedHttpClient";
+
   static Dio _getDio() {
     if (GetIt.instance.isRegistered<Dio>()) {
       return GetIt.instance.get<Dio>();
@@ -39,12 +43,27 @@ class RepositoryManager {
     return dio;
   }
 
-  static AgoraDioHttpClient _getAgoraDioHttpClient() {
-    if (GetIt.instance.isRegistered<AgoraDioHttpClient>()) {
-      return GetIt.instance.get<AgoraDioHttpClient>();
+  static AgoraDioHttpClient getAgoraDioHttpClientWithoutAuthentication() {
+    if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _noAuthenticationHttpClient)) {
+      return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _noAuthenticationHttpClient);
     }
-    final agoraDioHttpClient = AgoraDioHttpClient(dio: _getDio());
-    GetIt.instance.registerSingleton(agoraDioHttpClient);
+    final agoraDioHttpClient = AgoraDioHttpClient(
+      dio: _getDio(),
+      jwtHelper: null,
+    );
+    GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _noAuthenticationHttpClient);
+    return agoraDioHttpClient;
+  }
+
+  static AgoraDioHttpClient _getAgoraDioHttpClient() {
+    if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient)) {
+      return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient);
+    }
+    final agoraDioHttpClient = AgoraDioHttpClient(
+      dio: _getDio(),
+      jwtHelper: HelperManager.getJwtHelper(),
+    );
+    GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _authenticatedHttpClient);
     return agoraDioHttpClient;
   }
 
@@ -79,7 +98,7 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockLoginRepository>()) {
       return GetIt.instance.get<MockLoginRepository>();
     }
-    final repository = MockLoginRepository(httpClient: _getAgoraDioHttpClient());
+    final repository = MockLoginRepository(httpClient: getAgoraDioHttpClientWithoutAuthentication());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }

@@ -11,16 +11,18 @@ void main() {
 
   const deviceId = "deviceId";
   const fcmToken = "fcmToken";
+  const loginToken = "loginToken";
 
-  group("Login", () {
-    test("when success should return userId", () async {
+  group("Signup", () {
+    test("when success should return jwtToken & loginToken", () async {
       // Given
       dioAdapter.onPost(
-        "/login",
+        "/signup",
         (server) => server.reply(
           HttpStatus.ok,
           {
-            "userId": "userId",
+            "jwtToken": "jwtToken",
+            "loginToken": "loginToken",
           },
         ),
         headers: {
@@ -32,19 +34,19 @@ void main() {
 
       // When
       final repository = LoginDioRepository(httpClient: httpClient);
-      final response = await repository.login(
+      final response = await repository.signup(
         deviceId: deviceId,
         firebaseMessagingToken: fcmToken,
       );
 
       // Then
-      expect(response, LoginSucceedResponse(userId: "userId"));
+      expect(response, SignupSucceedResponse(jwtToken: "jwtToken", loginToken: "loginToken"));
     });
 
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onPost(
-        "/login",
+        "/signup",
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
@@ -55,9 +57,67 @@ void main() {
 
       // When
       final repository = LoginDioRepository(httpClient: httpClient);
+      final response = await repository.signup(
+        deviceId: deviceId,
+        firebaseMessagingToken: fcmToken,
+      );
+
+      // Then
+      expect(response, SignupFailedResponse());
+    });
+  });
+
+  group("Login", () {
+    test("when success should return jwtToken", () async {
+      // Given
+      dioAdapter.onPost(
+        "/login",
+            (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "jwtToken": "jwtToken",
+            "loginToken": "loginToken",
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+          "fcmToken": fcmToken,
+        },
+        data: loginToken,
+      );
+
+      // When
+      final repository = LoginDioRepository(httpClient: httpClient);
       final response = await repository.login(
         deviceId: deviceId,
         firebaseMessagingToken: fcmToken,
+        loginToken: loginToken,
+      );
+
+      // Then
+      expect(response, LoginSucceedResponse(jwtToken: "jwtToken"));
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onPost(
+        "/login",
+            (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "deviceId": deviceId,
+          "fcmToken": fcmToken,
+        },
+        data: loginToken,
+      );
+
+      // When
+      final repository = LoginDioRepository(httpClient: httpClient);
+      final response = await repository.login(
+        deviceId: deviceId,
+        firebaseMessagingToken: fcmToken,
+        loginToken: loginToken,
       );
 
       // Then

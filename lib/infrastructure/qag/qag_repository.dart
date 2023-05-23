@@ -9,7 +9,6 @@ import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,
@@ -17,28 +16,23 @@ abstract class QagRepository {
   });
 
   Future<GetQagsRepositoryResponse> fetchQags({
-    required String deviceId,
     required String? thematiqueId,
   });
 
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
-    required String deviceId,
   });
 
   Future<SupportQagRepositoryResponse> supportQag({
     required String qagId,
-    required String deviceId,
   });
 
   Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({
     required String qagId,
-    required String deviceId,
   });
 
   Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
     required String qagId,
-    required String deviceId,
     required bool isHelpful,
   });
 }
@@ -50,7 +44,6 @@ class QagDioRepository extends QagRepository {
 
   @override
   Future<CreateQagRepositoryResponse> createQag({
-    required String deviceId,
     required String title,
     required String description,
     required String author,
@@ -65,7 +58,6 @@ class QagDioRepository extends QagRepository {
           "author": author,
           "thematiqueId": thematiqueId,
         },
-        headers: {"deviceId": deviceId},
       );
       return CreateQagSucceedResponse();
     } catch (e) {
@@ -76,14 +68,12 @@ class QagDioRepository extends QagRepository {
 
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
-    required String deviceId,
     required String? thematiqueId,
   }) async {
     try {
       final response = await httpClient.get(
         "/qags",
         queryParameters: {"thematiqueId": thematiqueId},
-        headers: {"deviceId": deviceId},
       );
       final qagResponses = response.data["responses"] as List;
       final qags = response.data["qags"] as Map;
@@ -111,12 +101,10 @@ class QagDioRepository extends QagRepository {
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
-    required String deviceId,
   }) async {
     try {
       final response = await httpClient.get(
         "/qags/$qagId",
-        headers: {"deviceId": deviceId},
       );
       final qagDetailsSupport = response.data["support"] as Map?;
       final qagDetailsResponse = response.data["response"] as Map?;
@@ -155,12 +143,10 @@ class QagDioRepository extends QagRepository {
   @override
   Future<SupportQagRepositoryResponse> supportQag({
     required String qagId,
-    required String deviceId,
   }) async {
     try {
       await httpClient.post(
         "/qags/$qagId/support",
-        headers: {"deviceId": deviceId},
       );
       return SupportQagSucceedResponse();
     } catch (e) {
@@ -170,11 +156,10 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
-  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId, required String deviceId}) async {
+  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId}) async {
     try {
       await httpClient.delete(
         "/qags/$qagId/support",
-        headers: {"deviceId": deviceId},
       );
       return DeleteSupportQagSucceedResponse();
     } catch (e) {
@@ -186,13 +171,11 @@ class QagDioRepository extends QagRepository {
   @override
   Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
     required String qagId,
-    required String deviceId,
     required bool isHelpful,
   }) async {
     try {
       await httpClient.post(
         "/qags/$qagId/feedback",
-        headers: {"deviceId": deviceId},
         data: {"isHelpful": isHelpful},
       );
       return QagFeedbackSuccessResponse();

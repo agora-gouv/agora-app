@@ -2,7 +2,6 @@ import 'package:agora/bloc/demographic/get/demographic_information_bloc.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_event.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_state.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_view_model.dart';
-import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
@@ -47,10 +46,9 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<DemographicInformationBloc>(
-          create: (BuildContext context) => DemographicInformationBloc(
-            demographicRepository: RepositoryManager.getDemographicRepository(),
-            deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-          )..add(GetDemographicInformationEvent()),
+          create: (BuildContext context) =>
+              DemographicInformationBloc(demographicRepository: RepositoryManager.getDemographicRepository())
+                ..add(GetDemographicInformationEvent()),
         ),
       ],
       child: AgoraScaffold(

@@ -1,17 +1,14 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
-import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/infrastructure/consultation/presenter/consultation_questions_presenter.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationQuestionsBloc extends Bloc<ConsultationQuestionsEvent, ConsultationQuestionsState> {
   final ConsultationRepository consultationRepository;
-  final DeviceInfoHelper deviceInfoHelper;
 
   ConsultationQuestionsBloc({
     required this.consultationRepository,
-    required this.deviceInfoHelper,
   }) : super(ConsultationQuestionsInitialLoadingState()) {
     on<FetchConsultationQuestionsEvent>(_handleConsultationQuestions);
     on<ConsultationNextQuestionEvent>(_handleConsultationNextQuestion);
@@ -22,14 +19,8 @@ class ConsultationQuestionsBloc extends Bloc<ConsultationQuestionsEvent, Consult
     FetchConsultationQuestionsEvent event,
     Emitter<ConsultationQuestionsState> emit,
   ) async {
-    final deviceId = await deviceInfoHelper.getDeviceId();
-    if (deviceId == null) {
-      emit(ConsultationQuestionsErrorState());
-      return;
-    }
     final response = await consultationRepository.fetchConsultationQuestions(
       consultationId: event.consultationId,
-      deviceId: deviceId,
     );
     if (response is GetConsultationQuestionsSucceedResponse) {
       final consultationQuestionViewModels = ConsultationQuestionsPresenter.present(response.consultationQuestions);

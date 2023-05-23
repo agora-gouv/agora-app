@@ -1,7 +1,6 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_bloc.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_event.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_state.dart';
-import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
@@ -43,10 +42,8 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
     final consultationId = ModalRoute.of(context)!.settings.arguments as String;
     return BlocProvider(
       create: (BuildContext context) {
-        return ConsultationSummaryBloc(
-          consultationRepository: RepositoryManager.getConsultationRepository(),
-          deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
-        )..add(FetchConsultationSummaryEvent(consultationId: consultationId));
+        return ConsultationSummaryBloc(consultationRepository: RepositoryManager.getConsultationRepository())
+          ..add(FetchConsultationSummaryEvent(consultationId: consultationId));
       },
       child: AgoraScaffold(
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(

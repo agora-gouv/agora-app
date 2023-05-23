@@ -4,20 +4,22 @@ import 'package:agora/bloc/login/login_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/jwt/fake_jwt_helper.dart';
 import '../../fakes/login/fake_login_storage_client.dart';
 import '../../fakes/login/fakes_login_repository.dart';
 import '../../fakes/push_notification/fakes_push_notification_service.dart';
 import '../../fakes/qag/fake_device_id_helper.dart';
 
 void main() {
-  group("check login event", () {
+  group("check login event - when no signup (loginToken not stored)", () {
     blocTest(
-      "when user is not yet login (userId not in stock) with deviceId is null - should emit error state",
+      "when deviceId is null - should emit error state",
       build: () => LoginBloc(
         repository: FakeLoginNoImportantRepository(),
         loginStorageClient: FakeLoginStorageClient(),
         deviceInfoHelper: FakeDeviceIdNullHelper(),
         pushNotificationService: FakePushNotificationService(),
+        jwtHelper: FakeJwtHelper(),
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -27,13 +29,15 @@ void main() {
     );
 
     final loginStorage1 = FakeLoginStorageClient();
+    final jwtHelper1 = FakeJwtHelper();
     blocTest(
-      "when user is not yet login (userId not in stock) with deviceId not null and repository success - should emit success state",
+      "when deviceId not null and repository success - should emit success state",
       build: () => LoginBloc(
         repository: FakeLoginSuccessRepository(),
         loginStorageClient: loginStorage1,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
+        jwtHelper: jwtHelper1,
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -41,18 +45,21 @@ void main() {
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () {
-        expect(loginStorage1.userId, "userId");
+        expect(loginStorage1.loginToken, "loginToken");
+        expect(jwtHelper1.getJwtToken(), "jwtToken");
       },
     );
 
     final loginStorage2 = FakeLoginStorageClient();
+    final jwtHelper2 = FakeJwtHelper();
     blocTest(
-      "when user is not yet login (userId not in stock) with deviceId not null and repository failed - should emit error state",
+      "when deviceId not null and repository failed - should emit error state",
       build: () => LoginBloc(
         repository: FakeLoginFailureRepository(),
         loginStorageClient: loginStorage2,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
+        jwtHelper: jwtHelper2,
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -60,25 +67,70 @@ void main() {
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () {
-        expect(loginStorage2.userId, null);
+        expect(loginStorage2.loginToken, null);
+        expect(jwtHelper2.getJwtToken(), null);
       },
     );
+  });
 
-    final loginStorage3 = FakeLoginStorageClient();
+  group("check login event - when signup (loginToken in storage)", () {
+    final signUpLoginStorage = FakeLoginStorageClient()..save("loginToken");
+
     blocTest(
-      "when user is already login (userId in stock) - should emit login success state",
-      setUp: () => loginStorage3.save("userId"),
+      "when deviceId is null - should emit error state",
       build: () => LoginBloc(
         repository: FakeLoginNoImportantRepository(),
-        loginStorageClient: loginStorage3,
+        loginStorageClient: signUpLoginStorage,
+        deviceInfoHelper: FakeDeviceIdNullHelper(),
+        pushNotificationService: FakePushNotificationService(),
+        jwtHelper: FakeJwtHelper(),
+      ),
+      act: (bloc) => bloc.add(CheckLoginEvent()),
+      expect: () => [
+        LoginErrorState(),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    final jwtHelper1 = FakeJwtHelper();
+    blocTest(
+      "when deviceId not null and repository success - should emit login success state",
+      setUp: () => signUpLoginStorage.save("loginToken"),
+      build: () => LoginBloc(
+        repository: FakeLoginSuccessRepository(),
+        loginStorageClient: signUpLoginStorage,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
+        jwtHelper: jwtHelper1,
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
         LoginSuccessState(),
       ],
       wait: const Duration(milliseconds: 5),
+      tearDown: () {
+        expect(jwtHelper1.getJwtToken(), "jwtToken");
+      },
+    );
+
+    final jwtHelper2 = FakeJwtHelper();
+    blocTest(
+      "when deviceId not null and repository failed - should emit error state",
+      build: () => LoginBloc(
+        repository: FakeLoginFailureRepository(),
+        loginStorageClient: signUpLoginStorage,
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+        pushNotificationService: FakePushNotificationService(),
+        jwtHelper: jwtHelper2,
+      ),
+      act: (bloc) => bloc.add(CheckLoginEvent()),
+      expect: () => [
+        LoginErrorState(),
+      ],
+      wait: const Duration(milliseconds: 5),
+      tearDown: () {
+        expect(jwtHelper2.getJwtToken(), null);
+      },
     );
   });
 }

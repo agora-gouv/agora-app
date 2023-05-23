@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:dio/dio.dart';
 
 abstract class AgoraHttpClient {
@@ -10,8 +11,9 @@ abstract class AgoraHttpClient {
 
 class AgoraDioHttpClient extends AgoraHttpClient {
   final Dio dio;
+  final JwtHelper? jwtHelper;
 
-  AgoraDioHttpClient({required this.dio});
+  AgoraDioHttpClient({required this.dio, required this.jwtHelper});
 
   @override
   Future<Response<T>> get<T>(
@@ -23,9 +25,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
       path,
       queryParameters: queryParameters,
       options: Options(
-        headers: {
-          "accept": "application/json",
-        }..addAll(headers),
+        headers: buildInitialHeaders()..addAll(headers),
       ),
     );
   }
@@ -35,9 +35,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     return dio.post<T>(
       path,
       options: Options(
-        headers: {
-          "accept": "application/json",
-        }..addAll(headers),
+        headers: buildInitialHeaders()..addAll(headers),
       ),
       data: data,
     );
@@ -48,11 +46,22 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     return dio.delete<T>(
       path,
       options: Options(
-        headers: {
-          "accept": "application/json",
-        }..addAll(headers),
+        headers: buildInitialHeaders()..addAll(headers),
       ),
       data: data,
     );
+  }
+
+  Map<String, dynamic> buildInitialHeaders() {
+    if (jwtHelper != null) {
+      return {
+        "accept": "application/json",
+        "Authorization": "Bearer ${jwtHelper!.getJwtToken()}",
+      };
+    } else {
+      return {
+        "accept": "application/json",
+      };
+    }
   }
 }

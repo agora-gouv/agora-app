@@ -9,7 +9,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../../fakes/consultation/fakes_consultation_repository.dart';
-import '../../fakes/qag/fake_device_id_helper.dart';
 
 void main() {
   Intl.defaultLocale = "fr_FR";
@@ -20,7 +19,6 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -62,7 +60,6 @@ void main() {
       "when repository succeed and finished consultation is empty - should emit success state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -93,23 +90,9 @@ void main() {
     );
 
     blocTest(
-      "when device id is null - should emit failure state",
-      build: () => ConsultationBloc(
-        consultationRepository: FakeConsultationSuccessRepository(),
-        deviceInfoHelper: FakeDeviceIdNullHelper(),
-      ),
-      act: (bloc) => bloc.add(FetchConsultationsEvent()),
-      expect: () => [
-        ConsultationErrorState(),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
-
-    blocTest(
       "when repository failed - should emit failure state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationFailureRepository(),
-        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
