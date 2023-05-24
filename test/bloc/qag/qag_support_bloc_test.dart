@@ -18,7 +18,7 @@ void main() {
       act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId)),
       expect: () => [
         QagSupportLoadingState(),
-        QagSupportSuccessState(),
+        QagSupportSuccessState(qagId: qagId),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -31,7 +31,7 @@ void main() {
       act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId)),
       expect: () => [
         QagSupportLoadingState(),
-        QagSupportErrorState(),
+        QagSupportErrorState(qagId: qagId),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -46,7 +46,7 @@ void main() {
       act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId)),
       expect: () => [
         QagDeleteSupportLoadingState(),
-        QagDeleteSupportSuccessState(),
+        QagDeleteSupportSuccessState(qagId: qagId),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -59,7 +59,7 @@ void main() {
       act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId)),
       expect: () => [
         QagDeleteSupportLoadingState(),
-        QagDeleteSupportErrorState(),
+        QagDeleteSupportErrorState(qagId: qagId),
       ],
       wait: const Duration(milliseconds: 5),
     );

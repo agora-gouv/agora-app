@@ -37,10 +37,11 @@ class QagDetailsSupportView extends StatelessWidget {
                 Row(
                   children: [
                     AgoraRoundedButton(
-                      icon: _buildIcon(isSupported, supportState),
-                      label: _buildLabel(isSupported, supportState),
+                      icon: _buildButtonIcon(isSupported, supportState),
+                      label: _buildButtonLabel(isSupported, supportState),
                       style: _buildButtonStyle(isSupported, supportState),
                       isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
+                      contentAlignment: _buildButtonAlignment(isSupported, supportState),
                       onPressed: () {
                         _buildOnPressed(context, qagId, isSupported, supportState);
                       },
@@ -51,7 +52,7 @@ class QagDetailsSupportView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SvgPicture.asset("assets/ic_heard.svg"),
+                    SvgPicture.asset("assets/${_buildIcon(isSupported, supportState)}"),
                     SizedBox(width: AgoraSpacings.x0_25),
                     Text(
                       _buildCount(support, supportState),
@@ -88,24 +89,58 @@ class QagDetailsSupportView extends StatelessWidget {
     return supportCount.toString();
   }
 
-  String _buildIcon(bool isSupported, QagSupportState supportState) {
+  String _buildButtonIcon(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
         return "ic_confirmation_green.svg";
       } else {
-        return "ic_thumb_white.svg";
+        return "ic_heart_white.svg";
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
         return "ic_confirmation_green.svg";
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
-        return "ic_thumb_white.svg";
+        return "ic_heart_white.svg";
       }
     }
     return ""; // value not important
   }
 
-  String _buildLabel(bool isSupported, QagSupportState supportState) {
+  CrossAxisAlignment _buildButtonAlignment(bool isSupported, QagSupportState supportState) {
+    if (supportState is QagSupportInitialState) {
+      if (isSupported) {
+        return CrossAxisAlignment.center;
+      } else {
+        return CrossAxisAlignment.end;
+      }
+    } else {
+      if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
+        return CrossAxisAlignment.center;
+      } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
+        return CrossAxisAlignment.end;
+      }
+    }
+    return CrossAxisAlignment.center; // value not important
+  }
+
+  String _buildIcon(bool isSupported, QagSupportState supportState) {
+    if (supportState is QagSupportInitialState || supportState is QagSupportLoadingState) {
+      if (isSupported) {
+        return "ic_heart_full.svg";
+      } else {
+        return "ic_heart.svg";
+      }
+    } else {
+      if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
+        return "ic_heart_full.svg";
+      } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
+        return "ic_heart.svg";
+      }
+    }
+    return ""; // value not important
+  }
+
+  String _buildButtonLabel(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
         return QagStrings.questionSupported;

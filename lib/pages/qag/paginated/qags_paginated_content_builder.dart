@@ -25,7 +25,10 @@ class QagsPaginatedContentBuilder {
           date: qagPaginatedViewModel.date,
           supportCount: qagPaginatedViewModel.supportCount,
           isSupported: qagPaginatedViewModel.isSupported,
-          onClick: () {
+          onSupportClick: (support) {
+            // TODO
+          },
+          onCardClick: () {
             Navigator.pushNamed(
               context,
               QagDetailsPage.routeName,

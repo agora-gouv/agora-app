@@ -18,9 +18,9 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     emit(QagSupportLoadingState());
     final response = await qagRepository.supportQag(qagId: event.qagId);
     if (response is SupportQagSucceedResponse) {
-      emit(QagSupportSuccessState());
+      emit(QagSupportSuccessState(qagId: event.qagId));
     } else {
-      emit(QagSupportErrorState());
+      emit(QagSupportErrorState(qagId: event.qagId));
     }
   }
 
@@ -31,9 +31,9 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     emit(QagDeleteSupportLoadingState());
     final response = await qagRepository.deleteSupportQag(qagId: event.qagId);
     if (response is DeleteSupportQagSucceedResponse) {
-      emit(QagDeleteSupportSuccessState());
+      emit(QagDeleteSupportSuccessState(qagId: event.qagId));
     } else {
-      emit(QagDeleteSupportErrorState());
+      emit(QagDeleteSupportErrorState(qagId: event.qagId));
     }
   }
 }
