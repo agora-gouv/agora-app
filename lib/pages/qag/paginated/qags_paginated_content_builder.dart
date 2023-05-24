@@ -4,6 +4,7 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
 
 class QagsPaginatedContentBuilder {
@@ -24,6 +25,13 @@ class QagsPaginatedContentBuilder {
           date: qagPaginatedViewModel.date,
           supportCount: qagPaginatedViewModel.supportCount,
           isSupported: qagPaginatedViewModel.isSupported,
+          onClick: () {
+            Navigator.pushNamed(
+              context,
+              QagDetailsPage.routeName,
+              arguments: QagDetailsArguments(qagId: qagPaginatedViewModel.id),
+            );
+          },
         ),
       );
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));

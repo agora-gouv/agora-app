@@ -1,3 +1,5 @@
+import 'package:agora/bloc/qag/qag_bloc.dart';
+import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -6,8 +8,10 @@ import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum QagTab { popular, latest, supporting }
 
@@ -51,24 +55,24 @@ class _QagsSectionState extends State<QagsSection> {
             right: AgoraSpacings.horizontalPadding,
             top: AgoraSpacings.base,
           ),
-          child: _buildQags(),
+          child: _buildQags(context),
         ),
       ],
     );
   }
 
-  Widget _buildQags() {
+  Widget _buildQags(BuildContext context) {
     switch (currentSelected) {
       case QagTab.popular:
-        return Column(children: _buildQagWidgets(widget.popularViewModels, currentSelected));
+        return Column(children: _buildQagWidgets(context, widget.popularViewModels, currentSelected));
       case QagTab.latest:
-        return Column(children: _buildQagWidgets(widget.latestViewModels, currentSelected));
+        return Column(children: _buildQagWidgets(context, widget.latestViewModels, currentSelected));
       case QagTab.supporting:
-        return Column(children: _buildQagWidgets(widget.supportingViewModels, currentSelected));
+        return Column(children: _buildQagWidgets(context, widget.supportingViewModels, currentSelected));
     }
   }
 
-  List<Widget> _buildQagWidgets(List<QagViewModel> qagViewModels, QagTab qagTab) {
+  List<Widget> _buildQagWidgets(BuildContext context, List<QagViewModel> qagViewModels, QagTab qagTab) {
     final List<Widget> qagsWidgets = [];
     if (qagViewModels.isNotEmpty) {
       for (final qagViewModel in qagViewModels) {
@@ -81,6 +85,29 @@ class _QagsSectionState extends State<QagsSection> {
             date: qagViewModel.date,
             supportCount: qagViewModel.supportCount,
             isSupported: qagViewModel.isSupported,
+            onClick: () {
+              Navigator.pushNamed(
+                context,
+                QagDetailsPage.routeName,
+                arguments: QagDetailsArguments(qagId: qagViewModel.id),
+              ).then((result) {
+                final qagDetailsBackResult = result as QagDetailsBackResult?;
+                if (qagDetailsBackResult != null && qagDetailsBackResult.isSupported != null) {
+                  context.read<QagBloc>().add(
+                        UpdateQagsEvent(
+                          qagId: qagDetailsBackResult.qagId,
+                          thematique: qagDetailsBackResult.thematique,
+                          title: qagDetailsBackResult.title,
+                          username: qagDetailsBackResult.username,
+                          date: qagDetailsBackResult.date,
+                          supportCount: qagDetailsBackResult.supportCount,
+                          isSupported: qagDetailsBackResult.isSupported!,
+                        ),
+                      );
+                  setState(() {}); // do not remove: utils to update screen
+                }
+              });
+            },
           ),
         );
         qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
