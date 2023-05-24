@@ -13,7 +13,8 @@ class QagStrings {
   static const String at = "le";
   static const String de = "De";
   static const String share = "Partager";
-  static const String askQuestionTitle = "Poser une question au gouvernement";
+  static const String askQuestionTitle1 = "Poser une\n";
+  static const String askQuestionTitle2 = "question au gouvernement";
   static const String askQuestionDescription =
       "Toutes les questions sont les bienvenues, du moment qu'elles se conforment à la charte de participation : porter sur un sujet d'intérêt général et avoir un ton respectueux.";
   static const String readNotice = "Lire la charte";

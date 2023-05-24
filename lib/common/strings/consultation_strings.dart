@@ -17,7 +17,7 @@ class ConsultationStrings {
   static const String previousQuestion = "Question précédente";
   static const String confirmationTitle = "Merci pour votre participation !";
   static const String confirmationDescription =
-      "Vous pouvez maintenant consulter les résultats de cette consultation et suivre l’avancée des propositions.";
+      "Vous pouvez maintenant découvrir les résultats de cette consultation et suivre l’avancée des propositions.";
   static const String goToResult = "Voir les résultats";
   static const String summaryTabResult = "Résultats";
   static const String summaryTabEtEnsuite = "Et ensuite ?";

@@ -19,6 +19,7 @@ class AgoraReadMoreText extends StatefulWidget {
   final int trimLines;
   final AgoraTrimMode trimMode;
   final TextStyle style;
+  final TextStyle trimTextStyle;
   final TextAlign textAlign;
   final TextDirection textDirection;
 
@@ -27,11 +28,12 @@ class AgoraReadMoreText extends StatefulWidget {
     Key? key,
     this.trimExpandedText = QagStrings.readMore,
     this.trimCollapsedText = QagStrings.readLess,
-    this.colorClickableText = AgoraColors.blueFrance,
+    this.colorClickableText = AgoraColors.primaryGreen,
     this.trimLength = 240,
     this.trimLines = 12,
     this.trimMode = AgoraTrimMode.line,
     this.style = AgoraTextStyles.light14,
+    this.trimTextStyle = AgoraTextStyles.light14Underline,
     this.textAlign = TextAlign.start,
     this.textDirection = TextDirection.ltr,
   })  : assert(
@@ -66,7 +68,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
 
     final readMoreButton = TextSpan(
       text: _readMore ? widget.trimExpandedText : widget.trimCollapsedText,
-      style: textStyle.copyWith(color: colorClickableText),
+      style: widget.trimTextStyle.copyWith(color: colorClickableText),
       recognizer: TapGestureRecognizer()..onTap = _onReadMoreLink,
     );
 
