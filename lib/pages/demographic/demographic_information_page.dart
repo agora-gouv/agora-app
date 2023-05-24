@@ -120,16 +120,18 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                 },
                               ),
                               SizedBox(width: AgoraSpacings.base),
-                              AgoraButton(
-                                label: DemographicStrings.toNoAnswer,
-                                style: AgoraButtonStyle.whiteButtonWithGreenBorderStyle,
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    ConsultationSummaryPage.routeName,
-                                    arguments: consultationId,
-                                  );
-                                },
+                              Flexible(
+                                child: AgoraButton(
+                                  label: DemographicStrings.toNoAnswer,
+                                  style: AgoraButtonStyle.whiteButtonWithGreenBorderStyle,
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      ConsultationSummaryPage.routeName,
+                                      arguments: consultationId,
+                                    );
+                                  },
+                                ),
                               ),
                             ],
                           ),
