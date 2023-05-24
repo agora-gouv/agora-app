@@ -59,76 +59,70 @@ class QagDetailsPage extends StatelessWidget {
               final support = viewModel.support;
               final response = viewModel.response;
               return AgoraSingleScrollView(
-                child: Stack(
+                child: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AgoraSpacings.horizontalPadding,
-                          vertical: AgoraSpacings.x1_25,
-                        ),
-                        child: AgoraButton(
-                          icon: "ic_share.svg",
-                          label: QagStrings.share,
-                          style: AgoraButtonStyle.lightGreyButtonStyle,
-                          onPressed: () {
-                            Share.share(
-                              'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${arguments.qagId}',
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    Column(
+                    AgoraTopDiagonal(),
+                    Row(
                       children: [
-                        AgoraTopDiagonal(),
-                        AgoraToolbar(),
+                        Expanded(child: AgoraToolbar()),
                         Padding(
-                          padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ThematiqueHelper.buildCard(context, viewModel.thematique),
-                              SizedBox(height: AgoraSpacings.x0_5),
-                              Text(viewModel.title, style: AgoraTextStyles.medium18),
-                              SizedBox(height: AgoraSpacings.base),
-                              if (response == null)
-                                Text(viewModel.description, style: AgoraTextStyles.light14)
-                              else
-                                AgoraReadMoreText(viewModel.description, trimLines: 3),
-                              SizedBox(height: AgoraSpacings.base),
-                              if (support != null) ...[
-                                RichText(
-                                  text: TextSpan(
-                                    style: AgoraTextStyles.medium14,
-                                    children: [
-                                      TextSpan(text: QagStrings.de),
-                                      WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                      TextSpan(
-                                        text: viewModel.username,
-                                        style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
-                                      ),
-                                      WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                      TextSpan(text: QagStrings.at),
-                                      WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                      TextSpan(
-                                        text: viewModel.date,
-                                        style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: AgoraSpacings.x3),
-                                QagDetailsSupportView(qagId: arguments.qagId, support: support),
-                              ],
-                            ],
+                          padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+                          child: AgoraButton(
+                            icon: "ic_share.svg",
+                            label: QagStrings.share,
+                            style: AgoraButtonStyle.lightGreyButtonStyle,
+                            onPressed: () {
+                              Share.share(
+                                'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${arguments.qagId}',
+                              );
+                            },
                           ),
                         ),
-                        if (response != null)
-                          QagDetailsResponseView(qagId: arguments.qagId, detailsViewModel: viewModel),
+                        SizedBox(width: AgoraSpacings.horizontalPadding),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ThematiqueHelper.buildCard(context, viewModel.thematique),
+                          SizedBox(height: AgoraSpacings.x0_5),
+                          Text(viewModel.title, style: AgoraTextStyles.medium18),
+                          SizedBox(height: AgoraSpacings.base),
+                          if (response == null)
+                            Text(viewModel.description, style: AgoraTextStyles.light14)
+                          else
+                            AgoraReadMoreText(viewModel.description, trimLines: 3),
+                          SizedBox(height: AgoraSpacings.base),
+                          if (support != null) ...[
+                            RichText(
+                              text: TextSpan(
+                                style: AgoraTextStyles.medium14,
+                                children: [
+                                  TextSpan(text: QagStrings.de),
+                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                  TextSpan(
+                                    text: viewModel.username,
+                                    style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
+                                  ),
+                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                  TextSpan(text: QagStrings.at),
+                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                  TextSpan(
+                                    text: viewModel.date,
+                                    style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: AgoraSpacings.x3),
+                            QagDetailsSupportView(qagId: arguments.qagId, support: support),
+                          ],
+                        ],
+                      ),
+                    ),
+                    if (response != null) QagDetailsResponseView(qagId: arguments.qagId, detailsViewModel: viewModel),
                   ],
                 ),
               );
