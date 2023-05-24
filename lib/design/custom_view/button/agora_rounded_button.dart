@@ -16,6 +16,7 @@ class AgoraRoundedButton extends StatelessWidget {
   final AgoraRoundedButtonStyle style;
   final AgoraRoundedButtonPadding padding;
   final bool isLoading;
+  final CrossAxisAlignment contentAlignment;
   final VoidCallback onPressed;
 
   const AgoraRoundedButton({
@@ -23,6 +24,7 @@ class AgoraRoundedButton extends StatelessWidget {
     this.icon,
     required this.label,
     this.isLoading = false,
+    this.contentAlignment = CrossAxisAlignment.center,
     this.style = AgoraRoundedButtonStyle.primaryButton,
     this.padding = AgoraRoundedButtonPadding.normal,
     required this.onPressed,
@@ -39,6 +41,7 @@ class AgoraRoundedButton extends StatelessWidget {
         padding: _buildPadding(),
         cardColor: _buildCardColor(),
         child: Row(
+          crossAxisAlignment: contentAlignment,
           children: [
             if (icon != null) ...[
               SvgPicture.asset("assets/$icon"),

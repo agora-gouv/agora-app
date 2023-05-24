@@ -16,7 +16,8 @@ class AgoraQagCard extends StatelessWidget {
   final String date;
   final int supportCount;
   final bool isSupported;
-  final VoidCallback onClick;
+  final Function(bool support) onSupportClick;
+  final VoidCallback onCardClick;
 
   AgoraQagCard({
     required this.id,
@@ -26,7 +27,8 @@ class AgoraQagCard extends StatelessWidget {
     required this.date,
     required this.supportCount,
     required this.isSupported,
-    required this.onClick,
+    required this.onSupportClick,
+    required this.onCardClick,
   });
 
   @override
@@ -34,7 +36,7 @@ class AgoraQagCard extends StatelessWidget {
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: () => onClick(),
+      onTap: () => onCardClick(),
       child: Column(
         children: [
           Padding(
@@ -47,15 +49,20 @@ class AgoraQagCard extends StatelessWidget {
                     ThematiqueHelper.buildCard(context, thematique),
                     SizedBox(width: AgoraSpacings.x0_25),
                     Spacer(),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SvgPicture.asset("assets/ic_heard.svg"),
-                        SizedBox(width: AgoraSpacings.x0_25),
-                        Text(supportCount.toString(), style: AgoraTextStyles.medium14),
-                        SizedBox(width: AgoraSpacings.x0_5),
-                      ],
+                    GestureDetector(
+                      onTap: () => onSupportClick(!isSupported),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          isSupported
+                              ? SvgPicture.asset("assets/ic_heart_full.svg")
+                              : SvgPicture.asset("assets/ic_heart.svg"),
+                          SizedBox(width: AgoraSpacings.x0_25),
+                          Text(supportCount.toString(), style: AgoraTextStyles.medium14),
+                        ],
+                      ),
                     ),
+                    SizedBox(width: AgoraSpacings.x0_5),
                   ],
                 ),
                 SizedBox(height: AgoraSpacings.x0_25),
