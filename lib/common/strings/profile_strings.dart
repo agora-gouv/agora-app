@@ -11,4 +11,12 @@ class ProfileStrings {
   static const String helpTipsTitle = "Aidez-nous à améliorer cette application !";
   static const String helpTipsDescription = "Partagez vos retours et vos idées";
   static const String helpTipsButton = "Donner mon avis";
+  static const String charter = "Charte de";
+  static const String moderation = "modération";
+  static const String policy = "Politique de ";
+  static const String privacy = "confidentialité";
+  static const String condition = "Conditions générales";
+  static const String term = "d’utilisation";
+  static const String notice = "Mentions";
+  static const String legal = "légales";
 }

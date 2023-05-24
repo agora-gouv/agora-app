@@ -10,6 +10,10 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
+import 'package:agora/pages/profile/legal_notice_page.dart';
+import 'package:agora/pages/profile/moderation_charter_page.dart';
+import 'package:agora/pages/profile/privacy_policy_page.dart';
+import 'package:agora/pages/profile/terms_of_condition_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -61,25 +65,25 @@ class ProfilePage extends StatelessWidget {
               AgoraMenuItem(
                 title: ProfileStrings.moderationCharter,
                 onClick: () {
-                  // TODO
+                  Navigator.pushNamed(context, ModerationCharterPage.routeName);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.privacyPolicy,
                 onClick: () {
-                  // TODO
+                  Navigator.pushNamed(context, PrivacyPolicyPage.routeName);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.termsOfService,
                 onClick: () {
-                  // TODO
+                  Navigator.pushNamed(context, TermsOfConditionPage.routeName);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.legalNotice,
                 onClick: () {
-                  // TODO
+                  Navigator.pushNamed(context, LegalNoticePage.routeName);
                 },
               ),
               SizedBox(height: AgoraSpacings.base),

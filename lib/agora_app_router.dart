@@ -9,7 +9,11 @@ import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
+import 'package:agora/pages/profile/legal_notice_page.dart';
+import 'package:agora/pages/profile/moderation_charter_page.dart';
+import 'package:agora/pages/profile/privacy_policy_page.dart';
 import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/profile/terms_of_condition_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_confirmation_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
@@ -35,6 +39,10 @@ class AgoraAppRouter {
       QagAskQuestionConfirmationPage.routeName: (context) => QagAskQuestionConfirmationPage(),
       // Profile
       ProfilePage.routeName: (context) => ProfilePage(),
+      ModerationCharterPage.routeName: (context) => ModerationCharterPage(),
+      PrivacyPolicyPage.routeName: (context) => PrivacyPolicyPage(),
+      TermsOfConditionPage.routeName: (context) => TermsOfConditionPage(),
+      LegalNoticePage.routeName: (context) => LegalNoticePage(),
       // Demographique
       DemographicInformationPage.routeName: (context) => DemographicInformationPage(),
       DemographicQuestionPage.routeName: (context) => DemographicQuestionPage(),
