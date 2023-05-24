@@ -5,7 +5,6 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,6 +16,7 @@ class AgoraQagCard extends StatelessWidget {
   final String date;
   final int supportCount;
   final bool isSupported;
+  final VoidCallback onClick;
 
   AgoraQagCard({
     required this.id,
@@ -26,6 +26,7 @@ class AgoraQagCard extends StatelessWidget {
     required this.date,
     required this.supportCount,
     required this.isSupported,
+    required this.onClick,
   });
 
   @override
@@ -33,13 +34,7 @@ class AgoraQagCard extends StatelessWidget {
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          QagDetailsPage.routeName,
-          arguments: QagDetailsArguments(qagId: id),
-        );
-      },
+      onTap: () => onClick(),
       child: Column(
         children: [
           Padding(

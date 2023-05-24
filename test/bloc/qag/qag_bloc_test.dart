@@ -83,4 +83,225 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
   });
+
+  group("UpdateQagsEvent", () {
+    blocTest<QagBloc, QagState>(
+      "when add support to qags - should emit updated state",
+      build: () => QagBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagFetchedState(
+        qagResponseViewModels: [
+          QagResponseViewModel(
+            qagId: "qagId",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+            author: "author",
+            authorPortraitUrl: "authorPortraitUrl",
+            responseDate: "a répondu le 23 mars",
+          ),
+        ],
+        popularViewModels: [
+          QagViewModel(
+            id: "id0",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title0",
+            username: "username0",
+            date: "23 janvier",
+            supportCount: 8,
+            isSupported: true,
+          ),
+        ],
+        latestViewModels: [
+          QagViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 6,
+            isSupported: false,
+          ),
+        ],
+        supportingViewModels: [
+          QagViewModel(
+            id: "id0",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title0",
+            username: "username0",
+            date: "23 janvier",
+            supportCount: 8,
+            isSupported: true,
+          ),
+        ],
+      ),
+      act: (bloc) => bloc.add(
+        UpdateQagsEvent(
+          qagId: "id1",
+          thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+          title: "title1",
+          username: "username1",
+          date: "23 février",
+          supportCount: 7,
+          isSupported: true,
+        ),
+      ),
+      expect: () => [
+        QagFetchedState(
+          qagResponseViewModels: [
+            QagResponseViewModel(
+              qagId: "qagId",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              author: "author",
+              authorPortraitUrl: "authorPortraitUrl",
+              responseDate: "a répondu le 23 mars",
+            ),
+          ],
+          popularViewModels: [
+            QagViewModel(
+              id: "id0",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title0",
+              username: "username0",
+              date: "23 janvier",
+              supportCount: 8,
+              isSupported: true,
+            ),
+          ],
+          latestViewModels: [
+            QagViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 7,
+              isSupported: true,
+            ),
+          ],
+          supportingViewModels: [
+            QagViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 7,
+              isSupported: true,
+            ),
+            QagViewModel(
+              id: "id0",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title0",
+              username: "username0",
+              date: "23 janvier",
+              supportCount: 8,
+              isSupported: true,
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagBloc, QagState>(
+      "when delete support to qags - should emit updated state",
+      build: () => QagBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagFetchedState(
+        qagResponseViewModels: [
+          QagResponseViewModel(
+            qagId: "qagId",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+            author: "author",
+            authorPortraitUrl: "authorPortraitUrl",
+            responseDate: "a répondu le 23 mars",
+          ),
+        ],
+        popularViewModels: [
+          QagViewModel(
+            id: "id0",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title0",
+            username: "username0",
+            date: "23 janvier",
+            supportCount: 7,
+            isSupported: true,
+          ),
+          QagViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 7,
+            isSupported: true,
+          ),
+        ],
+        latestViewModels: [],
+        supportingViewModels: [
+          QagViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 7,
+            isSupported: true,
+          ),
+        ],
+      ),
+      act: (bloc) => bloc.add(
+        UpdateQagsEvent(
+          qagId: "id1",
+          thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+          title: "title1",
+          username: "username1",
+          date: "23 février",
+          supportCount: 6,
+          isSupported: false,
+        ),
+      ),
+      expect: () => [
+        QagFetchedState(
+          qagResponseViewModels: [
+            QagResponseViewModel(
+              qagId: "qagId",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              author: "author",
+              authorPortraitUrl: "authorPortraitUrl",
+              responseDate: "a répondu le 23 mars",
+            ),
+          ],
+          popularViewModels: [
+            QagViewModel(
+              id: "id0",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title0",
+              username: "username0",
+              date: "23 janvier",
+              supportCount: 7,
+              isSupported: true,
+            ),
+            QagViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 6,
+              isSupported: false,
+            ),
+          ],
+          latestViewModels: [],
+          supportingViewModels: [],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
 }

@@ -3,6 +3,7 @@ import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
+import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -29,8 +30,35 @@ class QagDetailsArguments {
   QagDetailsArguments({required this.qagId});
 }
 
-class QagDetailsPage extends StatelessWidget {
+class QagDetailsBackResult {
+  final String qagId;
+  final ThematiqueViewModel thematique;
+  final String title;
+  final String username;
+  final String date;
+  final int supportCount;
+  final bool? isSupported;
+
+  QagDetailsBackResult({
+    required this.qagId,
+    required this.thematique,
+    required this.title,
+    required this.username,
+    required this.date,
+    required this.supportCount,
+    required this.isSupported,
+  });
+}
+
+class QagDetailsPage extends StatefulWidget {
   static const routeName = "/qagDetailsPage";
+
+  @override
+  State<QagDetailsPage> createState() => _QagDetailsPageState();
+}
+
+class _QagDetailsPageState extends State<QagDetailsPage> {
+  QagDetailsBackResult? backResult;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +92,13 @@ class QagDetailsPage extends StatelessWidget {
                     AgoraTopDiagonal(),
                     Row(
                       children: [
-                        Expanded(child: AgoraToolbar()),
+                        Expanded(
+                          child: AgoraToolbar(
+                            onBackClick: () {
+                              Navigator.pop(context, backResult);
+                            },
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
                           child: AgoraButton(
@@ -117,7 +151,21 @@ class QagDetailsPage extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: AgoraSpacings.x3),
-                            QagDetailsSupportView(qagId: arguments.qagId, support: support),
+                            QagDetailsSupportView(
+                              qagId: arguments.qagId,
+                              support: support,
+                              onSupportChange: (supportCount, isSupported) {
+                                backResult = QagDetailsBackResult(
+                                  qagId: arguments.qagId,
+                                  thematique: viewModel.thematique,
+                                  title: viewModel.title,
+                                  username: viewModel.username,
+                                  date: viewModel.date,
+                                  supportCount: supportCount,
+                                  isSupported: isSupported,
+                                );
+                              },
+                            ),
                           ],
                         ],
                       ),
