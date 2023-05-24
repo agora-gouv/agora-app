@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_menu_item.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
@@ -94,15 +95,15 @@ class ProfilePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(ProfileStrings.helpTipsTitle, style: AgoraTextStyles.medium18),
+                      Text(ProfileStrings.feedbackTipsTitle, style: AgoraTextStyles.medium18),
                       SizedBox(height: AgoraSpacings.x0_75),
-                      Text(ProfileStrings.helpTipsDescription, style: AgoraTextStyles.light14),
+                      Text(ProfileStrings.feedbackTipsDescription, style: AgoraTextStyles.light14),
                       SizedBox(height: AgoraSpacings.x1_25),
                       AgoraButton(
-                        label: ProfileStrings.helpTipsButton,
+                        label: ProfileStrings.feedbackTipsButton,
                         style: AgoraButtonStyle.primaryButtonStyle,
                         onPressed: () {
-                          // TODO
+                          LaunchUrlHelper.launch(ProfileStrings.feedbackUrl);
                         },
                       ),
                     ],
