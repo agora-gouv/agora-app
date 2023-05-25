@@ -4,6 +4,7 @@ import 'package:agora/common/extension/qag_paginated_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
@@ -44,6 +45,8 @@ abstract class QagRepository {
     required String qagId,
     required bool isHelpful,
   });
+
+  Future<QagModerationListRepositoryResponse> fetchQagModerationList();
 }
 
 class QagDioRepository extends QagRepository {
@@ -218,6 +221,35 @@ class QagDioRepository extends QagRepository {
     }
   }
 
+  @override
+  Future<QagModerationListRepositoryResponse> fetchQagModerationList() async {
+    try {
+      final response = await httpClient.get("/moderate/qags");
+      return QagModerationListSuccessResponse(
+        qagModerationList: QagModerationList(
+          totalNumber: response.data["totalNumber"] as int,
+          qagsToModeration: (response.data["qagsToModerate"] as List)
+              .map(
+                (qagToModerate) => QagModeration(
+                  id: qagToModerate["qagId"] as String,
+                  thematique: (qagToModerate["thematique"] as Map).toThematique(),
+                  title: qagToModerate["title"] as String,
+                  description: qagToModerate["description"] as String,
+                  date: (qagToModerate["date"] as String).parseToDateTime(),
+                  username: qagToModerate["username"] as String,
+                  supportCount: qagToModerate["support"]["count"] as int,
+                  isSupported: qagToModerate["support"]["isSupported"] as bool,
+                ),
+              )
+              .toList(),
+        ),
+      );
+    } catch (e) {
+      Log.e("fetchQagModerationList failed", e);
+      return QagModerationListFailedResponse();
+    }
+  }
+
   List<Qag> _transformToQagList(List<dynamic> qags) {
     return qags.map((qag) {
       final support = qag["support"] as Map;
@@ -346,3 +378,19 @@ abstract class QagFeedbackRepositoryResponse extends Equatable {
 class QagFeedbackSuccessResponse extends QagFeedbackRepositoryResponse {}
 
 class QagFeedbackFailedResponse extends QagFeedbackRepositoryResponse {}
+
+abstract class QagModerationListRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class QagModerationListSuccessResponse extends QagModerationListRepositoryResponse {
+  final QagModerationList qagModerationList;
+
+  QagModerationListSuccessResponse({required this.qagModerationList});
+
+  @override
+  List<Object> get props => [qagModerationList];
+}
+
+class QagModerationListFailedResponse extends QagModerationListRepositoryResponse {}
