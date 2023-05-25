@@ -2,6 +2,9 @@ import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_bloc.dart';
 import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_event.dart';
 import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_state.dart';
 import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_view_model.dart';
+import 'package:agora/bloc/qag/moderation/moderate/qag_moderate_bloc.dart';
+import 'package:agora/bloc/qag/moderation/moderate/qag_moderate_event.dart';
+import 'package:agora/bloc/qag/moderation/moderate/qag_moderate_state.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
@@ -30,6 +33,9 @@ class ModerationPage extends StatelessWidget {
               ..add(FetchQagModerationListEvent());
           },
         ),
+        BlocProvider(
+          create: (BuildContext context) => QagModerateBloc(qagRepository: RepositoryManager.getQagRepository()),
+        ),
       ],
       child: AgoraScaffold(
         child: SingleChildScrollView(
@@ -50,7 +56,7 @@ class ModerationPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _buildQagsToModerate(qagModerationListState.viewModel),
+                      children: _buildQagsToModerate(context, qagModerationListState.viewModel),
                     ),
                   );
                 } else if (qagModerationListState is QagModerationListInitialState ||
@@ -67,7 +73,7 @@ class ModerationPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildQagsToModerate(QagModerationListViewModel viewModel) {
+  List<Widget> _buildQagsToModerate(BuildContext context, QagModerationListViewModel viewModel) {
     final List<Widget> qagsWidgets = [
       Text(
         QagStrings.totalNumber.format(viewModel.totalNumber.toString()),
@@ -75,17 +81,44 @@ class ModerationPage extends StatelessWidget {
       ),
       SizedBox(height: AgoraSpacings.base),
     ];
-    for (final qagsToModerationViewModel in viewModel.qagsToModerationViewModels) {
+    for (final qagToModerationViewModel in viewModel.qagsToModerationViewModels) {
       qagsWidgets.add(
-        AgoraQagModerationCard(
-          id: qagsToModerationViewModel.id,
-          thematique: qagsToModerationViewModel.thematique,
-          title: qagsToModerationViewModel.title,
-          description: qagsToModerationViewModel.description,
-          username: qagsToModerationViewModel.username,
-          date: qagsToModerationViewModel.date,
-          supportCount: qagsToModerationViewModel.supportCount,
-          isSupported: qagsToModerationViewModel.isSupported,
+        BlocConsumer<QagModerateBloc, QagModerateState>(
+          listenWhen: (previousState, currentState) {
+            return currentState is QagModerateSuccessState && currentState.qagId == qagToModerationViewModel.id;
+          },
+          listener: (context, currentState) {
+            context
+                .read<QagModerationListBloc>()
+                .add(RemoveFromQagModerationListEvent(qagId: qagToModerationViewModel.id));
+          },
+          buildWhen: (previousState, currentState) {
+            return currentState is QagModerateInitialState ||
+                (currentState is QagModerateLoadingState && currentState.qagId == qagToModerationViewModel.id) ||
+                (currentState is QagModerateSuccessState && currentState.qagId == qagToModerationViewModel.id) ||
+                (currentState is QagModerateErrorState && currentState.qagId == qagToModerationViewModel.id);
+          },
+          builder: (context, qagModerateState) {
+            return AgoraQagModerationCard(
+              id: qagToModerationViewModel.id,
+              thematique: qagToModerationViewModel.thematique,
+              title: qagToModerationViewModel.title,
+              description: qagToModerationViewModel.description,
+              username: qagToModerationViewModel.username,
+              date: qagToModerationViewModel.date,
+              supportCount: qagToModerationViewModel.supportCount,
+              isSupported: qagToModerationViewModel.isSupported,
+              validateLoading: qagModerateState is QagModerateLoadingState && qagModerateState.isAccept,
+              refuseLoading: qagModerateState is QagModerateLoadingState && !qagModerateState.isAccept,
+              error: qagModerateState is QagModerateErrorState,
+              onValidate: () => context
+                  .read<QagModerateBloc>()
+                  .add(QagModerateEvent(qagId: qagToModerationViewModel.id, isAccept: true)),
+              onRefuse: () => context
+                  .read<QagModerateBloc>()
+                  .add(QagModerateEvent(qagId: qagToModerationViewModel.id, isAccept: false)),
+            );
+          },
         ),
       );
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
@@ -99,9 +132,7 @@ class ModerationPage extends StatelessWidget {
             AgoraRoundedButton(
               label: QagStrings.displayMore,
               style: AgoraRoundedButtonStyle.primaryButton,
-              onPressed: () {
-                // TODO
-              },
+              onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
             ),
           ],
         ),

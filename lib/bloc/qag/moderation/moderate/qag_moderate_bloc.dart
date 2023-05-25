@@ -15,7 +15,6 @@ class QagModerateBloc extends Bloc<QagModerateEvent, QagModerateState> {
     Emitter<QagModerateState> emit,
   ) async {
     emit(QagModerateLoadingState(qagId: event.qagId, isAccept: event.isAccept));
-    await Future.delayed(Duration(seconds: 1));
     final response = await qagRepository.moderateQag(
       qagId: event.qagId,
       isAccepted: event.isAccept,
