@@ -47,6 +47,11 @@ abstract class QagRepository {
   });
 
   Future<QagModerationListRepositoryResponse> fetchQagModerationList();
+
+  Future<ModerateQagRepositoryResponse> moderateQag({
+    required String qagId,
+    required bool isAccepted,
+  });
 }
 
 class QagDioRepository extends QagRepository {
@@ -139,9 +144,7 @@ class QagDioRepository extends QagRepository {
     required String qagId,
   }) async {
     try {
-      final response = await httpClient.get(
-        "/qags/$qagId",
-      );
+      final response = await httpClient.get("/qags/$qagId");
       final qagDetailsSupport = response.data["support"] as Map?;
       final qagDetailsResponse = response.data["response"] as Map?;
       return GetQagDetailsSucceedResponse(
@@ -181,9 +184,7 @@ class QagDioRepository extends QagRepository {
     required String qagId,
   }) async {
     try {
-      await httpClient.post(
-        "/qags/$qagId/support",
-      );
+      await httpClient.post("/qags/$qagId/support");
       return SupportQagSucceedResponse();
     } catch (e) {
       Log.e("supportQag failed", e);
@@ -194,9 +195,7 @@ class QagDioRepository extends QagRepository {
   @override
   Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId}) async {
     try {
-      await httpClient.delete(
-        "/qags/$qagId/support",
-      );
+      await httpClient.delete("/qags/$qagId/support");
       return DeleteSupportQagSucceedResponse();
     } catch (e) {
       Log.e("deleteSupportQag failed", e);
@@ -247,6 +246,23 @@ class QagDioRepository extends QagRepository {
     } catch (e) {
       Log.e("fetchQagModerationList failed", e);
       return QagModerationListFailedResponse();
+    }
+  }
+
+  @override
+  Future<ModerateQagRepositoryResponse> moderateQag({
+    required String qagId,
+    required bool isAccepted,
+  }) async {
+    try {
+      await httpClient.put(
+        "/moderate/qags/$qagId",
+        data: {"isAccepted": isAccepted},
+      );
+      return ModerateQagSuccessResponse();
+    } catch (e) {
+      Log.e("moderateQag failed", e);
+      return ModerateQagFailedResponse();
     }
   }
 
@@ -394,3 +410,12 @@ class QagModerationListSuccessResponse extends QagModerationListRepositoryRespon
 }
 
 class QagModerationListFailedResponse extends QagModerationListRepositoryResponse {}
+
+abstract class ModerateQagRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class ModerateQagSuccessResponse extends ModerateQagRepositoryResponse {}
+
+class ModerateQagFailedResponse extends ModerateQagRepositoryResponse {}

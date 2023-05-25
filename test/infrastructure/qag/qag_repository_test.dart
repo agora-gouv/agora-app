@@ -629,4 +629,50 @@ void main() {
       expect(response, QagModerationListFailedResponse());
     });
   });
+
+  group("Moderate qag", () {
+    test("when success should return success", () async {
+      // Given
+      dioAdapter.onPut(
+        "/moderate/qags/$qagId",
+        (server) => server.reply(HttpStatus.ok, {}),
+        data: {
+          "isAccepted": true,
+        },
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.moderateQag(qagId: qagId, isAccepted: true);
+
+      // Then
+      expect(response, ModerateQagSuccessResponse());
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onPut(
+        "/moderate/qags/$qagId",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        data: {
+          "isAccepted": true,
+        },
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.moderateQag(qagId: qagId, isAccepted: true);
+
+      // Then
+      expect(response, ModerateQagFailedResponse());
+    });
+  });
 }
