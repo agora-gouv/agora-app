@@ -36,6 +36,7 @@ class LoginDioRepository extends LoginRepository {
       return SignupSucceedResponse(
         jwtToken: response.data["jwtToken"] as String,
         loginToken: response.data["loginToken"] as String,
+        isModerator: response.data["isModerator"] as bool,
       );
     } catch (e) {
       Log.e("signup failed", e);
@@ -58,7 +59,10 @@ class LoginDioRepository extends LoginRepository {
         },
         data: loginToken,
       );
-      return LoginSucceedResponse(jwtToken: response.data["jwtToken"] as String);
+      return LoginSucceedResponse(
+        jwtToken: response.data["jwtToken"] as String,
+        isModerator: response.data["isModerator"] as bool,
+      );
     } catch (e) {
       Log.e("login failed", e);
       return LoginFailedResponse();
@@ -74,11 +78,12 @@ abstract class SignupRepositoryResponse extends Equatable {
 class SignupSucceedResponse extends SignupRepositoryResponse {
   final String jwtToken;
   final String loginToken;
+  final bool isModerator;
 
-  SignupSucceedResponse({required this.jwtToken, required this.loginToken});
+  SignupSucceedResponse({required this.jwtToken, required this.loginToken, required this.isModerator});
 
   @override
-  List<Object> get props => [jwtToken, loginToken];
+  List<Object> get props => [jwtToken, loginToken, isModerator];
 }
 
 class SignupFailedResponse extends SignupRepositoryResponse {}
@@ -90,11 +95,12 @@ abstract class LoginRepositoryResponse extends Equatable {
 
 class LoginSucceedResponse extends LoginRepositoryResponse {
   final String jwtToken;
+  final bool isModerator;
 
-  LoginSucceedResponse({required this.jwtToken});
+  LoginSucceedResponse({required this.jwtToken, required this.isModerator});
 
   @override
-  List<Object> get props => [jwtToken];
+  List<Object> get props => [jwtToken, isModerator];
 }
 
 class LoginFailedResponse extends LoginRepositoryResponse {}

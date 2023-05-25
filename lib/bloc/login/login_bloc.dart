@@ -2,6 +2,7 @@ import 'package:agora/bloc/login/login_event.dart';
 import 'package:agora/bloc/login/login_state.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
+import 'package:agora/common/helper/role_helper.dart';
 import 'package:agora/infrastructure/login/login_repository.dart';
 import 'package:agora/infrastructure/login/login_storage_client.dart';
 import 'package:agora/push_notification/push_notification_service.dart';
@@ -13,6 +14,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final DeviceInfoHelper deviceInfoHelper;
   final PushNotificationService pushNotificationService;
   final JwtHelper jwtHelper;
+  final RoleHelper roleHelper;
 
   LoginBloc({
     required this.repository,
@@ -20,6 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required this.deviceInfoHelper,
     required this.pushNotificationService,
     required this.jwtHelper,
+    required this.roleHelper,
   }) : super(LoginInitialLoadingState()) {
     on<CheckLoginEvent>(_handleCheckLoginEvent);
   }
@@ -48,6 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
     if (response is LoginSucceedResponse) {
       jwtHelper.setJwtToken(response.jwtToken);
+      roleHelper.setIsModerator(response.isModerator);
       return LoginSuccessState();
     } else {
       return LoginErrorState();
@@ -64,6 +68,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (response is SignupSucceedResponse) {
       loginStorageClient.save(response.loginToken);
       jwtHelper.setJwtToken(response.jwtToken);
+      roleHelper.setIsModerator(response.isModerator);
       return LoginSuccessState();
     } else {
       return LoginErrorState();

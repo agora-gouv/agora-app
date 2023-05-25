@@ -1,3 +1,4 @@
+import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/thematique/thematique.dart';
@@ -5,6 +6,40 @@ import 'package:agora/infrastructure/qag/qag_repository.dart';
 
 class MockQagRepository extends QagDioRepository {
   MockQagRepository({required super.httpClient});
+
+  @override
+  Future<QagModerationListRepositoryResponse> fetchQagModerationList() async {
+    return QagModerationListSuccessResponse(
+      qagModerationList: QagModerationList(
+        totalNumber: 100,
+        qagsToModeration: [
+          QagModeration(
+            id: "996436ca-ee69-11ed-a05b-0242ac120003",
+            thematique: Thematique(picto: "💼", label: "Travail & emploi"),
+            title:
+                "On parle beaucoup de l’intelligence artificielle… vous comptez faire quoi pour les emplois qu’elle risque de remplacer ?",
+            description:
+                "ChatGPT est arrivé avec fureur et on voit déjà combien un certain nombre de tâches et de métier pourraient être rapidement remplacés par l’intelligence artificielle… Faut-il interdire ChatGPT? Faut-il ré-orienter les travailleurs concernés ?",
+            username: "Nina",
+            date: DateTime(2023, 6, 23),
+            supportCount: 22,
+            isSupported: true,
+          ),
+          QagModeration(
+            id: "1731a370-ee6b-11ed-a05b-0242ac120003",
+            thematique: Thematique(picto: "🎓", label: "Education"),
+            title: "Ma question, c’est pourquoi on n’arrive pas, dans ce pays, à recruter davantage de professeurs ?!",
+            description:
+                "Il y a bien sûr la question de la rémunération, mais au-delà de ça, c’est aussi la position sociale et la reconnaissance même du professeur qui semble avoir “baissé” ces 20 dernières années. Comment remédier à cela ?",
+            username: "Agny",
+            date: DateTime(2023, 6, 2),
+            supportCount: 2,
+            isSupported: false,
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({

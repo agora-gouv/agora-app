@@ -3,6 +3,7 @@ import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
+import 'package:agora/common/helper/role_helper.dart';
 import 'package:get_it/get_it.dart';
 
 class HelperManager {
@@ -47,6 +48,15 @@ class HelperManager {
       return GetIt.instance.get<JwtHelperImpl>();
     }
     final helper = JwtHelperImpl();
+    GetIt.instance.registerSingleton(helper);
+    return helper;
+  }
+
+  static RoleHelper getRoleHelper() {
+    if (GetIt.instance.isRegistered<RoleHelperImpl>()) {
+      return GetIt.instance.get<RoleHelperImpl>();
+    }
+    final helper = RoleHelperImpl();
     GetIt.instance.registerSingleton(helper);
     return helper;
   }
