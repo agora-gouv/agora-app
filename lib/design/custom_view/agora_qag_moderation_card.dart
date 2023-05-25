@@ -1,6 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -19,6 +20,11 @@ class AgoraQagModerationCard extends StatelessWidget {
   final String date;
   final int supportCount;
   final bool isSupported;
+  final bool validateLoading;
+  final bool refuseLoading;
+  final bool error;
+  final VoidCallback onValidate;
+  final VoidCallback onRefuse;
 
   AgoraQagModerationCard({
     required this.id,
@@ -29,6 +35,11 @@ class AgoraQagModerationCard extends StatelessWidget {
     required this.date,
     required this.supportCount,
     required this.isSupported,
+    required this.validateLoading,
+    required this.refuseLoading,
+    required this.error,
+    required this.onValidate,
+    required this.onRefuse,
   });
 
   @override
@@ -103,25 +114,27 @@ class AgoraQagModerationCard extends StatelessWidget {
                 Expanded(
                   child: AgoraButton(
                     label: QagStrings.refuse,
+                    isLoading: refuseLoading,
                     style: AgoraButtonStyle.whiteButtonWithGreenBorderStyle,
-                    onPressed: () {
-                      // TODO
-                    },
+                    onPressed: () => onRefuse(),
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.base),
                 Expanded(
                   child: AgoraButton(
                     label: QagStrings.validate,
+                    isLoading: validateLoading,
                     style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () {
-                      // TODO
-                    },
+                    onPressed: () => onValidate(),
                   ),
                 ),
               ],
             ),
-          )
+          ),
+          if (error) ...[
+            AgoraErrorView(),
+            SizedBox(height: AgoraSpacings.base),
+          ],
         ],
       ),
     );

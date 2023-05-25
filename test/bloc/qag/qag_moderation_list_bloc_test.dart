@@ -57,4 +57,90 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
   });
+
+  group("RemoveFromQagModerationListEvent", () {
+    blocTest<QagModerationListBloc, QagModerationListState>(
+      "when remove qag with specific id exist from list - should emit success state with new list",
+      build: () => QagModerationListBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagModerationListSuccessState(
+        QagModerationListViewModel(
+          totalNumber: 120,
+          qagsToModerationViewModels: [
+            QagModerationViewModel(
+              id: "qagId1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              description: "description1",
+              username: "username1",
+              date: "23 avril",
+              supportCount: 10,
+              isSupported: false,
+            ),
+            QagModerationViewModel(
+              id: "qagId",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title",
+              description: "description",
+              username: "username",
+              date: "23 avril",
+              supportCount: 9,
+              isSupported: true,
+            ),
+          ],
+        ),
+      ),
+      act: (bloc) => bloc.add(RemoveFromQagModerationListEvent(qagId: "qagId")),
+      expect: () => [
+        QagModerationListSuccessState(
+          QagModerationListViewModel(
+            totalNumber: 119,
+            qagsToModerationViewModels: [
+              QagModerationViewModel(
+                id: "qagId1",
+                thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+                title: "title1",
+                description: "description1",
+                username: "username1",
+                date: "23 avril",
+                supportCount: 10,
+                isSupported: false,
+              ),
+            ],
+          ),
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagModerationListBloc, QagModerationListState>(
+      "when remove qag with specific id NOT exist from list - should emit success state",
+      build: () => QagModerationListBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagModerationListSuccessState(
+        QagModerationListViewModel(
+          totalNumber: 120,
+          qagsToModerationViewModels: [
+            QagModerationViewModel(
+              id: "qagId",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title",
+              description: "description",
+              username: "username",
+              date: "23 avril",
+              supportCount: 9,
+              isSupported: true,
+            ),
+          ],
+        ),
+      ),
+      act: (bloc) => bloc.add(RemoveFromQagModerationListEvent(qagId: "qagIdNotExist")),
+      expect: () => [
+        // state should not changed
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
 }
