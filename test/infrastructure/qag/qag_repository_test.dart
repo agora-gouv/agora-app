@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
@@ -551,6 +552,81 @@ void main() {
 
       // Then
       expect(response, QagFeedbackFailedResponse());
+    });
+  });
+
+  group("Fetch qag moderation list", () {
+    test("when success should return qag moderation list", () async {
+      // Given
+      dioAdapter.onGet(
+        "/moderate/qags",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "totalNumber": 120,
+            "qagsToModerate": [
+              {
+                "qagId": "qagId",
+                "thematique": {"label": "Transports", "picto": "🚊"},
+                "title": "Titre de la QaG",
+                "description": "Description textuelle",
+                "date": "2024-01-23",
+                "username": "Henri J.",
+                "support": {"count": 112, "isSupported": true},
+              },
+            ]
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQagModerationList();
+
+      // Then
+      expect(
+        response,
+        QagModerationListSuccessResponse(
+          qagModerationList: QagModerationList(
+            totalNumber: 120,
+            qagsToModeration: [
+              QagModeration(
+                id: qagId,
+                thematique: Thematique(picto: "🚊", label: "Transports"),
+                title: "Titre de la QaG",
+                description: "Description textuelle",
+                date: DateTime(2024, 1, 23),
+                username: "Henri J.",
+                supportCount: 112,
+                isSupported: true,
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/moderate/qags",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQagModerationList();
+
+      // Then
+      expect(response, QagModerationListFailedResponse());
     });
   });
 }
