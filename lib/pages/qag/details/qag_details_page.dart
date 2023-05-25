@@ -79,6 +79,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         ),
       ],
       child: AgoraScaffold(
+        popAction: () => _popWithBackResult(context),
         appBarColor: AgoraColors.primaryGreen,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
@@ -92,13 +93,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                     AgoraTopDiagonal(),
                     Row(
                       children: [
-                        Expanded(
-                          child: AgoraToolbar(
-                            onBackClick: () {
-                              Navigator.pop(context, backResult);
-                            },
-                          ),
-                        ),
+                        Expanded(child: AgoraToolbar(onBackClick: () => _popWithBackResult(context))),
                         Padding(
                           padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
                           child: AgoraButton(
@@ -183,5 +178,9 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         ),
       ),
     );
+  }
+
+  void _popWithBackResult(BuildContext context) {
+    Navigator.pop(context, backResult);
   }
 }
