@@ -8,6 +8,14 @@ class MockQagRepository extends QagDioRepository {
   MockQagRepository({required super.httpClient});
 
   @override
+  Future<ModerateQagRepositoryResponse> moderateQag({
+    required String qagId,
+    required bool isAccepted,
+  }) async {
+    return ModerateQagSuccessResponse();
+  }
+
+  @override
   Future<QagModerationListRepositoryResponse> fetchQagModerationList() async {
     return QagModerationListSuccessResponse(
       qagModerationList: QagModerationList(

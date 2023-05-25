@@ -180,6 +180,14 @@ class FakeQagSuccessRepository extends QagRepository {
       ),
     );
   }
+
+  @override
+  Future<ModerateQagRepositoryResponse> moderateQag({
+    required String qagId,
+    required bool isAccepted,
+  }) async {
+    return ModerateQagSuccessResponse();
+  }
 }
 
 class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagSuccessRepository {
@@ -206,16 +214,6 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
         ),
       ),
     );
-  }
-
-  @override
-  Future<SupportQagRepositoryResponse> supportQag({required String qagId}) async {
-    return SupportQagSucceedResponse();
-  }
-
-  @override
-  Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId}) async {
-    return DeleteSupportQagSucceedResponse();
   }
 }
 
@@ -274,5 +272,13 @@ class FakeQagFailureRepository extends QagRepository {
   @override
   Future<QagModerationListRepositoryResponse> fetchQagModerationList() async {
     return QagModerationListFailedResponse();
+  }
+
+  @override
+  Future<ModerateQagRepositoryResponse> moderateQag({
+    required String qagId,
+    required bool isAccepted,
+  }) async {
+    return ModerateQagFailedResponse();
   }
 }
