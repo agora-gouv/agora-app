@@ -23,6 +23,7 @@ void main() {
           {
             "jwtToken": "jwtToken",
             "loginToken": "loginToken",
+            "isModerator": true,
           },
         ),
         headers: {
@@ -40,7 +41,14 @@ void main() {
       );
 
       // Then
-      expect(response, SignupSucceedResponse(jwtToken: "jwtToken", loginToken: "loginToken"));
+      expect(
+        response,
+        SignupSucceedResponse(
+          jwtToken: "jwtToken",
+          loginToken: "loginToken",
+          isModerator: true,
+        ),
+      );
     });
 
     test("when failure should return failed", () async {
@@ -77,6 +85,7 @@ void main() {
           {
             "jwtToken": "jwtToken",
             "loginToken": "loginToken",
+            "isModerator": false,
           },
         ),
         headers: {
@@ -96,7 +105,13 @@ void main() {
       );
 
       // Then
-      expect(response, LoginSucceedResponse(jwtToken: "jwtToken"));
+      expect(
+        response,
+        LoginSucceedResponse(
+          jwtToken: "jwtToken",
+          isModerator: false,
+        ),
+      );
     });
 
     test("when failure should return failed", () async {

@@ -1,4 +1,5 @@
 import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_menu_item.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
@@ -15,6 +16,7 @@ import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/moderation_charter_page.dart';
 import 'package:agora/pages/profile/privacy_policy_page.dart';
 import 'package:agora/pages/profile/terms_of_condition_page.dart';
+import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -59,6 +61,13 @@ class ProfilePage extends StatelessWidget {
                   // TODO
                 },
               ),
+              if (HelperManager.getRoleHelper().isModerator() == true)
+                AgoraMenuItem(
+                  title: ProfileStrings.moderationCapitalize,
+                  onClick: () {
+                    Navigator.pushNamed(context, ModerationPage.routeName);
+                  },
+                ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
                 child: Divider(color: AgoraColors.divider, thickness: 1),

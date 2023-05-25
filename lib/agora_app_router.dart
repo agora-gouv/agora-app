@@ -17,6 +17,7 @@ import 'package:agora/pages/profile/terms_of_condition_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_confirmation_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class AgoraAppRouter {
       QagAskQuestionConfirmationPage.routeName: (context) => QagAskQuestionConfirmationPage(),
       // Profile
       ProfilePage.routeName: (context) => ProfilePage(),
+      ModerationPage.routeName: (context) => ModerationPage(),
       ModerationCharterPage.routeName: (context) => ModerationCharterPage(),
       PrivacyPolicyPage.routeName: (context) => PrivacyPolicyPage(),
       TermsOfConditionPage.routeName: (context) => TermsOfConditionPage(),

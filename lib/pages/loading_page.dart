@@ -58,6 +58,7 @@ class LoadingPage extends StatelessWidget {
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
             pushNotificationService: ServiceManager.getPushNotificationService(),
             jwtHelper: HelperManager.getJwtHelper(),
+            roleHelper: HelperManager.getRoleHelper(),
           )..add(CheckLoginEvent()),
         ),
       ],

@@ -50,4 +50,7 @@ class QagStrings {
   static const String emptyList = "La liste est vide.";
   static const String displayMore = "Afficher plus";
   static const String retry = "Réessayer";
+  static const String validate = "Valider";
+  static const String refuse = "Refuser";
+  static const String totalNumber = "Nombre total : %s";
 }

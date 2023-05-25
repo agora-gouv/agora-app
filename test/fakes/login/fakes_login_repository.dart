@@ -6,7 +6,11 @@ class FakeLoginSuccessRepository extends LoginRepository {
     required String deviceId,
     required String firebaseMessagingToken,
   }) async {
-    return SignupSucceedResponse(jwtToken: "jwtToken", loginToken: "loginToken");
+    return SignupSucceedResponse(
+      jwtToken: "jwtToken",
+      loginToken: "loginToken",
+      isModerator: true,
+    );
   }
 
   @override
@@ -15,7 +19,10 @@ class FakeLoginSuccessRepository extends LoginRepository {
     required String firebaseMessagingToken,
     required String loginToken,
   }) async {
-    return LoginSucceedResponse(jwtToken: "jwtToken");
+    return LoginSucceedResponse(
+      jwtToken: "jwtToken",
+      isModerator: false,
+    );
   }
 }
 

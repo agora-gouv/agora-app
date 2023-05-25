@@ -4,6 +4,7 @@ class ProfileStrings {
   static const String myInformation = "Mes informations";
   static const String notification = "Notifications";
   static const String tutorial = "Tutoriel";
+  static const String moderationCapitalize = "Modération";
   static const String moderationCharter = "Charte de modération";
   static const String privacyPolicy = "Politique de confidentialité";
   static const String termsOfService = "Conditions générales d'utilisation";
