@@ -1,4 +1,5 @@
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
@@ -158,6 +159,27 @@ class FakeQagSuccessRepository extends QagRepository {
   }) async {
     return QagFeedbackSuccessResponse();
   }
+
+  @override
+  Future<QagModerationListRepositoryResponse> fetchQagModerationList() async {
+    return QagModerationListSuccessResponse(
+      qagModerationList: QagModerationList(
+        totalNumber: 120,
+        qagsToModeration: [
+          QagModeration(
+            id: "id",
+            thematique: Thematique(picto: "🚊", label: "Transports"),
+            title: "title",
+            description: "description",
+            username: "username",
+            date: DateTime(2024, 4, 23),
+            supportCount: 9,
+            isSupported: true,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagSuccessRepository {
@@ -247,5 +269,10 @@ class FakeQagFailureRepository extends QagRepository {
     required bool isHelpful,
   }) async {
     return QagFeedbackFailedResponse();
+  }
+
+  @override
+  Future<QagModerationListRepositoryResponse> fetchQagModerationList() async {
+    return QagModerationListFailedResponse();
   }
 }
