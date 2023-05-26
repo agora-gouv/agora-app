@@ -18,8 +18,10 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/qag/ask_question/qag_ask_question_confirmation_page.dart';
+import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_thematiques_drop_down.dart';
+import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -151,7 +153,17 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                             BlocConsumer<CreateQagBloc, CreateQagState>(
                               listener: (context, createQagState) {
                                 if (createQagState is CreateQagSuccessState) {
-                                  Navigator.pushNamed(context, QagAskQuestionConfirmationPage.routeName);
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    QagsPage.routeName,
+                                    arguments: QagDetailsArguments(qagId: createQagState.qagId),
+                                    ModalRoute.withName(LoadingPage.routeName),
+                                  );
+                                  Navigator.pushNamed(
+                                    context,
+                                    QagDetailsPage.routeName,
+                                    arguments: QagDetailsArguments(qagId: createQagState.qagId),
+                                  );
                                 }
                               },
                               builder: (context, createQagState) {

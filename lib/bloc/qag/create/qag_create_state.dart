@@ -9,6 +9,13 @@ class CreateQagInitialState extends CreateQagState {}
 
 class CreateQagLoadingState extends CreateQagState {}
 
-class CreateQagSuccessState extends CreateQagState {}
+class CreateQagSuccessState extends CreateQagState {
+  final String qagId;
+
+  CreateQagSuccessState({required this.qagId});
+
+  @override
+  List<Object> get props => [qagId];
+}
 
 class CreateQagErrorState extends CreateQagState {}

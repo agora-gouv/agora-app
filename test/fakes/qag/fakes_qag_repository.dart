@@ -15,7 +15,7 @@ class FakeQagSuccessRepository extends QagRepository {
     required String author,
     required String thematiqueId,
   }) async {
-    return CreateQagSucceedResponse();
+    return CreateQagSucceedResponse(qagId: "qagId");
   }
 
   @override

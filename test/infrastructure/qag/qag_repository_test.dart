@@ -24,7 +24,10 @@ void main() {
       // Given
       dioAdapter.onPost(
         "/qags",
-        (server) => server.reply(HttpStatus.ok, {}),
+        (server) => server.reply(
+          HttpStatus.ok,
+          {"qagId": qagId},
+        ),
         data: {
           "title": "qag title",
           "description": "qag description",
@@ -47,7 +50,7 @@ void main() {
       );
 
       // Then
-      expect(response, CreateQagSucceedResponse());
+      expect(response, CreateQagSucceedResponse(qagId: qagId));
     });
 
     test("when failure should return failed", () async {
