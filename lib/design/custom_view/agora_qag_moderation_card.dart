@@ -115,7 +115,7 @@ class AgoraQagModerationCard extends StatelessWidget {
                   child: AgoraButton(
                     label: QagStrings.refuse,
                     isLoading: refuseLoading,
-                    style: AgoraButtonStyle.whiteButtonWithGreenBorderStyle,
+                    style: AgoraButtonStyle.greenBorderButtonStyle,
                     onPressed: () => onRefuse(),
                   ),
                 ),

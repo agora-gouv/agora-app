@@ -30,7 +30,7 @@ class DemographicHelper {
   static Widget buildIgnoreButton({required VoidCallback onPressed}) {
     return AgoraButton(
       label: DemographicStrings.ignoreQuestion,
-      style: AgoraButtonStyle.whiteButtonWithGreenBorderStyle,
+      style: AgoraButtonStyle.greenBorderButtonStyle,
       onPressed: onPressed,
     );
   }

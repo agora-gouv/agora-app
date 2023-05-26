@@ -123,7 +123,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                               Flexible(
                                 child: AgoraButton(
                                   label: DemographicStrings.toNoAnswer,
-                                  style: AgoraButtonStyle.whiteButtonWithGreenBorderStyle,
+                                  style: AgoraButtonStyle.greenBorderButtonStyle,
                                   onPressed: () {
                                     Navigator.pushNamed(
                                       context,

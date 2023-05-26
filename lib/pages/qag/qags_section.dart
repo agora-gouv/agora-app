@@ -212,7 +212,7 @@ class _QagsSectionState extends State<QagsSection> {
       children: [
         AgoraRoundedButton(
           label: GenericStrings.all,
-          style: AgoraRoundedButtonStyle.primaryButton,
+          style: AgoraRoundedButtonStyle.primaryButtonStyle,
           onPressed: () {
             Navigator.pushNamed(
               context,

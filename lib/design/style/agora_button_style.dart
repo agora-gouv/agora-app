@@ -24,13 +24,13 @@ class AgoraButtonStyle {
     ),
   );
 
-  static ButtonStyle whiteButtonWithGreenBorderStyle = ButtonStyle(
+  static ButtonStyle greenBorderButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
         } else {
-          return AgoraColors.white;
+          return AgoraColors.transparent;
         }
       },
     ),
@@ -44,13 +44,13 @@ class AgoraButtonStyle {
     ),
   );
 
-  static ButtonStyle whiteButtonWithRedBorderStyle = ButtonStyle(
+  static ButtonStyle redBorderButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
           return AgoraColors.stereotypicalDuck;
         } else {
-          return AgoraColors.white;
+          return AgoraColors.transparent;
         }
       },
     ),

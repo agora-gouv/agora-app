@@ -6,7 +6,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum AgoraRoundedButtonStyle { primaryButton, secondaryButton, whiteButton }
+enum AgoraRoundedButtonStyle { primaryButtonStyle, greenBorderButtonStyle, greyBorderButtonStyle }
 
 enum AgoraRoundedButtonPadding { normal, short }
 
@@ -25,7 +25,7 @@ class AgoraRoundedButton extends StatelessWidget {
     required this.label,
     this.isLoading = false,
     this.contentAlignment = CrossAxisAlignment.center,
-    this.style = AgoraRoundedButtonStyle.primaryButton,
+    this.style = AgoraRoundedButtonStyle.primaryButtonStyle,
     this.padding = AgoraRoundedButtonPadding.normal,
     required this.onPressed,
   });
@@ -57,33 +57,33 @@ class AgoraRoundedButton extends StatelessWidget {
 
   Color? _buildBorderColor() {
     switch (style) {
-      case AgoraRoundedButtonStyle.primaryButton:
+      case AgoraRoundedButtonStyle.primaryButtonStyle:
         return null;
-      case AgoraRoundedButtonStyle.secondaryButton:
+      case AgoraRoundedButtonStyle.greenBorderButtonStyle:
         return AgoraColors.primaryGreen;
-      case AgoraRoundedButtonStyle.whiteButton:
+      case AgoraRoundedButtonStyle.greyBorderButtonStyle:
         return AgoraColors.orochimaru;
     }
   }
 
   Color _buildCardColor() {
     switch (style) {
-      case AgoraRoundedButtonStyle.primaryButton:
+      case AgoraRoundedButtonStyle.primaryButtonStyle:
         return AgoraColors.primaryGreen;
-      case AgoraRoundedButtonStyle.secondaryButton:
-        return AgoraColors.white;
-      case AgoraRoundedButtonStyle.whiteButton:
-        return AgoraColors.white;
+      case AgoraRoundedButtonStyle.greenBorderButtonStyle:
+        return AgoraColors.transparent;
+      case AgoraRoundedButtonStyle.greyBorderButtonStyle:
+        return AgoraColors.transparent;
     }
   }
 
   TextStyle _buildTextStyle() {
     switch (style) {
-      case AgoraRoundedButtonStyle.primaryButton:
+      case AgoraRoundedButtonStyle.primaryButtonStyle:
         return AgoraTextStyles.medium14.copyWith(color: AgoraColors.white);
-      case AgoraRoundedButtonStyle.secondaryButton:
+      case AgoraRoundedButtonStyle.greenBorderButtonStyle:
         return AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen);
-      case AgoraRoundedButtonStyle.whiteButton:
+      case AgoraRoundedButtonStyle.greyBorderButtonStyle:
         return AgoraTextStyles.medium14;
     }
   }

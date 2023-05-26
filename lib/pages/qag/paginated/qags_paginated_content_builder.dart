@@ -52,7 +52,7 @@ class QagsPaginatedContentBuilder {
           children: [
             AgoraRoundedButton(
               label: QagStrings.retry,
-              style: AgoraRoundedButtonStyle.primaryButton,
+              style: AgoraRoundedButtonStyle.primaryButtonStyle,
               onPressed: () => onRetryClick(),
             ),
           ],
@@ -67,7 +67,7 @@ class QagsPaginatedContentBuilder {
             children: [
               AgoraRoundedButton(
                 label: QagStrings.displayMore,
-                style: AgoraRoundedButtonStyle.primaryButton,
+                style: AgoraRoundedButtonStyle.primaryButtonStyle,
                 onPressed: () => onDisplayMoreClick(),
               ),
             ],

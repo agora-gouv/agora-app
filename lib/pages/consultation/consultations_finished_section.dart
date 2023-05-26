@@ -44,7 +44,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                     Spacer(),
                     AgoraRoundedButton(
                       label: GenericStrings.all,
-                      style: AgoraRoundedButtonStyle.whiteButton,
+                      style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                       onPressed: () {
                         // TODO
                       },
