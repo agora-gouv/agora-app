@@ -22,7 +22,7 @@ class CreateQagBloc extends Bloc<CreateQagEvent, CreateQagState> {
       thematiqueId: event.thematiqueId,
     );
     if (response is CreateQagSucceedResponse) {
-      emit(CreateQagSuccessState());
+      emit(CreateQagSuccessState(qagId: response.qagId));
     } else {
       emit(CreateQagErrorState());
     }

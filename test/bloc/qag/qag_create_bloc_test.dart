@@ -23,7 +23,7 @@ void main() {
       ),
       expect: () => [
         CreateQagLoadingState(),
-        CreateQagSuccessState(),
+        CreateQagSuccessState(qagId: "qagId"),
       ],
       wait: const Duration(milliseconds: 5),
     );

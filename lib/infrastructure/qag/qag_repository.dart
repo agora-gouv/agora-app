@@ -67,7 +67,7 @@ class QagDioRepository extends QagRepository {
     required String thematiqueId,
   }) async {
     try {
-      await httpClient.post(
+      final response = await httpClient.post(
         "/qags",
         data: {
           "title": title,
@@ -76,7 +76,7 @@ class QagDioRepository extends QagRepository {
           "thematiqueId": thematiqueId,
         },
       );
-      return CreateQagSucceedResponse();
+      return CreateQagSucceedResponse(qagId: response.data["qagId"] as String);
     } catch (e) {
       Log.e("createQag failed", e);
       return CreateQagFailedResponse();
@@ -302,7 +302,14 @@ abstract class CreateQagRepositoryResponse extends Equatable {
   List<Object> get props => [];
 }
 
-class CreateQagSucceedResponse extends CreateQagRepositoryResponse {}
+class CreateQagSucceedResponse extends CreateQagRepositoryResponse {
+  final String qagId;
+
+  CreateQagSucceedResponse({required this.qagId});
+
+  @override
+  List<Object> get props => [qagId];
+}
 
 class CreateQagFailedResponse extends CreateQagRepositoryResponse {}
 
