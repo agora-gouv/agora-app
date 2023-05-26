@@ -38,7 +38,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
               children: [
                 _buildFinishedConsultationCard(context),
                 AgoraRoundedCard(
-                  cardColor: AgoraColors.primaryGreenOpacity90,
+                  cardColor: AgoraColors.whiteOpacity90,
                   child: Container(),
                 ),
                 Padding(
@@ -46,9 +46,31 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                     horizontal: AgoraSpacings.x0_75,
                     vertical: AgoraSpacings.x0_5,
                   ),
-                  child: Text(
-                    ConsultationStrings.shortly,
-                    style: AgoraTextStyles.bold18.copyWith(color: AgoraColors.white),
+                  child: Row(
+                    children: [
+                      AgoraRoundedCard(
+                        cardColor: AgoraColors.lightBrun,
+                        padding: const EdgeInsets.only(
+                          top: AgoraSpacings.x0_25,
+                          left: AgoraSpacings.x0_5,
+                          right: AgoraSpacings.x0_5,
+                          bottom: AgoraSpacings.x0_25 - 2.5,
+                        ),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/ic_timer_brun.svg"),
+                            SizedBox(width: AgoraSpacings.x0_25),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 2.5),
+                              child: Text(
+                                ConsultationStrings.shortly,
+                                style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.brun),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -97,12 +119,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
               children: [
                 SvgPicture.asset(_getIcon()),
                 SizedBox(width: AgoraSpacings.x0_25),
-                Expanded(
-                  child: Text(
-                    _getStepString(),
-                    style: AgoraTextStyles.regular12.copyWith(color: AgoraColors.primaryGreen),
-                  ),
-                ),
+                Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
                 SizedBox(width: AgoraSpacings.x0_25),
                 AgoraStepCircle(currentStep: step),
               ],

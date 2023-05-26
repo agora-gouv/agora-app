@@ -1,4 +1,4 @@
-import 'package:agora/design/custom_view/agora_green_separator.dart';
+import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -29,7 +29,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
             children: [
               Row(children: [Expanded(child: title)]),
               SizedBox(height: AgoraSpacings.x1_25),
-              AgoraGreenSeparator(),
+              AgoraLittleSeparator(),
               SizedBox(height: AgoraSpacings.base),
             ],
           ),

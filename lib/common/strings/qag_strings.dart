@@ -11,7 +11,7 @@ class QagStrings {
   static const String askQuestion = "Poser ma question";
   static const String by = "Par";
   static const String at = "le";
-  static const String de = "De";
+  static const String authorAndDate = "De %1s - le %2s";
   static const String share = "Partager";
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";

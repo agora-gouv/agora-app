@@ -17,7 +17,8 @@ class AgoraIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
       padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x0_75),
-      cardColor: AgoraColors.cascadingWhite,
+      borderColor: AgoraColors.steam,
+      cardColor: AgoraColors.transparent,
       child: SvgPicture.asset("assets/$icon"),
       onTap: () {
         onClick();

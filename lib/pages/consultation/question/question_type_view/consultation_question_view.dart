@@ -43,7 +43,7 @@ class ConsultationQuestionView extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.base),
                 Text(
                   title,
-                  style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryGreen),
+                  style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
                 ),
               ],
             ),

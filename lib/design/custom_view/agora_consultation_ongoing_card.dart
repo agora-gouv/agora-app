@@ -1,7 +1,9 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -36,29 +38,21 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
         children: [
           Image.network(imageUrl, height: 200),
           SizedBox(height: AgoraSpacings.base),
-          ThematiqueHelper.buildCard(context, thematique),
+          ThematiqueHelper.buildCard(context, thematique, size: AgoraThematiqueSize.large),
           SizedBox(height: AgoraSpacings.x0_25),
           Text(title, style: AgoraTextStyles.medium22),
           SizedBox(height: AgoraSpacings.x0_5),
-          RichText(
-            text: TextSpan(
-              style: AgoraTextStyles.regular13,
-              children: [
-                TextSpan(text: ConsultationStrings.endDateVariation),
-                WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                TextSpan(
-                  text: endDate,
-                  style: AgoraTextStyles.regular13.copyWith(color: AgoraColors.primaryGreen),
-                ),
-              ],
-            ),
+          Text(
+            ConsultationStrings.endDate.format(endDate),
+            style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.rhineCastle),
           ),
-          SizedBox(height: AgoraSpacings.x2),
+          SizedBox(height: AgoraSpacings.x1_25),
           Row(
             children: [
               AgoraButton(
                 label: ConsultationStrings.participate,
-                style: AgoraButtonStyle.primaryButtonStyle,
+                icon: "ic_bubble.svg",
+                style: AgoraButtonStyle.blueBorderButtonStyle,
                 onPressed: () {
                   onParticipationClick();
                 },

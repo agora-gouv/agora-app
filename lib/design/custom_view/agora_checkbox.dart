@@ -47,7 +47,7 @@ class _AgoraCheckboxState extends State<AgoraCheckbox> {
               vertical: VisualDensity.minimumDensity,
             ),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            fillColor: MaterialStateProperty.all(AgoraColors.primaryGreen),
+            fillColor: MaterialStateProperty.all(AgoraColors.primaryBlue),
             value: value,
             onChanged: (newValue) => setState(
               () {

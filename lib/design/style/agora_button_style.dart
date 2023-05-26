@@ -9,9 +9,9 @@ class AgoraButtonStyle {
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.primaryGreenOpacity50;
+          return AgoraColors.primaryBlueOpacity50;
         } else {
-          return AgoraColors.primaryGreen;
+          return AgoraColors.primaryBlue;
         }
       },
     ),
@@ -24,7 +24,7 @@ class AgoraButtonStyle {
     ),
   );
 
-  static ButtonStyle greenBorderButtonStyle = ButtonStyle(
+  static ButtonStyle blueBorderButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
@@ -35,10 +35,10 @@ class AgoraButtonStyle {
       },
     ),
     overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.greenTextButton),
+    textStyle: MaterialStateProperty.all(AgoraTextStyles.primaryBlueTextButton),
     elevation: MaterialStateProperty.all(0),
     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
-    side: MaterialStateProperty.all(BorderSide(color: AgoraColors.primaryGreen, width: 1.0, style: BorderStyle.solid)),
+    side: MaterialStateProperty.all(BorderSide(color: AgoraColors.primaryBlue, width: 1.0, style: BorderStyle.solid)),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),

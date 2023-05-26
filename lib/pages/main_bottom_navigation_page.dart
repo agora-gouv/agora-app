@@ -38,8 +38,9 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: AgoraColors.white,
         appBar: AppBar(
-          backgroundColor: AgoraColors.primaryGreen,
+          backgroundColor: AgoraColors.primaryBlue,
           toolbarHeight: 0,
           elevation: 0,
         ),

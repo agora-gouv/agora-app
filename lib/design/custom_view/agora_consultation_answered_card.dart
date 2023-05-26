@@ -80,12 +80,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
               children: [
                 SvgPicture.asset(_getIcon()),
                 SizedBox(width: AgoraSpacings.x0_25),
-                Expanded(
-                  child: Text(
-                    _getStepString(),
-                    style: AgoraTextStyles.regular12.copyWith(color: AgoraColors.primaryGreen),
-                  ),
-                ),
+                Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
                 SizedBox(width: AgoraSpacings.x0_25),
                 AgoraStepCircle(currentStep: step),
               ],

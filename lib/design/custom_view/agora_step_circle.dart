@@ -2,14 +2,18 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
+enum AgoraStepCircleStyle { single, multiple }
+
 class AgoraStepCircle extends StatelessWidget {
   final int currentStep;
   final int totalStep;
+  final AgoraStepCircleStyle style;
 
   const AgoraStepCircle({
     super.key,
     required this.currentStep,
     this.totalStep = 3,
+    this.style = AgoraStepCircleStyle.multiple,
   });
 
   @override
@@ -22,14 +26,27 @@ class AgoraStepCircle extends StatelessWidget {
 
   List<Widget> _buildStep() {
     final List<Widget> widgets = [];
-    for (int step = 1; step <= totalStep; step++) {
-      if (step == currentStep) {
-        widgets.add(_buildCircle(AgoraColors.primaryGreen));
-      } else {
-        widgets.add(_buildCircle(AgoraColors.gravelFint));
+    if (style == AgoraStepCircleStyle.single) {
+      for (int step = 1; step <= totalStep; step++) {
+        if (step == currentStep) {
+          widgets.add(_buildCircle(AgoraColors.blue525));
+        } else {
+          widgets.add(_buildCircle(AgoraColors.gravelFint));
+        }
+        if (step != totalStep) {
+          widgets.add(SizedBox(width: AgoraSpacings.x0_25));
+        }
       }
-      if (step != totalStep) {
-        widgets.add(SizedBox(width: AgoraSpacings.x0_25));
+    } else {
+      for (int step = 1; step <= totalStep; step++) {
+        if (step <= currentStep) {
+          widgets.add(_buildCircle(AgoraColors.blue525));
+        } else {
+          widgets.add(_buildCircle(AgoraColors.gravelFint));
+        }
+        if (step != totalStep) {
+          widgets.add(SizedBox(width: AgoraSpacings.x0_25));
+        }
       }
     }
     return widgets;

@@ -22,9 +22,8 @@ class AgoraToggleButton extends StatelessWidget {
       isSelected: [isSelected],
       onPressed: (_) => onClicked?.call(),
       color: AgoraColors.white,
-      selectedColor: AgoraColors.primaryGreenOpacity15,
       borderColor: AgoraColors.border,
-      selectedBorderColor: AgoraColors.primaryGreen,
+      selectedBorderColor: AgoraColors.primaryBlue,
       borderRadius: BorderRadius.all(AgoraCorners.rounded),
       children: [
         Ink(

@@ -49,7 +49,7 @@ class DemographicConfirmationPage extends StatelessWidget {
         ),
       child: AgoraScaffold(
         shouldPop: false,
-        appBarColor: AgoraColors.primaryGreen,
+        appBarColor: AgoraColors.primaryBlue,
         child: BlocConsumer<SendDemographicResponsesBloc, SendDemographicResponsesState>(
           listener: (context, state) {
             if (_isProfileJourney(state)) {

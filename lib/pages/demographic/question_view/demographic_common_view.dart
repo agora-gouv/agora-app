@@ -38,7 +38,7 @@ class DemographicCommonView extends StatelessWidget {
       widgets.add(
         Text(
           DemographicStrings.whatAbout,
-          style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryGreen),
+          style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
         ),
       );
       widgets.add(SizedBox(height: AgoraSpacings.base));
