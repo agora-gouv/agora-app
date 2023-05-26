@@ -97,7 +97,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                                 Spacer(),
                                 AgoraRoundedButton(
                                   label: GenericStrings.modify,
-                                  style: AgoraRoundedButtonStyle.whiteButton,
+                                  style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                                   onPressed: () {
                                     Navigator.pushNamed(context, DemographicQuestionPage.routeName);
                                   },
@@ -117,7 +117,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                             SizedBox(height: AgoraSpacings.x1_25),
                             AgoraButton(
                               label: DemographicStrings.suppressMyInformation,
-                              style: AgoraButtonStyle.whiteButtonWithRedBorderStyle,
+                              style: AgoraButtonStyle.redBorderButtonStyle,
                               onPressed: () {
                                 // TODO
                               },

@@ -131,7 +131,7 @@ class ModerationPage extends StatelessWidget {
           children: [
             AgoraRoundedButton(
               label: QagStrings.displayMore,
-              style: AgoraRoundedButtonStyle.primaryButton,
+              style: AgoraRoundedButtonStyle.primaryButtonStyle,
               onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
             ),
           ],

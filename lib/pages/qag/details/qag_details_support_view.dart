@@ -160,18 +160,18 @@ class QagDetailsSupportView extends StatelessWidget {
   AgoraRoundedButtonStyle _buildButtonStyle(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
-        return AgoraRoundedButtonStyle.secondaryButton;
+        return AgoraRoundedButtonStyle.greenBorderButtonStyle;
       } else {
-        return AgoraRoundedButtonStyle.primaryButton;
+        return AgoraRoundedButtonStyle.primaryButtonStyle;
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return AgoraRoundedButtonStyle.secondaryButton;
+        return AgoraRoundedButtonStyle.greenBorderButtonStyle;
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
-        return AgoraRoundedButtonStyle.primaryButton;
+        return AgoraRoundedButtonStyle.primaryButtonStyle;
       }
     }
-    return AgoraRoundedButtonStyle.secondaryButton; // value not important
+    return AgoraRoundedButtonStyle.greenBorderButtonStyle; // value not important
   }
 
   void _buildOnPressed(BuildContext context, String qagId, bool isSupported, QagSupportState supportState) {

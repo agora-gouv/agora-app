@@ -32,7 +32,7 @@ class AgoraMainToolbar extends StatelessWidget {
                   AgoraRoundedButton(
                     icon: "ic_profile.svg",
                     label: GenericStrings.profil,
-                    style: AgoraRoundedButtonStyle.whiteButton,
+                    style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                     padding: AgoraRoundedButtonPadding.short,
                     onPressed: () {
                       Navigator.pushNamed(context, ProfilePage.routeName);
