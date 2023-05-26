@@ -1,6 +1,7 @@
 import 'package:agora/bloc/qag/details/qag_details_bloc.dart';
 import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
+import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
@@ -83,99 +84,124 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         appBarColor: AgoraColors.primaryGreen,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
-            if (detailsState is QagDetailsFetchedState) {
-              final viewModel = detailsState.viewModel;
-              final support = viewModel.support;
-              final response = viewModel.response;
-              return AgoraSingleScrollView(
-                child: Column(
-                  children: [
-                    AgoraTopDiagonal(),
-                    Row(
-                      children: [
-                        Expanded(child: AgoraToolbar(onBackClick: () => _popWithBackResult(context))),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-                          child: AgoraButton(
-                            icon: "ic_share.svg",
-                            label: QagStrings.share,
-                            style: AgoraButtonStyle.lightGreyButtonStyle,
-                            onPressed: () {
-                              Share.share(
-                                'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${arguments.qagId}',
-                              );
-                            },
-                          ),
-                        ),
-                        SizedBox(width: AgoraSpacings.horizontalPadding),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ThematiqueHelper.buildCard(context, viewModel.thematique),
-                          SizedBox(height: AgoraSpacings.x0_5),
-                          Text(viewModel.title, style: AgoraTextStyles.medium18),
-                          SizedBox(height: AgoraSpacings.base),
-                          if (response == null)
-                            Text(viewModel.description, style: AgoraTextStyles.light14)
-                          else
-                            AgoraReadMoreText(viewModel.description, trimLines: 3),
-                          SizedBox(height: AgoraSpacings.base),
-                          if (support != null) ...[
-                            RichText(
-                              text: TextSpan(
-                                style: AgoraTextStyles.medium14,
-                                children: [
-                                  TextSpan(text: QagStrings.de),
-                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                  TextSpan(
-                                    text: viewModel.username,
-                                    style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
-                                  ),
-                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                  TextSpan(text: QagStrings.at),
-                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                  TextSpan(
-                                    text: viewModel.date,
-                                    style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: AgoraSpacings.x3),
-                            QagDetailsSupportView(
-                              qagId: arguments.qagId,
-                              support: support,
-                              onSupportChange: (supportCount, isSupported) {
-                                backResult = QagDetailsBackResult(
-                                  qagId: arguments.qagId,
-                                  thematique: viewModel.thematique,
-                                  title: viewModel.title,
-                                  username: viewModel.username,
-                                  date: viewModel.date,
-                                  supportCount: supportCount,
-                                  isSupported: isSupported,
-                                );
-                              },
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                    if (response != null) QagDetailsResponseView(qagId: arguments.qagId, detailsViewModel: viewModel),
-                  ],
-                ),
-              );
-            } else if (detailsState is QagDetailsInitialLoadingState) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return Center(child: AgoraErrorView());
-            }
+            return AgoraSingleScrollView(
+              child: Column(
+                children: [
+                  AgoraTopDiagonal(),
+                  _buildState(context, detailsState),
+                ],
+              ),
+            );
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildState(BuildContext context, QagDetailsState detailsState) {
+    if (detailsState is QagDetailsFetchedState) {
+      return _buildContent(context, detailsState.viewModel);
+    } else if (detailsState is QagDetailsInitialLoadingState) {
+      return Column(
+        children: [
+          AgoraToolbar(),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          AgoraToolbar(),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: AgoraErrorView()),
+        ],
+      );
+    }
+  }
+
+  Widget _buildContent(BuildContext context, QagDetailsViewModel viewModel) {
+    final support = viewModel.support;
+    final response = viewModel.response;
+    return Expanded(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(child: AgoraToolbar(onBackClick: () => _popWithBackResult(context))),
+              Padding(
+                padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+                child: AgoraButton(
+                  icon: "ic_share.svg",
+                  label: QagStrings.share,
+                  style: AgoraButtonStyle.lightGreyButtonStyle,
+                  onPressed: () {
+                    Share.share(
+                      'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${viewModel.id}',
+                    );
+                  },
+                ),
+              ),
+              SizedBox(width: AgoraSpacings.horizontalPadding),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ThematiqueHelper.buildCard(context, viewModel.thematique),
+                SizedBox(height: AgoraSpacings.x0_5),
+                Text(viewModel.title, style: AgoraTextStyles.medium18),
+                SizedBox(height: AgoraSpacings.base),
+                if (response == null)
+                  Text(viewModel.description, style: AgoraTextStyles.light14)
+                else
+                  AgoraReadMoreText(viewModel.description, trimLines: 3),
+                SizedBox(height: AgoraSpacings.base),
+                if (support != null) ...[
+                  RichText(
+                    text: TextSpan(
+                      style: AgoraTextStyles.medium14,
+                      children: [
+                        TextSpan(text: QagStrings.de),
+                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                        TextSpan(
+                          text: viewModel.username,
+                          style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
+                        ),
+                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                        TextSpan(text: QagStrings.at),
+                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                        TextSpan(
+                          text: viewModel.date,
+                          style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: AgoraSpacings.x3),
+                  QagDetailsSupportView(
+                    qagId: viewModel.id,
+                    support: support,
+                    onSupportChange: (supportCount, isSupported) {
+                      backResult = QagDetailsBackResult(
+                        qagId: viewModel.id,
+                        thematique: viewModel.thematique,
+                        title: viewModel.title,
+                        username: viewModel.username,
+                        date: viewModel.date,
+                        supportCount: supportCount,
+                        isSupported: isSupported,
+                      );
+                    },
+                  ),
+                ],
+              ],
+            ),
+          ),
+          if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+        ],
       ),
     );
   }

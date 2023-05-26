@@ -6,6 +6,7 @@ import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
@@ -57,13 +58,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
-                      onToolbarBackClick: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          ConsultationsPage.routeName,
-                          ModalRoute.withName(LoadingPage.routeName),
-                        );
-                      },
+                      onToolbarBackClick: () => _navigateToConsultationPage(context),
                       topChild: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -102,13 +97,33 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                 ),
               );
             } else if (state is ConsultationSummaryInitialLoadingState) {
-              return Center(child: CircularProgressIndicator());
+              return Column(
+                children: [
+                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context)),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                  Center(child: CircularProgressIndicator()),
+                ],
+              );
             } else {
-              return AgoraErrorView();
+              return Column(
+                children: [
+                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context)),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                  AgoraErrorView(),
+                ],
+              );
             }
           },
         ),
       ),
+    );
+  }
+
+  void _navigateToConsultationPage(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      ConsultationsPage.routeName,
+      ModalRoute.withName(LoadingPage.routeName),
     );
   }
 }

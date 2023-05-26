@@ -6,6 +6,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -61,58 +62,81 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (state is SendConsultationQuestionsResponsesSuccessState && !state.shouldDisplayDemographicInformation) {
-              return SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    AgoraTopDiagonal(),
-                    SizedBox(height: AgoraSpacings.base),
-                    SvgPicture.asset(
-                      "assets/ic_question_confirmation.svg",
-                      width: MediaQuery.of(context).size.width - AgoraSpacings.base,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ConsultationStrings.confirmationTitle,
-                            style: AgoraTextStyles.medium19,
-                          ),
-                          SizedBox(height: AgoraSpacings.base),
-                          Text(
-                            ConsultationStrings.confirmationDescription,
-                            style: AgoraTextStyles.light16,
-                          ),
-                          SizedBox(height: AgoraSpacings.x1_5),
-                          AgoraButton(
-                            label: ConsultationStrings.goToResult,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                ConsultationSummaryPage.routeName,
-                                arguments: consultationId,
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            } else if (state is SendConsultationQuestionsResponsesInitialLoadingState ||
-                _shouldDisplayDemographicQuiz(state)) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return Center(child: AgoraErrorView());
-            }
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  AgoraTopDiagonal(),
+                  _buildState(context, state),
+                ],
+              ),
+            );
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildState(BuildContext context, SendConsultationQuestionsResponsesState state) {
+    if (state is SendConsultationQuestionsResponsesSuccessState && !state.shouldDisplayDemographicInformation) {
+      return _buildContent(context);
+    } else if (state is SendConsultationQuestionsResponsesInitialLoadingState || _shouldDisplayDemographicQuiz(state)) {
+      return Column(
+        children: [
+          AgoraToolbar(),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          AgoraToolbar(),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: AgoraErrorView()),
+        ],
+      );
+    }
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: AgoraSpacings.base),
+        SvgPicture.asset(
+          "assets/ic_question_confirmation.svg",
+          width: MediaQuery.of(context).size.width - AgoraSpacings.base,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                ConsultationStrings.confirmationTitle,
+                style: AgoraTextStyles.medium19,
+              ),
+              SizedBox(height: AgoraSpacings.base),
+              Text(
+                ConsultationStrings.confirmationDescription,
+                style: AgoraTextStyles.light16,
+              ),
+              SizedBox(height: AgoraSpacings.x1_5),
+              AgoraButton(
+                label: ConsultationStrings.goToResult,
+                style: AgoraButtonStyle.primaryButtonStyle,
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    ConsultationSummaryPage.routeName,
+                    arguments: consultationId,
+                  );
+                },
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 

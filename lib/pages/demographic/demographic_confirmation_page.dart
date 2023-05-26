@@ -6,6 +6,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -39,14 +40,13 @@ class DemographicConfirmationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) {
-        return SendDemographicResponsesBloc(demographicRepository: RepositoryManager.getDemographicRepository())
-          ..add(
-            SendDemographicResponsesEvent(
-              demographicResponses: context.read<DemographicResponsesStockBloc>().state.responses,
-            ),
-          );
-      },
+      create: (BuildContext context) => SendDemographicResponsesBloc(
+        demographicRepository: RepositoryManager.getDemographicRepository(),
+      )..add(
+          SendDemographicResponsesEvent(
+            demographicResponses: context.read<DemographicResponsesStockBloc>().state.responses,
+          ),
+        ),
       child: AgoraScaffold(
         shouldPop: false,
         appBarColor: AgoraColors.primaryGreen,
@@ -65,55 +65,71 @@ class DemographicConfirmationPage extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is SendDemographicResponsesSuccessState && consultationId != null) {
-              return SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    AgoraTopDiagonal(),
-                    SizedBox(height: AgoraSpacings.base),
-                    SvgPicture.asset(
-                      "assets/ic_question_confirmation.svg",
-                      width: MediaQuery.of(context).size.width - AgoraSpacings.base,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ConsultationStrings.confirmationTitle,
-                            style: AgoraTextStyles.medium19,
-                          ),
-                          SizedBox(height: AgoraSpacings.base),
-                          Text(
-                            ConsultationStrings.confirmationDescription,
-                            style: AgoraTextStyles.light16,
-                          ),
-                          SizedBox(height: AgoraSpacings.x1_5),
-                          AgoraButton(
-                            label: ConsultationStrings.goToResult,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                ConsultationSummaryPage.routeName,
-                                arguments: consultationId,
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
+              return _buildContent(context);
             } else if (state is SendDemographicResponsesInitialLoadingState || _isProfileJourney(state)) {
-              return Center(child: CircularProgressIndicator());
+              return Column(
+                children: [
+                  AgoraToolbar(),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                  Center(child: CircularProgressIndicator()),
+                ],
+              );
             } else {
-              return Center(child: AgoraErrorView());
+              return Column(
+                children: [
+                  AgoraToolbar(),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                  Center(child: AgoraErrorView()),
+                ],
+              );
             }
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          AgoraTopDiagonal(),
+          SizedBox(height: AgoraSpacings.base),
+          SvgPicture.asset(
+            "assets/ic_question_confirmation.svg",
+            width: MediaQuery.of(context).size.width - AgoraSpacings.base,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  ConsultationStrings.confirmationTitle,
+                  style: AgoraTextStyles.medium19,
+                ),
+                SizedBox(height: AgoraSpacings.base),
+                Text(
+                  ConsultationStrings.confirmationDescription,
+                  style: AgoraTextStyles.light16,
+                ),
+                SizedBox(height: AgoraSpacings.x1_5),
+                AgoraButton(
+                  label: ConsultationStrings.goToResult,
+                  style: AgoraButtonStyle.primaryButtonStyle,
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      ConsultationSummaryPage.routeName,
+                      arguments: consultationId,
+                    );
+                  },
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -54,163 +54,181 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       child: AgoraScaffold(
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
-            if (state is ThematiqueInitialLoadingState) {
-              return Center(child: CircularProgressIndicator());
-            } else if (state is ThematiqueErrorState) {
-              return Center(child: AgoraErrorView());
-            } else if (state is ThematiqueSuccessState) {
-              return SingleChildScrollView(
-                child: AgoraSecondaryStyleView(
-                  title: AgoraRichText(
-                    policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                    items: [
-                      AgoraRichTextTextItem(
-                        text: QagStrings.askQuestionTitle1,
-                        style: AgoraRichTextItemStyle.regular,
-                      ),
-                      AgoraRichTextTextItem(
-                        text: QagStrings.askQuestionTitle2,
-                        style: AgoraRichTextItemStyle.bold,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(QagStrings.askQuestionDescription, style: AgoraTextStyles.light14),
-                            SizedBox(height: AgoraSpacings.base),
-                            AgoraButton(
-                              label: QagStrings.readNotice,
-                              style: AgoraButtonStyle.lightGreyButtonStyle,
-                              onPressed: () {
-                                showAgoraDialog(
-                                  context: context,
-                                  columnChildren: [
-                                    Text(QagStrings.noticeTitle, style: AgoraTextStyles.medium16),
-                                    SizedBox(height: AgoraSpacings.x0_5),
-                                    Text(QagStrings.noticeDescription, style: AgoraTextStyles.light14),
-                                    SizedBox(height: AgoraSpacings.x0_5),
-                                    AgoraButton(
-                                      label: QagStrings.agree,
-                                      style: AgoraButtonStyle.primaryButtonStyle,
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.base),
-                            Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
-                            SizedBox(height: AgoraSpacings.x0_75),
-                            AgoraTextField(
-                              maxLength: 200,
-                              hintText: QagStrings.questionHint,
-                              showCounterText: true,
-                              onChanged: (input) {
-                                question = input;
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.x0_75),
-                            Text(QagStrings.detailsTitle, style: AgoraTextStyles.medium18),
-                            SizedBox(height: AgoraSpacings.x0_75),
-                            AgoraTextField(
-                              maxLength: 400,
-                              hintText: QagStrings.detailsHint,
-                              showCounterText: true,
-                              onChanged: (input) {
-                                details = input;
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.x0_75),
-                            Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18),
-                            SizedBox(height: AgoraSpacings.x0_5),
-                            QagThematiquesDropDown(
-                              firstValue: null,
-                              elements: state.thematiqueViewModels,
-                              hintText: QagStrings.thematiqueHint,
-                              onSelected: (value) {
-                                thematique = value;
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.x1_5),
-                            Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
-                            SizedBox(height: AgoraSpacings.x0_75),
-                            AgoraTextField(
-                              maxLength: 50,
-                              hintText: QagStrings.yourNameHint,
-                              showCounterText: true,
-                              onChanged: (input) {
-                                firstname = input;
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.base),
-                            Text(QagStrings.askQuestionInformation, style: AgoraTextStyles.light14),
-                            SizedBox(height: AgoraSpacings.base),
-                            BlocConsumer<CreateQagBloc, CreateQagState>(
-                              listener: (context, createQagState) {
-                                if (createQagState is CreateQagSuccessState) {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    QagsPage.routeName,
-                                    arguments: QagDetailsArguments(qagId: createQagState.qagId),
-                                    ModalRoute.withName(LoadingPage.routeName),
-                                  );
-                                  Navigator.pushNamed(
-                                    context,
-                                    QagDetailsPage.routeName,
-                                    arguments: QagDetailsArguments(qagId: createQagState.qagId),
-                                  );
-                                }
-                              },
-                              builder: (context, createQagState) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (createQagState is CreateQagErrorState) ...[
-                                      SizedBox(height: AgoraSpacings.base),
-                                      AgoraErrorView(),
-                                      SizedBox(height: AgoraSpacings.base),
-                                    ],
-                                    if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),
-                                    AgoraButton(
-                                      label: QagStrings.send,
-                                      isLoading: createQagState is CreateQagLoadingState,
-                                      style: AgoraButtonStyle.primaryButtonStyle,
-                                      onPressed: () async {
-                                        if (_couldSend()) {
-                                          context.read<CreateQagBloc>().add(
-                                                CreateQagEvent(
-                                                  title: question,
-                                                  description: details,
-                                                  author: firstname,
-                                                  thematiqueId: thematique!.id,
-                                                ),
-                                              );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                            SizedBox(height: AgoraSpacings.x2),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+            return SingleChildScrollView(
+              child: AgoraSecondaryStyleView(
+                title: AgoraRichText(
+                  policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                  items: [
+                    AgoraRichTextTextItem(
+                      text: QagStrings.askQuestionTitle1,
+                      style: AgoraRichTextItemStyle.regular,
+                    ),
+                    AgoraRichTextTextItem(
+                      text: QagStrings.askQuestionTitle2,
+                      style: AgoraRichTextItemStyle.bold,
+                    ),
+                  ],
                 ),
-              );
-            } else {
-              return Container();
-            }
+                child: _buildState(state),
+              ),
+            );
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildState(ThematiqueState state) {
+    if (state is ThematiqueSuccessState) {
+      return _buildContent(state.thematiqueViewModels);
+    } else if (state is ThematiqueInitialLoadingState) {
+      return Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
+    } else if (state is ThematiqueErrorState) {
+      return Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          Center(child: AgoraErrorView()),
+        ],
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Widget _buildContent(List<ThematiqueWithIdViewModel> thematiqueViewModels) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(QagStrings.askQuestionDescription, style: AgoraTextStyles.light14),
+              SizedBox(height: AgoraSpacings.base),
+              AgoraButton(
+                label: QagStrings.readNotice,
+                style: AgoraButtonStyle.lightGreyButtonStyle,
+                onPressed: () {
+                  showAgoraDialog(
+                    context: context,
+                    columnChildren: [
+                      Text(QagStrings.noticeTitle, style: AgoraTextStyles.medium16),
+                      SizedBox(height: AgoraSpacings.x0_5),
+                      Text(QagStrings.noticeDescription, style: AgoraTextStyles.light14),
+                      SizedBox(height: AgoraSpacings.x0_5),
+                      AgoraButton(
+                        label: QagStrings.agree,
+                        style: AgoraButtonStyle.primaryButtonStyle,
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              SizedBox(height: AgoraSpacings.base),
+              Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
+              SizedBox(height: AgoraSpacings.x0_75),
+              AgoraTextField(
+                maxLength: 200,
+                hintText: QagStrings.questionHint,
+                showCounterText: true,
+                onChanged: (input) {
+                  question = input;
+                },
+              ),
+              SizedBox(height: AgoraSpacings.x0_75),
+              Text(QagStrings.detailsTitle, style: AgoraTextStyles.medium18),
+              SizedBox(height: AgoraSpacings.x0_75),
+              AgoraTextField(
+                maxLength: 400,
+                hintText: QagStrings.detailsHint,
+                showCounterText: true,
+                onChanged: (input) {
+                  details = input;
+                },
+              ),
+              SizedBox(height: AgoraSpacings.x0_75),
+              Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18),
+              SizedBox(height: AgoraSpacings.x0_5),
+              QagThematiquesDropDown(
+                firstValue: null,
+                elements: thematiqueViewModels,
+                hintText: QagStrings.thematiqueHint,
+                onSelected: (value) {
+                  thematique = value;
+                },
+              ),
+              SizedBox(height: AgoraSpacings.x1_5),
+              Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
+              SizedBox(height: AgoraSpacings.x0_75),
+              AgoraTextField(
+                maxLength: 50,
+                hintText: QagStrings.yourNameHint,
+                showCounterText: true,
+                onChanged: (input) {
+                  firstname = input;
+                },
+              ),
+              SizedBox(height: AgoraSpacings.base),
+              Text(QagStrings.askQuestionInformation, style: AgoraTextStyles.light14),
+              SizedBox(height: AgoraSpacings.base),
+              BlocConsumer<CreateQagBloc, CreateQagState>(
+                listener: (context, createQagState) {
+                  if (createQagState is CreateQagSuccessState) {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      QagsPage.routeName,
+                      arguments: QagDetailsArguments(qagId: createQagState.qagId),
+                      ModalRoute.withName(LoadingPage.routeName),
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      QagDetailsPage.routeName,
+                      arguments: QagDetailsArguments(qagId: createQagState.qagId),
+                    );
+                  }
+                },
+                builder: (context, createQagState) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (createQagState is CreateQagErrorState) ...[
+                        SizedBox(height: AgoraSpacings.base),
+                        AgoraErrorView(),
+                        SizedBox(height: AgoraSpacings.base),
+                      ],
+                      if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),
+                      AgoraButton(
+                        label: QagStrings.send,
+                        isLoading: createQagState is CreateQagLoadingState,
+                        style: AgoraButtonStyle.primaryButtonStyle,
+                        onPressed: () async {
+                          if (_couldSend()) {
+                            context.read<CreateQagBloc>().add(
+                                  CreateQagEvent(
+                                    title: question,
+                                    description: details,
+                                    author: firstname,
+                                    thematiqueId: thematique!.id,
+                                  ),
+                                );
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
+              SizedBox(height: AgoraSpacings.x2),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
