@@ -62,13 +62,13 @@ class ConsultationsPage extends StatelessWidget {
       ];
     } else if (state is ConsultationInitialLoadingState) {
       return [
-        SizedBox(height: AgoraSpacings.base),
+        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
         Center(child: CircularProgressIndicator()),
         SizedBox(height: AgoraSpacings.x2),
       ];
     } else if (state is ConsultationErrorState) {
       return [
-        SizedBox(height: AgoraSpacings.base),
+        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
         Center(child: AgoraErrorView()),
         SizedBox(height: AgoraSpacings.x2),
       ];

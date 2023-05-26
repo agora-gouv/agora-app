@@ -8,6 +8,7 @@ import 'package:agora/bloc/consultation/question/response/stock/consultation_que
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/question/question_type_view/consultation_question_chapter_view.dart';
@@ -89,12 +90,22 @@ class ConsultationQuestionPage extends StatelessWidget {
                   } else {
                     return Container();
                   }
-                } else if (questionsState is ConsultationQuestionsInitialLoadingState) {
-                  return Center(child: CircularProgressIndicator());
                 } else if (questionsState is ConsultationQuestionsErrorState) {
-                  return Center(child: AgoraErrorView());
+                  return Column(
+                    children: [
+                      AgoraToolbar(),
+                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                      Center(child: AgoraErrorView()),
+                    ],
+                  );
                 } else {
-                  return Center(child: CircularProgressIndicator());
+                  return Column(
+                    children: [
+                      AgoraToolbar(),
+                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                      Center(child: CircularProgressIndicator()),
+                    ],
+                  );
                 }
               },
             );

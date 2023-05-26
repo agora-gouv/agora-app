@@ -36,12 +36,8 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
   @override
   Widget build(BuildContext context) {
     consultationId = ModalRoute.of(context)!.settings.arguments as String?;
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<DemographicResponsesStockBloc>(
-          create: (BuildContext context) => DemographicResponsesStockBloc(),
-        ),
-      ],
+    return BlocProvider<DemographicResponsesStockBloc>(
+      create: (BuildContext context) => DemographicResponsesStockBloc(),
       child: AgoraScaffold(
         shouldPop: false,
         child: BlocBuilder<DemographicResponsesStockBloc, DemographicResponsesStockState>(

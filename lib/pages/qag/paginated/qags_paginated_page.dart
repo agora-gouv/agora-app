@@ -11,6 +11,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_latest_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_popular_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_supporting_content.dart';
@@ -126,9 +127,21 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                 ),
               );
             } else if (thematiqueState is ThematiqueInitialLoadingState) {
-              return Center(child: CircularProgressIndicator());
+              return Column(
+                children: [
+                  AgoraToolbar(),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                  Center(child: CircularProgressIndicator()),
+                ],
+              );
             } else {
-              return AgoraErrorView();
+              return Column(
+                children: [
+                  AgoraToolbar(),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                  AgoraErrorView(),
+                ],
+              );
             }
           },
         ),

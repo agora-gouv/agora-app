@@ -96,13 +96,13 @@ class _QagsPageState extends State<QagsPage> {
       ];
     } else if (state is QagInitialLoadingState) {
       return [
-        SizedBox(height: AgoraSpacings.base),
+        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
         Center(child: CircularProgressIndicator()),
         SizedBox(height: AgoraSpacings.x2),
       ];
     } else if (state is QagErrorState) {
       return [
-        SizedBox(height: AgoraSpacings.base),
+        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
         Center(child: AgoraErrorView()),
         SizedBox(height: AgoraSpacings.x2),
       ];

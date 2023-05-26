@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
+import 'package:agora/bloc/consultation/details/consultation_details_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -33,126 +34,147 @@ class ConsultationDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as ConsultationDetailsArguments;
     return BlocProvider(
-      create: (BuildContext context) {
-        return ConsultationDetailsBloc(consultationRepository: RepositoryManager.getConsultationRepository())
-          ..add(FetchConsultationDetailsEvent(consultationId: arguments.consultationId));
-      },
+      create: (BuildContext context) => ConsultationDetailsBloc(
+        consultationRepository: RepositoryManager.getConsultationRepository(),
+      )..add(FetchConsultationDetailsEvent(consultationId: arguments.consultationId)),
       child: AgoraScaffold(
         child: BlocBuilder<ConsultationDetailsBloc, ConsultationDetailsState>(
           builder: (context, state) {
-            const columnPadding = AgoraSpacings.horizontalPadding;
-            const spacing = AgoraSpacings.x0_5;
-            const icPersonIconSize = 21;
-            if (state is ConsultationDetailsFetchedState) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    AgoraToolbar(),
-                    Image.network(state.viewModel.coverUrl),
-                    Padding(
-                      padding: const EdgeInsets.all(columnPadding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ThematiqueHelper.buildCard(context, state.viewModel.thematique),
-                          SizedBox(height: AgoraSpacings.x0_5),
-                          Text(state.viewModel.title, style: AgoraTextStyles.medium19),
-                          SizedBox(height: AgoraSpacings.x1_5),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Flexible(
-                                child: Column(
-                                  children: [
-                                    _buildInformationItem(
-                                      image: "ic_calendar.svg",
-                                      text: state.viewModel.endDate,
-                                      textStyle: AgoraTextStyles.regularItalic14,
-                                    ),
-                                    SizedBox(height: AgoraSpacings.x1_5),
-                                    _buildInformationItem(
-                                      image: "ic_query.svg",
-                                      text: state.viewModel.questionCount,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: AgoraSpacings.x0_5),
-                              Flexible(
-                                child: Column(
-                                  children: [
-                                    _buildInformationItem(
-                                      image: "ic_timer.svg",
-                                      text: state.viewModel.estimatedTime,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: AgoraSpacings.x1_5),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SvgPicture.asset("assets/ic_person.svg"),
-                              SizedBox(width: spacing),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    state.viewModel.participantCountText,
-                                    style: AgoraTextStyles.light14,
-                                  ),
-                                  SizedBox(height: AgoraSpacings.x0_5),
-                                  AgoraParticipantsProgressBar(
-                                    currentNbParticipants: state.viewModel.participantCount,
-                                    objectiveNbParticipants: state.viewModel.participantCountGoal,
-                                    minusPadding: columnPadding * 2 + spacing + icPersonIconSize,
-                                  ),
-                                  SizedBox(height: AgoraSpacings.x0_5),
-                                  Text(
-                                    state.viewModel.participantCountGoalText,
-                                    style: AgoraTextStyles.light14,
-                                  ),
-                                  SizedBox(height: AgoraSpacings.x0_5),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Divider(height: AgoraSpacings.x1_5, color: AgoraColors.divider, thickness: 1),
-                          AgoraHtml(data: state.viewModel.description),
-                          SizedBox(height: AgoraSpacings.base),
-                          AgoraRoundedCard(
-                            cardColor: AgoraColors.cascadingWhite,
-                            padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-                            child: AgoraHtml(data: state.viewModel.tipsDescription),
-                          ),
-                          SizedBox(height: AgoraSpacings.base),
-                          AgoraButton(
-                            label: ConsultationStrings.beginButton,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                ConsultationQuestionPage.routeName,
-                                arguments: arguments.consultationId,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            } else if (state is ConsultationDetailsInitialLoadingState) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return Center(child: AgoraErrorView());
-            }
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  AgoraToolbar(),
+                  _buildState(context, state),
+                ],
+              ),
+            );
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildState(BuildContext context, ConsultationDetailsState state) {
+    if (state is ConsultationDetailsFetchedState) {
+      return _buildContent(context, state.viewModel);
+    } else if (state is ConsultationDetailsInitialLoadingState) {
+      return Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: AgoraErrorView()),
+        ],
+      );
+    }
+  }
+
+  Widget _buildContent(BuildContext context, ConsultationDetailsViewModel viewModel) {
+    const columnPadding = AgoraSpacings.horizontalPadding;
+    const spacing = AgoraSpacings.x0_5;
+    const icPersonIconSize = 21;
+    return Column(
+      children: [
+        Image.network(viewModel.coverUrl),
+        Padding(
+          padding: const EdgeInsets.all(columnPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ThematiqueHelper.buildCard(context, viewModel.thematique),
+              SizedBox(height: AgoraSpacings.x0_5),
+              Text(viewModel.title, style: AgoraTextStyles.medium19),
+              SizedBox(height: AgoraSpacings.x1_5),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Flexible(
+                    child: Column(
+                      children: [
+                        _buildInformationItem(
+                          image: "ic_calendar.svg",
+                          text: viewModel.endDate,
+                          textStyle: AgoraTextStyles.regularItalic14,
+                        ),
+                        SizedBox(height: AgoraSpacings.x1_5),
+                        _buildInformationItem(
+                          image: "ic_query.svg",
+                          text: viewModel.questionCount,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: AgoraSpacings.x0_5),
+                  Flexible(
+                    child: Column(
+                      children: [
+                        _buildInformationItem(
+                          image: "ic_timer.svg",
+                          text: viewModel.estimatedTime,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: AgoraSpacings.x1_5),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SvgPicture.asset("assets/ic_person.svg"),
+                  SizedBox(width: spacing),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        viewModel.participantCountText,
+                        style: AgoraTextStyles.light14,
+                      ),
+                      SizedBox(height: AgoraSpacings.x0_5),
+                      AgoraParticipantsProgressBar(
+                        currentNbParticipants: viewModel.participantCount,
+                        objectiveNbParticipants: viewModel.participantCountGoal,
+                        minusPadding: columnPadding * 2 + spacing + icPersonIconSize,
+                      ),
+                      SizedBox(height: AgoraSpacings.x0_5),
+                      Text(
+                        viewModel.participantCountGoalText,
+                        style: AgoraTextStyles.light14,
+                      ),
+                      SizedBox(height: AgoraSpacings.x0_5),
+                    ],
+                  ),
+                ],
+              ),
+              Divider(height: AgoraSpacings.x1_5, color: AgoraColors.divider, thickness: 1),
+              AgoraHtml(data: viewModel.description),
+              SizedBox(height: AgoraSpacings.base),
+              AgoraRoundedCard(
+                cardColor: AgoraColors.cascadingWhite,
+                padding: const EdgeInsets.all(AgoraSpacings.x0_5),
+                child: AgoraHtml(data: viewModel.tipsDescription),
+              ),
+              SizedBox(height: AgoraSpacings.base),
+              AgoraButton(
+                label: ConsultationStrings.beginButton,
+                style: AgoraButtonStyle.primaryButtonStyle,
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    ConsultationQuestionPage.routeName,
+                    arguments: viewModel.id,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
