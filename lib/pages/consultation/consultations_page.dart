@@ -5,7 +5,6 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
-import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/consultation/consultations_answered_section.dart';
@@ -25,33 +24,31 @@ class ConsultationsPage extends StatelessWidget {
           consultationRepository: RepositoryManager.getConsultationRepository(),
         )..add(FetchConsultationsEvent());
       },
-      child: AgoraScaffold(
-        child: BlocBuilder<ConsultationBloc, ConsultationState>(
-          builder: (context, state) {
-            return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  AgoraMainToolbar(
-                    title: AgoraRichText(
-                      policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                      items: [
-                        AgoraRichTextTextItem(
-                          text: "${ConsultationStrings.toolbarPart1}\n",
-                          style: AgoraRichTextItemStyle.regular,
-                        ),
-                        AgoraRichTextTextItem(
-                          text: ConsultationStrings.toolbarPart2,
-                          style: AgoraRichTextItemStyle.bold,
-                        ),
-                      ],
-                    ),
+      child: BlocBuilder<ConsultationBloc, ConsultationState>(
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                AgoraMainToolbar(
+                  title: AgoraRichText(
+                    policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                    items: [
+                      AgoraRichTextTextItem(
+                        text: "${ConsultationStrings.toolbarPart1}\n",
+                        style: AgoraRichTextItemStyle.regular,
+                      ),
+                      AgoraRichTextTextItem(
+                        text: ConsultationStrings.toolbarPart2,
+                        style: AgoraRichTextItemStyle.bold,
+                      ),
+                    ],
                   ),
-                  Column(children: _handleConsultationsState(context, state)),
-                ],
-              ),
-            );
-          },
-        ),
+                ),
+                Column(children: _handleConsultationsState(context, state)),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
