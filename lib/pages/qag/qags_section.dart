@@ -142,7 +142,7 @@ class _QagsSectionState extends State<QagsSection> {
                     arguments: QagDetailsArguments(qagId: qagViewModel.id),
                   ).then((result) {
                     final qagDetailsBackResult = result as QagDetailsBackResult?;
-                    if (qagDetailsBackResult != null && qagDetailsBackResult.isSupported != null) {
+                    if (qagDetailsBackResult != null) {
                       context.read<QagBloc>().add(
                             UpdateQagsEvent(
                               qagId: qagDetailsBackResult.qagId,
@@ -151,7 +151,7 @@ class _QagsSectionState extends State<QagsSection> {
                               username: qagDetailsBackResult.username,
                               date: qagDetailsBackResult.date,
                               supportCount: qagDetailsBackResult.supportCount,
-                              isSupported: qagDetailsBackResult.isSupported!,
+                              isSupported: qagDetailsBackResult.isSupported,
                             ),
                           );
                       setState(() {}); // do not remove: utils to update screen

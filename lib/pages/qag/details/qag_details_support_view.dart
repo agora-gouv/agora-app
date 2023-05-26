@@ -14,7 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class QagDetailsSupportView extends StatelessWidget {
   final String qagId;
   final QagDetailsSupportViewModel support;
-  final Function(int supportCount, bool? isSupported) onSupportChange;
+  final Function(int supportCount, bool isSupported) onSupportChange;
 
   const QagDetailsSupportView({
     super.key,
@@ -85,7 +85,7 @@ class QagDetailsSupportView extends StatelessWidget {
       onSupportChange(newSupportCount, false);
       return (newSupportCount).toString();
     }
-    onSupportChange(supportCount, null);
+    onSupportChange(supportCount, isSupported);
     return supportCount.toString();
   }
 

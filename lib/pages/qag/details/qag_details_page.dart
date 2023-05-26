@@ -37,7 +37,7 @@ class QagDetailsBackResult {
   final String username;
   final String date;
   final int supportCount;
-  final bool? isSupported;
+  final bool isSupported;
 
   QagDetailsBackResult({
     required this.qagId,

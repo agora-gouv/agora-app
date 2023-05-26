@@ -89,6 +89,16 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
               isSupported: event.isSupported,
             ),
           );
+        } else {
+          supportingViewModelsCopy[updatedSupportingIndex] = QagViewModel(
+            id: event.qagId,
+            thematique: event.thematique,
+            title: event.title,
+            username: event.username,
+            date: event.date,
+            supportCount: event.supportCount,
+            isSupported: event.isSupported,
+          );
         }
       } else {
         // Not supported
