@@ -6,7 +6,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum AgoraRoundedButtonStyle { primaryButtonStyle, greenBorderButtonStyle, greyBorderButtonStyle }
+enum AgoraRoundedButtonStyle { primaryButtonStyle, blueBorderButtonStyle, greyBorderButtonStyle }
 
 enum AgoraRoundedButtonPadding { normal, short }
 
@@ -59,8 +59,8 @@ class AgoraRoundedButton extends StatelessWidget {
     switch (style) {
       case AgoraRoundedButtonStyle.primaryButtonStyle:
         return null;
-      case AgoraRoundedButtonStyle.greenBorderButtonStyle:
-        return AgoraColors.primaryGreen;
+      case AgoraRoundedButtonStyle.blueBorderButtonStyle:
+        return AgoraColors.primaryBlue;
       case AgoraRoundedButtonStyle.greyBorderButtonStyle:
         return AgoraColors.orochimaru;
     }
@@ -69,8 +69,8 @@ class AgoraRoundedButton extends StatelessWidget {
   Color _buildCardColor() {
     switch (style) {
       case AgoraRoundedButtonStyle.primaryButtonStyle:
-        return AgoraColors.primaryGreen;
-      case AgoraRoundedButtonStyle.greenBorderButtonStyle:
+        return AgoraColors.primaryBlue;
+      case AgoraRoundedButtonStyle.blueBorderButtonStyle:
         return AgoraColors.transparent;
       case AgoraRoundedButtonStyle.greyBorderButtonStyle:
         return AgoraColors.transparent;
@@ -81,8 +81,8 @@ class AgoraRoundedButton extends StatelessWidget {
     switch (style) {
       case AgoraRoundedButtonStyle.primaryButtonStyle:
         return AgoraTextStyles.medium14.copyWith(color: AgoraColors.white);
-      case AgoraRoundedButtonStyle.greenBorderButtonStyle:
-        return AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen);
+      case AgoraRoundedButtonStyle.blueBorderButtonStyle:
+        return AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryBlue);
       case AgoraRoundedButtonStyle.greyBorderButtonStyle:
         return AgoraTextStyles.medium14;
     }

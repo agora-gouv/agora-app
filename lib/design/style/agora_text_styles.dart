@@ -321,11 +321,11 @@ class AgoraTextStyles {
     foreground: Paint()..color = AgoraColors.invertedBlueFrance,
   );
 
-  static TextStyle greenTextButton = TextStyle(
+  static TextStyle primaryBlueTextButton = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
     fontSize: 16.0,
-    foreground: Paint()..color = AgoraColors.primaryGreen,
+    foreground: Paint()..color = AgoraColors.primaryBlue,
   );
 
   static TextStyle redTextButton = TextStyle(

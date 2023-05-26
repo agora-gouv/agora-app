@@ -1,4 +1,5 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -86,20 +87,7 @@ class AgoraQagModerationCard extends StatelessWidget {
                   cardColor: AgoraColors.doctor,
                   padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
                   roundedCorner: AgoraRoundedCorner.bottomRounded,
-                  child: RichText(
-                    text: TextSpan(
-                      style: AgoraTextStyles.medium11.copyWith(color: AgoraColors.primaryGreen),
-                      children: [
-                        TextSpan(text: QagStrings.de),
-                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                        TextSpan(text: username, style: AgoraTextStyles.medium12),
-                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                        TextSpan(text: QagStrings.at),
-                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                        TextSpan(text: date, style: AgoraTextStyles.medium12),
-                      ],
-                    ),
-                  ),
+                  child: Text(QagStrings.authorAndDate.format2(username, date), style: AgoraTextStyles.light12),
                 ),
               ),
             ],
@@ -115,7 +103,7 @@ class AgoraQagModerationCard extends StatelessWidget {
                   child: AgoraButton(
                     label: QagStrings.refuse,
                     isLoading: refuseLoading,
-                    style: AgoraButtonStyle.greenBorderButtonStyle,
+                    style: AgoraButtonStyle.blueBorderButtonStyle,
                     onPressed: () => onRefuse(),
                   ),
                 ),

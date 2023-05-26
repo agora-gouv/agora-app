@@ -85,7 +85,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
       toolbarHeight: height,
       bottom: TabBar(
         controller: widget.tabController,
-        indicatorColor: AgoraColors.blueFrance,
+        indicatorColor: AgoraColors.primaryBlue,
         labelStyle: AgoraTextStyles.medium14,
         unselectedLabelStyle: AgoraTextStyles.light14,
         labelColor: AgoraColors.primaryGrey,

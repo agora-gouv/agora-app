@@ -30,7 +30,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
     final consultationId = ModalRoute.of(context)!.settings.arguments as String;
     return AgoraScaffold(
       shouldPop: false,
-      appBarColor: AgoraColors.primaryGreen,
+      appBarColor: AgoraColors.primaryBlue,
       child: AgoraSingleScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +110,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                               },
                               child: Text(
                                 DemographicStrings.readMore,
-                                style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryGreen),
+                                style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
                               ),
                             ),
                           ],
@@ -136,7 +136,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                               Flexible(
                                 child: AgoraButton(
                                   label: DemographicStrings.toNoAnswer,
-                                  style: AgoraButtonStyle.greenBorderButtonStyle,
+                                  style: AgoraButtonStyle.blueBorderButtonStyle,
                                   onPressed: () {
                                     TrackerHelper.trackClick(
                                       clickName: AnalyticsEventNames.ignoreDemographic,

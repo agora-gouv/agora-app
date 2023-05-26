@@ -28,7 +28,7 @@ class AgoraReadMoreText extends StatefulWidget {
     Key? key,
     this.trimExpandedText = QagStrings.readMore,
     this.trimCollapsedText = QagStrings.readLess,
-    this.colorClickableText = AgoraColors.primaryGreen,
+    this.colorClickableText = AgoraColors.primaryBlue,
     this.trimLength = 240,
     this.trimLines = 12,
     this.trimMode = AgoraTrimMode.line,

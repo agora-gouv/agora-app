@@ -11,7 +11,6 @@ class ConsultationStrings {
   static const String participate = "Participer";
   static const String beginButton = "Commencer";
   static const String endDate = "Jusqu'au %s";
-  static const String endDateVariation = "Jusqu'au";
   static const String participantCount = "%s participants";
   static const String participantCountGoal = "Prochain objectif : %s !";
   static const String previousQuestion = "Question précédente";
@@ -42,5 +41,5 @@ class ConsultationStrings {
   static const String coming = "A venir";
   static const String engagement = "Engagements";
   static const String implementation = "Mise en œuvre";
-  static const String shortly = "Prochainement";
+  static const String shortly = "PROCHAINEMENT";
 }

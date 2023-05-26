@@ -7,6 +7,7 @@ import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -86,7 +87,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
       ],
       child: AgoraScaffold(
         popAction: () => _popWithBackResult(context),
-        appBarColor: AgoraColors.primaryGreen,
+        appBarColor: AgoraColors.primaryBlue,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
             return AgoraSingleScrollView(
@@ -169,25 +170,9 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                   AgoraReadMoreText(viewModel.description, trimLines: 3),
                 SizedBox(height: AgoraSpacings.base),
                 if (support != null) ...[
-                  RichText(
-                    text: TextSpan(
-                      style: AgoraTextStyles.medium14,
-                      children: [
-                        TextSpan(text: QagStrings.de),
-                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                        TextSpan(
-                          text: viewModel.username,
-                          style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
-                        ),
-                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                        TextSpan(text: QagStrings.at),
-                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                        TextSpan(
-                          text: viewModel.date,
-                          style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.primaryGreen),
-                        )
-                      ],
-                    ),
+                  Text(
+                    QagStrings.authorAndDate.format2(viewModel.username, viewModel.date),
+                    style: AgoraTextStyles.medium14,
                   ),
                   SizedBox(height: AgoraSpacings.x3),
                   QagDetailsSupportView(

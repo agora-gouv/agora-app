@@ -66,7 +66,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
             side: widget.error
                 ? BorderSide(color: AgoraColors.fluorescentRed, width: 2)
                 : widget.check
-                    ? BorderSide(color: AgoraColors.primaryGreen, width: 1)
+                    ? BorderSide(color: AgoraColors.primaryBlue, width: 1)
                     : BorderSide(color: AgoraColors.border, width: 1),
           ),
           child: Stack(

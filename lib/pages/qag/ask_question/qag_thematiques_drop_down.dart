@@ -57,10 +57,8 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
           final thematique = value as ThematiqueWithIdViewModel;
           return DropdownMenuItem<T>(
             value: value,
-            child: AgoraThematiqueCard(
-              picto: thematique.picto,
-              label: thematique.label,
-            ),
+            child:
+                AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, size: AgoraThematiqueSize.medium),
           );
         }).toList(),
       ),

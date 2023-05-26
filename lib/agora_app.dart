@@ -81,8 +81,8 @@ class _AgoraAppState extends State<AgoraApp> {
       ),
       theme: ThemeData(
         colorScheme: ColorScheme.light(
-          primary: AgoraColors.primaryGreen,
-          secondary: AgoraColors.primaryGreen,
+          primary: AgoraColors.primaryBlue,
+          secondary: AgoraColors.primaryBlue,
         ),
       ),
     );

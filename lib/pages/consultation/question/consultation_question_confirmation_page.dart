@@ -53,7 +53,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
       },
       child: AgoraScaffold(
         shouldPop: false,
-        appBarColor: AgoraColors.primaryGreen,
+        appBarColor: AgoraColors.primaryBlue,
         child: BlocConsumer<ConsultationQuestionsResponsesBloc, SendConsultationQuestionsResponsesState>(
           listener: (context, state) {
             if (_shouldDisplayDemographicQuiz(state)) {

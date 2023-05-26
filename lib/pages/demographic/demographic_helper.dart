@@ -30,7 +30,7 @@ class DemographicHelper {
   static Widget buildIgnoreButton({required VoidCallback onPressed}) {
     return AgoraButton(
       label: DemographicStrings.ignoreQuestion,
-      style: AgoraButtonStyle.greenBorderButtonStyle,
+      style: AgoraButtonStyle.blueBorderButtonStyle,
       onPressed: onPressed,
     );
   }
@@ -52,12 +52,12 @@ class DemographicHelper {
                     Expanded(
                       child: Text(
                         DemographicStrings.previousQuestion,
-                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.blueFrance),
+                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
                       ),
                     ),
                   ],
                 ),
-                Divider(height: 10, color: AgoraColors.blueFrance, thickness: 1),
+                Divider(height: 10, color: AgoraColors.primaryBlue, thickness: 1),
               ],
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/design/custom_view/agora_green_separator.dart';
+import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -41,7 +41,7 @@ class AgoraMainToolbar extends StatelessWidget {
                 ],
               ),
               SizedBox(height: AgoraSpacings.x1_25),
-              AgoraGreenSeparator(),
+              AgoraLittleSeparator(),
             ],
           ),
         ),

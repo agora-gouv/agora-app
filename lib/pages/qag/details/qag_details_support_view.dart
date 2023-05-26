@@ -93,13 +93,13 @@ class QagDetailsSupportView extends StatelessWidget {
   String _buildButtonIcon(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
-        return "ic_confirmation_green.svg";
+        return "ic_confirmation.svg";
       } else {
         return "ic_heart_white.svg";
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return "ic_confirmation_green.svg";
+        return "ic_confirmation.svg";
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
         return "ic_heart_white.svg";
       }
@@ -161,18 +161,18 @@ class QagDetailsSupportView extends StatelessWidget {
   AgoraRoundedButtonStyle _buildButtonStyle(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
-        return AgoraRoundedButtonStyle.greenBorderButtonStyle;
+        return AgoraRoundedButtonStyle.blueBorderButtonStyle;
       } else {
         return AgoraRoundedButtonStyle.primaryButtonStyle;
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return AgoraRoundedButtonStyle.greenBorderButtonStyle;
+        return AgoraRoundedButtonStyle.blueBorderButtonStyle;
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
         return AgoraRoundedButtonStyle.primaryButtonStyle;
       }
     }
-    return AgoraRoundedButtonStyle.greenBorderButtonStyle; // value not important
+    return AgoraRoundedButtonStyle.blueBorderButtonStyle; // value not important
   }
 
   void _buildOnPressed(BuildContext context, String qagId, bool isSupported, QagSupportState supportState) {

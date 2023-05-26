@@ -40,7 +40,7 @@ class AgoraDemographicResponseCard extends StatelessWidget {
 
   AgoraRoundedCard buildCard() {
     return AgoraRoundedCard(
-      borderColor: isSelected ? AgoraColors.primaryGreen : AgoraColors.border,
+      borderColor: isSelected ? AgoraColors.primaryBlue : AgoraColors.border,
       borderWidth: isSelected ? 2.0 : 1.0,
       cardColor: AgoraColors.white,
       onTap: () => onTap(),

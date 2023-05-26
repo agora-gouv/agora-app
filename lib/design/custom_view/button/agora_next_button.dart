@@ -18,7 +18,7 @@ class AgoraNextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
       cornerRadius: AgoraCorners.round,
-      cardColor: AgoraColors.primaryGreen,
+      cardColor: AgoraColors.primaryBlue,
       child: SvgPicture.asset("assets/$icon"),
       onTap: () => onPressed(),
     );

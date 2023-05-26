@@ -42,7 +42,7 @@ class AgoraQagResponseCard extends StatelessWidget {
                 children: [
                   ThematiqueHelper.buildCard(context, thematique),
                   SizedBox(height: AgoraSpacings.x0_25),
-                  Text(title, style: AgoraTextStyles.regular14),
+                  Text(title, style: AgoraTextStyles.medium14),
                   SizedBox(height: AgoraSpacings.x0_25),
                 ],
               ),
@@ -62,7 +62,7 @@ class AgoraQagResponseCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(author, style: AgoraTextStyles.medium12),
-                        Text(date, style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.primaryGreen)),
+                        Text(date, style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
                       ],
                     ),
                   ),

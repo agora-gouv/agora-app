@@ -7,7 +7,7 @@ import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_green_separator.dart';
+import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
@@ -134,7 +134,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
             _buildDemographicInformation(demographicInformationViewModels) +
             [
               SizedBox(height: AgoraSpacings.base),
-              AgoraGreenSeparator(),
+              AgoraLittleSeparator(),
               SizedBox(height: AgoraSpacings.base),
               Text(DemographicStrings.demographicInformationNotice1, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.x0_5),
@@ -196,7 +196,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
           children: [
             Text(
               viewModel.demographicType,
-              style: AgoraTextStyles.regular16.copyWith(color: AgoraColors.primaryGreen),
+              style: AgoraTextStyles.regular16.copyWith(color: AgoraColors.blue525),
             ),
             SizedBox(height: AgoraSpacings.x0_25),
             Text(viewModel.data, style: AgoraTextStyles.medium18),

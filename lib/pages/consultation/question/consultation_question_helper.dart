@@ -23,12 +23,12 @@ class ConsultationQuestionHelper {
                     Expanded(
                       child: Text(
                         ConsultationStrings.previousQuestion,
-                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.blueFrance),
+                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
                       ),
                     ),
                   ],
                 ),
-                Divider(height: 10, color: AgoraColors.blueFrance, thickness: 1),
+                Divider(height: 10, color: AgoraColors.primaryBlue, thickness: 1),
               ],
             ),
           ),

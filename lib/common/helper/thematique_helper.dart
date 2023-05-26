@@ -7,8 +7,12 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class ThematiqueHelper {
-  static Widget buildCard(BuildContext context, ThematiqueViewModel thematique) {
-    return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label);
+  static Widget buildCard(
+    BuildContext context,
+    ThematiqueViewModel thematique, {
+    AgoraThematiqueSize size = AgoraThematiqueSize.medium,
+  }) {
+    return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, size: size);
   }
 
   static Widget buildThematiques({
