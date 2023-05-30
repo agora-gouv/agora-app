@@ -1,38 +1,122 @@
+import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_latest_bloc.dart';
+import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_popular_bloc.dart';
+import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_supporting_bloc.dart';
+import 'package:agora/bloc/qag/paginated/qag_paginated_event.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_state.dart';
+import 'package:agora/bloc/qag/paginated/qag_paginated_view_model.dart';
+import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
+import 'package:agora/bloc/qag/support/qag_support_event.dart';
+import 'package:agora/bloc/qag/support/qag_support_state.dart';
+import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsPaginatedContentBuilder {
   static List<Widget> buildWidgets({
     required BuildContext context,
+    required QagPaginatedTab paginatedTab,
     required QagPaginatedState qagPaginatedState,
     required VoidCallback onDisplayMoreClick,
     required VoidCallback onRetryClick,
+    required Function(List<QagDetailsBackResult>) onQagDetailsBackResults,
   }) {
+    _buildQagBackResults(qagPaginatedState, onQagDetailsBackResults);
     final List<Widget> qagsWidgets = [];
     for (final qagPaginatedViewModel in qagPaginatedState.qagViewModels) {
       qagsWidgets.add(
-        AgoraQagCard(
-          id: qagPaginatedViewModel.id,
-          thematique: qagPaginatedViewModel.thematique,
-          title: qagPaginatedViewModel.title,
-          username: qagPaginatedViewModel.username,
-          date: qagPaginatedViewModel.date,
-          supportCount: qagPaginatedViewModel.supportCount,
-          isSupported: qagPaginatedViewModel.isSupported,
-          onSupportClick: (support) {
-            // TODO
+        BlocConsumer<QagSupportBloc, QagSupportState>(
+          listenWhen: (previousState, currentState) {
+            return (currentState is QagSupportSuccessState && currentState.qagId == qagPaginatedViewModel.id) ||
+                (currentState is QagDeleteSupportSuccessState && currentState.qagId == qagPaginatedViewModel.id) ||
+                (currentState is QagSupportErrorState && currentState.qagId == qagPaginatedViewModel.id) ||
+                (currentState is QagDeleteSupportErrorState && currentState.qagId == qagPaginatedViewModel.id);
           },
-          onCardClick: () {
-            Navigator.pushNamed(
-              context,
-              QagDetailsPage.routeName,
-              arguments: QagDetailsArguments(qagId: qagPaginatedViewModel.id),
+          listener: (previousState, currentState) {
+            if (currentState is QagSupportSuccessState || currentState is QagDeleteSupportSuccessState) {
+              final newSupportCount = _buildCount(qagPaginatedViewModel.supportCount, currentState);
+              final newIsSupported = !qagPaginatedViewModel.isSupported;
+              _updatePaginatedQags(
+                context: context,
+                paginatedTab: paginatedTab,
+                qagId: qagPaginatedViewModel.id,
+                thematique: qagPaginatedViewModel.thematique,
+                title: qagPaginatedViewModel.title,
+                username: qagPaginatedViewModel.username,
+                date: qagPaginatedViewModel.date,
+                supportCount: newSupportCount,
+                isSupported: newIsSupported,
+              );
+            } else if (currentState is QagSupportErrorState || currentState is QagDeleteSupportErrorState) {
+              showAgoraDialog(
+                context: context,
+                columnChildren: [
+                  AgoraErrorView(),
+                  SizedBox(height: AgoraSpacings.x0_75),
+                  AgoraButton(
+                    label: GenericStrings.close,
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              );
+            }
+          },
+          buildWhen: (previousState, currentState) {
+            return currentState is QagSupportInitialState ||
+                currentState is QagSupportLoadingState ||
+                currentState is QagDeleteSupportLoadingState ||
+                (currentState is QagSupportSuccessState && currentState.qagId == qagPaginatedViewModel.id) ||
+                (currentState is QagDeleteSupportSuccessState && currentState.qagId == qagPaginatedViewModel.id);
+          },
+          builder: (context, state) {
+            return AgoraQagCard(
+              id: qagPaginatedViewModel.id,
+              thematique: qagPaginatedViewModel.thematique,
+              title: qagPaginatedViewModel.title,
+              username: qagPaginatedViewModel.username,
+              date: qagPaginatedViewModel.date,
+              supportCount: qagPaginatedViewModel.supportCount,
+              isSupported: qagPaginatedViewModel.isSupported,
+              onSupportClick: (support) {
+                if (support) {
+                  context.read<QagSupportBloc>().add(SupportQagEvent(qagId: qagPaginatedViewModel.id));
+                } else {
+                  context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: qagPaginatedViewModel.id));
+                }
+              },
+              onCardClick: () {
+                Navigator.pushNamed(
+                  context,
+                  QagDetailsPage.routeName,
+                  arguments: QagDetailsArguments(qagId: qagPaginatedViewModel.id),
+                ).then((result) {
+                  final qagDetailsBackResult = result as QagDetailsBackResult?;
+                  if (qagDetailsBackResult != null) {
+                    _updatePaginatedQags(
+                      context: context,
+                      paginatedTab: paginatedTab,
+                      qagId: qagDetailsBackResult.qagId,
+                      thematique: qagDetailsBackResult.thematique,
+                      title: qagDetailsBackResult.title,
+                      username: qagDetailsBackResult.username,
+                      date: qagDetailsBackResult.date,
+                      supportCount: qagDetailsBackResult.supportCount,
+                      isSupported: qagDetailsBackResult.isSupported,
+                    );
+                  }
+                });
+              },
             );
           },
         ),
@@ -77,5 +161,93 @@ class QagsPaginatedContentBuilder {
       }
     }
     return qagsWidgets;
+  }
+
+  static void _buildQagBackResults(
+    QagPaginatedState qagPaginatedState,
+    Function(List<QagDetailsBackResult>) onQagDetailsBackResults,
+  ) {
+    List<QagPaginatedViewModel> qagPaginatedViewModels = [...qagPaginatedState.qagViewModels];
+    if (qagPaginatedViewModels.length > 10) {
+      qagPaginatedViewModels = qagPaginatedViewModels.sublist(0, 10);
+    }
+    final List<QagDetailsBackResult> backResults = [];
+    for (final qagPaginatedViewModel in qagPaginatedViewModels) {
+      backResults.add(
+        QagDetailsBackResult(
+          qagId: qagPaginatedViewModel.id,
+          thematique: qagPaginatedViewModel.thematique,
+          title: qagPaginatedViewModel.title,
+          username: qagPaginatedViewModel.username,
+          date: qagPaginatedViewModel.date,
+          supportCount: qagPaginatedViewModel.supportCount,
+          isSupported: qagPaginatedViewModel.isSupported,
+        ),
+      );
+    }
+    onQagDetailsBackResults(backResults);
+  }
+
+  static void _updatePaginatedQags({
+    required BuildContext context,
+    required QagPaginatedTab paginatedTab,
+    required String qagId,
+    required ThematiqueViewModel thematique,
+    required String title,
+    required String username,
+    required String date,
+    required int supportCount,
+    required bool isSupported,
+  }) {
+    switch (paginatedTab) {
+      case QagPaginatedTab.popular:
+        context.read<QagPaginatedPopularBloc>().add(
+              UpdateQagsPaginatedEvent(
+                qagId: qagId,
+                thematique: thematique,
+                title: title,
+                username: username,
+                date: date,
+                supportCount: supportCount,
+                isSupported: isSupported,
+              ),
+            );
+        break;
+      case QagPaginatedTab.latest:
+        context.read<QagPaginatedLatestBloc>().add(
+              UpdateQagsPaginatedEvent(
+                qagId: qagId,
+                thematique: thematique,
+                title: title,
+                username: username,
+                date: date,
+                supportCount: supportCount,
+                isSupported: isSupported,
+              ),
+            );
+        break;
+      case QagPaginatedTab.supporting:
+        context.read<QagPaginatedSupportingBloc>().add(
+              UpdateQagsPaginatedEvent(
+                qagId: qagId,
+                thematique: thematique,
+                title: title,
+                username: username,
+                date: date,
+                supportCount: supportCount,
+                isSupported: isSupported,
+              ),
+            );
+        break;
+    }
+  }
+
+  static int _buildCount(int supportCount, QagSupportState supportState) {
+    if (supportState is QagSupportSuccessState) {
+      return supportCount + 1;
+    } else if (supportState is QagDeleteSupportSuccessState) {
+      return supportCount - 1;
+    }
+    return supportCount;
   }
 }

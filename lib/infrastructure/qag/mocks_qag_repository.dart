@@ -121,13 +121,13 @@ class MockQagRepository extends QagDioRepository {
       maxPage: 8,
       paginatedQags: [
         QagPaginated(
-          id: "id_$name",
+          id: "996436ca-ee69-11ed-a05b-0242ac120003",
           thematique: _getThematique(thematiqueId),
           title: "title_$name",
           username: "username_$name",
           date: DateTime(2024, 2, 23),
-          supportCount: 8,
-          isSupported: false,
+          supportCount: 12,
+          isSupported: true,
         ),
       ],
     );

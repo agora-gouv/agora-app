@@ -5,7 +5,7 @@ import 'package:agora/infrastructure/qag/presenter/qag_paginated_presenter.dart'
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class QagPaginatedBloc extends Bloc<FetchQagsPaginatedEvent, QagPaginatedState> {
+abstract class QagPaginatedBloc extends Bloc<QagsPaginatedEvent, QagPaginatedState> {
   final QagRepository qagRepository;
   final QagPaginatedFilter qagPaginatedFilter;
 
@@ -13,10 +13,11 @@ abstract class QagPaginatedBloc extends Bloc<FetchQagsPaginatedEvent, QagPaginat
     required this.qagRepository,
     required this.qagPaginatedFilter,
   }) : super(QagPaginatedInitialState()) {
-    on<FetchQagsPaginatedEvent>(_handleQagPaginated);
+    on<FetchQagsPaginatedEvent>(_handleFetchQagPaginated);
+    on<UpdateQagsPaginatedEvent>(handleUpdateQagsPaginated);
   }
 
-  Future<void> _handleQagPaginated(
+  Future<void> _handleFetchQagPaginated(
     FetchQagsPaginatedEvent event,
     Emitter<QagPaginatedState> emit,
   ) async {
@@ -51,4 +52,9 @@ abstract class QagPaginatedBloc extends Bloc<FetchQagsPaginatedEvent, QagPaginat
       );
     }
   }
+
+  Future<void> handleUpdateQagsPaginated(
+    UpdateQagsPaginatedEvent event,
+    Emitter<QagPaginatedState> emit,
+  );
 }

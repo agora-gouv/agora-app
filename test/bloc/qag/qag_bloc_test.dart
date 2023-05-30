@@ -3,6 +3,8 @@ import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -389,6 +391,129 @@ void main() {
               username: "username0",
               date: "23 janvier",
               supportCount: 8,
+              isSupported: true,
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
+
+  group("ReplaceAllQagsByBackResultsEvent", () {
+    blocTest<QagBloc, QagState>(
+      "when replace qags by back results - should emit updated state",
+      build: () => QagBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagFetchedState(
+        qagResponseViewModels: [],
+        popularViewModels: [
+          QagViewModel(
+            id: "id0",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title0",
+            username: "username0",
+            date: "23 janvier",
+            supportCount: 8,
+            isSupported: true,
+          ),
+        ],
+        latestViewModels: [
+          QagViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 6,
+            isSupported: false,
+          ),
+        ],
+        supportingViewModels: [
+          QagViewModel(
+            id: "id0",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title0",
+            username: "username0",
+            date: "23 janvier",
+            supportCount: 8,
+            isSupported: true,
+          ),
+        ],
+      ),
+      act: (bloc) => bloc.add(
+        ReplaceAllQagsByBackResultsEvent(
+          backResults: QagPaginatedDetailsBackResults(
+            popularQagDetailsBackResults: [
+              QagDetailsBackResult(
+                qagId: "id2",
+                thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+                title: "title2",
+                username: "username2",
+                date: "23 février",
+                supportCount: 22,
+                isSupported: true,
+              ),
+            ],
+            latestQagDetailsBackResults: [
+              QagDetailsBackResult(
+                qagId: "id2",
+                thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+                title: "title2",
+                username: "username2",
+                date: "23 février",
+                supportCount: 22,
+                isSupported: true,
+              ),
+            ],
+            supportingQagDetailsBackResults: [
+              QagDetailsBackResult(
+                qagId: "id2",
+                thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+                title: "title2",
+                username: "username2",
+                date: "23 février",
+                supportCount: 22,
+                isSupported: true,
+              ),
+            ],
+          ),
+        ),
+      ),
+      expect: () => [
+        QagFetchedState(
+          qagResponseViewModels: [],
+          popularViewModels: [
+            QagViewModel(
+              id: "id2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title2",
+              username: "username2",
+              date: "23 février",
+              supportCount: 22,
+              isSupported: true,
+            ),
+          ],
+          latestViewModels: [
+            QagViewModel(
+              id: "id2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title2",
+              username: "username2",
+              date: "23 février",
+              supportCount: 22,
+              isSupported: true,
+            ),
+          ],
+          supportingViewModels: [
+            QagViewModel(
+              id: "id2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title2",
+              username: "username2",
+              date: "23 février",
+              supportCount: 22,
               isSupported: true,
             ),
           ],
