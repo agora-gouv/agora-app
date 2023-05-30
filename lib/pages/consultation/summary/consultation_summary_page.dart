@@ -1,12 +1,14 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_bloc.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_event.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_state.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
@@ -81,14 +83,20 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       child: TabBarView(
                         controller: _tabController,
                         children: [
-                          ConsultationSummaryResultsTabContent(
-                            participantCount: viewModel.participantCount,
-                            results: viewModel.results,
+                          AgoraTracker(
+                            widgetName: AnalyticsScreenNames.consultationSummaryResultPage,
+                            child: ConsultationSummaryResultsTabContent(
+                              participantCount: viewModel.participantCount,
+                              results: viewModel.results,
+                            ),
                           ),
-                          ConsultationSummaryEtEnsuiteTabContent(
-                            title: viewModel.title,
-                            consultationId: consultationId,
-                            etEnsuiteViewModel: viewModel.etEnsuite,
+                          AgoraTracker(
+                            widgetName: AnalyticsScreenNames.consultationSummaryEtEnsuitePage,
+                            child: ConsultationSummaryEtEnsuiteTabContent(
+                              title: viewModel.title,
+                              consultationId: consultationId,
+                              etEnsuiteViewModel: viewModel.etEnsuite,
+                            ),
                           ),
                         ],
                       ),

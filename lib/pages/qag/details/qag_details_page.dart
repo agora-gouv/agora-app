@@ -54,6 +54,10 @@ class QagDetailsBackResult {
 class QagDetailsPage extends StatefulWidget {
   static const routeName = "/qagDetailsPage";
 
+  final String qagId;
+
+  const QagDetailsPage({super.key, required this.qagId});
+
   @override
   State<QagDetailsPage> createState() => _QagDetailsPageState();
 }
@@ -63,14 +67,12 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as QagDetailsArguments;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) {
-            return QagDetailsBloc(qagRepository: RepositoryManager.getQagRepository())
-              ..add(FetchQagDetailsEvent(qagId: arguments.qagId));
-          },
+          create: (BuildContext context) => QagDetailsBloc(
+            qagRepository: RepositoryManager.getQagRepository(),
+          )..add(FetchQagDetailsEvent(qagId: widget.qagId)),
         ),
         BlocProvider(
           create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
