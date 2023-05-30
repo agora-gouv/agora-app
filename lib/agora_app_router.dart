@@ -1,3 +1,5 @@
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
@@ -29,24 +31,40 @@ class AgoraAppRouter {
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
-      ConsultationDetailsPage.routeName: (context) => ConsultationDetailsPage(),
-      ConsultationQuestionPage.routeName: (context) => ConsultationQuestionPage(),
+      ConsultationQuestionPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.consultationQuestionPage,
+            child: ConsultationQuestionPage(),
+          ),
       ConsultationSummaryPage.routeName: (context) => ConsultationSummaryPage(),
       // Question au gouvernement
       QagsPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
-      QagDetailsPage.routeName: (context) => QagDetailsPage(),
-      QagAskQuestionPage.routeName: (context) => QagAskQuestionPage(),
+      QagAskQuestionPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.qagAskQuestionPage,
+            child: QagAskQuestionPage(),
+          ),
       // Profile
-      ProfilePage.routeName: (context) => ProfilePage(),
+      ProfilePage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.profilePage,
+            child: ProfilePage(),
+          ),
       ModerationPage.routeName: (context) => ModerationPage(),
       ModerationCharterPage.routeName: (context) => ModerationCharterPage(),
       PrivacyPolicyPage.routeName: (context) => PrivacyPolicyPage(),
       TermsOfConditionPage.routeName: (context) => TermsOfConditionPage(),
       LegalNoticePage.routeName: (context) => LegalNoticePage(),
       // Demographique
-      DemographicInformationPage.routeName: (context) => DemographicInformationPage(),
-      DemographicQuestionPage.routeName: (context) => DemographicQuestionPage(),
-      DemographicProfilePage.routeName: (context) => DemographicProfilePage(),
+      DemographicInformationPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.demographicInformationPage,
+            child: DemographicInformationPage(),
+          ),
+      DemographicQuestionPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.demographicQuestionPage,
+            child: DemographicQuestionPage(),
+          ),
+      DemographicProfilePage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.demographicProfilePage,
+            child: DemographicProfilePage(),
+          ),
     };
   }
 
@@ -56,23 +74,50 @@ class AgoraAppRouter {
       case LoadingPage.routeName:
         currentRoute = LoadingPage(sharedPref: sharedPref);
         break;
+      // Consultation
+      case ConsultationDetailsPage.routeName:
+        final arguments = settings.arguments as ConsultationDetailsArguments;
+        currentRoute = AgoraTracker(
+          widgetName: AnalyticsScreenNames.consultationDetailsPage,
+          id: arguments.consultationId,
+          child: ConsultationDetailsPage(consultationId: arguments.consultationId),
+        );
+        break;
       case ConsultationQuestionConfirmationPage.routeName:
         final arguments = settings.arguments as ConsultationQuestionConfirmationArguments;
         currentRoute = BlocProvider.value(
           value: arguments.consultationQuestionsResponsesBloc,
-          child: ConsultationQuestionConfirmationPage(consultationId: arguments.consultationId),
+          child: AgoraTracker(
+            widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
+            child: ConsultationQuestionConfirmationPage(consultationId: arguments.consultationId),
+          ),
+        );
+        break;
+      // Qag
+      case QagDetailsPage.routeName:
+        final arguments = settings.arguments as QagDetailsArguments;
+        currentRoute = AgoraTracker(
+          widgetName: AnalyticsScreenNames.qagDetailsPage,
+          id: arguments.qagId,
+          child: QagDetailsPage(qagId: arguments.qagId),
+        );
+        break;
+      case QagsPaginatedPage.routeName:
+        final arguments = settings.arguments as QagsPaginatedArguments;
+        currentRoute = AgoraTracker(
+          widgetName: AnalyticsScreenNames.qagsPaginatedPage,
+          child: QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab),
         );
         break;
       case DemographicConfirmationPage.routeName:
         final arguments = settings.arguments as DemographicConfirmationArguments;
         currentRoute = BlocProvider.value(
           value: arguments.demographicResponsesStockBloc,
-          child: DemographicConfirmationPage(consultationId: arguments.consultationId),
+          child: AgoraTracker(
+            widgetName: AnalyticsScreenNames.demographicConfirmationPage,
+            child: DemographicConfirmationPage(consultationId: arguments.consultationId),
+          ),
         );
-        break;
-      case QagsPaginatedPage.routeName:
-        final arguments = settings.arguments as QagsPaginatedArguments;
-        currentRoute = QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab);
         break;
       default:
         throw Exception("Route doesn't exist: ${settings.name}");

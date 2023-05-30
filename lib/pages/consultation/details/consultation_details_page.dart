@@ -30,13 +30,16 @@ class ConsultationDetailsArguments {
 class ConsultationDetailsPage extends StatelessWidget {
   static const routeName = "/consultationDetailsPage";
 
+  final String consultationId;
+
+  const ConsultationDetailsPage({super.key, required this.consultationId});
+
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as ConsultationDetailsArguments;
     return BlocProvider(
       create: (BuildContext context) => ConsultationDetailsBloc(
         consultationRepository: RepositoryManager.getConsultationRepository(),
-      )..add(FetchConsultationDetailsEvent(consultationId: arguments.consultationId)),
+      )..add(FetchConsultationDetailsEvent(consultationId: consultationId)),
       child: AgoraScaffold(
         child: BlocBuilder<ConsultationDetailsBloc, ConsultationDetailsState>(
           builder: (context, state) {

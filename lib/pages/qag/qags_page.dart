@@ -4,11 +4,13 @@ import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
+import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
@@ -29,41 +31,44 @@ class _QagsPageState extends State<QagsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (BuildContext context) => QagBloc(
-            qagRepository: RepositoryManager.getQagRepository(),
-          )..add(FetchQagsEvent(thematiqueId: currentThematiqueId)),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-        ),
-        BlocProvider(
-          create: (context) => ThematiqueBloc(
-            repository: RepositoryManager.getThematiqueRepository(),
-          )..add(FetchThematiqueEvent()),
-        ),
-      ],
-      child: BlocBuilder<QagBloc, QagState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                AgoraMainToolbar(
-                  title: AgoraRichText(
-                    policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                    items: [
-                      AgoraRichTextTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
-                      AgoraRichTextTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
-                    ],
+    return AgoraTracker(
+      widgetName: AnalyticsScreenNames.qagsPage,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (BuildContext context) => QagBloc(
+              qagRepository: RepositoryManager.getQagRepository(),
+            )..add(FetchQagsEvent(thematiqueId: currentThematiqueId)),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+          ),
+          BlocProvider(
+            create: (context) => ThematiqueBloc(
+              repository: RepositoryManager.getThematiqueRepository(),
+            )..add(FetchThematiqueEvent()),
+          ),
+        ],
+        child: BlocBuilder<QagBloc, QagState>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  AgoraMainToolbar(
+                    title: AgoraRichText(
+                      policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                      items: [
+                        AgoraRichTextTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
+                        AgoraRichTextTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
+                      ],
+                    ),
                   ),
-                ),
-                Column(children: _handleQagState(context, state)),
-              ],
-            ),
-          );
-        },
+                  Column(children: _handleQagState(context, state)),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
