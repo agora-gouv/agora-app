@@ -119,6 +119,13 @@ class _QagsSectionState extends State<QagsSection> {
                 );
               }
             },
+            buildWhen: (previousState, currentState) {
+              return currentState is QagSupportInitialState ||
+                  currentState is QagSupportLoadingState ||
+                  currentState is QagDeleteSupportLoadingState ||
+                  (currentState is QagSupportSuccessState && currentState.qagId == qagViewModel.id) ||
+                  (currentState is QagDeleteSupportSuccessState && currentState.qagId == qagViewModel.id);
+            },
             builder: (context, state) {
               return AgoraQagCard(
                 id: qagViewModel.id,
@@ -166,15 +173,15 @@ class _QagsSectionState extends State<QagsSection> {
       }
       switch (qagTab) {
         case QagTab.popular:
-          qagsWidgets.add(_buildAllButton(QagPaginatedInitialTab.popular));
+          qagsWidgets.add(_buildAllButton(QagPaginatedTab.popular));
           qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
           break;
         case QagTab.latest:
-          qagsWidgets.add(_buildAllButton(QagPaginatedInitialTab.latest));
+          qagsWidgets.add(_buildAllButton(QagPaginatedTab.latest));
           qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
           break;
         case QagTab.supporting:
-          qagsWidgets.add(_buildAllButton(QagPaginatedInitialTab.supporting));
+          qagsWidgets.add(_buildAllButton(QagPaginatedTab.supporting));
           qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
           break;
       }
@@ -206,7 +213,7 @@ class _QagsSectionState extends State<QagsSection> {
     return supportCount;
   }
 
-  Row _buildAllButton(QagPaginatedInitialTab initialTab) {
+  Row _buildAllButton(QagPaginatedTab initialTab) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -218,7 +225,11 @@ class _QagsSectionState extends State<QagsSection> {
               context,
               QagsPaginatedPage.routeName,
               arguments: QagsPaginatedArguments(thematiqueId: widget.selectedThematiqueId, initialTab: initialTab),
-            );
+            ).then((results) {
+              final qagDetailsBackResults = results as QagPaginatedDetailsBackResults;
+              context.read<QagBloc>().add(ReplaceAllQagsByBackResultsEvent(backResults: qagDetailsBackResults));
+              setState(() {}); // do not remove: utils to update screen
+            });
           },
         ),
       ],

@@ -2,16 +2,20 @@ import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_supporting_bloc.dart
 import 'package:agora/bloc/qag/paginated/qag_paginated_event.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_state.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_content_builder.dart';
+import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsPaginatedSupportingContent extends StatelessWidget {
   final String? thematiqueId;
+  final Function(List<QagDetailsBackResult>) onQagDetailsBackResults;
 
   const QagsPaginatedSupportingContent({
     super.key,
     required this.thematiqueId,
+    required this.onQagDetailsBackResults,
   });
 
   @override
@@ -28,6 +32,7 @@ class QagsPaginatedSupportingContent extends StatelessWidget {
             child: Column(
               children: QagsPaginatedContentBuilder.buildWidgets(
                 context: context,
+                paginatedTab: QagPaginatedTab.supporting,
                 qagPaginatedState: state,
                 onDisplayMoreClick: () {
                   context.read<QagPaginatedSupportingBloc>().add(
@@ -45,6 +50,7 @@ class QagsPaginatedSupportingContent extends StatelessWidget {
                         ),
                       );
                 },
+                onQagDetailsBackResults: (qagDetailsBackResults) => onQagDetailsBackResults(qagDetailsBackResults),
               ),
             ),
           ),

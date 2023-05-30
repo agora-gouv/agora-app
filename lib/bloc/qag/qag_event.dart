@@ -1,4 +1,5 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:equatable/equatable.dart';
 
 class QagsEvent extends Equatable {
@@ -44,4 +45,13 @@ class UpdateQagsEvent extends QagsEvent {
         supportCount,
         isSupported,
       ];
+}
+
+class ReplaceAllQagsByBackResultsEvent extends QagsEvent {
+  final QagPaginatedDetailsBackResults backResults;
+
+  ReplaceAllQagsByBackResultsEvent({required this.backResults});
+
+  @override
+  List<Object> get props => [backResults];
 }

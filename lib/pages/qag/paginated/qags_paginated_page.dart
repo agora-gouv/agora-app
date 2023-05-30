@@ -2,6 +2,7 @@ import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_latest_bloc.dart';
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_popular_bloc.dart';
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_supporting_bloc.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_event.dart';
+import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
@@ -12,26 +13,39 @@ import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_latest_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_popular_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_supporting_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum QagPaginatedInitialTab { popular, latest, supporting }
+enum QagPaginatedTab { popular, latest, supporting }
 
 class QagsPaginatedArguments {
   final String? thematiqueId;
-  final QagPaginatedInitialTab initialTab;
+  final QagPaginatedTab initialTab;
 
   QagsPaginatedArguments({required this.thematiqueId, required this.initialTab});
+}
+
+class QagPaginatedDetailsBackResults {
+  final List<QagDetailsBackResult> popularQagDetailsBackResults;
+  final List<QagDetailsBackResult> latestQagDetailsBackResults;
+  final List<QagDetailsBackResult> supportingQagDetailsBackResults;
+
+  QagPaginatedDetailsBackResults({
+    required this.popularQagDetailsBackResults,
+    required this.latestQagDetailsBackResults,
+    required this.supportingQagDetailsBackResults,
+  });
 }
 
 class QagsPaginatedPage extends StatefulWidget {
   static const routeName = "/qagsPaginatedPage";
 
   final String? thematiqueId;
-  final QagPaginatedInitialTab initialTab;
+  final QagPaginatedTab initialTab;
 
   const QagsPaginatedPage({super.key, required this.thematiqueId, required this.initialTab});
 
@@ -44,6 +58,9 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   late TabController _tabController;
   String? currentThematiqueId;
   bool shouldInitializeListener = true;
+  List<QagDetailsBackResult> popularQagDetailsBackResults = [];
+  List<QagDetailsBackResult> latestQagDetailsBackResults = [];
+  List<QagDetailsBackResult> supportingQagDetailsBackResults = [];
 
   @override
   void initState() {
@@ -67,11 +84,15 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
             repository: RepositoryManager.getThematiqueRepository(),
           )..add(FetchThematiqueEvent()),
         ),
+        BlocProvider(
+          create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+        ),
         BlocProvider(create: (context) => _getQagPaginatedPopularBloc()),
         BlocProvider(create: (context) => _getQagPaginatedLatestBloc()),
         BlocProvider(create: (context) => _getQagPaginatedSupportingBloc()),
       ],
       child: AgoraScaffold(
+        popAction: () => _popWithBackResult(context),
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, thematiqueState) {
             if (thematiqueState is ThematiqueSuccessState) {
@@ -83,7 +104,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
-                      onToolbarBackClick: () => Navigator.pop(context),
+                      onToolbarBackClick: () => _popWithBackResult(context),
                       topChild: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
@@ -117,9 +138,21 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                       child: TabBarView(
                         controller: _tabController,
                         children: [
-                          QagsPaginatedPopularContent(thematiqueId: currentThematiqueId),
-                          QagsPaginatedLatestContent(thematiqueId: currentThematiqueId),
-                          QagsPaginatedSupportingContent(thematiqueId: currentThematiqueId),
+                          QagsPaginatedPopularContent(
+                            thematiqueId: currentThematiqueId,
+                            onQagDetailsBackResults: (qagDetailsBackResults) =>
+                                popularQagDetailsBackResults = qagDetailsBackResults,
+                          ),
+                          QagsPaginatedLatestContent(
+                            thematiqueId: currentThematiqueId,
+                            onQagDetailsBackResults: (qagDetailsBackResults) =>
+                                latestQagDetailsBackResults = qagDetailsBackResults,
+                          ),
+                          QagsPaginatedSupportingContent(
+                            thematiqueId: currentThematiqueId,
+                            onQagDetailsBackResults: (qagDetailsBackResults) =>
+                                supportingQagDetailsBackResults = qagDetailsBackResults,
+                          ),
                         ],
                       ),
                     ),
@@ -129,7 +162,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
             } else if (thematiqueState is ThematiqueInitialLoadingState) {
               return Column(
                 children: [
-                  AgoraToolbar(),
+                  AgoraToolbar(onBackClick: () => _popWithBackResult(context)),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: CircularProgressIndicator()),
                 ],
@@ -137,7 +170,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
             } else {
               return Column(
                 children: [
-                  AgoraToolbar(),
+                  AgoraToolbar(onBackClick: () => _popWithBackResult(context)),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   AgoraErrorView(),
                 ],
@@ -149,11 +182,20 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
     );
   }
 
+  void _popWithBackResult(BuildContext context) => Navigator.pop(
+        context,
+        QagPaginatedDetailsBackResults(
+          popularQagDetailsBackResults: popularQagDetailsBackResults,
+          latestQagDetailsBackResults: latestQagDetailsBackResults,
+          supportingQagDetailsBackResults: supportingQagDetailsBackResults,
+        ),
+      );
+
   QagPaginatedPopularBloc _getQagPaginatedPopularBloc() {
     final qagPaginatedPopularBloc = QagPaginatedPopularBloc(
       qagRepository: RepositoryManager.getQagRepository(),
     );
-    if (widget.initialTab == QagPaginatedInitialTab.popular) {
+    if (widget.initialTab == QagPaginatedTab.popular) {
       qagPaginatedPopularBloc.add(
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
@@ -168,7 +210,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
     final qagPaginatedLatestBloc = QagPaginatedLatestBloc(
       qagRepository: RepositoryManager.getQagRepository(),
     );
-    if (widget.initialTab == QagPaginatedInitialTab.latest) {
+    if (widget.initialTab == QagPaginatedTab.latest) {
       qagPaginatedLatestBloc.add(
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
@@ -183,7 +225,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
     final qagPaginatedSupportingBloc = QagPaginatedSupportingBloc(
       qagRepository: RepositoryManager.getQagRepository(),
     );
-    if (widget.initialTab == QagPaginatedInitialTab.supporting) {
+    if (widget.initialTab == QagPaginatedTab.supporting) {
       qagPaginatedSupportingBloc.add(
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
@@ -236,11 +278,11 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
 
   int _getInitialIndex() {
     switch (widget.initialTab) {
-      case QagPaginatedInitialTab.popular:
+      case QagPaginatedTab.popular:
         return 0;
-      case QagPaginatedInitialTab.latest:
+      case QagPaginatedTab.latest:
         return 1;
-      case QagPaginatedInitialTab.supporting:
+      case QagPaginatedTab.supporting:
         return 2;
     }
   }

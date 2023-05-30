@@ -243,4 +243,57 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
   });
+
+  group("UpdateQagsPaginatedEvent", () {
+    blocTest<QagPaginatedLatestBloc, QagPaginatedState>(
+      "when update qags - should emit success state",
+      build: () => QagPaginatedLatestBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagPaginatedFetchedState(
+        maxPage: 3,
+        currentPageNumber: 1,
+        qagViewModels: [
+          QagPaginatedViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 8,
+            isSupported: false,
+          ),
+        ],
+      ),
+      act: (bloc) => bloc.add(
+        UpdateQagsPaginatedEvent(
+          qagId: "id1",
+          thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+          title: "title1",
+          username: "username1",
+          date: "23 février",
+          supportCount: 9,
+          isSupported: true,
+        ),
+      ),
+      expect: () => [
+        QagPaginatedFetchedState(
+          maxPage: 3,
+          currentPageNumber: 1,
+          qagViewModels: [
+            QagPaginatedViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 9,
+              isSupported: true,
+            ),
+          ],
+        )
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
 }
