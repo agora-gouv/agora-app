@@ -87,14 +87,14 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                         controller: _tabController,
                         children: [
                           AgoraTracker(
-                            widgetName: AnalyticsScreenNames.consultationSummaryResultPage,
+                            widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
                             child: ConsultationSummaryResultsTabContent(
                               participantCount: viewModel.participantCount,
                               results: viewModel.results,
                             ),
                           ),
                           AgoraTracker(
-                            widgetName: AnalyticsScreenNames.consultationSummaryEtEnsuitePage,
+                            widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                             child: ConsultationSummaryEtEnsuiteTabContent(
                               title: viewModel.title,
                               consultationId: consultationId,

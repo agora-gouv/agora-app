@@ -69,6 +69,10 @@ class ConsultationsOngoingSection extends StatelessWidget {
             );
           },
           onShareClick: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.shareConsultation} ${ongoingViewModel.id}",
+              widgetName: AnalyticsScreenNames.consultationsPage,
+            );
             Share.share(
               'Consultation : ${ongoingViewModel.title}\nagora://consultation.gouv.fr/${ongoingViewModel.id}',
             );

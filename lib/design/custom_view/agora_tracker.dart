@@ -6,9 +6,8 @@ import 'package:matomo_tracker/matomo_tracker.dart';
 class AgoraTracker extends StatefulWidget {
   final String widgetName;
   final Widget child;
-  final String? id;
 
-  const AgoraTracker({Key? key, required this.widgetName, required this.child, this.id}) : super(key: key);
+  const AgoraTracker({Key? key, required this.widgetName, required this.child}) : super(key: key);
 
   @override
   State<AgoraTracker> createState() => _AgoraTrackerState();
@@ -47,11 +46,10 @@ class _AgoraTrackerState extends State<AgoraTracker> with RouteAware {
   }
 
   void _track() {
-    final eventName = widget.id != null ? "CreatedPage_${widget.id}" : "CreatedPage";
-    Log.d("AGORA MATOMO TRACK SCREEN - ${widget.widgetName} - $eventName");
+    Log.d("AGORA MATOMO TRACK SCREEN - ${widget.widgetName}");
     MatomoTracker.instance.trackScreenWithName(
       widgetName: widget.widgetName,
-      eventName: eventName,
+      eventName: "CreatedPage",
     );
   }
 }

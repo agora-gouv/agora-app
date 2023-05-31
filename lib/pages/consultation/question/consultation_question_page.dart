@@ -25,9 +25,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ConsultationQuestionPage extends StatelessWidget {
   static const routeName = "/consultationQuestionPage";
 
+  final String consultationId;
+
+  const ConsultationQuestionPage({super.key, required this.consultationId});
+
   @override
   Widget build(BuildContext context) {
-    final consultationId = ModalRoute.of(context)!.settings.arguments as String;
     return MultiBlocProvider(
       providers: [
         BlocProvider<ConsultationQuestionsBloc>(
