@@ -1,5 +1,8 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -58,6 +61,10 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       cardColor: AgoraColors.white,
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
       onTap: () {
+        TrackerHelper.trackClick(
+          clickName: "${AnalyticsEventNames.finishedConsultation} $id",
+          widgetName: AnalyticsScreenNames.consultationsPage,
+        );
         Navigator.pushNamed(
           context,
           ConsultationDetailsPage.routeName,

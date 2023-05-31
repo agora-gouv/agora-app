@@ -130,8 +130,8 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                 style: AgoraButtonStyle.primaryButtonStyle,
                 onPressed: () {
                   TrackerHelper.trackClick(
-                    clickName: AnalyticsEventNames.goToResult,
-                    widgetName: "${AnalyticsScreenNames.consultationQuestionConfirmationPage} $consultationId",
+                    clickName: "${AnalyticsEventNames.goToResult} $consultationId",
+                    widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
                   );
                   Navigator.pushNamed(
                     context,

@@ -171,8 +171,8 @@ class ConsultationDetailsPage extends StatelessWidget {
                 style: AgoraButtonStyle.primaryButtonStyle,
                 onPressed: () {
                   TrackerHelper.trackClick(
-                    clickName: AnalyticsEventNames.startConsultation,
-                    widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${viewModel.id}",
+                    clickName: "${AnalyticsEventNames.startConsultation} $consultationId",
+                    widgetName: AnalyticsScreenNames.consultationDetailsPage,
                   );
                   Navigator.pushNamed(
                     context,

@@ -1,4 +1,7 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -78,6 +81,10 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                             label: ConsultationStrings.returnToHome,
                             style: AgoraButtonStyle.lightGreyWithBorderButtonStyle,
                             onPressed: () {
+                              TrackerHelper.trackClick(
+                                clickName: AnalyticsEventNames.backToHome,
+                                widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
+                              );
                               Navigator.pushNamedAndRemoveUntil(
                                 context,
                                 ConsultationsPage.routeName,
@@ -92,6 +99,10 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                           icon: "ic_share_white.svg",
                           style: AgoraButtonStyle.primaryButtonStyle,
                           onPressed: () async {
+                            TrackerHelper.trackClick(
+                              clickName: AnalyticsEventNames.shareConsultationResults,
+                              widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
+                            );
                             Share.share('Consultation : $title\nagora://consultation.gouv.fr/$consultationId');
                           },
                         ),
