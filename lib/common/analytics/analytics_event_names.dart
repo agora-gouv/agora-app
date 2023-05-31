@@ -6,7 +6,7 @@ class AnalyticsEventNames {
   static const String answeredQag = "Réponse à la QaG";
   static const String shareQag = "Partager la QaG";
   static const String giveQagFeedback = "Donner un feedback à la QaG";
-  static const String video = "Voir la vidéo plus de 5 secondes";
+  static const String qagVideo = "Voir la vidéo plus de 5 secondes";
 
   static const String startConsultation = "Commencer le questionnaire d'une consultation";
   static const String answerConsultationQuestion = "Répondre à la question %s d'une consultation";
@@ -24,4 +24,14 @@ class AnalyticsEventNames {
   static const String ignoreDemographicQuestion = "Passer la question données démographique %s";
   static const String backDemographicQuestion = "Répondre à la question données démographique %s - retour";
   static const String sendDemographic = "Envoyer les données démographiques";
+
+  static const String myInformation = "Mes informations";
+  static const String notification = "Notifications";
+  static const String tutorial = "Tutoriel";
+  static const String moderationCapitalize = "Modération";
+  static const String moderationCharter = "Charte de modération";
+  static const String privacyPolicy = "Politique de confidentialité";
+  static const String termsOfService = "Conditions générales d'utilisation";
+  static const String legalNotice = "Mentions légales";
+  static const String giveFeedback = "Donner mon avis";
 }

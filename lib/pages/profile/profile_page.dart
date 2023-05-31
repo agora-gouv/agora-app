@@ -1,4 +1,7 @@
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_menu_item.dart';
@@ -46,18 +49,21 @@ class ProfilePage extends StatelessWidget {
               AgoraMenuItem(
                 title: ProfileStrings.myInformation,
                 onClick: () {
+                  _track(AnalyticsEventNames.myInformation);
                   Navigator.pushNamed(context, DemographicProfilePage.routeName);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.notification,
                 onClick: () {
+                  _track(AnalyticsEventNames.notification);
                   // TODO
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.tutorial,
                 onClick: () {
+                  _track(AnalyticsEventNames.tutorial);
                   // TODO
                 },
               ),
@@ -65,6 +71,7 @@ class ProfilePage extends StatelessWidget {
                 AgoraMenuItem(
                   title: ProfileStrings.moderationCapitalize,
                   onClick: () {
+                    _track(AnalyticsEventNames.moderationCapitalize);
                     Navigator.pushNamed(context, ModerationPage.routeName);
                   },
                 ),
@@ -75,24 +82,28 @@ class ProfilePage extends StatelessWidget {
               AgoraMenuItem(
                 title: ProfileStrings.moderationCharter,
                 onClick: () {
+                  _track(AnalyticsEventNames.moderationCharter);
                   Navigator.pushNamed(context, ModerationCharterPage.routeName);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.privacyPolicy,
                 onClick: () {
+                  _track(AnalyticsEventNames.privacyPolicy);
                   Navigator.pushNamed(context, PrivacyPolicyPage.routeName);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.termsOfService,
                 onClick: () {
+                  _track(AnalyticsEventNames.termsOfService);
                   Navigator.pushNamed(context, TermsOfConditionPage.routeName);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.legalNotice,
                 onClick: () {
+                  _track(AnalyticsEventNames.legalNotice);
                   Navigator.pushNamed(context, LegalNoticePage.routeName);
                 },
               ),
@@ -112,6 +123,7 @@ class ProfilePage extends StatelessWidget {
                         label: ProfileStrings.feedbackTipsButton,
                         style: AgoraButtonStyle.primaryButtonStyle,
                         onPressed: () {
+                          _track(AnalyticsEventNames.giveFeedback);
                           LaunchUrlHelper.launch(ProfileStrings.feedbackUrl);
                         },
                       ),
@@ -124,6 +136,13 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _track(String clickName) {
+    TrackerHelper.trackClick(
+      clickName: clickName,
+      widgetName: AnalyticsScreenNames.profilePage,
     );
   }
 }
