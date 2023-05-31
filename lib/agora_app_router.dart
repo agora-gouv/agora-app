@@ -47,11 +47,26 @@ class AgoraAppRouter {
             widgetName: AnalyticsScreenNames.profilePage,
             child: ProfilePage(),
           ),
-      ModerationPage.routeName: (context) => ModerationPage(),
-      ModerationCharterPage.routeName: (context) => ModerationCharterPage(),
-      PrivacyPolicyPage.routeName: (context) => PrivacyPolicyPage(),
-      TermsOfConditionPage.routeName: (context) => TermsOfConditionPage(),
-      LegalNoticePage.routeName: (context) => LegalNoticePage(),
+      ModerationPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.moderationPage,
+            child: ModerationPage(),
+          ),
+      ModerationCharterPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.moderationCharterPage,
+            child: ModerationCharterPage(),
+          ),
+      PrivacyPolicyPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.privacyPolicyPage,
+            child: PrivacyPolicyPage(),
+          ),
+      TermsOfConditionPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.termsOfConditionPage,
+            child: TermsOfConditionPage(),
+          ),
+      LegalNoticePage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.legalNoticePage,
+            child: LegalNoticePage(),
+          ),
       // Demographique
       DemographicInformationPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.demographicInformationPage,
