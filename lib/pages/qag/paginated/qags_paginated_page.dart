@@ -6,13 +6,17 @@ import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_latest_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_popular_content.dart';
@@ -115,8 +119,13 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                             setState(() {
                               if (thematiqueId == currentThematiqueId) {
                                 currentThematiqueId = null;
+                                // TODO track all thematique id
                               } else {
                                 currentThematiqueId = thematiqueId;
+                                TrackerHelper.trackClick(
+                                  clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
+                                  widgetName: AnalyticsScreenNames.qagsPaginatedPage,
+                                );
                               }
                               _call(context);
                             });
@@ -138,20 +147,29 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                       child: TabBarView(
                         controller: _tabController,
                         children: [
-                          QagsPaginatedPopularContent(
-                            thematiqueId: currentThematiqueId,
-                            onQagDetailsBackResults: (qagDetailsBackResults) =>
-                                popularQagDetailsBackResults = qagDetailsBackResults,
+                          AgoraTracker(
+                            widgetName: AnalyticsScreenNames.qagsPaginatedPopularPage,
+                            child: QagsPaginatedPopularContent(
+                              thematiqueId: currentThematiqueId,
+                              onQagDetailsBackResults: (qagDetailsBackResults) =>
+                                  popularQagDetailsBackResults = qagDetailsBackResults,
+                            ),
                           ),
-                          QagsPaginatedLatestContent(
-                            thematiqueId: currentThematiqueId,
-                            onQagDetailsBackResults: (qagDetailsBackResults) =>
-                                latestQagDetailsBackResults = qagDetailsBackResults,
+                          AgoraTracker(
+                            widgetName: AnalyticsScreenNames.qagsPaginatedLatestPage,
+                            child: QagsPaginatedLatestContent(
+                              thematiqueId: currentThematiqueId,
+                              onQagDetailsBackResults: (qagDetailsBackResults) =>
+                                  latestQagDetailsBackResults = qagDetailsBackResults,
+                            ),
                           ),
-                          QagsPaginatedSupportingContent(
-                            thematiqueId: currentThematiqueId,
-                            onQagDetailsBackResults: (qagDetailsBackResults) =>
-                                supportingQagDetailsBackResults = qagDetailsBackResults,
+                          AgoraTracker(
+                            widgetName: AnalyticsScreenNames.qagsPaginatedSupportingPage,
+                            child: QagsPaginatedSupportingContent(
+                              thematiqueId: currentThematiqueId,
+                              onQagDetailsBackResults: (qagDetailsBackResults) =>
+                                  supportingQagDetailsBackResults = qagDetailsBackResults,
+                            ),
                           ),
                         ],
                       ),

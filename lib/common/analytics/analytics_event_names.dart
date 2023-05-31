@@ -25,6 +25,17 @@ class AnalyticsEventNames {
   static const String backDemographicQuestion = "Répondre à la question données démographique %s - retour";
   static const String sendDemographic = "Envoyer les données démographiques";
 
+  static const String askQuestion = "Poser une QaG";
+  static const String sendAskQuestion = "Envoyer une QaG";
+  static const String thematique = "Thematique";
+  static const String qagPopular = "QaG populaires";
+  static const String qagLatest = "QaG récentes";
+  static const String qagSupporting = "QaG soutenues";
+  static const String likeQag = "Like une QaG directement";
+  static const String unlikeQag = "Unlike une QaG directement";
+  static const String likeQagDetails = "Like une QaG à partir de détails";
+  static const String unlikeQagDetails = "Unlike une QaG à partir de détails";
+
   static const String myInformation = "Mes informations";
   static const String notification = "Notifications";
   static const String tutorial = "Tutoriel";

@@ -8,6 +8,9 @@ class AnalyticsScreenNames {
 
   static const String qagsPage = "Liste des QaGs";
   static const String qagsPaginatedPage = "Liste des QaGs infinie";
+  static const String qagsPaginatedPopularPage = "Liste des QaGs populaires infinie";
+  static const String qagsPaginatedLatestPage = "Liste des QaGs récentes infinie";
+  static const String qagsPaginatedSupportingPage = "Liste des QaGs soutenues infinie";
   static const String qagDetailsPage = "Détails d'une QaG";
   static const String qagAskQuestionPage = "Poser une QaG";
 

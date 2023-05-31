@@ -119,10 +119,7 @@ class AgoraAppRouter {
         break;
       case QagsPaginatedPage.routeName:
         final arguments = settings.arguments as QagsPaginatedArguments;
-        currentRoute = AgoraTracker(
-          widgetName: AnalyticsScreenNames.qagsPaginatedPage,
-          child: QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab),
-        );
+        currentRoute = QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab);
         break;
       case DemographicConfirmationPage.routeName:
         final arguments = settings.arguments as DemographicConfirmationArguments;

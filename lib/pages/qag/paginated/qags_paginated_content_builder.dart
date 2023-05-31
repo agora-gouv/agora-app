@@ -8,6 +8,9 @@ import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
@@ -89,6 +92,7 @@ class QagsPaginatedContentBuilder {
               supportCount: qagPaginatedViewModel.supportCount,
               isSupported: qagPaginatedViewModel.isSupported,
               onSupportClick: (support) {
+                _track(paginatedTab: paginatedTab, isSupport: support);
                 if (support) {
                   context.read<QagSupportBloc>().add(SupportQagEvent(qagId: qagPaginatedViewModel.id));
                 } else {
@@ -238,6 +242,32 @@ class QagsPaginatedContentBuilder {
                 isSupported: isSupported,
               ),
             );
+        break;
+    }
+  }
+
+  static void _track({
+    required QagPaginatedTab paginatedTab,
+    required bool isSupport,
+  }) {
+    switch (paginatedTab) {
+      case QagPaginatedTab.popular:
+        TrackerHelper.trackClick(
+          clickName: isSupport ? AnalyticsEventNames.likeQag : AnalyticsEventNames.unlikeQag,
+          widgetName: AnalyticsScreenNames.qagsPaginatedPopularPage,
+        );
+        break;
+      case QagPaginatedTab.latest:
+        TrackerHelper.trackClick(
+          clickName: isSupport ? AnalyticsEventNames.likeQag : AnalyticsEventNames.unlikeQag,
+          widgetName: AnalyticsScreenNames.qagsPaginatedLatestPage,
+        );
+        break;
+      case QagPaginatedTab.supporting:
+        TrackerHelper.trackClick(
+          clickName: isSupport ? AnalyticsEventNames.likeQag : AnalyticsEventNames.unlikeQag,
+          widgetName: AnalyticsScreenNames.qagsPaginatedSupportingPage,
+        );
         break;
     }
   }

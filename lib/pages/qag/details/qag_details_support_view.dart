@@ -2,6 +2,9 @@ import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
@@ -42,9 +45,7 @@ class QagDetailsSupportView extends StatelessWidget {
                       style: _buildButtonStyle(isSupported, supportState),
                       isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
                       contentAlignment: _buildButtonAlignment(isSupported, supportState),
-                      onPressed: () {
-                        _buildOnPressed(context, qagId, isSupported, supportState);
-                      },
+                      onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
                     ),
                   ],
                 ),
@@ -178,16 +179,27 @@ class QagDetailsSupportView extends StatelessWidget {
     final qagSupportBloc = context.read<QagSupportBloc>();
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
+        _track(AnalyticsEventNames.unlikeQagDetails);
         qagSupportBloc.add(DeleteSupportQagEvent(qagId: qagId));
       } else {
+        _track(AnalyticsEventNames.likeQagDetails);
         qagSupportBloc.add(SupportQagEvent(qagId: qagId));
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
+        _track(AnalyticsEventNames.unlikeQagDetails);
         qagSupportBloc.add(DeleteSupportQagEvent(qagId: qagId));
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
+        _track(AnalyticsEventNames.likeQagDetails);
         qagSupportBloc.add(SupportQagEvent(qagId: qagId));
       }
     }
+  }
+
+  void _track(String clickName) {
+    TrackerHelper.trackClick(
+      clickName: clickName,
+      widgetName: AnalyticsScreenNames.qagDetailsPage,
+    );
   }
 }

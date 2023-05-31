@@ -1,3 +1,6 @@
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
@@ -29,6 +32,10 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
               AgoraRoundedButton(
                 label: QagStrings.askQuestion,
                 onPressed: () {
+                  TrackerHelper.trackClick(
+                    clickName: AnalyticsEventNames.askQuestion,
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
                   Navigator.pushNamed(context, QagAskQuestionPage.routeName);
                 },
               ),

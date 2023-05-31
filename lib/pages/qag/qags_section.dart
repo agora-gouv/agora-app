@@ -4,6 +4,9 @@ import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
@@ -137,8 +140,16 @@ class _QagsSectionState extends State<QagsSection> {
                 isSupported: qagViewModel.isSupported,
                 onSupportClick: (support) {
                   if (support) {
+                    TrackerHelper.trackClick(
+                      clickName: AnalyticsEventNames.likeQag,
+                      widgetName: AnalyticsScreenNames.qagsPage,
+                    );
                     context.read<QagSupportBloc>().add(SupportQagEvent(qagId: qagViewModel.id));
                   } else {
+                    TrackerHelper.trackClick(
+                      clickName: AnalyticsEventNames.unlikeQag,
+                      widgetName: AnalyticsScreenNames.qagsPage,
+                    );
                     context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: qagViewModel.id));
                   }
                 },
@@ -247,6 +258,10 @@ class _QagsSectionState extends State<QagsSection> {
                 label: QagStrings.popular,
                 isSelected: currentSelected == QagTab.popular,
                 onTap: () {
+                  TrackerHelper.trackClick(
+                    clickName: AnalyticsEventNames.qagPopular,
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
                   setState(() => currentSelected = QagTab.popular);
                 },
               ),
@@ -256,6 +271,10 @@ class _QagsSectionState extends State<QagsSection> {
                 label: QagStrings.latest,
                 isSelected: currentSelected == QagTab.latest,
                 onTap: () {
+                  TrackerHelper.trackClick(
+                    clickName: AnalyticsEventNames.qagLatest,
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
                   setState(() => currentSelected = QagTab.latest);
                 },
               ),
@@ -265,6 +284,10 @@ class _QagsSectionState extends State<QagsSection> {
                 label: QagStrings.supporting,
                 isSelected: currentSelected == QagTab.supporting,
                 onTap: () {
+                  TrackerHelper.trackClick(
+                    clickName: AnalyticsEventNames.qagSupporting,
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
                   setState(() => currentSelected = QagTab.supporting);
                 },
               ),
