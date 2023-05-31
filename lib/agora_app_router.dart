@@ -31,10 +31,6 @@ class AgoraAppRouter {
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
-      ConsultationQuestionPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.consultationQuestionPage,
-            child: ConsultationQuestionPage(),
-          ),
       ConsultationSummaryPage.routeName: (context) => ConsultationSummaryPage(),
       // Question au gouvernement
       QagsPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
@@ -93,9 +89,15 @@ class AgoraAppRouter {
       case ConsultationDetailsPage.routeName:
         final arguments = settings.arguments as ConsultationDetailsArguments;
         currentRoute = AgoraTracker(
-          widgetName: AnalyticsScreenNames.consultationDetailsPage,
-          id: arguments.consultationId,
+          widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${arguments.consultationId}",
           child: ConsultationDetailsPage(consultationId: arguments.consultationId),
+        );
+        break;
+      case ConsultationQuestionPage.routeName:
+        final consultationId = settings.arguments as String;
+        currentRoute = AgoraTracker(
+          widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
+          child: ConsultationQuestionPage(consultationId: consultationId),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:
@@ -113,16 +115,12 @@ class AgoraAppRouter {
         final arguments = settings.arguments as QagDetailsArguments;
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagDetailsPage,
-          id: arguments.qagId,
           child: QagDetailsPage(qagId: arguments.qagId),
         );
         break;
       case QagsPaginatedPage.routeName:
         final arguments = settings.arguments as QagsPaginatedArguments;
-        currentRoute = AgoraTracker(
-          widgetName: AnalyticsScreenNames.qagsPaginatedPage,
-          child: QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab),
-        );
+        currentRoute = QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab);
         break;
       case DemographicConfirmationPage.routeName:
         final arguments = settings.arguments as DemographicConfirmationArguments;

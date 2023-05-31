@@ -5,7 +5,10 @@ import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
@@ -209,6 +212,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         style: AgoraButtonStyle.primaryButtonStyle,
                         onPressed: () async {
                           if (_couldSend()) {
+                            TrackerHelper.trackClick(
+                              clickName: AnalyticsEventNames.sendAskQuestion,
+                              widgetName: AnalyticsScreenNames.qagAskQuestionPage,
+                            );
                             context.read<CreateQagBloc>().add(
                                   CreateQagEvent(
                                     title: question,

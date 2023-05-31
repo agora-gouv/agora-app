@@ -2,6 +2,9 @@ import 'package:agora/bloc/consultation/question/response/send/consultation_ques
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -126,6 +129,10 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                 label: ConsultationStrings.goToResult,
                 style: AgoraButtonStyle.primaryButtonStyle,
                 onPressed: () {
+                  TrackerHelper.trackClick(
+                    clickName: "${AnalyticsEventNames.goToResult} $consultationId",
+                    widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
+                  );
                   Navigator.pushNamed(
                     context,
                     ConsultationSummaryPage.routeName,

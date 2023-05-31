@@ -2,7 +2,10 @@ import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -167,6 +170,10 @@ class ConsultationDetailsPage extends StatelessWidget {
                 label: ConsultationStrings.beginButton,
                 style: AgoraButtonStyle.primaryButtonStyle,
                 onPressed: () {
+                  TrackerHelper.trackClick(
+                    clickName: "${AnalyticsEventNames.startConsultation} $consultationId",
+                    widgetName: AnalyticsScreenNames.consultationDetailsPage,
+                  );
                   Navigator.pushNamed(
                     context,
                     ConsultationQuestionPage.routeName,

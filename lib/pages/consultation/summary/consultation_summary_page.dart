@@ -1,7 +1,9 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_bloc.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_event.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_state.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
@@ -49,6 +51,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
           ..add(FetchConsultationSummaryEvent(consultationId: consultationId));
       },
       child: AgoraScaffold(
+        popAction: () => _navigateToConsultationPage(context, consultationId),
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(
           builder: (context, state) {
             if (state is ConsultationSummaryFetchedState) {
@@ -60,7 +63,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
-                      onToolbarBackClick: () => _navigateToConsultationPage(context),
+                      onToolbarBackClick: () => _navigateToConsultationPage(context, consultationId),
                       topChild: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -84,14 +87,14 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                         controller: _tabController,
                         children: [
                           AgoraTracker(
-                            widgetName: AnalyticsScreenNames.consultationSummaryResultPage,
+                            widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
                             child: ConsultationSummaryResultsTabContent(
                               participantCount: viewModel.participantCount,
                               results: viewModel.results,
                             ),
                           ),
                           AgoraTracker(
-                            widgetName: AnalyticsScreenNames.consultationSummaryEtEnsuitePage,
+                            widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                             child: ConsultationSummaryEtEnsuiteTabContent(
                               title: viewModel.title,
                               consultationId: consultationId,
@@ -107,7 +110,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
             } else if (state is ConsultationSummaryInitialLoadingState) {
               return Column(
                 children: [
-                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context)),
+                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context, consultationId)),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: CircularProgressIndicator()),
                 ],
@@ -115,7 +118,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
             } else {
               return Column(
                 children: [
-                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context)),
+                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context, consultationId)),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   AgoraErrorView(),
                 ],
@@ -127,7 +130,11 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
     );
   }
 
-  void _navigateToConsultationPage(BuildContext context) {
+  void _navigateToConsultationPage(BuildContext context, String consultationId) {
+    TrackerHelper.trackClick(
+      clickName: AnalyticsEventNames.back,
+      widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
+    );
     Navigator.pushNamedAndRemoveUntil(
       context,
       ConsultationsPage.routeName,

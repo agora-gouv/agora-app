@@ -1,4 +1,7 @@
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
@@ -55,6 +58,10 @@ class ConsultationsOngoingSection extends StatelessWidget {
           title: ongoingViewModel.title,
           endDate: ongoingViewModel.endDate,
           onParticipationClick: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.participateConsultation} ${ongoingViewModel.id}",
+              widgetName: AnalyticsScreenNames.consultationsPage,
+            );
             Navigator.pushNamed(
               context,
               ConsultationDetailsPage.routeName,
@@ -62,6 +69,10 @@ class ConsultationsOngoingSection extends StatelessWidget {
             );
           },
           onShareClick: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.shareConsultation} ${ongoingViewModel.id}",
+              widgetName: AnalyticsScreenNames.consultationsPage,
+            );
             Share.share(
               'Consultation : ${ongoingViewModel.title}\nagora://consultation.gouv.fr/${ongoingViewModel.id}',
             );

@@ -4,7 +4,9 @@ import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -83,9 +85,14 @@ class _QagsPageState extends State<QagsPage> {
           onThematiqueIdSelected: (String thematiqueId) {
             setState(() {
               if (thematiqueId == currentThematiqueId) {
+                // TODO track all thematique id
                 currentThematiqueId = null;
               } else {
                 currentThematiqueId = thematiqueId;
+                TrackerHelper.trackClick(
+                  clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                );
               }
               context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
             });
