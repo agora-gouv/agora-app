@@ -5,7 +5,10 @@ import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -138,6 +141,10 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                   label: QagStrings.share,
                   style: AgoraButtonStyle.lightGreyButtonStyle,
                   onPressed: () {
+                    TrackerHelper.trackClick(
+                      clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
+                      widgetName: AnalyticsScreenNames.qagDetailsPage,
+                    );
                     Share.share(
                       'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${viewModel.id}',
                     );

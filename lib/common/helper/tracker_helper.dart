@@ -10,4 +10,13 @@ class TrackerHelper {
       eventName: clickName,
     );
   }
+
+  static void trackEvent({required String widgetName, required String eventName}) {
+    Log.d("AGORA MATOMO TRACK CLICK - $widgetName - $eventName");
+    MatomoTracker.instance.trackEvent(
+      eventCategory: widgetName,
+      action: "event",
+      eventName: eventName,
+    );
+  }
 }

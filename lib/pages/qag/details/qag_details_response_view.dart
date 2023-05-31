@@ -2,6 +2,9 @@ import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_event.dart';
 import 'package:agora/bloc/qag/feedback/qag_feedback_state.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
@@ -40,7 +43,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
             children: [
               Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17),
               SizedBox(height: AgoraSpacings.base),
-              AgoraVideoView(videoUrl: response.videoUrl),
+              AgoraVideoView(qagId: widget.qagId, videoUrl: response.videoUrl),
               SizedBox(height: AgoraSpacings.base),
               RichText(
                 text: TextSpan(
@@ -120,6 +123,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                                   padding: AgoraRoundedButtonPadding.short,
                                   isLoading: feedbackState is QagFeedbackLoadingState && isThumbUpClicked,
                                   onPressed: () {
+                                    _trackFeedback();
                                     setState(() => isThumbUpClicked = true);
                                     qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: true));
                                   },
@@ -131,6 +135,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                                   padding: AgoraRoundedButtonPadding.short,
                                   isLoading: feedbackState is QagFeedbackLoadingState && !isThumbUpClicked,
                                   onPressed: () {
+                                    _trackFeedback();
                                     setState(() => isThumbUpClicked = false);
                                     qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: false));
                                   },
@@ -149,6 +154,13 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
           ),
         ),
       ),
+    );
+  }
+
+  void _trackFeedback() {
+    TrackerHelper.trackClick(
+      clickName: "${AnalyticsEventNames.giveQagFeedback} ${widget.qagId}",
+      widgetName: AnalyticsScreenNames.qagDetailsPage,
     );
   }
 }

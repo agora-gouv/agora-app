@@ -1,4 +1,7 @@
 import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
@@ -94,6 +97,10 @@ class QagsResponseSection extends StatelessWidget {
           author: qagResponse.author,
           date: qagResponse.responseDate,
           onClick: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
+              widgetName: AnalyticsScreenNames.qagsPage,
+            );
             Navigator.pushNamed(
               context,
               QagDetailsPage.routeName,

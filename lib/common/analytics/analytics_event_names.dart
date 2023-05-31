@@ -3,6 +3,11 @@ class AnalyticsEventNames {
   static const String finishedConsultation = "Consultation depuis grâce à vous";
   static const String answeredConsultation = "Consultation depuis mes consultations";
 
+  static const String answeredQag = "Réponse à la QaG";
+  static const String shareQag = "Partager la QaG";
+  static const String giveQagFeedback = "Donner un feedback à la QaG";
+  static const String video = "Voir la vidéo plus de 5 secondes";
+
   static const String startConsultation = "Commencer le questionnaire d'une consultation";
   static const String answerConsultationQuestion = "Répondre à la question %s d'une consultation";
   static const String backConsultationQuestion = "Répondre à la question %s d'une consultation - retour";
