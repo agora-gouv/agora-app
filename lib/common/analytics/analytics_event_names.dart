@@ -8,8 +8,8 @@ class AnalyticsEventNames {
   static const String readMore = "Lire la suite des données démographiques";
   static const String beginDemographic = "Commencer la saisie des données démographiques";
   static const String ignoreDemographic = "Ignorer la saisie des données démographiques";
-  static const String sendDemographic = "Envoyer les données démographiques";
   static const String answerDemographicQuestion = "Répondre à la question données démographique %s";
   static const String ignoreDemographicQuestion = "Passer la question données démographique %s";
   static const String backDemographicQuestion = "Répondre à la question données démographique %s - retour";
+  static const String sendDemographic = "Envoyer les données démographiques";
 }

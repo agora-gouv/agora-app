@@ -1,7 +1,10 @@
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_bloc.dart';
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_event.dart';
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_state.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -81,7 +84,10 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                           children: [_buildResponseSection(context, currentStep, responsesStockState.responses)] +
                               DemographicHelper.buildBackButton(
                                 step: currentStep,
-                                onBackTap: () => setState(() => currentStep--),
+                                onBackTap: () {
+                                  _trackBackClick();
+                                  setState(() => currentStep--);
+                                },
                               ),
                         ),
                       ),
@@ -102,10 +108,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         return DemographicCommonView(
           responseChoices: DemographicResponseHelper.question1ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
+            _trackContinueClick(step);
             _stockResponse(context, DemographicType.gender, responseCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
+            _trackIgnoreClick(step);
             _deleteResponse(context, DemographicType.gender);
             _nextStep(context);
           }),
@@ -115,10 +123,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         final oldResponse = _getOldResponse(DemographicType.yearOfBirth, oldResponses);
         return DemographicBirthView(
           onContinuePressed: (String inputYear) => setState(() {
+            _trackContinueClick(step);
             _stockResponse(context, DemographicType.yearOfBirth, inputYear);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
+            _trackIgnoreClick(step);
             _deleteResponse(context, DemographicType.yearOfBirth);
             _nextStep(context);
           }),
@@ -127,10 +137,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
       case 3:
         return DemographicDepartmentView(
           onContinuePressed: (departmentCode) => setState(() {
+            _trackContinueClick(step);
             _stockResponse(context, DemographicType.department, departmentCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
+            _trackIgnoreClick(step);
             _deleteResponse(context, DemographicType.department);
             _nextStep(context);
           }),
@@ -139,10 +151,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         return DemographicCommonView(
           responseChoices: DemographicResponseHelper.question4ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
+            _trackContinueClick(step);
             _stockResponse(context, DemographicType.cityType, responseCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
+            _trackIgnoreClick(step);
             _deleteResponse(context, DemographicType.cityType);
             _nextStep(context);
           }),
@@ -152,10 +166,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         return DemographicCommonView(
           responseChoices: DemographicResponseHelper.question5ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
+            _trackContinueClick(step);
             _stockResponse(context, DemographicType.jobCategory, responseCode);
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
+            _trackIgnoreClick(step);
             _deleteResponse(context, DemographicType.jobCategory);
             _nextStep(context);
           }),
@@ -166,6 +182,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         return DemographicVoteView(
           responseChoices: DemographicResponseHelper.question6ResponseChoice(),
           onContinuePressed: (voteFrequencyCode, publicMeetingFrequencyCode, consultationFrequencyCode) => setState(() {
+            _trackContinueClick(step);
             if (voteFrequencyCode != null) {
               _stockResponse(context, DemographicType.voteFrequency, voteFrequencyCode);
             }
@@ -178,6 +195,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             _nextStep(context);
           }),
           onIgnorePressed: () => setState(() {
+            _trackIgnoreClick(step);
             _deleteResponse(context, DemographicType.voteFrequency);
             _deleteResponse(context, DemographicType.publicMeetingFrequency);
             _deleteResponse(context, DemographicType.consultationFrequency);
@@ -189,8 +207,33 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
     }
   }
 
+  void _trackContinueClick(int step) {
+    TrackerHelper.trackClick(
+      clickName: AnalyticsEventNames.answerDemographicQuestion.format("$step / $totalStep"),
+      widgetName: AnalyticsScreenNames.demographicQuestionPage,
+    );
+  }
+
+  void _trackIgnoreClick(int step) {
+    TrackerHelper.trackClick(
+      clickName: AnalyticsEventNames.ignoreDemographicQuestion.format("$step / $totalStep"),
+      widgetName: AnalyticsScreenNames.demographicQuestionPage,
+    );
+  }
+
+  void _trackBackClick() {
+    TrackerHelper.trackClick(
+      clickName: AnalyticsEventNames.backDemographicQuestion.format("$currentStep / $totalStep"),
+      widgetName: AnalyticsScreenNames.demographicQuestionPage,
+    );
+  }
+
   void _nextStep(BuildContext context) {
     if (currentStep == totalStep) {
+      TrackerHelper.trackClick(
+        clickName: AnalyticsEventNames.sendDemographic,
+        widgetName: AnalyticsScreenNames.demographicQuestionPage,
+      );
       Navigator.pushNamed(
         context,
         DemographicConfirmationPage.routeName,

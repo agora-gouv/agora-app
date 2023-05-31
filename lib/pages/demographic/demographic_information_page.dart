@@ -1,3 +1,6 @@
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
@@ -98,7 +101,13 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                             ),
                             SizedBox(height: AgoraSpacings.x1_25),
                             InkWell(
-                              onTap: () => setState(() => isReadMore = true),
+                              onTap: () {
+                                TrackerHelper.trackClick(
+                                  clickName: AnalyticsEventNames.readMore,
+                                  widgetName: AnalyticsScreenNames.demographicInformationPage,
+                                );
+                                setState(() => isReadMore = true);
+                              },
                               child: Text(
                                 DemographicStrings.readMore,
                                 style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryGreen),
@@ -112,6 +121,10 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                 label: DemographicStrings.begin,
                                 style: AgoraButtonStyle.primaryButtonStyle,
                                 onPressed: () {
+                                  TrackerHelper.trackClick(
+                                    clickName: AnalyticsEventNames.beginDemographic,
+                                    widgetName: AnalyticsScreenNames.demographicInformationPage,
+                                  );
                                   Navigator.pushNamed(
                                     context,
                                     DemographicQuestionPage.routeName,
@@ -125,6 +138,10 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   label: DemographicStrings.toNoAnswer,
                                   style: AgoraButtonStyle.greenBorderButtonStyle,
                                   onPressed: () {
+                                    TrackerHelper.trackClick(
+                                      clickName: AnalyticsEventNames.ignoreDemographic,
+                                      widgetName: AnalyticsScreenNames.demographicInformationPage,
+                                    );
                                     Navigator.pushNamed(
                                       context,
                                       ConsultationSummaryPage.routeName,
