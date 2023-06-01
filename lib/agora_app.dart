@@ -1,6 +1,6 @@
 import 'package:agora/agora_app_router.dart';
 import 'package:agora/common/analytics/matomo_route_observer.dart';
-import 'package:agora/common/helper/deep_link_test_helper.dart';
+import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';

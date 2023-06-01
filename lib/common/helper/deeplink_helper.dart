@@ -4,10 +4,10 @@ import 'dart:ui';
 import 'package:agora/common/log/log.dart';
 import 'package:uni_links/uni_links.dart';
 
-class DeeplinkTestHelper {
-  static const String consultationHost = "consultation.gouv.fr";
-  static const String qagHost = "qag.gouv.fr";
-  static final uuidRegExp =
+class DeeplinkHelper {
+  static const String _consultationHost = "consultation.gouv.fr";
+  static const String _qagHost = "qag.gouv.fr";
+  static final _uuidRegExp =
       RegExp(r'[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}');
 
   StreamSubscription<Uri?>? _sub;
@@ -20,14 +20,14 @@ class DeeplinkTestHelper {
     if (uri != null) {
       Log.d("deeplink initiate uri : $uri");
       switch (uri.host) {
-        case consultationHost:
+        case _consultationHost:
           _handleDeeplink(
             uri: uri,
             onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
             onMatchFailedCallback: () => Log.e("deeplink initiate uri : no consultation id match error"),
           );
           break;
-        case qagHost:
+        case _qagHost:
           _handleDeeplink(
             uri: uri,
             onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
@@ -51,14 +51,14 @@ class DeeplinkTestHelper {
       (Uri? uri) {
         if (uri != null) {
           switch (uri.host) {
-            case consultationHost:
+            case _consultationHost:
               _handleDeeplink(
                 uri: uri,
                 onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
                 onMatchFailedCallback: () => Log.e("deeplink listen uri : no consultation id match error"),
               );
               break;
-            case qagHost:
+            case _qagHost:
               _handleDeeplink(
                 uri: uri,
                 onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
@@ -84,7 +84,7 @@ class DeeplinkTestHelper {
     required Function(String id) onMatchSuccessCallback,
     required VoidCallback onMatchFailedCallback,
   }) {
-    final RegExpMatch? match = uuidRegExp.firstMatch(uri.toString());
+    final RegExpMatch? match = _uuidRegExp.firstMatch(uri.toString());
     if (match != null && match[0] != null) {
       onMatchSuccessCallback(match[0]!);
     } else {

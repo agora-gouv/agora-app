@@ -1,7 +1,4 @@
 import 'package:agora/agora_app.dart';
-import 'package:agora/bloc/deeplink/deeplink_bloc.dart';
-import 'package:agora/bloc/deeplink/deeplink_event.dart';
-import 'package:agora/bloc/deeplink/deeplink_state.dart';
 import 'package:agora/bloc/login/login_bloc.dart';
 import 'package:agora/bloc/login/login_event.dart';
 import 'package:agora/bloc/login/login_state.dart';
@@ -50,11 +47,6 @@ class LoadingPage extends StatelessWidget {
           )..add(RequestNotificationPermissionEvent()),
         ),
         BlocProvider(
-          create: (context) => DeeplinkBloc(
-            deeplinkHelper: HelperManager.getDeepLinkHelper(),
-          )..add(InitDeeplinkListenerEvent()),
-        ),
-        BlocProvider(
           create: (context) => LoginBloc(
             repository: RepositoryManager.getLoginRepository(),
             loginStorageClient: StorageManager.getLoginStorageClient(sharedPref),
@@ -74,42 +66,25 @@ class LoadingPage extends StatelessWidget {
               await Permission.notification.request();
             }
           },
-          child: BlocListener<DeeplinkBloc, DeeplinkState>(
-            listener: (context, deeplinkState) {
-              if (deeplinkState is ConsultationDeeplinkState) {
-                Navigator.pushNamed(
-                  context,
-                  ConsultationDetailsPage.routeName,
-                  arguments: ConsultationDetailsArguments(consultationId: deeplinkState.consultationId),
-                );
-              } else if (deeplinkState is QagDeeplinkState) {
-                Navigator.pushNamed(
-                  context,
-                  QagDetailsPage.routeName,
-                  arguments: QagDetailsArguments(qagId: deeplinkState.qagId),
-                );
+          child: BlocConsumer<LoginBloc, LoginState>(
+            listener: (context, loginState) async {
+              if (loginState is LoginSuccessState) {
+                Navigator.pushNamed(context, ConsultationsPage.routeName);
+                _pushDeeplinkPage(context);
+                if (redirection.shouldShowOnboarding) {
+                  Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
+                    StorageManager.getOnboardingStorageClient().save(false);
+                  });
+                }
               }
             },
-            child: BlocConsumer<LoginBloc, LoginState>(
-              listener: (context, loginState) async {
-                if (loginState is LoginSuccessState) {
-                  Navigator.pushNamed(context, ConsultationsPage.routeName);
-                  _pushDeeplinkPage(context);
-                  if (redirection.shouldShowOnboarding) {
-                    Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
-                      // StorageManager.getOnboardingStorageClient().save(false);
-                    });
-                  }
-                }
-              },
-              builder: (context, loginState) {
-                if (loginState is LoginErrorState) {
-                  return Center(child: AgoraErrorView(errorMessage: GenericStrings.authenticationErrorMessage));
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
+            builder: (context, loginState) {
+              if (loginState is LoginErrorState) {
+                return Center(child: AgoraErrorView(errorMessage: GenericStrings.authenticationErrorMessage));
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
           ),
         ),
       ),
