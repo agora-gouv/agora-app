@@ -3,7 +3,8 @@ import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_step_circle.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
-import 'package:agora/design/custom_view/button/agora_next_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -61,21 +62,22 @@ class OnboardingStep3View extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: AgoraSpacings.base),
+          AgoraStepCircle(currentStep: 3),
+          SizedBox(height: AgoraSpacings.x0_5),
           Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: AgoraSpacings.horizontalPadding,
               vertical: AgoraSpacings.base,
             ),
-            child: Row(
-              children: [
-                AgoraStepCircle(currentStep: 3),
-                Spacer(),
-                AgoraNextButton(
-                  icon: "ic_forward.svg",
-                  onPressed: () => onClick(),
-                ),
-              ],
+            child: SizedBox(
+              width: double.infinity,
+              child: AgoraButton(
+                label: GenericStrings.onboardingStep0LetsGo,
+                style: AgoraButtonStyle.primaryButtonStyle,
+                onPressed: () => onClick(),
+              ),
             ),
           ),
         ],

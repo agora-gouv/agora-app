@@ -61,6 +61,9 @@ class OnboardingStep2View extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: AgoraSpacings.base),
+          AgoraStepCircle(currentStep: 2),
+          SizedBox(height: AgoraSpacings.x0_5),
           Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -69,7 +72,6 @@ class OnboardingStep2View extends StatelessWidget {
             ),
             child: Row(
               children: [
-                AgoraStepCircle(currentStep: 2),
                 Spacer(),
                 AgoraNextButton(
                   icon: "ic_forward.svg",

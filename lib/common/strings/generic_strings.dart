@@ -17,6 +17,7 @@ class GenericStrings {
   static const String onboardingStep0Description2 = "dialoguer";
   static const String onboardingStep0Description3 = "les citoyens et le gouvernement";
   static const String onboardingStep0Begin = "Commencer";
+  static const String onboardingStep0LetsGo = "C’est parti";
   static const String onboardingStep1Title1 = "Participez";
   static const String onboardingStep1Title2 = "à l’action politique";
   static const String onboardingStep1Description =
