@@ -70,12 +70,7 @@ class LoadingPage extends StatelessWidget {
             listener: (context, loginState) async {
               if (loginState is LoginSuccessState) {
                 Navigator.pushNamed(context, ConsultationsPage.routeName);
-                _pushDeeplinkPage(context);
-                if (redirection.shouldShowOnboarding) {
-                  Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
-                    StorageManager.getOnboardingStorageClient().save(false);
-                  });
-                }
+                _pushPageWithCondition(context);
               }
             },
             builder: (context, loginState) {
@@ -91,7 +86,7 @@ class LoadingPage extends StatelessWidget {
     );
   }
 
-  void _pushDeeplinkPage(BuildContext context) {
+  void _pushPageWithCondition(BuildContext context) {
     if (redirection.shouldShowConsultationDetails) {
       Navigator.pushNamed(
         context,
@@ -105,6 +100,11 @@ class LoadingPage extends StatelessWidget {
         QagDetailsPage.routeName,
         arguments: QagDetailsPage(qagId: redirection.qagId!),
       );
+    }
+    if (redirection.shouldShowOnboarding) {
+      Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
+        StorageManager.getOnboardingStorageClient().save(false);
+      });
     }
   }
 

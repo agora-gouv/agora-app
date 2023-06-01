@@ -14,7 +14,10 @@ class AgoraStepCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: _buildStep());
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: _buildStep(),
+    );
   }
 
   List<Widget> _buildStep() {
