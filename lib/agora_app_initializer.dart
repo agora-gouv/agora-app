@@ -1,6 +1,7 @@
 import 'package:agora/agora_app.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -16,10 +17,11 @@ class AgoraInitializer {
     Intl.defaultLocale = "fr_FR";
     initializeDateFormatting('fr_FR', null);
 
-    final sharedPref = await SharedPreferences.getInstance();
     await _setupNotification();
     await _setupMatomo();
-    runApp(AgoraApp(sharedPref: sharedPref));
+    final sharedPref = await SharedPreferences.getInstance();
+    final isFirstConnection = await StorageManager.getOnboardingStorageClient().isFirstTime();
+    runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection));
   }
 
   static Future<void> _setupNotification() async {

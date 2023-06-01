@@ -12,6 +12,14 @@ class AgoraTextStyles {
   static const light = FontWeight.w400;
   static const thin = FontWeight.w300;
 
+  static const TextStyle bold28 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: bold,
+    fontSize: 28.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle bold24 = TextStyle(
     fontFamily: marianne,
     fontWeight: bold,
@@ -20,10 +28,26 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle bold22 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: bold,
+    fontSize: 22.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle bold18 = TextStyle(
     fontFamily: marianne,
     fontWeight: bold,
     fontSize: 18.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle medium32 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 32.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );
@@ -190,10 +214,26 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle light28 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 28.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle light24 = TextStyle(
     fontFamily: marianne,
     fontWeight: light,
     fontSize: 24.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle light22 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 22.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );

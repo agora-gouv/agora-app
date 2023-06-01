@@ -42,7 +42,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
           SizedBox(height: AgoraSpacings.x0_5),
           RichText(
             text: TextSpan(
-              style: AgoraTextStyles.regular13.copyWith(color: AgoraColors.primaryGrey),
+              style: AgoraTextStyles.regular13,
               children: [
                 TextSpan(text: ConsultationStrings.endDateVariation),
                 WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),

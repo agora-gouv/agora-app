@@ -1,6 +1,4 @@
-import 'package:agora/bloc/deeplink/deeplink_bloc.dart';
-import 'package:agora/bloc/deeplink/deeplink_event.dart';
-import 'package:agora/bloc/deeplink/deeplink_state.dart';
+import 'package:agora/agora_app.dart';
 import 'package:agora/bloc/login/login_bloc.dart';
 import 'package:agora/bloc/login/login_event.dart';
 import 'package:agora/bloc/login/login_state.dart';
@@ -21,6 +19,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +30,9 @@ class LoadingPage extends StatelessWidget {
   static const routeName = "/";
 
   final SharedPreferences sharedPref;
+  final Redirection redirection;
 
-  const LoadingPage({super.key, required this.sharedPref});
+  const LoadingPage({super.key, required this.sharedPref, required this.redirection});
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,6 @@ class LoadingPage extends StatelessWidget {
             platformHelper: HelperManager.getPlatformHelper(),
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
           )..add(RequestNotificationPermissionEvent()),
-        ),
-        BlocProvider(
-          create: (context) => DeeplinkBloc(
-            deeplinkHelper: HelperManager.getDeepLinkHelper(),
-          )..add(InitDeeplinkListenerEvent()),
         ),
         BlocProvider(
           create: (context) => LoginBloc(
@@ -71,40 +66,46 @@ class LoadingPage extends StatelessWidget {
               await Permission.notification.request();
             }
           },
-          child: BlocListener<DeeplinkBloc, DeeplinkState>(
-            listener: (context, deeplinkState) {
-              if (deeplinkState is ConsultationDeeplinkState) {
-                Navigator.pushNamed(
-                  context,
-                  ConsultationDetailsPage.routeName,
-                  arguments: ConsultationDetailsArguments(consultationId: deeplinkState.consultationId),
-                );
-              } else if (deeplinkState is QagDeeplinkState) {
-                Navigator.pushNamed(
-                  context,
-                  QagDetailsPage.routeName,
-                  arguments: QagDetailsArguments(qagId: deeplinkState.qagId),
-                );
+          child: BlocConsumer<LoginBloc, LoginState>(
+            listener: (context, loginState) async {
+              if (loginState is LoginSuccessState) {
+                Navigator.pushNamed(context, ConsultationsPage.routeName);
+                _pushDeeplinkPage(context);
+                if (redirection.shouldShowOnboarding) {
+                  Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
+                    StorageManager.getOnboardingStorageClient().save(false);
+                  });
+                }
               }
             },
-            child: BlocConsumer<LoginBloc, LoginState>(
-              listener: (context, loginState) {
-                if (loginState is LoginSuccessState) {
-                  Navigator.pushNamed(context, ConsultationsPage.routeName);
-                }
-              },
-              builder: (context, loginState) {
-                if (loginState is LoginErrorState) {
-                  return Center(child: AgoraErrorView(errorMessage: GenericStrings.authenticationErrorMessage));
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
+            builder: (context, loginState) {
+              if (loginState is LoginErrorState) {
+                return Center(child: AgoraErrorView(errorMessage: GenericStrings.authenticationErrorMessage));
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
           ),
         ),
       ),
     );
+  }
+
+  void _pushDeeplinkPage(BuildContext context) {
+    if (redirection.shouldShowConsultationDetails) {
+      Navigator.pushNamed(
+        context,
+        ConsultationDetailsPage.routeName,
+        arguments: ConsultationDetailsArguments(consultationId: redirection.consultationId!),
+      );
+    }
+    if (redirection.shouldShowQagDetails) {
+      Navigator.pushNamed(
+        context,
+        QagDetailsPage.routeName,
+        arguments: QagDetailsPage(qagId: redirection.qagId!),
+      );
+    }
   }
 
   void _showNotificationDialog(BuildContext context) {

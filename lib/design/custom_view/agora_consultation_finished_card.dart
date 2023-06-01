@@ -5,6 +5,7 @@ import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/agora_step_circle.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -103,7 +104,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.x0_25),
-                _buildStepCircle(),
+                AgoraStepCircle(currentStep: step),
               ],
             ),
           ),
@@ -136,50 +137,5 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       default:
         return "";
     }
-  }
-
-  Widget _buildStepCircle() {
-    switch (step) {
-      case 1:
-        return Row(
-          children: [
-            _buildCircle(AgoraColors.primaryGreen),
-            SizedBox(width: AgoraSpacings.x0_25),
-            _buildCircle(AgoraColors.gravelFint),
-            SizedBox(width: AgoraSpacings.x0_25),
-            _buildCircle(AgoraColors.gravelFint),
-          ],
-        );
-      case 2:
-        return Row(
-          children: [
-            _buildCircle(AgoraColors.primaryGreen),
-            SizedBox(width: AgoraSpacings.x0_25),
-            _buildCircle(AgoraColors.primaryGreen),
-            SizedBox(width: AgoraSpacings.x0_25),
-            _buildCircle(AgoraColors.gravelFint),
-          ],
-        );
-      case 3:
-        return Row(
-          children: [
-            _buildCircle(AgoraColors.primaryGreen),
-            SizedBox(width: AgoraSpacings.x0_25),
-            _buildCircle(AgoraColors.primaryGreen),
-            SizedBox(width: AgoraSpacings.x0_25),
-            _buildCircle(AgoraColors.primaryGreen),
-          ],
-        );
-      default:
-        return Container();
-    }
-  }
-
-  Widget _buildCircle(Color color) {
-    return Container(
-      width: 8.0,
-      height: 8.0,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-    );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:agora/common/helper/deep_link_helper.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
@@ -30,15 +29,6 @@ class HelperManager {
       return GetIt.instance.get<PermissionImplHelper>();
     }
     final helper = PermissionImplHelper();
-    GetIt.instance.registerSingleton(helper);
-    return helper;
-  }
-
-  static DeeplinkHelper getDeepLinkHelper() {
-    if (GetIt.instance.isRegistered<DeeplinkImplHelper>()) {
-      return GetIt.instance.get<DeeplinkImplHelper>();
-    }
-    final helper = DeeplinkImplHelper();
     GetIt.instance.registerSingleton(helper);
     return helper;
   }
