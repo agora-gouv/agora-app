@@ -1,3 +1,4 @@
+import 'package:agora/agora_app.dart';
 import 'package:agora/bloc/deeplink/deeplink_bloc.dart';
 import 'package:agora/bloc/deeplink/deeplink_event.dart';
 import 'package:agora/bloc/deeplink/deeplink_state.dart';
@@ -32,9 +33,9 @@ class LoadingPage extends StatelessWidget {
   static const routeName = "/";
 
   final SharedPreferences sharedPref;
-  final bool shouldShowOnboarding;
+  final Redirection redirection;
 
-  const LoadingPage({super.key, required this.sharedPref, required this.shouldShowOnboarding});
+  const LoadingPage({super.key, required this.sharedPref, required this.redirection});
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +93,12 @@ class LoadingPage extends StatelessWidget {
             child: BlocConsumer<LoginBloc, LoginState>(
               listener: (context, loginState) async {
                 if (loginState is LoginSuccessState) {
-                  if (shouldShowOnboarding) {
-                    //StorageManager.getOnboardingStorageClient().save(false);
-                    Navigator.pushNamed(context, OnboardingPage.routeName);
-                  } else {
-                    Navigator.pushNamed(context, ConsultationsPage.routeName);
+                  Navigator.pushNamed(context, ConsultationsPage.routeName);
+                  _pushDeeplinkPage(context);
+                  if (redirection.shouldShowOnboarding) {
+                    Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
+                      // StorageManager.getOnboardingStorageClient().save(false);
+                    });
                   }
                 }
               },
@@ -112,6 +114,23 @@ class LoadingPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _pushDeeplinkPage(BuildContext context) {
+    if (redirection.shouldShowConsultationDetails) {
+      Navigator.pushNamed(
+        context,
+        ConsultationDetailsPage.routeName,
+        arguments: ConsultationDetailsArguments(consultationId: redirection.consultationId!),
+      );
+    }
+    if (redirection.shouldShowQagDetails) {
+      Navigator.pushNamed(
+        context,
+        QagDetailsPage.routeName,
+        arguments: QagDetailsPage(qagId: redirection.qagId!),
+      );
+    }
   }
 
   void _showNotificationDialog(BuildContext context) {

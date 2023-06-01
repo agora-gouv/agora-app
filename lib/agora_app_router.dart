@@ -1,3 +1,4 @@
+import 'package:agora/agora_app.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
@@ -85,12 +86,12 @@ class AgoraAppRouter {
   static MaterialPageRoute<dynamic> handleAgoraGenerateRoute({
     required RouteSettings settings,
     required SharedPreferences sharedPref,
-    required bool shouldShowOnboarding,
+    required Redirection redirection,
   }) {
     Widget currentRoute;
     switch (settings.name) {
       case LoadingPage.routeName:
-        currentRoute = LoadingPage(sharedPref: sharedPref, shouldShowOnboarding: shouldShowOnboarding);
+        currentRoute = LoadingPage(sharedPref: sharedPref, redirection: redirection);
         break;
       // Consultation
       case ConsultationDetailsPage.routeName:

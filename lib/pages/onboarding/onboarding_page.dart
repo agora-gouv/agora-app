@@ -1,6 +1,4 @@
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/pages/consultation/consultations_page.dart';
-import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/onboarding/onboarding_step0_view.dart';
 import 'package:agora/pages/onboarding/onboarding_step1_view.dart';
 import 'package:agora/pages/onboarding/onboarding_step2_view.dart';
@@ -33,13 +31,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       case 2:
         return OnboardingStep2View(onClick: () => setState(() => step = 3));
       case 3:
-        return OnboardingStep3View(
-          onClick: () => Navigator.pushNamedAndRemoveUntil(
-            context,
-            ConsultationsPage.routeName,
-            ModalRoute.withName(LoadingPage.routeName),
-          ),
-        );
+        return OnboardingStep3View(onClick: () => Navigator.pop(context));
       default:
         throw Exception("Onboarding: step not handle");
     }
