@@ -47,7 +47,7 @@ class DemographicHelper {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset("assets/ic_forward.svg"),
+                    SvgPicture.asset("assets/ic_backward.svg"),
                     SizedBox(width: AgoraSpacings.base),
                     Expanded(
                       child: Text(

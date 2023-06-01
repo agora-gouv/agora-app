@@ -21,6 +21,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +32,9 @@ class LoadingPage extends StatelessWidget {
   static const routeName = "/";
 
   final SharedPreferences sharedPref;
+  final bool shouldShowOnboarding;
 
-  const LoadingPage({super.key, required this.sharedPref});
+  const LoadingPage({super.key, required this.sharedPref, required this.shouldShowOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +90,14 @@ class LoadingPage extends StatelessWidget {
               }
             },
             child: BlocConsumer<LoginBloc, LoginState>(
-              listener: (context, loginState) {
+              listener: (context, loginState) async {
                 if (loginState is LoginSuccessState) {
-                  Navigator.pushNamed(context, ConsultationsPage.routeName);
+                  if (shouldShowOnboarding) {
+                    //StorageManager.getOnboardingStorageClient().save(false);
+                    Navigator.pushNamed(context, OnboardingPage.routeName);
+                  } else {
+                    Navigator.pushNamed(context, ConsultationsPage.routeName);
+                  }
                 }
               },
               builder: (context, loginState) {

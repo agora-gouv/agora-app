@@ -2,7 +2,12 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
-enum AgoraRichTextPoliceStyle { toolbar, section }
+enum AgoraRichTextPoliceStyle {
+  toolbar,
+  section,
+  police22,
+  police28,
+}
 
 enum AgoraRichTextItemStyle { bold, regular }
 
@@ -56,6 +61,10 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.light24.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.section:
         return AgoraTextStyles.light18.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police22:
+        return AgoraTextStyles.light22.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police28:
+        return AgoraTextStyles.light28.copyWith(height: 1.2);
     }
   }
 
@@ -65,6 +74,10 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.bold24.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.section:
         return AgoraTextStyles.bold18.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police22:
+        return AgoraTextStyles.bold22.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police28:
+        return AgoraTextStyles.bold28.copyWith(height: 1.2);
     }
   }
 }

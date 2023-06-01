@@ -11,6 +11,7 @@ import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
+import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/moderation_charter_page.dart';
 import 'package:agora/pages/profile/privacy_policy_page.dart';
@@ -28,6 +29,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AgoraAppRouter {
   static Map<String, WidgetBuilder> handleAgoraRoutes() {
     return {
+      // Onboarding
+      OnboardingPage.routeName: (context) => OnboardingPage(),
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
@@ -79,11 +82,15 @@ class AgoraAppRouter {
     };
   }
 
-  static MaterialPageRoute<dynamic> handleAgoraGenerateRoute(RouteSettings settings, SharedPreferences sharedPref) {
+  static MaterialPageRoute<dynamic> handleAgoraGenerateRoute({
+    required RouteSettings settings,
+    required SharedPreferences sharedPref,
+    required bool shouldShowOnboarding,
+  }) {
     Widget currentRoute;
     switch (settings.name) {
       case LoadingPage.routeName:
-        currentRoute = LoadingPage(sharedPref: sharedPref);
+        currentRoute = LoadingPage(sharedPref: sharedPref, shouldShowOnboarding: shouldShowOnboarding);
         break;
       // Consultation
       case ConsultationDetailsPage.routeName:

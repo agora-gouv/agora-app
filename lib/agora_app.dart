@@ -7,9 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AgoraApp extends StatelessWidget {
   final SharedPreferences sharedPref;
+  final bool shouldShowOnboarding;
+
   static final matomoRouteObserver = MatomoRouteObserver();
 
-  const AgoraApp({super.key, required this.sharedPref});
+  const AgoraApp({super.key, required this.sharedPref, required this.shouldShowOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,11 @@ class AgoraApp extends StatelessWidget {
         matomoRouteObserver,
       ],
       routes: AgoraAppRouter.handleAgoraRoutes(),
-      onGenerateRoute: (RouteSettings settings) => AgoraAppRouter.handleAgoraGenerateRoute(settings, sharedPref),
+      onGenerateRoute: (RouteSettings settings) => AgoraAppRouter.handleAgoraGenerateRoute(
+        settings: settings,
+        sharedPref: sharedPref,
+        shouldShowOnboarding: shouldShowOnboarding,
+      ),
       theme: ThemeData(
         colorScheme: ColorScheme.light(
           primary: AgoraColors.primaryGreen,
