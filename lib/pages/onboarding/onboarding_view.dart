@@ -11,10 +11,10 @@ import 'package:agora/pages/onboarding/onboarding_thematique_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class OnboardingStep0View extends StatelessWidget {
+class OnboardingView extends StatelessWidget {
   final VoidCallback onClick;
 
-  const OnboardingStep0View({super.key, required this.onClick});
+  const OnboardingView({super.key, required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class OnboardingStep0View extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SvgPicture.asset("assets/ic_marianne.svg"),
-                  SizedBox(height: AgoraSpacings.x1_25),
+                  SizedBox(height: AgoraSpacings.x2),
                   Text(GenericStrings.onboardingStep0Title, style: AgoraTextStyles.light28),
-                  SizedBox(height: AgoraSpacings.x0_5),
+                  SizedBox(height: AgoraSpacings.x1_5),
                   AgoraRichText(
                     policeStyle: AgoraRichTextPoliceStyle.police22,
                     items: [
@@ -73,8 +73,8 @@ class OnboardingStep0View extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: AgoraSpacings.base),
                   Spacer(),
+                  SizedBox(height: AgoraSpacings.x1_5),
                   SizedBox(
                     width: double.infinity,
                     child: AgoraButton(
