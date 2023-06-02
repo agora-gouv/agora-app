@@ -611,7 +611,7 @@ void main() {
             "totalNumber": 120,
             "qagsToModerate": [
               {
-                "qagId": "qagId",
+                "id": "qagId",
                 "thematique": {"label": "Transports", "picto": "🚊"},
                 "title": "Titre de la QaG",
                 "description": "Description textuelle",
