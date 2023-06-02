@@ -231,7 +231,7 @@ class QagDioRepository extends QagRepository {
           qagsToModeration: (response.data["qagsToModerate"] as List)
               .map(
                 (qagToModerate) => QagModeration(
-                  id: qagToModerate["qagId"] as String,
+                  id: qagToModerate["id"] as String,
                   thematique: (qagToModerate["thematique"] as Map).toThematique(),
                   title: qagToModerate["title"] as String,
                   description: qagToModerate["description"] as String,
