@@ -1,9 +1,7 @@
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/pages/onboarding/onboarding_step0_view.dart';
-import 'package:agora/pages/onboarding/onboarding_step1_view.dart';
-import 'package:agora/pages/onboarding/onboarding_step2_view.dart';
-import 'package:agora/pages/onboarding/onboarding_step3_view.dart';
+import 'package:agora/pages/onboarding/onboarding_step_view.dart';
+import 'package:agora/pages/onboarding/onboarding_view.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -25,17 +23,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget _handleStep(BuildContext context) {
-    switch (step) {
-      case 0:
-        return OnboardingStep0View(onClick: () => setState(() => step = 1));
-      case 1:
-        return OnboardingStep1View(onClick: () => setState(() => step = 2));
-      case 2:
-        return OnboardingStep2View(onClick: () => setState(() => step = 3));
-      case 3:
-        return OnboardingStep3View(onClick: () => Navigator.pop(context));
-      default:
-        throw Exception("Onboarding: step not handle");
+    if (step == 0) {
+      return OnboardingView(onClick: () => setState(() => step = 1));
+    } else {
+      return OnboardingStepView(
+        step: step,
+        onClick: (currentStep) {
+          if (currentStep == 1) {
+            setState(() => step = 2);
+          } else if (currentStep == 2) {
+            setState(() => step = 3);
+          } else {
+            Navigator.pop(context);
+          }
+        },
+      );
     }
   }
 }
