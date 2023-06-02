@@ -1,7 +1,8 @@
 import 'package:agora/agora_app_router.dart';
-import 'package:agora/common/analytics/matomo_route_observer.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
+import 'package:agora/common/observer/matomo_route_observer.dart';
+import 'package:agora/common/observer/navigation_observer.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/loading_page.dart';
@@ -14,6 +15,7 @@ class AgoraApp extends StatefulWidget {
   final bool shouldShowOnboarding;
 
   static final matomoRouteObserver = MatomoRouteObserver();
+  static final navigationObserver = NavigationObserver();
 
   const AgoraApp({super.key, required this.sharedPref, required this.shouldShowOnboarding});
 
@@ -69,6 +71,7 @@ class _AgoraAppState extends State<AgoraApp> {
       navigatorKey: navigatorKey,
       navigatorObservers: [
         AgoraApp.matomoRouteObserver,
+        AgoraApp.navigationObserver,
       ],
       routes: AgoraAppRouter.handleAgoraRoutes(),
       onGenerateRoute: (RouteSettings settings) => AgoraAppRouter.handleAgoraGenerateRoute(
