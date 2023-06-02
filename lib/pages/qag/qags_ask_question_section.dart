@@ -1,15 +1,10 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:flutter/material.dart';
 
@@ -45,22 +40,7 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
                     clickName: AnalyticsEventNames.askQuestion,
                     widgetName: AnalyticsScreenNames.qagsPage,
                   );
-                  if (errorCase == null) {
-                    Navigator.pushNamed(context, QagAskQuestionPage.routeName);
-                  } else {
-                    showAgoraDialog(
-                      context: context,
-                      columnChildren: [
-                        Text(errorCase!, style: AgoraTextStyles.medium16),
-                        SizedBox(height: AgoraSpacings.x0_75),
-                        AgoraButton(
-                          label: GenericStrings.close,
-                          style: AgoraButtonStyle.primaryButtonStyle,
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    );
-                  }
+                  Navigator.pushNamed(context, QagAskQuestionPage.routeName, arguments: errorCase);
                 },
               ),
             ],

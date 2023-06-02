@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 enum AgoraRichTextPoliceStyle {
   toolbar,
   section,
+  police14,
   police22,
   police28,
 }
@@ -61,6 +62,8 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.light24.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.section:
         return AgoraTextStyles.light18.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14:
+        return AgoraTextStyles.light14.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.light22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:
@@ -74,6 +77,8 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.bold24.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.section:
         return AgoraTextStyles.bold18.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14:
+        return AgoraTextStyles.bold14.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.bold22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:

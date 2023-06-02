@@ -13,26 +13,32 @@ class QagStrings {
   static const String at = "le";
   static const String de = "De";
   static const String share = "Partager";
-  static const String askQuestionTitle1 = "Poser une\n";
-  static const String askQuestionTitle2 = "question au gouvernement";
-  static const String askQuestionDescription =
-      "Toutes les questions sont les bienvenues, du moment qu'elles se conforment à la charte de participation : porter sur un sujet d'intérêt général et avoir un ton respectueux.";
+  static const String askQuestionTitle1 = "Poser ma\n";
+  static const String askQuestionTitle2 = "question au Gouvernement";
+  static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement.";
+  static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine.";
+  static const String askQuestionDescription3 =
+      "Le Gouvernement répondra directement sur l’appli à la question la plus populaire de la semaine, c’est-à-dire celle qui a obtenu le plus de soutiens.";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
   static const String agree = "C'est compris";
-  static const String questionTitle = "Question";
-  static const String questionHint = "Votre question";
+  static const String questionTitle = "Ma question";
+  static const String questionHint = "Exemple : Pourquoi avoir créé cette application ?";
+  static const String questionRequiredCondition = "La question doit comporter au moins 10 caractères.";
   static const String detailsTitle = "Détails supplémentaires";
-  static const String detailsHint = "Ajoutez davantage d’informations ou de contexte si vous le souhaitez.\n";
+  static const String detailsDescription =
+      "Ajoutez davantage d’informations ou de contexte si vous le souhaitez (facultatif)";
+  static const String detailsHint = "Exemple : Je vous pose cette question parce que …\n";
   static const String thematiqueTitle = "Thématique";
   static const String thematiqueHint = "Choisissez votre thématique";
-  static const String yourNameTitle = "Votre prénom";
+  static const String yourNameTitle = "Mon prénom";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
-      "Durant la phase d’expérimentation, nous vous proposons d’envoyer votre question par e-mail. Elle apparaîtra dans les 48h sur l’application.";
+      "Toutes les questions sont bienvenues, du moment qu’elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. ";
   static const String askQuestionConfigureMail = "Veuillez configurer l'application Mail par défaut de votre appareil.";
   static const String askQuestionMailSubject = "Ma question au gouvernement";
+  static const String askQuestionCheckboxLabel = "Ma question respecte la charte";
   static const String send = "Envoyer";
 
   static const String supportQuestion = "Soutenir cette question";
