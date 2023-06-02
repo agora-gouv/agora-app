@@ -1,4 +1,5 @@
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/onboarding/onboarding_step0_view.dart';
 import 'package:agora/pages/onboarding/onboarding_step1_view.dart';
 import 'package:agora/pages/onboarding/onboarding_step2_view.dart';
@@ -18,6 +19,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return AgoraScaffold(
+      appBarColor: AgoraColors.primaryGreen,
       child: _handleStep(context),
     );
   }
