@@ -11,7 +11,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';

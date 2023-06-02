@@ -9,7 +9,7 @@ class AgoraButtonStyle {
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.stereotypicalDuck;
+          return AgoraColors.primaryGreenOpacity50;
         } else {
           return AgoraColors.primaryGreen;
         }

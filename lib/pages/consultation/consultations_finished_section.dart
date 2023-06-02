@@ -2,7 +2,7 @@ import 'package:agora/bloc/consultation/consultation_view_model.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_finished_card.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';

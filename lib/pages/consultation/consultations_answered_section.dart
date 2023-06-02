@@ -1,7 +1,7 @@
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_answered_card.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 

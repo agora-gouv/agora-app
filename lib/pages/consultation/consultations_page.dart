@@ -6,7 +6,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/consultation/consultations_answered_section.dart';

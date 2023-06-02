@@ -5,7 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';

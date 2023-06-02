@@ -4,7 +4,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_ongoing_card.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:flutter/material.dart';

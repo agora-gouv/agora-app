@@ -20,6 +20,7 @@ class AgoraColors {
   static const Color invertedBlueFrance = Color(0xFFF5F5FE);
   static const Color primaryGreen = Color(0xFF27A658);
   static const Color primaryGreenOpacity90 = Color(0xE627A658);
+  static const Color primaryGreenOpacity50 = Color(0x8027A658);
   static const Color primaryGreenOpacity15 = Color(0x2627A658);
   static const Color mountainLakeAzure = Color(0xFF51C0A6);
   static const Color blueFrance = Color(0xFF000091);

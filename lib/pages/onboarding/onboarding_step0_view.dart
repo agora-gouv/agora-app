@@ -1,6 +1,6 @@
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
-import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
