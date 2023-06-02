@@ -108,6 +108,7 @@ class QagDioRepository extends QagRepository {
         qagPopular: _transformToQagList(qags["popular"] as List),
         qagLatest: _transformToQagList(qags["latest"] as List),
         qagSupporting: _transformToQagList(qags["supporting"] as List),
+        errorCase: response.data["askQagErrorText"] as String?,
       );
     } catch (e) {
       Log.e("fetchQags failed", e);
@@ -323,12 +324,14 @@ class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
   final List<Qag> qagPopular;
   final List<Qag> qagLatest;
   final List<Qag> qagSupporting;
+  final String? errorCase;
 
   GetQagsSucceedResponse({
     required this.qagResponses,
     required this.qagPopular,
     required this.qagLatest,
     required this.qagSupporting,
+    required this.errorCase,
   });
 
   @override

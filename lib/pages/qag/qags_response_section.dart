@@ -4,7 +4,6 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_title_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
@@ -67,11 +66,12 @@ class QagsResponseSection extends StatelessWidget {
         GestureDetector(
           child: SvgPicture.asset("assets/ic_info.svg"),
           onTap: () {
-            showAgoraDialog(
-              context: context,
-              dismissible: true,
-              columnChildren: [Text("A faire")],
-            );
+            // TODO
+            // showAgoraDialog(
+            //   context: context,
+            //   dismissible: true,
+            //   columnChildren: [],
+            // );
           },
         ),
         Spacer(),

@@ -31,6 +31,7 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           popularViewModels: qagPopularViewModels,
           latestViewModels: qagLatestViewModels,
           supportingViewModels: qagSupportingViewModels,
+          errorCase: response.errorCase,
         ),
       );
     } else {
@@ -118,6 +119,7 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           popularViewModels: popularViewModelsCopy,
           latestViewModels: latestViewModelsCopy,
           supportingViewModels: supportingViewModelsCopy,
+          errorCase: currentState.errorCase,
         ),
       );
     }
@@ -135,6 +137,7 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           popularViewModels: _toQagViewModel(event.backResults.popularQagDetailsBackResults),
           latestViewModels: _toQagViewModel(event.backResults.latestQagDetailsBackResults),
           supportingViewModels: _toQagViewModel(event.backResults.supportingQagDetailsBackResults),
+          errorCase: currentState.errorCase,
         ),
       );
     }
