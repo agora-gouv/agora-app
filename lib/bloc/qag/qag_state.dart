@@ -13,20 +13,23 @@ class QagFetchedState extends QagState {
   final List<QagViewModel> popularViewModels;
   final List<QagViewModel> latestViewModels;
   final List<QagViewModel> supportingViewModels;
+  final String? errorCase;
 
   QagFetchedState({
     required this.qagResponseViewModels,
     required this.popularViewModels,
     required this.latestViewModels,
     required this.supportingViewModels,
+    required this.errorCase,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         qagResponseViewModels,
         popularViewModels,
         latestViewModels,
         supportingViewModels,
+        errorCase,
       ];
 }
 

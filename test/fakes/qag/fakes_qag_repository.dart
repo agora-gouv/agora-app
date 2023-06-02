@@ -66,6 +66,7 @@ class FakeQagSuccessRepository extends QagRepository {
           isSupported: true,
         ),
       ],
+      errorCase: null,
     );
   }
 
@@ -213,6 +214,60 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
           feedbackStatus: true,
         ),
       ),
+    );
+  }
+}
+
+class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccessRepository {
+  @override
+  Future<GetQagsRepositoryResponse> fetchQags({
+    required String? thematiqueId,
+  }) async {
+    return GetQagsSucceedResponse(
+      qagResponses: [
+        QagResponse(
+          qagId: "qagId",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+          author: "author",
+          authorPortraitUrl: "authorPortraitUrl",
+          responseDate: DateTime(2024, 1, 23),
+        ),
+      ],
+      qagPopular: [
+        Qag(
+          id: "id1",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title1",
+          username: "username1",
+          date: DateTime(2024, 1, 23),
+          supportCount: 7,
+          isSupported: true,
+        ),
+      ],
+      qagLatest: [
+        Qag(
+          id: "id2",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title2",
+          username: "username2",
+          date: DateTime(2024, 2, 23),
+          supportCount: 8,
+          isSupported: false,
+        ),
+      ],
+      qagSupporting: [
+        Qag(
+          id: "id3",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title3",
+          username: "username3",
+          date: DateTime(2024, 3, 23),
+          supportCount: 9,
+          isSupported: true,
+        ),
+      ],
+      errorCase: "Une erreur est survenue",
     );
   }
 }

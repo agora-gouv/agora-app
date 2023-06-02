@@ -79,7 +79,7 @@ class _QagsPageState extends State<QagsPage> {
     if (state is QagFetchedState) {
       return [
         QagsResponseSection(qagResponseViewModels: state.qagResponseViewModels),
-        QagsAskQuestionSectionPage(),
+        QagsAskQuestionSectionPage(errorCase: state.errorCase),
         QagsThematiqueSection(
           currentThematiqueId: currentThematiqueId,
           onThematiqueIdSelected: (String thematiqueId) {

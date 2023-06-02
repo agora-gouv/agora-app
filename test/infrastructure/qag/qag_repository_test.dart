@@ -85,7 +85,7 @@ void main() {
   });
 
   group("Fetch qags", () {
-    test("when success should return qags", () async {
+    test("when success and error message null should return qags", () async {
       // Given
       dioAdapter.onGet(
         "/qags",
@@ -143,6 +143,7 @@ void main() {
                   },
                 }
               ],
+              "askQagErrorText": null,
             }
           },
         ),
@@ -203,6 +204,47 @@ void main() {
               isSupported: true,
             ),
           ],
+          errorCase: null,
+        ),
+      );
+    });
+
+    test("when success and error message not null should return qags", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags",
+        queryParameters: {"thematiqueId": thematiqueId},
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "responses": [],
+            "qags": {
+              "popular": [],
+              "latest": [],
+              "supporting": [],
+              "askQagErrorText": "Une erreur est survenue",
+            }
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQags(thematiqueId: thematiqueId);
+
+      // Then
+      expect(
+        response,
+        GetQagsSucceedResponse(
+          qagResponses: [],
+          qagPopular: [],
+          qagLatest: [],
+          qagSupporting: [],
+          errorCase: "Une erreur est survenue",
         ),
       );
     });
