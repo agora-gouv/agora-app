@@ -11,9 +11,11 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
+enum OnboardingStep { participate, askYourQuestion, invent }
+
 class OnboardingStepView extends StatelessWidget {
-  final int step;
-  final Function(int step) onClick;
+  final OnboardingStep step;
+  final VoidCallback onClick;
 
   const OnboardingStepView({super.key, required this.step, required this.onClick});
 
@@ -57,7 +59,7 @@ class OnboardingStepView extends StatelessWidget {
             ],
           ),
           SizedBox(height: AgoraSpacings.x2),
-          AgoraStepCircle(currentStep: step, style: AgoraStepCircleStyle.single),
+          AgoraStepCircle(currentStep: _buildStep(), style: AgoraStepCircleStyle.single),
           SizedBox(height: AgoraSpacings.x0_5),
           Spacer(),
           Padding(
@@ -74,7 +76,7 @@ class OnboardingStepView extends StatelessWidget {
 
   List<AgoraRichTextItem> _buildTitle() {
     switch (step) {
-      case 1:
+      case OnboardingStep.participate:
         return [
           AgoraRichTextTextItem(
             text: GenericStrings.onboardingStep1Title1,
@@ -86,7 +88,7 @@ class OnboardingStepView extends StatelessWidget {
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
-      case 2:
+      case OnboardingStep.askYourQuestion:
         return [
           AgoraRichTextTextItem(
             text: GenericStrings.onboardingStep2Title1,
@@ -98,7 +100,7 @@ class OnboardingStepView extends StatelessWidget {
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
-      case 3:
+      case OnboardingStep.invent:
         return [
           AgoraRichTextTextItem(
             text: GenericStrings.onboardingStep3Title1,
@@ -117,38 +119,45 @@ class OnboardingStepView extends StatelessWidget {
 
   String _buildDescription() {
     switch (step) {
-      case 1:
+      case OnboardingStep.participate:
         return GenericStrings.onboardingStep1Description;
-      case 2:
+      case OnboardingStep.askYourQuestion:
         return GenericStrings.onboardingStep2Description;
-      case 3:
+      case OnboardingStep.invent:
         return GenericStrings.onboardingStep3Description;
-      default:
-        throw Exception("onboarding : step $step not exists error ");
     }
   }
 
   String _buildImage() {
     switch (step) {
-      case 1:
+      case OnboardingStep.participate:
         return "assets/ic_onboarding_step1.png";
-      case 2:
+      case OnboardingStep.askYourQuestion:
         return "assets/ic_onboarding_step2.png";
-      case 3:
+      case OnboardingStep.invent:
         return "assets/ic_onboarding_step3.png";
-      default:
-        throw Exception("onboarding : step $step not exists error ");
+    }
+  }
+
+  int _buildStep() {
+    switch (step) {
+      case OnboardingStep.participate:
+        return 1;
+      case OnboardingStep.askYourQuestion:
+        return 2;
+      case OnboardingStep.invent:
+        return 3;
     }
   }
 
   Widget _buildButton() {
-    if (step == 1 || step == 2) {
+    if (step == OnboardingStep.participate || step == OnboardingStep.askYourQuestion) {
       return Row(
         children: [
           Spacer(),
           AgoraNextButton(
             icon: "ic_forward.svg",
-            onPressed: () => onClick(step),
+            onPressed: () => onClick(),
           ),
         ],
       );
@@ -156,9 +165,9 @@ class OnboardingStepView extends StatelessWidget {
       return SizedBox(
         width: double.infinity,
         child: AgoraButton(
-          label: GenericStrings.onboardingStep0LetsGo,
-          style: AgoraButtonStyle.primaryButtonStyle,
-          onPressed: () => onClick(step),
+          label: GenericStrings.onboardingStep3LetsGo,
+          style: AgoraButtonStyle.onboardingButtonStyle,
+          onPressed: () => onClick(),
         ),
       );
     }

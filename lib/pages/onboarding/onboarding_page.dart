@@ -12,7 +12,13 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  int step = 0;
+  final _controller = PageController(initialPage: 0);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +29,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget _handleStep(BuildContext context) {
-    if (step == 0) {
-      return OnboardingView(onClick: () => setState(() => step = 1));
-    } else {
-      return OnboardingStepView(
-        step: step,
-        onClick: (currentStep) {
-          if (currentStep == 1) {
-            setState(() => step = 2);
-          } else if (currentStep == 2) {
-            setState(() => step = 3);
-          } else {
-            Navigator.pop(context);
-          }
-        },
-      );
-    }
+    return PageView(
+      controller: _controller,
+      children: [
+        OnboardingView(onClick: () => _controller.jumpToPage(1)),
+        OnboardingStepView(
+          step: OnboardingStep.participate,
+          onClick: () => _controller.jumpToPage(2),
+        ),
+        OnboardingStepView(
+          step: OnboardingStep.askYourQuestion,
+          onClick: () => _controller.jumpToPage(3),
+        ),
+        OnboardingStepView(
+          step: OnboardingStep.invent,
+          onClick: () => Navigator.pop(context),
+        ),
+      ],
+    );
   }
 }

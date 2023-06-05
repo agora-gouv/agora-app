@@ -85,7 +85,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                         children: [
                           Text(
                             viewModel.title,
-                            style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryGreen),
+                            style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
                           ),
                         ],
                       ),
