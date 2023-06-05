@@ -25,6 +25,7 @@ class ConsultationDetailsPresenter {
       ),
       description: consultationDetails.description,
       tipsDescription: consultationDetails.tipsDescription,
+      hasAnswered: consultationDetails.hasAnswered,
     );
   }
 }

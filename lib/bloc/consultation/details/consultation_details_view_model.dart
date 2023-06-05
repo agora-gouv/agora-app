@@ -15,6 +15,7 @@ class ConsultationDetailsViewModel extends Equatable {
   final String participantCountGoalText;
   final String description;
   final String tipsDescription;
+  final bool hasAnswered;
 
   ConsultationDetailsViewModel({
     required this.id,
@@ -30,6 +31,7 @@ class ConsultationDetailsViewModel extends Equatable {
     required this.participantCountGoalText,
     required this.description,
     required this.tipsDescription,
+    required this.hasAnswered,
   });
 
   @override
@@ -47,5 +49,6 @@ class ConsultationDetailsViewModel extends Equatable {
         participantCountGoalText,
         description,
         tipsDescription,
+        hasAnswered,
       ];
 }

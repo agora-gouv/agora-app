@@ -20,6 +20,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
+import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,7 +45,19 @@ class ConsultationDetailsPage extends StatelessWidget {
         consultationRepository: RepositoryManager.getConsultationRepository(),
       )..add(FetchConsultationDetailsEvent(consultationId: consultationId)),
       child: AgoraScaffold(
-        child: BlocBuilder<ConsultationDetailsBloc, ConsultationDetailsState>(
+        child: BlocConsumer<ConsultationDetailsBloc, ConsultationDetailsState>(
+          listener: (previousState, currentState) {
+            if (currentState is ConsultationDetailsFetchedState && currentState.viewModel.hasAnswered) {
+              Navigator.pushNamed(
+                context,
+                ConsultationSummaryPage.routeName,
+                arguments: ConsultationSummaryArguments(
+                  consultationId: consultationId,
+                  shouldReloadConsultationsWhenPop: false,
+                ),
+              ).then((value) => Navigator.pop(context));
+            }
+          },
           builder: (context, state) {
             return SingleChildScrollView(
               child: Column(
