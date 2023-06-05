@@ -63,7 +63,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
           ..add(FetchConsultationSummaryEvent(consultationId: consultationId));
       },
       child: AgoraScaffold(
-        popAction: () => _navigateToConsultationPage(context, consultationId, shouldReloadConsultationsWhenPop),
+        popAction: () => _onBackClick(context, consultationId, shouldReloadConsultationsWhenPop),
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(
           builder: (context, state) {
             if (state is ConsultationSummaryFetchedState) {
@@ -75,7 +75,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
-                      onToolbarBackClick: () => _navigateToConsultationPage(
+                      onToolbarBackClick: () => _onBackClick(
                         context,
                         consultationId,
                         shouldReloadConsultationsWhenPop,
@@ -115,7 +115,11 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                               title: viewModel.title,
                               consultationId: consultationId,
                               etEnsuiteViewModel: viewModel.etEnsuite,
-                              shouldReloadConsultationsWhenPop: shouldReloadConsultationsWhenPop,
+                              onBackToConsultationClick: () => _onBackToMenuClick(
+                                context,
+                                consultationId,
+                                shouldReloadConsultationsWhenPop,
+                              ),
                             ),
                           ),
                         ],
@@ -128,7 +132,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
               return Column(
                 children: [
                   AgoraToolbar(
-                    onBackClick: () => _navigateToConsultationPage(
+                    onBackClick: () => _onBackClick(
                       context,
                       consultationId,
                       shouldReloadConsultationsWhenPop,
@@ -142,7 +146,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
               return Column(
                 children: [
                   AgoraToolbar(
-                    onBackClick: () => _navigateToConsultationPage(
+                    onBackClick: () => _onBackClick(
                       context,
                       consultationId,
                       shouldReloadConsultationsWhenPop,
@@ -159,7 +163,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
     );
   }
 
-  void _navigateToConsultationPage(
+  void _onBackClick(
     BuildContext context,
     String consultationId,
     bool shouldReloadConsultationWhenPop,
@@ -168,7 +172,23 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
       clickName: AnalyticsEventNames.back,
       widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
     );
-    if (shouldReloadConsultationWhenPop) {
+    _navigateToConsultationsPage(context, shouldReloadConsultationWhenPop);
+  }
+
+  void _onBackToMenuClick(
+    BuildContext context,
+    String consultationId,
+    bool shouldReloadConsultationsWhenPop,
+  ) {
+    TrackerHelper.trackClick(
+      clickName: AnalyticsEventNames.backToMenu,
+      widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
+    );
+    _navigateToConsultationsPage(context, shouldReloadConsultationsWhenPop);
+  }
+
+  void _navigateToConsultationsPage(BuildContext context, bool shouldReloadConsultationsWhenPop) {
+    if (shouldReloadConsultationsWhenPop) {
       Navigator.pushNamedAndRemoveUntil(
         context,
         ConsultationsPage.routeName,

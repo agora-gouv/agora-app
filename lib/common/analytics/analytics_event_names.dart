@@ -15,7 +15,7 @@ class AnalyticsEventNames {
   static const String chapterDescription = "Chapitre descriptive d'une consultation";
   static const String goToResult = "Voir les résultats";
   static const String shareConsultationResults = "Partager les résultats d'une consultation";
-  static const String backToHome = "Revenir au menu";
+  static const String backToMenu = "Revenir au menu";
   static const String back = "Retour";
 
   static const String readMore = "Lire la suite des données démographiques";
