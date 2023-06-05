@@ -3,6 +3,7 @@ import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_answered_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsAnsweredSection extends StatelessWidget {
@@ -47,7 +48,9 @@ class ConsultationsAnsweredSection extends StatelessWidget {
     if (answeredViewModels.isEmpty) {
       answeredConsultationsWidgets.add(Container(width: double.infinity));
       answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
-      answeredConsultationsWidgets.add(Center(child: Text(ConsultationStrings.consultationEmpty)));
+      answeredConsultationsWidgets.add(
+        Center(child: Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.light14)),
+      );
       answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.x2));
     }
     for (final answeredViewModel in answeredViewModels) {
