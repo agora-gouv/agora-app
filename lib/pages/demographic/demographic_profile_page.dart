@@ -56,7 +56,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                   policeStyle: AgoraRichTextPoliceStyle.toolbar,
                   items: [
                     AgoraRichTextTextItem(
-                      text: DemographicStrings.yours,
+                      text: DemographicStrings.my,
                       style: AgoraRichTextItemStyle.regular,
                     ),
                     AgoraRichTextSpaceItem(),
@@ -114,7 +114,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                         style: AgoraRichTextItemStyle.regular,
                       ),
                       AgoraRichTextTextItem(
-                        text: DemographicStrings.general,
+                        text: DemographicStrings.demographic,
                         style: AgoraRichTextItemStyle.bold,
                       ),
                     ],

@@ -1,4 +1,5 @@
 import 'package:agora/bloc/demographic/get/demographic_information_view_model.dart';
+import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/department.dart';
@@ -16,21 +17,21 @@ class DemographicInformationPresenter {
   static String _buildTypeString(DemographicType demographicType) {
     switch (demographicType) {
       case DemographicType.gender:
-        return "Genre";
+        return DemographicStrings.gender;
       case DemographicType.yearOfBirth:
-        return "Année de naissance";
+        return DemographicStrings.yearOfBirth;
       case DemographicType.department:
-        return "Département";
+        return DemographicStrings.department;
       case DemographicType.cityType:
-        return "J'habite";
+        return DemographicStrings.cityType;
       case DemographicType.jobCategory:
-        return "Catégorie socio-professionnelle";
+        return DemographicStrings.jobCategory;
       case DemographicType.voteFrequency:
-        return "Vote";
+        return DemographicStrings.voteFrequency;
       case DemographicType.publicMeetingFrequency:
-        return "Réunions publiques";
+        return DemographicStrings.publicMeetingFrequency;
       case DemographicType.consultationFrequency:
-        return "Consultations citoyennes";
+        return DemographicStrings.consultationFrequency;
     }
   }
 
@@ -56,13 +57,13 @@ class DemographicInformationPresenter {
   static String _buildGenderData(String? data) {
     switch (data) {
       case "M":
-        return "Homme";
+        return DemographicStrings.man;
       case "F":
-        return "Femme";
+        return DemographicStrings.woman;
       case "A":
-        return "Autre";
+        return DemographicStrings.other;
       default:
-        return "Non renseigné";
+        return DemographicStrings.notSpecified;
     }
   }
 
@@ -70,7 +71,7 @@ class DemographicInformationPresenter {
     if (data != null) {
       return data;
     } else {
-      return "Non renseigné";
+      return DemographicStrings.notSpecified;
     }
   }
 
@@ -79,56 +80,56 @@ class DemographicInformationPresenter {
       final department = DepartmentHelper.getDepartment().firstWhere((department) => department.code == data);
       return "${department.name} (${department.code})";
     } else {
-      return "Non renseigné";
+      return DemographicStrings.notSpecified;
     }
   }
 
   static String _buildCityTypeData(String? data) {
     switch (data) {
       case "R":
-        return "En milieu rural";
+        return DemographicStrings.ruralArea;
       case "U":
-        return "En milieu urbain";
+        return DemographicStrings.urbanArea;
       case "A":
-        return "Autre / Je ne sais pas";
+        return DemographicStrings.otherAndUnknown;
       default:
-        return "Non renseigné";
+        return DemographicStrings.notSpecified;
     }
   }
 
   static String _buildJobCategoryData(String? data) {
     switch (data) {
       case "AG":
-        return "Agriculteurs";
+        return DemographicStrings.farmer;
       case "AR":
-        return "Artisans, commerçants, chefs d'entreprise";
+        return DemographicStrings.craftsmen;
       case "CA":
-        return "Cadres";
+        return DemographicStrings.managerialStaff;
       case "PI":
-        return "Professions intermédiaires";
+        return DemographicStrings.intermediateProfessions;
       case "EM":
-        return "Employés";
+        return DemographicStrings.employees;
       case "OU":
-        return "Ouvriers";
+        return DemographicStrings.workers;
       case "ND":
-        return "Non déterminé";
+        return DemographicStrings.notDetermined;
       case "UN":
-        return "Je ne sais pas";
+        return DemographicStrings.unknown;
       default:
-        return "Non renseigné";
+        return DemographicStrings.notSpecified;
     }
   }
 
   static String _buildFrequencyData(String? data) {
     switch (data) {
       case "S":
-        return "Souvent";
+        return DemographicStrings.often;
       case "P":
-        return "Parfois";
+        return DemographicStrings.sometime;
       case "J":
-        return "Jamais";
+        return DemographicStrings.never;
       default:
-        return "Non renseigné";
+        return DemographicStrings.notSpecified;
     }
   }
 }
