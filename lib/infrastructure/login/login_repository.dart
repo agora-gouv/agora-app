@@ -4,12 +4,10 @@ import 'package:equatable/equatable.dart';
 
 abstract class LoginRepository {
   Future<SignupRepositoryResponse> signup({
-    required String deviceId,
     required String firebaseMessagingToken,
   });
 
   Future<LoginRepositoryResponse> login({
-    required String deviceId,
     required String firebaseMessagingToken,
     required String loginToken,
   });
@@ -22,18 +20,17 @@ class LoginDioRepository extends LoginRepository {
 
   @override
   Future<SignupRepositoryResponse> signup({
-    required String deviceId,
     required String firebaseMessagingToken,
   }) async {
     try {
       final response = await httpClient.post(
         "/signup",
         headers: {
-          "deviceId": deviceId,
           "fcmToken": firebaseMessagingToken,
         },
       );
       return SignupSucceedResponse(
+        userId: response.data["userId"] as String,
         jwtToken: response.data["jwtToken"] as String,
         loginToken: response.data["loginToken"] as String,
         isModerator: response.data["isModerator"] as bool,
@@ -46,7 +43,6 @@ class LoginDioRepository extends LoginRepository {
 
   @override
   Future<LoginRepositoryResponse> login({
-    required String deviceId,
     required String firebaseMessagingToken,
     required String loginToken,
   }) async {
@@ -54,7 +50,6 @@ class LoginDioRepository extends LoginRepository {
       final response = await httpClient.post(
         "/login",
         headers: {
-          "deviceId": deviceId,
           "fcmToken": firebaseMessagingToken,
         },
         data: loginToken,
@@ -76,14 +71,20 @@ abstract class SignupRepositoryResponse extends Equatable {
 }
 
 class SignupSucceedResponse extends SignupRepositoryResponse {
+  final String userId;
   final String jwtToken;
   final String loginToken;
   final bool isModerator;
 
-  SignupSucceedResponse({required this.jwtToken, required this.loginToken, required this.isModerator});
+  SignupSucceedResponse({
+    required this.userId,
+    required this.jwtToken,
+    required this.loginToken,
+    required this.isModerator,
+  });
 
   @override
-  List<Object> get props => [jwtToken, loginToken, isModerator];
+  List<Object> get props => [userId, jwtToken, loginToken, isModerator];
 }
 
 class SignupFailedResponse extends SignupRepositoryResponse {}

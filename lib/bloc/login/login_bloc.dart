@@ -39,13 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<LoginState> _login({required String loginToken, required String fcmToken}) async {
-    final deviceId = await deviceInfoHelper.getDeviceId();
-    if (deviceId == null) {
-      return LoginErrorState();
-    }
-
     final response = await repository.login(
-      deviceId: deviceId,
       firebaseMessagingToken: fcmToken,
       loginToken: loginToken,
     );
@@ -59,14 +53,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<LoginState> _signup({required String fcmToken}) async {
-    final deviceId = await deviceInfoHelper.getDeviceId();
-    if (deviceId == null) {
-      return LoginErrorState();
-    }
-
-    final response = await repository.signup(deviceId: deviceId, firebaseMessagingToken: fcmToken);
+    final response = await repository.signup(firebaseMessagingToken: fcmToken);
     if (response is SignupSucceedResponse) {
-      loginStorageClient.save(response.loginToken);
+      loginStorageClient.save(userId: response.userId, loginToken: response.loginToken);
       jwtHelper.setJwtToken(response.jwtToken);
       roleHelper.setIsModerator(response.isModerator);
       return LoginSuccessState();

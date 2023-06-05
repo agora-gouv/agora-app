@@ -9,7 +9,7 @@ void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
 
-  const deviceId = "deviceId";
+  const userId = "userId";
   const fcmToken = "fcmToken";
   const loginToken = "loginToken";
 
@@ -21,6 +21,7 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
+            "userId": userId,
             "jwtToken": "jwtToken",
             "loginToken": "loginToken",
             "isModerator": true,
@@ -28,7 +29,6 @@ void main() {
         ),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
           "fcmToken": fcmToken,
         },
       );
@@ -36,7 +36,6 @@ void main() {
       // When
       final repository = LoginDioRepository(httpClient: httpClient);
       final response = await repository.signup(
-        deviceId: deviceId,
         firebaseMessagingToken: fcmToken,
       );
 
@@ -44,6 +43,7 @@ void main() {
       expect(
         response,
         SignupSucceedResponse(
+          userId: userId,
           jwtToken: "jwtToken",
           loginToken: "loginToken",
           isModerator: true,
@@ -58,7 +58,6 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
           "fcmToken": fcmToken,
         },
       );
@@ -66,7 +65,6 @@ void main() {
       // When
       final repository = LoginDioRepository(httpClient: httpClient);
       final response = await repository.signup(
-        deviceId: deviceId,
         firebaseMessagingToken: fcmToken,
       );
 
@@ -90,7 +88,6 @@ void main() {
         ),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
           "fcmToken": fcmToken,
         },
         data: loginToken,
@@ -99,7 +96,6 @@ void main() {
       // When
       final repository = LoginDioRepository(httpClient: httpClient);
       final response = await repository.login(
-        deviceId: deviceId,
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,
       );
@@ -121,7 +117,6 @@ void main() {
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
-          "deviceId": deviceId,
           "fcmToken": fcmToken,
         },
         data: loginToken,
@@ -130,7 +125,6 @@ void main() {
       // When
       final repository = LoginDioRepository(httpClient: httpClient);
       final response = await repository.login(
-        deviceId: deviceId,
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,
       );

@@ -3,10 +3,10 @@ import 'package:agora/infrastructure/login/login_repository.dart';
 class FakeLoginSuccessRepository extends LoginRepository {
   @override
   Future<SignupRepositoryResponse> signup({
-    required String deviceId,
     required String firebaseMessagingToken,
   }) async {
     return SignupSucceedResponse(
+      userId: "userId",
       jwtToken: "jwtToken",
       loginToken: "loginToken",
       isModerator: true,
@@ -15,7 +15,6 @@ class FakeLoginSuccessRepository extends LoginRepository {
 
   @override
   Future<LoginRepositoryResponse> login({
-    required String deviceId,
     required String firebaseMessagingToken,
     required String loginToken,
   }) async {
@@ -29,7 +28,6 @@ class FakeLoginSuccessRepository extends LoginRepository {
 class FakeLoginFailureRepository extends LoginRepository {
   @override
   Future<SignupRepositoryResponse> signup({
-    required String deviceId,
     required String firebaseMessagingToken,
   }) async {
     return SignupFailedResponse();
@@ -37,29 +35,9 @@ class FakeLoginFailureRepository extends LoginRepository {
 
   @override
   Future<LoginRepositoryResponse> login({
-    required String deviceId,
     required String firebaseMessagingToken,
     required String loginToken,
   }) async {
     return LoginFailedResponse();
-  }
-}
-
-class FakeLoginNoImportantRepository extends LoginRepository {
-  @override
-  Future<SignupRepositoryResponse> signup({
-    required String deviceId,
-    required String firebaseMessagingToken,
-  }) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<LoginRepositoryResponse> login({
-    required String deviceId,
-    required String firebaseMessagingToken,
-    required String loginToken,
-  }) async {
-    throw UnimplementedError();
   }
 }

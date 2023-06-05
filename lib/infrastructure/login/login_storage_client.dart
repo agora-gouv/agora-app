@@ -5,19 +5,28 @@ abstract class LoginStorageClient {
 
   LoginStorageClient({required this.secureStorageClient});
 
-  void save(String loginToken);
+  void save({required String userId, required String loginToken});
+
+  Future<String?> getUserId();
 
   Future<String?> getLoginToken();
 }
 
 class LoginSharedPreferencesClient extends LoginStorageClient {
+  final userIdKey = "userIdKey";
   final loginTokenKey = "loginTokenKey";
 
   LoginSharedPreferencesClient({required super.secureStorageClient});
 
   @override
-  void save(String loginToken) async {
+  void save({required String userId, required String loginToken}) async {
+    await secureStorageClient.write(key: userIdKey, value: userId);
     await secureStorageClient.write(key: loginTokenKey, value: loginToken);
+  }
+
+  @override
+  Future<String?> getUserId() async {
+    return await secureStorageClient.read(key: userIdKey);
   }
 
   @override
