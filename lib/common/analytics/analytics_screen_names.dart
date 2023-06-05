@@ -1,4 +1,5 @@
 class AnalyticsScreenNames {
+  static const String onboardingPage = "Écran d'onboarding";
   static const String consultationsPage = "Liste des consultations";
   static const String consultationDetailsPage = "Détails d'une consultation";
   static const String consultationQuestionPage = "Questionnaire d'une consultation";
