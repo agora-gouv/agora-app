@@ -61,9 +61,19 @@ class ModerationPage extends StatelessWidget {
                   );
                 } else if (qagModerationListState is QagModerationListInitialState ||
                     qagModerationListState is QagModerationListLoadingState) {
-                  return Center(child: CircularProgressIndicator());
+                  return Column(
+                    children: [
+                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+                      Center(child: CircularProgressIndicator()),
+                    ],
+                  );
                 } else {
-                  return Center(child: AgoraErrorView());
+                  return Column(
+                    children: [
+                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+                      Center(child: AgoraErrorView()),
+                    ],
+                  );
                 }
               },
             ),
