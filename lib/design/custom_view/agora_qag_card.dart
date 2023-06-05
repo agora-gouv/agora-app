@@ -47,9 +47,8 @@ class AgoraQagCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    ThematiqueHelper.buildCard(context, thematique),
+                    Expanded(child: ThematiqueHelper.buildCard(context, thematique)),
                     SizedBox(width: AgoraSpacings.x0_25),
-                    Spacer(),
                     GestureDetector(
                       onTap: () => onSupportClick(!isSupported),
                       child: Row(

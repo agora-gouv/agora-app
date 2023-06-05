@@ -41,13 +41,14 @@ class AgoraRoundedButton extends StatelessWidget {
         padding: _buildPadding(),
         cardColor: _buildCardColor(),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: contentAlignment,
           children: [
             if (icon != null) ...[
               SvgPicture.asset("assets/$icon"),
               SizedBox(width: AgoraSpacings.x0_5),
             ],
-            Text(label, style: _buildTextStyle()),
+            Flexible(child: Text(label, style: _buildTextStyle(), textAlign: TextAlign.center)),
           ],
         ),
         onTap: () => onPressed(),
