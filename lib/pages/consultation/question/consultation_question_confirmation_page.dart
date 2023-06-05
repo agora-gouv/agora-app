@@ -136,7 +136,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     ConsultationSummaryPage.routeName,
-                    arguments: consultationId,
+                    arguments: ConsultationSummaryArguments(consultationId: consultationId),
                   );
                 },
               )

@@ -20,6 +20,16 @@ import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class ConsultationSummaryArguments {
+  final String consultationId;
+  final bool shouldReloadConsultationsWhenPop;
+
+  ConsultationSummaryArguments({
+    required this.consultationId,
+    this.shouldReloadConsultationsWhenPop = true,
+  });
+}
+
 class ConsultationSummaryPage extends StatefulWidget {
   static const routeName = "/consultationSummaryPage";
 
@@ -44,14 +54,16 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
 
   @override
   Widget build(BuildContext context) {
-    final consultationId = ModalRoute.of(context)!.settings.arguments as String;
+    final arguments = ModalRoute.of(context)!.settings.arguments as ConsultationSummaryArguments;
+    final consultationId = arguments.consultationId;
+    final shouldReloadConsultationsWhenPop = arguments.shouldReloadConsultationsWhenPop;
     return BlocProvider(
       create: (BuildContext context) {
         return ConsultationSummaryBloc(consultationRepository: RepositoryManager.getConsultationRepository())
           ..add(FetchConsultationSummaryEvent(consultationId: consultationId));
       },
       child: AgoraScaffold(
-        popAction: () => _navigateToConsultationPage(context, consultationId),
+        popAction: () => _navigateToConsultationPage(context, consultationId, shouldReloadConsultationsWhenPop),
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(
           builder: (context, state) {
             if (state is ConsultationSummaryFetchedState) {
@@ -63,7 +75,11 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
-                      onToolbarBackClick: () => _navigateToConsultationPage(context, consultationId),
+                      onToolbarBackClick: () => _navigateToConsultationPage(
+                        context,
+                        consultationId,
+                        shouldReloadConsultationsWhenPop,
+                      ),
                       topChild: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -99,6 +115,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                               title: viewModel.title,
                               consultationId: consultationId,
                               etEnsuiteViewModel: viewModel.etEnsuite,
+                              shouldReloadConsultationsWhenPop: shouldReloadConsultationsWhenPop,
                             ),
                           ),
                         ],
@@ -110,7 +127,13 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
             } else if (state is ConsultationSummaryInitialLoadingState) {
               return Column(
                 children: [
-                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context, consultationId)),
+                  AgoraToolbar(
+                    onBackClick: () => _navigateToConsultationPage(
+                      context,
+                      consultationId,
+                      shouldReloadConsultationsWhenPop,
+                    ),
+                  ),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: CircularProgressIndicator()),
                 ],
@@ -118,7 +141,13 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
             } else {
               return Column(
                 children: [
-                  AgoraToolbar(onBackClick: () => _navigateToConsultationPage(context, consultationId)),
+                  AgoraToolbar(
+                    onBackClick: () => _navigateToConsultationPage(
+                      context,
+                      consultationId,
+                      shouldReloadConsultationsWhenPop,
+                    ),
+                  ),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   AgoraErrorView(),
                 ],
@@ -130,15 +159,23 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
     );
   }
 
-  void _navigateToConsultationPage(BuildContext context, String consultationId) {
+  void _navigateToConsultationPage(
+    BuildContext context,
+    String consultationId,
+    bool shouldReloadConsultationWhenPop,
+  ) {
     TrackerHelper.trackClick(
       clickName: AnalyticsEventNames.back,
       widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
     );
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      ConsultationsPage.routeName,
-      ModalRoute.withName(LoadingPage.routeName),
-    );
+    if (shouldReloadConsultationWhenPop) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        ConsultationsPage.routeName,
+        ModalRoute.withName(LoadingPage.routeName),
+      );
+    } else {
+      Navigator.pop(context);
+    }
   }
 }
