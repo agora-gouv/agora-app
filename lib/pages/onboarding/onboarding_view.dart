@@ -79,7 +79,7 @@ class OnboardingView extends StatelessWidget {
                     width: double.infinity,
                     child: AgoraButton(
                       label: GenericStrings.onboardingStep0Begin,
-                      style: AgoraButtonStyle.primaryButtonStyle,
+                      style: AgoraButtonStyle.onboardingButtonStyle,
                       onPressed: () => onClick(),
                     ),
                   ),
@@ -127,7 +127,7 @@ class OnboardingView extends StatelessWidget {
   }
 
   Widget _buildThematiqueCard(BuildContext context, String picto, String label) {
-    final width = MediaQuery.of(context).size.width * 0.28;
+    final width = MediaQuery.of(context).size.width * 0.32;
     return SizedBox(
       width: width,
       child: OnboardingThematiqueCard(picto: picto, label: label),

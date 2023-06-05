@@ -55,7 +55,7 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
           ),
         ),
         AgoraRoundedCard(
-          cardColor: AgoraColors.blueFranceOpacity10,
+          cardColor: AgoraColors.primaryBlueOpacity10,
           padding: null,
           child: SizedBox(
             height: barHeight,

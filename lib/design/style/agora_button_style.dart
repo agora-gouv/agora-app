@@ -24,6 +24,25 @@ class AgoraButtonStyle {
     ),
   );
 
+  static ButtonStyle onboardingButtonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.resolveWith(
+      (states) {
+        if (states.contains(MaterialState.disabled)) {
+          return AgoraColors.primaryBlueOpacity50;
+        } else {
+          return AgoraColors.primaryBlue;
+        }
+      },
+    ),
+    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
+    textStyle: MaterialStateProperty.all(AgoraTextStyles.primaryButton.copyWith(fontSize: 18.0)),
+    elevation: MaterialStateProperty.all(0),
+    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    padding: MaterialStateProperty.all(
+      EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x0_75),
+    ),
+  );
+
   static ButtonStyle blueBorderButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
@@ -125,25 +144,6 @@ class AgoraButtonStyle {
         borderRadius: BorderRadius.all(AgoraCorners.rounded),
       ),
     ),
-    padding: MaterialStateProperty.all(
-      EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-    ),
-  );
-
-  static ButtonStyle whiteButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
-      (states) {
-        if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.stereotypicalDuck;
-        } else {
-          return AgoraColors.white;
-        }
-      },
-    ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
