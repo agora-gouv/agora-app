@@ -1,8 +1,10 @@
 class QagStrings {
   static const String toolbarPart1 = "Questions";
-  static const String toolbarPart2 = "au gouvernement";
+  static const String toolbarPart2 = "au Gouvernement";
   static const String qagResponsePart1 = "Les réponses";
   static const String qagResponsePart2 = "à vos questions";
+  static const String qagResponseInfoBubble =
+      "Chaque semaine, le Gouvernement répond directement sur l’appli à la question citoyenne la plus populaire, c’est-à-dire celle qui a obtenu le plus de soutiens au cours de la semaine écoulée.";
   static const String allQagPart1 = "Toutes vos";
   static const String allQagPart2 = "questions";
   static const String popular = "Populaires";
@@ -36,8 +38,6 @@ class QagStrings {
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
       "Toutes les questions sont bienvenues, du moment qu’elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. ";
-  static const String askQuestionConfigureMail = "Veuillez configurer l'application Mail par défaut de votre appareil.";
-  static const String askQuestionMailSubject = "Ma question au gouvernement";
   static const String askQuestionCheckboxLabel = "Ma question respecte la charte";
   static const String send = "Envoyer";
 

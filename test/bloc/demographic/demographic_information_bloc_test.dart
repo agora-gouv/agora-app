@@ -20,12 +20,15 @@ void main() {
           demographicInformationViewModels: [
             DemographicInformationViewModel(demographicType: "Genre", data: "Homme"),
             DemographicInformationViewModel(demographicType: "Année de naissance", data: "1999"),
-            DemographicInformationViewModel(demographicType: "Département", data: "Paris (75)"),
+            DemographicInformationViewModel(
+              demographicType: "Département ou collectivité d’outre mer",
+              data: "Paris (75)",
+            ),
             DemographicInformationViewModel(demographicType: "J'habite", data: "En milieu rural"),
             DemographicInformationViewModel(demographicType: "Catégorie socio-professionnelle", data: "Non renseigné"),
             DemographicInformationViewModel(demographicType: "Vote", data: "Jamais"),
-            DemographicInformationViewModel(demographicType: "Réunions publiques", data: "Souvent"),
-            DemographicInformationViewModel(demographicType: "Consultations citoyennes", data: "Parfois"),
+            DemographicInformationViewModel(demographicType: "Engagement sur le terrain", data: "Souvent"),
+            DemographicInformationViewModel(demographicType: "Engagement en ligne", data: "Parfois"),
           ],
         ),
       ],

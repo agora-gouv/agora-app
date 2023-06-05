@@ -9,9 +9,10 @@ class ProfileStrings {
   static const String privacyPolicy = "Politique de confidentialité";
   static const String termsOfService = "Conditions générales d'utilisation";
   static const String legalNotice = "Mentions légales";
-  static const String feedbackTipsTitle = "Aidez-nous à améliorer cette application !";
-  static const String feedbackTipsDescription = "Partagez vos retours et vos idées";
-  static const String feedbackTipsButton = "Donner mon avis";
+  static const String feedbackTipsTitle = "Inventez avec nous le futur de l’appli !";
+  static const String feedbackTipsDescription =
+      "Faites-nous remonter les éventuels bugs que vous repérez sur cette version beta mais aussi vos retours, critiques et idées pour nous aider à améliorer l’application.";
+  static const String feedbackTipsButton = "Donner mes retours";
   static const String feedbackUrl = "https://tally.so/r/waed4X";
   static const String charter = "Charte de";
   static const String moderation = "modération";
