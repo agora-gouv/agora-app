@@ -19,12 +19,14 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
   final String title;
   final String consultationId;
   final ConsultationSummaryEtEnsuiteViewModel etEnsuiteViewModel;
+  final bool shouldReloadConsultationsWhenPop;
 
   const ConsultationSummaryEtEnsuiteTabContent({
     super.key,
     required this.title,
     required this.consultationId,
     required this.etEnsuiteViewModel,
+    required this.shouldReloadConsultationsWhenPop,
   });
 
   @override
@@ -85,11 +87,15 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                                 clickName: AnalyticsEventNames.backToHome,
                                 widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                               );
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                ConsultationsPage.routeName,
-                                ModalRoute.withName(LoadingPage.routeName),
-                              );
+                              if (shouldReloadConsultationsWhenPop) {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  ConsultationsPage.routeName,
+                                  ModalRoute.withName(LoadingPage.routeName),
+                                );
+                              } else {
+                                Navigator.pop(context);
+                              }
                             },
                           ),
                         ),

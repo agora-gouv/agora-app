@@ -9,6 +9,7 @@ class ConsultationStrings {
   static const String answeredConsultationPart2 = "consultations";
   static const String consultationEmpty = "La liste est vide.";
   static const String participate = "Participer";
+  static const String seeResults = "Voir résultats";
   static const String beginButton = "Commencer";
   static const String endDate = "Jusqu'au %s";
   static const String participantCount = "%s participants";
