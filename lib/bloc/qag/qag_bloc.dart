@@ -3,7 +3,6 @@ import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagBloc extends Bloc<QagsEvent, QagState> {
@@ -12,7 +11,6 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
   QagBloc({required this.qagRepository}) : super(QagInitialLoadingState()) {
     on<FetchQagsEvent>(_handleFetchQags);
     on<UpdateQagsEvent>(_handleUpdateQags);
-    on<ReplaceAllQagsByBackResultsEvent>(_handleReplaceAllQagsByBackResults);
   }
 
   Future<void> _handleFetchQags(
@@ -123,39 +121,5 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
         ),
       );
     }
-  }
-
-  Future<void> _handleReplaceAllQagsByBackResults(
-    ReplaceAllQagsByBackResultsEvent event,
-    Emitter<QagState> emit,
-  ) async {
-    if (state is QagFetchedState) {
-      final currentState = state as QagFetchedState;
-      emit(
-        QagFetchedState(
-          qagResponseViewModels: [...currentState.qagResponseViewModels],
-          popularViewModels: _toQagViewModel(event.backResults.popularQagDetailsBackResults),
-          latestViewModels: _toQagViewModel(event.backResults.latestQagDetailsBackResults),
-          supportingViewModels: _toQagViewModel(event.backResults.supportingQagDetailsBackResults),
-          errorCase: currentState.errorCase,
-        ),
-      );
-    }
-  }
-
-  List<QagViewModel> _toQagViewModel(List<QagDetailsBackResult> qagDetailsBackResults) {
-    return qagDetailsBackResults
-        .map(
-          (qagDetailsBackResult) => QagViewModel(
-            id: qagDetailsBackResult.qagId,
-            thematique: qagDetailsBackResult.thematique,
-            title: qagDetailsBackResult.title,
-            username: qagDetailsBackResult.username,
-            date: qagDetailsBackResult.date,
-            supportCount: qagDetailsBackResult.supportCount,
-            isSupported: qagDetailsBackResult.isSupported,
-          ),
-        )
-        .toList();
   }
 }

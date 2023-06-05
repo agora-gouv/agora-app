@@ -3,7 +3,6 @@ import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_popular_bloc.dart';
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_supporting_bloc.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_event.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_state.dart';
-import 'package:agora/bloc/qag/paginated/qag_paginated_view_model.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
@@ -20,6 +19,7 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +32,7 @@ class QagsPaginatedContentBuilder {
     required QagPaginatedState qagPaginatedState,
     required VoidCallback onDisplayMoreClick,
     required VoidCallback onRetryClick,
-    required Function(List<QagDetailsBackResult>) onQagDetailsBackResults,
   }) {
-    _buildQagBackResults(qagPaginatedState, onQagDetailsBackResults);
     final List<Widget> qagsWidgets = [];
     for (final qagPaginatedViewModel in qagPaginatedState.qagViewModels) {
       qagsWidgets.add(
@@ -148,7 +146,10 @@ class QagsPaginatedContentBuilder {
       );
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
     } else {
-      if (qagPaginatedState.currentPageNumber < qagPaginatedState.maxPage) {
+      if (qagPaginatedState.currentPageNumber == 1 && qagPaginatedState.qagViewModels.isEmpty) {
+        qagsWidgets.add(Text(QagStrings.emptyList, style: AgoraTextStyles.light14));
+        qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
+      } else if (qagPaginatedState.currentPageNumber < qagPaginatedState.maxPage) {
         qagsWidgets.add(
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -165,31 +166,6 @@ class QagsPaginatedContentBuilder {
       }
     }
     return qagsWidgets;
-  }
-
-  static void _buildQagBackResults(
-    QagPaginatedState qagPaginatedState,
-    Function(List<QagDetailsBackResult>) onQagDetailsBackResults,
-  ) {
-    List<QagPaginatedViewModel> qagPaginatedViewModels = [...qagPaginatedState.qagViewModels];
-    if (qagPaginatedViewModels.length > 10) {
-      qagPaginatedViewModels = qagPaginatedViewModels.sublist(0, 10);
-    }
-    final List<QagDetailsBackResult> backResults = [];
-    for (final qagPaginatedViewModel in qagPaginatedViewModels) {
-      backResults.add(
-        QagDetailsBackResult(
-          qagId: qagPaginatedViewModel.id,
-          thematique: qagPaginatedViewModel.thematique,
-          title: qagPaginatedViewModel.title,
-          username: qagPaginatedViewModel.username,
-          date: qagPaginatedViewModel.date,
-          supportCount: qagPaginatedViewModel.supportCount,
-          isSupported: qagPaginatedViewModel.isSupported,
-        ),
-      );
-    }
-    onQagDetailsBackResults(backResults);
   }
 
   static void _updatePaginatedQags({
