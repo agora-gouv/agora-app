@@ -9,8 +9,6 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/consultations_page.dart';
-import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
@@ -19,14 +17,14 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
   final String title;
   final String consultationId;
   final ConsultationSummaryEtEnsuiteViewModel etEnsuiteViewModel;
-  final bool shouldReloadConsultationsWhenPop;
+  final VoidCallback onBackToConsultationClick;
 
   const ConsultationSummaryEtEnsuiteTabContent({
     super.key,
     required this.title,
     required this.consultationId,
     required this.etEnsuiteViewModel,
-    required this.shouldReloadConsultationsWhenPop,
+    required this.onBackToConsultationClick,
   });
 
   @override
@@ -82,21 +80,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                           child: AgoraButton(
                             label: ConsultationStrings.returnToHome,
                             style: AgoraButtonStyle.lightGreyWithBorderButtonStyle,
-                            onPressed: () {
-                              TrackerHelper.trackClick(
-                                clickName: AnalyticsEventNames.backToHome,
-                                widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
-                              );
-                              if (shouldReloadConsultationsWhenPop) {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  ConsultationsPage.routeName,
-                                  ModalRoute.withName(LoadingPage.routeName),
-                                );
-                              } else {
-                                Navigator.pop(context);
-                              }
-                            },
+                            onPressed: () => onBackToConsultationClick(),
                           ),
                         ),
                         SizedBox(width: AgoraSpacings.base),
