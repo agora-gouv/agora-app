@@ -10,7 +10,6 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingStepView extends StatelessWidget {
   final int step;
@@ -53,7 +52,7 @@ class OnboardingStepView extends StatelessWidget {
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.35,
-                child: SvgPicture.asset(_buildImage(), excludeFromSemantics: true),
+                child: Image.asset(_buildImage(), excludeFromSemantics: true),
               ),
             ],
           ),
@@ -132,11 +131,11 @@ class OnboardingStepView extends StatelessWidget {
   String _buildImage() {
     switch (step) {
       case 1:
-        return "assets/ic_onboarding_step1.svg";
+        return "assets/ic_onboarding_step1.png";
       case 2:
-        return "assets/ic_onboarding_step2.svg";
+        return "assets/ic_onboarding_step2.png";
       case 3:
-        return "assets/ic_onboarding_step3.svg";
+        return "assets/ic_onboarding_step3.png";
       default:
         throw Exception("onboarding : step $step not exists error ");
     }

@@ -15,6 +15,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
+import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/moderation_charter_page.dart';
 import 'package:agora/pages/profile/privacy_policy_page.dart';
@@ -64,7 +65,7 @@ class ProfilePage extends StatelessWidget {
                 title: ProfileStrings.tutorial,
                 onClick: () {
                   _track(AnalyticsEventNames.tutorial);
-                  // TODO
+                  Navigator.pushNamed(context, OnboardingPage.routeName);
                 },
               ),
               if (HelperManager.getRoleHelper().isModerator() == true)

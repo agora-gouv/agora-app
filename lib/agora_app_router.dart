@@ -31,7 +31,10 @@ class AgoraAppRouter {
   static Map<String, WidgetBuilder> handleAgoraRoutes() {
     return {
       // Onboarding
-      OnboardingPage.routeName: (context) => OnboardingPage(),
+      OnboardingPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.onboardingPage,
+            child: OnboardingPage(),
+          ),
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
