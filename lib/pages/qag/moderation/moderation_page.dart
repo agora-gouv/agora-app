@@ -126,15 +126,10 @@ class ModerationPage extends StatelessWidget {
     if (viewModel.qagsToModerationViewModels.isEmpty) {
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       qagsWidgets.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AgoraRoundedButton(
-              label: QagStrings.displayMore,
-              style: AgoraRoundedButtonStyle.primaryButtonStyle,
-              onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
-            ),
-          ],
+        AgoraRoundedButton(
+          label: QagStrings.displayMore,
+          style: AgoraRoundedButtonStyle.primaryButtonStyle,
+          onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
         ),
       );
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));

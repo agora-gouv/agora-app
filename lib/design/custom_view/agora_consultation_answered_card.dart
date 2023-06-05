@@ -31,10 +31,6 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildFinishedConsultationCard(context);
-  }
-
-  Widget _buildFinishedConsultationCard(BuildContext context) {
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
       cardColor: AgoraColors.white,

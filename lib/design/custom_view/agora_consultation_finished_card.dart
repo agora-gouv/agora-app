@@ -46,31 +46,30 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                     horizontal: AgoraSpacings.x0_75,
                     vertical: AgoraSpacings.x0_5,
                   ),
-                  child: Row(
-                    children: [
-                      AgoraRoundedCard(
-                        cardColor: AgoraColors.lightBrun,
-                        padding: const EdgeInsets.only(
-                          top: AgoraSpacings.x0_25,
-                          left: AgoraSpacings.x0_5,
-                          right: AgoraSpacings.x0_5,
-                          bottom: AgoraSpacings.x0_25 - 2.5,
-                        ),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/ic_timer_brun.svg"),
-                            SizedBox(width: AgoraSpacings.x0_25),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 2.5),
-                              child: Text(
-                                ConsultationStrings.shortly,
-                                style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.brun),
-                              ),
+                  child: AgoraRoundedCard(
+                    cardColor: AgoraColors.lightBrun,
+                    padding: const EdgeInsets.only(
+                      top: AgoraSpacings.x0_25,
+                      left: AgoraSpacings.x0_5,
+                      right: AgoraSpacings.x0_5,
+                      bottom: AgoraSpacings.x0_25 - 2.5,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset("assets/ic_timer_brun.svg"),
+                        SizedBox(width: AgoraSpacings.x0_25),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 2.5),
+                            child: Text(
+                              ConsultationStrings.shortly,
+                              style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.brun),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -37,17 +37,13 @@ class QagDetailsSupportView extends StatelessWidget {
             Stack(
               alignment: Alignment.centerLeft,
               children: [
-                Row(
-                  children: [
-                    AgoraRoundedButton(
-                      icon: _buildButtonIcon(isSupported, supportState),
-                      label: _buildButtonLabel(isSupported, supportState),
-                      style: _buildButtonStyle(isSupported, supportState),
-                      isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
-                      contentAlignment: _buildButtonAlignment(isSupported, supportState),
-                      onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
-                    ),
-                  ],
+                AgoraRoundedButton(
+                  icon: _buildButtonIcon(isSupported, supportState),
+                  label: _buildButtonLabel(isSupported, supportState),
+                  style: _buildButtonStyle(isSupported, supportState),
+                  isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
+                  contentAlignment: _buildButtonAlignment(isSupported, supportState),
+                  onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

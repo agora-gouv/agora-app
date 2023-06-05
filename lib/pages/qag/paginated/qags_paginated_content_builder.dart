@@ -151,15 +151,10 @@ class QagsPaginatedContentBuilder {
         qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       } else if (qagPaginatedState.currentPageNumber < qagPaginatedState.maxPage) {
         qagsWidgets.add(
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AgoraRoundedButton(
-                label: QagStrings.displayMore,
-                style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                onPressed: () => onDisplayMoreClick(),
-              ),
-            ],
+          AgoraRoundedButton(
+            label: QagStrings.displayMore,
+            style: AgoraRoundedButtonStyle.primaryButtonStyle,
+            onPressed: () => onDisplayMoreClick(),
           ),
         );
         qagsWidgets.add(SizedBox(height: AgoraSpacings.base));

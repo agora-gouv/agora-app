@@ -23,14 +23,16 @@ class AgoraThematiqueCard extends StatelessWidget {
       cardColor: AgoraColors.transparent,
       padding: null,
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (size == AgoraThematiqueSize.large) ...[
             Text(picto, style: AgoraTextStyles.medium23),
-            Text(label, style: AgoraTextStyles.light18.copyWith(color: AgoraColors.potBlack)),
+            SizedBox(width: AgoraSpacings.x0_25),
+            Flexible(child: Text(label, style: AgoraTextStyles.light18.copyWith(color: AgoraColors.potBlack))),
           ] else if (size == AgoraThematiqueSize.medium) ...[
             Text(picto, style: AgoraTextStyles.medium14),
             SizedBox(width: AgoraSpacings.x0_25),
-            Text(label, style: AgoraTextStyles.light14.copyWith(color: AgoraColors.potBlack)),
+            Flexible(child: Text(label, style: AgoraTextStyles.light14.copyWith(color: AgoraColors.potBlack))),
           ]
         ],
       ),
