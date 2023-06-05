@@ -140,6 +140,7 @@ void main() {
             "participantCountGoal": 30000,
             "description": "La description avec textes <b>en gras</b>",
             "tipsDescription": "Qui peut aussi être du texte <i>riche</i>",
+            "hasAnswered": false,
           },
         ),
         headers: {
@@ -168,6 +169,7 @@ void main() {
             participantCountGoal: 30000,
             description: "La description avec textes <b>en gras</b>",
             tipsDescription: "Qui peut aussi être du texte <i>riche</i>",
+            hasAnswered: false,
           ),
         ),
       );

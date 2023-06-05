@@ -13,6 +13,7 @@ class ConsultationDetails extends Equatable {
   final int participantCountGoal;
   final String description;
   final String tipsDescription;
+  final bool hasAnswered;
 
   ConsultationDetails({
     required this.id,
@@ -26,6 +27,7 @@ class ConsultationDetails extends Equatable {
     required this.participantCountGoal,
     required this.description,
     required this.tipsDescription,
+    required this.hasAnswered,
   });
 
   @override
@@ -41,5 +43,6 @@ class ConsultationDetails extends Equatable {
         participantCountGoal,
         description,
         tipsDescription,
+        hasAnswered,
       ];
 }
