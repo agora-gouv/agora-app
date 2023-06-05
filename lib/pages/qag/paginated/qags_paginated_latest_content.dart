@@ -2,7 +2,6 @@ import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_latest_bloc.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_event.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_state.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_content_builder.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsPaginatedLatestContent extends StatelessWidget {
   final String? thematiqueId;
-  final Function(List<QagDetailsBackResult>) onQagDetailsBackResults;
 
   const QagsPaginatedLatestContent({
     super.key,
     required this.thematiqueId,
-    required this.onQagDetailsBackResults,
   });
 
   @override
@@ -46,7 +43,6 @@ class QagsPaginatedLatestContent extends StatelessWidget {
                         pageNumber: state.currentPageNumber,
                       ),
                     ),
-                onQagDetailsBackResults: (qagDetailsBackResults) => onQagDetailsBackResults(qagDetailsBackResults),
               ),
             ),
           ),

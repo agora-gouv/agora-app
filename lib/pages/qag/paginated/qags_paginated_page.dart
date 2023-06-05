@@ -17,10 +17,11 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_latest_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_popular_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_supporting_content.dart';
+import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,18 +32,6 @@ class QagsPaginatedArguments {
   final QagPaginatedTab initialTab;
 
   QagsPaginatedArguments({required this.thematiqueId, required this.initialTab});
-}
-
-class QagPaginatedDetailsBackResults {
-  final List<QagDetailsBackResult> popularQagDetailsBackResults;
-  final List<QagDetailsBackResult> latestQagDetailsBackResults;
-  final List<QagDetailsBackResult> supportingQagDetailsBackResults;
-
-  QagPaginatedDetailsBackResults({
-    required this.popularQagDetailsBackResults,
-    required this.latestQagDetailsBackResults,
-    required this.supportingQagDetailsBackResults,
-  });
 }
 
 class QagsPaginatedPage extends StatefulWidget {
@@ -62,9 +51,6 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   late TabController _tabController;
   String? currentThematiqueId;
   bool shouldInitializeListener = true;
-  List<QagDetailsBackResult> popularQagDetailsBackResults = [];
-  List<QagDetailsBackResult> latestQagDetailsBackResults = [];
-  List<QagDetailsBackResult> supportingQagDetailsBackResults = [];
 
   @override
   void initState() {
@@ -149,27 +135,15 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                         children: [
                           AgoraTracker(
                             widgetName: AnalyticsScreenNames.qagsPaginatedPopularPage,
-                            child: QagsPaginatedPopularContent(
-                              thematiqueId: currentThematiqueId,
-                              onQagDetailsBackResults: (qagDetailsBackResults) =>
-                                  popularQagDetailsBackResults = qagDetailsBackResults,
-                            ),
+                            child: QagsPaginatedPopularContent(thematiqueId: currentThematiqueId),
                           ),
                           AgoraTracker(
                             widgetName: AnalyticsScreenNames.qagsPaginatedLatestPage,
-                            child: QagsPaginatedLatestContent(
-                              thematiqueId: currentThematiqueId,
-                              onQagDetailsBackResults: (qagDetailsBackResults) =>
-                                  latestQagDetailsBackResults = qagDetailsBackResults,
-                            ),
+                            child: QagsPaginatedLatestContent(thematiqueId: currentThematiqueId),
                           ),
                           AgoraTracker(
                             widgetName: AnalyticsScreenNames.qagsPaginatedSupportingPage,
-                            child: QagsPaginatedSupportingContent(
-                              thematiqueId: currentThematiqueId,
-                              onQagDetailsBackResults: (qagDetailsBackResults) =>
-                                  supportingQagDetailsBackResults = qagDetailsBackResults,
-                            ),
+                            child: QagsPaginatedSupportingContent(thematiqueId: currentThematiqueId),
                           ),
                         ],
                       ),
@@ -200,14 +174,13 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
     );
   }
 
-  void _popWithBackResult(BuildContext context) => Navigator.pop(
-        context,
-        QagPaginatedDetailsBackResults(
-          popularQagDetailsBackResults: popularQagDetailsBackResults,
-          latestQagDetailsBackResults: latestQagDetailsBackResults,
-          supportingQagDetailsBackResults: supportingQagDetailsBackResults,
-        ),
-      );
+  void _popWithBackResult(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      QagsPage.routeName,
+      ModalRoute.withName(LoadingPage.routeName),
+    );
+  }
 
   QagPaginatedPopularBloc _getQagPaginatedPopularBloc() {
     final qagPaginatedPopularBloc = QagPaginatedPopularBloc(

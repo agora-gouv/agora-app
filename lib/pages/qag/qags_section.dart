@@ -205,7 +205,7 @@ class _QagsSectionState extends State<QagsSection> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(QagStrings.emptyList),
+              Text(QagStrings.emptyList, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.x3 * 3),
             ],
           ),
@@ -224,26 +224,17 @@ class _QagsSectionState extends State<QagsSection> {
     return supportCount;
   }
 
-  Row _buildAllButton(QagPaginatedTab initialTab) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AgoraRoundedButton(
-          label: GenericStrings.all,
-          style: AgoraRoundedButtonStyle.primaryButtonStyle,
-          onPressed: () {
-            Navigator.pushNamed(
-              context,
-              QagsPaginatedPage.routeName,
-              arguments: QagsPaginatedArguments(thematiqueId: widget.selectedThematiqueId, initialTab: initialTab),
-            ).then((results) {
-              final qagDetailsBackResults = results as QagPaginatedDetailsBackResults;
-              context.read<QagBloc>().add(ReplaceAllQagsByBackResultsEvent(backResults: qagDetailsBackResults));
-              setState(() {}); // do not remove: utils to update screen
-            });
-          },
-        ),
-      ],
+  Widget _buildAllButton(QagPaginatedTab initialTab) {
+    return AgoraRoundedButton(
+      label: GenericStrings.all,
+      style: AgoraRoundedButtonStyle.primaryButtonStyle,
+      onPressed: () {
+        Navigator.pushNamed(
+          context,
+          QagsPaginatedPage.routeName,
+          arguments: QagsPaginatedArguments(thematiqueId: widget.selectedThematiqueId, initialTab: initialTab),
+        );
+      },
     );
   }
 
