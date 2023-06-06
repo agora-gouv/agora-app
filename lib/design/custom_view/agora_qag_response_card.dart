@@ -42,7 +42,7 @@ class AgoraQagResponseCard extends StatelessWidget {
                 children: [
                   ThematiqueHelper.buildCard(context, thematique),
                   SizedBox(height: AgoraSpacings.x0_25),
-                  Text(title, style: AgoraTextStyles.medium14),
+                  Text(title, style: AgoraTextStyles.medium16),
                   SizedBox(height: AgoraSpacings.x0_25),
                 ],
               ),
