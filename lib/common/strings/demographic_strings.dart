@@ -65,7 +65,7 @@ class DemographicStrings {
 
   static const String ruralArea = "En milieu rural";
   static const String urbanArea = "En milieu urbain";
-  static const String otherAndUnknown = "Autre / Je ne sais pas";
+  static const String otherOrUnknown = "Autre / Je ne sais pas";
 
   static const String farmer = "Agriculteurs";
   static const String craftsmen = "Artisans, commerçants, chefs d'entreprise";
@@ -73,8 +73,10 @@ class DemographicStrings {
   static const String intermediateProfessions = "Intermediate professions";
   static const String employees = "Employés";
   static const String workers = "Ouvriers";
+  static const String student = "Etudiants";
+  static const String retired = "Retraités";
+  static const String otherOrNonWorking = "Autre / Sans activité professionnelle";
 
-  static const String notDetermined = "Non déterminé";
   static const String unknown = "Je ne sais pas";
   static const String notSpecified = "Non renseigné";
 }

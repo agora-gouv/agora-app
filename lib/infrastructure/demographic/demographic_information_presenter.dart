@@ -100,7 +100,7 @@ class DemographicInformationPresenter {
       case "U":
         return DemographicStrings.urbanArea;
       case "A":
-        return DemographicStrings.otherAndUnknown;
+        return DemographicStrings.otherOrUnknown;
       default:
         return DemographicStrings.notSpecified;
     }
@@ -120,8 +120,12 @@ class DemographicInformationPresenter {
         return DemographicStrings.employees;
       case "OU":
         return DemographicStrings.workers;
-      case "ND":
-        return DemographicStrings.notDetermined;
+      case "ET":
+        return DemographicStrings.student;
+      case "RE":
+        return DemographicStrings.retired;
+      case "AU":
+        return DemographicStrings.otherOrNonWorking;
       case "UN":
         return DemographicStrings.unknown;
       default:
