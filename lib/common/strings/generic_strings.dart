@@ -1,4 +1,9 @@
 class GenericStrings {
+  static const String mailSupport = "equipe@agora.beta.gouv.fr";
+  static const String address =
+      "Direction interministérielle de la transformation publique - TSA 70732 - 75334 Paris Cedex 07";
+  static const String cnil = "https://www.cnil.fr";
+
   static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
   static const String errorMessage = "Une erreur est survenue.";
   static const String askNotificationPermissionMessage =

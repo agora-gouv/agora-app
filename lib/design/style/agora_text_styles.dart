@@ -296,7 +296,7 @@ class AgoraTextStyles {
     decoration: TextDecoration.underline,
   );
 
-  static const TextStyle lightItalic14 = TextStyle(
+  static const TextStyle light14Italic = TextStyle(
     fontFamily: marianne,
     fontWeight: light,
     fontStyle: FontStyle.italic,
