@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class GetDemographicInformationEvent extends Equatable {
+class DemographicInformationEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GetDemographicInformationEvent extends DemographicInformationEvent {}
+
+class RemoveDemographicInformationEvent extends DemographicInformationEvent {}

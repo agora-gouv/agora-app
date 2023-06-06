@@ -4,12 +4,13 @@ import 'package:agora/infrastructure/demographic/demographic_information_present
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DemographicInformationBloc extends Bloc<GetDemographicInformationEvent, DemographicInformationState> {
+class DemographicInformationBloc extends Bloc<DemographicInformationEvent, DemographicInformationState> {
   final DemographicRepository demographicRepository;
 
   DemographicInformationBloc({required this.demographicRepository})
       : super(GetDemographicInformationInitialLoadingState()) {
     on<GetDemographicInformationEvent>(_handleGetDemographicResponses);
+    on<RemoveDemographicInformationEvent>(_handleRemoveDemographicInformation);
   }
 
   Future<void> _handleGetDemographicResponses(
@@ -22,6 +23,19 @@ class DemographicInformationBloc extends Bloc<GetDemographicInformationEvent, De
       emit(GetDemographicInformationSuccessState(demographicInformationViewModels: viewModels));
     } else {
       emit(GetDemographicInformationFailureState());
+    }
+  }
+
+  Future<void> _handleRemoveDemographicInformation(
+    RemoveDemographicInformationEvent event,
+    Emitter<DemographicInformationState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is GetDemographicInformationSuccessState) {
+      final viewModels = DemographicInformationPresenter.presentEmptyData(
+        currentState.demographicInformationViewModels,
+      );
+      emit(GetDemographicInformationSuccessState(demographicInformationViewModels: viewModels));
     }
   }
 }

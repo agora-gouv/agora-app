@@ -28,4 +28,6 @@ class ProfileStrings {
       "Si vous souhaitez supprimer votre compte et faire valoir votre droit à l’oubli, envoyez votre demande à :";
   static const String deleteAccountEmail = "equipe@agora.beta.gouv.fr";
   static const String deleteAccount2 = "avec le code :";
+
+  static const String suppressDemographicPopUp = "Êtes vous sûrs de vouloir supprimer vos données démographiques?";
 }

@@ -2,9 +2,13 @@ import 'package:agora/bloc/demographic/get/demographic_information_bloc.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_event.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_state.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_view_model.dart';
+import 'package:agora/bloc/demographic/send/demographic_responses_send_bloc.dart';
+import 'package:agora/bloc/demographic/send/demographic_responses_send_event.dart';
+import 'package:agora/bloc/demographic/send/demographic_responses_send_state.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_little_separator.dart';
@@ -43,10 +47,19 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _handleModification(context);
     });
-    return BlocProvider<DemographicInformationBloc>(
-      create: (BuildContext context) => DemographicInformationBloc(
-        demographicRepository: RepositoryManager.getDemographicRepository(),
-      )..add(GetDemographicInformationEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DemographicInformationBloc>(
+          create: (BuildContext context) => DemographicInformationBloc(
+            demographicRepository: RepositoryManager.getDemographicRepository(),
+          )..add(GetDemographicInformationEvent()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => SendDemographicResponsesBloc(
+            demographicRepository: RepositoryManager.getDemographicRepository(),
+          ),
+        ),
+      ],
       child: AgoraScaffold(
         child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
           builder: (context, state) {
@@ -140,12 +153,48 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
               SizedBox(height: AgoraSpacings.x0_5),
               Text(DemographicStrings.demographicInformationNotice2, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.x1_25),
-              AgoraButton(
-                label: DemographicStrings.suppressMyInformation,
-                style: AgoraButtonStyle.redBorderButtonStyle,
-                onPressed: () {
-                  // TODO
+              BlocListener<SendDemographicResponsesBloc, SendDemographicResponsesState>(
+                listener: (previousState, currentState) {
+                  if (currentState is SendDemographicResponsesSuccessState) {
+                    context.read<DemographicInformationBloc>().add(RemoveDemographicInformationEvent());
+                    _modificationSuccess(context);
+                  } else if (currentState is SendDemographicResponsesFailureState) {
+                    _modificationError(context);
+                  }
                 },
+                child: AgoraButton(
+                  label: DemographicStrings.suppressMyInformation,
+                  style: AgoraButtonStyle.redBorderButtonStyle,
+                  onPressed: () {
+                    showAgoraDialog(
+                      context: context,
+                      columnChildren: [
+                        Text(ProfileStrings.suppressDemographicPopUp, style: AgoraTextStyles.medium16),
+                        SizedBox(height: AgoraSpacings.x0_75),
+                        Row(
+                          children: [
+                            AgoraButton(
+                              label: GenericStrings.yes,
+                              style: AgoraButtonStyle.primaryButtonStyle,
+                              onPressed: () {
+                                context
+                                    .read<SendDemographicResponsesBloc>()
+                                    .add(SendDemographicResponsesEvent(demographicResponses: []));
+                                Navigator.pop(context);
+                              },
+                            ),
+                            SizedBox(width: AgoraSpacings.x0_75),
+                            AgoraButton(
+                              label: GenericStrings.no,
+                              style: AgoraButtonStyle.blueBorderButtonStyle,
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
               SizedBox(height: AgoraSpacings.base),
             ],
@@ -158,33 +207,41 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
     if (isFirstTimeDisplayedPopUp && arguments != null) {
       isFirstTimeDisplayedPopUp = false;
       if (arguments.modificationSuccess) {
-        showAgoraDialog(
-          context: context,
-          columnChildren: [
-            Text(GenericStrings.modificationSuccess, style: AgoraTextStyles.medium16),
-            SizedBox(height: AgoraSpacings.x0_75),
-            AgoraButton(
-              label: GenericStrings.close,
-              style: AgoraButtonStyle.primaryButtonStyle,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
+        _modificationSuccess(context);
       } else {
-        showAgoraDialog(
-          context: context,
-          columnChildren: [
-            Text(GenericStrings.errorMessage, style: AgoraTextStyles.medium16),
-            SizedBox(height: AgoraSpacings.x0_75),
-            AgoraButton(
-              label: GenericStrings.close,
-              style: AgoraButtonStyle.primaryButtonStyle,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
+        _modificationError(context);
       }
     }
+  }
+
+  void _modificationError(BuildContext context) {
+    showAgoraDialog(
+      context: context,
+      columnChildren: [
+        Text(GenericStrings.errorMessage, style: AgoraTextStyles.medium16),
+        SizedBox(height: AgoraSpacings.x0_75),
+        AgoraButton(
+          label: GenericStrings.close,
+          style: AgoraButtonStyle.primaryButtonStyle,
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+    );
+  }
+
+  void _modificationSuccess(BuildContext context) {
+    showAgoraDialog(
+      context: context,
+      columnChildren: [
+        Text(GenericStrings.modificationSuccess, style: AgoraTextStyles.medium16),
+        SizedBox(height: AgoraSpacings.x0_75),
+        AgoraButton(
+          label: GenericStrings.close,
+          style: AgoraButtonStyle.primaryButtonStyle,
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+    );
   }
 
   List<Widget> _buildDemographicInformation(List<DemographicInformationViewModel> demographicInformationViewModels) {

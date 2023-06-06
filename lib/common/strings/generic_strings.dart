@@ -30,4 +30,7 @@ class GenericStrings {
   static const String onboardingStep3Description =
       "L’appli Agora est en expérimentation. Partagez vos idées pour écrire la suite de son histoire !";
   static const String onboardingStep3LetsGo = "C’est parti";
+
+  static const String yes = "Oui";
+  static const String no = "Non";
 }
