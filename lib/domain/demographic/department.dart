@@ -114,7 +114,18 @@ class DepartmentHelper {
       Department(code: "972", name: "Martinique", displayedName: "972 - Martinique"),
       Department(code: "973", name: "Guyane", displayedName: "973 - Guyane"),
       Department(code: "974", name: "La Réunion", displayedName: "974 - La Réunion"),
+      Department(code: "975", name: "Saint-Pierre-et-Miquelon", displayedName: "975 - Saint-Pierre-et-Miquelon"),
       Department(code: "976", name: "Mayotte", displayedName: "976 - Mayotte"),
+      Department(code: "977", name: "Saint-Barthélémy", displayedName: "977 - Saint-Barthélémy"),
+      Department(code: "978", name: "Saint-Martin", displayedName: "978 - Saint-Martin"),
+      Department(
+        code: "984",
+        name: "Terres australes et antarctiques françaises",
+        displayedName: "984 - Terres australes et antarctiques françaises",
+      ),
+      Department(code: "986", name: "Wallis-et-Futuna", displayedName: "986 - Wallis-et-Futuna"),
+      Department(code: "987", name: "Polynésie française", displayedName: "987 - Polynésie française"),
+      Department(code: "988", name: "Nouvelle-Calédonie", displayedName: "988 - Nouvelle-Calédonie"),
       Department(code: "Etranger", name: "Hors de France", displayedName: "Etranger - Hors de France"),
     ];
   }
