@@ -61,6 +61,7 @@ class FirebasePushNotificationService extends PushNotificationService {
 
   @override
   Future<String> getMessagingToken() async {
+    await _messaging.requestPermission();
     final token = await _messaging.getToken();
     if (token == null) {
       throw Exception("No firebase messaging token found error");
