@@ -1,15 +1,15 @@
+import 'package:agora/common/helper/clipboard_helper.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class DeleteAccountPage extends StatelessWidget {
   static const routeName = "/deleteAccountPage";
@@ -55,20 +55,10 @@ class DeleteAccountPage extends StatelessWidget {
                                 children: [
                                   SizedBox(height: AgoraSpacings.base),
                                   GestureDetector(
-                                    onLongPress: () {
-                                      Clipboard.setData(ClipboardData(text: ProfileStrings.deleteAccountEmail));
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            "${ProfileStrings.deleteAccountEmail} est copié.",
-                                            style: AgoraTextStyles.light14.copyWith(color: AgoraColors.white),
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    onLongPress: () => ClipboardHelper.copy(context, GenericStrings.mailSupport),
                                     child: Center(
                                       child: Text(
-                                        ProfileStrings.deleteAccountEmail,
+                                        GenericStrings.mailSupport,
                                         style: AgoraTextStyles.medium16,
                                       ),
                                     ),
@@ -87,15 +77,10 @@ class DeleteAccountPage extends StatelessWidget {
                                   SizedBox(height: AgoraSpacings.base),
                                   GestureDetector(
                                     onLongPress: () {
-                                      Clipboard.setData(ClipboardData(text: snapshot.data));
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            "${snapshot.data} est copié.",
-                                            style: AgoraTextStyles.light14.copyWith(color: AgoraColors.white),
-                                          ),
-                                        ),
-                                      );
+                                      final userId = snapshot.data;
+                                      if (userId != null) {
+                                        ClipboardHelper.copy(context, userId);
+                                      }
                                     },
                                     child: Center(
                                       child: Text(
