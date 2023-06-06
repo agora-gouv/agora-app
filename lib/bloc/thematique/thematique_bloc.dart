@@ -8,13 +8,24 @@ class ThematiqueBloc extends Bloc<FetchThematiqueEvent, ThematiqueState> {
   final ThematiqueRepository repository;
 
   ThematiqueBloc({required this.repository}) : super(ThematiqueInitialLoadingState()) {
-    on<FetchThematiqueEvent>(_handleThematiqueEvent);
+    on<FetchFilterThematiqueEvent>(_handleFetchFilterThematique);
+    on<FetchAskQaGThematiqueEvent>(_handleFetchAskQaGThematique);
   }
 
-  Future<void> _handleThematiqueEvent(FetchThematiqueEvent event, Emitter<ThematiqueState> emit) async {
+  Future<void> _handleFetchFilterThematique(FetchFilterThematiqueEvent event, Emitter<ThematiqueState> emit) async {
     final thematiquesResponse = await repository.fetchThematiques();
     if (thematiquesResponse is GetThematiqueSucceedResponse) {
-      final thematiqueViewModels = ThematiquePresenter.present(thematiquesResponse.thematiques);
+      final thematiqueViewModels = ThematiquePresenter.presentFilterThematique(thematiquesResponse.thematiques);
+      emit(ThematiqueSuccessState(thematiqueViewModels));
+    } else {
+      emit(ThematiqueErrorState());
+    }
+  }
+
+  Future<void> _handleFetchAskQaGThematique(FetchAskQaGThematiqueEvent event, Emitter<ThematiqueState> emit) async {
+    final thematiquesResponse = await repository.fetchThematiques();
+    if (thematiquesResponse is GetThematiqueSucceedResponse) {
+      final thematiqueViewModels = ThematiquePresenter.presentAskQaGThematique(thematiquesResponse.thematiques);
       emit(ThematiqueSuccessState(thematiqueViewModels));
     } else {
       emit(ThematiqueErrorState());

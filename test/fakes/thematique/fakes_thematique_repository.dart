@@ -14,6 +14,7 @@ class FakeThematiqueSuccessRepository extends ThematiqueRepository {
         ThematiqueWithId(id: "6", picto: "\ud83c\udf0f", label: "International"),
         ThematiqueWithId(id: "7", picto: "\ud83d\ude8a", label: "Transports"),
         ThematiqueWithId(id: "8", picto: "\ud83d\ude94", label: "Sécurité"),
+        ThematiqueWithId(id: "9", picto: "\ud83d\udce6", label: "Autre"),
       ],
     );
   }

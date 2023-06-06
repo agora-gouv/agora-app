@@ -48,7 +48,7 @@ class _QagsPageState extends State<QagsPage> {
           BlocProvider(
             create: (context) => ThematiqueBloc(
               repository: RepositoryManager.getThematiqueRepository(),
-            )..add(FetchThematiqueEvent()),
+            )..add(FetchFilterThematiqueEvent()),
           ),
         ],
         child: BlocBuilder<QagBloc, QagState>(
@@ -82,20 +82,21 @@ class _QagsPageState extends State<QagsPage> {
         QagsAskQuestionSectionPage(errorCase: state.errorCase),
         QagsThematiqueSection(
           currentThematiqueId: currentThematiqueId,
-          onThematiqueIdSelected: (String thematiqueId) {
-            setState(() {
-              if (thematiqueId == currentThematiqueId) {
-                // TODO track all thematique id
-                currentThematiqueId = null;
-              } else {
-                currentThematiqueId = thematiqueId;
+          onThematiqueIdSelected: (String? thematiqueId) {
+            if (currentThematiqueId != null || thematiqueId != null) {
+              setState(() {
+                if (thematiqueId == currentThematiqueId) {
+                  currentThematiqueId = null;
+                } else {
+                  currentThematiqueId = thematiqueId;
+                }
                 TrackerHelper.trackClick(
                   clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
                   widgetName: AnalyticsScreenNames.qagsPage,
                 );
-              }
-              context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
-            });
+                context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
+              });
+            }
           },
         ),
         QagsSection(
