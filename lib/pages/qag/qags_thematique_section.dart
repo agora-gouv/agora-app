@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsThematiqueSection extends StatelessWidget {
   final String? currentThematiqueId;
-  final Function(String) onThematiqueIdSelected;
+  final Function(String?) onThematiqueIdSelected;
 
   const QagsThematiqueSection({
     super.key,

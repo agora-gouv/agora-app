@@ -72,7 +72,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
         BlocProvider(
           create: (context) => ThematiqueBloc(
             repository: RepositoryManager.getThematiqueRepository(),
-          )..add(FetchThematiqueEvent()),
+          )..add(FetchFilterThematiqueEvent()),
         ),
         BlocProvider(
           create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
@@ -102,19 +102,20 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                           thematiques: thematiqueState.thematiqueViewModels,
                           selectedThematiqueId: currentThematiqueId,
                           onThematiqueIdSelected: (thematiqueId) {
-                            setState(() {
-                              if (thematiqueId == currentThematiqueId) {
-                                currentThematiqueId = null;
-                                // TODO track all thematique id
-                              } else {
-                                currentThematiqueId = thematiqueId;
+                            if (currentThematiqueId != null || thematiqueId != null) {
+                              setState(() {
+                                if (thematiqueId == currentThematiqueId) {
+                                  currentThematiqueId = null;
+                                } else {
+                                  currentThematiqueId = thematiqueId;
+                                }
                                 TrackerHelper.trackClick(
                                   clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
                                   widgetName: AnalyticsScreenNames.qagsPaginatedPage,
                                 );
-                              }
-                              _call(context);
-                            });
+                                _call(context);
+                              });
+                            }
                           },
                           needHorizontalSpacing: false,
                         ),

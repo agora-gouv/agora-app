@@ -2,8 +2,27 @@ import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/domain/thematique/thematique_with_id.dart';
 
 class ThematiquePresenter {
-  static List<ThematiqueWithIdViewModel> present(List<ThematiqueWithId> thematiques) {
-    return thematiques
+  static List<ThematiqueWithIdViewModel> presentFilterThematique(List<ThematiqueWithId> thematiques) {
+    return [
+          ThematiqueWithIdViewModel(
+            id: null,
+            picto: "\ud83d\udca1",
+            label: "Toutes",
+          ),
+        ] +
+        thematiques
+            .map(
+              (thematique) => ThematiqueWithIdViewModel(
+                id: thematique.id,
+                picto: thematique.picto,
+                label: thematique.label,
+              ),
+            )
+            .toList();
+  }
+
+  static List<ThematiqueWithIdViewModel> presentAskQaGThematique(List<ThematiqueWithId> thematiques) {
+    final currentThematiques = thematiques
         .map(
           (thematique) => ThematiqueWithIdViewModel(
             id: thematique.id,
@@ -12,5 +31,15 @@ class ThematiquePresenter {
           ),
         )
         .toList();
+    final findOtherThematique = currentThematiques.firstWhere((element) => element.label == "Autre");
+    currentThematiques.remove(findOtherThematique);
+
+    final newOtherThematique = ThematiqueWithIdViewModel(
+      id: findOtherThematique.id,
+      picto: findOtherThematique.picto,
+      label: "Autre / Je ne sais pas",
+    );
+    currentThematiques.insert(0, newOtherThematique);
+    return currentThematiques;
   }
 }

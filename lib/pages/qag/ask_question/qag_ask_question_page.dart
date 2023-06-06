@@ -87,7 +87,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
     if (state is ThematiqueSuccessState) {
       return _buildContent(state.thematiqueViewModels);
     } else if (state is ThematiqueInitialLoadingState) {
-      context.read<ThematiqueBloc>().add(FetchThematiqueEvent());
+      context.read<ThematiqueBloc>().add(FetchAskQaGThematiqueEvent());
       return Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
@@ -235,7 +235,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                                         title: question,
                                         description: details,
                                         author: firstname,
-                                        thematiqueId: thematique!.id,
+                                        thematiqueId: thematique!.id!,
                                       ),
                                     );
                               }

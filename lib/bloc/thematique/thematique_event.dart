@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class FetchThematiqueEvent extends Equatable {
+abstract class FetchThematiqueEvent extends Equatable {
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
+
+class FetchFilterThematiqueEvent extends FetchThematiqueEvent {}
+
+class FetchAskQaGThematiqueEvent extends FetchThematiqueEvent {}

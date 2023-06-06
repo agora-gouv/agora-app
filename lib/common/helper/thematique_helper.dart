@@ -18,7 +18,7 @@ class ThematiqueHelper {
   static Widget buildThematiques({
     required List<ThematiqueWithIdViewModel> thematiques,
     required String? selectedThematiqueId,
-    required Function(String) onThematiqueIdSelected,
+    required Function(String?) onThematiqueIdSelected,
     bool needHorizontalSpacing = true,
   }) {
     List<Widget> thematiqueWidgets = thematiques
