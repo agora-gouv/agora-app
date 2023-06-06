@@ -25,7 +25,7 @@ class QagsThematiqueSection extends StatelessWidget {
         Container(
           color: AgoraColors.doctor,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x1_25),
+            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75),
             child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
               builder: (context, state) {
                 if (state is ThematiqueSuccessState) {
