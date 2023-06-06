@@ -126,7 +126,7 @@ class DepartmentHelper {
       Department(code: "986", name: "Wallis-et-Futuna", displayedName: "986 - Wallis-et-Futuna"),
       Department(code: "987", name: "Polynésie française", displayedName: "987 - Polynésie française"),
       Department(code: "988", name: "Nouvelle-Calédonie", displayedName: "988 - Nouvelle-Calédonie"),
-      Department(code: "Etranger", name: "Hors de France", displayedName: "Etranger - Hors de France"),
+      Department(code: "99", name: "Hors de France", displayedName: "99 - Hors de France"),
     ];
   }
 }
