@@ -14,6 +14,15 @@ class DemographicInformationPresenter {
     }).toList();
   }
 
+  static List<DemographicInformationViewModel> presentEmptyData(List<DemographicInformationViewModel> viewModels) {
+    return viewModels.map((viewModel) {
+      return DemographicInformationViewModel(
+        demographicType: viewModel.demographicType,
+        data: DemographicStrings.notSpecified,
+      );
+    }).toList();
+  }
+
   static String _buildTypeString(DemographicType demographicType) {
     switch (demographicType) {
       case DemographicType.gender:

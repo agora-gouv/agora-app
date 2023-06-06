@@ -47,4 +47,47 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
   });
+
+  group("RemoveDemographicInformationEvent", () {
+    blocTest<DemographicInformationBloc, DemographicInformationState>(
+      "when repository succeed - should emit success state",
+      build: () => DemographicInformationBloc(
+        demographicRepository: FakeDemographicFailureRepository(),
+      ),
+      seed: () => GetDemographicInformationSuccessState(
+        demographicInformationViewModels: [
+          DemographicInformationViewModel(demographicType: "Genre", data: "Homme"),
+          DemographicInformationViewModel(demographicType: "Année de naissance", data: "1999"),
+          DemographicInformationViewModel(
+            demographicType: "Département ou collectivité d’outre mer",
+            data: "Paris (75)",
+          ),
+          DemographicInformationViewModel(demographicType: "J'habite", data: "En milieu rural"),
+          DemographicInformationViewModel(demographicType: "Catégorie socio-professionnelle", data: "Cadres"),
+          DemographicInformationViewModel(demographicType: "Vote", data: "Jamais"),
+          DemographicInformationViewModel(demographicType: "Engagement sur le terrain", data: "Souvent"),
+          DemographicInformationViewModel(demographicType: "Engagement en ligne", data: "Parfois"),
+        ],
+      ),
+      act: (bloc) => bloc.add(RemoveDemographicInformationEvent()),
+      expect: () => [
+        GetDemographicInformationSuccessState(
+          demographicInformationViewModels: [
+            DemographicInformationViewModel(demographicType: "Genre", data: "Non renseigné"),
+            DemographicInformationViewModel(demographicType: "Année de naissance", data: "Non renseigné"),
+            DemographicInformationViewModel(
+              demographicType: "Département ou collectivité d’outre mer",
+              data: "Non renseigné",
+            ),
+            DemographicInformationViewModel(demographicType: "J'habite", data: "Non renseigné"),
+            DemographicInformationViewModel(demographicType: "Catégorie socio-professionnelle", data: "Non renseigné"),
+            DemographicInformationViewModel(demographicType: "Vote", data: "Non renseigné"),
+            DemographicInformationViewModel(demographicType: "Engagement sur le terrain", data: "Non renseigné"),
+            DemographicInformationViewModel(demographicType: "Engagement en ligne", data: "Non renseigné"),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
 }
