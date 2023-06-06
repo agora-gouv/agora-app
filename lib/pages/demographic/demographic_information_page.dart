@@ -39,10 +39,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
             SizedBox(height: AgoraSpacings.x1_5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-              child: Text(
-                DemographicStrings.informationTitle,
-                style: AgoraTextStyles.medium20,
-              ),
+              child: Text(DemographicStrings.informationTitle, style: AgoraTextStyles.medium20),
             ),
             SizedBox(height: AgoraSpacings.x1_5),
             Flexible(
@@ -59,6 +56,11 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(
+                            DemographicStrings.informationShortDescription,
+                            style: AgoraTextStyles.regular14,
+                          ),
+                          SizedBox(height: AgoraSpacings.x1_25),
                           if (isReadMore) ...[
                             Text(
                               DemographicStrings.informationLongDescription1,
@@ -94,12 +96,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                               DemographicStrings.informationLongDescription4,
                               style: AgoraTextStyles.regular14,
                             ),
-                          ] else ...[
-                            Text(
-                              DemographicStrings.informationShortDescription,
-                              style: AgoraTextStyles.regular14,
-                            ),
-                            SizedBox(height: AgoraSpacings.x1_25),
+                          ] else
                             InkWell(
                               onTap: () {
                                 TrackerHelper.trackClick(
@@ -113,7 +110,6 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                 style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
                               ),
                             ),
-                          ],
                           SizedBox(height: AgoraSpacings.x1_25),
                           Row(
                             children: [
