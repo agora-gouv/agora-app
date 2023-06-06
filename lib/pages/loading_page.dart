@@ -49,7 +49,7 @@ class LoadingPage extends StatelessWidget {
         BlocProvider(
           create: (context) => LoginBloc(
             repository: RepositoryManager.getLoginRepository(),
-            loginStorageClient: StorageManager.getLoginStorageClient(sharedPref),
+            loginStorageClient: StorageManager.getLoginStorageClient(sharedPref: sharedPref),
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
             pushNotificationService: ServiceManager.getPushNotificationService(),
             jwtHelper: HelperManager.getJwtHelper(),

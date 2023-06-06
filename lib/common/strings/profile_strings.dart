@@ -6,6 +6,7 @@ class ProfileStrings {
   static const String tutorial = "Tutoriel";
   static const String moderationCapitalize = "Modération";
   static const String moderationCharter = "Charte de modération";
+  static const String deleteAccount = "Supprimer mon compte";
   static const String privacyPolicy = "Politique de confidentialité";
   static const String termsOfService = "Conditions générales d'utilisation";
   static const String legalNotice = "Mentions légales";
@@ -22,4 +23,9 @@ class ProfileStrings {
   static const String term = "d’utilisation";
   static const String notice = "Mentions";
   static const String legal = "légales";
+
+  static const String deleteAccount1 =
+      "Si vous souhaitez supprimer votre compte et faire valoir votre droit à l’oubli, envoyez votre demande à :";
+  static const String deleteAccountEmail = "equipe@agora.beta.gouv.fr";
+  static const String deleteAccount2 = "avec le code :";
 }

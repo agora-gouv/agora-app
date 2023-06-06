@@ -28,11 +28,11 @@ class StorageManager {
     return storage;
   }
 
-  static LoginStorageClient getLoginStorageClient(SharedPreferences sharedPref) {
+  static LoginStorageClient getLoginStorageClient({SharedPreferences? sharedPref}) {
     if (GetIt.instance.isRegistered<LoginSharedPreferencesClient>()) {
       return GetIt.instance.get<LoginSharedPreferencesClient>();
     }
-    final storage = LoginSharedPreferencesClient(secureStorageClient: _getSecureStorageClient(sharedPref));
+    final storage = LoginSharedPreferencesClient(secureStorageClient: _getSecureStorageClient(sharedPref!));
     GetIt.instance.registerSingleton(storage);
     return storage;
   }

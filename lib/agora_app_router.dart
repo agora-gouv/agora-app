@@ -13,6 +13,7 @@ import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
+import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/moderation_charter_page.dart';
 import 'package:agora/pages/profile/privacy_policy_page.dart';
@@ -53,6 +54,10 @@ class AgoraAppRouter {
       ModerationPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.moderationPage,
             child: ModerationPage(),
+          ),
+      DeleteAccountPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.deleteAccountPage,
+            child: DeleteAccountPage(),
           ),
       ModerationCharterPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.moderationCharterPage,
