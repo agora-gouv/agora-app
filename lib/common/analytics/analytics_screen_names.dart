@@ -22,8 +22,9 @@ class AnalyticsScreenNames {
   static const String demographicQuestionPage = "Questionnaire sur les données démographiques";
   static const String demographicConfirmationPage = "Envoi des réponses des données démographiques";
   static const String demographicProfilePage = "Profile - Données démographique";
-  static const String moderationCharterPage = "Charte de modération";
-  static const String privacyPolicyPage = "Politique de confidentialité";
-  static const String termsOfConditionPage = "Condition générales d'utilisations";
-  static const String legalNoticePage = "Mentions légales";
+  static const String deleteAccountPage = "Profile - Supprimer mon compte";
+  static const String moderationCharterPage = "Profil - Charte de modération";
+  static const String privacyPolicyPage = "Profile - Politique de confidentialité";
+  static const String termsOfConditionPage = "Profile - Condition générales d'utilisations";
+  static const String legalNoticePage = "Profile - Mentions légales";
 }

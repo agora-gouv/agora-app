@@ -36,6 +36,8 @@ class DemographicStrings {
   static const String departmentHint = "Votre numéro ou nom de département";
   static const String my = "Mes";
   static const String information = "informations";
+  static const String delete = "Supprimer";
+  static const String myAccount = "mon compte";
   static const String informationCapitalize = "Informations\n";
   static const String demographic = "démographiques";
   static const String demographicInformationNotice1 =

@@ -16,6 +16,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
+import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/moderation_charter_page.dart';
 import 'package:agora/pages/profile/privacy_policy_page.dart';
@@ -76,6 +77,13 @@ class ProfilePage extends StatelessWidget {
                     Navigator.pushNamed(context, ModerationPage.routeName);
                   },
                 ),
+              AgoraMenuItem(
+                title: ProfileStrings.deleteAccount,
+                onClick: () {
+                  _track(AnalyticsEventNames.deleteAccount);
+                  Navigator.pushNamed(context, DeleteAccountPage.routeName);
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
                 child: Divider(color: AgoraColors.divider, thickness: 1),
