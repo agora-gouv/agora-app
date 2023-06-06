@@ -49,6 +49,9 @@ class DemographicStrings {
   static const String whatAbout = "De quoi s’agit-il ?";
   static const String question5WhatAbout =
       "Les catégories socio-professionnelles sont des regroupements effectués par l’INSEE (l’Institut national de la statistique et des études économiques) pour regrouper la population en fonction de leur activité professionnelle et de leur position sociale. Cela permet de comprendre la structure de la population. Si vous avez un doute sur la vôtre, pas d’inquiétude, choisissez tout simplement l’option qui dit que vous ne savez pas !";
+  static const String whyAsk = "Pourquoi me demande-t-on cela ?";
+  static const String whyAskContent =
+      "Ces questions nous aident à comprendre quels participants cette application nous permet de toucher.\n\nNotre objectif est de faire en sorte que des citoyens de toutes sensibilités partisanes, de tous âges et de tous horizons puissent s’intéresser et participer à la vie politique.\n\nNous espérons que cette application permettra, petit à petit, de faire reculer l’abstention et peut-être, de motiver certains utilisateurs à s’engager, que ce soit sur le terrain ou en ligne.\n\nCes renseignements sont donc utiles pour évaluer si nous arrivons à toucher tous les publics! Peu importe que vous soyez pour ou contre l’action du Gouvernement.";
 
   static const String gender = "Genre";
   static const String yearOfBirth = "Année de naissance";
