@@ -177,6 +177,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           }),
           oldResponse: _getOldResponse(DemographicType.jobCategory, oldResponses),
           showWhatAbout: true,
+          whatAboutText: DemographicStrings.question5WhatAbout,
         );
       case 6:
         return DemographicVoteView(
