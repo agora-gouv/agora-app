@@ -8,7 +8,7 @@ class PrivacyPolicyStrings {
   static const String description1_3 =
       "Le responsable de traitement est Thierry Lambert, Délégué interministériel de la transformation publique (DITP).";
   static const String description1_4 =
-      "Le responsable de traitement s’engage à ce que la collecte et le traitement des données à caractère personnel, effectués à partir de la plateforme Agora soient conformes au règlement européen n° 2016/679 général sur la protection des données du 27 avril 2016 dit « RGPD » et à la loi n° 78-17 relative à l’informatique, aux fichiers et aux libertés dite «\u{00A0}LIL\u{00A0}».";
+      "Le responsable de traitement s’engage à ce que la collecte et le traitement des données à caractère personnel, effectués à partir de la plateforme Agora soient conformes au règlement européen n°\u{00A0}2016/679 général sur la protection des données du 27 avril 2016 dit «\u{00A0}RGPD\u{00A0}» et à la loi n°\u{00A0}78-17 relative à l’informatique, aux fichiers et aux libertés dite «\u{00A0}LIL\u{00A0}».";
 
   static const String title2 = "Pourquoi manipulons-nous ces données\u{00A0}?";
   static const String description2_1 =
@@ -40,7 +40,7 @@ class PrivacyPolicyStrings {
   static const String description4_1 =
       "Agora manipule des données personnelles en se basant sur l’exécution d’une mission d’intérêt public ou relevant de l’exercice de l’autorité publique dont est investi le responsable de traitement au sens de l’article 6-e du RPGD.";
   static const String description4_2 =
-      "La DITP notamment concourt sur le fondement de l’article 4 du décret n° 2015-1165 du 21 septembre 2015 à l'adaptation de l'organisation des administrations de l'Etat pour tenir compte de l'évolution de leurs missions et de leurs modes de gestion. Elle est aussi chargée de l'animation et de la coordination des travaux d'audit et d'évaluation des politiques publiques.";
+      "La DITP notamment concourt sur le fondement de l’article 4 du décret n°\u{00A0}2015-1165 du 21 septembre 2015 à l'adaptation de l'organisation des administrations de l'Etat pour tenir compte de l'évolution de leurs missions et de leurs modes de gestion. Elle est aussi chargée de l'animation et de la coordination des travaux d'audit et d'évaluation des politiques publiques.";
 
   static const String title5 = "Pendant combien de temps conservons-nous ces données\u{00A0}?";
   static const String description5_1 =
@@ -60,7 +60,7 @@ class PrivacyPolicyStrings {
   static const String description6_5 = "Pour les exercer, contactez-nous par voie électronique à\u{00A0}:";
   static const String description6_6 = "Ou par voie postale\u{00A0}:";
   static const String description6_7 =
-      "Puisque ce sont des droits personnels, nous ne traiterons votre demande que si nous sommes en mesure de vous identifier. Pour l’exercice de vos droits, veuillez vous munir du code suivant [User ID] (disponible dans “Votre Profil - Supprimer mon compte”). Dans le cas où nous ne parvenons pas à vous identifier, nous pourrions être amenés à vous demander une preuve de votre identité.";
+      "Puisque ce sont des droits personnels, nous ne traiterons votre demande que si nous sommes en mesure de vous identifier. Pour l’exercice de vos droits, veuillez vous munir du code suivant [User\u{00A0}ID] (disponible dans “Votre Profil - Supprimer mon compte”). Dans le cas où nous ne parvenons pas à vous identifier, nous pourrions être amenés à vous demander une preuve de votre identité.";
   static const String description6_8 =
       "Nous nous engageons à vous répondre dans un délai raisonnable qui ne saurait dépasser 1 mois à compter de la réception de votre demande.";
   static const String description6_9 =
@@ -117,7 +117,7 @@ class PrivacyPolicyStrings {
 
   static const String title10 = "Cookies";
   static const String description10_1 =
-      "Un cookie est un fichier déposé sur votre terminal lors de la visite d’un site. Il a pour but de collecter des informations relatives à votre navigation et de vous adresser des services adaptés à votre terminal (ordinateur, mobile ou tablette).\nEn application de l’article 5(3) de la directive 2002/58/CE modifiée concernant le traitement des données à caractère personnel et la protection de la vie privée dans le secteur des communications électroniques, transposée à l’article 82 de la loi n°78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés, les traceurs ou cookies suivent deux régimes distincts\u{00A0}:";
+      "Un cookie est un fichier déposé sur votre terminal lors de la visite d’un site. Il a pour but de collecter des informations relatives à votre navigation et de vous adresser des services adaptés à votre terminal (ordinateur, mobile ou tablette).\nEn application de l’article 5(3) de la directive 2002/58/CE modifiée concernant le traitement des données à caractère personnel et la protection de la vie privée dans le secteur des communications électroniques, transposée à l’article 82 de la loi n°\u{00A0}78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés, les traceurs ou cookies suivent deux régimes distincts\u{00A0}:";
   static const String description10_2 =
       "Les cookies strictement nécessaires au service ou ayant pour finalité exclusive de faciliter la communication par voie électronique sont dispensés de consentement préalable au titre de l’article 82 de la LIL ;";
   static const String description10_3 =
@@ -130,9 +130,9 @@ class PrivacyPolicyStrings {
 
   static const String description11 =
       "Pour aller plus loin, vous avez la possibilité de consulter les fiches proposées par la CNIL grâce aux liens suivants\u{00A0}:";
-  static const String description11_1_1 = "Cookies & traceurs : que dit la loi\u{00A0}?";
+  static const String description11_1_1 = "Cookies & traceurs\u{00A0}: que dit la loi\u{00A0}?";
   static const String description11_1_2 = "https://www.cnil.fr/fr/cookies-et-traceurs-que-dit-la-loi";
-  static const String description11_2_1 = "Cookies : les outils pour les maîtriser";
+  static const String description11_2_1 = "Cookies\u{00A0}: les outils pour les maîtriser";
   static const String description11_2_2 =
       "https://www.cnil.fr/fr/les-conseils-de-la-cnil-pour-maitriser-votre-navigateur";
 }
