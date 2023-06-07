@@ -43,11 +43,13 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   bloc_test: ^9.1.1
   http_mock_adapter: ^0.4.2
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/launcher_icons/
   fonts:
     - family: Marianne
       fonts:
