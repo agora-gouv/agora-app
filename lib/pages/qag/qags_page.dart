@@ -14,6 +14,7 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/pages/profile/profile_page.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
 import 'package:agora/pages/qag/qags_section.dart';
@@ -64,6 +65,16 @@ class _QagsPageState extends State<QagsPage> {
                         AgoraRichTextTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
                       ],
                     ),
+                    onProfileClick: () {
+                      Navigator.pushNamed(context, ProfilePage.routeName).then(
+                        (value) {
+                          final shouldReloadPage = value as bool;
+                          if (shouldReloadPage) {
+                            context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
+                          }
+                        },
+                      );
+                    },
                   ),
                   Column(children: _handleQagState(context, state)),
                 ],

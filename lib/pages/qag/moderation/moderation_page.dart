@@ -20,26 +20,34 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ModerationPage extends StatelessWidget {
+class ModerationPage extends StatefulWidget {
   static const routeName = "/moderationPage";
+
+  @override
+  State<ModerationPage> createState() => _ModerationPageState();
+}
+
+class _ModerationPageState extends State<ModerationPage> {
+  var shouldReloadQagsPage = false;
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) {
-            return QagModerationListBloc(qagRepository: RepositoryManager.getQagRepository())
-              ..add(FetchQagModerationListEvent());
-          },
+          create: (BuildContext context) => QagModerationListBloc(
+            qagRepository: RepositoryManager.getQagRepository(),
+          )..add(FetchQagModerationListEvent()),
         ),
         BlocProvider(
           create: (BuildContext context) => QagModerateBloc(qagRepository: RepositoryManager.getQagRepository()),
         ),
       ],
       child: AgoraScaffold(
+        popAction: () => _onBackClick(context),
         child: SingleChildScrollView(
           child: AgoraSecondaryStyleView(
+            onBackClick: () => _onBackClick(context),
             title: AgoraRichText(
               policeStyle: AgoraRichTextPoliceStyle.toolbar,
               items: [
@@ -83,6 +91,10 @@ class ModerationPage extends StatelessWidget {
     );
   }
 
+  void _onBackClick(BuildContext context) {
+    Navigator.pop(context, shouldReloadQagsPage);
+  }
+
   List<Widget> _buildQagsToModerate(BuildContext context, QagModerationListViewModel viewModel) {
     final List<Widget> qagsWidgets = [
       Text(
@@ -98,6 +110,9 @@ class ModerationPage extends StatelessWidget {
             return currentState is QagModerateSuccessState && currentState.qagId == qagToModerationViewModel.id;
           },
           listener: (context, currentState) {
+            if (!shouldReloadQagsPage) {
+              setState(() => shouldReloadQagsPage = true);
+            }
             context
                 .read<QagModerationListBloc>()
                 .add(RemoveFromQagModerationListEvent(qagId: qagToModerationViewModel.id));
