@@ -55,13 +55,13 @@ class ProfilePage extends StatelessWidget {
                   Navigator.pushNamed(context, DemographicProfilePage.routeName);
                 },
               ),
-              AgoraMenuItem(
-                title: ProfileStrings.notification,
-                onClick: () {
-                  _track(AnalyticsEventNames.notification);
-                  // TODO
-                },
-              ),
+              // AgoraMenuItem(
+              //   title: ProfileStrings.notification,
+              //   onClick: () {
+              //     _track(AnalyticsEventNames.notification);
+              //     // TODO
+              //   },
+              // ),
               AgoraMenuItem(
                 title: ProfileStrings.tutorial,
                 onClick: () {
