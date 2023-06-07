@@ -1,0 +1,5 @@
+flutter_launcher_icons:
+  image_path: "assets/launcher_icons/ic_agora.png"
+  ios: true
+  android: true
+  remove_alpha_ios: true
