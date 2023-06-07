@@ -85,6 +85,7 @@ class _AgoraAppState extends State<AgoraApp> {
           secondary: AgoraColors.primaryBlue,
         ),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
