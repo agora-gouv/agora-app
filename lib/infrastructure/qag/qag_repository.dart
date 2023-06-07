@@ -9,6 +9,7 @@ import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
@@ -110,8 +111,8 @@ class QagDioRepository extends QagRepository {
         qagSupporting: _transformToQagList(qags["supporting"] as List),
         errorCase: response.data["askQagErrorText"] as String?,
       );
-    } catch (e) {
-      Log.e("fetchQags failed", e);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.connectionError) Log.e("fetchQags failed", e);
       return GetQagsFailedResponse();
     }
   }
