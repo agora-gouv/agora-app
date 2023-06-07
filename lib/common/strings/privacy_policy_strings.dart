@@ -104,11 +104,11 @@ class PrivacyPolicyStrings {
       "- Solution installée et opérée par la Direction interministérielle du numérique";
   static const String description9_6 = "Pour le sous-traitant Scalingo\u{00A0}:";
   static const String description9_7 = "Pays destinataire\u{00A0}: France";
-  static const String description9_8 = "Traitement réalisé\u{00A0}: Infogérance";
-  static const String description9_9 = "https://scalingo.com/fr/data-processing-agreement";
+  static const String description9_8 = "Traitement réalisé\u{00A0}: Infogérance de la plateforme";
+  static const String description9_9 = "https://scalingo.com/fr/contrat-gestion-traitements-donnees-personnelles";
   static const String description9_10 = "Pour le sous-traitant Outscale\u{00A0}:";
   static const String description9_11 = "Pays destinataire\u{00A0}: France";
-  static const String description9_12 = "Traitement réalisé\u{00A0}: Hébergement du site web";
+  static const String description9_12 = "Traitement réalisé\u{00A0}: Hébergement de la plateforme";
   static const String description9_13 = "https://fr.outscale.com/contact-donnees-personnelles/";
   static const String description9_14 = "Pour le sous-traitant Tally\u{00A0}:";
   static const String description9_15 = "Pays destinataire\u{00A0}: Belgique";
