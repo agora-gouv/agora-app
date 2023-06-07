@@ -14,14 +14,14 @@ class NavigationObserver extends RouteObserver<ModalRoute<dynamic>> {
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (route.settings.name != null) {
-      Log.d("🐣 Pop ${previousRoute?.settings.name} ➡️ ${route.settings.name}");
+      Log.d("🐣 Pop ${route.settings.name} ➡️ ${previousRoute?.settings.name}");
     }
   }
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     if (route.settings.name != null) {
-      Log.d("🐣 Remove ${previousRoute?.settings.name} ➡️ ${route.settings.name}");
+      Log.d("🐣 Remove ${route.settings.name}");
     }
   }
 

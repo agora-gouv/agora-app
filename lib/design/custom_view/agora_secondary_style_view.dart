@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 
 class AgoraSecondaryStyleView extends StatelessWidget {
   final AgoraRichText title;
+  final VoidCallback? onBackClick;
   final Widget child;
 
   const AgoraSecondaryStyleView({
     super.key,
     required this.title,
+    this.onBackClick,
     required this.child,
   });
 
@@ -18,7 +20,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AgoraToolbar(),
+        AgoraToolbar(onBackClick: onBackClick),
         SizedBox(height: AgoraSpacings.x0_5),
         Padding(
           padding: const EdgeInsets.symmetric(

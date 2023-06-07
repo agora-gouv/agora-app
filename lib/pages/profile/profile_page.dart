@@ -24,14 +24,23 @@ import 'package:agora/pages/profile/terms_of_condition_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   static const routeName = "/profilePage";
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  var shouldReloadQagsPage = false;
 
   @override
   Widget build(BuildContext context) {
     return AgoraScaffold(
+      popAction: () => _onBackClick(context),
       child: SingleChildScrollView(
         child: AgoraSecondaryStyleView(
+          onBackClick: () => _onBackClick(context),
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
@@ -74,7 +83,14 @@ class ProfilePage extends StatelessWidget {
                   title: ProfileStrings.moderationCapitalize,
                   onClick: () {
                     _track(AnalyticsEventNames.moderationCapitalize);
-                    Navigator.pushNamed(context, ModerationPage.routeName);
+                    Navigator.pushNamed(context, ModerationPage.routeName).then(
+                      (value) {
+                        final previousShouldReloadQagsPage = value as bool;
+                        if (!shouldReloadQagsPage && previousShouldReloadQagsPage) {
+                          setState(() => shouldReloadQagsPage = true);
+                        }
+                      },
+                    );
                   },
                 ),
               AgoraMenuItem(
@@ -146,6 +162,10 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onBackClick(BuildContext context) {
+    Navigator.pop(context, shouldReloadQagsPage);
   }
 
   void _track(String clickName) {

@@ -3,13 +3,13 @@ import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class AgoraMainToolbar extends StatelessWidget {
   final Widget title;
+  final VoidCallback onProfileClick;
 
-  const AgoraMainToolbar({super.key, required this.title});
+  const AgoraMainToolbar({super.key, required this.title, required this.onProfileClick});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,7 @@ class AgoraMainToolbar extends StatelessWidget {
                     label: GenericStrings.profil,
                     style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                     padding: AgoraRoundedButtonPadding.short,
-                    onPressed: () {
-                      Navigator.pushNamed(context, ProfilePage.routeName);
-                    },
+                    onPressed: () => onProfileClick(),
                   ),
                 ],
               ),
