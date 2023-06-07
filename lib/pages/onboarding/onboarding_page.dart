@@ -23,6 +23,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return AgoraScaffold(
+      shouldPop: false,
       appBarColor: AgoraColors.primaryBlue,
       child: _handleStep(context),
     );

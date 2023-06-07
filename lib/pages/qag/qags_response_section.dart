@@ -8,7 +8,6 @@ import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -84,14 +83,14 @@ class QagsResponseSection extends StatelessWidget {
             );
           },
         ),
-        Spacer(),
-        AgoraRoundedButton(
-          label: GenericStrings.all,
-          style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-          onPressed: () {
-            // TODO
-          },
-        ),
+        // Spacer(),
+        // AgoraRoundedButton(
+        //   label: GenericStrings.all,
+        //   style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+        //   onPressed: () {
+        //     // TODO
+        //   },
+        // ),
       ],
     );
   }
