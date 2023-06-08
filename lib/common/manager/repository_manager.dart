@@ -15,16 +15,24 @@ import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class RepositoryManager {
+  static const String _baseUrl = "baseUrl";
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
+
+  static void initRepositoryManager({required String baseUrl}) {
+    GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
+  }
 
   static Dio _getDio() {
     if (GetIt.instance.isRegistered<Dio>()) {
       return GetIt.instance.get<Dio>();
     }
+    if (!GetIt.instance.isRegistered<String>(instanceName: _baseUrl)) {
+      throw Exception("RepositoryManager has not been initialized");
+    }
     final dio = Dio(
       BaseOptions(
-        baseUrl: "https://agora-dev.osc-secnum-fr1.scalingo.io",
+        baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
         connectTimeout: Duration(seconds: 60),
         receiveTimeout: Duration(seconds: 60),
       ),
