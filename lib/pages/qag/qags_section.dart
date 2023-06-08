@@ -199,16 +199,14 @@ class _QagsSectionState extends State<QagsSection> {
       return qagsWidgets;
     } else {
       return [
-        SizedBox(
-          height: MediaQuery.of(context).size.height - (AgoraSpacings.x3 * 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(QagStrings.emptyList, style: AgoraTextStyles.light14),
-              SizedBox(height: AgoraSpacings.x3 * 3),
-            ],
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: AgoraSpacings.base),
+            Text(QagStrings.emptyList, style: AgoraTextStyles.light14),
+            SizedBox(height: AgoraSpacings.x3 * 2),
+          ],
         ),
       ];
     }
