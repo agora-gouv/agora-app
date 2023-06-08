@@ -59,4 +59,12 @@ class QagStrings {
   static const String validate = "Valider";
   static const String refuse = "Refuser";
   static const String totalNumber = "Nombre total : %s";
+
+  static const String qagModerateTitle = "Cette question n’est plus disponible !";
+  static const String qagModerateDescription1_1 = "Elle ne respectait pas la";
+  static const String qagModerateDescription1_2 = "charte de participation";
+  static const String qagModerateDescription1_3 = "ou bien son auteur a décidé de la retirer.";
+  static const String qagModerateDescription2 =
+      "Si vous pensez qu’elle a pu être modérée par erreur, vous pouvez nous adresser un message à l’adresse";
+  static const String qagModerateSeeOther = "Voir les autres questions";
 }

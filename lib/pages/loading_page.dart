@@ -21,6 +21,7 @@ import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -69,7 +70,6 @@ class LoadingPage extends StatelessWidget {
           child: BlocConsumer<LoginBloc, LoginState>(
             listener: (context, loginState) async {
               if (loginState is LoginSuccessState) {
-                Navigator.pushNamed(context, ConsultationsPage.routeName);
                 _pushPageWithCondition(context);
               }
             },
@@ -87,24 +87,27 @@ class LoadingPage extends StatelessWidget {
   }
 
   void _pushPageWithCondition(BuildContext context) {
-    if (redirection.shouldShowConsultationDetails) {
-      Navigator.pushNamed(
-        context,
-        ConsultationDetailsPage.routeName,
-        arguments: ConsultationDetailsArguments(consultationId: redirection.consultationId!),
-      );
-    }
     if (redirection.shouldShowQagDetails) {
+      Navigator.pushNamed(context, QagsPage.routeName);
       Navigator.pushNamed(
         context,
         QagDetailsPage.routeName,
         arguments: QagDetailsPage(qagId: redirection.qagId!),
       );
-    }
-    if (redirection.shouldShowOnboarding) {
-      Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
-        StorageManager.getOnboardingStorageClient().save(false);
-      });
+    } else {
+      Navigator.pushNamed(context, ConsultationsPage.routeName);
+      if (redirection.shouldShowConsultationDetails) {
+        Navigator.pushNamed(
+          context,
+          ConsultationDetailsPage.routeName,
+          arguments: ConsultationDetailsArguments(consultationId: redirection.consultationId!),
+        );
+      }
+      if (redirection.shouldShowOnboarding) {
+        Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
+          StorageManager.getOnboardingStorageClient().save(false);
+        });
+      }
     }
   }
 

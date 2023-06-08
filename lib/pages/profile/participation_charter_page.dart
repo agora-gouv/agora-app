@@ -9,8 +9,8 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class ModerationCharterPage extends StatelessWidget {
-  static const routeName = "/moderationCharterPage";
+class ParticipationCharterPage extends StatelessWidget {
+  static const routeName = "/participationCharterPage";
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 class GenericStrings {
-  static const String mailSupport = "equipe@agora.beta.gouv.fr";
+  static const String mailSupport = "agora@beta.gouv.fr";
   static const String address =
       "Direction interministérielle de la transformation publique - TSA 70732 - 75334 Paris Cedex 07";
   static const String cnil = "https://www.cnil.fr";

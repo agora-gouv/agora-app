@@ -17,4 +17,6 @@ class QagDetailsFetchedState extends QagDetailsState {
   List<Object> get props => [viewModel];
 }
 
+class QagDetailsModerateErrorState extends QagDetailsState {}
+
 class QagDetailsErrorState extends QagDetailsState {}

@@ -16,7 +16,7 @@ import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/legal_notice_page.dart';
-import 'package:agora/pages/profile/moderation_charter_page.dart';
+import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/profile/privacy_policy_page.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:agora/pages/profile/terms_of_condition_page.dart';
@@ -60,9 +60,9 @@ class AgoraAppRouter {
             widgetName: AnalyticsScreenNames.deleteAccountPage,
             child: DeleteAccountPage(),
           ),
-      ModerationCharterPage.routeName: (context) => AgoraTracker(
+      ParticipationCharterPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.participationCharterPage,
-            child: ModerationCharterPage(),
+            child: ParticipationCharterPage(),
           ),
       PrivacyPolicyPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.privacyPolicyPage,

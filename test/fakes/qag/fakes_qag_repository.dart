@@ -337,3 +337,12 @@ class FakeQagFailureRepository extends QagRepository {
     return ModerateQagFailedResponse();
   }
 }
+
+class FakeQagDetailsModerateFailureRepository extends FakeQagFailureRepository {
+  @override
+  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
+    required String qagId,
+  }) async {
+    return GetQagDetailsModerateFailedResponse();
+  }
+}

@@ -71,6 +71,17 @@ void main() {
     );
 
     blocTest(
+      "when repository failed with qag moderate error - should emit failure state",
+      build: () => QagDetailsBloc(
+        qagRepository: FakeQagDetailsModerateFailureRepository(),
+      ),
+      act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
+      expect: () => [
+        QagDetailsModerateErrorState(),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+    blocTest(
       "when repository failed - should emit failure state",
       build: () => QagDetailsBloc(
         qagRepository: FakeQagFailureRepository(),
