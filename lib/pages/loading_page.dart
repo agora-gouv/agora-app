@@ -11,10 +11,11 @@ import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
@@ -24,6 +25,7 @@ import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,6 +61,7 @@ class LoadingPage extends StatelessWidget {
         ),
       ],
       child: AgoraScaffold(
+        appBarColor: AgoraColors.primaryBlue,
         child: BlocListener<NotificationBloc, NotificationState>(
           listener: (context, notificationState) async {
             if (notificationState is AskNotificationConsentState) {
@@ -75,7 +78,29 @@ class LoadingPage extends StatelessWidget {
             },
             builder: (context, loginState) {
               if (loginState is LoginErrorState) {
-                return Center(child: AgoraErrorView(errorMessage: GenericStrings.authenticationErrorMessage));
+                return Column(
+                  children: [
+                    AgoraTopDiagonal(),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset("assets/ic_oops.svg"),
+                            SizedBox(height: AgoraSpacings.x1_25),
+                            Text(
+                              GenericStrings.authenticationErrorMessage,
+                              style: AgoraTextStyles.medium18,
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
               } else {
                 return Center(child: CircularProgressIndicator());
               }
