@@ -61,7 +61,7 @@ class AgoraAppRouter {
             child: DeleteAccountPage(),
           ),
       ModerationCharterPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.moderationCharterPage,
+            widgetName: AnalyticsScreenNames.participationCharterPage,
             child: ModerationCharterPage(),
           ),
       PrivacyPolicyPage.routeName: (context) => AgoraTracker(

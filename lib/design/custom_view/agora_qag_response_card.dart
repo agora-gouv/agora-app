@@ -40,6 +40,7 @@ class AgoraQagResponseCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(width: double.infinity),
                   ThematiqueHelper.buildCard(context, thematique),
                   SizedBox(height: AgoraSpacings.x0_25),
                   Text(title, style: AgoraTextStyles.medium16),

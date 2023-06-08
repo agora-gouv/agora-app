@@ -5,7 +5,7 @@ class ProfileStrings {
   static const String notification = "Notifications";
   static const String tutorial = "Tutoriel";
   static const String moderationCapitalize = "Modération";
-  static const String moderationCharter = "Charte de modération";
+  static const String participationCharter = "Charte de participation";
   static const String deleteAccount = "Supprimer mon compte";
   static const String privacyPolicy = "Politique de confidentialité";
   static const String termsOfService = "Conditions générales d'utilisation";
@@ -16,7 +16,7 @@ class ProfileStrings {
   static const String feedbackTipsButton = "Donner mes retours";
   static const String feedbackUrl = "https://tally.so/r/waed4X";
   static const String charter = "Charte de";
-  static const String moderation = "modération";
+  static const String participation = "participation";
   static const String policy = "Politique de ";
   static const String privacy = "confidentialité";
   static const String condition = "Conditions générales";
