@@ -28,6 +28,7 @@ void main() {
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
+        LoginLoadingState(),
         LoginSuccessState(),
       ],
       wait: const Duration(milliseconds: 5),
@@ -54,6 +55,7 @@ void main() {
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
+        LoginLoadingState(),
         LoginErrorState(),
       ],
       wait: const Duration(milliseconds: 5),
@@ -83,6 +85,7 @@ void main() {
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
+        LoginLoadingState(),
         LoginSuccessState(),
       ],
       wait: const Duration(milliseconds: 5),
@@ -108,6 +111,7 @@ void main() {
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
+        LoginLoadingState(),
         LoginErrorState(),
       ],
       wait: const Duration(milliseconds: 5),
