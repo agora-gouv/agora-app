@@ -105,9 +105,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Divider(color: AgoraColors.divider, thickness: 1),
               ),
               AgoraMenuItem(
-                title: ProfileStrings.moderationCharter,
+                title: ProfileStrings.participationCharter,
                 onClick: () {
-                  _track(AnalyticsEventNames.moderationCharter);
+                  _track(AnalyticsEventNames.participationCharter);
                   Navigator.pushNamed(context, ModerationCharterPage.routeName);
                 },
               ),

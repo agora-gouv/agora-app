@@ -26,7 +26,7 @@ class ModerationCharterPage extends StatelessWidget {
               ),
               AgoraRichTextSpaceItem(),
               AgoraRichTextTextItem(
-                text: ProfileStrings.moderation,
+                text: ProfileStrings.participation,
                 style: AgoraRichTextItemStyle.bold,
               ),
             ],

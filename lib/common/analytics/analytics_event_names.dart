@@ -42,7 +42,7 @@ class AnalyticsEventNames {
   static const String tutorial = "Tutoriel";
   static const String moderationCapitalize = "Modération";
   static const String deleteAccount = "Supprimer mon compte";
-  static const String moderationCharter = "Charte de modération";
+  static const String participationCharter = "Charte de participation";
   static const String privacyPolicy = "Politique de confidentialité";
   static const String termsOfService = "Conditions générales d'utilisation";
   static const String legalNotice = "Mentions légales";

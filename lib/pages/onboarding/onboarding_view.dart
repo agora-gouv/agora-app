@@ -55,6 +55,7 @@ class OnboardingView extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: AgoraSpacings.x2),
+                  Spacer(),
                   OnboardingAutoScrollPage(
                     scrollDirection: Axis.horizontal,
                     gap: 0,
@@ -74,7 +75,7 @@ class OnboardingView extends StatelessWidget {
                     ],
                   ),
                   Spacer(),
-                  SizedBox(height: AgoraSpacings.x1_5),
+                  SizedBox(height: AgoraSpacings.x3),
                   SizedBox(
                     width: double.infinity,
                     child: AgoraButton(
