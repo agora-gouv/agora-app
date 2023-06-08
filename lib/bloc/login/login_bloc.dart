@@ -23,13 +23,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required this.pushNotificationService,
     required this.jwtHelper,
     required this.roleHelper,
-  }) : super(LoginInitialLoadingState()) {
+  }) : super(LoginInitialState()) {
     on<CheckLoginEvent>(_handleCheckLoginEvent);
   }
 
   Future<void> _handleCheckLoginEvent(CheckLoginEvent event, Emitter<LoginState> emit) async {
+    emit(LoginLoadingState());
     final fcmToken = await pushNotificationService.getMessagingToken();
-
     final loginToken = await loginStorageClient.getLoginToken();
     if (loginToken != null) {
       emit(await _login(loginToken: loginToken, fcmToken: fcmToken));

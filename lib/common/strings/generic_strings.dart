@@ -4,6 +4,7 @@ class GenericStrings {
       "Direction interministérielle de la transformation publique - TSA 70732 - 75334 Paris Cedex 07";
   static const String cnil = "https://www.cnil.fr";
 
+  static const String retry = "Réessayer";
   static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
   static const String errorMessage = "Une erreur est survenue.";
   static const String askNotificationPermissionMessage =
