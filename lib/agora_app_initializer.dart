@@ -3,7 +3,6 @@ import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/firebase_options.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -19,6 +18,7 @@ class AgoraInitializer {
     Intl.defaultLocale = "fr_FR";
     initializeDateFormatting('fr_FR', null);
 
+    _setupFirebaseOptions(appConfig.firebaseOptions);
     await _setupNotification();
     await _setupMatomo();
     RepositoryManager.initRepositoryManager(baseUrl: appConfig.baseUrl);
@@ -27,8 +27,12 @@ class AgoraInitializer {
     runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection));
   }
 
+  static void _setupFirebaseOptions(FirebaseOptions firebaseOptions) {
+    ConfigManager.setFirebaseOptions(firebaseOptions);
+  }
+
   static Future<void> _setupNotification() async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
     if (!kIsWeb) {
       await ServiceManager.getPushNotificationService().setupNotifications();
     }
@@ -45,9 +49,13 @@ class AgoraInitializer {
 
 class AgoraAppConfig extends Equatable {
   final String baseUrl;
+  final FirebaseOptions firebaseOptions;
 
-  AgoraAppConfig({required this.baseUrl});
+  AgoraAppConfig({
+    required this.baseUrl,
+    required this.firebaseOptions,
+  });
 
   @override
-  List<Object?> get props => [baseUrl];
+  List<Object?> get props => [baseUrl, firebaseOptions];
 }
