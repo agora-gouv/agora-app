@@ -25,6 +25,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/details/qag_details_response_view.dart';
 import 'package:agora/pages/qag/details/qag_details_support_view.dart';
+import 'package:agora/pages/qag/qags_moderated_error_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -115,6 +116,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
           Center(child: CircularProgressIndicator()),
         ],
       );
+    } else if (detailsState is QagDetailsModerateErrorState) {
+      return QagsModeratedErrorContent();
     } else {
       return Column(
         children: [

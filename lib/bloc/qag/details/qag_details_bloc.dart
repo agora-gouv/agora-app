@@ -19,6 +19,8 @@ class QagDetailsBloc extends Bloc<FetchQagDetailsEvent, QagDetailsState> {
     if (response is GetQagDetailsSucceedResponse) {
       final qagDetailsViewModel = QagDetailsPresenter.present(response.qagDetails);
       emit(QagDetailsFetchedState(qagDetailsViewModel));
+    } else if (response is GetQagDetailsModerateFailedResponse) {
+      emit(QagDetailsModerateErrorState());
     } else {
       emit(QagDetailsErrorState());
     }

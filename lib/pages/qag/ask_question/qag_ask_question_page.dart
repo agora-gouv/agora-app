@@ -22,7 +22,7 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/loading_page.dart';
-import 'package:agora/pages/profile/moderation_charter_page.dart';
+import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_thematiques_drop_down.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
@@ -186,7 +186,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               AgoraButton(
                 label: QagStrings.readNotice,
                 style: AgoraButtonStyle.lightGreyButtonStyle,
-                onPressed: () => Navigator.pushNamed(context, ModerationCharterPage.routeName),
+                onPressed: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
               ),
               SizedBox(height: AgoraSpacings.x1_5),
               AgoraCheckbox(

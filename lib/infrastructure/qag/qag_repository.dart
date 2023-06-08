@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/qag_paginated_filter_extension.dart';
@@ -175,7 +177,13 @@ class QagDioRepository extends QagRepository {
               : null,
         ),
       );
-    } catch (e) {
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == HttpStatus.locked) {
+          Log.e("fetchQagDetails failed : QaG moderated error", e);
+          return GetQagDetailsModerateFailedResponse();
+        }
+      }
       Log.e("fetchQagDetails failed", e);
       return GetQagDetailsFailedResponse();
     }
@@ -376,6 +384,8 @@ class GetQagDetailsSucceedResponse extends GetQagDetailsRepositoryResponse {
   @override
   List<Object> get props => [qagDetails];
 }
+
+class GetQagDetailsModerateFailedResponse extends GetQagDetailsRepositoryResponse {}
 
 class GetQagDetailsFailedResponse extends GetQagDetailsRepositoryResponse {}
 

@@ -464,6 +464,25 @@ void main() {
       );
     });
 
+    test("when failure with 423 should return qag moderated failure", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/$qagId",
+        (server) => server.reply(HttpStatus.locked, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQagDetails(qagId: qagId);
+
+      // Then
+      expect(response, GetQagDetailsModerateFailedResponse());
+    });
+
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
