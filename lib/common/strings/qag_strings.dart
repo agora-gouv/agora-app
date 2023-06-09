@@ -67,4 +67,7 @@ class QagStrings {
   static const String qagModerateDescription2 =
       "Si vous pensez qu’elle a pu être modérée par erreur, vous pouvez nous adresser un message à l’adresse";
   static const String qagModerateSeeOther = "Voir les autres questions";
+
+  static const String shareDeeplinkText =
+      "Voilà une question où j’aimerais avoir une réponse du gouvernement. Peux-tu la soutenir pour qu’elle ait plus de chance d’être celle de la semaine ?\n%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
 }

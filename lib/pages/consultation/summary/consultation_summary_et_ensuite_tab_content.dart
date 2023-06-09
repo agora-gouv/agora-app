@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
@@ -11,7 +12,6 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
   final String title;
@@ -93,7 +93,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                               clickName: AnalyticsEventNames.shareConsultationResults,
                               widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                             );
-                            Share.share('Comme moi, tu peux participer à la Consultation : $title\nhttps://agora.beta.gouv.fr/consultations/$consultationId');
+                            ShareHelper.shareConsultation(title: title, id: consultationId);
                           },
                         ),
                       ],
