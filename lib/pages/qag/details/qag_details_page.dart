@@ -150,7 +150,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                       widgetName: AnalyticsScreenNames.qagDetailsPage,
                     );
                     Share.share(
-                      'Question au gouvernement : ${viewModel.title}\nagora://qag.gouv.fr/${viewModel.id}',
+                      'Voilà une question où j’aimerais avoir une réponse du gouvernement. Peux-tu la soutenir pour qu’elle ait plus de chance d’être celle de la semaine ?\n${viewModel.title}\nhttps://agora.beta.gouv.fr/qags/${viewModel.id}',
                     );
                   },
                 ),

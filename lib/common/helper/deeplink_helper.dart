@@ -5,8 +5,8 @@ import 'package:agora/common/log/log.dart';
 import 'package:uni_links/uni_links.dart';
 
 class DeeplinkHelper {
-  static const String _consultationHost = "consultation.gouv.fr";
-  static const String _qagHost = "qag.gouv.fr";
+  static const String _consultationPath = "consultations";
+  static const String _qagPath = "qags";
   static final _uuidRegExp =
       RegExp(r'[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}');
 
@@ -19,23 +19,25 @@ class DeeplinkHelper {
     final uri = await getInitialUri();
     if (uri != null) {
       Log.d("deeplink initiate uri : $uri");
-      switch (uri.host) {
-        case _consultationHost:
+      final featurePath = uri.pathSegments.first;
+      final id = uri.pathSegments.last;
+      switch (featurePath) {
+        case _consultationPath:
           _handleDeeplink(
-            uri: uri,
+            id: id,
             onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
             onMatchFailedCallback: () => Log.e("deeplink initiate uri : no consultation id match error"),
           );
           break;
-        case _qagHost:
+        case _qagPath:
           _handleDeeplink(
-            uri: uri,
+            id: id,
             onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
             onMatchFailedCallback: () => Log.e("deeplink initiate uri : no qag id match error"),
           );
           break;
         default:
-          Log.e("deeplink initiate uri : unknown host error");
+          Log.e("deeplink initiate uri : unknown path error: ${uri.path}");
           break;
       }
     } else {
@@ -50,23 +52,25 @@ class DeeplinkHelper {
     _sub = uriLinkStream.listen(
       (Uri? uri) {
         if (uri != null) {
-          switch (uri.host) {
-            case _consultationHost:
+          final featurePath = uri.pathSegments.first;
+          final id = uri.pathSegments.last;
+          switch (featurePath) {
+            case _consultationPath:
               _handleDeeplink(
-                uri: uri,
+                id: id,
                 onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
                 onMatchFailedCallback: () => Log.e("deeplink listen uri : no consultation id match error"),
               );
               break;
-            case _qagHost:
+            case _qagPath:
               _handleDeeplink(
-                uri: uri,
+                id: id,
                 onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
                 onMatchFailedCallback: () => Log.e("deeplink listen uri : no qag id match error"),
               );
               break;
             default:
-              Log.e("deeplink listen uri : unknown host error");
+              Log.e("deeplink listen uri : unknown path error: ${uri.path}");
               break;
           }
         } else {
@@ -80,11 +84,11 @@ class DeeplinkHelper {
   }
 
   void _handleDeeplink({
-    required Uri uri,
+    required String id,
     required Function(String id) onMatchSuccessCallback,
     required VoidCallback onMatchFailedCallback,
   }) {
-    final RegExpMatch? match = _uuidRegExp.firstMatch(uri.toString());
+    final RegExpMatch? match = _uuidRegExp.firstMatch(id);
     if (match != null && match[0] != null) {
       onMatchSuccessCallback(match[0]!);
     } else {
