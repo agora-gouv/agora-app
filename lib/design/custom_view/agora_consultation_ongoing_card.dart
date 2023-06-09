@@ -2,6 +2,7 @@ import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -16,7 +17,6 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
 
 class AgoraConsultationOngoingCard extends StatelessWidget {
   final String consultationId;
@@ -94,9 +94,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                     clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
                     widgetName: AnalyticsScreenNames.consultationsPage,
                   );
-                  Share.share(
-                    'Comme moi, tu peux participer à la Consultation : $title\nhttps://agora.beta.gouv.fr/consultations/$consultationId',
-                  );
+                  ShareHelper.shareConsultation(title: title, id: consultationId);
                 },
               ),
             ],

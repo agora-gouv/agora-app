@@ -8,6 +8,7 @@ import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -28,7 +29,6 @@ import 'package:agora/pages/qag/details/qag_details_support_view.dart';
 import 'package:agora/pages/qag/qags_moderated_error_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:share_plus/share_plus.dart';
 
 class QagDetailsArguments {
   final String qagId;
@@ -149,9 +149,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                       clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
                       widgetName: AnalyticsScreenNames.qagDetailsPage,
                     );
-                    Share.share(
-                      'Voilà une question où j’aimerais avoir une réponse du gouvernement. Peux-tu la soutenir pour qu’elle ait plus de chance d’être celle de la semaine ?\n${viewModel.title}\nhttps://agora.beta.gouv.fr/qags/${viewModel.id}',
-                    );
+                    ShareHelper.shareQag(title: viewModel.title, id: viewModel.id);
                   },
                 ),
               ),
