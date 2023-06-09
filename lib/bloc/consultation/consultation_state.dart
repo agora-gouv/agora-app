@@ -1,4 +1,5 @@
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
+import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationState extends Equatable {
@@ -27,4 +28,11 @@ class ConsultationsFetchedState extends ConsultationState {
       ];
 }
 
-class ConsultationErrorState extends ConsultationState {}
+class ConsultationErrorState extends ConsultationState {
+  final ConsultationsErrorType errorType;
+
+  ConsultationErrorState({required this.errorType});
+
+  @override
+  List<Object?> get props => [errorType];
+}

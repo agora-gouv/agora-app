@@ -32,8 +32,8 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
           answeredViewModels: answeredViewModels,
         ),
       );
-    } else {
-      emit(ConsultationErrorState());
+    } else if (response is GetConsultationsFailedResponse) {
+      emit(ConsultationErrorState(errorType: response.errorType));
     }
   }
 }

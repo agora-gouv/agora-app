@@ -113,8 +113,8 @@ class QagDioRepository extends QagRepository {
         qagSupporting: _transformToQagList(qags["supporting"] as List),
         errorCase: response.data["askQagErrorText"] as String?,
       );
-    } on DioError catch (e) {
-      if (e.type == DioErrorType.connectionError) Log.e("fetchQags failed", e);
+    } catch (e) {
+      Log.e("fetchQags failed", e);
       return GetQagsFailedResponse();
     }
   }
@@ -177,10 +177,11 @@ class QagDioRepository extends QagRepository {
               : null,
         ),
       );
-    } on DioError catch (e) {
-      if (e.response != null) {
-        if (e.response!.statusCode == HttpStatus.locked) {
-          Log.e("fetchQagDetails failed : QaG moderated error", e);
+    } catch (e) {
+      if (e is DioError) {
+        final response = e.response;
+        if (response != null && response.statusCode == HttpStatus.locked) {
+          Log.e("fetchQagDetails failed : QaG is moderated error", e);
           return GetQagDetailsModerateFailedResponse();
         }
       }

@@ -5,14 +5,20 @@ import 'package:flutter/material.dart';
 
 class AgoraErrorView extends StatelessWidget {
   final String errorMessage;
+  final TextAlign textAlign;
 
-  const AgoraErrorView({super.key, this.errorMessage = GenericStrings.errorMessage});
+  const AgoraErrorView({
+    super.key,
+    this.errorMessage = GenericStrings.errorMessage,
+    this.textAlign = TextAlign.start,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       errorMessage,
       style: AgoraTextStyles.light14.copyWith(color: AgoraColors.red),
+      textAlign: textAlign,
     );
   }
 }

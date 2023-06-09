@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/domain/consultation/consultation.dart';
+import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
@@ -10,6 +11,7 @@ import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuit
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -99,6 +101,52 @@ void main() {
           ],
         ),
       );
+    });
+
+    test("when failure with connection timeout should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations",
+        (server) {
+          server.throws(
+            404,
+            DioError.connectionTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.fetchConsultations();
+
+      // Then
+      expect(response, GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout));
+    });
+
+    test("when failure with receive timeout should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations",
+        (server) {
+          server.throws(
+            404,
+            DioError.receiveTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final response = await repository.fetchConsultations();
+
+      // Then
+      expect(response, GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout));
     });
 
     test("when failure should return failed", () async {

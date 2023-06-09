@@ -22,7 +22,13 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<Dio>()) {
       return GetIt.instance.get<Dio>();
     }
-    final dio = Dio(BaseOptions(baseUrl: "https://agora-dev.osc-secnum-fr1.scalingo.io"));
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: "https://agora-dev.osc-secnum-fr1.scalingo.io",
+        connectTimeout: Duration(seconds: 60),
+        receiveTimeout: Duration(seconds: 60),
+      ),
+    );
     final dioLoggerInterceptor = PrettyDioLogger(
       requestHeader: true,
       requestBody: true,

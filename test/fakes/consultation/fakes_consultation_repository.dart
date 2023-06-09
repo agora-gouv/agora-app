@@ -1,4 +1,5 @@
 import 'package:agora/domain/consultation/consultation.dart';
+import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
@@ -204,5 +205,12 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
     required String consultationId,
   }) async {
     return GetConsultationSummaryFailedResponse();
+  }
+}
+
+class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRepository {
+  @override
+  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
+    return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
   }
 }
