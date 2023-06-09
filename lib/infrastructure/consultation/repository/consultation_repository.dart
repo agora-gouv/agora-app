@@ -3,6 +3,7 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/domain/consultation/consultation.dart';
+import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -10,6 +11,7 @@ import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
@@ -78,6 +80,12 @@ class ConsultationDioRepository extends ConsultationRepository {
         }).toList(),
       );
     } catch (e) {
+      if (e is DioError) {
+        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+          Log.e("fetchConsultations failed : timeout error", e);
+          return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
+        }
+      }
       Log.e("fetchConsultations failed", e);
       return GetConsultationsFailedResponse();
     }
@@ -217,7 +225,14 @@ class GetConsultationsSucceedResponse extends GetConsultationsRepositoryResponse
       ];
 }
 
-class GetConsultationsFailedResponse extends GetConsultationsRepositoryResponse {}
+class GetConsultationsFailedResponse extends GetConsultationsRepositoryResponse {
+  final ConsultationsErrorType errorType;
+
+  GetConsultationsFailedResponse({this.errorType = ConsultationsErrorType.generic});
+
+  @override
+  List<Object> get props => [errorType];
+}
 
 abstract class GetConsultationDetailsRepositoryResponse extends Equatable {
   @override

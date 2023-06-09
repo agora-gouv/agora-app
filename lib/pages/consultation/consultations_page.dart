@@ -4,11 +4,13 @@ import 'package:agora/bloc/consultation/consultation_state.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/pages/consultation/consultations_answered_section.dart';
 import 'package:agora/pages/consultation/consultations_finished_section.dart';
 import 'package:agora/pages/consultation/consultations_ongoing_section.dart';
@@ -68,18 +70,34 @@ class ConsultationsPage extends StatelessWidget {
         ConsultationsAnsweredSection(answeredViewModels: state.answeredViewModels),
       ];
     } else if (state is ConsultationInitialLoadingState) {
-      return [
-        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-        Center(child: CircularProgressIndicator()),
-        SizedBox(height: AgoraSpacings.x2),
-      ];
-    } else if (state is ConsultationErrorState) {
-      return [
-        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-        Center(child: AgoraErrorView()),
-        SizedBox(height: AgoraSpacings.x2),
-      ];
+      return _buildPadding(context, CircularProgressIndicator());
+    } else if (state is ConsultationErrorState && state.errorType == ConsultationsErrorType.timeout) {
+      return _buildPadding(
+        context,
+        AgoraErrorView(errorMessage: GenericStrings.timeoutErrorMessage, textAlign: TextAlign.center),
+      );
+    } else if (state is ConsultationErrorState && state.errorType == ConsultationsErrorType.generic) {
+      return _buildPadding(context, AgoraErrorView());
     }
     return [];
+  }
+
+  List<Widget> _buildPadding(BuildContext context, Widget child) {
+    return [
+      Padding(
+        padding: EdgeInsets.only(
+          left: AgoraSpacings.horizontalPadding,
+          top: AgoraSpacings.base,
+          right: AgoraSpacings.horizontalPadding,
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+            Center(child: child),
+            SizedBox(height: AgoraSpacings.x2),
+          ],
+        ),
+      )
+    ];
   }
 }

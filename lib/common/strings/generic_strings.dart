@@ -7,6 +7,8 @@ class GenericStrings {
   static const String retry = "Réessayer";
   static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
   static const String errorMessage = "Une erreur est survenue.";
+  static const String timeoutErrorMessage =
+      "Oh ! Il semble qu'il y ait un problème de connexion. Vérifiez votre connexion à Internet et ré-essayez plus tard.";
   static const String askNotificationPermissionMessage =
       "Activez vos notifications pour recevoir les actualités des consultations et questions au gouvernement.";
   static const String rejectNotificationPermissionButton = "Ne pas recevoir de notifications";
