@@ -3,6 +3,7 @@ import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -130,13 +131,25 @@ void main() {
     );
 
     blocTest(
+      "when repository failed with timeout - should emit failure state",
+      build: () => QagBloc(
+        qagRepository: FakeQagTimeoutFailureRepository(),
+      ),
+      act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: "thematiqueId")),
+      expect: () => [
+        QagErrorState(errorType: QagsErrorType.timeout),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest(
       "when repository failed - should emit failure state",
       build: () => QagBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
       act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: "anotherThematiqueId")),
       expect: () => [
-        QagErrorState(),
+        QagErrorState(errorType: QagsErrorType.generic),
       ],
       wait: const Duration(milliseconds: 5),
     );

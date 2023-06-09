@@ -32,8 +32,8 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           errorCase: response.errorCase,
         ),
       );
-    } else {
-      emit(QagErrorState());
+    } else if (response is GetQagsFailedResponse) {
+      emit(QagErrorState(errorType: response.errorType));
     }
   }
 
