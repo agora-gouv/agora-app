@@ -57,7 +57,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
             children: [
               AgoraButton(
                 label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
-                icon: "ic_bubble.svg",
+                icon: "ic_list.svg",
                 style: AgoraButtonStyle.blueBorderButtonStyle,
                 onPressed: () {
                   TrackerHelper.trackClick(
