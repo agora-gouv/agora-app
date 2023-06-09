@@ -32,6 +32,7 @@ class FirebasePushNotificationService extends PushNotificationService {
   final String _channelId = 'high_importance_channel';
   late AndroidNotificationChannel channel;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final int _fcmTokenErrorWaitDelayInSeconds = 3;
 
   @override
   Future<void> setupNotifications() async {
@@ -62,12 +63,13 @@ class FirebasePushNotificationService extends PushNotificationService {
   @override
   Future<String> getMessagingToken() async {
     await _messaging.requestPermission();
-    final token = await _messaging.getToken();
-    if (token == null) {
-      throw Exception("No firebase messaging token found error");
+    try {
+      return await _fetchMessagingToken();
+    } catch (e) {
+      Log.e("\nFirebase messaging token fetch error, waiting for APNs to be initialized...\n");
+      await Future.delayed(Duration(seconds: _fcmTokenErrorWaitDelayInSeconds));
+      return await _fetchMessagingToken();
     }
-    Log.d("\nFirebase messaging token : $token\n");
-    return token;
   }
 
   @override
@@ -89,6 +91,15 @@ class FirebasePushNotificationService extends PushNotificationService {
         ),
       );
     }
+  }
+
+  Future<String> _fetchMessagingToken() async {
+    final token = await _messaging.getToken();
+    if (token == null) {
+      throw Exception("No firebase messaging token found error");
+    }
+    Log.d("\nFirebase messaging token : $token\n");
+    return token;
   }
 
   Future<void> _createHighImportanceAndroidChannel() async {
