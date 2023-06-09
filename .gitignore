@@ -43,9 +43,3 @@ t
 /android/app/profile
 /android/app/release
 
-
-# firebase service
-/ios/firebase_app_id_file.json
-/ios/Runner/GoogleService-Info.plist
-/lib/firebase_options.dart
-/android/app/google-services.json
