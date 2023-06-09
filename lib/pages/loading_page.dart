@@ -171,7 +171,7 @@ class _LoadingPageState extends State<LoadingPage> {
       Navigator.pushNamed(
         context,
         QagDetailsPage.routeName,
-        arguments: QagDetailsPage(qagId: widget.redirection.qagId!),
+        arguments: QagDetailsArguments(qagId: widget.redirection.qagId!),
       );
     } else {
       Navigator.pushNamed(context, ConsultationsPage.routeName);
