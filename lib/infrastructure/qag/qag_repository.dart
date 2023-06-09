@@ -11,6 +11,7 @@ import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
+import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -114,6 +115,12 @@ class QagDioRepository extends QagRepository {
         errorCase: response.data["askQagErrorText"] as String?,
       );
     } catch (e) {
+      if (e is DioError) {
+        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+          Log.e("fetchQags failed : timeout error", e);
+          return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
+        }
+      }
       Log.e("fetchQags failed", e);
       return GetQagsFailedResponse();
     }
@@ -353,7 +360,14 @@ class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
       ];
 }
 
-class GetQagsFailedResponse extends GetQagsRepositoryResponse {}
+class GetQagsFailedResponse extends GetQagsRepositoryResponse {
+  final QagsErrorType errorType;
+
+  GetQagsFailedResponse({this.errorType = QagsErrorType.generic});
+
+  @override
+  List<Object> get props => [errorType];
+}
 
 abstract class GetQagsPaginatedRepositoryResponse extends Equatable {
   @override

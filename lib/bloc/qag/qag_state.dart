@@ -1,4 +1,5 @@
 import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagState extends Equatable {
@@ -33,4 +34,11 @@ class QagFetchedState extends QagState {
       ];
 }
 
-class QagErrorState extends QagState {}
+class QagErrorState extends QagState {
+  final QagsErrorType errorType;
+
+  QagErrorState({required this.errorType});
+
+  @override
+  List<Object> get props => [errorType];
+}

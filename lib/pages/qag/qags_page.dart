@@ -8,12 +8,14 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
@@ -119,18 +121,34 @@ class _QagsPageState extends State<QagsPage> {
         ),
       ];
     } else if (state is QagInitialLoadingState) {
-      return [
-        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-        Center(child: CircularProgressIndicator()),
-        SizedBox(height: AgoraSpacings.x2),
-      ];
-    } else if (state is QagErrorState) {
-      return [
-        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-        Center(child: AgoraErrorView()),
-        SizedBox(height: AgoraSpacings.x2),
-      ];
+      return _buildPadding(context, CircularProgressIndicator());
+    } else if (state is QagErrorState && state.errorType == QagsErrorType.timeout) {
+      return _buildPadding(
+        context,
+        AgoraErrorView(errorMessage: GenericStrings.timeoutErrorMessage, textAlign: TextAlign.center),
+      );
+    } else if (state is QagErrorState && state.errorType == QagsErrorType.generic) {
+      return _buildPadding(context, AgoraErrorView());
     }
     return [];
+  }
+
+  List<Widget> _buildPadding(BuildContext context, Widget child) {
+    return [
+      Padding(
+        padding: EdgeInsets.only(
+          left: AgoraSpacings.horizontalPadding,
+          top: AgoraSpacings.base,
+          right: AgoraSpacings.horizontalPadding,
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+            Center(child: child),
+            SizedBox(height: AgoraSpacings.x2),
+          ],
+        ),
+      )
+    ];
   }
 }

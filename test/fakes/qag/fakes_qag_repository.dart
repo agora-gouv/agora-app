@@ -4,6 +4,7 @@ import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
+import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 
@@ -335,6 +336,15 @@ class FakeQagFailureRepository extends QagRepository {
     required bool isAccepted,
   }) async {
     return ModerateQagFailedResponse();
+  }
+}
+
+class FakeQagTimeoutFailureRepository extends FakeQagFailureRepository {
+  @override
+  Future<GetQagsRepositoryResponse> fetchQags({
+    required String? thematiqueId,
+  }) async {
+    return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
   }
 }
 

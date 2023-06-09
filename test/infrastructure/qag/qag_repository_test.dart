@@ -6,8 +6,10 @@ import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
+import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -247,6 +249,52 @@ void main() {
           errorCase: "Une erreur est survenue",
         ),
       );
+    });
+
+    test("when failure with connection timeout should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags",
+        (server) {
+          server.throws(
+            404,
+            DioError.connectionTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQags(thematiqueId: thematiqueId);
+
+      // Then
+      expect(response, GetQagsFailedResponse(errorType: QagsErrorType.timeout));
+    });
+
+    test("when failure with receive timeout should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags",
+        (server) {
+          server.throws(
+            404,
+            DioError.receiveTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(httpClient: httpClient);
+      final response = await repository.fetchQags(thematiqueId: thematiqueId);
+
+      // Then
+      expect(response, GetQagsFailedResponse(errorType: QagsErrorType.timeout));
     });
 
     test("when failure should return failed", () async {
