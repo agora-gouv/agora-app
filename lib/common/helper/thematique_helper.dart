@@ -32,10 +32,10 @@ class ThematiqueHelper {
               ),
               SizedBox(height: AgoraSpacings.x0_5),
               SizedBox(
-                width: 80,
+                width: 85,
                 child: Text(
                   thematique.label,
-                  style: AgoraTextStyles.medium12,
+                  style: AgoraTextStyles.medium11,
                   textAlign: TextAlign.center,
                 ),
               ),
