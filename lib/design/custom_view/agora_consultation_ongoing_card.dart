@@ -95,7 +95,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                     widgetName: AnalyticsScreenNames.consultationsPage,
                   );
                   Share.share(
-                    'Consultation : $title\nagora://consultation.gouv.fr/$consultationId',
+                    'Comme moi, tu peux participer à la Consultation : $title\nhttps://agora.beta.gouv.fr/consultations/$consultationId',
                   );
                 },
               ),

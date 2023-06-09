@@ -93,7 +93,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                               clickName: AnalyticsEventNames.shareConsultationResults,
                               widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                             );
-                            Share.share('Consultation : $title\nagora://consultation.gouv.fr/$consultationId');
+                            Share.share('Comme moi, tu peux participer à la Consultation : $title\nhttps://agora.beta.gouv.fr/consultations/$consultationId');
                           },
                         ),
                       ],
