@@ -57,14 +57,14 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
             children: [
               AgoraButton(
                 label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
-                icon: "ic_list.svg",
+                icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
                 style: AgoraButtonStyle.blueBorderButtonStyle,
                 onPressed: () {
-                  TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
-                    widgetName: AnalyticsScreenNames.consultationsPage,
-                  );
                   if (hasAnswered) {
+                    TrackerHelper.trackClick(
+                      clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
+                      widgetName: AnalyticsScreenNames.consultationsPage,
+                    );
                     Navigator.pushNamed(
                       context,
                       ConsultationSummaryPage.routeName,
@@ -74,6 +74,10 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                       ),
                     );
                   } else {
+                    TrackerHelper.trackClick(
+                      clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
+                      widgetName: AnalyticsScreenNames.consultationsPage,
+                    );
                     Navigator.pushNamed(
                       context,
                       ConsultationDetailsPage.routeName,
