@@ -28,7 +28,7 @@ void main() {
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: "a répondu le 23 janvier",
@@ -85,7 +85,7 @@ void main() {
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: "a répondu le 23 janvier",
@@ -195,7 +195,7 @@ void main() {
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: "a répondu le 23 janvier",
@@ -276,7 +276,7 @@ void main() {
           QagResponseViewModel(
             qagId: "qagId",
             thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-            title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
             author: "author",
             authorPortraitUrl: "authorPortraitUrl",
             responseDate: "a répondu le 23 mars",
@@ -334,7 +334,7 @@ void main() {
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: "a répondu le 23 mars",
@@ -398,7 +398,7 @@ void main() {
           QagResponseViewModel(
             qagId: "qagId",
             thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-            title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
             author: "author",
             authorPortraitUrl: "authorPortraitUrl",
             responseDate: "a répondu le 23 mars",
@@ -455,7 +455,7 @@ void main() {
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: "a répondu le 23 mars",

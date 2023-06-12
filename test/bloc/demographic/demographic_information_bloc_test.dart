@@ -21,7 +21,7 @@ void main() {
             DemographicInformationViewModel(demographicType: "Genre", data: "Homme"),
             DemographicInformationViewModel(demographicType: "Année de naissance", data: "1999"),
             DemographicInformationViewModel(
-              demographicType: "Département ou collectivité d’outre mer",
+              demographicType: "Département ou collectivité d'outre mer",
               data: "Paris (75)",
             ),
             DemographicInformationViewModel(demographicType: "J'habite", data: "En milieu rural"),
@@ -59,7 +59,7 @@ void main() {
           DemographicInformationViewModel(demographicType: "Genre", data: "Homme"),
           DemographicInformationViewModel(demographicType: "Année de naissance", data: "1999"),
           DemographicInformationViewModel(
-            demographicType: "Département ou collectivité d’outre mer",
+            demographicType: "Département ou collectivité d'outre mer",
             data: "Paris (75)",
           ),
           DemographicInformationViewModel(demographicType: "J'habite", data: "En milieu rural"),
@@ -76,7 +76,7 @@ void main() {
             DemographicInformationViewModel(demographicType: "Genre", data: "Non renseigné"),
             DemographicInformationViewModel(demographicType: "Année de naissance", data: "Non renseigné"),
             DemographicInformationViewModel(
-              demographicType: "Département ou collectivité d’outre mer",
+              demographicType: "Département ou collectivité d'outre mer",
               data: "Non renseigné",
             ),
             DemographicInformationViewModel(demographicType: "J'habite", data: "Non renseigné"),
