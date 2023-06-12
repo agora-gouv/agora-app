@@ -14,7 +14,6 @@ class ProfileStrings {
   static const String feedbackTipsDescription =
       "Faites-nous remonter les éventuels bugs que vous repérez sur cette version beta mais aussi vos retours, critiques et idées pour nous aider à améliorer l’application.";
   static const String feedbackTipsButton = "Donner mes retours";
-  static const String feedbackUrl = "https://tally.so/r/waed4X";
   static const String charter = "Charte de";
   static const String participation = "participation";
   static const String policy = "Politique de ";
@@ -29,4 +28,9 @@ class ProfileStrings {
   static const String deleteAccount2 = "avec le code :";
 
   static const String suppressDemographicPopUp = "Êtes vous sûrs de vouloir supprimer vos données démographiques?";
+
+  static const String cguLink = "https://agora.beta.gouv.fr/cgu";
+  static const String feedbackLink = "https://agora.beta.gouv.fr/retours-application";
+  static const String privacyPolicyLink = "https://agora.beta.gouv.fr/politique-confidentialite";
+  static const String legalNoticeLink = "https://agora.beta.gouv.fr/mentions-legales";
 }
