@@ -1,5 +1,6 @@
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -26,11 +27,9 @@ class ConsultationQuestionView extends StatelessWidget {
     return AgoraSingleScrollView(
       child: Column(
         children: [
+          AgoraToolbar(style: AgoraToolbarStyle.close),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: AgoraSpacings.x0_75,
-              horizontal: AgoraSpacings.horizontalPadding,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -45,6 +44,7 @@ class ConsultationQuestionView extends StatelessWidget {
                   title,
                   style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
                 ),
+                SizedBox(height: AgoraSpacings.x0_75),
               ],
             ),
           ),
