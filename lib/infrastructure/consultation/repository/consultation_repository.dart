@@ -112,7 +112,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           participantCountGoal: response.data["participantCountGoal"] as int,
           description: response.data["description"] as String,
           tipsDescription: response.data["tipsDescription"] as String,
-          hasAnswered: (response.data["hasAnswered"] as bool?) ?? false, // TODO remove default value
+          hasAnswered: response.data["hasAnswered"] as bool,
         ),
       );
     } catch (e) {
