@@ -17,7 +17,7 @@ class ConsultationStrings {
   static const String previousQuestion = "Question précédente";
   static const String confirmationTitle = "Merci pour votre participation !";
   static const String confirmationDescription =
-      "Vous pouvez maintenant découvrir les résultats de cette consultation et suivre l’avancée des propositions.";
+      "Vous pouvez maintenant découvrir les résultats de cette consultation et suivre l'avancée des propositions.";
   static const String goToResult = "Voir les résultats";
   static const String summaryTabResult = "Résultats";
   static const String summaryTabEtEnsuite = "Et ensuite ?";
@@ -35,7 +35,7 @@ class ConsultationStrings {
   static const String nextQuestion = "Question suivante";
   static const String validate = "Valider";
   static const String hintText = "Saisissez votre réponse\n\n\n\n\n\n";
-  static const String maxChoices = "Vous pouvez choisir jusqu’à %s réponses.";
+  static const String maxChoices = "Vous pouvez choisir jusqu'à %s réponses.";
   static const String severalResponsePossible = "Plusieurs réponses possibles.";
 
   static const String inProgress = "En cours";

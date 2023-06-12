@@ -28,8 +28,8 @@ void main() {
           QagDetailsViewModel(
             id: qagId,
             thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-            title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
-            description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
+            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+            description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
             date: "23 janvier",
             username: "CollectifSauvonsLaRetraite",
             support: QagDetailsSupportViewModel(count: 112, isSupported: true),
@@ -51,8 +51,8 @@ void main() {
           QagDetailsViewModel(
             id: qagId,
             thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-            title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
-            description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
+            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+            description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
             date: "23 janvier",
             username: "CollectifSauvonsLaRetraite",
             support: null,

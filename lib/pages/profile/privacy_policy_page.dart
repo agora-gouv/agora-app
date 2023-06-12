@@ -72,7 +72,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   }
 
   List<Widget> _paragraph1() {
-    // Qui est responsable d’Agora ?
+    // Qui est responsable d'Agora ?
     return [
       Text(PrivacyPolicyStrings.title1, style: AgoraTextStyles.medium16),
       SizedBox(height: AgoraSpacings.x0_75),
@@ -134,7 +134,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   }
 
   List<Widget> _paragraph4() {
-    // Qu’est-ce qui nous autorise à manipuler ces données ?;
+    // Qu'est-ce qui nous autorise à manipuler ces données ?;
     return [
       Text(PrivacyPolicyStrings.title4, style: AgoraTextStyles.medium16),
       SizedBox(height: AgoraSpacings.x0_75),

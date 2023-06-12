@@ -28,7 +28,7 @@ class FakeQagSuccessRepository extends QagRepository {
         QagResponse(
           qagId: "qagId",
           thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+          title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
           author: "author",
           authorPortraitUrl: "authorPortraitUrl",
           responseDate: DateTime(2024, 1, 23),
@@ -134,8 +134,8 @@ class FakeQagSuccessRepository extends QagRepository {
       qagDetails: QagDetails(
         id: qagId,
         thematique: Thematique(picto: "🚊", label: "Transports"),
-        title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
-        description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
+        title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+        description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
         date: DateTime(2024, 1, 23),
         username: "CollectifSauvonsLaRetraite",
         support: QagDetailsSupport(count: 112, isSupported: true),
@@ -201,8 +201,8 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
       qagDetails: QagDetails(
         id: qagId,
         thematique: Thematique(picto: "🚊", label: "Transports"),
-        title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
-        description: "Le conseil d’orientation des retraites indique que les comptes sont à l’équilibre.",
+        title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+        description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
         date: DateTime(2024, 1, 23),
         username: "CollectifSauvonsLaRetraite",
         support: null,
@@ -229,7 +229,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
         QagResponse(
           qagId: "qagId",
           thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+          title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
           author: "author",
           authorPortraitUrl: "authorPortraitUrl",
           responseDate: DateTime(2024, 1, 23),

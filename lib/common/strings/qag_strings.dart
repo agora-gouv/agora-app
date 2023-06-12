@@ -4,7 +4,7 @@ class QagStrings {
   static const String qagResponsePart1 = "Les réponses";
   static const String qagResponsePart2 = "à vos questions";
   static const String qagResponseInfoBubble =
-      "Chaque semaine, le Gouvernement répond directement sur l’appli à la question citoyenne la plus populaire, c’est-à-dire celle qui a obtenu le plus de soutiens au cours de la semaine écoulée.";
+      "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens au cours de la semaine écoulée.";
   static const String allQagPart1 = "Toutes vos";
   static const String allQagPart2 = "questions";
   static const String popular = "Populaires";
@@ -20,7 +20,7 @@ class QagStrings {
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement.";
   static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine.";
   static const String askQuestionDescription3 =
-      "Le Gouvernement répondra directement sur l’appli à la question la plus populaire de la semaine, c’est-à-dire celle qui a obtenu le plus de soutiens.";
+      "Le Gouvernement répondra directement sur l'appli à la question la plus populaire de la semaine, c'est-à-dire celle qui a obtenu le plus de soutiens.";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
@@ -30,14 +30,14 @@ class QagStrings {
   static const String questionRequiredCondition = "La question doit comporter au moins 10 caractères.";
   static const String detailsTitle = "Détails supplémentaires";
   static const String detailsDescription =
-      "Ajoutez davantage d’informations ou de contexte si vous le souhaitez (facultatif)";
+      "Ajoutez davantage d'informations ou de contexte si vous le souhaitez (facultatif)";
   static const String detailsHint = "Exemple : Je vous pose cette question parce que …\n";
   static const String thematiqueTitle = "Thématique";
   static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Mon prénom";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
-      "Toutes les questions sont bienvenues, du moment qu’elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. ";
+      "Toutes les questions sont bienvenues, du moment qu'elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. ";
   static const String askQuestionCheckboxLabel = "Ma question respecte la charte";
   static const String send = "Envoyer";
 
@@ -60,14 +60,14 @@ class QagStrings {
   static const String refuse = "Refuser";
   static const String totalNumber = "Nombre total : %s";
 
-  static const String qagModerateTitle = "Cette question n’est plus disponible !";
+  static const String qagModerateTitle = "Cette question n'est plus disponible !";
   static const String qagModerateDescription1_1 = "Elle ne respectait pas la";
   static const String qagModerateDescription1_2 = "charte de participation";
   static const String qagModerateDescription1_3 = "ou bien son auteur a décidé de la retirer.";
   static const String qagModerateDescription2 =
-      "Si vous pensez qu’elle a pu être modérée par erreur, vous pouvez nous adresser un message à l’adresse";
+      "Si vous pensez qu'elle a pu être modérée par erreur, vous pouvez nous adresser un message à l'adresse";
   static const String qagModerateSeeOther = "Voir les autres questions";
 
   static const String shareDeeplinkText =
-      "Voilà une question où j’aimerais avoir une réponse du gouvernement. Peux-tu la soutenir pour qu’elle ait plus de chance d’être celle de la semaine ?\n%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
+      "Voilà une question où j'aimerais avoir une réponse du gouvernement. Peux-tu la soutenir pour qu'elle ait plus de chance d'être celle de la semaine ?\n%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
 }
