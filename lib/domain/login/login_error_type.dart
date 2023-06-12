@@ -1,0 +1,1 @@
+enum LoginErrorType { generic, timeout }

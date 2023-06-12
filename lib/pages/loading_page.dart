@@ -19,6 +19,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/domain/login/login_error_type.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
@@ -114,7 +115,9 @@ class _LoadingPageState extends State<LoadingPage> {
                             SvgPicture.asset("assets/ic_oops.svg"),
                             SizedBox(height: AgoraSpacings.x1_25),
                             Text(
-                              GenericStrings.authenticationErrorMessage,
+                              loginState.errorType == LoginErrorType.generic
+                                  ? GenericStrings.authenticationErrorMessage
+                                  : GenericStrings.timeoutErrorMessage,
                               style: AgoraTextStyles.medium18,
                               textAlign: TextAlign.center,
                             ),
