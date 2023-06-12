@@ -18,6 +18,7 @@ class GenericStrings {
   static const String back = "Retour";
   static const String modify = "Modifier";
   static const String close = "Fermer";
+  static const String readCompleteCharter = "Lire la charte complète";
   static const String modificationSuccess = "La modification a été prise en compte.";
 
   static const String onboardingStep0Title = "Bienvenue dans Agora !";
