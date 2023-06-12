@@ -1,3 +1,4 @@
+import 'package:agora/domain/login/login_error_type.dart';
 import 'package:agora/infrastructure/login/login_repository.dart';
 
 class FakeLoginSuccessRepository extends LoginRepository {
@@ -22,6 +23,23 @@ class FakeLoginSuccessRepository extends LoginRepository {
       jwtToken: "jwtToken",
       isModerator: false,
     );
+  }
+}
+
+class FakeLoginTimeoutFailureRepository extends LoginRepository {
+  @override
+  Future<SignupRepositoryResponse> signup({
+    required String firebaseMessagingToken,
+  }) async {
+    return SignupFailedResponse(errorType: LoginErrorType.timeout);
+  }
+
+  @override
+  Future<LoginRepositoryResponse> login({
+    required String firebaseMessagingToken,
+    required String loginToken,
+  }) async {
+    return LoginFailedResponse(errorType: LoginErrorType.timeout);
   }
 }
 

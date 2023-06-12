@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:agora/domain/login/login_error_type.dart';
 import 'package:agora/infrastructure/login/login_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -49,6 +51,35 @@ void main() {
           isModerator: true,
         ),
       );
+    });
+
+    test("when failure with connection timeout should return failed", () async {
+      // Given
+      dioAdapter.onPost(
+        "/signup",
+        (server) {
+          server.throws(
+            404,
+            DioError.connectionTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+        headers: {
+          "accept": "application/json",
+          "fcmToken": fcmToken,
+        },
+      );
+
+      // When
+      final repository = LoginDioRepository(httpClient: httpClient);
+      final response = await repository.signup(
+        firebaseMessagingToken: fcmToken,
+      );
+
+      // Then
+      expect(response, SignupFailedResponse(errorType: LoginErrorType.timeout));
     });
 
     test("when failure should return failed", () async {
@@ -108,6 +139,37 @@ void main() {
           isModerator: false,
         ),
       );
+    });
+
+    test("when failure with connection timeout should return failed", () async {
+      // Given
+      dioAdapter.onPost(
+        "/login",
+        (server) {
+          server.throws(
+            404,
+            DioError.connectionTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+        headers: {
+          "accept": "application/json",
+          "fcmToken": fcmToken,
+        },
+        data: loginToken,
+      );
+
+      // When
+      final repository = LoginDioRepository(httpClient: httpClient);
+      final response = await repository.login(
+        firebaseMessagingToken: fcmToken,
+        loginToken: loginToken,
+      );
+
+      // Then
+      expect(response, LoginFailedResponse(errorType: LoginErrorType.timeout));
     });
 
     test("when failure should return failed", () async {

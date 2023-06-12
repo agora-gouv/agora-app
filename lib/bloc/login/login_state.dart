@@ -1,3 +1,4 @@
+import 'package:agora/domain/login/login_error_type.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class LoginState extends Equatable {
@@ -11,4 +12,11 @@ class LoginLoadingState extends LoginState {}
 
 class LoginSuccessState extends LoginState {}
 
-class LoginErrorState extends LoginState {}
+class LoginErrorState extends LoginState {
+  final LoginErrorType errorType;
+
+  LoginErrorState({required this.errorType});
+
+  @override
+  List<Object> get props => [errorType];
+}

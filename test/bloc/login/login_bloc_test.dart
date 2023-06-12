@@ -1,6 +1,7 @@
 import 'package:agora/bloc/login/login_bloc.dart';
 import 'package:agora/bloc/login/login_event.dart';
 import 'package:agora/bloc/login/login_state.dart';
+import 'package:agora/domain/login/login_error_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,6 +17,7 @@ void main() {
     final loginStorage1 = FakeLoginStorageClient();
     final jwtHelper1 = FakeJwtHelper();
     final roleHelper1 = FakeRoleHelper();
+
     blocTest(
       "when repository success - should emit success state",
       build: () => LoginBloc(
@@ -44,9 +46,9 @@ void main() {
     final jwtHelper2 = FakeJwtHelper();
     final roleHelper2 = FakeRoleHelper();
     blocTest(
-      "when repository failed - should emit error state",
+      "when repository failed with timeout - should emit error state",
       build: () => LoginBloc(
-        repository: FakeLoginFailureRepository(),
+        repository: FakeLoginTimeoutFailureRepository(),
         loginStorageClient: loginStorage2,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
@@ -56,7 +58,7 @@ void main() {
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
         LoginLoadingState(),
-        LoginErrorState(),
+        LoginErrorState(errorType: LoginErrorType.timeout),
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
@@ -64,6 +66,33 @@ void main() {
         expect(await loginStorage2.getLoginToken(), null);
         expect(jwtHelper2.getJwtToken(), null);
         expect(roleHelper2.isModerator(), null);
+      },
+    );
+
+    final loginStorage3 = FakeLoginStorageClient();
+    final jwtHelper3 = FakeJwtHelper();
+    final roleHelper3 = FakeRoleHelper();
+    blocTest(
+      "when repository failed - should emit error state",
+      build: () => LoginBloc(
+        repository: FakeLoginFailureRepository(),
+        loginStorageClient: loginStorage3,
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+        pushNotificationService: FakePushNotificationService(),
+        jwtHelper: jwtHelper3,
+        roleHelper: roleHelper3,
+      ),
+      act: (bloc) => bloc.add(CheckLoginEvent()),
+      expect: () => [
+        LoginLoadingState(),
+        LoginErrorState(errorType: LoginErrorType.generic),
+      ],
+      wait: const Duration(milliseconds: 5),
+      tearDown: () async {
+        expect(await loginStorage3.getUserId(), null);
+        expect(await loginStorage3.getLoginToken(), null);
+        expect(jwtHelper3.getJwtToken(), null);
+        expect(roleHelper3.isModerator(), null);
       },
     );
   });
@@ -99,10 +128,10 @@ void main() {
     final roleHelper2 = FakeRoleHelper();
     final signUpLoginStorage2 = FakeLoginStorageClient();
     blocTest(
-      "when repository failed - should emit error state",
+      "when repository failed with timeout - should emit error state",
       setUp: () => signUpLoginStorage2.save(userId: "userId", loginToken: "loginToken"),
       build: () => LoginBloc(
-        repository: FakeLoginFailureRepository(),
+        repository: FakeLoginTimeoutFailureRepository(),
         loginStorageClient: signUpLoginStorage2,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
@@ -112,12 +141,38 @@ void main() {
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
         LoginLoadingState(),
-        LoginErrorState(),
+        LoginErrorState(errorType: LoginErrorType.timeout),
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () {
         expect(jwtHelper2.getJwtToken(), null);
         expect(roleHelper2.isModerator(), null);
+      },
+    );
+
+    final jwtHelper3 = FakeJwtHelper();
+    final roleHelper3 = FakeRoleHelper();
+    final signUpLoginStorage3 = FakeLoginStorageClient();
+    blocTest(
+      "when repository failed - should emit error state",
+      setUp: () => signUpLoginStorage3.save(userId: "userId", loginToken: "loginToken"),
+      build: () => LoginBloc(
+        repository: FakeLoginFailureRepository(),
+        loginStorageClient: signUpLoginStorage3,
+        deviceInfoHelper: FakeDeviceInfoHelper(),
+        pushNotificationService: FakePushNotificationService(),
+        jwtHelper: jwtHelper3,
+        roleHelper: roleHelper3,
+      ),
+      act: (bloc) => bloc.add(CheckLoginEvent()),
+      expect: () => [
+        LoginLoadingState(),
+        LoginErrorState(errorType: LoginErrorType.generic),
+      ],
+      wait: const Duration(milliseconds: 5),
+      tearDown: () {
+        expect(jwtHelper3.getJwtToken(), null);
+        expect(roleHelper3.isModerator(), null);
       },
     );
   });

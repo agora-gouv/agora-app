@@ -48,7 +48,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       roleHelper.setIsModerator(response.isModerator);
       return LoginSuccessState();
     } else {
-      return LoginErrorState();
+      final errorResponse = response as LoginFailedResponse;
+      return LoginErrorState(errorType: errorResponse.errorType);
     }
   }
 
@@ -60,7 +61,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       roleHelper.setIsModerator(response.isModerator);
       return LoginSuccessState();
     } else {
-      return LoginErrorState();
+      final errorResponse = response as SignupFailedResponse;
+      return LoginErrorState(errorType: errorResponse.errorType);
     }
   }
 }

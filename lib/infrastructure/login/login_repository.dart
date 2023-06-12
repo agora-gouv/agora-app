@@ -1,5 +1,7 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/log/log.dart';
+import 'package:agora/domain/login/login_error_type.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class LoginRepository {
@@ -36,6 +38,12 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
       );
     } catch (e) {
+      if (e is DioError) {
+        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+          Log.e("signup failed : timeout error", e);
+          return SignupFailedResponse(errorType: LoginErrorType.timeout);
+        }
+      }
       Log.e("signup failed", e);
       return SignupFailedResponse();
     }
@@ -59,6 +67,12 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
       );
     } catch (e) {
+      if (e is DioError) {
+        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+          Log.e("signup failed : timeout error", e);
+          return LoginFailedResponse(errorType: LoginErrorType.timeout);
+        }
+      }
       Log.e("login failed", e);
       return LoginFailedResponse();
     }
@@ -87,7 +101,14 @@ class SignupSucceedResponse extends SignupRepositoryResponse {
   List<Object> get props => [userId, jwtToken, loginToken, isModerator];
 }
 
-class SignupFailedResponse extends SignupRepositoryResponse {}
+class SignupFailedResponse extends SignupRepositoryResponse {
+  final LoginErrorType errorType;
+
+  SignupFailedResponse({this.errorType = LoginErrorType.generic});
+
+  @override
+  List<Object> get props => [errorType];
+}
 
 abstract class LoginRepositoryResponse extends Equatable {
   @override
@@ -104,4 +125,11 @@ class LoginSucceedResponse extends LoginRepositoryResponse {
   List<Object> get props => [jwtToken, isModerator];
 }
 
-class LoginFailedResponse extends LoginRepositoryResponse {}
+class LoginFailedResponse extends LoginRepositoryResponse {
+  final LoginErrorType errorType;
+
+  LoginFailedResponse({this.errorType = LoginErrorType.generic});
+
+  @override
+  List<Object> get props => [errorType];
+}
