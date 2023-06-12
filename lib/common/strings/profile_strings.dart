@@ -29,6 +29,7 @@ class ProfileStrings {
 
   static const String suppressDemographicPopUp = "Êtes vous sûrs de vouloir supprimer vos données démographiques?";
 
+  static const String participateCharterLink = "https://agora.beta.gouv.fr/charte-participation";
   static const String cguLink = "https://agora.beta.gouv.fr/cgu";
   static const String feedbackLink = "https://agora.beta.gouv.fr/retours-application";
   static const String privacyPolicyLink = "https://agora.beta.gouv.fr/politique-confidentialite";

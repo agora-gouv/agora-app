@@ -17,7 +17,6 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
-import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:flutter/material.dart';
 
@@ -105,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: ProfileStrings.participationCharter,
                 onClick: () {
                   _track(AnalyticsEventNames.participationCharter);
-                  Navigator.pushNamed(context, ParticipationCharterPage.routeName);
+                  LaunchUrlHelper.launch(ProfileStrings.participateCharterLink);
                 },
               ),
               AgoraMenuItem(
