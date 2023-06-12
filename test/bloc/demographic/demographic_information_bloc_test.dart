@@ -26,7 +26,7 @@ void main() {
             ),
             DemographicInformationViewModel(demographicType: "J'habite", data: "En milieu rural"),
             DemographicInformationViewModel(demographicType: "Catégorie socio-professionnelle", data: "Non renseigné"),
-            DemographicInformationViewModel(demographicType: "Vote", data: "Jamais"),
+            DemographicInformationViewModel(demographicType: "Fréquence de vote", data: "Jamais"),
             DemographicInformationViewModel(demographicType: "Engagement sur le terrain", data: "Souvent"),
             DemographicInformationViewModel(demographicType: "Engagement en ligne", data: "Parfois"),
           ],

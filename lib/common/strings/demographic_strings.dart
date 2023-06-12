@@ -1,10 +1,10 @@
 class DemographicStrings {
-  static const String informationTitle = "Psst.. nous avons quelques questions sur vous 👀";
+  static const String informationTitle = "Psst.. nous avons quelques questions pour vous 👀";
   static const String informationShortDescription =
       "Pour analyser les résultats des consultations, cela nous aide beaucoup de connaître un peu mieux le profil des participants.\n\nVous pouvez retrouver, modifier ou supprimer toutes ces informations directement dans l’onglet \"Profil\".";
   static const String informationLongDescription1 = "Concrètement, cela nous permet :\n";
   static const String informationLongDescription2 =
-      "De savoir dans quelle mesure les personnes qui répondent sont représentatives de l’ensemble de la population française (plus la représentativité est forte, plus les résultats sont solides).\n";
+      "De savoir dans quelle mesure les personnes qui répondent sont représentatives de l’ensemble de la population française (plus la représentativité est forte, plus les résultats sont solides et fiables).\n";
   static const String informationLongDescription3 =
       "De voir s’il y a des différences de réponses, par exemple entre les départements ou entre les catégories d’âge.\n";
   static const String informationLongDescription4 = "Promis, on ne vous demandera ces infos qu’une seule fois !";
@@ -58,7 +58,7 @@ class DemographicStrings {
   static const String department = "Département ou collectivité d’outre mer";
   static const String cityType = "J'habite";
   static const String jobCategory = "Catégorie socio-professionnelle";
-  static const String voteFrequency = "Vote";
+  static const String voteFrequency = "Fréquence de vote";
   static const String publicMeetingFrequency = "Engagement sur le terrain";
   static const String consultationFrequency = "Engagement en ligne";
 

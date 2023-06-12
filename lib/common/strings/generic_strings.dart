@@ -23,10 +23,10 @@ class GenericStrings {
   static const String onboardingStep0Title = "Bienvenue dans Agora !";
   static const String onboardingStep0Description1 = "La première appli qui fait";
   static const String onboardingStep0Description2 = "dialoguer";
-  static const String onboardingStep0Description3 = "les citoyens et le gouvernement";
+  static const String onboardingStep0Description3 = "les citoyens et le Gouvernement";
   static const String onboardingStep0Begin = "Commencer";
   static const String onboardingStep1Title1 = "Participez";
-  static const String onboardingStep1Title2 = "à l’action politique";
+  static const String onboardingStep1Title2 = "à l’action du Gouvernement";
   static const String onboardingStep1Description =
       "Donnez votre avis sur des projets qui vous concernent et suivez leurs avancées.";
   static const String onboardingStep2Title1 = "Posez vos questions";
