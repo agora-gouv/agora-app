@@ -23,7 +23,11 @@ class AgoraParticipantsProgressBar extends StatelessWidget {
     if (minusPadding != null) {
       totalWidth = totalWidth - minusPadding!;
     }
-    final participantsPercentage = currentNbParticipants / objectiveNbParticipants;
+    double participantsPercentage = currentNbParticipants / objectiveNbParticipants;
+    if (participantsPercentage > 1) {
+      participantsPercentage = 1;
+    }
+
     return Stack(
       children: [
         AgoraRoundedCard(
