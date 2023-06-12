@@ -9,14 +9,14 @@ abstract class QagState extends Equatable {
 
 class QagInitialLoadingState extends QagState {}
 
-class QagFetchedState extends QagState {
+abstract class QagWithItem extends QagState {
   final List<QagResponseViewModel> qagResponseViewModels;
   final List<QagViewModel> popularViewModels;
   final List<QagViewModel> latestViewModels;
   final List<QagViewModel> supportingViewModels;
   final String? errorCase;
 
-  QagFetchedState({
+  QagWithItem({
     required this.qagResponseViewModels,
     required this.popularViewModels,
     required this.latestViewModels,
@@ -32,6 +32,26 @@ class QagFetchedState extends QagState {
         supportingViewModels,
         errorCase,
       ];
+}
+
+class QagLoadingState extends QagWithItem {
+  QagLoadingState({
+    required super.qagResponseViewModels,
+    required super.popularViewModels,
+    required super.latestViewModels,
+    required super.supportingViewModels,
+    required super.errorCase,
+  });
+}
+
+class QagFetchedState extends QagWithItem {
+  QagFetchedState({
+    required super.qagResponseViewModels,
+    required super.popularViewModels,
+    required super.latestViewModels,
+    required super.supportingViewModels,
+    required super.errorCase,
+  });
 }
 
 class QagErrorState extends QagState {

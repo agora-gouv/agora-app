@@ -89,7 +89,7 @@ class _QagsPageState extends State<QagsPage> {
   }
 
   List<Widget> _handleQagState(BuildContext context, QagState state) {
-    if (state is QagFetchedState) {
+    if (state is QagWithItem) {
       return [
         QagsResponseSection(qagResponseViewModels: state.qagResponseViewModels),
         QagsAskQuestionSectionPage(errorCase: state.errorCase),
@@ -113,6 +113,7 @@ class _QagsPageState extends State<QagsPage> {
           },
         ),
         QagsSection(
+          isLoading: state is QagLoadingState,
           defaultSelected: QagTab.popular,
           popularViewModels: state.popularViewModels,
           latestViewModels: state.latestViewModels,
