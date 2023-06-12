@@ -64,6 +64,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                   ConsultationQuestionHelper.buildBackButton(order: chapter.order, onBackTap: onBackTap),
             ),
           ),
+          SizedBox(height: AgoraSpacings.x1_5),
         ],
       ),
     );
