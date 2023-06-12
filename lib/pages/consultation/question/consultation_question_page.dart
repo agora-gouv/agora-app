@@ -104,7 +104,7 @@ class ConsultationQuestionPage extends StatelessWidget {
                 } else if (questionsState is ConsultationQuestionsErrorState) {
                   return Column(
                     children: [
-                      AgoraToolbar(),
+                      AgoraToolbar(style: AgoraToolbarStyle.close),
                       SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                       Center(child: AgoraErrorView()),
                     ],
@@ -112,7 +112,7 @@ class ConsultationQuestionPage extends StatelessWidget {
                 } else {
                   return Column(
                     children: [
-                      AgoraToolbar(),
+                      AgoraToolbar(style: AgoraToolbarStyle.close),
                       SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                       Center(child: CircularProgressIndicator()),
                     ],
