@@ -26,6 +26,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 enum QagTab { popular, latest, supporting }
 
 class QagsSection extends StatefulWidget {
+  final bool isLoading;
   final QagTab defaultSelected;
   final List<QagViewModel> popularViewModels;
   final List<QagViewModel> latestViewModels;
@@ -34,6 +35,7 @@ class QagsSection extends StatefulWidget {
 
   const QagsSection({
     super.key,
+    required this.isLoading,
     required this.defaultSelected,
     required this.popularViewModels,
     required this.latestViewModels,
@@ -65,7 +67,15 @@ class _QagsSectionState extends State<QagsSection> {
             right: AgoraSpacings.horizontalPadding,
             top: AgoraSpacings.base,
           ),
-          child: _buildQags(context),
+          child: widget.isLoading
+              ? Column(
+                  children: [
+                    SizedBox(height: AgoraSpacings.base),
+                    CircularProgressIndicator(),
+                    SizedBox(height: AgoraSpacings.x3 * 2),
+                  ],
+                )
+              : _buildQags(context),
         ),
       ],
     );

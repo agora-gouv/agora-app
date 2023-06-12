@@ -74,7 +74,7 @@ void main() {
     );
 
     blocTest(
-      "when repository succeed with error message - should emit success state",
+      "when repository succeed with ask question error message - should emit success state",
       build: () => QagBloc(
         qagRepository: FakeQagSuccessWithAskQuestionErrorMessageRepository(),
       ),
@@ -125,6 +125,116 @@ void main() {
             ),
           ],
           errorCase: "Une erreur est survenue",
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagBloc, QagState>(
+      "when repository succeed with already existing qag in state - should emit success state",
+      build: () => QagBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagFetchedState(
+        qagResponseViewModels: [
+          QagResponseViewModel(
+            qagId: "",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "",
+            author: "",
+            authorPortraitUrl: "",
+            responseDate: "",
+          ),
+        ],
+        popularViewModels: [
+          QagViewModel(
+            id: "",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "",
+            username: "",
+            date: "",
+            supportCount: 7,
+            isSupported: true,
+          ),
+        ],
+        latestViewModels: [
+          QagViewModel(
+            id: "",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "",
+            username: "",
+            date: "",
+            supportCount: 8,
+            isSupported: false,
+          ),
+        ],
+        supportingViewModels: [
+          QagViewModel(
+            id: "",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "",
+            username: "",
+            date: "",
+            supportCount: 9,
+            isSupported: true,
+          ),
+        ],
+        errorCase: null,
+      ),
+      act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: null)),
+      expect: () => [
+        QagLoadingState(
+          qagResponseViewModels: [],
+          popularViewModels: [],
+          latestViewModels: [],
+          supportingViewModels: [],
+          errorCase: null,
+        ),
+        QagFetchedState(
+          qagResponseViewModels: [
+            QagResponseViewModel(
+              qagId: "qagId",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "Pour la retraite : comment est-ce qu’on aboutit au chiffre de 65 ans ?",
+              author: "author",
+              authorPortraitUrl: "authorPortraitUrl",
+              responseDate: "a répondu le 23 janvier",
+            ),
+          ],
+          popularViewModels: [
+            QagViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 janvier",
+              supportCount: 7,
+              isSupported: true,
+            ),
+          ],
+          latestViewModels: [
+            QagViewModel(
+              id: "id2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title2",
+              username: "username2",
+              date: "23 février",
+              supportCount: 8,
+              isSupported: false,
+            ),
+          ],
+          supportingViewModels: [
+            QagViewModel(
+              id: "id3",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title3",
+              username: "username3",
+              date: "23 mars",
+              supportCount: 9,
+              isSupported: true,
+            ),
+          ],
+          errorCase: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),
