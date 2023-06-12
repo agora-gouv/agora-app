@@ -17,10 +17,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
-import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
-import 'package:agora/pages/profile/privacy_policy_page.dart';
-import 'package:agora/pages/profile/terms_of_condition_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:flutter/material.dart';
 
@@ -115,21 +112,21 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: ProfileStrings.privacyPolicy,
                 onClick: () {
                   _track(AnalyticsEventNames.privacyPolicy);
-                  Navigator.pushNamed(context, PrivacyPolicyPage.routeName);
+                  LaunchUrlHelper.launch(ProfileStrings.privacyPolicyLink);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.termsOfService,
                 onClick: () {
                   _track(AnalyticsEventNames.termsOfService);
-                  Navigator.pushNamed(context, TermsOfConditionPage.routeName);
+                  LaunchUrlHelper.launch(ProfileStrings.cguLink);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.legalNotice,
                 onClick: () {
                   _track(AnalyticsEventNames.legalNotice);
-                  Navigator.pushNamed(context, LegalNoticePage.routeName);
+                  LaunchUrlHelper.launch(ProfileStrings.legalNoticeLink);
                 },
               ),
               SizedBox(height: AgoraSpacings.base),
@@ -149,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: AgoraButtonStyle.primaryButtonStyle,
                         onPressed: () {
                           _track(AnalyticsEventNames.giveFeedback);
-                          LaunchUrlHelper.launch(ProfileStrings.feedbackUrl);
+                          LaunchUrlHelper.launch(ProfileStrings.feedbackLink);
                         },
                       ),
                     ],
