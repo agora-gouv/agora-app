@@ -1,6 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/demographic_question_type_extension.dart';
-import 'package:agora/common/log/log.dart';
+import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/demographic_response.dart';
@@ -16,8 +16,9 @@ abstract class DemographicRepository {
 
 class DemographicDioRepository extends DemographicRepository {
   final AgoraDioHttpClient httpClient;
+  final CrashlyticsHelper crashlyticsHelper;
 
-  DemographicDioRepository({required this.httpClient});
+  DemographicDioRepository({required this.httpClient, required this.crashlyticsHelper});
 
   @override
   Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
@@ -31,8 +32,8 @@ class DemographicDioRepository extends DemographicRepository {
           );
         }).toList(),
       );
-    } catch (e) {
-      Log.e("getDemographicResponses failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "getDemographicResponses failed");
       return GetDemographicInformationFailureResponse();
     }
   }
@@ -51,8 +52,8 @@ class DemographicDioRepository extends DemographicRepository {
         data: data,
       );
       return SendDemographicResponsesSucceedResponse();
-    } catch (e) {
-      Log.e("sendDemographicResponses failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "sendDemographicResponses failed");
       return SendDemographicResponsesFailureResponse();
     }
   }
