@@ -1,5 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/common/log/log.dart';
+import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/login/login_error_type.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -17,8 +17,9 @@ abstract class LoginRepository {
 
 class LoginDioRepository extends LoginRepository {
   final AgoraDioHttpClient httpClient;
+  final CrashlyticsHelper crashlyticsHelper;
 
-  LoginDioRepository({required this.httpClient});
+  LoginDioRepository({required this.httpClient, required this.crashlyticsHelper});
 
   @override
   Future<SignupRepositoryResponse> signup({
@@ -37,14 +38,14 @@ class LoginDioRepository extends LoginRepository {
         loginToken: response.data["loginToken"] as String,
         isModerator: response.data["isModerator"] as bool,
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioError) {
         if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
-          Log.e("signup failed : timeout error", e);
+          crashlyticsHelper.recordError(e, s, reason: "signup failed : timeout error");
           return SignupFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
-      Log.e("signup failed", e);
+      crashlyticsHelper.recordError(e, s, reason: "signup failed");
       return SignupFailedResponse();
     }
   }
@@ -66,14 +67,14 @@ class LoginDioRepository extends LoginRepository {
         jwtToken: response.data["jwtToken"] as String,
         isModerator: response.data["isModerator"] as bool,
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioError) {
         if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
-          Log.e("signup failed : timeout error", e);
+          crashlyticsHelper.recordError(e, s, reason: "login failed : timeout error");
           return LoginFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
-      Log.e("login failed", e);
+      crashlyticsHelper.recordError(e, s, reason: "login failed");
       return LoginFailedResponse();
     }
   }

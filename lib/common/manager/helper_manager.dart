@@ -1,8 +1,10 @@
+import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:get_it/get_it.dart';
 
 class HelperManager {
@@ -47,6 +49,15 @@ class HelperManager {
       return GetIt.instance.get<RoleHelperImpl>();
     }
     final helper = RoleHelperImpl();
+    GetIt.instance.registerSingleton(helper);
+    return helper;
+  }
+
+  static CrashlyticsHelper getCrashlyticsHelper() {
+    if (GetIt.instance.isRegistered<CrashlyticsHelperImpl>()) {
+      return GetIt.instance.get<CrashlyticsHelperImpl>();
+    }
+    final helper = CrashlyticsHelperImpl(FirebaseCrashlytics.instance);
     GetIt.instance.registerSingleton(helper);
     return helper;
   }
