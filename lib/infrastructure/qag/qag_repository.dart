@@ -4,7 +4,7 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/qag_paginated_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
-import 'package:agora/common/log/log.dart';
+import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
@@ -60,8 +60,9 @@ abstract class QagRepository {
 
 class QagDioRepository extends QagRepository {
   final AgoraDioHttpClient httpClient;
+  final CrashlyticsHelper crashlyticsHelper;
 
-  QagDioRepository({required this.httpClient});
+  QagDioRepository({required this.httpClient, required this.crashlyticsHelper});
 
   @override
   Future<CreateQagRepositoryResponse> createQag({
@@ -81,8 +82,8 @@ class QagDioRepository extends QagRepository {
         },
       );
       return CreateQagSucceedResponse(qagId: response.data["qagId"] as String);
-    } catch (e) {
-      Log.e("createQag failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "createQag failed");
       return CreateQagFailedResponse();
     }
   }
@@ -114,14 +115,14 @@ class QagDioRepository extends QagRepository {
         qagSupporting: _transformToQagList(qags["supporting"] as List),
         errorCase: response.data["askQagErrorText"] as String?,
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioError) {
         if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
-          Log.e("fetchQags failed : timeout error", e);
+          crashlyticsHelper.recordError(e, s, reason: "fetchQags failed : timeout error");
           return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
         }
       }
-      Log.e("fetchQags failed", e);
+      crashlyticsHelper.recordError(e, s, reason: "fetchQags failed");
       return GetQagsFailedResponse();
     }
   }
@@ -144,8 +145,8 @@ class QagDioRepository extends QagRepository {
         maxPage: response.data["maxPageNumber"] as int,
         paginatedQags: _transformToQagPaginatedList(response.data["qags"] as List),
       );
-    } catch (e) {
-      Log.e("fetchQagsPaginated failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "fetchQagsPaginated failed");
       return GetQagsPaginatedFailedResponse();
     }
   }
@@ -184,15 +185,15 @@ class QagDioRepository extends QagRepository {
               : null,
         ),
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioError) {
         final response = e.response;
         if (response != null && response.statusCode == HttpStatus.locked) {
-          Log.e("fetchQagDetails failed : QaG is moderated error", e);
+          crashlyticsHelper.recordError(e, s, reason: "fetchQagDetails failed : QaG is moderated error");
           return GetQagDetailsModerateFailedResponse();
         }
       }
-      Log.e("fetchQagDetails failed", e);
+      crashlyticsHelper.recordError(e, s, reason: "fetchQagDetails failed");
       return GetQagDetailsFailedResponse();
     }
   }
@@ -204,8 +205,8 @@ class QagDioRepository extends QagRepository {
     try {
       await httpClient.post("/qags/$qagId/support");
       return SupportQagSucceedResponse();
-    } catch (e) {
-      Log.e("supportQag failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "supportQag failed");
       return SupportQagFailedResponse();
     }
   }
@@ -215,8 +216,8 @@ class QagDioRepository extends QagRepository {
     try {
       await httpClient.delete("/qags/$qagId/support");
       return DeleteSupportQagSucceedResponse();
-    } catch (e) {
-      Log.e("deleteSupportQag failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "deleteSupportQag failed");
       return DeleteSupportQagFailedResponse();
     }
   }
@@ -232,8 +233,8 @@ class QagDioRepository extends QagRepository {
         data: {"isHelpful": isHelpful},
       );
       return QagFeedbackSuccessResponse();
-    } catch (e) {
-      Log.e("giveQagResponseFeedback failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "giveQagResponseFeedback failed");
       return QagFeedbackFailedResponse();
     }
   }
@@ -261,8 +262,8 @@ class QagDioRepository extends QagRepository {
               .toList(),
         ),
       );
-    } catch (e) {
-      Log.e("fetchQagModerationList failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "fetchQagModerationList failed");
       return QagModerationListFailedResponse();
     }
   }
@@ -278,8 +279,8 @@ class QagDioRepository extends QagRepository {
         data: {"isAccepted": isAccepted},
       );
       return ModerateQagSuccessResponse();
-    } catch (e) {
-      Log.e("moderateQag failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "moderateQag failed");
       return ModerateQagFailedResponse();
     }
   }

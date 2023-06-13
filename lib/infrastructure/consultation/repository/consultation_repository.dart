@@ -1,7 +1,7 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
-import 'package:agora/common/log/log.dart';
+import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
@@ -37,8 +37,9 @@ abstract class ConsultationRepository {
 
 class ConsultationDioRepository extends ConsultationRepository {
   final AgoraDioHttpClient httpClient;
+  final CrashlyticsHelper crashlyticsHelper;
 
-  ConsultationDioRepository({required this.httpClient});
+  ConsultationDioRepository({required this.httpClient, required this.crashlyticsHelper});
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
@@ -79,14 +80,14 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioError) {
         if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
-          Log.e("fetchConsultations failed : timeout error", e);
+          crashlyticsHelper.recordError(e, s, reason: "fetchConsultations failed : timeout error");
           return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
         }
       }
-      Log.e("fetchConsultations failed", e);
+      crashlyticsHelper.recordError(e, s, reason: "fetchConsultations failed");
       return GetConsultationsFailedResponse();
     }
   }
@@ -115,8 +116,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           hasAnswered: response.data["hasAnswered"] as bool,
         ),
       );
-    } catch (e) {
-      Log.e("fetchConsultationDetails failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationDetails failed");
       return GetConsultationDetailsFailedResponse();
     }
   }
@@ -137,8 +138,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           chapters: response.data["chapters"] as List,
         ),
       );
-    } catch (e) {
-      Log.e("fetchConsultationQuestions failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationQuestions failed");
       return GetConsultationQuestionsFailedResponse();
     }
   }
@@ -167,8 +168,8 @@ class ConsultationDioRepository extends ConsultationRepository {
       return SendConsultationResponsesSucceedResponse(
         shouldDisplayDemographicInformation: response.data["askDemographicInfo"] as bool,
       );
-    } catch (e) {
-      Log.e("sendConsultationResponses failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "sendConsultationResponses failed");
       return SendConsultationResponsesFailureResponse();
     }
   }
@@ -194,8 +195,8 @@ class ConsultationDioRepository extends ConsultationRepository {
         ),
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);
-    } catch (e) {
-      Log.e("fetchConsultationSummary failed", e);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationSummary failed");
       return GetConsultationSummaryFailedResponse();
     }
   }

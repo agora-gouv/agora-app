@@ -5,11 +5,13 @@ import 'package:agora/infrastructure/login/login_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/common/fake_crashlytics_helper.dart';
 import '../../utils/dio_utils.dart';
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final fakeCrashlyticsHelper = FakeCrashlyticsHelper();
 
   const userId = "userId";
   const fcmToken = "fcmToken";
@@ -36,7 +38,10 @@ void main() {
       );
 
       // When
-      final repository = LoginDioRepository(httpClient: httpClient);
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
       );
@@ -73,7 +78,10 @@ void main() {
       );
 
       // When
-      final repository = LoginDioRepository(httpClient: httpClient);
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
       );
@@ -94,7 +102,10 @@ void main() {
       );
 
       // When
-      final repository = LoginDioRepository(httpClient: httpClient);
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
       );
@@ -125,7 +136,10 @@ void main() {
       );
 
       // When
-      final repository = LoginDioRepository(httpClient: httpClient);
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,
@@ -162,7 +176,10 @@ void main() {
       );
 
       // When
-      final repository = LoginDioRepository(httpClient: httpClient);
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,
@@ -185,7 +202,10 @@ void main() {
       );
 
       // When
-      final repository = LoginDioRepository(httpClient: httpClient);
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,

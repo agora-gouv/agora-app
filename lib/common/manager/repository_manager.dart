@@ -19,6 +19,8 @@ class RepositoryManager {
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
 
+  static final crashlyticsHelper = HelperManager.getCrashlyticsHelper();
+
   static void initRepositoryManager({required String baseUrl}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
   }
@@ -82,7 +84,10 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<ThematiqueDioRepository>()) {
       return GetIt.instance.get<ThematiqueDioRepository>();
     }
-    final repository = ThematiqueDioRepository(httpClient: _getAgoraDioHttpClient());
+    final repository = ThematiqueDioRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      crashlyticsHelper: crashlyticsHelper,
+    );
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
@@ -91,7 +96,10 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockConsultationRepository>()) {
       return GetIt.instance.get<MockConsultationRepository>();
     }
-    final repository = MockConsultationRepository(httpClient: _getAgoraDioHttpClient());
+    final repository = MockConsultationRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      crashlyticsHelper: crashlyticsHelper,
+    );
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
@@ -100,7 +108,10 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockQagRepository>()) {
       return GetIt.instance.get<MockQagRepository>();
     }
-    final repository = MockQagRepository(httpClient: _getAgoraDioHttpClient());
+    final repository = MockQagRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      crashlyticsHelper: crashlyticsHelper,
+    );
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
@@ -109,7 +120,10 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockLoginRepository>()) {
       return GetIt.instance.get<MockLoginRepository>();
     }
-    final repository = MockLoginRepository(httpClient: getAgoraDioHttpClientWithoutAuthentication());
+    final repository = MockLoginRepository(
+      httpClient: getAgoraDioHttpClientWithoutAuthentication(),
+      crashlyticsHelper: crashlyticsHelper,
+    );
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
@@ -118,7 +132,10 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockDemographicRepository>()) {
       return GetIt.instance.get<MockDemographicRepository>();
     }
-    final repository = MockDemographicRepository(httpClient: _getAgoraDioHttpClient());
+    final repository = MockDemographicRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      crashlyticsHelper: crashlyticsHelper,
+    );
     GetIt.instance.registerSingleton(repository);
     return repository;
   }

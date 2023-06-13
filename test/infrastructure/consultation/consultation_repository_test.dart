@@ -14,11 +14,13 @@ import 'package:agora/infrastructure/consultation/repository/consultation_reposi
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/common/fake_crashlytics_helper.dart';
 import '../../utils/dio_utils.dart';
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final fakeCrashlyticsHelper = FakeCrashlyticsHelper();
 
   const consultationId = "consultationId";
 
@@ -64,7 +66,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultations();
 
       // Then
@@ -119,7 +124,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultations();
 
       // Then
@@ -142,7 +150,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultations();
 
       // Then
@@ -161,7 +172,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultations();
 
       // Then
@@ -198,7 +212,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultationDetails(consultationId: consultationId);
 
       // Then
@@ -235,7 +252,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultationDetails(consultationId: consultationId);
 
       // Then
@@ -317,7 +337,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
       // Then
@@ -375,7 +398,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
       // Then
@@ -421,7 +447,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
         questionsResponses: [
@@ -467,7 +496,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
         questionsResponses: [
@@ -538,7 +570,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);
 
       // Then
@@ -588,7 +623,10 @@ void main() {
       );
 
       // When
-      final repository = ConsultationDioRepository(httpClient: httpClient);
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);
 
       // Then
