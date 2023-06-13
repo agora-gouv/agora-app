@@ -5,6 +5,7 @@ import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -33,9 +34,24 @@ class AgoraInitializer {
 
   static Future<void> _setupNotification() async {
     await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
+    _detectCrashlyticsError();
     if (!kIsWeb) {
       await ServiceManager.getPushNotificationService().setupNotifications();
     }
+  }
+
+  static void _detectCrashlyticsError() {
+    /// report all uncaught synchronous errors
+    FlutterError.onError = (errorDetails) {
+      FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+      // use recordFlutterFatalError if want to catch fatal error
+    };
+
+    /// report all uncaught asynchronous errors
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: false);
+      return true;
+    };
   }
 
   static Future<void> _setupMatomo() async {
