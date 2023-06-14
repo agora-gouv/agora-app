@@ -10,7 +10,7 @@ abstract class QagState extends Equatable {
 class QagInitialLoadingState extends QagState {}
 
 abstract class QagWithItem extends QagState {
-  final List<QagResponseViewModel> qagResponseViewModels;
+  final List<QagResponseTypeViewModel> qagResponseViewModels;
   final List<QagViewModel> popularViewModels;
   final List<QagViewModel> latestViewModels;
   final List<QagViewModel> supportingViewModels;

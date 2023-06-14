@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class QagsResponseSection extends StatelessWidget {
-  final List<QagResponseViewModel> qagResponseViewModels;
+  final List<QagResponseTypeViewModel> qagResponseViewModels;
 
   const QagsResponseSection({super.key, required this.qagResponseViewModels});
 
@@ -95,29 +95,33 @@ class QagsResponseSection extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildQagResponseCard(BuildContext context, List<QagResponseViewModel> qagResponses) {
+  List<Widget> _buildQagResponseCard(BuildContext context, List<QagResponseTypeViewModel> qagResponses) {
     final List<Widget> qagWidget = List.empty(growable: true);
     for (final qagResponse in qagResponses) {
-      qagWidget.add(
-        AgoraQagResponseCard(
-          thematique: qagResponse.thematique,
-          title: qagResponse.title,
-          authorImageUrl: qagResponse.authorPortraitUrl,
-          author: qagResponse.author,
-          date: qagResponse.responseDate,
-          onClick: () {
-            TrackerHelper.trackClick(
-              clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
-              widgetName: AnalyticsScreenNames.qagsPage,
-            );
-            Navigator.pushNamed(
-              context,
-              QagDetailsPage.routeName,
-              arguments: QagDetailsArguments(qagId: qagResponse.qagId),
-            );
-          },
-        ),
-      );
+      if (qagResponse is QagResponseViewModel) {
+        qagWidget.add(
+          AgoraQagResponseCard(
+            thematique: qagResponse.thematique,
+            title: qagResponse.title,
+            authorImageUrl: qagResponse.authorPortraitUrl,
+            author: qagResponse.author,
+            date: qagResponse.responseDate,
+            onClick: () {
+              TrackerHelper.trackClick(
+                clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
+                widgetName: AnalyticsScreenNames.qagsPage,
+              );
+              Navigator.pushNamed(
+                context,
+                QagDetailsPage.routeName,
+                arguments: QagDetailsArguments(qagId: qagResponse.qagId),
+              );
+            },
+          ),
+        );
+      } else if (qagResponse is QagResponseIncomingViewModel) {
+        // todo
+      }
       qagWidget.add(SizedBox(width: AgoraSpacings.x0_5));
     }
     return qagWidget;
