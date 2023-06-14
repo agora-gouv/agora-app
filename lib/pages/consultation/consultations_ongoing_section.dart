@@ -44,7 +44,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
     if (ongoingViewModels.isEmpty) {
       ongoingConsultationsWidgets.add(Container(width: double.infinity));
       ongoingConsultationsWidgets.add(
-        Center(child: Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.light14)),
+        Center(child: Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.medium14)),
       );
       ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
     }

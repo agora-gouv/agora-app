@@ -147,7 +147,7 @@ class QagsPaginatedContentBuilder {
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
     } else {
       if (qagPaginatedState.currentPageNumber == 1 && qagPaginatedState.qagViewModels.isEmpty) {
-        qagsWidgets.add(Text(QagStrings.emptyList, style: AgoraTextStyles.light14));
+        qagsWidgets.add(Text(QagStrings.emptyList, style: AgoraTextStyles.medium14));
         qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       } else if (qagPaginatedState.currentPageNumber < qagPaginatedState.maxPage) {
         qagsWidgets.add(

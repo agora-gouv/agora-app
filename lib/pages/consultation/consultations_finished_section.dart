@@ -55,7 +55,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                     ? Column(
                         children: [
                           SizedBox(height: AgoraSpacings.x0_5),
-                          Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.light14),
+                          Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.medium14),
                           SizedBox(height: AgoraSpacings.base),
                         ],
                       )

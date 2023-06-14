@@ -49,7 +49,7 @@ class ConsultationsAnsweredSection extends StatelessWidget {
       answeredConsultationsWidgets.add(Container(width: double.infinity));
       answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
       answeredConsultationsWidgets.add(
-        Center(child: Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.light14)),
+        Center(child: Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.medium14)),
       );
       answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.x2));
     }
