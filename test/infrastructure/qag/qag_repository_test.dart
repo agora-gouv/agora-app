@@ -6,6 +6,7 @@ import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
+import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -103,6 +104,17 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
+            "incomingResponses": [
+              {
+                "qagId": "incomingQagId",
+                "thematique": {"label": "Transports", "picto": "🚊"},
+                "title": "Pourquoi nana... ?",
+                "support": {
+                  "count": 200,
+                  "isSupported": true,
+                }
+              },
+            ],
             "responses": [
               {
                 "qagId": "qagId",
@@ -174,6 +186,15 @@ void main() {
       expect(
         response,
         GetQagsSucceedResponse(
+          qagResponsesIncoming: [
+            QagResponseIncoming(
+              qagId: "incomingQagId",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "Pourquoi nana... ?",
+              supportCount: 200,
+              isSupported: true,
+            )
+          ],
           qagResponses: [
             QagResponse(
               qagId: "qagId",
@@ -230,6 +251,7 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
+            "incomingResponses": [],
             "responses": [],
             "qags": {
               "popular": [],
@@ -256,6 +278,7 @@ void main() {
       expect(
         response,
         GetQagsSucceedResponse(
+          qagResponsesIncoming: [],
           qagResponses: [],
           qagPopular: [],
           qagLatest: [],

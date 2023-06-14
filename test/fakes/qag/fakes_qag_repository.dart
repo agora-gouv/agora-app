@@ -4,6 +4,7 @@ import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
+import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -24,6 +25,15 @@ class FakeQagSuccessRepository extends QagRepository {
     required String? thematiqueId,
   }) async {
     return GetQagsSucceedResponse(
+      qagResponsesIncoming: [
+        QagResponseIncoming(
+          qagId: "qagId2",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "Pour la ...",
+          supportCount: 200,
+          isSupported: true,
+        ),
+      ],
       qagResponses: [
         QagResponse(
           qagId: "qagId",
@@ -229,6 +239,15 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
     required String? thematiqueId,
   }) async {
     return GetQagsSucceedResponse(
+      qagResponsesIncoming: [
+        QagResponseIncoming(
+          qagId: "qagId2",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "Pour la ...",
+          supportCount: 200,
+          isSupported: true,
+        ),
+      ],
       qagResponses: [
         QagResponse(
           qagId: "qagId",

@@ -25,6 +25,13 @@ void main() {
       expect: () => [
         QagFetchedState(
           qagResponseViewModels: [
+            QagResponseIncomingViewModel(
+              qagId: "qagId2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "Pour la ...",
+              supportCount: 200,
+              isSupported: true,
+            ),
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
@@ -82,6 +89,13 @@ void main() {
       expect: () => [
         QagFetchedState(
           qagResponseViewModels: [
+            QagResponseIncomingViewModel(
+              qagId: "qagId2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "Pour la ...",
+              supportCount: 200,
+              isSupported: true,
+            ),
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
@@ -192,6 +206,13 @@ void main() {
         ),
         QagFetchedState(
           qagResponseViewModels: [
+            QagResponseIncomingViewModel(
+              qagId: "qagId2",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "Pour la ...",
+              supportCount: 200,
+              isSupported: true,
+            ),
             QagResponseViewModel(
               qagId: "qagId",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),

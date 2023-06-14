@@ -30,7 +30,10 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
     }
     final response = await qagRepository.fetchQags(thematiqueId: event.thematiqueId);
     if (response is GetQagsSucceedResponse) {
-      final qagResponseViewModels = QagPresenter.presentQagResponse(response.qagResponses);
+      final qagResponseViewModels = QagPresenter.presentQagResponse(
+        incomingQagResponses: response.qagResponsesIncoming,
+        qagResponses: response.qagResponses,
+      );
       final qagPopularViewModels = QagPresenter.presentQag(response.qagPopular);
       final qagLatestViewModels = QagPresenter.presentQag(response.qagLatest);
       final qagSupportingViewModels = QagPresenter.presentQag(response.qagSupporting);
