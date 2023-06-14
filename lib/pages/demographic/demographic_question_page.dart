@@ -9,6 +9,7 @@ import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -48,9 +49,9 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             return AgoraSingleScrollView(
               child: Column(
                 children: [
+                  AgoraToolbar(style: AgoraToolbarStyle.close),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      vertical: AgoraSpacings.x0_75,
                       horizontal: AgoraSpacings.horizontalPadding,
                     ),
                     child: Column(
@@ -70,6 +71,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                           DemographicHelper.getQuestionTitle(currentStep),
                           style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
                         ),
+                        SizedBox(height: AgoraSpacings.x0_75),
                       ],
                     ),
                   ),
