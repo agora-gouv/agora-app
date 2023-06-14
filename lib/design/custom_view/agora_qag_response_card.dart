@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
@@ -8,8 +10,8 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AgoraQagResponseCard extends StatelessWidget {
-  final ThematiqueViewModel thematique;
   final String title;
+  final ThematiqueViewModel thematique;
   final String authorImageUrl;
   final String author;
   final String date;
@@ -27,7 +29,7 @@ class AgoraQagResponseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
+      width: max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth),
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
         cardColor: AgoraColors.white,

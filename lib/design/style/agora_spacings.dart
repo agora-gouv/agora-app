@@ -11,4 +11,6 @@ class AgoraSpacings {
   static const double x3 = base * 3;
 
   static const horizontalPadding = x1_25;
+
+  static const carrouselMinWidth = 210.0;
 }
