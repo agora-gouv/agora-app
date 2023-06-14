@@ -214,7 +214,7 @@ class _QagsSectionState extends State<QagsSection> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: AgoraSpacings.base),
-            Text(QagStrings.emptyList, style: AgoraTextStyles.light14),
+            Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
             SizedBox(height: AgoraSpacings.x3 * 2),
           ],
         ),

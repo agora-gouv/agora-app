@@ -55,7 +55,7 @@ class QagStrings {
   static const String readLess = "Lire moins";
   static const String feedback = "Merci pour votre réponse.";
   static const String answeredAt = "a répondu le %s";
-  static const String emptyList = "La liste est vide.";
+  static const String emptyList = "Pas de question en ce moment";
   static const String displayMore = "Afficher plus";
   static const String retry = "Réessayer";
   static const String validate = "Valider";
