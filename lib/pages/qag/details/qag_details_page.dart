@@ -14,6 +14,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
@@ -165,14 +166,23 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
               children: [
                 ThematiqueHelper.buildCard(context, viewModel.thematique),
                 SizedBox(height: AgoraSpacings.x0_5),
-                Text(viewModel.title, style: AgoraTextStyles.medium18),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
+                    if (response != null) ...[
+                      SizedBox(width: AgoraSpacings.x0_75),
+                      Padding(
+                        padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
+                        child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
+                      ),
+                    ],
+                  ],
+                ),
                 SizedBox(height: AgoraSpacings.base),
-                if (response == null)
-                  Text(viewModel.description, style: AgoraTextStyles.light14)
-                else
-                  AgoraReadMoreText(viewModel.description, trimLines: 3),
-                SizedBox(height: AgoraSpacings.base),
-                if (support != null) ...[
+                if (response == null) ...[
+                  Text(viewModel.description, style: AgoraTextStyles.light14),
+                  SizedBox(height: AgoraSpacings.base),
                   Text(
                     QagStrings.authorAndDate.format2(viewModel.username, viewModel.date),
                     style: AgoraTextStyles.medium14,
@@ -180,6 +190,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                   SizedBox(height: AgoraSpacings.x3),
                   QagDetailsSupportView(
                     qagId: viewModel.id,
+                    canSupport: viewModel.canSupport,
                     support: support,
                     onSupportChange: (supportCount, isSupported) {
                       backResult = QagDetailsBackResult(
@@ -193,7 +204,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                       );
                     },
                   ),
-                ],
+                ] else
+                  AgoraReadMoreText(viewModel.description, trimLines: 3),
               ],
             ),
           ),

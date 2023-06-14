@@ -2,12 +2,12 @@ import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraQagCard extends StatelessWidget {
   final String id;
@@ -51,18 +51,8 @@ class AgoraQagCard extends StatelessWidget {
                     SizedBox(width: AgoraSpacings.x0_25),
                     GestureDetector(
                       onTap: () => onSupportClick(!isSupported),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          isSupported
-                              ? SvgPicture.asset("assets/ic_heart_full.svg")
-                              : SvgPicture.asset("assets/ic_heart.svg"),
-                          SizedBox(width: AgoraSpacings.x0_25),
-                          Text(supportCount.toString(), style: AgoraTextStyles.medium14),
-                        ],
-                      ),
+                      child: AgoraLikeView(isSupported: isSupported, supportCount: supportCount),
                     ),
-                    SizedBox(width: AgoraSpacings.x0_5),
                   ],
                 ),
                 SizedBox(height: AgoraSpacings.x0_25),

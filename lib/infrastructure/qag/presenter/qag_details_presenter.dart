@@ -15,12 +15,11 @@ class QagDetailsPresenter {
       date: qagDetails.date.formatToDayMonth(),
       username: qagDetails.username,
       canShare: qagDetails.canShare,
-      support: support != null
-          ? QagDetailsSupportViewModel(
-              count: support.count,
-              isSupported: support.isSupported,
-            )
-          : null,
+      canSupport: qagDetails.canSupport,
+      support: QagDetailsSupportViewModel(
+        count: support.count,
+        isSupported: support.isSupported,
+      ),
       response: response != null
           ? QagDetailsResponseViewModel(
               author: response.author,

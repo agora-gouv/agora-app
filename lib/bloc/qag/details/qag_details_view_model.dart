@@ -9,7 +9,8 @@ class QagDetailsViewModel extends Equatable {
   final String username;
   final String date;
   final bool canShare;
-  final QagDetailsSupportViewModel? support;
+  final bool canSupport;
+  final QagDetailsSupportViewModel support;
   final QagDetailsResponseViewModel? response;
 
   QagDetailsViewModel({
@@ -20,6 +21,7 @@ class QagDetailsViewModel extends Equatable {
     required this.username,
     required this.date,
     required this.canShare,
+    required this.canSupport,
     required this.support,
     required this.response,
   });
@@ -33,6 +35,7 @@ class QagDetailsViewModel extends Equatable {
         username,
         date,
         canShare,
+        canSupport,
         support,
         response,
       ];

@@ -7,21 +7,22 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class QagDetailsSupportView extends StatelessWidget {
   final String qagId;
+  final bool canSupport;
   final QagDetailsSupportViewModel support;
   final Function(int supportCount, bool isSupported) onSupportChange;
 
   const QagDetailsSupportView({
     super.key,
     required this.qagId,
+    required this.canSupport,
     required this.support,
     required this.onSupportChange,
   });
@@ -34,29 +35,24 @@ class QagDetailsSupportView extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              alignment: Alignment.centerLeft,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AgoraRoundedButton(
-                  icon: _buildButtonIcon(isSupported, supportState),
-                  label: _buildButtonLabel(isSupported, supportState),
-                  style: _buildButtonStyle(isSupported, supportState),
-                  isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
-                  contentAlignment: _buildButtonAlignment(isSupported, supportState),
-                  onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    SvgPicture.asset("assets/${_buildIcon(isSupported, supportState)}"),
-                    SizedBox(width: AgoraSpacings.x0_25),
-                    Text(
-                      _buildCount(support, supportState),
-                      style: AgoraTextStyles.medium14,
+                if (canSupport)
+                  Flexible(
+                    child: AgoraRoundedButton(
+                      icon: _buildButtonIcon(isSupported, supportState),
+                      label: _buildButtonLabel(isSupported, supportState),
+                      style: _buildButtonStyle(isSupported, supportState),
+                      isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
+                      contentAlignment: _buildButtonAlignment(isSupported, supportState),
+                      onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
                     ),
-                    SizedBox(width: AgoraSpacings.x0_5),
-                  ],
+                  ),
+                SizedBox(width: AgoraSpacings.x0_5),
+                AgoraLikeView(
+                  isSupported: _buildIsSupported(isSupported, supportState),
+                  supportCount: _buildCount(support, supportState),
                 ),
               ],
             ),
@@ -70,20 +66,20 @@ class QagDetailsSupportView extends StatelessWidget {
     );
   }
 
-  String _buildCount(QagDetailsSupportViewModel serverSupportViewModel, QagSupportState supportState) {
+  int _buildCount(QagDetailsSupportViewModel serverSupportViewModel, QagSupportState supportState) {
     final isSupported = serverSupportViewModel.isSupported;
     final supportCount = serverSupportViewModel.count;
     if (!isSupported && supportState is QagSupportSuccessState) {
       final newSupportCount = supportCount + 1;
       onSupportChange(newSupportCount, true);
-      return (newSupportCount).toString();
+      return newSupportCount;
     } else if (isSupported && supportState is QagDeleteSupportSuccessState) {
       final newSupportCount = supportCount - 1;
       onSupportChange(newSupportCount, false);
-      return (newSupportCount).toString();
+      return newSupportCount;
     }
     onSupportChange(supportCount, isSupported);
-    return supportCount.toString();
+    return supportCount;
   }
 
   String _buildButtonIcon(bool isSupported, QagSupportState supportState) {
@@ -120,21 +116,21 @@ class QagDetailsSupportView extends StatelessWidget {
     return CrossAxisAlignment.center; // value not important
   }
 
-  String _buildIcon(bool isSupported, QagSupportState supportState) {
+  bool _buildIsSupported(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState || supportState is QagSupportLoadingState) {
       if (isSupported) {
-        return "ic_heart_full.svg";
+        return true;
       } else {
-        return "ic_heart.svg";
+        return false;
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return "ic_heart_full.svg";
+        return true;
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
-        return "ic_heart.svg";
+        return false;
       }
     }
-    return ""; // value not important
+    return false; // value not important
   }
 
   String _buildButtonLabel(bool isSupported, QagSupportState supportState) {
