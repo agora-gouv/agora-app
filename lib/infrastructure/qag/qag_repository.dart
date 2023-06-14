@@ -157,7 +157,7 @@ class QagDioRepository extends QagRepository {
   }) async {
     try {
       final response = await httpClient.get("/qags/$qagId");
-      final qagDetailsSupport = response.data["support"] as Map?;
+      final qagDetailsSupport = response.data["support"] as Map;
       final qagDetailsResponse = response.data["response"] as Map?;
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
@@ -167,13 +167,12 @@ class QagDioRepository extends QagRepository {
           description: response.data["description"] as String,
           date: (response.data["date"] as String).parseToDateTime(),
           username: response.data["username"] as String,
-          canShare: (response.data["canShare"] as bool?) ?? true,
-          support: qagDetailsSupport != null
-              ? QagDetailsSupport(
-                  count: qagDetailsSupport["count"] as int,
-                  isSupported: qagDetailsSupport["isSupported"] as bool,
-                )
-              : null,
+          canShare: response.data["canShare"] as bool,
+          canSupport: response.data["canSupport"] as bool,
+          support: QagDetailsSupport(
+            count: qagDetailsSupport["count"] as int,
+            isSupported: qagDetailsSupport["isSupported"] as bool,
+          ),
           response: qagDetailsResponse != null
               ? QagDetailsResponse(
                   author: qagDetailsResponse["author"] as String,

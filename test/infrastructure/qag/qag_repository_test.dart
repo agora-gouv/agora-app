@@ -437,7 +437,7 @@ void main() {
   });
 
   group("Fetch qag details", () {
-    test("when success with support not null and response null should return qag details", () async {
+    test("when success with response null should return qag details", () async {
       // Given
       dioAdapter.onGet(
         "/qags/$qagId",
@@ -451,6 +451,7 @@ void main() {
             "date": "2024-01-23",
             "username": "Henri J.",
             "canShare": true,
+            "canSupport": true,
             "support": {"count": 112, "isSupported": true},
             "response": null
           },
@@ -480,6 +481,7 @@ void main() {
             date: DateTime(2024, 1, 23),
             username: "Henri J.",
             canShare: true,
+            canSupport: true,
             support: QagDetailsSupport(count: 112, isSupported: true),
             response: null,
           ),
@@ -487,7 +489,7 @@ void main() {
       );
     });
 
-    test("when success with support null and response not null should return qag details", () async {
+    test("when success with response not null should return qag details", () async {
       // Given
       dioAdapter.onGet(
         "/qags/$qagId",
@@ -501,7 +503,8 @@ void main() {
             "date": "2024-01-23",
             "username": "Henri J.",
             "canShare": false,
-            "support": null,
+            "canSupport": false,
+            "support": {"count": 112, "isSupported": true},
             "response": {
               "author": "Olivier Véran",
               "authorDescription": "Ministre délégué auprès de...",
@@ -537,7 +540,8 @@ void main() {
             date: DateTime(2024, 1, 23),
             username: "Henri J.",
             canShare: false,
-            support: null,
+            canSupport: false,
+            support: QagDetailsSupport(count: 112, isSupported: true),
             response: QagDetailsResponse(
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",

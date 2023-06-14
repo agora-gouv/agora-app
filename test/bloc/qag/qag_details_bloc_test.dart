@@ -33,6 +33,7 @@ void main() {
             date: "23 janvier",
             username: "CollectifSauvonsLaRetraite",
             canShare: false,
+            canSupport: false,
             support: QagDetailsSupportViewModel(count: 112, isSupported: true),
             response: null,
           ),
@@ -57,7 +58,8 @@ void main() {
             date: "23 janvier",
             username: "CollectifSauvonsLaRetraite",
             canShare: true,
-            support: null,
+            canSupport: true,
+            support: QagDetailsSupportViewModel(count: 112, isSupported: true),
             response: QagDetailsResponseViewModel(
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",

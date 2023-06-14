@@ -139,6 +139,7 @@ class FakeQagSuccessRepository extends QagRepository {
         date: DateTime(2024, 1, 23),
         username: "CollectifSauvonsLaRetraite",
         canShare: false,
+        canSupport: false,
         support: QagDetailsSupport(count: 112, isSupported: true),
         response: null,
       ),
@@ -206,8 +207,9 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
         description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
         date: DateTime(2024, 1, 23),
         username: "CollectifSauvonsLaRetraite",
-        support: null,
         canShare: true,
+        canSupport: true,
+        support: QagDetailsSupport(count: 112, isSupported: true),
         response: QagDetailsResponse(
           author: "Olivier Véran",
           authorDescription: "Ministre délégué auprès de...",
