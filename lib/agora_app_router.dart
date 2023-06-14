@@ -1,6 +1,5 @@
 import 'package:agora/agora_app.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
-import 'package:agora/common/observer/route_aware_widget.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
@@ -153,7 +152,8 @@ class AgoraAppRouter {
         throw Exception("Route doesn't exist: ${settings.name}");
     }
     return MaterialPageRoute(
-      builder: (_) => RouteAwareWidget(name: settings.name ?? "", child: currentRoute),
+      settings: RouteSettings(name: settings.name),
+      builder: (_) => currentRoute,
     );
   }
 }

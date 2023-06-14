@@ -16,6 +16,7 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
     } else if (state is SendConsultationQuestionsResponsesInitialLoadingState || _shouldDisplayDemographicQuiz(state)) {
       return Column(
         children: [
-          AgoraToolbar(),
+          _buildToolbar(context),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: CircularProgressIndicator()),
         ],
@@ -94,12 +95,18 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
     } else {
       return Column(
         children: [
-          AgoraToolbar(),
+          _buildToolbar(context),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: AgoraErrorView()),
         ],
       );
     }
+  }
+
+  Widget _buildToolbar(BuildContext context) {
+    return AgoraToolbar(
+      onBackClick: () => Navigator.popUntil(context, ModalRoute.withName(ConsultationDetailsPage.routeName)),
+    );
   }
 
   Widget _buildContent(BuildContext context) {
