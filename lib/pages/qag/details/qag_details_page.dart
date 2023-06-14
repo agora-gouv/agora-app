@@ -135,27 +135,29 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     return Expanded(
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(child: AgoraToolbar(onBackClick: () => _popWithBackResult(context))),
-              Padding(
-                padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-                child: AgoraButton(
-                  icon: "ic_share.svg",
-                  label: QagStrings.share,
-                  style: AgoraButtonStyle.lightGreyButtonStyle,
-                  onPressed: () {
-                    TrackerHelper.trackClick(
-                      clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
-                      widgetName: AnalyticsScreenNames.qagDetailsPage,
-                    );
-                    ShareHelper.shareQag(title: viewModel.title, id: viewModel.id);
-                  },
-                ),
-              ),
-              SizedBox(width: AgoraSpacings.horizontalPadding),
-            ],
-          ),
+          viewModel.canShare
+              ? Row(
+                  children: [
+                    Expanded(child: _buildAgoraToolbarWithPopAction(context)),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+                      child: AgoraButton(
+                        icon: "ic_share.svg",
+                        label: QagStrings.share,
+                        style: AgoraButtonStyle.lightGreyButtonStyle,
+                        onPressed: () {
+                          TrackerHelper.trackClick(
+                            clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
+                            widgetName: AnalyticsScreenNames.qagDetailsPage,
+                          );
+                          ShareHelper.shareQag(title: viewModel.title, id: viewModel.id);
+                        },
+                      ),
+                    ),
+                    SizedBox(width: AgoraSpacings.horizontalPadding),
+                  ],
+                )
+              : _buildAgoraToolbarWithPopAction(context),
           Padding(
             padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
             child: Column(
@@ -200,6 +202,9 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
       ),
     );
   }
+
+  AgoraToolbar _buildAgoraToolbarWithPopAction(BuildContext context) =>
+      AgoraToolbar(onBackClick: () => _popWithBackResult(context));
 
   void _popWithBackResult(BuildContext context) {
     Navigator.pop(context, backResult);

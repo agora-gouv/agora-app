@@ -32,6 +32,7 @@ void main() {
             description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
             date: "23 janvier",
             username: "CollectifSauvonsLaRetraite",
+            canShare: false,
             support: QagDetailsSupportViewModel(count: 112, isSupported: true),
             response: null,
           ),
@@ -55,6 +56,7 @@ void main() {
             description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
             date: "23 janvier",
             username: "CollectifSauvonsLaRetraite",
+            canShare: true,
             support: null,
             response: QagDetailsResponseViewModel(
               author: "Olivier Véran",

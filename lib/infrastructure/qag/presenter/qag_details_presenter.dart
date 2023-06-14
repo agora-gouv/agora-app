@@ -14,6 +14,7 @@ class QagDetailsPresenter {
       description: qagDetails.description,
       date: qagDetails.date.formatToDayMonth(),
       username: qagDetails.username,
+      canShare: qagDetails.canShare,
       support: support != null
           ? QagDetailsSupportViewModel(
               count: support.count,

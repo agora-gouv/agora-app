@@ -8,6 +8,7 @@ class QagDetails extends Equatable {
   final String description;
   final DateTime date;
   final String username;
+  final bool canShare;
   final QagDetailsSupport? support;
   final QagDetailsResponse? response;
 
@@ -18,6 +19,7 @@ class QagDetails extends Equatable {
     required this.description,
     required this.date,
     required this.username,
+    required this.canShare,
     required this.support,
     required this.response,
   });
@@ -30,6 +32,7 @@ class QagDetails extends Equatable {
         description,
         date,
         username,
+        canShare,
         support,
         response,
       ];

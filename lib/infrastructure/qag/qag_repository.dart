@@ -167,6 +167,7 @@ class QagDioRepository extends QagRepository {
           description: response.data["description"] as String,
           date: (response.data["date"] as String).parseToDateTime(),
           username: response.data["username"] as String,
+          canShare: (response.data["canShare"] as bool?) ?? true,
           support: qagDetailsSupport != null
               ? QagDetailsSupport(
                   count: qagDetailsSupport["count"] as int,

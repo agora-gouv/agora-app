@@ -450,6 +450,7 @@ void main() {
             "description": "Description textuelle",
             "date": "2024-01-23",
             "username": "Henri J.",
+            "canShare": true,
             "support": {"count": 112, "isSupported": true},
             "response": null
           },
@@ -478,6 +479,7 @@ void main() {
             description: "Description textuelle",
             date: DateTime(2024, 1, 23),
             username: "Henri J.",
+            canShare: true,
             support: QagDetailsSupport(count: 112, isSupported: true),
             response: null,
           ),
@@ -498,6 +500,7 @@ void main() {
             "description": "Description textuelle",
             "date": "2024-01-23",
             "username": "Henri J.",
+            "canShare": false,
             "support": null,
             "response": {
               "author": "Olivier Véran",
@@ -533,6 +536,7 @@ void main() {
             description: "Description textuelle",
             date: DateTime(2024, 1, 23),
             username: "Henri J.",
+            canShare: false,
             support: null,
             response: QagDetailsResponse(
               author: "Olivier Véran",
