@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
@@ -31,7 +33,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
+      width: max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth),
       child: step != 1
           ? _buildFinishedConsultationCard(context)
           : Stack(

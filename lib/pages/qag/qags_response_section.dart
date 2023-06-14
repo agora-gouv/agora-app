@@ -5,6 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
+import 'package:agora/design/custom_view/agora_qag_incoming_response_card.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -101,8 +102,8 @@ class QagsResponseSection extends StatelessWidget {
       if (qagResponse is QagResponseViewModel) {
         qagWidget.add(
           AgoraQagResponseCard(
-            thematique: qagResponse.thematique,
             title: qagResponse.title,
+            thematique: qagResponse.thematique,
             authorImageUrl: qagResponse.authorPortraitUrl,
             author: qagResponse.author,
             date: qagResponse.responseDate,
@@ -120,7 +121,25 @@ class QagsResponseSection extends StatelessWidget {
           ),
         );
       } else if (qagResponse is QagResponseIncomingViewModel) {
-        // todo
+        qagWidget.add(
+          AgoraQagIncomingResponseCard(
+            title: qagResponse.title,
+            thematique: qagResponse.thematique,
+            supportCount: qagResponse.supportCount,
+            isSupported: qagResponse.isSupported,
+            onClick: () {
+              TrackerHelper.trackClick(
+                clickName: "${AnalyticsEventNames.incomingAnsweredQag} ${qagResponse.qagId}",
+                widgetName: AnalyticsScreenNames.qagsPage,
+              );
+              Navigator.pushNamed(
+                context,
+                QagDetailsPage.routeName,
+                arguments: QagDetailsArguments(qagId: qagResponse.qagId),
+              );
+            },
+          ),
+        );
       }
       qagWidget.add(SizedBox(width: AgoraSpacings.x0_5));
     }

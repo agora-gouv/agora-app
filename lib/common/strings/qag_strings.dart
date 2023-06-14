@@ -3,6 +3,8 @@ class QagStrings {
   static const String toolbarPart2 = "au Gouvernement";
   static const String qagResponsePart1 = "Les réponses";
   static const String qagResponsePart2 = "à vos questions";
+  static const String mostPopularQuestion = "La question la plus populaire";
+  static const String incomingResponse = "Réponse à venir";
   static const String qagResponseInfoBubble =
       "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens au cours de la semaine écoulée.";
   static const String allQagPart1 = "Toutes vos";
