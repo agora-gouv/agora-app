@@ -42,7 +42,35 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(imageUrl, height: 200),
+          Center(
+            child: Image.network(
+              imageUrl,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width * 0.5,
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                return Center(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.width * 0.5,
+                    child: loadingProgress == null
+                        ? child
+                        : Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                  ),
+                );
+              },
+            ),
+          ),
           SizedBox(height: AgoraSpacings.base),
           ThematiqueHelper.buildCard(context, thematique, size: AgoraThematiqueSize.large),
           SizedBox(height: AgoraSpacings.x0_25),

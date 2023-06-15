@@ -32,13 +32,14 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final carrouselWidth = max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth);
     return SizedBox(
-      width: max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth),
+      width: carrouselWidth,
       child: step != 1
-          ? _buildFinishedConsultationCard(context)
+          ? _buildFinishedConsultationCard(context, carrouselWidth)
           : Stack(
               children: [
-                _buildFinishedConsultationCard(context),
+                _buildFinishedConsultationCard(context, carrouselWidth),
                 AgoraRoundedCard(
                   cardColor: AgoraColors.whiteOpacity90,
                   child: Container(),
@@ -79,7 +80,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFinishedConsultationCard(BuildContext context) {
+  Widget _buildFinishedConsultationCard(BuildContext context, double carrouselWidth) {
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
       cardColor: AgoraColors.white,
@@ -97,7 +98,33 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       },
       child: Column(
         children: [
-          Image.network(imageUrl, height: 125),
+          Image.network(
+            imageUrl,
+            width: carrouselWidth,
+            height: carrouselWidth * 0.55,
+            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+              return Center(
+                child: SizedBox(
+                  width: carrouselWidth,
+                  height: carrouselWidth * 0.55,
+                  child: loadingProgress == null
+                      ? child
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Spacer(),
+                            CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                ),
+              );
+            },
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
             child: Column(
