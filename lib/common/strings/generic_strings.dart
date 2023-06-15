@@ -5,6 +5,7 @@ class GenericStrings {
   static const String cnil = "https://www.cnil.fr";
 
   static const String retry = "Réessayer";
+  static const String contactSupport = "Contacter le support";
   static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
   static const String errorMessage = "Une erreur est survenue.";
   static const String timeoutErrorMessage =
