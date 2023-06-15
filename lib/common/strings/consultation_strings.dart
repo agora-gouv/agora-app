@@ -8,6 +8,7 @@ class ConsultationStrings {
   static const String answeredConsultationPart1 = "Mes";
   static const String answeredConsultationPart2 = "consultations";
   static const String consultationEmpty = "La liste est vide.";
+  static const String answeredConsultationEmptyList = "Vous n'avez pas encore participé à une consultation.";
   static const String participate = "Participer";
   static const String seeResults = "Voir les résultats";
   static const String beginButton = "Commencer";

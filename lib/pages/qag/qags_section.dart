@@ -18,6 +18,7 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class QagsSection extends StatefulWidget {
   final List<QagViewModel> latestViewModels;
   final List<QagViewModel> supportingViewModels;
   final String? selectedThematiqueId;
+  final String? askQuestionErrorCase;
 
   const QagsSection({
     super.key,
@@ -41,6 +43,7 @@ class QagsSection extends StatefulWidget {
     required this.latestViewModels,
     required this.supportingViewModels,
     required this.selectedThematiqueId,
+    required this.askQuestionErrorCase,
   });
 
   @override
@@ -215,6 +218,17 @@ class _QagsSectionState extends State<QagsSection> {
           children: [
             SizedBox(height: AgoraSpacings.base),
             Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
+            SizedBox(height: AgoraSpacings.x1_5),
+            AgoraRoundedButton(
+              label: QagStrings.askQuestion,
+              onPressed: () {
+                TrackerHelper.trackClick(
+                  clickName: AnalyticsEventNames.askQuestionInEmptyList,
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                );
+                Navigator.pushNamed(context, QagAskQuestionPage.routeName, arguments: widget.askQuestionErrorCase);
+              },
+            ),
             SizedBox(height: AgoraSpacings.x3 * 2),
           ],
         ),

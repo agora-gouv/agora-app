@@ -29,6 +29,7 @@ class AnalyticsEventNames {
   static const String sendDemographic = "Envoyer les données démographiques";
 
   static const String askQuestion = "Poser une QaG";
+  static const String askQuestionInEmptyList = "Poser une QaG dans la liste vide";
   static const String sendAskQuestion = "Envoyer une QaG";
   static const String thematique = "Thematique";
   static const String qagPopular = "QaG populaires";
