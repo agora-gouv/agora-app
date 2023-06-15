@@ -5,6 +5,7 @@ import 'package:agora/bloc/login/login_state.dart';
 import 'package:agora/bloc/notification/notification_bloc.dart';
 import 'package:agora/bloc/notification/notification_event.dart';
 import 'package:agora/bloc/notification/notification_state.dart';
+import 'package:agora/common/helper/clipboard_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
@@ -122,10 +123,20 @@ class _LoadingPageState extends State<LoadingPage> {
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(height: AgoraSpacings.x1_25),
-                            AgoraButton(
-                              label: GenericStrings.retry,
-                              style: AgoraButtonStyle.blueBorderButtonStyle,
-                              onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                AgoraButton(
+                                  label: GenericStrings.contactSupport,
+                                  style: AgoraButtonStyle.blueBorderButtonStyle,
+                                  onPressed: () => ClipboardHelper.copy(context, GenericStrings.mailSupport),
+                                ),
+                                AgoraButton(
+                                  label: GenericStrings.retry,
+                                  style: AgoraButtonStyle.primaryButtonStyle,
+                                  onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
+                                ),
+                              ],
                             ),
                             SizedBox(height: screenHeight * 0.1),
                           ],
