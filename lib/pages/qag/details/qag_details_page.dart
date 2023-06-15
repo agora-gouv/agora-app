@@ -12,7 +12,9 @@ import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
@@ -33,8 +35,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagDetailsArguments {
   final String qagId;
+  final String? infoMessage;
 
-  QagDetailsArguments({required this.qagId});
+  QagDetailsArguments({required this.qagId, this.infoMessage});
 }
 
 class QagDetailsBackResult {
@@ -61,8 +64,9 @@ class QagDetailsPage extends StatefulWidget {
   static const routeName = "/qagDetailsPage";
 
   final String qagId;
+  final String? infoMessage;
 
-  const QagDetailsPage({super.key, required this.qagId});
+  const QagDetailsPage({super.key, required this.qagId, this.infoMessage});
 
   @override
   State<QagDetailsPage> createState() => _QagDetailsPageState();
@@ -70,6 +74,27 @@ class QagDetailsPage extends StatefulWidget {
 
 class _QagDetailsPageState extends State<QagDetailsPage> {
   QagDetailsBackResult? backResult;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (widget.infoMessage != null) {
+        showAgoraDialog(
+          context: context,
+          columnChildren: [
+            Text(widget.infoMessage!, style: AgoraTextStyles.light16),
+            SizedBox(height: AgoraSpacings.x0_75),
+            AgoraButton(
+              label: GenericStrings.close,
+              style: AgoraButtonStyle.primaryButtonStyle,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

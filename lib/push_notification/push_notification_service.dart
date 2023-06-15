@@ -1,9 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:agora/common/extension/notification_message_type_extension.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/common/navigator/navigator_key.dart';
+import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -15,14 +21,21 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   final pushNotificationService = ServiceManager.getPushNotificationService();
   await pushNotificationService.setupNotifications();
-  // await pushNotificationService.showNotification(message);
+  saveNotificationMessage(message);
   Log.d("Handling a background message ${message.messageId}");
+}
+
+void saveNotificationMessage(RemoteMessage message) async {
+  Log.d("notification : save ${jsonEncode(message.toMap())}");
+  StorageManager.getPushNotificationStorageClient().saveMessage(jsonEncode(message.toMap()));
 }
 
 abstract class PushNotificationService {
   Future<void> setupNotifications();
 
   Future<void> showNotification(RemoteMessage message);
+
+  void redirectionFromSavedNotificationMessage();
 
   Future<String> getMessagingToken();
 }
@@ -45,17 +58,19 @@ class FirebasePushNotificationService extends PushNotificationService {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      Log.d('FirebaseMessaging - New notification while app is in foreground: ${message.notification?.title}');
-      await ServiceManager.getPushNotificationService().showNotification(message);
+      Log.d("FirebaseMessaging - New notification while app is in foreground: ${message.notification?.title}");
+      _redirectionFromNotificationMessage(message, true);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Log.d('FirebaseMessaging - New notification while app is in background: ${message.notification?.title}');
+      Log.d("FirebaseMessaging - New notification while app is in background: ${message.notification?.title}");
+      saveNotificationMessage(message);
     });
 
     FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        Log.d('FirebaseMessaging - New notification while app is terminated: ${message.notification?.title}');
+        Log.d("FirebaseMessaging - New notification while app is terminated: ${message.notification?.title}");
+        saveNotificationMessage(message);
       }
     });
   }
@@ -69,6 +84,17 @@ class FirebasePushNotificationService extends PushNotificationService {
       Log.e("\nFirebase messaging token fetch error, waiting for APNs to be initialized...\n");
       await Future.delayed(Duration(seconds: _fcmTokenErrorWaitDelayInSeconds));
       return await _fetchMessagingToken();
+    }
+  }
+
+  @override
+  void redirectionFromSavedNotificationMessage() async {
+    final String? savedNotificationMessage = await StorageManager.getPushNotificationStorageClient().getMessage();
+    Log.d("notification : redirect with $savedNotificationMessage");
+    if (savedNotificationMessage != null) {
+      final RemoteMessage message = RemoteMessage.fromMap(jsonDecode(savedNotificationMessage) as Map<String, dynamic>);
+      _redirectionFromNotificationMessage(message, false);
+      _clearNotificationMessage();
     }
   }
 
@@ -91,6 +117,26 @@ class FirebasePushNotificationService extends PushNotificationService {
         ),
       );
     }
+  }
+
+  void _redirectionFromNotificationMessage(RemoteMessage message, bool shouldDisplayQagMessage) {
+    final messageType = (message.data["type"] as String).toNotificationMessageType();
+    switch (messageType) {
+      case NotificationMessageType.qagDetails:
+        navigatorKey.currentState?.pushNamed(
+          QagDetailsPage.routeName,
+          arguments: QagDetailsArguments(
+            qagId: message.data["qagId"] as String,
+            infoMessage: shouldDisplayQagMessage ? message.notification?.body : null,
+          ),
+        );
+        break;
+    }
+  }
+
+  void _clearNotificationMessage() async {
+    StorageManager.getPushNotificationStorageClient().clearMessage();
+    await flutterLocalNotificationsPlugin.cancelAll();
   }
 
   Future<String> _fetchMessagingToken() async {
