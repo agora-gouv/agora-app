@@ -131,7 +131,7 @@ class AgoraAppRouter {
         final arguments = settings.arguments as QagDetailsArguments;
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagDetailsPage,
-          child: QagDetailsPage(qagId: arguments.qagId),
+          child: QagDetailsPage(qagId: arguments.qagId, infoMessage: arguments.infoMessage),
         );
         break;
       case QagsPaginatedPage.routeName:

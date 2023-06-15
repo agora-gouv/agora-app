@@ -1,5 +1,7 @@
 import 'package:agora/agora_app_router.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
+import 'package:agora/common/log/log.dart';
+import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/common/observer/matomo_route_observer.dart';
 import 'package:agora/common/observer/navigation_observer.dart';
@@ -23,13 +25,15 @@ class AgoraApp extends StatefulWidget {
   State<AgoraApp> createState() => _AgoraAppState();
 }
 
-class _AgoraAppState extends State<AgoraApp> {
+class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
   final deeplinkHelper = DeeplinkHelper();
   final redirection = Redirection();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this); // for didChangeAppLifecycleState
+
     if (widget.shouldShowOnboarding) {
       redirection.showOnboarding();
     }
@@ -58,7 +62,17 @@ class _AgoraAppState extends State<AgoraApp> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      Log.d("notification : resume");
+      await Future.delayed(Duration(milliseconds: 200));
+      ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     deeplinkHelper.dispose();
     super.dispose();
   }

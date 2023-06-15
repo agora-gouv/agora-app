@@ -13,5 +13,8 @@ class FakePushNotificationService extends PushNotificationService {
   }
 
   @override
+  void redirectionFromSavedNotificationMessage() {}
+
+  @override
   Future<void> showNotification(RemoteMessage message) async {}
 }
