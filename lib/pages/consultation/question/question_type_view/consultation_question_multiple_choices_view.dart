@@ -102,12 +102,12 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
           totalQuestions: widget.totalQuestions,
         ),
         style: AgoraButtonStyle.primaryButtonStyle,
-        onPressed: () {
-          if (currentResponseIds.isNotEmpty) {
-            widget.onMultipleResponseTap(multipleChoicesQuestion.id, [...currentResponseIds]);
-            shouldResetPreviousResponses = true;
-          }
-        },
+        onPressed: currentResponseIds.isNotEmpty
+            ? () {
+                widget.onMultipleResponseTap(multipleChoicesQuestion.id, [...currentResponseIds]);
+                shouldResetPreviousResponses = true;
+              }
+            : null,
       ),
     );
     return responseWidgets;
