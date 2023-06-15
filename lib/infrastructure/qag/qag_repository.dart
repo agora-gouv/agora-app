@@ -13,7 +13,6 @@ import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
-import 'package:agora/domain/thematique/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -99,30 +98,19 @@ class QagDioRepository extends QagRepository {
         "/qags",
         queryParameters: {"thematiqueId": thematiqueId},
       );
-      final qagResponsesIncoming = response.data["incomingResponses"] as List?; // todo remove nullability
+      final qagResponsesIncoming = response.data["incomingResponses"] as List;
       final qagResponses = response.data["responses"] as List;
       final qags = response.data["qags"] as Map;
       return GetQagsSucceedResponse(
-        qagResponsesIncoming: qagResponsesIncoming != null
-            ? qagResponsesIncoming.map((qagResponseIncoming) {
-                return QagResponseIncoming(
-                  qagId: qagResponseIncoming["qagId"] as String,
-                  thematique: (qagResponseIncoming["thematique"] as Map).toThematique(),
-                  title: qagResponseIncoming["title"] as String,
-                  supportCount: qagResponseIncoming["support"]["count"] as int,
-                  isSupported: qagResponseIncoming["support"]["isSupported"] as bool,
-                );
-              }).toList()
-            : [
-                // TODO remove
-                QagResponseIncoming(
-                  qagId: "qagId",
-                  thematique: Thematique(picto: "🚊", label: "Transports"),
-                  title: "test test test test test test test test test",
-                  supportCount: 10030,
-                  isSupported: true,
-                ),
-              ],
+        qagResponsesIncoming: qagResponsesIncoming.map((qagResponseIncoming) {
+          return QagResponseIncoming(
+            qagId: qagResponseIncoming["qagId"] as String,
+            thematique: (qagResponseIncoming["thematique"] as Map).toThematique(),
+            title: qagResponseIncoming["title"] as String,
+            supportCount: qagResponseIncoming["support"]["count"] as int,
+            isSupported: qagResponseIncoming["support"]["isSupported"] as bool,
+          );
+        }).toList(),
         qagResponses: qagResponses.map((qagResponse) {
           return QagResponse(
             qagId: qagResponse["qagId"] as String,
