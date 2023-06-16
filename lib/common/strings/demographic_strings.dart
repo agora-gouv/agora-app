@@ -44,7 +44,7 @@ class DemographicStrings {
   static const String demographicInformationNotice1 =
       "Ces informations nous permettent d'analyser plus finement les résultats des consultations.";
   static const String demographicInformationNotice2 =
-      "Conformation à la loi RGPD, vous avez la possibilité de consulter, modifier ou supprimer l'ensemble des informations vous concernant.";
+      "Conformément au RGPD, vous avez la possibilité de consulter, modifier ou supprimer l'ensemble des informations vous concernant.";
   static const String suppressMyInformation = "Supprimer mes informations";
   static const String whatAbout = "De quoi s'agit-il ?";
   static const String question5WhatAbout =
