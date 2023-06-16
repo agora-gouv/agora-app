@@ -1,3 +1,5 @@
+import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,11 @@ class AgoraLikeView extends StatelessWidget {
       children: [
         SvgPicture.asset(_getIcon(), width: _buildIconSize()),
         SizedBox(width: AgoraSpacings.x0_25),
-        Text(supportCount.toString(), style: _buildTextStyle()),
+        Text(
+          supportCount.toString(),
+          style: _buildTextStyle(),
+          semanticsLabel: SemanticsStrings.supportNumber.format(supportCount.toString()),
+        ),
         if (addEndSpacing) SizedBox(width: AgoraSpacings.x0_5),
       ],
     );

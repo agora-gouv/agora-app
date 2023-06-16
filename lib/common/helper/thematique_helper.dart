@@ -23,23 +23,29 @@ class ThematiqueHelper {
   }) {
     List<Widget> thematiqueWidgets = thematiques
         .map(
-          (thematique) => Column(
-            children: [
-              AgoraToggleButton(
-                isSelected: thematique.id == selectedThematiqueId,
-                text: thematique.picto,
-                onClicked: () => onThematiqueIdSelected(thematique.id),
+          (thematique) => Semantics(
+            toggled: thematique.id == selectedThematiqueId,
+            label: thematique.label,
+            child: ExcludeSemantics(
+              child: Column(
+                children: [
+                  AgoraToggleButton(
+                    isSelected: thematique.id == selectedThematiqueId,
+                    text: thematique.picto,
+                    onClicked: () => onThematiqueIdSelected(thematique.id),
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  SizedBox(
+                    width: 85,
+                    child: Text(
+                      thematique.label,
+                      style: AgoraTextStyles.medium11,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: AgoraSpacings.x0_5),
-              SizedBox(
-                width: 85,
-                child: Text(
-                  thematique.label,
-                  style: AgoraTextStyles.medium11,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
+            ),
           ),
         )
         .toList();
