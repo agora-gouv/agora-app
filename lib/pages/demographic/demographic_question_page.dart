@@ -47,6 +47,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         child: BlocBuilder<DemographicResponsesStockBloc, DemographicResponsesStockState>(
           builder: (context, responsesStockState) {
             return AgoraSingleScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   AgoraToolbar(style: AgoraToolbarStyle.close),

@@ -64,6 +64,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
         child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
           builder: (context, state) {
             return AgoraSingleScrollView(
+              physics: BouncingScrollPhysics(),
               child: AgoraSecondaryStyleView(
                 title: AgoraRichText(
                   policeStyle: AgoraRichTextPoliceStyle.toolbar,

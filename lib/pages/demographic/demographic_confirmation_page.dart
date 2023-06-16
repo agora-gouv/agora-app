@@ -91,7 +91,7 @@ class DemographicConfirmationPage extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: ClampingScrollPhysics(),
       child: Column(
         children: [
           AgoraTopDiagonal(),

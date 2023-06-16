@@ -22,6 +22,7 @@ class OnboardingStepView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraSingleScrollView(
+      physics: ClampingScrollPhysics(),
       child: Column(
         children: [
           AgoraTopDiagonal(),

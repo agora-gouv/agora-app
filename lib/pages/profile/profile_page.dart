@@ -36,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return AgoraScaffold(
       popAction: () => _onBackClick(context),
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: AgoraSecondaryStyleView(
           onBackClick: () => _onBackClick(context),
           title: AgoraRichText(

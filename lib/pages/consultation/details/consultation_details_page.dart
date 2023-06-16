@@ -60,6 +60,7 @@ class ConsultationDetailsPage extends StatelessWidget {
           },
           builder: (context, state) {
             return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   AgoraToolbar(),

@@ -16,6 +16,7 @@ class LegalNoticePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraScaffold(
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: AgoraSecondaryStyleView(
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
