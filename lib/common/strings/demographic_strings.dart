@@ -1,5 +1,5 @@
 class DemographicStrings {
-  static const String informationTitle = "Psst.. nous avons quelques questions pour vous 👀";
+  static const String informationTitle = "Psst… nous avons quelques questions supplémentaires pour vous 👀";
   static const String informationShortDescription =
       "Pour analyser les résultats des consultations, cela nous aide beaucoup de connaître un peu mieux le profil des participants.\n\nVous pouvez retrouver, modifier ou supprimer toutes ces informations directement dans l'onglet \"Profil\".";
   static const String informationLongDescription1 = "Concrètement, cela nous permet :\n";
