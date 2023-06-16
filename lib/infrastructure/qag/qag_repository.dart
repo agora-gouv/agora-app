@@ -190,6 +190,8 @@ class QagDioRepository extends QagRepository {
                   authorDescription: qagDetailsResponse["authorDescription"] as String,
                   responseDate: (qagDetailsResponse["responseDate"] as String).parseToDateTime(),
                   videoUrl: qagDetailsResponse["videoUrl"] as String,
+                  videoWidth: qagDetailsResponse["videoWidth"] as int?,
+                  videoHeight: qagDetailsResponse["videoHeight"] as int?,
                   transcription: qagDetailsResponse["transcription"] as String,
                   feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool,
                 )

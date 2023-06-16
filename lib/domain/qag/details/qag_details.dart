@@ -59,6 +59,8 @@ class QagDetailsResponse extends Equatable {
   final String authorDescription;
   final DateTime responseDate;
   final String videoUrl;
+  final int? videoWidth;
+  final int? videoHeight;
   final String transcription;
   final bool feedbackStatus;
 
@@ -67,16 +69,20 @@ class QagDetailsResponse extends Equatable {
     required this.authorDescription,
     required this.responseDate,
     required this.videoUrl,
+    required this.videoWidth,
+    required this.videoHeight,
     required this.transcription,
     required this.feedbackStatus,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         author,
         authorDescription,
         responseDate,
         videoUrl,
+        videoWidth,
+        videoHeight,
         transcription,
         feedbackStatus,
       ];

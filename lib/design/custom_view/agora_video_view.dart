@@ -9,8 +9,16 @@ import 'package:video_player/video_player.dart';
 class AgoraVideoView extends StatefulWidget {
   final String qagId;
   final String videoUrl;
+  final int? videoWidth;
+  final int? videoHeight;
 
-  const AgoraVideoView({super.key, required this.qagId, required this.videoUrl});
+  const AgoraVideoView({
+    super.key,
+    required this.qagId,
+    required this.videoUrl,
+    required this.videoWidth,
+    required this.videoHeight,
+  });
 
   @override
   State<AgoraVideoView> createState() => _AgoraVideoViewState();
@@ -21,11 +29,20 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
   late ChewieController chewieController;
   bool isFirstTimeTrack = true;
 
-  final aspectRatio = 1080 / 1920;
+  late double aspectRatio;
 
   @override
   void initState() {
     super.initState();
+
+    final videoWidth = widget.videoWidth;
+    final videoHeight = widget.videoHeight;
+    if (videoWidth != null && videoHeight != null) {
+      aspectRatio = videoWidth.toDouble() / videoHeight.toDouble();
+    } else {
+      aspectRatio = 1080 / 1920;
+    }
+
     videoPlayerController = VideoPlayerController.network(widget.videoUrl);
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
