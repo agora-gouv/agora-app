@@ -6,7 +6,7 @@ class QagStrings {
   static const String mostPopularQuestion = "La question la plus populaire";
   static const String incomingResponse = "Réponse à venir";
   static const String qagResponseInfoBubble =
-      "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens au cours de la semaine écoulée.";
+      "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens le mercredi à 14h.";
   static const String allQagPart1 = "Toutes vos";
   static const String allQagPart2 = "questions";
   static const String popular = "Populaires";
@@ -20,9 +20,10 @@ class QagStrings {
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement.";
-  static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine.";
+  static const String askQuestionDescription2 =
+      "Chaque utilisateur peut poser une question par semaine à partir de chaque mercredi à 14h.";
   static const String askQuestionDescription3 =
-      "Le Gouvernement répondra directement sur l'appli à la question la plus populaire de la semaine, c'est-à-dire celle qui a obtenu le plus de soutiens.";
+      "Le Gouvernement répondra directement sur l'appli à la question la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens chaque mercredi à 14h.";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
