@@ -15,6 +15,7 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
         child: Container(

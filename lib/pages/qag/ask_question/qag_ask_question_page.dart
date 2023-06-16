@@ -60,6 +60,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
             return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: AgoraSecondaryStyleView(
                 title: AgoraRichText(
                   policeStyle: AgoraRichTextPoliceStyle.toolbar,

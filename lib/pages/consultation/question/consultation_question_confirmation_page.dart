@@ -67,7 +67,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
           },
           builder: (context, state) {
             return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: ClampingScrollPhysics(),
               child: Column(
                 children: [
                   AgoraTopDiagonal(),

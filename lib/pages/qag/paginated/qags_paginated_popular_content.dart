@@ -20,6 +20,7 @@ class QagsPaginatedPopularContent extends StatelessWidget {
     return BlocBuilder<QagPaginatedPopularBloc, QagPaginatedState>(
       builder: (context, state) {
         return SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.only(
               left: AgoraSpacings.horizontalPadding,

@@ -57,6 +57,7 @@ class _QagsPageState extends State<QagsPage> {
         child: BlocBuilder<QagBloc, QagState>(
           builder: (context, state) {
             return SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
               child: Column(
                 children: <Widget>[
                   AgoraMainToolbar(

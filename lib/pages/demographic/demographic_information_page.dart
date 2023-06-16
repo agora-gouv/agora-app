@@ -32,6 +32,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
       shouldPop: false,
       appBarColor: AgoraColors.primaryBlue,
       child: AgoraSingleScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

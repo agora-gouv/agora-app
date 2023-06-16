@@ -34,6 +34,7 @@ class ConsultationsPage extends StatelessWidget {
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
           builder: (context, state) {
             return SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
               child: Column(
                 children: <Widget>[
                   AgoraMainToolbar(

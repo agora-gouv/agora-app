@@ -25,6 +25,7 @@ class ConsultationQuestionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraSingleScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(
         children: [
           AgoraToolbar(style: AgoraToolbarStyle.close),

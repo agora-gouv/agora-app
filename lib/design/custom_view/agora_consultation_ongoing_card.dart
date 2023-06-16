@@ -82,39 +82,42 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
           ),
           SizedBox(height: AgoraSpacings.x1_25),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AgoraButton(
-                label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
-                icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
-                style: AgoraButtonStyle.blueBorderButtonStyle,
-                onPressed: () {
-                  if (hasAnswered) {
-                    TrackerHelper.trackClick(
-                      clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
-                      widgetName: AnalyticsScreenNames.consultationsPage,
-                    );
-                    Navigator.pushNamed(
-                      context,
-                      ConsultationSummaryPage.routeName,
-                      arguments: ConsultationSummaryArguments(
-                        consultationId: consultationId,
-                        shouldReloadConsultationsWhenPop: false,
-                      ),
-                    );
-                  } else {
-                    TrackerHelper.trackClick(
-                      clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
-                      widgetName: AnalyticsScreenNames.consultationsPage,
-                    );
-                    Navigator.pushNamed(
-                      context,
-                      ConsultationDetailsPage.routeName,
-                      arguments: ConsultationDetailsArguments(consultationId: consultationId),
-                    );
-                  }
-                },
+              Flexible(
+                child: AgoraButton(
+                  label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
+                  icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
+                  style: AgoraButtonStyle.blueBorderButtonStyle,
+                  onPressed: () {
+                    if (hasAnswered) {
+                      TrackerHelper.trackClick(
+                        clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
+                        widgetName: AnalyticsScreenNames.consultationsPage,
+                      );
+                      Navigator.pushNamed(
+                        context,
+                        ConsultationSummaryPage.routeName,
+                        arguments: ConsultationSummaryArguments(
+                          consultationId: consultationId,
+                          shouldReloadConsultationsWhenPop: false,
+                        ),
+                      );
+                    } else {
+                      TrackerHelper.trackClick(
+                        clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
+                        widgetName: AnalyticsScreenNames.consultationsPage,
+                      );
+                      Navigator.pushNamed(
+                        context,
+                        ConsultationDetailsPage.routeName,
+                        arguments: ConsultationDetailsArguments(consultationId: consultationId),
+                      );
+                    }
+                  },
+                ),
               ),
-              Spacer(),
+              SizedBox(width: AgoraSpacings.base),
               AgoraIconButton(
                 icon: "ic_share.svg",
                 onClick: () {

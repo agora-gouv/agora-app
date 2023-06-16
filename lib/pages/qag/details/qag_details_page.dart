@@ -118,6 +118,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
             return AgoraSingleScrollView(
+              physics: ClampingScrollPhysics(),
               child: Column(
                 children: [
                   AgoraTopDiagonal(),
