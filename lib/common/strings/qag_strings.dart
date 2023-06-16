@@ -40,7 +40,7 @@ class QagStrings {
   static const String yourNameTitle = "Mon prénom";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
-      "Toutes les questions sont bienvenues, du moment qu'elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. ";
+      "Toutes les questions sont bienvenues, du moment qu'elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. Attention, une fois envoyée, vous ne pourrez plus modifier votre question.";
   static const String askQuestionCheckboxLabel = "Ma question respecte la charte";
   static const String send = "Envoyer";
 
