@@ -51,7 +51,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-    agoraLogoImage = Image.asset("assets/launcher_icons/ic_agora_logo.png", width: 76);
+    agoraLogoImage = Image.asset("assets/launcher_icons/ic_agora_logo.png", semanticLabel: "Agora");
   }
 
   @override
@@ -150,8 +150,9 @@ class _LoadingPageState extends State<LoadingPage> {
                   screenHeight: screenHeight,
                   screenWidth: screenWidth,
                   children: [
-                    agoraLogoImage,
+                    SizedBox(width: 76, height: 76, child: agoraLogoImage),
                     SizedBox(height: AgoraSpacings.x3 + 5),
+                    Container(width: double.infinity),
                   ],
                 );
               } else {
@@ -159,7 +160,7 @@ class _LoadingPageState extends State<LoadingPage> {
                   screenHeight: screenHeight,
                   screenWidth: screenWidth,
                   children: [
-                    agoraLogoImage,
+                    SizedBox(width: 76, height: 76, child: agoraLogoImage),
                     SizedBox(height: AgoraSpacings.x3),
                     LinearPercentIndicator(
                       percent: 1,
@@ -209,15 +210,11 @@ class _LoadingPageState extends State<LoadingPage> {
     required double screenWidth,
     required List<Widget> children,
   }) {
-    return SizedBox(
-      height: screenHeight,
-      width: screenWidth,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x3 * 2),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: children,
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.2),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: children,
       ),
     );
   }

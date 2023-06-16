@@ -218,6 +218,6 @@ SPEC CHECKSUMS:
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
-PODFILE CHECKSUM: 7b074cc2a0a43f1f71fcac7784c7e22be35d4d0a
+PODFILE CHECKSUM: 74d9c8207b8f9f899c821aee78e34def0f01a74b
 
 COCOAPODS: 1.12.1
