@@ -1,3 +1,4 @@
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -15,14 +16,18 @@ class AgoraIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AgoraRoundedCard(
-      padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x0_75),
-      borderColor: AgoraColors.steam,
-      cardColor: AgoraColors.transparent,
-      child: SvgPicture.asset("assets/$icon"),
-      onTap: () {
-        onClick();
-      },
+    return Semantics(
+      button: true,
+      label: SemanticsStrings.share,
+      child: AgoraRoundedCard(
+        padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x0_75),
+        borderColor: AgoraColors.steam,
+        cardColor: AgoraColors.transparent,
+        child: SvgPicture.asset("assets/$icon"),
+        onTap: () {
+          onClick();
+        },
+      ),
     );
   }
 }

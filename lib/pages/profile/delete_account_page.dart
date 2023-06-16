@@ -3,6 +3,7 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -65,25 +66,16 @@ class DeleteAccountPage extends StatelessWidget {
                                       SizedBox(width: 40),
                                       SizedBox(width: AgoraSpacings.x0_75),
                                       Expanded(
-                                        child: GestureDetector(
-                                          onLongPress: () => _copySupportEmail(context),
-                                          child: Center(
-                                            child: Text(
-                                              GenericStrings.mailSupport,
-                                              style: AgoraTextStyles.medium16,
-                                              textAlign: TextAlign.center,
-                                            ),
+                                        child: Center(
+                                          child: Text(
+                                            GenericStrings.mailSupport,
+                                            style: AgoraTextStyles.medium16,
+                                            textAlign: TextAlign.center,
                                           ),
                                         ),
                                       ),
                                       SizedBox(width: AgoraSpacings.x0_75),
-                                      AgoraRoundedCard(
-                                        cardColor: AgoraColors.transparent,
-                                        cornerRadius: AgoraCorners.rounded50,
-                                        onTap: () => _copySupportEmail(context),
-                                        padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-                                        child: SvgPicture.asset("assets/ic_copy.svg"),
-                                      ),
+                                      buildCopyButton(onTap: () => _copySupportEmail(context)),
                                     ],
                                   ),
                                   SizedBox(height: AgoraSpacings.base),
@@ -103,25 +95,16 @@ class DeleteAccountPage extends StatelessWidget {
                                       SizedBox(width: 40),
                                       SizedBox(width: AgoraSpacings.x0_75),
                                       Expanded(
-                                        child: GestureDetector(
-                                          onLongPress: () => _copyUserId(userId, context),
-                                          child: Center(
-                                            child: Text(
-                                              snapshot.data ?? "",
-                                              style: AgoraTextStyles.medium16,
-                                              textAlign: TextAlign.center,
-                                            ),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data ?? "",
+                                            style: AgoraTextStyles.medium16,
+                                            textAlign: TextAlign.center,
                                           ),
                                         ),
                                       ),
                                       SizedBox(width: AgoraSpacings.x0_75),
-                                      AgoraRoundedCard(
-                                        cardColor: AgoraColors.transparent,
-                                        cornerRadius: AgoraCorners.rounded50,
-                                        onTap: () => _copyUserId(userId, context),
-                                        padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-                                        child: SvgPicture.asset("assets/ic_copy.svg"),
-                                      )
+                                      buildCopyButton(onTap: () => _copyUserId(userId, context)),
                                     ],
                                   ),
                                   SizedBox(height: AgoraSpacings.base),
@@ -138,6 +121,20 @@ class DeleteAccountPage extends StatelessWidget {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Semantics buildCopyButton({required VoidCallback onTap}) {
+    return Semantics(
+      button: true,
+      label: SemanticsStrings.copy,
+      child: AgoraRoundedCard(
+        cardColor: AgoraColors.transparent,
+        cornerRadius: AgoraCorners.rounded50,
+        onTap: () => onTap(),
+        padding: const EdgeInsets.all(AgoraSpacings.x0_5),
+        child: SvgPicture.asset("assets/ic_copy.svg"),
       ),
     );
   }

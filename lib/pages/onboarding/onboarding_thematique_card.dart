@@ -21,7 +21,7 @@ class OnboardingThematiqueCard extends StatelessWidget {
       padding: const EdgeInsets.all(AgoraSpacings.base),
       child: Column(
         children: [
-          Text(picto, style: AgoraTextStyles.medium32),
+          ExcludeSemantics(child: Text(picto, style: AgoraTextStyles.medium32)),
           SizedBox(height: AgoraSpacings.x0_5),
           Text(label, style: AgoraTextStyles.regular12, textAlign: TextAlign.center),
         ],
