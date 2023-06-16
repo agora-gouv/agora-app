@@ -43,7 +43,12 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
             children: [
               Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17),
               SizedBox(height: AgoraSpacings.base),
-              AgoraVideoView(qagId: widget.qagId, videoUrl: response.videoUrl),
+              AgoraVideoView(
+                qagId: widget.qagId,
+                videoUrl: response.videoUrl,
+                videoWidth: response.videoWidth,
+                videoHeight: response.videoHeight,
+              ),
               SizedBox(height: AgoraSpacings.base),
               RichText(
                 text: TextSpan(

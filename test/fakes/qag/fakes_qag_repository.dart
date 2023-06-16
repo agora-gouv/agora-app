@@ -225,6 +225,8 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
           authorDescription: "Ministre délégué auprès de...",
           responseDate: DateTime(2024, 2, 20),
           videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+          videoWidth: 1080,
+          videoHeight: 1920,
           transcription: "Blablabla",
           feedbackStatus: true,
         ),

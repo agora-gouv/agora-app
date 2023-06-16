@@ -26,6 +26,8 @@ class QagDetailsPresenter {
               authorDescription: response.authorDescription,
               responseDate: response.responseDate.formatToDayMonth(),
               videoUrl: response.videoUrl,
+              videoWidth: response.videoWidth,
+              videoHeight: response.videoHeight,
               transcription: response.transcription,
               feedbackStatus: response.feedbackStatus,
             )
