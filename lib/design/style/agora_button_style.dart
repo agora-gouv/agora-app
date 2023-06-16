@@ -9,7 +9,7 @@ class AgoraButtonStyle {
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.primaryBlueOpacity50;
+          return AgoraColors.gravelFint;
         } else {
           return AgoraColors.primaryBlue;
         }
@@ -28,7 +28,7 @@ class AgoraButtonStyle {
     backgroundColor: MaterialStateProperty.resolveWith(
       (states) {
         if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.primaryBlueOpacity50;
+          return AgoraColors.gravelFint;
         } else {
           return AgoraColors.primaryBlue;
         }
