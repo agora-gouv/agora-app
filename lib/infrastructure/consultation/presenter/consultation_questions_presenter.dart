@@ -13,6 +13,7 @@ class ConsultationQuestionsPresenter {
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
+            nextQuestionId: consultationQuestion.nextQuestionId,
           );
         } else if (consultationQuestion is ConsultationQuestionMultiple) {
           return ConsultationQuestionMultipleViewModel(
@@ -22,6 +23,7 @@ class ConsultationQuestionsPresenter {
             questionProgress: consultationQuestion.questionProgress,
             maxChoices: consultationQuestion.maxChoices,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
+            nextQuestionId: consultationQuestion.nextQuestionId,
           );
         } else if (consultationQuestion is ConsultationQuestionOpened) {
           return ConsultationQuestionOpenedViewModel(
@@ -29,6 +31,15 @@ class ConsultationQuestionsPresenter {
             title: consultationQuestion.title,
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
+            nextQuestionId: consultationQuestion.nextQuestionId,
+          );
+        } else if (consultationQuestion is ConsultationQuestionWithCondition) {
+          return ConsultationQuestionWithConditionViewModel(
+            id: consultationQuestion.id,
+            title: consultationQuestion.title,
+            order: consultationQuestion.order,
+            questionProgress: consultationQuestion.questionProgress,
+            responseChoicesViewModels: _buildResponseWithConditionChoices(consultationQuestion.responseChoices),
           );
         } else if (consultationQuestion is ConsultationQuestionChapter) {
           return ConsultationQuestionChapterViewModel(
@@ -36,6 +47,7 @@ class ConsultationQuestionsPresenter {
             title: consultationQuestion.title,
             order: consultationQuestion.order,
             description: consultationQuestion.description,
+            nextQuestionId: consultationQuestion.nextQuestionId,
           );
         } else {
           throw Exception(
@@ -45,17 +57,7 @@ class ConsultationQuestionsPresenter {
       },
     ).toList()
       ..sort((viewModel1, viewModel2) => viewModel1.order.compareTo(viewModel2.order));
-
     return viewModels;
-  }
-
-  static int getFirstQuestionIndex(List<ConsultationQuestionViewModel> viewModels) {
-    try {
-      final firstQuestion = viewModels.firstWhere((viewModel) => viewModel is! ConsultationQuestionChapterViewModel);
-      return viewModels.indexOf(firstQuestion);
-    } catch (e) {
-      return -1;
-    }
   }
 
   static List<ConsultationQuestionResponseChoiceViewModel> _buildResponseChoices(
@@ -67,6 +69,22 @@ class ConsultationQuestionsPresenter {
             id: responseChoice.id,
             label: responseChoice.label,
             order: responseChoice.order,
+          ),
+        )
+        .toList()
+      ..sort((viewModel1, viewModel2) => viewModel1.order.compareTo(viewModel2.order));
+  }
+
+  static List<ConsultationQuestionWithConditionResponseChoiceViewModel> _buildResponseWithConditionChoices(
+    List<ConsultationQuestionResponseWithConditionChoice> responseChoices,
+  ) {
+    return responseChoices
+        .map(
+          (responseChoice) => ConsultationQuestionWithConditionResponseChoiceViewModel(
+            id: responseChoice.id,
+            label: responseChoice.label,
+            order: responseChoice.order,
+            nextQuestionId: responseChoice.nextQuestionId,
           ),
         )
         .toList()

@@ -7,14 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraQuestionResponseChoiceView extends StatelessWidget {
   final String responseId;
-  final String response;
+  final String responseLabel;
   final bool isSelected;
-  final Function(String) onTap;
+  final Function(String responseId) onTap;
 
   const AgoraQuestionResponseChoiceView({
     Key? key,
     required this.responseId,
-    required this.response,
+    required this.responseLabel,
     required this.isSelected,
     required this.onTap,
   }) : super(key: key);
@@ -30,7 +30,7 @@ class AgoraQuestionResponseChoiceView extends StatelessWidget {
         width: double.infinity,
         child: Row(
           children: [
-            Expanded(child: Text(response, style: AgoraTextStyles.light14)),
+            Expanded(child: Text(responseLabel, style: AgoraTextStyles.light14)),
             if (isSelected) ...[
               SizedBox(width: AgoraSpacings.x0_75),
               SvgPicture.asset("assets/ic_check.svg"),

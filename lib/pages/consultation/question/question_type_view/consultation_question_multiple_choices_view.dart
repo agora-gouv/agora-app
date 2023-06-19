@@ -32,6 +32,7 @@ class ConsultationQuestionMultipleChoicesView extends StatefulWidget {
 }
 
 class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQuestionMultipleChoicesView> {
+  String currentQuestionId = "";
   final List<String> currentResponseIds = [];
   bool shouldResetPreviousResponses = true;
   late ConsultationQuestionMultipleViewModel multipleChoicesQuestion;
@@ -57,6 +58,10 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
   }
 
   void _resetPreviousResponses() {
+    if (currentQuestionId != widget.multipleChoicesQuestion.id) {
+      currentQuestionId = widget.multipleChoicesQuestion.id;
+      shouldResetPreviousResponses = true;
+    }
     if (shouldResetPreviousResponses) {
       currentResponseIds.clear();
       final previousSelectedResponses = widget.previousSelectedResponses;
@@ -79,7 +84,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       responseWidgets.add(
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
-          response: response.label,
+          responseLabel: response.label,
           isSelected: _isResponseAlreadySelected(response.id),
           onTap: (responseId) {
             setState(() {

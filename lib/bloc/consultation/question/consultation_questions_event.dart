@@ -1,11 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class ConsultationQuestionsEvent extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class FetchConsultationQuestionsEvent extends ConsultationQuestionsEvent {
+class FetchConsultationQuestionsEvent extends Equatable {
   final String consultationId;
 
   FetchConsultationQuestionsEvent({required this.consultationId});
@@ -13,7 +8,3 @@ class FetchConsultationQuestionsEvent extends ConsultationQuestionsEvent {
   @override
   List<Object> get props => [consultationId];
 }
-
-class ConsultationPreviousQuestionEvent extends ConsultationQuestionsEvent {}
-
-class ConsultationNextQuestionEvent extends ConsultationQuestionsEvent {}

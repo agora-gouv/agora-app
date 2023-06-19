@@ -6,11 +6,13 @@ class ConsultationQuestionsBuilder {
     required List<dynamic> uniqueChoiceQuestions,
     required List<dynamic> openedQuestions,
     required List<dynamic> multipleChoicesQuestions,
+    required List<dynamic> withConditionQuestions,
     required List<dynamic> chapters,
   }) {
     return _buildUniqueChoiceQuestions(uniqueChoiceQuestions) +
         _buildOpenedQuestions(openedQuestions) +
         _buildMultipleChoicesQuestions(multipleChoicesQuestions) +
+        _buildWithConditionsQuestions(withConditionQuestions) +
         _buildChapters(chapters);
   }
 
@@ -32,6 +34,7 @@ class ConsultationQuestionsBuilder {
                 ),
               )
               .toList(),
+          nextQuestionId: questionUniqueChoice["nextQuestionId"] as String?,
         ),
       );
     }
@@ -47,6 +50,7 @@ class ConsultationQuestionsBuilder {
           title: questionOpened["title"] as String,
           order: questionOpened["order"] as int,
           questionProgress: questionOpened["questionProgress"] as String,
+          nextQuestionId: questionOpened["nextQuestionId"] as String?,
         ),
       );
     }
@@ -72,6 +76,32 @@ class ConsultationQuestionsBuilder {
                 ),
               )
               .toList(),
+          nextQuestionId: questionMultipleChoices["nextQuestionId"] as String?,
+        ),
+      );
+    }
+    return questions;
+  }
+
+  static List<ConsultationQuestion> _buildWithConditionsQuestions(List<dynamic> withConditionQuestions) {
+    final List<ConsultationQuestion> questions = [];
+    for (final withConditionQuestion in withConditionQuestions) {
+      questions.add(
+        ConsultationQuestionWithCondition(
+          id: withConditionQuestion["id"] as String,
+          title: withConditionQuestion["title"] as String,
+          order: withConditionQuestion["order"] as int,
+          questionProgress: withConditionQuestion["questionProgress"] as String,
+          responseChoices: (withConditionQuestion["possibleChoices"] as List)
+              .map(
+                (responseChoice) => ConsultationQuestionResponseWithConditionChoice(
+                  id: responseChoice["id"] as String,
+                  label: responseChoice["label"] as String,
+                  order: responseChoice["order"] as int,
+                  nextQuestionId: responseChoice["nextQuestionId"] as String,
+                ),
+              )
+              .toList(),
         ),
       );
     }
@@ -87,6 +117,7 @@ class ConsultationQuestionsBuilder {
           title: chapter["title"] as String,
           order: chapter["order"] as int,
           description: chapter["description"] as String,
+          nextQuestionId: chapter["nextQuestionId"] as String?,
         ),
       );
     }
