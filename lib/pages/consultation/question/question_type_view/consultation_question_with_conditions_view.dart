@@ -6,50 +6,50 @@ import 'package:agora/pages/consultation/question/consultation_question_helper.d
 import 'package:agora/pages/consultation/question/question_type_view/consultation_question_view.dart';
 import 'package:flutter/material.dart';
 
-class ConsultationQuestionUniqueChoiceView extends StatelessWidget {
-  final ConsultationQuestionUniqueViewModel uniqueChoiceQuestion;
+class ConsultationQuestionWithConditionsView extends StatelessWidget {
+  final ConsultationQuestionWithConditionViewModel questionWithConditions;
   final ConsultationQuestionResponses? previousResponses;
   final int totalQuestions;
-  final Function(String, String) onUniqueResponseTap;
+  final Function(String questionId, String responseId, String nextQuestionId) onWithConditionResponseTap;
   final VoidCallback onBackTap;
 
-  ConsultationQuestionUniqueChoiceView({
+  ConsultationQuestionWithConditionsView({
     Key? key,
-    required this.uniqueChoiceQuestion,
+    required this.questionWithConditions,
     required this.previousResponses,
     required this.totalQuestions,
-    required this.onUniqueResponseTap,
+    required this.onWithConditionResponseTap,
     required this.onBackTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ConsultationQuestionView(
-      order: uniqueChoiceQuestion.order,
+      order: questionWithConditions.order,
       totalQuestions: totalQuestions,
-      questionProgress: uniqueChoiceQuestion.questionProgress,
-      title: uniqueChoiceQuestion.title,
+      questionProgress: questionWithConditions.questionProgress,
+      title: questionWithConditions.title,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: _buildUniqueChoiceResponse() +
+        children: _buildWithConditionsResponse() +
             ConsultationQuestionHelper.buildBackButton(
-              order: uniqueChoiceQuestion.order,
+              order: questionWithConditions.order,
               onBackTap: onBackTap,
             ),
       ),
     );
   }
 
-  List<Widget> _buildUniqueChoiceResponse() {
+  List<Widget> _buildWithConditionsResponse() {
     final List<Widget> responseWidgets = [];
-    for (final response in uniqueChoiceQuestion.responseChoicesViewModels) {
+    for (final response in questionWithConditions.responseChoicesViewModels) {
       responseWidgets.add(
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
           responseLabel: response.label,
           isSelected: _isResponseAlreadySelected(response.id),
           onTap: (responseId) {
-            onUniqueResponseTap(uniqueChoiceQuestion.id, responseId);
+            onWithConditionResponseTap(questionWithConditions.id, responseId, response.nextQuestionId);
           },
         ),
       );

@@ -6,6 +6,15 @@ abstract class ConsultationQuestionsResponsesStockEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class AddConsultationChapterStockEvent extends ConsultationQuestionsResponsesStockEvent {
+  final String chapterId;
+
+  AddConsultationChapterStockEvent({required this.chapterId});
+
+  @override
+  List<Object> get props => [chapterId];
+}
+
 class AddConsultationQuestionsResponseStockEvent extends ConsultationQuestionsResponsesStockEvent {
   final ConsultationQuestionResponses questionResponse;
 
@@ -14,3 +23,5 @@ class AddConsultationQuestionsResponseStockEvent extends ConsultationQuestionsRe
   @override
   List<Object> get props => [questionResponse];
 }
+
+class RemoveConsultationQuestionEvent extends ConsultationQuestionsResponsesStockEvent {}

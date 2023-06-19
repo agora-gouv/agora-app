@@ -135,6 +135,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           uniqueChoiceQuestions: response.data["questionsUniqueChoice"] as List,
           openedQuestions: response.data["questionsOpened"] as List,
           multipleChoicesQuestions: response.data["questionsMultipleChoices"] as List,
+          withConditionQuestions: response.data["questionsWithCondition"] as List,
           chapters: response.data["chapters"] as List,
         ),
       );

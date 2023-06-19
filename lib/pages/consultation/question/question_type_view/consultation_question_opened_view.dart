@@ -31,6 +31,7 @@ class ConsultationQuestionOpenedView extends StatefulWidget {
 }
 
 class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpenedView> {
+  String currentQuestionId = "";
   String openedResponse = "";
   bool shouldResetPreviousResponses = true;
   late ConsultationQuestionOpenedViewModel openedQuestion;
@@ -56,6 +57,10 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
   }
 
   void _resetPreviousResponses() {
+    if (currentQuestionId != widget.openedQuestion.id) {
+      currentQuestionId = widget.openedQuestion.id;
+      shouldResetPreviousResponses = true;
+    }
     if (shouldResetPreviousResponses) {
       openedResponse = "";
       final previousSelectedResponses = widget.previousResponses;

@@ -76,29 +76,52 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         ConsultationQuestionUnique(
           id: "questionIdB",
           title: "Si vous vous lancez dans le co-voiturage, ...",
-          order: 2,
-          questionProgress: "Question 2/3",
+          order: 4,
+          questionProgress: "Question 3/4",
           responseChoices: [
             ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2),
             ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
           ],
+          nextQuestionId: "questionIdC",
         ),
         ConsultationQuestionOpened(
           id: "questionIdC",
           title: "Question C ?",
-          order: 4,
-          questionProgress: "Question 3/3",
+          order: 5,
+          questionProgress: "Question 4/4",
+          nextQuestionId: null,
         ),
         ConsultationQuestionMultiple(
           id: "questionIdA",
           title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
           order: 1,
-          questionProgress: "Question 1/3",
+          questionProgress: "Question 1/4",
           maxChoices: 2,
           responseChoices: [
             ConsultationQuestionResponseChoice(id: "choiceA", label: "En vélo ou à pied", order: 3),
             ConsultationQuestionResponseChoice(id: "choiceB", label: "En voiture", order: 1),
             ConsultationQuestionResponseChoice(id: "choiceC", label: "En transports en commun", order: 2),
+          ],
+          nextQuestionId: "questionIdD",
+        ),
+        ConsultationQuestionWithCondition(
+          id: "questionIdD",
+          title: "Avez vous ...?",
+          order: 2,
+          questionProgress: "Question 2/4",
+          responseChoices: [
+            ConsultationQuestionResponseWithConditionChoice(
+              id: "choiceAAA",
+              label: "non",
+              order: 2,
+              nextQuestionId: "questionIdB",
+            ),
+            ConsultationQuestionResponseWithConditionChoice(
+              id: "choiceBBB",
+              label: "oui",
+              order: 1,
+              nextQuestionId: "questionIdC",
+            ),
           ],
         ),
         ConsultationQuestionChapter(
@@ -106,6 +129,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "titre du chapitre",
           order: 3,
           description: "description du chapitre",
+          nextQuestionId: "questionIdB",
         ),
       ],
     );

@@ -44,11 +44,13 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) {
+        final questionsResponsesStockState = context.read<ConsultationQuestionsResponsesStockBloc>().state;
         return ConsultationQuestionsResponsesBloc(consultationRepository: RepositoryManager.getConsultationRepository())
           ..add(
             SendConsultationQuestionsResponsesEvent(
               consultationId: consultationId,
-              questionsResponses: context.read<ConsultationQuestionsResponsesStockBloc>().state.questionsResponses,
+              questionsStack: questionsResponsesStockState.questionsStack,
+              questionsResponses: questionsResponsesStockState.questionsResponses,
             ),
           );
       },

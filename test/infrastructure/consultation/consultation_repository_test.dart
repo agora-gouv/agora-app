@@ -275,8 +275,8 @@ void main() {
               {
                 "id": "question1",
                 "title": "quel est la fréquence d'utilisation de transport...",
-                "order": 4,
-                "questionProgress": "Question 3/3",
+                "order": 5,
+                "questionProgress": "Question 4/4",
                 "possibleChoices": [
                   {
                     "id": "choice1",
@@ -284,14 +284,16 @@ void main() {
                     "order": 1,
                   }
                 ],
+                "nextQuestionId": null,
               },
             ],
             "questionsOpened": [
               {
                 "id": "question2",
                 "title": "Donnez un feedback",
-                "order": 3,
-                "questionProgress": "Question 2/3",
+                "order": 4,
+                "questionProgress": "Question 3/4",
+                "nextQuestionId": "question1",
               },
             ],
             "questionsMultipleChoices": [
@@ -299,7 +301,8 @@ void main() {
                 "id": "question3",
                 "title": "Quel types de transports utilisez-vous le plus ?",
                 "order": 1,
-                "questionProgress": "Question 1/3",
+                "questionProgress": "Question 1/4",
+                "nextQuestionId": "question6",
                 "maxChoices": 2,
                 "possibleChoices": [
                   {
@@ -320,12 +323,24 @@ void main() {
                 ],
               },
             ],
+            "questionsWithCondition": [
+              {
+                "id": "question6",
+                "title": "Avez vous déjà fait du covoiturage ?",
+                "order": 2,
+                "questionProgress": "Question 2/4",
+                "possibleChoices": [
+                  {"id": "choice1", "label": "Oui", "order": 1, "nextQuestionId": "chapitre1"}
+                ]
+              }
+            ],
             "chapters": [
               {
                 "id": "chapitre1",
                 "title": "titre du chapitre",
-                "order": 2,
+                "order": 3,
                 "description": "texte riche",
+                "nextQuestionId": "question2",
               },
             ],
           },
@@ -351,23 +366,26 @@ void main() {
             ConsultationQuestionUnique(
               id: "question1",
               title: "quel est la fréquence d'utilisation de transport...",
-              order: 4,
-              questionProgress: "Question 3/3",
+              order: 5,
+              questionProgress: "Question 4/4",
               responseChoices: [
                 ConsultationQuestionResponseChoice(id: "choice1", label: "une à deux fois par semaine", order: 1),
               ],
+              nextQuestionId: null,
             ),
             ConsultationQuestionOpened(
               id: "question2",
               title: "Donnez un feedback",
-              order: 3,
-              questionProgress: "Question 2/3",
+              order: 4,
+              questionProgress: "Question 3/4",
+              nextQuestionId: "question1",
             ),
             ConsultationQuestionMultiple(
               id: "question3",
               title: "Quel types de transports utilisez-vous le plus ?",
               order: 1,
-              questionProgress: "Question 1/3",
+              questionProgress: "Question 1/4",
+              nextQuestionId: "question6",
               maxChoices: 2,
               responseChoices: [
                 ConsultationQuestionResponseChoice(id: "choice1", label: "Train", order: 1),
@@ -375,11 +393,26 @@ void main() {
                 ConsultationQuestionResponseChoice(id: "choice3", label: "Voiture", order: 3),
               ],
             ),
+            ConsultationQuestionWithCondition(
+              id: "question6",
+              title: "Avez vous déjà fait du covoiturage ?",
+              order: 2,
+              questionProgress: "Question 2/4",
+              responseChoices: [
+                ConsultationQuestionResponseWithConditionChoice(
+                  id: "choice1",
+                  label: "Oui",
+                  order: 1,
+                  nextQuestionId: "chapitre1",
+                ),
+              ],
+            ),
             ConsultationQuestionChapter(
               id: "chapitre1",
               title: "titre du chapitre",
-              order: 2,
+              order: 3,
               description: "texte riche",
+              nextQuestionId: "question2",
             ),
           ],
         ),

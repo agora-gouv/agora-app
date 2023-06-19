@@ -9,20 +9,12 @@ abstract class ConsultationQuestionsState extends Equatable {
 class ConsultationQuestionsInitialLoadingState extends ConsultationQuestionsState {}
 
 class ConsultationQuestionsFetchedState extends ConsultationQuestionsState {
-  final int currentQuestionIndex;
-  final int totalQuestion;
   final List<ConsultationQuestionViewModel> viewModels;
 
-  ConsultationQuestionsFetchedState({
-    required this.currentQuestionIndex,
-    required this.totalQuestion,
-    required this.viewModels,
-  });
+  ConsultationQuestionsFetchedState({required this.viewModels});
 
   @override
-  List<Object> get props => [currentQuestionIndex, totalQuestion, viewModels];
+  List<Object> get props => [viewModels];
 }
 
 class ConsultationQuestionsErrorState extends ConsultationQuestionsState {}
-
-class ConsultationQuestionsFinishState extends ConsultationQuestionsState {}

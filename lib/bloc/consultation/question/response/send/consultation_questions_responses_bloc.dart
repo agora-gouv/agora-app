@@ -1,3 +1,4 @@
+import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_builder.dart';
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
@@ -17,9 +18,14 @@ class ConsultationQuestionsResponsesBloc
     SendConsultationQuestionsResponsesEvent event,
     Emitter<SendConsultationQuestionsResponsesState> emit,
   ) async {
+    final questionResponses = ConsultationQuestionsResponsesBuilder.build(
+      questionsStack: event.questionsStack,
+      questionsResponses: event.questionsResponses,
+    );
+
     final response = await consultationRepository.sendConsultationResponses(
       consultationId: event.consultationId,
-      questionsResponses: event.questionsResponses,
+      questionsResponses: questionResponses,
     );
     if (response is SendConsultationResponsesSucceedResponse) {
       emit(
