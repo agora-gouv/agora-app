@@ -110,36 +110,18 @@ class ConsultationDetailsPage extends StatelessWidget {
               SizedBox(height: AgoraSpacings.x0_5),
               Text(viewModel.title, style: AgoraTextStyles.medium19),
               SizedBox(height: AgoraSpacings.x1_5),
+              _buildInformationItem(
+                image: "ic_calendar.svg",
+                text: viewModel.endDate,
+                textStyle: AgoraTextStyles.regularItalic14,
+              ),
+              SizedBox(height: AgoraSpacings.x1_5),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible(
-                    child: Column(
-                      children: [
-                        _buildInformationItem(
-                          image: "ic_calendar.svg",
-                          text: viewModel.endDate,
-                          textStyle: AgoraTextStyles.regularItalic14,
-                        ),
-                        SizedBox(height: AgoraSpacings.x1_5),
-                        _buildInformationItem(
-                          image: "ic_query.svg",
-                          text: viewModel.questionCount,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: AgoraSpacings.x0_5),
-                  Flexible(
-                    child: Column(
-                      children: [
-                        _buildInformationItem(
-                          image: "ic_timer.svg",
-                          text: viewModel.estimatedTime,
-                        ),
-                      ],
-                    ),
-                  )
+                  Flexible(child: _buildInformationItem(image: "ic_timer.svg", text: viewModel.estimatedTime)),
+                  SizedBox(width: AgoraSpacings.x0_75),
+                  Flexible(child: _buildInformationItem(image: "ic_query.svg", text: viewModel.questionCount)),
                 ],
               ),
               SizedBox(height: AgoraSpacings.x1_5),
