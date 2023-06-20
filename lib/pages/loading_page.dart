@@ -126,11 +126,14 @@ class _LoadingPageState extends State<LoadingPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                AgoraButton(
-                                  label: GenericStrings.contactSupport,
-                                  style: AgoraButtonStyle.blueBorderButtonStyle,
-                                  onPressed: () => ClipboardHelper.copy(context, GenericStrings.mailSupport),
+                                Flexible(
+                                  child: AgoraButton(
+                                    label: GenericStrings.contactSupport,
+                                    style: AgoraButtonStyle.blueBorderButtonStyle,
+                                    onPressed: () => ClipboardHelper.copy(context, GenericStrings.mailSupport),
+                                  ),
                                 ),
+                                SizedBox(width: AgoraSpacings.base),
                                 AgoraButton(
                                   label: GenericStrings.retry,
                                   style: AgoraButtonStyle.primaryButtonStyle,

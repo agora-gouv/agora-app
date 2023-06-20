@@ -99,21 +99,21 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // SizedBox(height: AgoraSpacings.x3),
-                    // Row(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     SvgPicture.asset("assets/ic_bell.svg"),
-                    //     SizedBox(width: AgoraSpacings.x0_75),
-                    //     Expanded(
-                    //       child: Text(
-                    //         ConsultationStrings.notificationInformation,
-                    //         style: AgoraTextStyles.light14,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    // SizedBox(height: AgoraSpacings.base),
+                    SizedBox(height: AgoraSpacings.x2_5),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset("assets/ic_bell.svg"),
+                        SizedBox(width: AgoraSpacings.x0_75),
+                        Expanded(
+                          child: Text(
+                            ConsultationStrings.notificationInformation,
+                            style: AgoraTextStyles.light14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: AgoraSpacings.base),
                     // AgoraButton(
                     //   label: ConsultationStrings.refuseNotification,
                     //   style: AgoraButtonStyle.greyButtonStyle,
