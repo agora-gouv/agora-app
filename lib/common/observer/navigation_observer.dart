@@ -1,8 +1,8 @@
 import 'package:agora/common/log/log.dart';
 import 'package:flutter/material.dart';
 
-/// Not works for onGenerateRoute
-/// Only works for routes
+/// works for routes automatically
+/// works for onGenerateRoute if added RouteSettings(name: settings.name) in PageRoute
 class NavigationObserver extends RouteObserver<ModalRoute<dynamic>> {
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
