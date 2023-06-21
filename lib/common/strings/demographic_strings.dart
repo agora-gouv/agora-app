@@ -42,9 +42,10 @@ class DemographicStrings {
   static const String informationCapitalize = "Informations\n";
   static const String demographic = "démographiques";
   static const String demographicInformationNotice1 =
-      "Ces informations nous permettent d'analyser plus finement les résultats des consultations.";
+      "Ces informations nous permettent d'analyser plus finement les résultats des consultations à des fins statistiques et de manière anonyme.";
   static const String demographicInformationNotice2 =
       "Conformément au RGPD, vous avez la possibilité de consulter, modifier ou supprimer l'ensemble des informations vous concernant.";
+  static const String demographicInformationNotice3 = "Lire la politique de confidentialité.";
   static const String suppressMyInformation = "Supprimer mes informations";
   static const String whatAbout = "De quoi s'agit-il ?";
   static const String question5WhatAbout =
