@@ -133,13 +133,10 @@ class OnboardingView extends StatelessWidget {
   Widget _buildThematiqueCard(BuildContext context, String picto, String label) {
     final width = max(MediaQuery.of(context).size.width * 0.32, 150.0);
     final height = max(MediaQuery.of(context).size.height * 0.2, 130.0);
-    return InkWell(
-      onTap: () => onClick(),
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: OnboardingThematiqueCard(picto: picto, label: label, height: height),
-      ),
+    return SizedBox(
+      width: width,
+      height: height,
+      child: OnboardingThematiqueCard(picto: picto, label: label, height: height),
     );
   }
 }
