@@ -5,6 +5,7 @@ import 'package:agora/bloc/demographic/get/demographic_information_view_model.da
 import 'package:agora/bloc/demographic/send/demographic_responses_send_bloc.dart';
 import 'package:agora/bloc/demographic/send/demographic_responses_send_event.dart';
 import 'package:agora/bloc/demographic/send/demographic_responses_send_state.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
@@ -23,6 +24,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -152,7 +154,21 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
               SizedBox(height: AgoraSpacings.base),
               Text(DemographicStrings.demographicInformationNotice1, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.x0_5),
-              Text(DemographicStrings.demographicInformationNotice2, style: AgoraTextStyles.light14),
+              RichText(
+                text: TextSpan(
+                  style: AgoraTextStyles.light14,
+                  children: [
+                    TextSpan(text: DemographicStrings.demographicInformationNotice2),
+                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                    TextSpan(
+                      text: DemographicStrings.demographicInformationNotice3,
+                      style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: AgoraSpacings.x1_25),
               BlocListener<SendDemographicResponsesBloc, SendDemographicResponsesState>(
                 listener: (previousState, currentState) {
