@@ -18,7 +18,7 @@
 	<string>iPhone Distribution: Octo Technology Mobile</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>fr.gouv.agora</key>
+		<key>fr.social.gouv.agora.debug</key>
 		<string>Agora AdHoc</string>
 	</dict>
 </dict>
