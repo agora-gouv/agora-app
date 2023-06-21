@@ -38,6 +38,7 @@ void main() {
               "thematique": {"label": "Transports", "picto": "🚊"},
               "endDate": "2023-03-21",
               "hasAnswered": false,
+              "highlightLabel": "Plus que 3 jours",
             }
           ],
           "finished": [
@@ -84,6 +85,7 @@ void main() {
               thematique: Thematique(picto: "🚊", label: "Transports"),
               endDate: DateTime(2023, 3, 21),
               hasAnswered: false,
+              highlightLabel: "Plus que 3 jours",
             ),
           ],
           finishedConsultations: [
@@ -104,6 +106,59 @@ void main() {
               step: 3,
             ),
           ],
+        ),
+      );
+    });
+
+    test("when success and highlightLabel is null should return consultations", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations",
+        (server) => server.reply(HttpStatus.ok, {
+          "ongoing": [
+            {
+              "id": "consultationId1",
+              "title": "Développer le covoiturage",
+              "coverUrl": "coverUrl1",
+              "thematique": {"label": "Transports", "picto": "🚊"},
+              "endDate": "2023-03-21",
+              "hasAnswered": false,
+              "highlightLabel": null,
+            }
+          ],
+          "finished": [],
+          "answered": []
+        }),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchConsultations();
+
+      // Then
+      expect(
+        response,
+        GetConsultationsSucceedResponse(
+          ongoingConsultations: [
+            ConsultationOngoing(
+              id: "consultationId1",
+              title: "Développer le covoiturage",
+              coverUrl: "coverUrl1",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              endDate: DateTime(2023, 3, 21),
+              hasAnswered: false,
+              highlightLabel: null,
+            ),
+          ],
+          finishedConsultations: [],
+          answeredConsultations: [],
         ),
       );
     });

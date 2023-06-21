@@ -16,7 +16,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: AgoraSpacings.x1_25),
+        SizedBox(height: AgoraSpacings.base),
         Container(
           color: AgoraColors.doctor,
           child: Padding(

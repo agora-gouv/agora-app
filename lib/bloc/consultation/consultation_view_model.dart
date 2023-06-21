@@ -8,6 +8,7 @@ class ConsultationOngoingViewModel extends Equatable {
   final ThematiqueViewModel thematique;
   final String endDate;
   final bool hasAnswered;
+  final String? highlightLabel;
 
   ConsultationOngoingViewModel({
     required this.id,
@@ -16,16 +17,18 @@ class ConsultationOngoingViewModel extends Equatable {
     required this.thematique,
     required this.endDate,
     required this.hasAnswered,
+    required this.highlightLabel,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         title,
         coverUrl,
         thematique,
         endDate,
         hasAnswered,
+        highlightLabel,
       ];
 }
 

@@ -59,6 +59,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             thematique: (ongoingConsultation["thematique"] as Map).toThematique(),
             endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
             hasAnswered: ongoingConsultation["hasAnswered"] as bool,
+            highlightLabel: ongoingConsultation["highlightLabel"] as String?,
           );
         }).toList(),
         finishedConsultations: finishedConsultations.map((finishedConsultation) {

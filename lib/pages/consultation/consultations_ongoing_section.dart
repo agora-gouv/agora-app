@@ -13,33 +13,34 @@ class ConsultationsOngoingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
-        right: AgoraSpacings.horizontalPadding,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: _buildOngoingConsultations(context),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: _buildOngoingConsultations(context),
     );
   }
 
   List<Widget> _buildOngoingConsultations(BuildContext context) {
     final List<Widget> ongoingConsultationsWidgets = List.empty(growable: true);
     ongoingConsultationsWidgets.add(
-      AgoraRichText(
-        items: [
-          AgoraRichTextTextItem(
-            text: "${ConsultationStrings.ongoingConsultationPart1}\n",
-            style: AgoraRichTextItemStyle.regular,
-          ),
-          AgoraRichTextTextItem(text: ConsultationStrings.ongoingConsultationPart2, style: AgoraRichTextItemStyle.bold),
-        ],
+      Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AgoraSpacings.horizontalPadding,
+          vertical: AgoraSpacings.base,
+        ),
+        child: AgoraRichText(
+          items: [
+            AgoraRichTextTextItem(
+              text: "${ConsultationStrings.ongoingConsultationPart1}\n",
+              style: AgoraRichTextItemStyle.regular,
+            ),
+            AgoraRichTextTextItem(
+              text: ConsultationStrings.ongoingConsultationPart2,
+              style: AgoraRichTextItemStyle.bold,
+            ),
+          ],
+        ),
       ),
     );
-    ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
 
     if (ongoingViewModels.isEmpty) {
       ongoingConsultationsWidgets.add(Container(width: double.infinity));
@@ -57,6 +58,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
           title: ongoingViewModel.title,
           endDate: ongoingViewModel.endDate,
           hasAnswered: ongoingViewModel.hasAnswered,
+          highlightLabel: ongoingViewModel.highlightLabel,
         ),
       );
       ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
