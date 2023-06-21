@@ -24,6 +24,7 @@ import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/pages/webview/webview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -88,6 +89,8 @@ class AgoraAppRouter {
             widgetName: AnalyticsScreenNames.demographicProfilePage,
             child: DemographicProfilePage(),
           ),
+      // Webview
+      WebviewPage.routeName: (context) => WebviewPage(),
     };
   }
 

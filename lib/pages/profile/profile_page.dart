@@ -113,21 +113,21 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: ProfileStrings.privacyPolicy,
                 onClick: () {
                   _track(AnalyticsEventNames.privacyPolicy);
-                  LaunchUrlHelper.launch(ProfileStrings.privacyPolicyLink);
+                  LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.termsOfService,
                 onClick: () {
                   _track(AnalyticsEventNames.termsOfService);
-                  LaunchUrlHelper.launch(ProfileStrings.cguLink);
+                  LaunchUrlHelper.webview(context, ProfileStrings.cguLink);
                 },
               ),
               AgoraMenuItem(
                 title: ProfileStrings.legalNotice,
                 onClick: () {
                   _track(AnalyticsEventNames.legalNotice);
-                  LaunchUrlHelper.launch(ProfileStrings.legalNoticeLink);
+                  LaunchUrlHelper.webview(context, ProfileStrings.legalNoticeLink);
                 },
               ),
               SizedBox(height: AgoraSpacings.base),
@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: AgoraButtonStyle.primaryButtonStyle,
                         onPressed: () {
                           _track(AnalyticsEventNames.giveFeedback);
-                          LaunchUrlHelper.launch(ProfileStrings.feedbackLink);
+                          LaunchUrlHelper.webview(context, ProfileStrings.feedbackLink);
                         },
                       ),
                     ],

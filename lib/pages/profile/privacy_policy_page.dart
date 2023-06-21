@@ -53,9 +53,9 @@ class PrivacyPolicyPage extends StatelessWidget {
                   _paragraph6(context) +
                   _paragraph7() +
                   _paragraph8() +
-                  _paragraph9() +
-                  _paragraph10() +
-                  _paragraph11() +
+                  _paragraph9(context) +
+                  _paragraph10(context) +
+                  _paragraph11(context) +
                   [
                     AgoraButton(
                       label: GenericStrings.back,
@@ -216,7 +216,7 @@ class PrivacyPolicyPage extends StatelessWidget {
           TextSpan(
             text: GenericStrings.cnil,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
-            recognizer: TapGestureRecognizer()..onTap = () => LaunchUrlHelper.launch(GenericStrings.cnil),
+            recognizer: TapGestureRecognizer()..onTap = () => LaunchUrlHelper.webview(context, GenericStrings.cnil),
           ),
         ],
         withBulletPoint: false,
@@ -271,7 +271,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     ];
   }
 
-  List<Widget> _paragraph9() {
+  List<Widget> _paragraph9(BuildContext context) {
     // Qui nous aide à manipuler les données ?
     return [
       Text(PrivacyPolicyStrings.title9, style: AgoraTextStyles.medium16),
@@ -293,7 +293,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             text: PrivacyPolicyStrings.descriptionMatomoLink,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
             recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.launch(PrivacyPolicyStrings.descriptionMatomoLink),
+              ..onTap = () => LaunchUrlHelper.webview(context, PrivacyPolicyStrings.descriptionMatomoLink),
           ),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
           TextSpan(text: PrivacyPolicyStrings.description9_5_3),
@@ -315,7 +315,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             text: PrivacyPolicyStrings.description9_9,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
             recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.launch(PrivacyPolicyStrings.description9_9),
+              ..onTap = () => LaunchUrlHelper.webview(context, PrivacyPolicyStrings.description9_9),
           ),
         ],
       ),
@@ -335,7 +335,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             text: PrivacyPolicyStrings.description9_13,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
             recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.launch(PrivacyPolicyStrings.description9_13),
+              ..onTap = () => LaunchUrlHelper.webview(context, PrivacyPolicyStrings.description9_13),
           ),
         ],
       ),
@@ -355,7 +355,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             text: PrivacyPolicyStrings.description9_17,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
             recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.launch(PrivacyPolicyStrings.description9_17),
+              ..onTap = () => LaunchUrlHelper.webview(context, PrivacyPolicyStrings.description9_17),
           ),
         ],
       ),
@@ -363,7 +363,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     ];
   }
 
-  List<Widget> _paragraph10() {
+  List<Widget> _paragraph10(BuildContext context) {
     // Cookies
     return [
       Text(PrivacyPolicyStrings.title10, style: AgoraTextStyles.medium16),
@@ -392,7 +392,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             text: PrivacyPolicyStrings.descriptionMatomoLink,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
             recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.launch(PrivacyPolicyStrings.descriptionMatomoLink),
+              ..onTap = () => LaunchUrlHelper.webview(context, PrivacyPolicyStrings.descriptionMatomoLink),
           ),
         ],
       ),
@@ -400,7 +400,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     ];
   }
 
-  List<Widget> _paragraph11() {
+  List<Widget> _paragraph11(BuildContext context) {
     // Pour aller plus loin
     return [
       SizedBox(height: AgoraSpacings.x0_75),
@@ -412,7 +412,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             text: PrivacyPolicyStrings.description11_1_1,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
             recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.launch(PrivacyPolicyStrings.description11_1_2),
+              ..onTap = () => LaunchUrlHelper.webview(context, PrivacyPolicyStrings.description11_1_2),
           ),
         ],
       ),
@@ -423,7 +423,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             text: PrivacyPolicyStrings.description11_2_1,
             style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
             recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.launch(PrivacyPolicyStrings.description11_2_2),
+              ..onTap = () => LaunchUrlHelper.webview(context, PrivacyPolicyStrings.description11_2_2),
           ),
         ],
       ),

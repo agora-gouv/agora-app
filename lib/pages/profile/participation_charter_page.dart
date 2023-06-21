@@ -51,7 +51,7 @@ class ParticipationCharterPage extends StatelessWidget {
                             label: GenericStrings.readCompleteCharter,
                             style: AgoraButtonStyle.blueBorderButtonStyle,
                             onPressed: () {
-                              LaunchUrlHelper.launch(ProfileStrings.participateCharterLink);
+                              LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
                             },
                           ),
                         ),
