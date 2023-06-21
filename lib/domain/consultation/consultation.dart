@@ -8,6 +8,7 @@ class ConsultationOngoing extends Equatable {
   final Thematique thematique;
   final bool hasAnswered;
   final DateTime endDate;
+  final String? highlightLabel;
 
   ConsultationOngoing({
     required this.id,
@@ -16,16 +17,18 @@ class ConsultationOngoing extends Equatable {
     required this.thematique,
     required this.endDate,
     required this.hasAnswered,
+    required this.highlightLabel,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         title,
         coverUrl,
         thematique,
         endDate,
         hasAnswered,
+        highlightLabel,
       ];
 }
 

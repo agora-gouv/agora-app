@@ -25,6 +25,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   final String title;
   final String endDate;
   final bool hasAnswered;
+  final String? highlightLabel;
 
   AgoraConsultationOngoingCard({
     required this.consultationId,
@@ -33,104 +34,130 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     required this.title,
     required this.endDate,
     required this.hasAnswered,
+    required this.highlightLabel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AgoraRoundedCard(
-      borderColor: AgoraColors.border,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Image.network(
-              imageUrl,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width * 0.5,
-              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                return Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.width * 0.5,
-                    child: loadingProgress == null
-                        ? child
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Spacer(),
-                              CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                  ),
-                );
-              },
-            ),
-          ),
-          SizedBox(height: AgoraSpacings.base),
-          ThematiqueHelper.buildCard(context, thematique, size: AgoraThematiqueSize.large),
-          SizedBox(height: AgoraSpacings.x0_25),
-          Text(title, style: AgoraTextStyles.medium22),
-          SizedBox(height: AgoraSpacings.x0_5),
-          Text(
-            ConsultationStrings.endDate.format(endDate),
-            style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.rhineCastle),
-          ),
-          SizedBox(height: AgoraSpacings.x1_25),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return highlightLabel != null
+        ? Stack(
             children: [
-              Flexible(
-                child: AgoraButton(
-                  label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
-                  icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
-                  style: AgoraButtonStyle.blueBorderButtonStyle,
-                  onPressed: () {
-                    if (hasAnswered) {
-                      TrackerHelper.trackClick(
-                        clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
-                        widgetName: AnalyticsScreenNames.consultationsPage,
-                      );
-                      Navigator.pushNamed(
-                        context,
-                        ConsultationSummaryPage.routeName,
-                        arguments: ConsultationSummaryArguments(
-                          consultationId: consultationId,
-                          shouldReloadConsultationsWhenPop: false,
-                        ),
-                      );
-                    } else {
-                      TrackerHelper.trackClick(
-                        clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
-                        widgetName: AnalyticsScreenNames.consultationsPage,
-                      );
-                      Navigator.pushNamed(
-                        context,
-                        ConsultationDetailsPage.routeName,
-                        arguments: ConsultationDetailsArguments(consultationId: consultationId),
-                      );
-                    }
-                  },
+              _buildCard(context),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: AgoraSpacings.base,
+                  left: AgoraSpacings.base,
+                  right: AgoraSpacings.x2,
                 ),
-              ),
-              SizedBox(width: AgoraSpacings.base),
-              AgoraIconButton(
-                icon: "ic_share.svg",
-                onClick: () {
-                  TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
-                    widgetName: AnalyticsScreenNames.consultationsPage,
-                  );
-                  ShareHelper.shareConsultation(title: title, id: consultationId);
-                },
+                child: AgoraRoundedCard(
+                  cardColor: AgoraColors.fluorescentRed,
+                  padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5, vertical: AgoraSpacings.x0_25),
+                  child: Text(highlightLabel!, style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.white)),
+                ),
               ),
             ],
           )
-        ],
+        : _buildCard(context);
+  }
+
+  Widget _buildCard(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+      child: AgoraRoundedCard(
+        borderColor: AgoraColors.border,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Image.network(
+                imageUrl,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.5,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  return Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width * 0.5,
+                      child: loadingProgress == null
+                          ? child
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: AgoraSpacings.base),
+            ThematiqueHelper.buildCard(context, thematique, size: AgoraThematiqueSize.large),
+            SizedBox(height: AgoraSpacings.x0_25),
+            Text(title, style: AgoraTextStyles.medium22),
+            SizedBox(height: AgoraSpacings.x0_5),
+            Text(
+              ConsultationStrings.endDate.format(endDate),
+              style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.rhineCastle),
+            ),
+            SizedBox(height: AgoraSpacings.x1_25),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: AgoraButton(
+                    label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
+                    icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
+                    style: AgoraButtonStyle.blueBorderButtonStyle,
+                    onPressed: () {
+                      if (hasAnswered) {
+                        TrackerHelper.trackClick(
+                          clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
+                          widgetName: AnalyticsScreenNames.consultationsPage,
+                        );
+                        Navigator.pushNamed(
+                          context,
+                          ConsultationSummaryPage.routeName,
+                          arguments: ConsultationSummaryArguments(
+                            consultationId: consultationId,
+                            shouldReloadConsultationsWhenPop: false,
+                          ),
+                        );
+                      } else {
+                        TrackerHelper.trackClick(
+                          clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
+                          widgetName: AnalyticsScreenNames.consultationsPage,
+                        );
+                        Navigator.pushNamed(
+                          context,
+                          ConsultationDetailsPage.routeName,
+                          arguments: ConsultationDetailsArguments(consultationId: consultationId),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(width: AgoraSpacings.base),
+                AgoraIconButton(
+                  icon: "ic_share.svg",
+                  onClick: () {
+                    TrackerHelper.trackClick(
+                      clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
+                      widgetName: AnalyticsScreenNames.consultationsPage,
+                    );
+                    ShareHelper.shareConsultation(title: title, id: consultationId);
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

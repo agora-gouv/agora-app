@@ -32,6 +32,7 @@ void main() {
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
               hasAnswered: false,
+              highlightLabel: "Plus que 3 jours",
             )
           ],
           finishedViewModels: [
@@ -73,6 +74,7 @@ void main() {
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
               hasAnswered: false,
+              highlightLabel: null,
             )
           ],
           finishedViewModels: [

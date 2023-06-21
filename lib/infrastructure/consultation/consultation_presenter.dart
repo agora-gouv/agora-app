@@ -15,6 +15,7 @@ class ConsultationPresenter {
         thematique: consultation.thematique.toThematiqueViewModel(),
         endDate: consultation.endDate.formatToDayMonth(),
         hasAnswered: consultation.hasAnswered,
+        highlightLabel: consultation.highlightLabel,
       );
     }).toList();
   }

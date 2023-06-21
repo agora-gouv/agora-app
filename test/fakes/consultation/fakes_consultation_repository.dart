@@ -22,6 +22,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
           hasAnswered: false,
+          highlightLabel: "Plus que 3 jours",
         )
       ],
       finishedConsultations: [
@@ -188,6 +189,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
           hasAnswered: false,
+          highlightLabel: null,
         )
       ],
       finishedConsultations: [],
