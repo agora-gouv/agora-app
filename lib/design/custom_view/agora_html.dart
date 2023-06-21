@@ -14,7 +14,7 @@ class AgoraHtml extends StatelessWidget {
       data: data,
       style: AgoraHtmlStyles.htmlStyle,
       onLinkTap: (url, _, __, ___) async {
-        LaunchUrlHelper.launch(url);
+        LaunchUrlHelper.webview(context, url);
       },
     );
   }
