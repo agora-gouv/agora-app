@@ -22,7 +22,7 @@
   git config core.hooksPath .githooks/
 ```
 ```shell
-  rm -rf .git/hooks
+  git config --unset core.hooksPath
 ```
 
 ## Firebase
