@@ -45,7 +45,7 @@ class FirebasePushNotificationService extends PushNotificationService {
   final String _channelId = 'high_importance_channel';
   late AndroidNotificationChannel channel;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  final int _fcmTokenErrorWaitDelayInSeconds = 3;
+  final int _fcmTokenErrorWaitDelayInSeconds = 5;
 
   @override
   Future<void> setupNotifications() async {
