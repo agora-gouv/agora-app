@@ -26,11 +26,16 @@ class WebviewPage extends StatelessWidget {
         children: [
           AgoraToolbar(),
           Expanded(
-            child: WebViewWidget(
-              controller: WebViewController()
-                ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                ..setBackgroundColor(AgoraColors.white)
-                ..loadRequest(Uri.parse(finalUrl)),
+            child: Stack(
+              children: [
+                Center(child: CircularProgressIndicator()),
+                WebViewWidget(
+                  controller: WebViewController()
+                    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                    ..setBackgroundColor(AgoraColors.white)
+                    ..loadRequest(Uri.parse(finalUrl)),
+                ),
+              ],
             ),
           ),
         ],
