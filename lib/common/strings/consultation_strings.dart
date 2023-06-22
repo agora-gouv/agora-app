@@ -45,6 +45,6 @@ class ConsultationStrings {
   static const String implementation = "Mise en œuvre";
   static const String shortly = "PROCHAINEMENT";
 
-  static const String shareDeeplinkText =
+  static const String shareConsultationDeeplink =
       "Comme moi, tu peux participer à la Consultation\u{00A0}: %1s\nhttps://agora.beta.gouv.fr/consultations/%2s";
 }

@@ -180,7 +180,11 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                             clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
                             widgetName: AnalyticsScreenNames.qagDetailsPage,
                           );
-                          ShareHelper.shareQag(title: viewModel.title, id: viewModel.id);
+                          if (viewModel.response == null) {
+                            ShareHelper.shareQag(title: viewModel.title, id: viewModel.id);
+                          } else {
+                            ShareHelper.shareQagAnswered(title: viewModel.title, id: viewModel.id);
+                          }
                         },
                       ),
                     ),
