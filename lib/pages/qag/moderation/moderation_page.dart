@@ -44,7 +44,10 @@ class _ModerationPageState extends State<ModerationPage> {
         ),
       ],
       child: AgoraScaffold(
-        popAction: () => _onBackClick(context),
+        popAction: () {
+          _onBackClick(context);
+          return true;
+        },
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: AgoraSecondaryStyleView(

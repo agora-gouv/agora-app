@@ -82,7 +82,10 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
         BlocProvider(create: (context) => _getQagPaginatedSupportingBloc()),
       ],
       child: AgoraScaffold(
-        popAction: () => _popWithBackResult(context),
+        popAction: () {
+          _popWithBackResult(context);
+          return true;
+        },
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, thematiqueState) {
             if (thematiqueState is ThematiqueSuccessState) {

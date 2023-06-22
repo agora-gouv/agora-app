@@ -6,7 +6,7 @@ class AgoraScaffold extends StatelessWidget {
   final Color appBarColor;
   final Color backgroundColor;
   final bool shouldPop;
-  final VoidCallback? popAction;
+  final bool Function()? popAction;
 
   const AgoraScaffold({
     super.key,
@@ -23,8 +23,7 @@ class AgoraScaffold extends StatelessWidget {
       if (popAction != null) {
         return WillPopScope(
           onWillPop: () async {
-            popAction!();
-            return true;
+            return popAction!();
           },
           child: _buildScaffold(),
         );

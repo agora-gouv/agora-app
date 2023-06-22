@@ -63,7 +63,10 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
           ..add(FetchConsultationSummaryEvent(consultationId: consultationId));
       },
       child: AgoraScaffold(
-        popAction: () => _onBackClick(context, consultationId, shouldReloadConsultationsWhenPop),
+        popAction: () {
+          _onBackClick(context, consultationId, shouldReloadConsultationsWhenPop);
+          return true;
+        },
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(
           builder: (context, state) {
             if (state is ConsultationSummaryFetchedState) {

@@ -34,7 +34,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return AgoraScaffold(
-      popAction: () => _onBackClick(context),
+      popAction: () {
+        _onBackClick(context);
+        return true;
+      },
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: AgoraSecondaryStyleView(
