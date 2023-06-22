@@ -13,31 +13,38 @@ enum AgoraLikeStyle {
 class AgoraLikeView extends StatelessWidget {
   final bool isSupported;
   final int supportCount;
-  final bool addEndSpacing;
+  final bool shouldHaveHorizontalPadding;
+  final bool shouldHaveVerticalPadding;
   final AgoraLikeStyle style;
 
   const AgoraLikeView({
     super.key,
     required this.isSupported,
     required this.supportCount,
-    this.addEndSpacing = true,
+    this.shouldHaveHorizontalPadding = true,
+    this.shouldHaveVerticalPadding = false,
     this.style = AgoraLikeStyle.police14,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        SvgPicture.asset(_getIcon(), width: _buildIconSize()),
-        SizedBox(width: AgoraSpacings.x0_25),
-        Text(
-          supportCount.toString(),
-          style: _buildTextStyle(),
-          semanticsLabel: SemanticsStrings.supportNumber.format(supportCount.toString()),
-        ),
-        if (addEndSpacing) SizedBox(width: AgoraSpacings.x0_5),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
+        vertical: shouldHaveVerticalPadding ? 2 : 0,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          SvgPicture.asset(_getIcon(), width: _buildIconSize()),
+          SizedBox(width: AgoraSpacings.x0_25),
+          Text(
+            supportCount.toString(),
+            style: _buildTextStyle(),
+            semanticsLabel: SemanticsStrings.supportNumber.format(supportCount.toString()),
+          ),
+        ],
+      ),
     );
   }
 

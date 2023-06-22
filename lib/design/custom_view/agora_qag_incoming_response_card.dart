@@ -98,7 +98,7 @@ class AgoraQagIncomingResponseCard extends StatelessWidget {
                       isSupported: isSupported,
                       supportCount: supportCount,
                       style: AgoraLikeStyle.police12,
-                      addEndSpacing: false,
+                      shouldHaveHorizontalPadding: false,
                     ),
                   ),
                 ],

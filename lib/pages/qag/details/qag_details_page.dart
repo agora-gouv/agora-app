@@ -204,7 +204,6 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                   children: [
                     Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
                     if (response != null) ...[
-                      SizedBox(width: AgoraSpacings.x0_75),
                       Padding(
                         padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
                         child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),

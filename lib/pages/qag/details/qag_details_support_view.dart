@@ -55,6 +55,7 @@ class QagDetailsSupportView extends StatelessWidget {
                   child: AgoraLikeView(
                     isSupported: _buildIsSupported(isSupported, supportState),
                     supportCount: _buildCount(support, supportState),
+                    shouldHaveVerticalPadding: true,
                   ),
                 ),
               ],
