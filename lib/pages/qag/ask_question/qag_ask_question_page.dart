@@ -14,6 +14,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -185,36 +186,41 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 children: [
                   Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
                   SizedBox(width: AgoraSpacings.x0_5),
-                  GestureDetector(
-                    child: SvgPicture.asset("assets/ic_info.svg"),
-                    onTap: () {
-                      showAgoraDialog(
-                        context: context,
-                        columnChildren: [
-                          RichText(
-                            text: TextSpan(
-                              style: AgoraTextStyles.light16,
-                              children: [
-                                TextSpan(text: QagStrings.yourNameInfoBubble1),
-                                WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                TextSpan(
-                                  text: QagStrings.yourNameInfoBubble2,
-                                  style: AgoraTextStyles.light16Underline.copyWith(color: AgoraColors.primaryBlue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
-                                ),
-                              ],
+                  Semantics(
+                    button: true,
+                    label: SemanticsStrings.moreInformation,
+                    child: GestureDetector(
+                      child: SvgPicture.asset("assets/ic_info.svg"),
+                      onTap: () {
+                        showAgoraDialog(
+                          context: context,
+                          columnChildren: [
+                            RichText(
+                              text: TextSpan(
+                                style: AgoraTextStyles.light16,
+                                children: [
+                                  TextSpan(text: QagStrings.yourNameInfoBubble1),
+                                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                  TextSpan(
+                                    text: QagStrings.yourNameInfoBubble2,
+                                    style: AgoraTextStyles.light16Underline.copyWith(color: AgoraColors.primaryBlue),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap =
+                                          () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(height: AgoraSpacings.x0_75),
-                          AgoraButton(
-                            label: GenericStrings.close,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      );
-                    },
+                            SizedBox(height: AgoraSpacings.x0_75),
+                            AgoraButton(
+                              label: GenericStrings.close,
+                              style: AgoraButtonStyle.primaryButtonStyle,
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
