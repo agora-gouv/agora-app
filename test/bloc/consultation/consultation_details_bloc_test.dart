@@ -36,7 +36,7 @@ void main() {
             participantCount: 15035,
             participantCountGoal: 30000,
             participantCountText: "15035 participants",
-            participantCountGoalText: "Prochain objectif : 30000 !",
+            participantCountGoalText: "Prochain objectif\u{00A0}: 30000\u{00A0}!",
             description: "<body>La description avec textes <b>en gras</b></body>",
             tipsDescription: "<body>texte <i>riche</i></body>",
             hasAnswered: true,

@@ -17,9 +17,12 @@
 - Open `IntelliJ IDEA` > `Preferences` > `Editor` > `Code Style` > `Dart`, Change Line Length to `120`
 - `shift` + `option` + `Command` + `l` > `pop-up opened` > select `Optimize imports`
 
-### 3. Add githooks
+### 3. Add githooks / Remove githooks
 ```shell
   git config core.hooksPath .githooks/
+```
+```shell
+  rm -rf .git/hooks
 ```
 
 ## Firebase
