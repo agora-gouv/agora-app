@@ -6,6 +6,11 @@ on:
 
   workflow_dispatch:
 
+# This will cancel the previous workflow
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: flutter-test
