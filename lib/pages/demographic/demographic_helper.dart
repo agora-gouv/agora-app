@@ -41,23 +41,21 @@ class DemographicHelper {
         SizedBox(height: AgoraSpacings.x1_5),
         InkWell(
           onTap: () => onBackTap(),
-          child: SizedBox(
-            width: 200,
-            child: Column(
+          child: Container(
+            padding: EdgeInsets.only(bottom: AgoraSpacings.x0_25),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: AgoraColors.primaryBlue, width: 1))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Row(
-                  children: [
-                    SvgPicture.asset("assets/ic_backward.svg"),
-                    SizedBox(width: AgoraSpacings.base),
-                    Expanded(
-                      child: Text(
-                        DemographicStrings.previousQuestion,
-                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
-                      ),
-                    ),
-                  ],
+                SvgPicture.asset("assets/ic_backward.svg"),
+                SizedBox(width: AgoraSpacings.base),
+                Flexible(
+                  child: Text(
+                    DemographicStrings.previousQuestion,
+                    style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
+                  ),
                 ),
-                Divider(height: 10, color: AgoraColors.primaryBlue, thickness: 1),
               ],
             ),
           ),
