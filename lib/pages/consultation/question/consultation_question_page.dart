@@ -36,6 +36,7 @@ class ConsultationQuestionPage extends StatefulWidget {
 
 class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   String? currentQuestionId;
+  List<String> questionsStack = [];
 
   @override
   Widget build(BuildContext context) {
@@ -50,31 +51,32 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           create: (BuildContext context) => ConsultationQuestionsResponsesStockBloc(),
         ),
       ],
-      child: AgoraScaffold(
-        shouldPop: false,
-        child: BlocBuilder<ConsultationQuestionsBloc, ConsultationQuestionsState>(
-          builder: (context, questionsState) {
-            if (questionsState is ConsultationQuestionsFetchedState) {
-              return _handleQuestionsFetchedState(questionsState);
-            } else if (questionsState is ConsultationQuestionsErrorState) {
-              return Column(
+      child: BlocBuilder<ConsultationQuestionsBloc, ConsultationQuestionsState>(
+        builder: (context, questionsState) {
+          if (questionsState is ConsultationQuestionsFetchedState) {
+            return _handleQuestionsFetchedState(questionsState);
+          } else if (questionsState is ConsultationQuestionsErrorState) {
+            return AgoraScaffold(
+              child: Column(
                 children: [
                   AgoraToolbar(style: AgoraToolbarStyle.close),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: AgoraErrorView()),
                 ],
-              );
-            } else {
-              return Column(
+              ),
+            );
+          } else {
+            return AgoraScaffold(
+              child: Column(
                 children: [
                   AgoraToolbar(style: AgoraToolbarStyle.close),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: CircularProgressIndicator()),
                 ],
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -83,62 +85,91 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     return BlocBuilder<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
       builder: (context, responsesStockState) {
         currentQuestionId ??= questionsState.viewModels[0].id;
+        questionsStack = responsesStockState.questionsStack;
         final currentQuestion = questionsState.viewModels.firstWhere((element) => element.id == currentQuestionId);
         final totalQuestions = questionsState.viewModels.length;
         final questionAlreadyAnswered = _getPreviousResponses(
           questionId: currentQuestion.id,
           inStockResponses: responsesStockState.questionsResponses,
         );
-        if (currentQuestion is ConsultationQuestionUniqueViewModel) {
-          return _handleQuestionUniqueChoice(
-            widget.consultationId,
+        return AgoraScaffold(
+          popAction: () {
+            try {
+              final previousQuestion = questionsStack.last;
+              _removeAndGoToPreviousQuestion(context, previousQuestion);
+              return false;
+            } catch (e) {
+              Navigator.pop(context);
+              return true;
+            }
+          },
+          child: _buildContent(
             currentQuestion,
             totalQuestions,
             questionAlreadyAnswered,
             responsesStockState,
             context,
-          );
-        } else if (currentQuestion is ConsultationQuestionMultipleViewModel) {
-          return _handleQuestionMultipleChoices(
-            widget.consultationId,
-            currentQuestion,
-            totalQuestions,
-            questionAlreadyAnswered,
-            responsesStockState,
-            context,
-          );
-        } else if (currentQuestion is ConsultationQuestionOpenedViewModel) {
-          return _handleQuestionOpened(
-            widget.consultationId,
-            currentQuestion,
-            totalQuestions,
-            questionAlreadyAnswered,
-            responsesStockState,
-            context,
-          );
-        }
-        if (currentQuestion is ConsultationQuestionWithConditionViewModel) {
-          return _handleQuestionWithConditions(
-            widget.consultationId,
-            currentQuestion,
-            totalQuestions,
-            questionAlreadyAnswered,
-            responsesStockState,
-            context,
-          );
-        } else if (currentQuestion is ConsultationQuestionChapterViewModel) {
-          return _handleChapter(
-            widget.consultationId,
-            currentQuestion,
-            totalQuestions,
-            responsesStockState,
-            context,
-          );
-        } else {
-          return Container();
-        }
+          ),
+        );
       },
     );
+  }
+
+  Widget _buildContent(
+    ConsultationQuestionViewModel currentQuestion,
+    int totalQuestions,
+    ConsultationQuestionResponses? questionAlreadyAnswered,
+    ConsultationQuestionsResponsesStockState responsesStockState,
+    BuildContext context,
+  ) {
+    if (currentQuestion is ConsultationQuestionUniqueViewModel) {
+      return _handleQuestionUniqueChoice(
+        widget.consultationId,
+        currentQuestion,
+        totalQuestions,
+        questionAlreadyAnswered,
+        responsesStockState,
+        context,
+      );
+    } else if (currentQuestion is ConsultationQuestionMultipleViewModel) {
+      return _handleQuestionMultipleChoices(
+        widget.consultationId,
+        currentQuestion,
+        totalQuestions,
+        questionAlreadyAnswered,
+        responsesStockState,
+        context,
+      );
+    } else if (currentQuestion is ConsultationQuestionOpenedViewModel) {
+      return _handleQuestionOpened(
+        widget.consultationId,
+        currentQuestion,
+        totalQuestions,
+        questionAlreadyAnswered,
+        responsesStockState,
+        context,
+      );
+    }
+    if (currentQuestion is ConsultationQuestionWithConditionViewModel) {
+      return _handleQuestionWithConditions(
+        widget.consultationId,
+        currentQuestion,
+        totalQuestions,
+        questionAlreadyAnswered,
+        responsesStockState,
+        context,
+      );
+    } else if (currentQuestion is ConsultationQuestionChapterViewModel) {
+      return _handleChapter(
+        widget.consultationId,
+        currentQuestion,
+        totalQuestions,
+        responsesStockState,
+        context,
+      );
+    } else {
+      return Container();
+    }
   }
 
   ConsultationQuestionUniqueChoiceView _handleQuestionUniqueChoice(

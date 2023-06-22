@@ -113,7 +113,10 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         ),
       ],
       child: AgoraScaffold(
-        popAction: () => _popWithBackResult(context),
+        popAction: () {
+          _popWithBackResult(context);
+          return true;
+        },
         appBarColor: AgoraColors.primaryBlue,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
