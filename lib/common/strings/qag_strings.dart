@@ -29,12 +29,12 @@ class QagStrings {
   static const String noticeDescription = "lorem ipsum";
   static const String agree = "C'est compris";
   static const String questionTitle = "Ma question";
-  static const String questionHint = "Exemple : Pourquoi avoir créé cette application ?";
+  static const String questionHint = "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}?";
   static const String questionRequiredCondition = "La question doit comporter au moins 10 caractères.";
   static const String detailsTitle = "Détails supplémentaires";
   static const String detailsDescription =
       "Ajoutez davantage d'informations ou de contexte si vous le souhaitez (facultatif)";
-  static const String detailsHint = "Exemple : Je vous pose cette question parce que …\n";
+  static const String detailsHint = "Exemple\u{00A0}: Je vous pose cette question parce que …\n";
   static const String thematiqueTitle = "Thématique";
   static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Mon prénom";
@@ -49,9 +49,9 @@ class QagStrings {
 
   static const String governmentResponseTitle = "Réponse du gouvernement";
   static const String answerTo = "En réponse à";
-  static const String questionUtilsTitle = "Le ministre a-t-il répondu à votre question ?";
-  static const String utils = "Oui !";
-  static const String notUtils = "Non !";
+  static const String questionUtilsTitle = "Le ministre a-t-il répondu à votre question\u{00A0}?";
+  static const String utils = "Oui\u{00A0}!";
+  static const String notUtils = "Non\u{00A0}!";
   static const String readMore = "Lire la suite";
   static const String readLess = "Lire moins";
   static const String feedback = "Merci pour votre réponse.";
@@ -61,9 +61,9 @@ class QagStrings {
   static const String retry = "Réessayer";
   static const String validate = "Valider";
   static const String refuse = "Refuser";
-  static const String totalNumber = "Nombre total : %s";
+  static const String totalNumber = "Nombre total\u{00A0}: %s";
 
-  static const String qagModerateTitle = "Cette question n'est plus disponible !";
+  static const String qagModerateTitle = "Cette question n'est plus disponible\u{00A0}!";
   static const String qagModerateDescription1_1 = "Elle ne respectait pas la";
   static const String qagModerateDescription1_2 = "charte de participation";
   static const String qagModerateDescription1_3 = "ou bien son auteur a décidé de la retirer.";
@@ -72,5 +72,5 @@ class QagStrings {
   static const String qagModerateSeeOther = "Voir les autres questions";
 
   static const String shareDeeplinkText =
-      "Voilà une question où j'aimerais avoir une réponse du gouvernement. Peux-tu la soutenir pour qu'elle ait plus de chance d'être celle de la semaine ?\n%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
+      "Voilà une question où j'aimerais avoir une réponse du gouvernement. Peux-tu la soutenir pour qu'elle ait plus de chance d'être celle de la semaine\u{00A0}?\n%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
 }
