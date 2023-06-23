@@ -46,6 +46,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       totalQuestions: widget.totalQuestions,
       questionProgress: multipleChoicesQuestion.questionProgress,
       title: multipleChoicesQuestion.title,
+      popupDescription: multipleChoicesQuestion.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: _buildMultipleChoiceResponse() +

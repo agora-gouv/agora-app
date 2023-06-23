@@ -45,6 +45,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
       totalQuestions: widget.totalQuestions,
       questionProgress: openedQuestion.questionProgress,
       title: openedQuestion.title,
+      popupDescription: openedQuestion.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: _buildOpenedChoiceResponse() +

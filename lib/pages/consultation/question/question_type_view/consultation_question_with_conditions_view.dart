@@ -29,6 +29,7 @@ class ConsultationQuestionWithConditionsView extends StatelessWidget {
       totalQuestions: totalQuestions,
       questionProgress: questionWithConditions.questionProgress,
       title: questionWithConditions.title,
+      popupDescription: questionWithConditions.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: _buildWithConditionsResponse() +

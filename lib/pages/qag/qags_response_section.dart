@@ -4,8 +4,8 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
+import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_qag_incoming_response_card.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
@@ -15,7 +15,6 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class QagsResponseSection extends StatelessWidget {
   final List<QagResponseTypeViewModel> qagResponseViewModels;
@@ -68,26 +67,21 @@ class QagsResponseSection extends StatelessWidget {
           ],
         ),
         SizedBox(width: AgoraSpacings.x0_75),
-        Semantics(
-          button: true,
-          label: SemanticsStrings.moreInformation,
-          child: GestureDetector(
-            child: SvgPicture.asset("assets/ic_info.svg"),
-            onTap: () {
-              showAgoraDialog(
-                context: context,
-                columnChildren: [
-                  Text(QagStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
-                  SizedBox(height: AgoraSpacings.x0_75),
-                  AgoraButton(
-                    label: GenericStrings.close,
-                    style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              );
-            },
-          ),
+        AgoraMoreInformation(
+          onClick: () {
+            showAgoraDialog(
+              context: context,
+              columnChildren: [
+                Text(QagStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
+                SizedBox(height: AgoraSpacings.x0_75),
+                AgoraButton(
+                  label: GenericStrings.close,
+                  style: AgoraButtonStyle.primaryButtonStyle,
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            );
+          },
         ),
         // Spacer(),
         // AgoraRoundedButton(
