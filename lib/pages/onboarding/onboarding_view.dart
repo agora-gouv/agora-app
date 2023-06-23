@@ -59,23 +59,27 @@ class OnboardingView extends StatelessWidget {
                   ),
                   SizedBox(height: AgoraSpacings.x2),
                   Spacer(),
-                  OnboardingAutoScrollPage(
-                    scrollDirection: Axis.horizontal,
-                    gap: 0,
-                    child: _buildFirstThematiqueList(context),
+                  ExcludeSemantics(
+                    child: OnboardingAutoScrollPage(
+                      scrollDirection: Axis.horizontal,
+                      gap: 0,
+                      child: _buildFirstThematiqueList(context),
+                    ),
                   ),
                   SizedBox(height: AgoraSpacings.base),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OnboardingAutoScrollPage(
-                          scrollDirection: Axis.horizontal,
-                          reverseScroll: true,
-                          gap: 0,
-                          child: _buildSecondThematiqueList(context),
+                  ExcludeSemantics(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: OnboardingAutoScrollPage(
+                            scrollDirection: Axis.horizontal,
+                            reverseScroll: true,
+                            gap: 0,
+                            child: _buildSecondThematiqueList(context),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Spacer(),
                   SizedBox(height: AgoraSpacings.x3),
