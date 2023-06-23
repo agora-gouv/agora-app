@@ -35,6 +35,7 @@ class ConsultationQuestionsBuilder {
               )
               .toList(),
           nextQuestionId: questionUniqueChoice["nextQuestionId"] as String?,
+          popupDescription: questionUniqueChoice["popupDescription"] as String?,
         ),
       );
     }
@@ -51,6 +52,7 @@ class ConsultationQuestionsBuilder {
           order: questionOpened["order"] as int,
           questionProgress: questionOpened["questionProgress"] as String,
           nextQuestionId: questionOpened["nextQuestionId"] as String?,
+          popupDescription: questionOpened["popupDescription"] as String?,
         ),
       );
     }
@@ -77,6 +79,7 @@ class ConsultationQuestionsBuilder {
               )
               .toList(),
           nextQuestionId: questionMultipleChoices["nextQuestionId"] as String?,
+          popupDescription: questionMultipleChoices["popupDescription"] as String?,
         ),
       );
     }
@@ -102,6 +105,7 @@ class ConsultationQuestionsBuilder {
                 ),
               )
               .toList(),
+          popupDescription: withConditionQuestion["popupDescription"] as String?,
         ),
       );
     }

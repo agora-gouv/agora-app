@@ -19,6 +19,7 @@ class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel 
   final String questionProgress;
   final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
   final String? nextQuestionId;
+  final String? popupDescription;
 
   ConsultationQuestionUniqueViewModel({
     required super.id,
@@ -27,6 +28,7 @@ class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel 
     required this.questionProgress,
     required this.responseChoicesViewModels,
     required this.nextQuestionId,
+    required this.popupDescription,
   });
 
   @override
@@ -37,6 +39,7 @@ class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel 
         questionProgress,
         responseChoicesViewModels,
         nextQuestionId,
+        popupDescription,
       ];
 }
 
@@ -45,6 +48,7 @@ class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewMode
   final int maxChoices;
   final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
   final String? nextQuestionId;
+  final String? popupDescription;
 
   ConsultationQuestionMultipleViewModel({
     required super.id,
@@ -54,6 +58,7 @@ class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewMode
     required this.maxChoices,
     required this.responseChoicesViewModels,
     required this.nextQuestionId,
+    required this.popupDescription,
   });
 
   @override
@@ -65,12 +70,14 @@ class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewMode
         maxChoices,
         responseChoicesViewModels,
         nextQuestionId,
+        popupDescription,
       ];
 }
 
 class ConsultationQuestionOpenedViewModel extends ConsultationQuestionViewModel {
   final String questionProgress;
   final String? nextQuestionId;
+  final String? popupDescription;
 
   ConsultationQuestionOpenedViewModel({
     required super.id,
@@ -78,15 +85,24 @@ class ConsultationQuestionOpenedViewModel extends ConsultationQuestionViewModel 
     required super.order,
     required this.questionProgress,
     required this.nextQuestionId,
+    required this.popupDescription,
   });
 
   @override
-  List<Object?> get props => [id, title, order, questionProgress, nextQuestionId];
+  List<Object?> get props => [
+        id,
+        title,
+        order,
+        questionProgress,
+        nextQuestionId,
+        popupDescription,
+      ];
 }
 
 class ConsultationQuestionWithConditionViewModel extends ConsultationQuestionViewModel {
   final String questionProgress;
   final List<ConsultationQuestionWithConditionResponseChoiceViewModel> responseChoicesViewModels;
+  final String? popupDescription;
 
   ConsultationQuestionWithConditionViewModel({
     required super.id,
@@ -94,10 +110,18 @@ class ConsultationQuestionWithConditionViewModel extends ConsultationQuestionVie
     required super.order,
     required this.questionProgress,
     required this.responseChoicesViewModels,
+    required this.popupDescription,
   });
 
   @override
-  List<Object> get props => [id, title, order, questionProgress, responseChoicesViewModels];
+  List<Object?> get props => [
+        id,
+        title,
+        order,
+        questionProgress,
+        responseChoicesViewModels,
+        popupDescription,
+      ];
 }
 
 class ConsultationQuestionChapterViewModel extends ConsultationQuestionViewModel {

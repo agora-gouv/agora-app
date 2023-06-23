@@ -84,6 +84,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1),
           ],
           nextQuestionId: "questionIdC",
+          popupDescription: "<body>La description avec textes <b>en gras</b></body>",
         ),
         ConsultationQuestionOpened(
           id: "questionIdC",
@@ -91,6 +92,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           order: 5,
           questionProgress: "Question 4/4",
           nextQuestionId: null,
+          popupDescription: null,
         ),
         ConsultationQuestionMultiple(
           id: "questionIdA",
@@ -104,6 +106,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             ConsultationQuestionResponseChoice(id: "choiceC", label: "En transports en commun", order: 2),
           ],
           nextQuestionId: "questionIdD",
+          popupDescription: "<body>La description avec textes <b>en gras</b></body>",
         ),
         ConsultationQuestionWithCondition(
           id: "questionIdD",
@@ -124,6 +127,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
               nextQuestionId: "questionIdC",
             ),
           ],
+          popupDescription: "<body>La description avec textes <b>en gras</b></body>",
         ),
         ConsultationQuestionChapter(
           id: "chapiter1",

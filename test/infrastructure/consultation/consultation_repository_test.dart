@@ -340,6 +340,7 @@ void main() {
                   }
                 ],
                 "nextQuestionId": null,
+                "popupDescription": "<body>La description avec textes <b>en gras</b></body>",
               },
             ],
             "questionsOpened": [
@@ -349,6 +350,7 @@ void main() {
                 "order": 4,
                 "questionProgress": "Question 3/4",
                 "nextQuestionId": "question1",
+                "popupDescription": null,
               },
             ],
             "questionsMultipleChoices": [
@@ -376,6 +378,7 @@ void main() {
                     "order": 3,
                   },
                 ],
+                "popupDescription": "<body>La description avec textes <b>en gras</b></body>",
               },
             ],
             "questionsWithCondition": [
@@ -386,7 +389,8 @@ void main() {
                 "questionProgress": "Question 2/4",
                 "possibleChoices": [
                   {"id": "choice1", "label": "Oui", "order": 1, "nextQuestionId": "chapitre1"}
-                ]
+                ],
+                "popupDescription": null,
               }
             ],
             "chapters": [
@@ -427,6 +431,7 @@ void main() {
                 ConsultationQuestionResponseChoice(id: "choice1", label: "une à deux fois par semaine", order: 1),
               ],
               nextQuestionId: null,
+              popupDescription: "<body>La description avec textes <b>en gras</b></body>",
             ),
             ConsultationQuestionOpened(
               id: "question2",
@@ -434,6 +439,7 @@ void main() {
               order: 4,
               questionProgress: "Question 3/4",
               nextQuestionId: "question1",
+              popupDescription: null,
             ),
             ConsultationQuestionMultiple(
               id: "question3",
@@ -447,6 +453,7 @@ void main() {
                 ConsultationQuestionResponseChoice(id: "choice2", label: "Tram", order: 2),
                 ConsultationQuestionResponseChoice(id: "choice3", label: "Voiture", order: 3),
               ],
+              popupDescription: "<body>La description avec textes <b>en gras</b></body>",
             ),
             ConsultationQuestionWithCondition(
               id: "question6",
@@ -461,6 +468,7 @@ void main() {
                   nextQuestionId: "chapitre1",
                 ),
               ],
+              popupDescription: null,
             ),
             ConsultationQuestionChapter(
               id: "chapitre1",
