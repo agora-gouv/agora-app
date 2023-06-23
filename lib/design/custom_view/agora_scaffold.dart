@@ -7,6 +7,8 @@ class AgoraScaffold extends StatelessWidget {
   final Color backgroundColor;
   final bool shouldPop;
   final bool Function()? popAction;
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
 
   const AgoraScaffold({
     super.key,
@@ -15,6 +17,8 @@ class AgoraScaffold extends StatelessWidget {
     required this.child,
     this.shouldPop = true,
     this.popAction,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation,
   });
 
   @override
@@ -44,6 +48,8 @@ class AgoraScaffold extends StatelessWidget {
         elevation: 0,
       ),
       body: child,
+      floatingActionButton: floatingActionButton,
+      floatingActionButtonLocation: floatingActionButtonLocation,
     );
   }
 }
