@@ -47,7 +47,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                     Html(
                       data: chapter.description,
                       style: AgoraHtmlStyles.htmlStyle,
-                      onLinkTap: (url, _, __) async {
+                      onLinkTap: (url, _, __, ___) async {
                         LaunchUrlHelper.webview(context, url);
                       },
                     ),
