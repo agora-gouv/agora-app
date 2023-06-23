@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:agora/bloc/consultation/details/consultation_details_bloc.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_event.dart';
 import 'package:agora/bloc/consultation/details/consultation_details_state.dart';
@@ -14,9 +16,8 @@ import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
@@ -44,57 +45,91 @@ class ConsultationDetailsPage extends StatelessWidget {
       create: (BuildContext context) => ConsultationDetailsBloc(
         consultationRepository: RepositoryManager.getConsultationRepository(),
       )..add(FetchConsultationDetailsEvent(consultationId: consultationId)),
-      child: AgoraScaffold(
-        child: BlocConsumer<ConsultationDetailsBloc, ConsultationDetailsState>(
-          listener: (previousState, currentState) {
-            if (currentState is ConsultationDetailsFetchedState && currentState.viewModel.hasAnswered) {
-              Navigator.pushNamed(
-                context,
-                ConsultationSummaryPage.routeName,
-                arguments: ConsultationSummaryArguments(
-                  consultationId: consultationId,
-                  shouldReloadConsultationsWhenPop: false,
-                ),
-              ).then((value) => Navigator.pop(context));
-            }
-          },
-          builder: (context, state) {
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  AgoraToolbar(),
-                  _buildState(context, state),
-                ],
+      child: BlocConsumer<ConsultationDetailsBloc, ConsultationDetailsState>(
+        listener: (previousState, currentState) {
+          if (currentState is ConsultationDetailsFetchedState && currentState.viewModel.hasAnswered) {
+            Navigator.pushNamed(
+              context,
+              ConsultationSummaryPage.routeName,
+              arguments: ConsultationSummaryArguments(
+                consultationId: consultationId,
+                shouldReloadConsultationsWhenPop: false,
               ),
-            );
-          },
-        ),
+            ).then((value) => Navigator.pop(context));
+          }
+        },
+        builder: (context, state) {
+          if (state is ConsultationDetailsFetchedState) {
+            return _handleFetchState(context, state);
+          } else if (state is ConsultationDetailsInitialLoadingState) {
+            return _buildCommonContent(context, CircularProgressIndicator());
+          } else {
+            return _buildCommonContent(context, AgoraErrorView());
+          }
+        },
       ),
     );
   }
 
-  Widget _buildState(BuildContext context, ConsultationDetailsState state) {
-    if (state is ConsultationDetailsFetchedState) {
-      return _buildContent(context, state.viewModel);
-    } else if (state is ConsultationDetailsInitialLoadingState) {
-      return Column(
+  Widget _handleFetchState(BuildContext context, ConsultationDetailsFetchedState state) {
+    return AgoraScaffold(
+      floatingActionButton: Theme(
+        data: Theme.of(context).copyWith(
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
+            extendedSizeConstraints: BoxConstraints.tightFor(height: 38),
+            extendedPadding: EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_75),
+            extendedTextStyle: AgoraTextStyles.primaryButton,
+          ),
+        ),
+        child: FloatingActionButton.extended(
+          backgroundColor: AgoraColors.primaryBlue,
+          label: Text(ConsultationStrings.beginButton),
+          onPressed: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.startConsultation} $consultationId",
+              widgetName: AnalyticsScreenNames.consultationDetailsPage,
+            );
+            Navigator.pushNamed(
+              context,
+              ConsultationQuestionPage.routeName,
+              arguments: state.viewModel.id,
+            );
+          },
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: CircularProgressIndicator()),
+          AgoraToolbar(),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  _buildSuccessContent(context, state.viewModel),
+                ],
+              ),
+            ),
+          ),
         ],
-      );
-    } else {
-      return Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorView()),
-        ],
-      );
-    }
+      ),
+    );
   }
 
-  Widget _buildContent(BuildContext context, ConsultationDetailsViewModel viewModel) {
+  Widget _buildCommonContent(BuildContext context, Widget widget) {
+    return AgoraScaffold(
+      child: Column(
+        children: [
+          AgoraToolbar(),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: widget),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSuccessContent(BuildContext context, ConsultationDetailsViewModel viewModel) {
     const columnPadding = AgoraSpacings.horizontalPadding;
     const spacing = AgoraSpacings.x0_5;
     const icPersonIconSize = 21;
@@ -161,22 +196,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 padding: const EdgeInsets.all(AgoraSpacings.x0_5),
                 child: AgoraHtml(data: viewModel.tipsDescription),
               ),
-              SizedBox(height: AgoraSpacings.base),
-              AgoraButton(
-                label: ConsultationStrings.beginButton,
-                style: AgoraButtonStyle.primaryButtonStyle,
-                onPressed: () {
-                  TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.startConsultation} $consultationId",
-                    widgetName: AnalyticsScreenNames.consultationDetailsPage,
-                  );
-                  Navigator.pushNamed(
-                    context,
-                    ConsultationQuestionPage.routeName,
-                    arguments: viewModel.id,
-                  );
-                },
-              ),
+              if (Platform.isAndroid) SizedBox(height: AgoraSpacings.x3_25) else SizedBox(height: AgoraSpacings.x5),
             ],
           ),
         ),
