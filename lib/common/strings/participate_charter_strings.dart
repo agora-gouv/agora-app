@@ -4,11 +4,10 @@ class PrivacyPolicyStrings {
   static const String description1_1 =
       "Cette fonctionnalité vous permet de poser une question au Gouvernement portant sur l'action gouvernementale.";
   static const String description1_2 =
-      "De façon générale, est interdit tout comportement ou propos contraire à la loi ou au règlement.";
-  static const String description1_3 =
-      "Seront supprimées par les modérateurs de l'application les questions incluant des propos\u{00A0}:";
+      "De façon générale, est interdit tout comportement ou propos contraire aux dispositions législatives ou réglementaires.";
+  static const String description1_3 = "Seront supprimées par les modérateurs de l'application les propos\u{00A0}:";
   static const String description1_3_1 =
-      "A caractère injurieux, discriminatoire, raciste, sexiste, xénophobe, obscène ou diffamatoire;";
+      "A caractère injurieux, discriminatoire, raciste, sexiste, xénophobe, obscène ou diffamatoire\u{00A0};";
   static const String description1_3_2 = "Rédigés en langue étrangère\u{00A0};";
   static const String description1_3_3 = "Relayant de fausses informations\u{00A0};";
   static const String description1_3_4_1 = "Attaquant";
@@ -17,14 +16,19 @@ class PrivacyPolicyStrings {
       "un individu, qu'il soit ou non membre du Gouvernement, ou portant atteinte à sa vie privée\u{00A0};";
   static const String description1_3_5 =
       "Les spams et les contenus de nature commerciale ou faisant la promotion d'un service ou d'une organisation\u{00A0};";
-  static const String description1_3_6 = "Qui ne sont pas des questions.";
+  static const String description1_3_6 =
+      "N'ayant pas une formulation interrogative (hors «\u{00A0}détails supplémentaires\u{00A0}»)";
   static const String description1_4 =
       "Lorsque vous posez une question au Gouvernement, il vous est demandé de\u{00A0}:";
-  static const String description1_4_1 = "Respecter ces principes de modération\u{00A0};";
+  static const String description1_4_1 = "Respecter la charte de participation\u{00A0};";
   static const String description1_4_2 = "Utiliser un langage correct, concis et compréhensible\u{00A0};";
   static const String description1_4_3 = "Utiliser un prénom dans la case \"Votre Prénom\"\u{00A0};";
   static const String description1_4_4 =
-      "Ne mentionner aucune donnée à caractère personnel ou élément qui permettrait de vous identifier ou d'identifier une autre personne.";
+      "Ne mentionner aucune donnée à caractère personnel ou élément qui permettrait de vous identifier ou d'identifier une autre personne\u{00A0};";
+  static const String description1_4_5 =
+      "Ne pas communiquer de données sensibles vous concernant ou concernant des tiers, notamment les données qui révèlent l'origine raciale ou ethnique supposée, les opinions politiques, les convictions religieuses ou philosophiques ou l'appartenance syndicale, des données concernant la santé ou des données concernant la vie sexuelle ou l'orientation sexuelle d'une personne physique.";
+  static const String description1_5 =
+      "Toute information transmise par l'Utilisateur relève de sa seule responsabilité.";
 
   static const String title2 = "Charte complète";
   static const String description2_1 =

@@ -111,6 +111,10 @@ class ParticipationCharterPage extends StatelessWidget {
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description1_4_3),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description1_4_4),
+      SizedBox(height: AgoraSpacings.x0_25),
+      _buildTextWithBulletPoint(PrivacyPolicyStrings.description1_4_5),
+      SizedBox(height: AgoraSpacings.x0_5),
+      Text(PrivacyPolicyStrings.description1_5, style: AgoraTextStyles.light14),
       SizedBox(height: AgoraSpacings.base),
     ];
   }
