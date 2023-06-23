@@ -98,7 +98,7 @@ class ConsultationDetailsPage extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       child: Column(
         children: [
           AgoraToolbar(),

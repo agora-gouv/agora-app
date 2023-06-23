@@ -29,61 +29,68 @@ class ConsultationQuestionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AgoraSingleScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          AgoraToolbar(style: AgoraToolbarStyle.close),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+    return Column(
+      children: [
+        AgoraToolbar(style: AgoraToolbarStyle.close),
+        Expanded(
+          child: AgoraSingleScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AgoraQuestionsProgressBar(
-                  currentQuestionOrder: order,
-                  totalQuestions: totalQuestions,
-                ),
-                SizedBox(height: AgoraSpacings.x0_75),
-                Text(questionProgress, style: AgoraTextStyles.medium16),
-                SizedBox(height: AgoraSpacings.base),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Flexible(
-                      child: Text(title, style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue)),
-                    ),
-                    if (popupDescription != null) ...[
-                      SizedBox(width: AgoraSpacings.x0_75),
-                      AgoraMoreInformation(
-                        onClick: () {
-                          showAgoraBottomSheet(
-                            context: context,
-                            columnChildren: [
-                              AgoraHtml(data: popupDescription!),
-                              SizedBox(height: AgoraSpacings.x0_75),
-                            ],
-                          );
-                        },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AgoraQuestionsProgressBar(
+                        currentQuestionOrder: order,
+                        totalQuestions: totalQuestions,
                       ),
-                    ]
-                  ],
+                      SizedBox(height: AgoraSpacings.x0_75),
+                      Text(questionProgress, style: AgoraTextStyles.medium16),
+                      SizedBox(height: AgoraSpacings.base),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Flexible(
+                            child:
+                                Text(title, style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue)),
+                          ),
+                          if (popupDescription != null) ...[
+                            SizedBox(width: AgoraSpacings.x0_75),
+                            AgoraMoreInformation(
+                              onClick: () {
+                                showAgoraBottomSheet(
+                                  context: context,
+                                  columnChildren: [
+                                    AgoraHtml(data: popupDescription!),
+                                    SizedBox(height: AgoraSpacings.x0_75),
+                                  ],
+                                );
+                              },
+                            ),
+                          ]
+                        ],
+                      ),
+                      SizedBox(height: AgoraSpacings.x0_75),
+                    ],
+                  ),
                 ),
-                SizedBox(height: AgoraSpacings.x0_75),
+                Flexible(
+                  child: Container(
+                    width: double.infinity,
+                    color: AgoraColors.background,
+                    child: Padding(
+                      padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+                      child: child,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-          Flexible(
-            child: Container(
-              width: double.infinity,
-              color: AgoraColors.background,
-              child: Padding(
-                padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                child: child,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

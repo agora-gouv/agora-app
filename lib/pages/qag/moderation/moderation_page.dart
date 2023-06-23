@@ -48,47 +48,44 @@ class _ModerationPageState extends State<ModerationPage> {
           _onBackClick(context);
           return true;
         },
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: AgoraSecondaryStyleView(
-            onBackClick: () => _onBackClick(context),
-            title: AgoraRichText(
-              policeStyle: AgoraRichTextPoliceStyle.toolbar,
-              items: [
-                AgoraRichTextTextItem(
-                  text: ProfileStrings.moderationCapitalize,
-                  style: AgoraRichTextItemStyle.bold,
-                ),
-              ],
-            ),
-            child: BlocBuilder<QagModerationListBloc, QagModerationListState>(
-              builder: (context, qagModerationListState) {
-                if (qagModerationListState is QagModerationListSuccessState) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: _buildQagsToModerate(context, qagModerationListState.viewModel),
-                    ),
-                  );
-                } else if (qagModerationListState is QagModerationListInitialState ||
-                    qagModerationListState is QagModerationListLoadingState) {
-                  return Column(
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-                      Center(child: CircularProgressIndicator()),
-                    ],
-                  );
-                } else {
-                  return Column(
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-                      Center(child: AgoraErrorView()),
-                    ],
-                  );
-                }
-              },
-            ),
+        child: AgoraSecondaryStyleView(
+          onBackClick: () => _onBackClick(context),
+          title: AgoraRichText(
+            policeStyle: AgoraRichTextPoliceStyle.toolbar,
+            items: [
+              AgoraRichTextTextItem(
+                text: ProfileStrings.moderationCapitalize,
+                style: AgoraRichTextItemStyle.bold,
+              ),
+            ],
+          ),
+          child: BlocBuilder<QagModerationListBloc, QagModerationListState>(
+            builder: (context, qagModerationListState) {
+              if (qagModerationListState is QagModerationListSuccessState) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _buildQagsToModerate(context, qagModerationListState.viewModel),
+                  ),
+                );
+              } else if (qagModerationListState is QagModerationListInitialState ||
+                  qagModerationListState is QagModerationListLoadingState) {
+                return Column(
+                  children: [
+                    SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+                    Center(child: CircularProgressIndicator()),
+                  ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+                    Center(child: AgoraErrorView()),
+                  ],
+                );
+              }
+            },
           ),
         ),
       ),

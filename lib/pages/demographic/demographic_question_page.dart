@@ -46,58 +46,64 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         shouldPop: false,
         child: BlocBuilder<DemographicResponsesStockBloc, DemographicResponsesStockState>(
           builder: (context, responsesStockState) {
-            return AgoraSingleScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  AgoraToolbar(style: AgoraToolbarStyle.close),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AgoraSpacings.horizontalPadding,
-                    ),
+            return Column(
+              children: [
+                AgoraToolbar(style: AgoraToolbarStyle.close),
+                Expanded(
+                  child: AgoraSingleScrollView(
+                    physics: BouncingScrollPhysics(),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AgoraQuestionsProgressBar(
-                          currentQuestionOrder: currentStep,
-                          totalQuestions: totalStep,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AgoraSpacings.horizontalPadding,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AgoraQuestionsProgressBar(
+                                currentQuestionOrder: currentStep,
+                                totalQuestions: totalStep,
+                              ),
+                              SizedBox(height: AgoraSpacings.x0_75),
+                              Text(
+                                DemographicStrings.profileStep.format2(currentStep.toString(), totalStep.toString()),
+                                style: AgoraTextStyles.medium16,
+                              ),
+                              SizedBox(height: AgoraSpacings.base),
+                              Text(
+                                DemographicHelper.getQuestionTitle(currentStep),
+                                style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                              ),
+                              SizedBox(height: AgoraSpacings.x0_75),
+                            ],
+                          ),
                         ),
-                        SizedBox(height: AgoraSpacings.x0_75),
-                        Text(
-                          DemographicStrings.profileStep.format2(currentStep.toString(), totalStep.toString()),
-                          style: AgoraTextStyles.medium16,
+                        Flexible(
+                          child: Container(
+                            width: double.infinity,
+                            color: AgoraColors.background,
+                            child: Padding(
+                              padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [_buildResponseSection(context, currentStep, responsesStockState.responses)] +
+                                    DemographicHelper.buildBackButton(
+                                      step: currentStep,
+                                      onBackTap: () {
+                                        _trackBackClick();
+                                        setState(() => currentStep--);
+                                      },
+                                    ),
+                              ),
+                            ),
+                          ),
                         ),
-                        SizedBox(height: AgoraSpacings.base),
-                        Text(
-                          DemographicHelper.getQuestionTitle(currentStep),
-                          style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
-                        ),
-                        SizedBox(height: AgoraSpacings.x0_75),
                       ],
                     ),
                   ),
-                  Flexible(
-                    child: Container(
-                      width: double.infinity,
-                      color: AgoraColors.background,
-                      child: Padding(
-                        padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [_buildResponseSection(context, currentStep, responsesStockState.responses)] +
-                              DemographicHelper.buildBackButton(
-                                step: currentStep,
-                                onBackTap: () {
-                                  _trackBackClick();
-                                  setState(() => currentStep--);
-                                },
-                              ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         ),

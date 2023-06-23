@@ -66,24 +66,21 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       child: AgoraScaffold(
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: AgoraSecondaryStyleView(
-                title: AgoraRichText(
-                  policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                  items: [
-                    AgoraRichTextTextItem(
-                      text: QagStrings.askQuestionTitle1,
-                      style: AgoraRichTextItemStyle.regular,
-                    ),
-                    AgoraRichTextTextItem(
-                      text: QagStrings.askQuestionTitle2,
-                      style: AgoraRichTextItemStyle.bold,
-                    ),
-                  ],
-                ),
-                child: errorCase == null ? _buildState(context, state) : _buildErrorCase(context, errorCase),
+            return AgoraSecondaryStyleView(
+              title: AgoraRichText(
+                policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                items: [
+                  AgoraRichTextTextItem(
+                    text: QagStrings.askQuestionTitle1,
+                    style: AgoraRichTextItemStyle.regular,
+                  ),
+                  AgoraRichTextTextItem(
+                    text: QagStrings.askQuestionTitle2,
+                    style: AgoraRichTextItemStyle.bold,
+                  ),
+                ],
               ),
+              child: errorCase == null ? _buildState(context, state) : _buildErrorCase(context, errorCase),
             );
           },
         ),
