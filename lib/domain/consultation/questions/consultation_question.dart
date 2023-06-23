@@ -20,6 +20,7 @@ class ConsultationQuestionUnique extends ConsultationQuestion {
   final String questionProgress;
   final List<ConsultationQuestionResponseChoice> responseChoices;
   final String? nextQuestionId;
+  final String? popupDescription;
 
   ConsultationQuestionUnique({
     required super.id,
@@ -28,10 +29,19 @@ class ConsultationQuestionUnique extends ConsultationQuestion {
     required this.questionProgress,
     required this.responseChoices,
     required this.nextQuestionId,
+    required this.popupDescription,
   });
 
   @override
-  List<Object?> get props => [id, title, order, questionProgress, responseChoices, nextQuestionId];
+  List<Object?> get props => [
+        id,
+        title,
+        order,
+        questionProgress,
+        responseChoices,
+        nextQuestionId,
+        popupDescription,
+      ];
 }
 
 class ConsultationQuestionMultiple extends ConsultationQuestion {
@@ -39,6 +49,7 @@ class ConsultationQuestionMultiple extends ConsultationQuestion {
   final int maxChoices;
   final List<ConsultationQuestionResponseChoice> responseChoices;
   final String? nextQuestionId;
+  final String? popupDescription;
 
   ConsultationQuestionMultiple({
     required super.id,
@@ -48,15 +59,26 @@ class ConsultationQuestionMultiple extends ConsultationQuestion {
     required this.maxChoices,
     required this.responseChoices,
     required this.nextQuestionId,
+    required this.popupDescription,
   });
 
   @override
-  List<Object?> get props => [id, title, order, questionProgress, maxChoices, responseChoices, nextQuestionId];
+  List<Object?> get props => [
+        id,
+        title,
+        order,
+        questionProgress,
+        maxChoices,
+        responseChoices,
+        nextQuestionId,
+        popupDescription,
+      ];
 }
 
 class ConsultationQuestionOpened extends ConsultationQuestion {
   final String questionProgress;
   final String? nextQuestionId;
+  final String? popupDescription;
 
   ConsultationQuestionOpened({
     required super.id,
@@ -64,10 +86,18 @@ class ConsultationQuestionOpened extends ConsultationQuestion {
     required super.order,
     required this.questionProgress,
     required this.nextQuestionId,
+    required this.popupDescription,
   });
 
   @override
-  List<Object?> get props => [id, title, order, questionProgress, nextQuestionId];
+  List<Object?> get props => [
+        id,
+        title,
+        order,
+        questionProgress,
+        nextQuestionId,
+        popupDescription,
+      ];
 }
 
 class ConsultationQuestionChapter extends ConsultationQuestion {
@@ -89,6 +119,7 @@ class ConsultationQuestionChapter extends ConsultationQuestion {
 class ConsultationQuestionWithCondition extends ConsultationQuestion {
   final String questionProgress;
   final List<ConsultationQuestionResponseWithConditionChoice> responseChoices;
+  final String? popupDescription;
 
   ConsultationQuestionWithCondition({
     required super.id,
@@ -96,8 +127,16 @@ class ConsultationQuestionWithCondition extends ConsultationQuestion {
     required super.order,
     required this.questionProgress,
     required this.responseChoices,
+    required this.popupDescription,
   });
 
   @override
-  List<Object> get props => [id, title, order, questionProgress, responseChoices];
+  List<Object?> get props => [
+        id,
+        title,
+        order,
+        questionProgress,
+        responseChoices,
+        popupDescription,
+      ];
 }

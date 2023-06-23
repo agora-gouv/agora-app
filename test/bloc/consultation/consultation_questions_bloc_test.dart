@@ -23,6 +23,7 @@ void main() {
         ConsultationQuestionResponseChoiceViewModel(id: "choiceA", label: "En vélo ou à pied", order: 3),
       ],
       nextQuestionId: "questionIdD",
+      popupDescription: "<body>La description avec textes <b>en gras</b></body>",
     ),
     ConsultationQuestionWithConditionViewModel(
       id: "questionIdD",
@@ -43,6 +44,7 @@ void main() {
           nextQuestionId: "questionIdB",
         ),
       ],
+      popupDescription: "<body>La description avec textes <b>en gras</b></body>",
     ),
     ConsultationQuestionChapterViewModel(
       id: "chapiter1",
@@ -61,6 +63,7 @@ void main() {
         ConsultationQuestionResponseChoiceViewModel(id: "choiceAA", label: "non", order: 2),
       ],
       nextQuestionId: "questionIdC",
+      popupDescription: "<body>La description avec textes <b>en gras</b></body>",
     ),
     ConsultationQuestionOpenedViewModel(
       id: "questionIdC",
@@ -68,6 +71,7 @@ void main() {
       order: 5,
       questionProgress: "Question 4/4",
       nextQuestionId: null,
+      popupDescription: null,
     ),
   ];
 

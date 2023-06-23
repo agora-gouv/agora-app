@@ -14,6 +14,7 @@ class ConsultationQuestionsPresenter {
             questionProgress: consultationQuestion.questionProgress,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
             nextQuestionId: consultationQuestion.nextQuestionId,
+            popupDescription: consultationQuestion.popupDescription,
           );
         } else if (consultationQuestion is ConsultationQuestionMultiple) {
           return ConsultationQuestionMultipleViewModel(
@@ -24,6 +25,7 @@ class ConsultationQuestionsPresenter {
             maxChoices: consultationQuestion.maxChoices,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
             nextQuestionId: consultationQuestion.nextQuestionId,
+            popupDescription: consultationQuestion.popupDescription,
           );
         } else if (consultationQuestion is ConsultationQuestionOpened) {
           return ConsultationQuestionOpenedViewModel(
@@ -32,6 +34,7 @@ class ConsultationQuestionsPresenter {
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
             nextQuestionId: consultationQuestion.nextQuestionId,
+            popupDescription: consultationQuestion.popupDescription,
           );
         } else if (consultationQuestion is ConsultationQuestionWithCondition) {
           return ConsultationQuestionWithConditionViewModel(
@@ -40,6 +43,7 @@ class ConsultationQuestionsPresenter {
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
             responseChoicesViewModels: _buildResponseWithConditionChoices(consultationQuestion.responseChoices),
+            popupDescription: consultationQuestion.popupDescription,
           );
         } else if (consultationQuestion is ConsultationQuestionChapter) {
           return ConsultationQuestionChapterViewModel(
