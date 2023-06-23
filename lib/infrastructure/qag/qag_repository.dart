@@ -127,8 +127,8 @@ class QagDioRepository extends QagRepository {
         errorCase: response.data["askQagErrorText"] as String?,
       );
     } catch (e, s) {
-      if (e is DioError) {
-        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           crashlyticsHelper.recordError(e, s, reason: "fetchQags failed : timeout error");
           return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
         }
@@ -199,7 +199,7 @@ class QagDioRepository extends QagRepository {
         ),
       );
     } catch (e, s) {
-      if (e is DioError) {
+      if (e is DioException) {
         final response = e.response;
         if (response != null && response.statusCode == HttpStatus.locked) {
           crashlyticsHelper.recordError(e, s, reason: "fetchQagDetails failed : QaG is moderated error");

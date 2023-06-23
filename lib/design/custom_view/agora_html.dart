@@ -13,7 +13,7 @@ class AgoraHtml extends StatelessWidget {
     return Html(
       data: data,
       style: AgoraHtmlStyles.htmlStyle,
-      onLinkTap: (url, _, __, ___) async {
+      onLinkTap: (url, _, __) async {
         LaunchUrlHelper.webview(context, url);
       },
     );
