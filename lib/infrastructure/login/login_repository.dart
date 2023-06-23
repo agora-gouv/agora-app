@@ -39,8 +39,8 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
       );
     } catch (e, s) {
-      if (e is DioError) {
-        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           crashlyticsHelper.recordError(e, s, reason: "signup failed : timeout error");
           return SignupFailedResponse(errorType: LoginErrorType.timeout);
         }
@@ -68,8 +68,8 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
       );
     } catch (e, s) {
-      if (e is DioError) {
-        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           crashlyticsHelper.recordError(e, s, reason: "login failed : timeout error");
           return LoginFailedResponse(errorType: LoginErrorType.timeout);
         }

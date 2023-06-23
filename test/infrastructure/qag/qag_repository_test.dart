@@ -295,7 +295,7 @@ void main() {
         (server) {
           server.throws(
             404,
-            DioError.connectionTimeout(
+            DioException.connectionTimeout(
               timeout: Duration(seconds: 60),
               requestOptions: RequestOptions(),
             ),
@@ -321,7 +321,7 @@ void main() {
         (server) {
           server.throws(
             404,
-            DioError.receiveTimeout(
+            DioException.receiveTimeout(
               timeout: Duration(seconds: 60),
               requestOptions: RequestOptions(),
             ),

@@ -82,8 +82,8 @@ class ConsultationDioRepository extends ConsultationRepository {
         }).toList(),
       );
     } catch (e, s) {
-      if (e is DioError) {
-        if (e.type == DioErrorType.connectionTimeout || e.type == DioErrorType.receiveTimeout) {
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           crashlyticsHelper.recordError(e, s, reason: "fetchConsultations failed : timeout error");
           return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
         }
