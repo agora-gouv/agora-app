@@ -1,5 +1,6 @@
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -28,22 +29,25 @@ class AgoraLikeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
-        vertical: shouldHaveVerticalPadding ? 2 : 0,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          SvgPicture.asset(_getIcon(), width: _buildIconSize()),
-          SizedBox(width: AgoraSpacings.x0_25),
-          Text(
-            supportCount.toString(),
-            style: _buildTextStyle(),
-            semanticsLabel: SemanticsStrings.supportNumber.format(supportCount.toString()),
-          ),
-        ],
+    return Container(
+      color: AgoraColors.transparent,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
+          vertical: shouldHaveVerticalPadding ? 2 : 0,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SvgPicture.asset(_getIcon(), width: _buildIconSize()),
+            SizedBox(width: AgoraSpacings.x0_25),
+            Text(
+              supportCount.toString(),
+              style: _buildTextStyle(),
+              semanticsLabel: SemanticsStrings.supportNumber.format(supportCount.toString()),
+            ),
+          ],
+        ),
       ),
     );
   }
