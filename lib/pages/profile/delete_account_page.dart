@@ -74,7 +74,10 @@ class DeleteAccountPage extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(width: AgoraSpacings.x0_75),
-                                    buildCopyButton(onTap: () => _copySupportEmail(context)),
+                                    buildCopyButton(
+                                      semanticsLabel: SemanticsStrings.copyMail,
+                                      onTap: () => _copySupportEmail(context),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: AgoraSpacings.base),
@@ -103,7 +106,10 @@ class DeleteAccountPage extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(width: AgoraSpacings.x0_75),
-                                    buildCopyButton(onTap: () => _copyUserId(userId, context)),
+                                    buildCopyButton(
+                                      semanticsLabel: SemanticsStrings.copyCode,
+                                      onTap: () => _copyUserId(userId, context),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: AgoraSpacings.base),
@@ -123,10 +129,10 @@ class DeleteAccountPage extends StatelessWidget {
     );
   }
 
-  Semantics buildCopyButton({required VoidCallback onTap}) {
+  Semantics buildCopyButton({required String semanticsLabel, required VoidCallback onTap}) {
     return Semantics(
       button: true,
-      label: SemanticsStrings.copy,
+      label: semanticsLabel,
       child: AgoraRoundedCard(
         cardColor: AgoraColors.transparent,
         cornerRadius: AgoraCorners.rounded50,
