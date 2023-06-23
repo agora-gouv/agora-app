@@ -1,3 +1,6 @@
+import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
+import 'package:agora/design/custom_view/agora_html.dart';
+import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
@@ -11,6 +14,7 @@ class ConsultationQuestionView extends StatelessWidget {
   final int totalQuestions;
   final String questionProgress;
   final String title;
+  final String? popupDescription;
   final Widget child;
 
   ConsultationQuestionView({
@@ -19,6 +23,7 @@ class ConsultationQuestionView extends StatelessWidget {
     required this.totalQuestions,
     required this.questionProgress,
     required this.title,
+    required this.popupDescription,
     required this.child,
   }) : super(key: key);
 
@@ -41,9 +46,27 @@ class ConsultationQuestionView extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.x0_75),
                 Text(questionProgress, style: AgoraTextStyles.medium16),
                 SizedBox(height: AgoraSpacings.base),
-                Text(
-                  title,
-                  style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Flexible(
+                      child: Text(title, style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue)),
+                    ),
+                    if (popupDescription != null) ...[
+                      SizedBox(width: AgoraSpacings.x0_75),
+                      AgoraMoreInformation(
+                        onClick: () {
+                          showAgoraBottomSheet(
+                            context: context,
+                            columnChildren: [
+                              AgoraHtml(data: popupDescription!),
+                              SizedBox(height: AgoraSpacings.x0_75),
+                            ],
+                          );
+                        },
+                      ),
+                    ]
+                  ],
                 ),
                 SizedBox(height: AgoraSpacings.x0_75),
               ],

@@ -29,6 +29,7 @@ class ConsultationQuestionUniqueChoiceView extends StatelessWidget {
       totalQuestions: totalQuestions,
       questionProgress: uniqueChoiceQuestion.questionProgress,
       title: uniqueChoiceQuestion.title,
+      popupDescription: uniqueChoiceQuestion.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: _buildUniqueChoiceResponse() +
