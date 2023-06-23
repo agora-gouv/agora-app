@@ -1,8 +1,8 @@
 class DemographicResponseHelper {
   static List<DemographicResponseChoice> question1ResponseChoice() {
     return [
-      DemographicResponseChoice(responseLabel: "Un homme", responseCode: "M"),
       DemographicResponseChoice(responseLabel: "Une femme", responseCode: "F"),
+      DemographicResponseChoice(responseLabel: "Un homme", responseCode: "M"),
       DemographicResponseChoice(responseLabel: "Autre", responseCode: "A"),
     ];
   }
