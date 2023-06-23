@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
@@ -135,12 +133,10 @@ class OnboardingView extends StatelessWidget {
   }
 
   Widget _buildThematiqueCard(BuildContext context, String picto, String label) {
-    final width = max(MediaQuery.of(context).size.width * 0.32, 150.0);
-    final height = max(MediaQuery.of(context).size.height * 0.2, 130.0);
+    final width = MediaQuery.of(context).size.width * 0.32;
     return SizedBox(
       width: width,
-      height: height,
-      child: OnboardingThematiqueCard(picto: picto, label: label, height: height),
+      child: OnboardingThematiqueCard(picto: picto, label: label),
     );
   }
 }
