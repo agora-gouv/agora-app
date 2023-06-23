@@ -20,52 +20,49 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraScaffold(
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: AgoraSecondaryStyleView(
-          title: AgoraRichText(
-            policeStyle: AgoraRichTextPoliceStyle.toolbar,
-            items: [
-              AgoraRichTextTextItem(
-                text: ProfileStrings.policy,
-                style: AgoraRichTextItemStyle.regular,
-              ),
-              AgoraRichTextSpaceItem(),
-              AgoraRichTextTextItem(
-                text: ProfileStrings.privacy,
-                style: AgoraRichTextItemStyle.bold,
-              ),
-            ],
+      child: AgoraSecondaryStyleView(
+        title: AgoraRichText(
+          policeStyle: AgoraRichTextPoliceStyle.toolbar,
+          items: [
+            AgoraRichTextTextItem(
+              text: ProfileStrings.policy,
+              style: AgoraRichTextItemStyle.regular,
+            ),
+            AgoraRichTextSpaceItem(),
+            AgoraRichTextTextItem(
+              text: ProfileStrings.privacy,
+              style: AgoraRichTextItemStyle.bold,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: AgoraSpacings.horizontalPadding,
+            right: AgoraSpacings.horizontalPadding,
+            bottom: AgoraSpacings.x2,
           ),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: AgoraSpacings.horizontalPadding,
-              right: AgoraSpacings.horizontalPadding,
-              bottom: AgoraSpacings.x2,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _paragraph1() +
-                  _paragraph2() +
-                  _paragraph3() +
-                  _paragraph4() +
-                  _paragraph5() +
-                  _paragraph6(context) +
-                  _paragraph7() +
-                  _paragraph8() +
-                  _paragraph9(context) +
-                  _paragraph10(context) +
-                  _paragraph11(context) +
-                  [
-                    AgoraButton(
-                      label: GenericStrings.back,
-                      style: AgoraButtonStyle.primaryButtonStyle,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _paragraph1() +
+                _paragraph2() +
+                _paragraph3() +
+                _paragraph4() +
+                _paragraph5() +
+                _paragraph6(context) +
+                _paragraph7() +
+                _paragraph8() +
+                _paragraph9(context) +
+                _paragraph10(context) +
+                _paragraph11(context) +
+                [
+                  AgoraButton(
+                    label: GenericStrings.back,
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
           ),
         ),
       ),

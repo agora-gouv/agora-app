@@ -16,7 +16,6 @@ import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
-import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -65,25 +64,22 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
       child: AgoraScaffold(
         child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
           builder: (context, state) {
-            return AgoraSingleScrollView(
-              physics: BouncingScrollPhysics(),
-              child: AgoraSecondaryStyleView(
-                title: AgoraRichText(
-                  policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                  items: [
-                    AgoraRichTextTextItem(
-                      text: DemographicStrings.my,
-                      style: AgoraRichTextItemStyle.regular,
-                    ),
-                    AgoraRichTextSpaceItem(),
-                    AgoraRichTextTextItem(
-                      text: DemographicStrings.information,
-                      style: AgoraRichTextItemStyle.bold,
-                    ),
-                  ],
-                ),
-                child: _build(context, state),
+            return AgoraSecondaryStyleView(
+              title: AgoraRichText(
+                policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                items: [
+                  AgoraRichTextTextItem(
+                    text: DemographicStrings.my,
+                    style: AgoraRichTextItemStyle.regular,
+                  ),
+                  AgoraRichTextSpaceItem(),
+                  AgoraRichTextTextItem(
+                    text: DemographicStrings.information,
+                    style: AgoraRichTextItemStyle.bold,
+                  ),
+                ],
               ),
+              child: _build(context, state),
             );
           },
         ),

@@ -120,14 +120,11 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         appBarColor: AgoraColors.primaryBlue,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
-            return AgoraSingleScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  AgoraTopDiagonal(),
-                  _buildState(context, detailsState),
-                ],
-              ),
+            return Column(
+              children: [
+                AgoraTopDiagonal(),
+                _buildState(context, detailsState),
+              ],
             );
           },
         ),
@@ -192,56 +189,65 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                   ],
                 )
               : _buildAgoraToolbarWithPopAction(context),
-          Padding(
-            padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ThematiqueHelper.buildCard(context, viewModel.thematique),
-                SizedBox(height: AgoraSpacings.x0_5),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
-                    if (response != null) ...[
-                      Padding(
-                        padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
-                        child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
-                      ),
-                    ],
-                  ],
-                ),
-                SizedBox(height: AgoraSpacings.base),
-                if (response == null) ...[
-                  Text(viewModel.description, style: AgoraTextStyles.light14),
-                  SizedBox(height: AgoraSpacings.base),
-                  Text(
-                    QagStrings.authorAndDate.format2(viewModel.username, viewModel.date),
-                    style: AgoraTextStyles.medium14,
+          Expanded(
+            child: AgoraSingleScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ThematiqueHelper.buildCard(context, viewModel.thematique),
+                        SizedBox(height: AgoraSpacings.x0_5),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
+                            if (response != null) ...[
+                              Padding(
+                                padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
+                                child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
+                              ),
+                            ],
+                          ],
+                        ),
+                        SizedBox(height: AgoraSpacings.base),
+                        if (response == null) ...[
+                          Text(viewModel.description, style: AgoraTextStyles.light14),
+                          SizedBox(height: AgoraSpacings.base),
+                          Text(
+                            QagStrings.authorAndDate.format2(viewModel.username, viewModel.date),
+                            style: AgoraTextStyles.medium14,
+                          ),
+                          SizedBox(height: AgoraSpacings.x3),
+                          QagDetailsSupportView(
+                            qagId: viewModel.id,
+                            canSupport: viewModel.canSupport,
+                            support: support,
+                            onSupportChange: (supportCount, isSupported) {
+                              backResult = QagDetailsBackResult(
+                                qagId: viewModel.id,
+                                thematique: viewModel.thematique,
+                                title: viewModel.title,
+                                username: viewModel.username,
+                                date: viewModel.date,
+                                supportCount: supportCount,
+                                isSupported: isSupported,
+                              );
+                            },
+                          ),
+                        ] else
+                          AgoraReadMoreText(viewModel.description, trimLines: 3),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: AgoraSpacings.x3),
-                  QagDetailsSupportView(
-                    qagId: viewModel.id,
-                    canSupport: viewModel.canSupport,
-                    support: support,
-                    onSupportChange: (supportCount, isSupported) {
-                      backResult = QagDetailsBackResult(
-                        qagId: viewModel.id,
-                        thematique: viewModel.thematique,
-                        title: viewModel.title,
-                        username: viewModel.username,
-                        date: viewModel.date,
-                        supportCount: supportCount,
-                        isSupported: isSupported,
-                      );
-                    },
-                  ),
-                ] else
-                  AgoraReadMoreText(viewModel.description, trimLines: 3),
-              ],
+                  if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                ],
+              ),
             ),
-          ),
-          if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+          )
         ],
       ),
     );

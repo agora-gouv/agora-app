@@ -38,128 +38,125 @@ class _ProfilePageState extends State<ProfilePage> {
         _onBackClick(context);
         return true;
       },
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: AgoraSecondaryStyleView(
-          onBackClick: () => _onBackClick(context),
-          title: AgoraRichText(
-            policeStyle: AgoraRichTextPoliceStyle.toolbar,
-            items: [
-              AgoraRichTextTextItem(
-                text: ProfileStrings.my,
-                style: AgoraRichTextItemStyle.regular,
-              ),
-              AgoraRichTextSpaceItem(),
-              AgoraRichTextTextItem(
-                text: ProfileStrings.profile,
-                style: AgoraRichTextItemStyle.bold,
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
+      child: AgoraSecondaryStyleView(
+        onBackClick: () => _onBackClick(context),
+        title: AgoraRichText(
+          policeStyle: AgoraRichTextPoliceStyle.toolbar,
+          items: [
+            AgoraRichTextTextItem(
+              text: ProfileStrings.my,
+              style: AgoraRichTextItemStyle.regular,
+            ),
+            AgoraRichTextSpaceItem(),
+            AgoraRichTextTextItem(
+              text: ProfileStrings.profile,
+              style: AgoraRichTextItemStyle.bold,
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            AgoraMenuItem(
+              title: ProfileStrings.myInformation,
+              onClick: () {
+                _track(AnalyticsEventNames.myInformation);
+                Navigator.pushNamed(context, DemographicProfilePage.routeName);
+              },
+            ),
+            // AgoraMenuItem(
+            //   title: ProfileStrings.notification,
+            //   onClick: () {
+            //     _track(AnalyticsEventNames.notification);
+            //     // TODO
+            //   },
+            // ),
+            AgoraMenuItem(
+              title: ProfileStrings.tutorial,
+              onClick: () {
+                _track(AnalyticsEventNames.tutorial);
+                Navigator.pushNamed(context, OnboardingPage.routeName);
+              },
+            ),
+            if (HelperManager.getRoleHelper().isModerator() == true)
               AgoraMenuItem(
-                title: ProfileStrings.myInformation,
+                title: ProfileStrings.moderationCapitalize,
                 onClick: () {
-                  _track(AnalyticsEventNames.myInformation);
-                  Navigator.pushNamed(context, DemographicProfilePage.routeName);
+                  _track(AnalyticsEventNames.moderationCapitalize);
+                  Navigator.pushNamed(context, ModerationPage.routeName).then(
+                    (value) {
+                      final previousShouldReloadQagsPage = value as bool;
+                      if (!shouldReloadQagsPage && previousShouldReloadQagsPage) {
+                        setState(() => shouldReloadQagsPage = true);
+                      }
+                    },
+                  );
                 },
               ),
-              // AgoraMenuItem(
-              //   title: ProfileStrings.notification,
-              //   onClick: () {
-              //     _track(AnalyticsEventNames.notification);
-              //     // TODO
-              //   },
-              // ),
-              AgoraMenuItem(
-                title: ProfileStrings.tutorial,
-                onClick: () {
-                  _track(AnalyticsEventNames.tutorial);
-                  Navigator.pushNamed(context, OnboardingPage.routeName);
-                },
-              ),
-              if (HelperManager.getRoleHelper().isModerator() == true)
-                AgoraMenuItem(
-                  title: ProfileStrings.moderationCapitalize,
-                  onClick: () {
-                    _track(AnalyticsEventNames.moderationCapitalize);
-                    Navigator.pushNamed(context, ModerationPage.routeName).then(
-                      (value) {
-                        final previousShouldReloadQagsPage = value as bool;
-                        if (!shouldReloadQagsPage && previousShouldReloadQagsPage) {
-                          setState(() => shouldReloadQagsPage = true);
-                        }
+            AgoraMenuItem(
+              title: ProfileStrings.deleteAccount,
+              onClick: () {
+                _track(AnalyticsEventNames.deleteAccount);
+                Navigator.pushNamed(context, DeleteAccountPage.routeName);
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+              child: Divider(color: AgoraColors.divider, thickness: 1),
+            ),
+            AgoraMenuItem(
+              title: ProfileStrings.participationCharter,
+              onClick: () {
+                _track(AnalyticsEventNames.participationCharter);
+                Navigator.pushNamed(context, ParticipationCharterPage.routeName);
+              },
+            ),
+            AgoraMenuItem(
+              title: ProfileStrings.privacyPolicy,
+              onClick: () {
+                _track(AnalyticsEventNames.privacyPolicy);
+                LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink);
+              },
+            ),
+            AgoraMenuItem(
+              title: ProfileStrings.termsOfService,
+              onClick: () {
+                _track(AnalyticsEventNames.termsOfService);
+                LaunchUrlHelper.webview(context, ProfileStrings.cguLink);
+              },
+            ),
+            AgoraMenuItem(
+              title: ProfileStrings.legalNotice,
+              onClick: () {
+                _track(AnalyticsEventNames.legalNotice);
+                LaunchUrlHelper.webview(context, ProfileStrings.legalNoticeLink);
+              },
+            ),
+            SizedBox(height: AgoraSpacings.base),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+              child: AgoraRoundedCard(
+                cardColor: AgoraColors.doctor,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(ProfileStrings.feedbackTipsTitle, style: AgoraTextStyles.medium18),
+                    SizedBox(height: AgoraSpacings.x0_75),
+                    Text(ProfileStrings.feedbackTipsDescription, style: AgoraTextStyles.light14),
+                    SizedBox(height: AgoraSpacings.x1_25),
+                    AgoraButton(
+                      label: ProfileStrings.feedbackTipsButton,
+                      style: AgoraButtonStyle.primaryButtonStyle,
+                      onPressed: () {
+                        _track(AnalyticsEventNames.giveFeedback);
+                        LaunchUrlHelper.webview(context, ProfileStrings.feedbackLink);
                       },
-                    );
-                  },
-                ),
-              AgoraMenuItem(
-                title: ProfileStrings.deleteAccount,
-                onClick: () {
-                  _track(AnalyticsEventNames.deleteAccount);
-                  Navigator.pushNamed(context, DeleteAccountPage.routeName);
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                child: Divider(color: AgoraColors.divider, thickness: 1),
-              ),
-              AgoraMenuItem(
-                title: ProfileStrings.participationCharter,
-                onClick: () {
-                  _track(AnalyticsEventNames.participationCharter);
-                  Navigator.pushNamed(context, ParticipationCharterPage.routeName);
-                },
-              ),
-              AgoraMenuItem(
-                title: ProfileStrings.privacyPolicy,
-                onClick: () {
-                  _track(AnalyticsEventNames.privacyPolicy);
-                  LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink);
-                },
-              ),
-              AgoraMenuItem(
-                title: ProfileStrings.termsOfService,
-                onClick: () {
-                  _track(AnalyticsEventNames.termsOfService);
-                  LaunchUrlHelper.webview(context, ProfileStrings.cguLink);
-                },
-              ),
-              AgoraMenuItem(
-                title: ProfileStrings.legalNotice,
-                onClick: () {
-                  _track(AnalyticsEventNames.legalNotice);
-                  LaunchUrlHelper.webview(context, ProfileStrings.legalNoticeLink);
-                },
-              ),
-              SizedBox(height: AgoraSpacings.base),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                child: AgoraRoundedCard(
-                  cardColor: AgoraColors.doctor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(ProfileStrings.feedbackTipsTitle, style: AgoraTextStyles.medium18),
-                      SizedBox(height: AgoraSpacings.x0_75),
-                      Text(ProfileStrings.feedbackTipsDescription, style: AgoraTextStyles.light14),
-                      SizedBox(height: AgoraSpacings.x1_25),
-                      AgoraButton(
-                        label: ProfileStrings.feedbackTipsButton,
-                        style: AgoraButtonStyle.primaryButtonStyle,
-                        onPressed: () {
-                          _track(AnalyticsEventNames.giveFeedback);
-                          LaunchUrlHelper.webview(context, ProfileStrings.feedbackLink);
-                        },
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: AgoraSpacings.x1_5),
-            ],
-          ),
+            ),
+            SizedBox(height: AgoraSpacings.x1_5),
+          ],
         ),
       ),
     );

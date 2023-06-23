@@ -17,56 +17,53 @@ class ParticipationCharterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraScaffold(
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: AgoraSecondaryStyleView(
-          title: AgoraRichText(
-            policeStyle: AgoraRichTextPoliceStyle.toolbar,
-            items: [
-              AgoraRichTextTextItem(
-                text: ProfileStrings.charter,
-                style: AgoraRichTextItemStyle.regular,
-              ),
-              AgoraRichTextSpaceItem(),
-              AgoraRichTextTextItem(
-                text: ProfileStrings.participation,
-                style: AgoraRichTextItemStyle.bold,
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: AgoraSpacings.horizontalPadding,
-              right: AgoraSpacings.horizontalPadding,
-              bottom: AgoraSpacings.x2,
+      child: AgoraSecondaryStyleView(
+        title: AgoraRichText(
+          policeStyle: AgoraRichTextPoliceStyle.toolbar,
+          items: [
+            AgoraRichTextTextItem(
+              text: ProfileStrings.charter,
+              style: AgoraRichTextItemStyle.regular,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _paragraph1() +
-                  [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: AgoraButton(
-                            label: GenericStrings.readCompleteCharter,
-                            style: AgoraButtonStyle.blueBorderButtonStyle,
-                            onPressed: () {
-                              LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
-                            },
-                          ),
-                        ),
-                        SizedBox(width: AgoraSpacings.base),
-                        AgoraButton(
-                          label: GenericStrings.back,
-                          style: AgoraButtonStyle.primaryButtonStyle,
+            AgoraRichTextSpaceItem(),
+            AgoraRichTextTextItem(
+              text: ProfileStrings.participation,
+              style: AgoraRichTextItemStyle.bold,
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: AgoraSpacings.horizontalPadding,
+            right: AgoraSpacings.horizontalPadding,
+            bottom: AgoraSpacings.x2,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _paragraph1() +
+                [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: AgoraButton(
+                          label: GenericStrings.readCompleteCharter,
+                          style: AgoraButtonStyle.blueBorderButtonStyle,
                           onPressed: () {
-                            Navigator.pop(context);
+                            LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
                           },
                         ),
-                      ],
-                    )
-                  ],
-            ),
+                      ),
+                      SizedBox(width: AgoraSpacings.base),
+                      AgoraButton(
+                        label: GenericStrings.back,
+                        style: AgoraButtonStyle.primaryButtonStyle,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  )
+                ],
           ),
         ),
       ),
