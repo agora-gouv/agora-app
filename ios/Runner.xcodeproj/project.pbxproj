@@ -441,6 +441,7 @@
 				DEVELOPMENT_TEAM = 8PN3J7J93H;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8PN3J7J93H;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -526,6 +527,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = PR958DC548;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = lib/main_prod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -609,6 +611,7 @@
 				DEVELOPMENT_TEAM = PR958DC548;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = PR958DC548;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = lib/main_prod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -689,6 +692,7 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = PR958DC548;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = lib/main_prod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -828,6 +832,7 @@
 				DEVELOPMENT_TEAM = 8PN3J7J93H;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8PN3J7J93H;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -857,6 +862,7 @@
 				DEVELOPMENT_TEAM = 8PN3J7J93H;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8PN3J7J93H;
 				ENABLE_BITCODE = NO;
+				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
