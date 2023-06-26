@@ -44,10 +44,15 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
               Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17),
               SizedBox(height: AgoraSpacings.base),
               AgoraVideoView(
-                qagId: widget.qagId,
                 videoUrl: response.videoUrl,
                 videoWidth: response.videoWidth,
                 videoHeight: response.videoHeight,
+                onVideoStartMoreThan5Sec: () {
+                  TrackerHelper.trackEvent(
+                    eventName: "${AnalyticsEventNames.video} ${widget.qagId}",
+                    widgetName: AnalyticsScreenNames.qagDetailsPage,
+                  );
+                },
               ),
               SizedBox(height: AgoraSpacings.base),
               RichText(
