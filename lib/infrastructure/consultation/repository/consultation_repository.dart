@@ -184,6 +184,9 @@ class ConsultationDioRepository extends ConsultationRepository {
       final response = await httpClient.get(
         "/consultations/$consultationId/responses",
       );
+      final etEnsuite = response.data["etEnsuite"];
+      final etEnsuiteVideo = etEnsuite["video"] as Map?;
+      final etEnsuiteConclusion = etEnsuite["conclusion"] as Map?;
       final summary = ConsultationSummary(
         title: response.data["title"] as String,
         participantCount: response.data["participantCount"] as int,
@@ -192,8 +195,34 @@ class ConsultationDioRepository extends ConsultationRepository {
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
         ),
         etEnsuite: ConsultationSummaryEtEnsuite(
-          step: response.data["etEnsuite"]["step"] as int,
-          description: response.data["etEnsuite"]["description"] as String,
+          step: etEnsuite["step"] as int,
+          description: etEnsuite["description"] as String,
+          explanationsTitle: etEnsuite["explanationsTitle"] as String?,
+          explanations: (etEnsuite["explanations"] as List).map((explanation) {
+            return ConsultationSummaryEtEnsuiteExplanation(
+              isTogglable: explanation["isTogglable"] as bool,
+              title: explanation["title"] as String,
+              intro: explanation["intro"] as String,
+              imageUrl: explanation["imageUrl"] as String,
+              description: explanation["description"] as String,
+            );
+          }).toList(),
+          video: etEnsuiteVideo != null
+              ? ConsultationSummaryEtEnsuiteVideo(
+                  title: etEnsuiteVideo["title"] as String,
+                  intro: etEnsuiteVideo["intro"] as String,
+                  videoUrl: etEnsuiteVideo["videoUrl"] as String,
+                  videoWidth: etEnsuiteVideo["videoWidth"] as int,
+                  videoHeight: etEnsuiteVideo["videoHeight"] as int,
+                  transcription: etEnsuiteVideo["transcription"] as String,
+                )
+              : null,
+          conclusion: etEnsuiteConclusion != null
+              ? ConsultationSummaryEtEnsuiteConclusion(
+                  title: etEnsuiteConclusion["title"] as String,
+                  description: etEnsuiteConclusion["description"] as String,
+                )
+              : null,
         ),
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);

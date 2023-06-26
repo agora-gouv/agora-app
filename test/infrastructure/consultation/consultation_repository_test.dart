@@ -656,6 +656,28 @@ void main() {
               "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
               "description":
                   "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
+              "explanationsTitle": "explanations title",
+              "explanations": [
+                {
+                  "isTogglable": false,
+                  "title": "toogle text title",
+                  "intro": "<body>image introduction</body>",
+                  "imageUrl": "<imageURL>",
+                  "description": "<body>image description</body>",
+                }
+              ],
+              "video": {
+                "title": "video title",
+                "intro": "<body>video intro</body>",
+                "videoUrl": "<videoUrl>",
+                "videoWidth": 1080,
+                "videoHeight": 1920,
+                "transcription": "transcription video",
+              },
+              "conclusion": {
+                "title": "conclusion title",
+                "description": "<body>conclusion description</body>",
+              }
             }
           },
         ),
@@ -701,6 +723,101 @@ void main() {
               step: 1,
               description:
                   "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
+              explanationsTitle: "explanations title",
+              explanations: [
+                ConsultationSummaryEtEnsuiteExplanation(
+                  isTogglable: false,
+                  title: "toogle text title",
+                  intro: "<body>image introduction</body>",
+                  imageUrl: "<imageURL>",
+                  description: "<body>image description</body>",
+                ),
+              ],
+              video: ConsultationSummaryEtEnsuiteVideo(
+                title: "video title",
+                intro: "<body>video intro</body>",
+                videoUrl: "<videoUrl>",
+                videoWidth: 1080,
+                videoHeight: 1920,
+                transcription: "transcription video",
+              ),
+              conclusion: ConsultationSummaryEtEnsuiteConclusion(
+                title: "conclusion title",
+                description: "<body>conclusion description</body>",
+              ),
+            ),
+          ),
+        ),
+      );
+    });
+
+    test("when success with explanations title null and video null should return consultation results", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/$consultationId/responses",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "title": "Développer le covoiturage au quotidien",
+            "participantCount": 15035,
+            "resultsUniqueChoice": [],
+            "resultsMultipleChoice": [],
+            "etEnsuite": {
+              "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
+              "description":
+                  "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
+              "explanationsTitle": null,
+              "explanations": [
+                {
+                  "isTogglable": true,
+                  "title": "toogle text title",
+                  "intro": "<body>image introduction</body>",
+                  "imageUrl": "<imageURL>",
+                  "description": "<body>image description</body>",
+                }
+              ],
+              "video": null,
+              "conclusion": null,
+            }
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchConsultationSummary(consultationId: consultationId);
+
+      // Then
+      expect(
+        response,
+        GetConsultationSummarySucceedResponse(
+          consultationSummary: ConsultationSummary(
+            title: "Développer le covoiturage au quotidien",
+            participantCount: 15035,
+            results: [],
+            etEnsuite: ConsultationSummaryEtEnsuite(
+              step: 1,
+              description:
+                  "<body>La description avec textes <b>en gras</b> et potentiellement des <a href=\"https://google.fr\">liens</a><br/><br/><ul><li>example1 <b>en gras</b></li><li>example2</li></ul></body>",
+              explanationsTitle: null,
+              explanations: [
+                ConsultationSummaryEtEnsuiteExplanation(
+                  isTogglable: true,
+                  title: "toogle text title",
+                  intro: "<body>image introduction</body>",
+                  imageUrl: "<imageURL>",
+                  description: "<body>image description</body>",
+                ),
+              ],
+              video: null,
+              conclusion: null,
             ),
           ),
         ),
