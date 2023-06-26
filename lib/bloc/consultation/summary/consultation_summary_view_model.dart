@@ -79,14 +79,100 @@ class ConsultationSummaryEtEnsuiteViewModel extends Equatable {
   final String image;
   final String title;
   final String description;
+  final String? explanationsTitle;
+  final List<ConsultationSummaryEtEnsuiteExplanationViewModel> explanations;
+  final ConsultationSummaryEtEnsuiteVideoViewModel? video;
+  final ConsultationSummaryEtEnsuiteConclusionViewModel? conclusion;
 
   ConsultationSummaryEtEnsuiteViewModel({
     required this.step,
     required this.image,
     required this.title,
     required this.description,
+    required this.explanationsTitle,
+    required this.explanations,
+    required this.video,
+    required this.conclusion,
   });
 
   @override
-  List<Object> get props => [step, image, title, description];
+  List<Object?> get props => [
+        step,
+        image,
+        title,
+        description,
+        explanationsTitle,
+        explanations,
+        video,
+        conclusion,
+      ];
+}
+
+class ConsultationSummaryEtEnsuiteExplanationViewModel extends Equatable {
+  final bool isTogglable;
+  final String title;
+  final String intro;
+  final String imageUrl;
+  final String description;
+
+  ConsultationSummaryEtEnsuiteExplanationViewModel({
+    required this.isTogglable,
+    required this.title,
+    required this.intro,
+    required this.imageUrl,
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [
+        isTogglable,
+        title,
+        intro,
+        imageUrl,
+        description,
+      ];
+}
+
+class ConsultationSummaryEtEnsuiteVideoViewModel extends Equatable {
+  final String title;
+  final String intro;
+  final String videoUrl;
+  final int videoWidth;
+  final int videoHeight;
+  final String transcription;
+
+  ConsultationSummaryEtEnsuiteVideoViewModel({
+    required this.title,
+    required this.intro,
+    required this.videoUrl,
+    required this.videoWidth,
+    required this.videoHeight,
+    required this.transcription,
+  });
+
+  @override
+  List<Object> get props => [
+        title,
+        intro,
+        videoUrl,
+        videoWidth,
+        videoHeight,
+        transcription,
+      ];
+}
+
+class ConsultationSummaryEtEnsuiteConclusionViewModel extends Equatable {
+  final String title;
+  final String description;
+
+  ConsultationSummaryEtEnsuiteConclusionViewModel({
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  List<Object> get props => [
+        title,
+        description,
+      ];
 }

@@ -6,6 +6,9 @@ import 'package:agora/domain/consultation/summary/consultation_summary_results.d
 
 class ConsultationSummaryPresenter {
   static ConsultationSummaryViewModel present(ConsultationSummary consultationSummary) {
+    final etEnsuite = consultationSummary.etEnsuite;
+    final etEnsuiteVideo = etEnsuite.video;
+    final etEnsuiteConclusion = etEnsuite.conclusion;
     return ConsultationSummaryViewModel(
       title: consultationSummary.title,
       participantCount: ConsultationStrings.participantCount.format(consultationSummary.participantCount.toString()),
@@ -32,10 +35,36 @@ class ConsultationSummaryPresenter {
       ).toList()
         ..sort((viewModel1, viewModel2) => viewModel1.order.compareTo(viewModel2.order)),
       etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
-        step: ConsultationStrings.step.format(consultationSummary.etEnsuite.step.toString()),
-        image: _getImageAsset(consultationSummary.etEnsuite.step),
-        title: _buildTitle(consultationSummary.etEnsuite.step),
-        description: consultationSummary.etEnsuite.description,
+        step: ConsultationStrings.step.format(etEnsuite.step.toString()),
+        image: _getImageAsset(etEnsuite.step),
+        title: _buildTitle(etEnsuite.step),
+        description: etEnsuite.description,
+        explanationsTitle: etEnsuite.explanationsTitle,
+        explanations: etEnsuite.explanations.map((explanation) {
+          return ConsultationSummaryEtEnsuiteExplanationViewModel(
+            isTogglable: explanation.isTogglable,
+            title: explanation.title,
+            intro: explanation.intro,
+            imageUrl: explanation.imageUrl,
+            description: explanation.description,
+          );
+        }).toList(),
+        video: etEnsuiteVideo != null
+            ? ConsultationSummaryEtEnsuiteVideoViewModel(
+                title: etEnsuiteVideo.title,
+                intro: etEnsuiteVideo.intro,
+                videoUrl: etEnsuiteVideo.videoUrl,
+                videoWidth: etEnsuiteVideo.videoWidth,
+                videoHeight: etEnsuiteVideo.videoHeight,
+                transcription: etEnsuiteVideo.transcription,
+              )
+            : null,
+        conclusion: etEnsuiteConclusion != null
+            ? ConsultationSummaryEtEnsuiteConclusionViewModel(
+                title: etEnsuiteConclusion.title,
+                description: etEnsuiteConclusion.description,
+              )
+            : null,
       ),
     );
   }
