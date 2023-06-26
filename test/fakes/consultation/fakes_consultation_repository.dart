@@ -270,7 +270,7 @@ class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRe
   }
 }
 
-class FakeConsultationEtEnsuiteWithNullExplanationsAndNullVideoRepository extends FakeConsultationSuccessRepository {
+class FakeConsultationEtEnsuiteWithNullElementsRepository extends FakeConsultationSuccessRepository {
   @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
