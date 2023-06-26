@@ -15,7 +15,7 @@ class AgoraRoundedImage extends StatelessWidget {
         shape: BoxShape.circle,
         image: DecorationImage(
           image: NetworkImage(imageUrl),
-          fit: BoxFit.fill,
+          fit: BoxFit.fitHeight,
         ),
       ),
     );
