@@ -16,6 +16,8 @@ class AgoraHtmlStyles {
   static Map<String, Style> htmlStyle = {
     "body": AgoraHtmlStyles.bodyStyle,
     "b": AgoraHtmlStyles.boldStyle,
+    "h1": AgoraHtmlStyles.h1Style,
+    "span": AgoraHtmlStyles.spanStyle,
   };
 
   static Style bodyStyle = Style(
@@ -24,6 +26,8 @@ class AgoraHtmlStyles {
     fontSize: FontSize(14.0),
     color: AgoraColors.primaryGrey,
     lineHeight: LineHeight(height),
+    padding: EdgeInsets.zero,
+    margin: Margins.zero,
   );
 
   static Style boldStyle = Style(
@@ -32,5 +36,27 @@ class AgoraHtmlStyles {
     fontSize: FontSize(14.0),
     color: AgoraColors.primaryGrey,
     lineHeight: LineHeight(height),
+    padding: EdgeInsets.zero,
+    margin: Margins.zero,
+  );
+
+  static Style h1Style = Style(
+    fontFamily: marianne,
+    fontWeight: bold,
+    fontSize: FontSize(16.0),
+    color: AgoraColors.primaryBlue,
+    lineHeight: LineHeight(height),
+    padding: EdgeInsets.zero,
+    margin: Margins.zero,
+  );
+
+  static Style spanStyle = Style(
+    fontFamily: marianne,
+    fontWeight: bold,
+    fontSize: FontSize(14.0),
+    color: AgoraColors.primaryBlue,
+    lineHeight: LineHeight(height),
+    padding: EdgeInsets.zero,
+    margin: Margins.zero,
   );
 }

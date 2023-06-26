@@ -9,7 +9,7 @@ class AnalyticsEventNames {
   static const String incomingAnsweredQag = "Réponse à venir de la QaG";
   static const String shareQag = "Partager la QaG";
   static const String giveQagFeedback = "Donner un feedback à la QaG";
-  static const String qagVideo = "Voir la vidéo plus de 5 secondes";
+  static const String video = "Voir la vidéo plus de 5 secondes";
 
   static const String startConsultation = "Commencer le questionnaire d'une consultation";
   static const String answerConsultationQuestion = "Répondre à la question %s d'une consultation";
