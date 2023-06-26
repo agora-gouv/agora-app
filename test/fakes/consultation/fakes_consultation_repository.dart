@@ -175,7 +175,32 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             ],
           ),
         ],
-        etEnsuite: ConsultationSummaryEtEnsuite(step: 1, description: "<body>textRiche</body>"),
+        etEnsuite: ConsultationSummaryEtEnsuite(
+          step: 1,
+          description: "<body>textRiche</body>",
+          explanationsTitle: "explanations title",
+          explanations: [
+            ConsultationSummaryEtEnsuiteExplanation(
+              isTogglable: false,
+              title: "toogle text title",
+              intro: "<body>image introduction</body>",
+              imageUrl: "<imageURL>",
+              description: "<body>image description</body>",
+            ),
+          ],
+          video: ConsultationSummaryEtEnsuiteVideo(
+            title: "video title",
+            intro: "<body>video intro</body>",
+            videoUrl: "<videoUrl>",
+            videoWidth: 1080,
+            videoHeight: 1920,
+            transcription: "transcription video",
+          ),
+          conclusion: ConsultationSummaryEtEnsuiteConclusion(
+            title: "conclusion title",
+            description: "<body>conclusion description</body>",
+          ),
+        ),
       ),
     );
   }
@@ -242,5 +267,54 @@ class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRe
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
+  }
+}
+
+class FakeConsultationEtEnsuiteWithNullExplanationsAndNullVideoRepository extends FakeConsultationSuccessRepository {
+  @override
+  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
+    required String consultationId,
+  }) async {
+    return GetConsultationSummarySucceedResponse(
+      consultationSummary: ConsultationSummary(
+        title: "Développer le covoiturage au quotidien",
+        participantCount: 15035,
+        results: [
+          ConsultationSummaryUniqueChoiceResults(
+            questionTitle: "Les déplacements professionnels en covoiturage",
+            order: 2,
+            responses: [
+              ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
+              ConsultationSummaryResponse(label: "En transports en commun, vélo, à pied", ratio: 17),
+              ConsultationSummaryResponse(label: "Autres", ratio: 18),
+            ],
+          ),
+          ConsultationSummaryMultipleChoicesResults(
+            questionTitle: "Pour quelle raison principale ?",
+            order: 1,
+            responses: [
+              ConsultationSummaryResponse(label: "Je veux être tranquille dans ma voiture", ratio: 42),
+              ConsultationSummaryResponse(label: "Autres", ratio: 58),
+            ],
+          ),
+        ],
+        etEnsuite: ConsultationSummaryEtEnsuite(
+          step: 1,
+          description: "<body>textRiche</body>",
+          explanationsTitle: null,
+          explanations: [
+            ConsultationSummaryEtEnsuiteExplanation(
+              isTogglable: false,
+              title: "toogle text title",
+              intro: "<body>image introduction</body>",
+              imageUrl: "<imageURL>",
+              description: "<body>image description</body>",
+            ),
+          ],
+          video: null,
+          conclusion: null,
+        ),
+      ),
+    );
   }
 }
