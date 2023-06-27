@@ -1,4 +1,5 @@
 import 'package:agora/domain/consultation/consultation.dart';
+import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
@@ -41,6 +42,24 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl3",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           step: 3,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
+    required int pageNumber,
+  }) async {
+    return GetConsultationsFinishedPaginatedSucceedResponse(
+      maxPage: 3,
+      finishedConsultationsPaginated: [
+        ConsultationFinishedPaginated(
+          id: "consultationId",
+          title: "Quelles solutions pour les déserts médicaux ?",
+          coverUrl: "coverUrl",
+          thematique: Thematique(picto: "🩺", label: "Santé"),
+          step: 2,
         ),
       ],
     );
@@ -231,6 +250,13 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsFailedResponse();
+  }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
+    required int pageNumber,
+  }) async {
+    return GetConsultationsFinishedPaginatedFailedResponse();
   }
 
   @override

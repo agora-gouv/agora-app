@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/domain/consultation/consultation.dart';
+import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
@@ -235,6 +236,79 @@ void main() {
 
       // Then
       expect(response, GetConsultationsFailedResponse());
+    });
+  });
+
+  group("Fetch consultations finished paginated", () {
+    const pageNumber = 1;
+
+    test("when success should return consultations", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/finished/$pageNumber",
+        (server) => server.reply(HttpStatus.ok, {
+          "maxPageNumber": 3,
+          "consultations": [
+            {
+              "id": "consultationId",
+              "title": "Quelles solutions pour les déserts médicaux ?",
+              "coverUrl": "coverUrl",
+              "thematique": {"label": "Santé", "picto": "🩺"},
+              "step": 2
+            },
+          ],
+        }),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
+
+      // Then
+      expect(
+        response,
+        GetConsultationsFinishedPaginatedSucceedResponse(
+          maxPage: 3,
+          finishedConsultationsPaginated: [
+            ConsultationFinishedPaginated(
+              id: "consultationId",
+              title: "Quelles solutions pour les déserts médicaux ?",
+              coverUrl: "coverUrl",
+              thematique: Thematique(picto: "🩺", label: "Santé"),
+              step: 2,
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/finished/$pageNumber",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
+
+      // Then
+      expect(response, GetConsultationsFinishedPaginatedFailedResponse());
     });
   });
 
