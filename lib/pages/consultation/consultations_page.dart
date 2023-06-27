@@ -67,7 +67,10 @@ class ConsultationsPage extends StatelessWidget {
     if (state is ConsultationsFetchedState) {
       return [
         ConsultationsOngoingSection(ongoingViewModels: state.ongoingViewModels),
-        ConsultationsFinishedSection(finishedViewModels: state.finishedViewModels),
+        ConsultationsFinishedSection(
+          finishedViewModels: state.finishedViewModels,
+          shouldDisplayAllButton: state.shouldDisplayFinishedAllButton,
+        ),
         ConsultationsAnsweredSection(answeredViewModels: state.answeredViewModels),
       ];
     } else if (state is ConsultationInitialLoadingState) {

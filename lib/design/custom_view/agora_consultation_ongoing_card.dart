@@ -61,6 +61,8 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.width * 0.55;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
       child: AgoraRoundedCard(
@@ -71,16 +73,17 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
             Center(
               child: Image.network(
                 imageUrl,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width * 0.5,
+                fit: BoxFit.fitWidth,
+                width: screenWidth,
+                height: screenHeight,
                 loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                   return Center(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.width * 0.5,
-                      child: loadingProgress == null
-                          ? child
-                          : Row(
+                    child: loadingProgress == null
+                        ? child
+                        : SizedBox(
+                            width: screenWidth,
+                            height: screenHeight,
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Spacer(),
@@ -92,7 +95,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                                 Spacer(),
                               ],
                             ),
-                    ),
+                          ),
                   );
                 },
               ),

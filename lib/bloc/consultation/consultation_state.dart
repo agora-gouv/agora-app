@@ -13,11 +13,13 @@ class ConsultationsFetchedState extends ConsultationState {
   final List<ConsultationOngoingViewModel> ongoingViewModels;
   final List<ConsultationFinishedViewModel> finishedViewModels;
   final List<ConsultationAnsweredViewModel> answeredViewModels;
+  final bool shouldDisplayFinishedAllButton;
 
   ConsultationsFetchedState({
     required this.ongoingViewModels,
     required this.finishedViewModels,
     required this.answeredViewModels,
+    required this.shouldDisplayFinishedAllButton,
   });
 
   @override
@@ -25,6 +27,7 @@ class ConsultationsFetchedState extends ConsultationState {
         ongoingViewModels,
         finishedViewModels,
         answeredViewModels,
+        shouldDisplayFinishedAllButton,
       ];
 }
 
