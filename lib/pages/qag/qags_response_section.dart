@@ -10,10 +10,12 @@ import 'package:agora/design/custom_view/agora_qag_incoming_response_card.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.dart';
 import 'package:flutter/material.dart';
 
 class QagsResponseSection extends StatelessWidget {
@@ -29,6 +31,7 @@ class QagsResponseSection extends StatelessWidget {
           left: AgoraSpacings.horizontalPadding,
           top: AgoraSpacings.base,
           right: AgoraSpacings.horizontalPadding,
+          bottom: AgoraSpacings.x2,
         ),
         child: Column(
           children: [
@@ -83,14 +86,12 @@ class QagsResponseSection extends StatelessWidget {
             );
           },
         ),
-        // Spacer(),
-        // AgoraRoundedButton(
-        //   label: GenericStrings.all,
-        //   style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-        //   onPressed: () {
-        //     // TODO
-        //   },
-        // ),
+        Spacer(),
+        AgoraRoundedButton(
+          label: GenericStrings.all,
+          style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+          onPressed: () => Navigator.pushNamed(context, QagResponsePaginatedPage.routeName),
+        ),
       ],
     );
   }
@@ -106,6 +107,7 @@ class QagsResponseSection extends StatelessWidget {
             authorImageUrl: qagResponse.authorPortraitUrl,
             author: qagResponse.author,
             date: qagResponse.responseDate,
+            style: AgoraQagResponseStyle.small,
             onClick: () {
               TrackerHelper.trackClick(
                 clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
