@@ -7,6 +7,7 @@ import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
+import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -456,6 +457,82 @@ void main() {
 
       // Then
       expect(response, GetQagsPaginatedFailedResponse());
+    });
+  });
+
+  group("Fetch qags response paginated", () {
+    test("when success should return qags response paginated", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/responses/page/1",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "maxPageNumber": 5,
+            "responses": [
+              {
+                "qagId": "qagId",
+                "thematique": {"label": "Transports", "picto": "🚊"},
+                "title": "Pourquoi ... ?",
+                "author": "Olivier Véran",
+                "authorPortraitUrl": "authorPortraitUrl",
+                "responseDate": "2023-01-23"
+              }
+            ],
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchQagsResponsePaginated(pageNumber: 1);
+
+      // Then
+      expect(
+        response,
+        GetQagsResponsePaginatedSucceedResponse(
+          maxPage: 5,
+          paginatedQagsResponse: [
+            QagResponsePaginated(
+              qagId: "qagId",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "Pourquoi ... ?",
+              author: "Olivier Véran",
+              authorPortraitUrl: "authorPortraitUrl",
+              responseDate: DateTime(2023, 1, 23),
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/responses/page/1",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchQagsResponsePaginated(pageNumber: 1);
+
+      // Then
+      expect(response, GetQagsResponsePaginatedFailedResponse());
     });
   });
 

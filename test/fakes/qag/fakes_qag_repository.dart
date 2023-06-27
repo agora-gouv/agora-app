@@ -5,6 +5,7 @@ import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
+import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -134,6 +135,25 @@ class FakeQagSuccessRepository extends QagRepository {
           ],
         );
     }
+  }
+
+  @override
+  Future<GetQagsResponsePaginatedRepositoryResponse> fetchQagsResponsePaginated({
+    required int pageNumber,
+  }) async {
+    return GetQagsResponsePaginatedSucceedResponse(
+      maxPage: 3,
+      paginatedQagsResponse: [
+        QagResponsePaginated(
+          qagId: "qagId",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "Pour la ... ?",
+          author: "author",
+          authorPortraitUrl: "authorPortraitUrl",
+          responseDate: DateTime(2024, 1, 23),
+        ),
+      ],
+    );
   }
 
   @override
@@ -323,6 +343,13 @@ class FakeQagFailureRepository extends QagRepository {
     required QagPaginatedFilter filter,
   }) async {
     return GetQagsPaginatedFailedResponse();
+  }
+
+  @override
+  Future<GetQagsResponsePaginatedRepositoryResponse> fetchQagsResponsePaginated({
+    required int pageNumber,
+  }) async {
+    return GetQagsResponsePaginatedFailedResponse();
   }
 
   @override
