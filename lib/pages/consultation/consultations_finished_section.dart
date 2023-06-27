@@ -1,16 +1,28 @@
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_finished_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
+import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsFinishedSection extends StatelessWidget {
   final List<ConsultationFinishedViewModel> finishedViewModels;
+  final bool shouldDisplayAllButton;
 
-  const ConsultationsFinishedSection({super.key, required this.finishedViewModels});
+  const ConsultationsFinishedSection({
+    super.key,
+    required this.finishedViewModels,
+    required this.shouldDisplayAllButton,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +52,14 @@ class ConsultationsFinishedSection extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Spacer(),
-                    // AgoraRoundedButton(
-                    //   label: GenericStrings.all,
-                    //   style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                    //   onPressed: () {
-                    //     // TODO
-                    //   },
-                    // ),
+                    if (shouldDisplayAllButton) ...[
+                      Spacer(),
+                      AgoraRoundedButton(
+                        label: GenericStrings.all,
+                        style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+                        onPressed: () => Navigator.pushNamed(context, ConsultationFinishedPaginatedPage.routeName),
+                      ),
+                    ],
                   ],
                 ),
                 SizedBox(height: AgoraSpacings.base),
@@ -91,6 +103,21 @@ class ConsultationsFinishedSection extends StatelessWidget {
           thematique: finishedViewModel.thematique,
           imageUrl: finishedViewModel.coverUrl,
           step: finishedViewModel.step,
+          style: AgoraConsultationFinishedStyle.small,
+          onClick: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.finishedConsultation} ${finishedViewModel.id}",
+              widgetName: AnalyticsScreenNames.consultationsPage,
+            );
+            Navigator.pushNamed(
+              context,
+              ConsultationSummaryPage.routeName,
+              arguments: ConsultationSummaryArguments(
+                consultationId: finishedViewModel.id,
+                shouldReloadConsultationsWhenPop: false,
+              ),
+            );
+          },
         ),
       );
       finishedConsultationsWidget.add(SizedBox(width: AgoraSpacings.x0_5));

@@ -1,24 +1,25 @@
-import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_bloc.dart';
-import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_event.dart';
-import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_state.dart';
+import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_bloc.dart';
+import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_event.dart';
+import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/design/custom_view/agora_consultation_finished_card.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class QagResponsePaginatedPage extends StatelessWidget {
-  static const routeName = "/qagResponsePaginatedPage";
+class ConsultationFinishedPaginatedPage extends StatelessWidget {
+  static const routeName = "/consultationFinishedPaginatedPage";
 
   final initialPage = 1;
 
@@ -27,9 +28,9 @@ class QagResponsePaginatedPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) => QagResponsePaginatedBloc(
-            qagRepository: RepositoryManager.getQagRepository(),
-          )..add(FetchQagsResponsePaginatedEvent(pageNumber: initialPage)),
+          create: (BuildContext context) => ConsultationFinishedPaginatedBloc(
+            consultationRepository: RepositoryManager.getConsultationRepository(),
+          )..add(FetchConsultationFinishedPaginatedEvent(pageNumber: initialPage)),
         ),
       ],
       child: AgoraScaffold(
@@ -39,18 +40,18 @@ class QagResponsePaginatedPage extends StatelessWidget {
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
               AgoraRichTextTextItem(
-                text: QagStrings.qagResponsePart1,
-                style: AgoraRichTextItemStyle.bold,
+                text: ConsultationStrings.finishConsultationPart1,
+                style: AgoraRichTextItemStyle.regular,
               ),
               AgoraRichTextSpaceItem(),
               AgoraRichTextSpaceItem(),
               AgoraRichTextTextItem(
-                text: QagStrings.qagResponsePart2,
-                style: AgoraRichTextItemStyle.regular,
+                text: ConsultationStrings.finishConsultationPart2,
+                style: AgoraRichTextItemStyle.bold,
               ),
             ],
           ),
-          child: BlocBuilder<QagResponsePaginatedBloc, QagResponsePaginatedState>(
+          child: BlocBuilder<ConsultationFinishedPaginatedBloc, ConsultationFinishedPaginatedState>(
             builder: (context, state) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -63,26 +64,29 @@ class QagResponsePaginatedPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildContent(BuildContext context, QagResponsePaginatedState state) {
+  List<Widget> _buildContent(BuildContext context, ConsultationFinishedPaginatedState state) {
     final List<Widget> widgets = [];
-    for (final qagResponse in state.qagResponseViewModels) {
+    for (final finishedViewModel in state.consultationFinishedViewModels) {
       widgets.add(
-        AgoraQagResponseCard(
-          title: qagResponse.title,
-          thematique: qagResponse.thematique,
-          authorImageUrl: qagResponse.authorPortraitUrl,
-          author: qagResponse.author,
-          date: qagResponse.responseDate,
-          style: AgoraQagResponseStyle.large,
+        AgoraConsultationFinishedCard(
+          id: finishedViewModel.id,
+          title: finishedViewModel.title,
+          thematique: finishedViewModel.thematique,
+          imageUrl: finishedViewModel.coverUrl,
+          step: finishedViewModel.step,
+          style: AgoraConsultationFinishedStyle.large,
           onClick: () {
             TrackerHelper.trackClick(
-              clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
-              widgetName: AnalyticsScreenNames.qagsResponsePaginatedPage,
+              clickName: "${AnalyticsEventNames.finishedConsultation} ${finishedViewModel.id}",
+              widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
             );
             Navigator.pushNamed(
               context,
-              QagDetailsPage.routeName,
-              arguments: QagDetailsArguments(qagId: qagResponse.qagId),
+              ConsultationSummaryPage.routeName,
+              arguments: ConsultationSummaryArguments(
+                consultationId: finishedViewModel.id,
+                shouldReloadConsultationsWhenPop: false,
+              ),
             );
           },
         ),
@@ -90,10 +94,10 @@ class QagResponsePaginatedPage extends StatelessWidget {
       widgets.add(SizedBox(height: AgoraSpacings.base));
     }
 
-    if (state is QagResponsePaginatedInitialState || state is QagResponsePaginatedLoadingState) {
+    if (state is ConsultationFinishedPaginatedInitialState || state is ConsultationFinishedPaginatedLoadingState) {
       widgets.add(Center(child: CircularProgressIndicator()));
       widgets.add(SizedBox(height: AgoraSpacings.base));
-    } else if (state is QagResponsePaginatedErrorState) {
+    } else if (state is ConsultationFinishedPaginatedErrorState) {
       widgets.add(AgoraErrorView());
       widgets.add(SizedBox(height: AgoraSpacings.base));
       widgets.add(
@@ -104,8 +108,8 @@ class QagResponsePaginatedPage extends StatelessWidget {
               label: QagStrings.retry,
               style: AgoraRoundedButtonStyle.primaryButtonStyle,
               onPressed: () => context
-                  .read<QagResponsePaginatedBloc>()
-                  .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
+                  .read<ConsultationFinishedPaginatedBloc>()
+                  .add(FetchConsultationFinishedPaginatedEvent(pageNumber: state.currentPageNumber)),
             ),
           ],
         ),
@@ -118,8 +122,8 @@ class QagResponsePaginatedPage extends StatelessWidget {
             label: QagStrings.displayMore,
             style: AgoraRoundedButtonStyle.primaryButtonStyle,
             onPressed: () => context
-                .read<QagResponsePaginatedBloc>()
-                .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber + 1)),
+                .read<ConsultationFinishedPaginatedBloc>()
+                .add(FetchConsultationFinishedPaginatedEvent(pageNumber: state.currentPageNumber + 1)),
           ),
         );
         widgets.add(SizedBox(height: AgoraSpacings.base));

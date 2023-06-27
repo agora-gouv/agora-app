@@ -6,15 +6,16 @@ class AnalyticsScreenNames {
   static const String consultationQuestionConfirmationPage = "Envoi des réponses d'une consultation";
   static const String consultationSummaryResultPage = "Résultats d'une consultation";
   static const String consultationSummaryEtEnsuitePage = "Et ensuite d'une consultation";
+  static const String consultationsFinishedPaginatedPage = "Liste infinie des consultations finis";
 
   static const String qagsPage = "Liste des QaGs";
-  static const String qagsPaginatedPage = "Liste des QaGs infinie";
-  static const String qagsPaginatedPopularPage = "Liste des QaGs populaires infinie";
-  static const String qagsPaginatedLatestPage = "Liste des QaGs récentes infinie";
-  static const String qagsPaginatedSupportingPage = "Liste des QaGs soutenues infinie";
+  static const String qagsPaginatedPage = "Liste infinie des QaGs";
+  static const String qagsPaginatedPopularPage = "Liste infinie des QaGs populaires";
+  static const String qagsPaginatedLatestPage = "Liste infinie des QaGs récentes";
+  static const String qagsPaginatedSupportingPage = "Liste infinie des QaGs soutenues";
   static const String qagDetailsPage = "Détails d'une QaG";
   static const String qagAskQuestionPage = "Poser une QaG";
-  static const String qagsResponsePaginatedPage = "Liste des réponses aux QaGs infinie";
+  static const String qagsResponsePaginatedPage = "Liste infinie des réponses aux QaGs";
 
   static const String profilePage = "Profile";
   static const String moderationPage = "Modération";

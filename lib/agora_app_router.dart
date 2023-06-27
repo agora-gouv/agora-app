@@ -3,6 +3,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
@@ -42,6 +43,10 @@ class AgoraAppRouter {
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
       ConsultationSummaryPage.routeName: (context) => ConsultationSummaryPage(),
+      ConsultationFinishedPaginatedPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
+            child: ConsultationFinishedPaginatedPage(),
+          ),
       // Question au gouvernement
       QagsPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
       QagAskQuestionPage.routeName: (context) => AgoraTracker(

@@ -21,8 +21,8 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     if (response is GetConsultationsSucceedResponse) {
       final ongoingViewModels = ConsultationPresenter.presentOngoingConsultations(response.ongoingConsultations);
       final finishedViewModels = ConsultationPresenter.presentFinishedConsultations(
-        response.ongoingConsultations,
-        response.finishedConsultations,
+        ongoingConsultations: response.ongoingConsultations,
+        finishedConsultations: response.finishedConsultations,
       );
       final answeredViewModels = ConsultationPresenter.presentAnsweredConsultations(response.answeredConsultations);
       emit(
@@ -30,6 +30,7 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
           ongoingViewModels: ongoingViewModels,
           finishedViewModels: finishedViewModels,
           answeredViewModels: answeredViewModels,
+          shouldDisplayFinishedAllButton: response.finishedConsultations.isNotEmpty,
         ),
       );
     } else if (response is GetConsultationsFailedResponse) {

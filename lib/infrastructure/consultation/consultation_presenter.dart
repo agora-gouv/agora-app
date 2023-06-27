@@ -20,10 +20,10 @@ class ConsultationPresenter {
     }).toList();
   }
 
-  static List<ConsultationFinishedViewModel> presentFinishedConsultations(
-    List<ConsultationOngoing> ongoingConsultations,
-    List<ConsultationFinished> finishedConsultations,
-  ) {
+  static List<ConsultationFinishedViewModel> presentFinishedConsultations({
+    required List<ConsultationOngoing> ongoingConsultations,
+    required List<ConsultationFinished> finishedConsultations,
+  }) {
     if (finishedConsultations.isNotEmpty) {
       return finishedConsultations.map((consultation) {
         return ConsultationFinishedViewModel(
