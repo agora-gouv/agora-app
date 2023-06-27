@@ -3,6 +3,7 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/consultation/consultation.dart';
+import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
@@ -16,6 +17,10 @@ import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
   Future<GetConsultationsRepositoryResponse> fetchConsultations();
+
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
+    required int pageNumber,
+  });
 
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
@@ -90,6 +95,30 @@ class ConsultationDioRepository extends ConsultationRepository {
       }
       crashlyticsHelper.recordError(e, s, reason: "fetchConsultations failed");
       return GetConsultationsFailedResponse();
+    }
+  }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
+    required int pageNumber,
+  }) async {
+    try {
+      final response = await httpClient.get("/consultations/finished/$pageNumber");
+      return GetConsultationsFinishedPaginatedSucceedResponse(
+        maxPage: response.data["maxPageNumber"] as int,
+        finishedConsultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
+          return ConsultationFinishedPaginated(
+            id: finishedConsultation["id"] as String,
+            title: finishedConsultation["title"] as String,
+            coverUrl: finishedConsultation["coverUrl"] as String,
+            thematique: (finishedConsultation["thematique"] as Map).toThematique(),
+            step: finishedConsultation["step"] as int,
+          );
+        }).toList(),
+      );
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationsFinishedPaginated failed");
+      return GetConsultationsFinishedPaginatedFailedResponse();
     }
   }
 
@@ -268,6 +297,26 @@ class GetConsultationsFailedResponse extends GetConsultationsRepositoryResponse 
   @override
   List<Object> get props => [errorType];
 }
+
+abstract class GetConsultationsFinishedPaginatedRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetConsultationsFinishedPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
+  final int maxPage;
+  final List<ConsultationFinishedPaginated> finishedConsultationsPaginated;
+
+  GetConsultationsFinishedPaginatedSucceedResponse({
+    required this.maxPage,
+    required this.finishedConsultationsPaginated,
+  });
+
+  @override
+  List<Object> get props => [maxPage, finishedConsultationsPaginated];
+}
+
+class GetConsultationsFinishedPaginatedFailedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {}
 
 abstract class GetConsultationDetailsRepositoryResponse extends Equatable {
   @override
