@@ -18,7 +18,7 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         left: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.x3,
+        top: AgoraSpacings.base,
         right: AgoraSpacings.horizontalPadding,
       ),
       child: Column(
