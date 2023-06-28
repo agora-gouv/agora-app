@@ -214,7 +214,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         "/consultations/$consultationId/responses",
       );
       final etEnsuite = response.data["etEnsuite"];
-      final explanations = etEnsuite["explanations"] as List?;
+      final explanations = etEnsuite["explanations"] as List;
       final etEnsuiteVideo = etEnsuite["video"] as Map?;
       final etEnsuiteConclusion = etEnsuite["conclusion"] as Map?;
       final summary = ConsultationSummary(
@@ -228,17 +228,15 @@ class ConsultationDioRepository extends ConsultationRepository {
           step: etEnsuite["step"] as int,
           description: etEnsuite["description"] as String,
           explanationsTitle: etEnsuite["explanationsTitle"] as String?,
-          explanations: explanations != null
-              ? explanations.map((explanation) {
-                  return ConsultationSummaryEtEnsuiteExplanation(
-                    isTogglable: explanation["isTogglable"] as bool,
-                    title: explanation["title"] as String,
-                    intro: explanation["intro"] as String,
-                    imageUrl: explanation["imageUrl"] as String,
-                    description: explanation["description"] as String,
-                  );
-                }).toList()
-              : [],
+          explanations: explanations.map((explanation) {
+            return ConsultationSummaryEtEnsuiteExplanation(
+              isTogglable: explanation["isTogglable"] as bool,
+              title: explanation["title"] as String,
+              intro: explanation["intro"] as String,
+              imageUrl: explanation["imageUrl"] as String,
+              description: explanation["description"] as String,
+            );
+          }).toList(),
           video: etEnsuiteVideo != null
               ? ConsultationSummaryEtEnsuiteVideo(
                   title: etEnsuiteVideo["title"] as String,
