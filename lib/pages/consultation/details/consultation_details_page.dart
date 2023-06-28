@@ -166,7 +166,7 @@ class ConsultationDetailsPage extends StatelessWidget {
               SizedBox(height: AgoraSpacings.base),
               AgoraRoundedCard(
                 cardColor: AgoraColors.cascadingWhite,
-                padding: const EdgeInsets.all(AgoraSpacings.x0_5),
+                padding: const EdgeInsets.all(AgoraSpacings.base),
                 child: AgoraHtml(data: viewModel.tipsDescription),
               ),
               SizedBox(height: AgoraSpacings.base),
