@@ -121,7 +121,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                               clickName: AnalyticsEventNames.shareConsultationResults,
                               widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                             );
-                            ShareHelper.shareConsultation(title: title, id: consultationId);
+                            ShareHelper.shareConsultation(context: context, title: title, id: consultationId);
                           },
                         ),
                       ],

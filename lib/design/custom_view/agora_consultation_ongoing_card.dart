@@ -154,7 +154,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                       clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
                       widgetName: AnalyticsScreenNames.consultationsPage,
                     );
-                    ShareHelper.shareConsultation(title: title, id: consultationId);
+                    ShareHelper.shareConsultation(context: context, title: title, id: consultationId);
                   },
                 ),
               ],
