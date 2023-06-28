@@ -32,7 +32,7 @@ class AgoraQagIncomingResponseCard extends StatelessWidget {
     return SizedBox(
       width: max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth),
       child: AgoraRoundedCard(
-        borderColor: AgoraColors.border,
+        borderColor: AgoraColors.primaryBlue,
         cardColor: AgoraColors.white,
         padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
         onTap: () => onClick(),
