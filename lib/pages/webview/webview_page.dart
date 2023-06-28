@@ -16,11 +16,6 @@ class WebviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)!.settings.arguments as WebviewArguments;
-
-    String finalUrl = arguments.url;
-    if (finalUrl.endsWith(".pdf")) {
-      finalUrl = "https://docs.google.com/gview?embedded=true&url=$finalUrl";
-    }
     return AgoraScaffold(
       child: Column(
         children: [
@@ -33,7 +28,7 @@ class WebviewPage extends StatelessWidget {
                   controller: WebViewController()
                     ..setJavaScriptMode(JavaScriptMode.unrestricted)
                     ..setBackgroundColor(AgoraColors.white)
-                    ..loadRequest(Uri.parse(finalUrl)),
+                    ..loadRequest(Uri.parse(arguments.url)),
                 ),
               ],
             ),
