@@ -8,6 +8,7 @@ import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
+import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -89,13 +90,23 @@ class FirebasePushNotificationService extends PushNotificationService {
 
   @override
   void redirectionFromSavedNotificationMessage() async {
+    final message = await _redirect("notification : redirect with");
+    if (message == null) {
+      // retry redirect if waiting time is insufficient
+      await Future.delayed(Duration(seconds: 1));
+      _redirect("notification : retry redirect with");
+    }
+  }
+
+  Future<String?> _redirect(String logMessage) async {
     final String? savedNotificationMessage = await StorageManager.getPushNotificationStorageClient().getMessage();
-    Log.d("notification : redirect with $savedNotificationMessage");
+    Log.d("$logMessage $savedNotificationMessage");
     if (savedNotificationMessage != null) {
       final RemoteMessage message = RemoteMessage.fromMap(jsonDecode(savedNotificationMessage) as Map<String, dynamic>);
       _redirectionFromNotificationMessage(message, false);
       _clearNotificationMessage();
     }
+    return savedNotificationMessage;
   }
 
   @override
@@ -119,7 +130,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     }
   }
 
-  void _redirectionFromNotificationMessage(RemoteMessage message, bool shouldDisplayQagMessage) {
+  void _redirectionFromNotificationMessage(RemoteMessage message, bool shouldDisplayMessage) {
     final messageType = (message.data["type"] as String).toNotificationMessageType();
     switch (messageType) {
       case NotificationMessageType.qagDetails:
@@ -127,7 +138,18 @@ class FirebasePushNotificationService extends PushNotificationService {
           QagDetailsPage.routeName,
           arguments: QagDetailsArguments(
             qagId: message.data["qagId"] as String,
-            infoMessage: shouldDisplayQagMessage ? message.notification?.body : null,
+            notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
+            notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
+          ),
+        );
+        break;
+      case NotificationMessageType.consultationDetails:
+        navigatorKey.currentState?.pushNamed(
+          ConsultationDetailsPage.routeName,
+          arguments: ConsultationDetailsArguments(
+            consultationId: message.data["consultationId"] as String,
+            notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
+            notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
           ),
         );
         break;
@@ -136,7 +158,7 @@ class FirebasePushNotificationService extends PushNotificationService {
 
   void _clearNotificationMessage() async {
     StorageManager.getPushNotificationStorageClient().clearMessage();
-    await flutterLocalNotificationsPlugin.cancelAll();
+    //await flutterLocalNotificationsPlugin.cancelAll();
   }
 
   Future<String> _fetchMessagingToken() async {

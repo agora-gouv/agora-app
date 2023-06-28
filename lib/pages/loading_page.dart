@@ -6,6 +6,7 @@ import 'package:agora/bloc/notification/notification_bloc.dart';
 import 'package:agora/bloc/notification/notification_event.dart';
 import 'package:agora/bloc/notification/notification_state.dart';
 import 'package:agora/common/helper/clipboard_helper.dart';
+import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
@@ -206,6 +207,8 @@ class _LoadingPageState extends State<LoadingPage> {
         });
       }
     }
+    Log.d("notification : start app");
+    ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
   }
 
   Widget _buildContent({

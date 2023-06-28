@@ -8,6 +8,8 @@ import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
@@ -27,23 +29,69 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationDetailsArguments {
   final String consultationId;
+  final String? notificationTitle;
+  final String? notificationDescription;
 
-  ConsultationDetailsArguments({required this.consultationId});
+  ConsultationDetailsArguments({
+    required this.consultationId,
+    this.notificationTitle,
+    this.notificationDescription,
+  });
 }
 
-class ConsultationDetailsPage extends StatelessWidget {
+class ConsultationDetailsPage extends StatefulWidget {
   static const routeName = "/consultationDetailsPage";
 
   final String consultationId;
+  final String? notificationTitle;
+  final String? notificationDescription;
 
-  const ConsultationDetailsPage({super.key, required this.consultationId});
+  const ConsultationDetailsPage({
+    super.key,
+    required this.consultationId,
+    this.notificationTitle,
+    this.notificationDescription,
+  });
+
+  @override
+  State<ConsultationDetailsPage> createState() => _ConsultationDetailsPageState();
+}
+
+class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    final notificationTitle = widget.notificationTitle;
+    final notificationDescription = widget.notificationDescription;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (notificationTitle != null) {
+        showAgoraDialog(
+          context: context,
+          columnChildren: [
+            Text(notificationTitle, style: AgoraTextStyles.light16),
+            SizedBox(height: AgoraSpacings.x0_75),
+            if (notificationDescription != null) ...[
+              Text(notificationDescription, style: AgoraTextStyles.light16),
+              SizedBox(height: AgoraSpacings.x0_75),
+            ],
+            AgoraButton(
+              label: GenericStrings.close,
+              style: AgoraButtonStyle.primaryButtonStyle,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => ConsultationDetailsBloc(
         consultationRepository: RepositoryManager.getConsultationRepository(),
-      )..add(FetchConsultationDetailsEvent(consultationId: consultationId)),
+      )..add(FetchConsultationDetailsEvent(consultationId: widget.consultationId)),
       child: BlocConsumer<ConsultationDetailsBloc, ConsultationDetailsState>(
         listener: (previousState, currentState) {
           if (currentState is ConsultationDetailsFetchedState && currentState.viewModel.hasAnswered) {
@@ -51,7 +99,7 @@ class ConsultationDetailsPage extends StatelessWidget {
               context,
               ConsultationSummaryPage.routeName,
               arguments: ConsultationSummaryArguments(
-                consultationId: consultationId,
+                consultationId: widget.consultationId,
                 shouldReloadConsultationsWhenPop: false,
               ),
             ).then((value) => Navigator.pop(context));
@@ -175,7 +223,7 @@ class ConsultationDetailsPage extends StatelessWidget {
                 style: AgoraButtonStyle.primaryButtonStyle,
                 onPressed: () {
                   TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.startConsultation} $consultationId",
+                    clickName: "${AnalyticsEventNames.startConsultation} ${widget.consultationId}",
                     widgetName: AnalyticsScreenNames.consultationDetailsPage,
                   );
                   Navigator.pushNamed(

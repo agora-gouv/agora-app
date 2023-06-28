@@ -35,9 +35,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagDetailsArguments {
   final String qagId;
-  final String? infoMessage;
+  final String? notificationTitle;
+  final String? notificationDescription;
 
-  QagDetailsArguments({required this.qagId, this.infoMessage});
+  QagDetailsArguments({
+    required this.qagId,
+    this.notificationTitle,
+    this.notificationDescription,
+  });
 }
 
 class QagDetailsBackResult {
@@ -64,9 +69,15 @@ class QagDetailsPage extends StatefulWidget {
   static const routeName = "/qagDetailsPage";
 
   final String qagId;
-  final String? infoMessage;
+  final String? notificationTitle;
+  final String? notificationDescription;
 
-  const QagDetailsPage({super.key, required this.qagId, this.infoMessage});
+  const QagDetailsPage({
+    super.key,
+    required this.qagId,
+    this.notificationTitle,
+    this.notificationDescription,
+  });
 
   @override
   State<QagDetailsPage> createState() => _QagDetailsPageState();
@@ -78,13 +89,20 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
   @override
   void initState() {
     super.initState();
+
+    final notificationTitle = widget.notificationTitle;
+    final notificationDescription = widget.notificationDescription;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (widget.infoMessage != null) {
+      if (notificationTitle != null) {
         showAgoraDialog(
           context: context,
           columnChildren: [
-            Text(widget.infoMessage!, style: AgoraTextStyles.light16),
+            Text(notificationTitle, style: AgoraTextStyles.light16),
             SizedBox(height: AgoraSpacings.x0_75),
+            if (notificationDescription != null) ...[
+              Text(notificationDescription, style: AgoraTextStyles.light16),
+              SizedBox(height: AgoraSpacings.x0_75),
+            ],
             AgoraButton(
               label: GenericStrings.close,
               style: AgoraButtonStyle.primaryButtonStyle,

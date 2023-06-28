@@ -119,7 +119,11 @@ class AgoraAppRouter {
         final arguments = settings.arguments as ConsultationDetailsArguments;
         currentRoute = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${arguments.consultationId}",
-          child: ConsultationDetailsPage(consultationId: arguments.consultationId),
+          child: ConsultationDetailsPage(
+            consultationId: arguments.consultationId,
+            notificationTitle: arguments.notificationTitle,
+            notificationDescription: arguments.notificationDescription,
+          ),
         );
         break;
       case ConsultationQuestionPage.routeName:
@@ -144,7 +148,11 @@ class AgoraAppRouter {
         final arguments = settings.arguments as QagDetailsArguments;
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagDetailsPage,
-          child: QagDetailsPage(qagId: arguments.qagId, infoMessage: arguments.infoMessage),
+          child: QagDetailsPage(
+            qagId: arguments.qagId,
+            notificationTitle: arguments.notificationTitle,
+            notificationDescription: arguments.notificationDescription,
+          ),
         );
         break;
       case QagsPaginatedPage.routeName:

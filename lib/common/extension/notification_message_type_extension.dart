@@ -5,6 +5,8 @@ extension NotificationMessageExtension on String {
     switch (this) {
       case "qagDetails":
         return NotificationMessageType.qagDetails;
+      case "consultationDetails":
+        return NotificationMessageType.consultationDetails;
       default:
         throw Exception("Notification message type doesn't exist: $this}");
     }
