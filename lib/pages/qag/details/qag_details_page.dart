@@ -178,9 +178,9 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                             widgetName: AnalyticsScreenNames.qagDetailsPage,
                           );
                           if (viewModel.response == null) {
-                            ShareHelper.shareQag(title: viewModel.title, id: viewModel.id);
+                            ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
                           } else {
-                            ShareHelper.shareQagAnswered(title: viewModel.title, id: viewModel.id);
+                            ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
                           }
                         },
                       ),

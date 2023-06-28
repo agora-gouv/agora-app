@@ -10,6 +10,11 @@ class FakeDeviceInfoHelper extends DeviceInfoHelper {
   Future<int> getAndroidSdk() async {
     return 33;
   }
+
+  @override
+  Future<bool> isIpad() async {
+    return false;
+  }
 }
 
 class FakeDeviceIdNullHelper extends FakeDeviceInfoHelper {
