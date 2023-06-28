@@ -63,6 +63,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
+    // work only when app is already open
     if (state == AppLifecycleState.resumed) {
       Log.d("notification : resume");
       await Future.delayed(Duration(milliseconds: 200));

@@ -1,3 +1,4 @@
 enum NotificationMessageType {
   qagDetails,
+  consultationDetails,
 }
