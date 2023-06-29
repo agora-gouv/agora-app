@@ -8,13 +8,12 @@ import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/notification_helper.dart';
 import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
@@ -89,29 +88,11 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
   @override
   void initState() {
     super.initState();
-
-    final notificationTitle = widget.notificationTitle;
-    final notificationDescription = widget.notificationDescription;
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (notificationTitle != null) {
-        showAgoraDialog(
-          context: context,
-          columnChildren: [
-            Text(notificationTitle, style: AgoraTextStyles.light16),
-            SizedBox(height: AgoraSpacings.x0_75),
-            if (notificationDescription != null) ...[
-              Text(notificationDescription, style: AgoraTextStyles.light16),
-              SizedBox(height: AgoraSpacings.x0_75),
-            ],
-            AgoraButton(
-              label: GenericStrings.close,
-              style: AgoraButtonStyle.primaryButtonStyle,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      }
-    });
+    NotificationHelper.displayNotificationWithDialog(
+      context: context,
+      notificationTitle: widget.notificationTitle,
+      notificationDescription: widget.notificationDescription,
+    );
   }
 
   @override
