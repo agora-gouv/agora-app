@@ -1,4 +1,4 @@
-# Agora onboarding
+_# Agora onboarding
 
 ## Content
 
@@ -37,3 +37,11 @@ This should generate the following files:
 - /ios/Runner/GoogleService-Info.plist
 - /lib/firebase_options.dart
 - /android/app/google-services.json
+
+## Compile the project
+
+![main_dev](./image/main_dev.png)
+![main_prod](./image/main_prod.png)
+
+- Configure `--dart-define=app.flavor=XX` and `Build flavor : XX` => XX must be identical.
+- `--dart-define=app.flavor=XX` is used in `FlavorHelper`.
