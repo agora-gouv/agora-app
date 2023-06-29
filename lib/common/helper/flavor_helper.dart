@@ -14,7 +14,7 @@ class FlavorHelper {
         return AgoraFlavor.prod;
       default:
         throw Exception(
-          "Flavor not define error : you need to define --dart-define=app.flavor=Dev when you run the app",
+          "Flavor not define error : you need to define --dart-define=app.flavor=XX when you run the app",
         );
     }
   }
