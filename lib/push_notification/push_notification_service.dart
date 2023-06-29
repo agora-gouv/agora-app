@@ -59,18 +59,24 @@ class FirebasePushNotificationService extends PushNotificationService {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      Log.d("FirebaseMessaging - New notification while app is in foreground: ${message.notification?.title}");
+      Log.d(
+        "FirebaseMessaging - New notification while app is in foreground: ${message.notification?.title} ${message.notification?.body}",
+      );
       _redirectionFromNotificationMessage(message, true);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Log.d("FirebaseMessaging - New notification while app is in background: ${message.notification?.title}");
+      Log.d(
+        "FirebaseMessaging - New notification while app is in background: ${message.notification?.title} ${message.notification?.body}",
+      );
       saveNotificationMessage(message);
     });
 
     FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        Log.d("FirebaseMessaging - New notification while app is terminated: ${message.notification?.title}");
+        Log.d(
+          "FirebaseMessaging - New notification while app is terminated: ${message.notification?.title} ${message.notification?.body}",
+        );
         saveNotificationMessage(message);
       }
     });

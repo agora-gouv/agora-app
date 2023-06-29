@@ -19,17 +19,12 @@ class AgoraInitializer {
     Intl.defaultLocale = "fr_FR";
     initializeDateFormatting('fr_FR', null);
 
-    _setupFirebaseOptions(appConfig.firebaseOptions);
     await _setupNotification();
     await _setupMatomo();
     RepositoryManager.initRepositoryManager(baseUrl: appConfig.baseUrl);
     final sharedPref = await SharedPreferences.getInstance();
     final isFirstConnection = await StorageManager.getOnboardingStorageClient().isFirstTime();
     runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection));
-  }
-
-  static void _setupFirebaseOptions(FirebaseOptions firebaseOptions) {
-    ConfigManager.setFirebaseOptions(firebaseOptions);
   }
 
   static Future<void> _setupNotification() async {
@@ -65,13 +60,9 @@ class AgoraInitializer {
 
 class AgoraAppConfig extends Equatable {
   final String baseUrl;
-  final FirebaseOptions firebaseOptions;
 
-  AgoraAppConfig({
-    required this.baseUrl,
-    required this.firebaseOptions,
-  });
+  AgoraAppConfig({required this.baseUrl});
 
   @override
-  List<Object?> get props => [baseUrl, firebaseOptions];
+  List<Object?> get props => [baseUrl];
 }
