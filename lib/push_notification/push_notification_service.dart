@@ -23,7 +23,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final pushNotificationService = ServiceManager.getPushNotificationService();
   await pushNotificationService.setupNotifications();
   saveNotificationMessage(message);
-  Log.d("Handling a background message ${message.messageId}");
+  Log.d("notification : handling a background message ${message.messageId}");
 }
 
 void saveNotificationMessage(RemoteMessage message) async {
