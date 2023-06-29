@@ -42,7 +42,6 @@ class AgoraAppRouter {
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
-      ConsultationSummaryPage.routeName: (context) => ConsultationSummaryPage(),
       ConsultationFinishedPaginatedPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
             child: ConsultationFinishedPaginatedPage(),
@@ -143,6 +142,16 @@ class AgoraAppRouter {
           ),
         );
         break;
+      case ConsultationSummaryPage.routeName:
+        final arguments = settings.arguments as ConsultationSummaryArguments;
+        currentRoute = ConsultationSummaryPage(
+          consultationId: arguments.consultationId,
+          shouldReloadConsultationsWhenPop: arguments.shouldReloadConsultationsWhenPop,
+          notificationTitle: arguments.notificationTitle,
+          notificationDescription: arguments.notificationDescription,
+        );
+        break;
+
       // Qag
       case QagDetailsPage.routeName:
         final arguments = settings.arguments as QagDetailsArguments;

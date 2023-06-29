@@ -7,6 +7,8 @@ extension NotificationMessageExtension on String {
         return NotificationMessageType.qagDetails;
       case "consultationDetails":
         return NotificationMessageType.consultationDetails;
+      case "consultationResults":
+        return NotificationMessageType.consultationResults;
       default:
         throw Exception("Notification message type doesn't exist: $this}");
     }

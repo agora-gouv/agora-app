@@ -9,6 +9,7 @@ import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,10 +21,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
 
+  Log.d("notification : handling a background message ${message.messageId}");
   final pushNotificationService = ServiceManager.getPushNotificationService();
   await pushNotificationService.setupNotifications();
   saveNotificationMessage(message);
-  Log.d("notification : handling a background message ${message.messageId}");
 }
 
 void saveNotificationMessage(RemoteMessage message) async {
@@ -154,6 +155,17 @@ class FirebasePushNotificationService extends PushNotificationService {
           ConsultationDetailsPage.routeName,
           arguments: ConsultationDetailsArguments(
             consultationId: message.data["consultationId"] as String,
+            notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
+            notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
+          ),
+        );
+        break;
+      case NotificationMessageType.consultationResults:
+        navigatorKey.currentState?.pushNamed(
+          ConsultationSummaryPage.routeName,
+          arguments: ConsultationSummaryArguments(
+            consultationId: message.data["consultationId"] as String,
+            shouldReloadConsultationsWhenPop: false,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
             notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
           ),
