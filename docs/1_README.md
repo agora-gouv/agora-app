@@ -1,16 +1,17 @@
-_# Agora onboarding
+# Agora onboarding
 
 ## Content
 
-1. [Setting project](#setup)
+1. [Setting project](#setting-project)
+2. [Firebase](#firebase)
+3. [Compile the project](#compile-the-project)
 
 
-<a name="setup"></a>
 ## Setting project
 
 ### 1. Android module Gradle setup
 - Go to `agora/android/build.gradle` right click on it and click on `Link Gradle Project`.
-- Open the `Gradle Tool Window` (if tab doesn't appear, click on `IntelliJ IDEA` > `View` > `Tool Windows` > `Gradle`), click on `+` and select the `android/` folder. 
+- Open the `Gradle Tool Window` (if tab doesn't appear, click on `IntelliJ IDEA` > `View` > `Tool Windows` > `Gradle`), click on `+` and select the `android/` folder.
 - Gradle sync the Android project and error disappear.
 
 ### 2. Configure Dart style
@@ -26,6 +27,7 @@ _# Agora onboarding
 ```
 
 ## Firebase
+
 - Download and install [Firebase CLI](https://firebase.google.com/docs/cli)
 - run `firebase login`
 - run `dart pub global activate flutterfire_cli`
@@ -37,6 +39,7 @@ This should generate the following files:
 - /ios/Runner/GoogleService-Info.plist
 - /lib/firebase_options.dart
 - /android/app/google-services.json
+
 
 ## Compile the project
 

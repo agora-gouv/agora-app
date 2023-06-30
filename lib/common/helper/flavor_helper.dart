@@ -4,8 +4,7 @@ enum AgoraFlavor { dev, prod }
 
 class FlavorHelper {
   static AgoraFlavor getFlavor() {
-    const environment = String.fromEnvironment('app.flavor');
-    switch (environment) {
+    switch (const String.fromEnvironment('app.flavor')) {
       case "Dev":
         Log.d("Flavor : Dev");
         return AgoraFlavor.dev;
@@ -14,7 +13,7 @@ class FlavorHelper {
         return AgoraFlavor.prod;
       default:
         throw Exception(
-          "Flavor not define error : you need to define --dart-define=app.flavor=XX when you run the app",
+          "Flavor not define error : you need to define --dart-define=app.flavor=XX when you run the app => see docs/1_README.md - Compile the project",
         );
     }
   }

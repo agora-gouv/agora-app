@@ -1,15 +1,15 @@
-import 'dart:io';
-
+import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/pages/webview/webview_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LaunchUrlHelper {
   static void webview(BuildContext context, String? url) {
     if (url != null) {
-      if (Platform.isIOS) {
+      if (PlatformStaticHelper.isIOS() || kIsWeb) {
         _launch(url: url);
-      } else if (Platform.isAndroid) {
+      } else if (PlatformStaticHelper.isAndroid()) {
         if (url.endsWith(".pdf")) {
           _launch(
             url: "https://docs.google.com/gview?embedded=true&url=$url",

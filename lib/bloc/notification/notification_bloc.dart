@@ -4,6 +4,7 @@ import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/infrastructure/notification/notification_first_request_permission_storage_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationBloc extends Bloc<NotificationPermissionEvent, NotificationState> {
@@ -29,22 +30,24 @@ class NotificationBloc extends Bloc<NotificationPermissionEvent, NotificationSta
     RequestNotificationPermissionEvent event,
     Emitter<NotificationState> emit,
   ) async {
-    final isFirstRequest = await notificationFirstRequestPermissionStorageClient.isFirstRequest();
-    if (isFirstRequest) {
-      notificationFirstRequestPermissionStorageClient.save(false);
-      if (await permissionHelper.isDenied()) {
-        if (platformHelper.isIOS()) {
-          emit(AutoAskNotificationConsentState());
-        } else if (platformHelper.isAndroid()) {
-          final androidSdk = await deviceInfoHelper.getAndroidSdk();
-          if (androidSdk >= 33) {
+    if (!kIsWeb) {
+      final isFirstRequest = await notificationFirstRequestPermissionStorageClient.isFirstRequest();
+      if (isFirstRequest) {
+        notificationFirstRequestPermissionStorageClient.save(false);
+        if (await permissionHelper.isDenied()) {
+          if (platformHelper.isIOS()) {
             emit(AutoAskNotificationConsentState());
-          } else {
-            emit(AskNotificationConsentState());
+          } else if (platformHelper.isAndroid()) {
+            final androidSdk = await deviceInfoHelper.getAndroidSdk();
+            if (androidSdk >= 33) {
+              emit(AutoAskNotificationConsentState());
+            } else {
+              emit(AskNotificationConsentState());
+            }
           }
+        } else if (await permissionHelper.isPermanentlyDenied()) {
+          emit(AskNotificationConsentState());
         }
-      } else if (await permissionHelper.isPermanentlyDenied()) {
-        emit(AskNotificationConsentState());
       }
     }
   }

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:agora/common/extension/notification_message_type_extension.dart';
+import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
@@ -53,9 +53,9 @@ class FirebasePushNotificationService extends PushNotificationService {
   Future<void> setupNotifications() async {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-    if (Platform.isAndroid) {
+    if (PlatformStaticHelper.isAndroid()) {
       await _createHighImportanceAndroidChannel();
-    } else if (Platform.isIOS) {
+    } else if (PlatformStaticHelper.isIOS()) {
       await _messaging.setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
     }
 
@@ -200,4 +200,20 @@ class FirebasePushNotificationService extends PushNotificationService {
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
+}
+
+class NotImportantFirebasePushNotificationService extends PushNotificationService {
+  @override
+  Future<String> getMessagingToken() async {
+    return "";
+  }
+
+  @override
+  void redirectionFromSavedNotificationMessage() {}
+
+  @override
+  Future<void> setupNotifications() async {}
+
+  @override
+  Future<void> showNotification(RemoteMessage message) async {}
 }

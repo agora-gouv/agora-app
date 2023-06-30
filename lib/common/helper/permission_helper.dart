@@ -19,3 +19,15 @@ class PermissionImplHelper extends PermissionHelper {
     return await permission.isPermanentlyDenied;
   }
 }
+
+class NotImportantPermissionImplHelper extends PermissionHelper {
+  @override
+  Future<bool> isDenied() async {
+    return false;
+  }
+
+  @override
+  Future<bool> isPermanentlyDenied() async {
+    return false;
+  }
+}

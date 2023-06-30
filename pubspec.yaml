@@ -21,23 +21,23 @@ dependencies:
   dio_cache_interceptor: ^3.4.2
   intl: ^0.18.1
   get_it: ^7.6.0
-  flutter_html: ^3.0.0-alpha.6
+  flutter_html: ^3.0.0-alpha.6 # not support for web
   url_launcher: ^6.1.11
-  logger: ^1.4.0
+  logger: ^1.4.0 # not support for web
   device_info_plus: ^8.2.2
-  permission_handler: ^10.3.0
+  permission_handler: ^10.3.0 # not support for web
   video_player: ^2.6.1
   chewie: ^1.5.0
   uni_links: ^0.5.1
   share_plus: ^6.3.4
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.4
-  flutter_local_notifications: ^14.0.0
+  flutter_local_notifications: ^14.0.0 # not support for web
   flutter_secure_storage: ^8.0.0
   matomo_tracker: ^3.1.0
   percent_indicator: ^4.2.3
-  firebase_crashlytics: ^3.3.3
-  webview_flutter: ^4.2.2
+  firebase_crashlytics: ^3.3.3 # not support for web
+  webview_flutter: ^4.2.2 # not support for web
 
 dev_dependencies:
   flutter_test:
