@@ -5,6 +5,7 @@ import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
 class HelperManager {
@@ -27,12 +28,21 @@ class HelperManager {
   }
 
   static PermissionHelper getPermissionHelper() {
-    if (GetIt.instance.isRegistered<PermissionImplHelper>()) {
-      return GetIt.instance.get<PermissionImplHelper>();
+    if (kIsWeb) {
+      if (GetIt.instance.isRegistered<NotImportantPermissionImplHelper>()) {
+        return GetIt.instance.get<NotImportantPermissionImplHelper>();
+      }
+      final helper = NotImportantPermissionImplHelper();
+      GetIt.instance.registerSingleton(helper);
+      return helper;
+    } else {
+      if (GetIt.instance.isRegistered<PermissionImplHelper>()) {
+        return GetIt.instance.get<PermissionImplHelper>();
+      }
+      final helper = PermissionImplHelper();
+      GetIt.instance.registerSingleton(helper);
+      return helper;
     }
-    final helper = PermissionImplHelper();
-    GetIt.instance.registerSingleton(helper);
-    return helper;
   }
 
   static JwtHelper getJwtHelper() {
@@ -54,11 +64,20 @@ class HelperManager {
   }
 
   static CrashlyticsHelper getCrashlyticsHelper() {
-    if (GetIt.instance.isRegistered<CrashlyticsHelperImpl>()) {
-      return GetIt.instance.get<CrashlyticsHelperImpl>();
+    if (kIsWeb) {
+      if (GetIt.instance.isRegistered<NotImportantCrashlyticsHelperImpl>()) {
+        return GetIt.instance.get<NotImportantCrashlyticsHelperImpl>();
+      }
+      final helper = NotImportantCrashlyticsHelperImpl();
+      GetIt.instance.registerSingleton(helper);
+      return helper;
+    } else {
+      if (GetIt.instance.isRegistered<CrashlyticsHelperImpl>()) {
+        return GetIt.instance.get<CrashlyticsHelperImpl>();
+      }
+      final helper = CrashlyticsHelperImpl(FirebaseCrashlytics.instance);
+      GetIt.instance.registerSingleton(helper);
+      return helper;
     }
-    final helper = CrashlyticsHelperImpl(FirebaseCrashlytics.instance);
-    GetIt.instance.registerSingleton(helper);
-    return helper;
   }
 }

@@ -9,6 +9,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,37 +38,41 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
     if (widget.shouldShowOnboarding) {
       redirection.showOnboarding();
     }
-    deeplinkHelper.onInitial(
-      onConsultationSuccessCallback: (id) {
-        redirection.showConsultationDetails(id);
-      },
-      onQagSuccessCallback: (id) {
-        redirection.showQagDetails(id);
-      },
-    );
-    deeplinkHelper.onGetUriLinkStream(
-      onConsultationSuccessCallback: (id) {
-        navigatorKey.currentState?.pushNamed(
-          ConsultationDetailsPage.routeName,
-          arguments: ConsultationDetailsArguments(consultationId: id),
-        );
-      },
-      onQagSuccessCallback: (id) {
-        navigatorKey.currentState?.pushNamed(
-          QagDetailsPage.routeName,
-          arguments: QagDetailsArguments(qagId: id),
-        );
-      },
-    );
+    if (!kIsWeb) {
+      deeplinkHelper.onInitial(
+        onConsultationSuccessCallback: (id) {
+          redirection.showConsultationDetails(id);
+        },
+        onQagSuccessCallback: (id) {
+          redirection.showQagDetails(id);
+        },
+      );
+      deeplinkHelper.onGetUriLinkStream(
+        onConsultationSuccessCallback: (id) {
+          navigatorKey.currentState?.pushNamed(
+            ConsultationDetailsPage.routeName,
+            arguments: ConsultationDetailsArguments(consultationId: id),
+          );
+        },
+        onQagSuccessCallback: (id) {
+          navigatorKey.currentState?.pushNamed(
+            QagDetailsPage.routeName,
+            arguments: QagDetailsArguments(qagId: id),
+          );
+        },
+      );
+    }
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-    // work only when app is already open
-    if (state == AppLifecycleState.resumed) {
-      Log.d("notification : resume");
-      await Future.delayed(Duration(milliseconds: 200));
-      ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
+    if (!kIsWeb) {
+      if (state == AppLifecycleState.resumed) {
+        // work only when app is already open
+        Log.d("notification : resume");
+        await Future.delayed(Duration(milliseconds: 200));
+        ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
+      }
     }
   }
 

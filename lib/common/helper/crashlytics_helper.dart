@@ -35,3 +35,17 @@ class CrashlyticsHelperImpl extends CrashlyticsHelper {
     );
   }
 }
+
+class NotImportantCrashlyticsHelperImpl extends CrashlyticsHelper {
+  @override
+  void recordError(
+    dynamic exception,
+    StackTrace? stack, {
+    String reason = "",
+    Iterable<Object> information = const [],
+    bool? printDetails,
+    bool fatal = false,
+  }) {
+    // do nothing
+  }
+}

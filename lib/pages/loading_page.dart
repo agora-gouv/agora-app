@@ -27,6 +27,7 @@ import 'package:agora/pages/consultation/details/consultation_details_page.dart'
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -88,10 +89,12 @@ class _LoadingPageState extends State<LoadingPage> {
         appBarColor: AgoraColors.primaryBlue,
         child: BlocListener<NotificationBloc, NotificationState>(
           listener: (context, notificationState) async {
-            if (notificationState is AskNotificationConsentState) {
-              _showNotificationDialog(context);
-            } else if (notificationState is AutoAskNotificationConsentState) {
-              await Permission.notification.request();
+            if (!kIsWeb) {
+              if (notificationState is AskNotificationConsentState) {
+                _showNotificationDialog(context);
+              } else if (notificationState is AutoAskNotificationConsentState) {
+                await Permission.notification.request();
+              }
             }
           },
           child: BlocConsumer<LoginBloc, LoginState>(
@@ -207,8 +210,10 @@ class _LoadingPageState extends State<LoadingPage> {
         });
       }
     }
-    Log.d("notification : start app");
-    ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
+    if (!kIsWeb) {
+      Log.d("notification : start app");
+      ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
+    }
   }
 
   Widget _buildContent({

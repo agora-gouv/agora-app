@@ -1,10 +1,11 @@
-import 'dart:io';
 import 'dart:ui' show lerpDouble;
 
+import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,6 +26,7 @@ class AgoraBottomNavigationBar extends StatefulWidget {
 }
 
 class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
+  final double _webBottomBarHeight = 50;
   final double _iosBottomBarHeight = 75;
   final double _androidBottomBarHeight = 60;
   final double _indicatorHeight = 2;
@@ -52,9 +54,11 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
     return Container(
-      height: Platform.isIOS
-          ? _iosBottomBarHeight //+ MediaQuery.of(context).viewPadding.bottom,// utils for ios
-          : _androidBottomBarHeight,
+      height: kIsWeb
+          ? _webBottomBarHeight
+          : PlatformStaticHelper.isIOS()
+              ? _iosBottomBarHeight //+ MediaQuery.of(context).viewPadding.bottom,// utils for ios
+              : _androidBottomBarHeight,
       width: _width,
       decoration: BoxDecoration(color: _inactiveIndicatorColor),
       child: Stack(
@@ -108,12 +112,16 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget _buildItemWidget(int selectedIndex, AgoraBottomNavigationBarItem item) {
     return Container(
       color: selectedIndex == _currentSelectedIndex ? _activeBgColor : _inactiveBgColor,
-      height: Platform.isIOS ? _iosBottomBarHeight : _androidBottomBarHeight,
+      height: kIsWeb
+          ? _webBottomBarHeight
+          : PlatformStaticHelper.isIOS()
+              ? _iosBottomBarHeight
+              : _androidBottomBarHeight,
       width: _width / _items.length,
       child: Column(
-        mainAxisAlignment: Platform.isIOS ? MainAxisAlignment.start : MainAxisAlignment.center,
+        mainAxisAlignment: PlatformStaticHelper.isIOS() ? MainAxisAlignment.start : MainAxisAlignment.center,
         children: <Widget>[
-          if (Platform.isIOS) SizedBox(height: AgoraSpacings.x0_75),
+          if (PlatformStaticHelper.isIOS()) SizedBox(height: AgoraSpacings.x0_75),
           _setIcon(selectedIndex, item),
           SizedBox(height: AgoraSpacings.x0_25),
           _setLabel(selectedIndex, item),

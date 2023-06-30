@@ -10,6 +10,11 @@ class FakePlatformAndroidHelper extends PlatformHelper {
   bool isIOS() {
     return false;
   }
+
+  @override
+  bool isWeb() {
+    return false;
+  }
 }
 
 class FakePlatformIOSHelper extends PlatformHelper {
@@ -21,5 +26,10 @@ class FakePlatformIOSHelper extends PlatformHelper {
   @override
   bool isIOS() {
     return true;
+  }
+
+  @override
+  bool isWeb() {
+    return false;
   }
 }

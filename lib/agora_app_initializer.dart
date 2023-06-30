@@ -28,9 +28,9 @@ class AgoraInitializer {
   }
 
   static Future<void> _setupNotification() async {
-    await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
-    _detectCrashlyticsError();
     if (!kIsWeb) {
+      await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
+      _detectCrashlyticsError();
       await ServiceManager.getPushNotificationService().setupNotifications();
     }
   }
