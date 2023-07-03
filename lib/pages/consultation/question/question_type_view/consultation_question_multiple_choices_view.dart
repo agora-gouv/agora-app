@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/uuid/uuid_utils.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -15,7 +16,7 @@ class ConsultationQuestionMultipleChoicesView extends StatefulWidget {
   final ConsultationQuestionMultipleViewModel multipleChoicesQuestion;
   final ConsultationQuestionResponses? previousSelectedResponses;
   final int totalQuestions;
-  final Function(String, List<String>) onMultipleResponseTap;
+  final Function(String questionId, List<String> responseIds) onMultipleResponseTap;
   final VoidCallback onBackTap;
 
   ConsultationQuestionMultipleChoicesView({
@@ -49,11 +50,16 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       popupDescription: multipleChoicesQuestion.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: _buildMultipleChoiceResponse() +
-            ConsultationQuestionHelper.buildBackButton(
-              order: multipleChoicesQuestion.order,
-              onBackTap: widget.onBackTap,
-            ),
+        children: [
+          ..._buildMultipleChoiceResponse(),
+          ...ConsultationQuestionHelper.buildBackButton(
+            order: multipleChoicesQuestion.order,
+            onBackTap: widget.onBackTap,
+          ),
+          ...ConsultationQuestionHelper.buildIgnoreButton(
+            onPressed: () => widget.onMultipleResponseTap(multipleChoicesQuestion.id, [UuidUtils.uuidZero]),
+          ),
+        ],
       ),
     );
   }
@@ -66,7 +72,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
     if (shouldResetPreviousResponses) {
       currentResponseIds.clear();
       final previousSelectedResponses = widget.previousSelectedResponses;
-      if (previousSelectedResponses != null) {
+      if (previousSelectedResponses != null && !previousSelectedResponses.responseIds.contains(UuidUtils.uuidZero)) {
         currentResponseIds.addAll(previousSelectedResponses.responseIds);
       }
       shouldResetPreviousResponses = false;
@@ -111,7 +117,6 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
         onPressed: currentResponseIds.isNotEmpty
             ? () {
                 widget.onMultipleResponseTap(multipleChoicesQuestion.id, [...currentResponseIds]);
-                shouldResetPreviousResponses = true;
               }
             : null,
       ),

@@ -1,4 +1,5 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
+import 'package:agora/common/uuid/uuid_utils.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -10,7 +11,7 @@ class ConsultationQuestionUniqueChoiceView extends StatelessWidget {
   final ConsultationQuestionUniqueViewModel uniqueChoiceQuestion;
   final ConsultationQuestionResponses? previousResponses;
   final int totalQuestions;
-  final Function(String, String) onUniqueResponseTap;
+  final Function(String questionId, String responseId) onUniqueResponseTap;
   final VoidCallback onBackTap;
 
   ConsultationQuestionUniqueChoiceView({
@@ -32,11 +33,16 @@ class ConsultationQuestionUniqueChoiceView extends StatelessWidget {
       popupDescription: uniqueChoiceQuestion.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: _buildUniqueChoiceResponse() +
-            ConsultationQuestionHelper.buildBackButton(
-              order: uniqueChoiceQuestion.order,
-              onBackTap: onBackTap,
-            ),
+        children: [
+          ..._buildUniqueChoiceResponse(),
+          ...ConsultationQuestionHelper.buildBackButton(
+            order: uniqueChoiceQuestion.order,
+            onBackTap: onBackTap,
+          ),
+          ...ConsultationQuestionHelper.buildIgnoreButton(
+            onPressed: () => onUniqueResponseTap(uniqueChoiceQuestion.id, UuidUtils.uuidZero),
+          ),
+        ],
       ),
     );
   }

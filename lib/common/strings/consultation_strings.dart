@@ -16,6 +16,7 @@ class ConsultationStrings {
   static const String participantCount = "%s participants";
   static const String participantCountGoal = "Prochain objectif\u{00A0}: %s\u{00A0}!";
   static const String previousQuestion = "Question précédente";
+  static const String ignoreQuestion = "Passer cette question";
   static const String confirmationTitle = "Merci pour votre participation\u{00A0}!";
   static const String confirmationDescription =
       "Vous pouvez maintenant découvrir les résultats de cette consultation et suivre l'avancée des propositions.";

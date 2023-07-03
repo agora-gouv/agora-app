@@ -37,31 +37,31 @@ class ConsultationQuestionChapterView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                    AgoraQuestionsProgressBar(
-                      currentQuestionOrder: chapter.order,
-                      totalQuestions: totalQuestions,
-                    ),
-                    SizedBox(height: AgoraSpacings.x0_75),
-                    Text(chapter.title, style: AgoraTextStyles.medium19),
-                    SizedBox(height: AgoraSpacings.base),
-                    Html(
-                      data: chapter.description,
-                      style: AgoraHtmlStyles.htmlStyle,
-                      onLinkTap: (url, _, __, ___) async {
-                        LaunchUrlHelper.webview(context, url);
-                      },
-                    ),
-                    SizedBox(height: AgoraSpacings.x1_5),
-                    AgoraButton(
-                      label: ConsultationQuestionHelper.buildNextButtonLabel(
-                        order: chapter.order,
-                        totalQuestions: totalQuestions,
-                      ),
-                      style: AgoraButtonStyle.primaryButtonStyle,
-                      onPressed: () => onNextTap(),
-                    )
-                  ] +
-                  ConsultationQuestionHelper.buildBackButton(order: chapter.order, onBackTap: onBackTap),
+                AgoraQuestionsProgressBar(
+                  currentQuestionOrder: chapter.order,
+                  totalQuestions: totalQuestions,
+                ),
+                SizedBox(height: AgoraSpacings.x0_75),
+                Text(chapter.title, style: AgoraTextStyles.medium19),
+                SizedBox(height: AgoraSpacings.base),
+                Html(
+                  data: chapter.description,
+                  style: AgoraHtmlStyles.htmlStyle,
+                  onLinkTap: (url, _, __, ___) async {
+                    LaunchUrlHelper.webview(context, url);
+                  },
+                ),
+                SizedBox(height: AgoraSpacings.x1_5),
+                AgoraButton(
+                  label: ConsultationQuestionHelper.buildNextButtonLabel(
+                    order: chapter.order,
+                    totalQuestions: totalQuestions,
+                  ),
+                  style: AgoraButtonStyle.primaryButtonStyle,
+                  onPressed: () => onNextTap(),
+                ),
+                ...ConsultationQuestionHelper.buildBackButton(order: chapter.order, onBackTap: onBackTap),
+              ],
             ),
           ),
           SizedBox(height: AgoraSpacings.x1_5),
