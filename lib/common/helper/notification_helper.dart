@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -14,7 +13,7 @@ class NotificationHelper {
     required String? notificationTitle,
     required String? notificationDescription,
   }) {
-    if (Platform.isAndroid && notificationTitle != null) {
+    if (PlatformStaticHelper.isAndroid() && notificationTitle != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         showAgoraDialog(
           context: context,

@@ -38,6 +38,7 @@ dependencies:
   percent_indicator: ^4.2.3
   firebase_crashlytics: ^3.3.3 # not support for web
   webview_flutter: ^4.2.2 # not support for web
+  flutter_widget_from_html: ^0.10.2 # only support web
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,10 @@
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/clipboard_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ShareHelper {
@@ -19,11 +21,16 @@ class ShareHelper {
   }
 
   static void _share(BuildContext context, {required String shareText}) async {
-    final Size size = MediaQuery.of(context).size;
-    await Share.share(
-      shareText,
-      sharePositionOrigin:
-          await HelperManager.getDeviceInfoHelper().isIpad() ? Rect.fromLTWH(0, 0, size.width, size.height / 2) : null,
-    );
+    if (kIsWeb) {
+      ClipboardHelper.copy(context, shareText);
+    } else {
+      final Size size = MediaQuery.of(context).size;
+      await Share.share(
+        shareText,
+        sharePositionOrigin: await HelperManager.getDeviceInfoHelper().isIpad()
+            ? Rect.fromLTWH(0, 0, size.width, size.height / 2)
+            : null,
+      );
+    }
   }
 }
