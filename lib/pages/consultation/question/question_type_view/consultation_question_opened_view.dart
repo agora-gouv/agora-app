@@ -1,4 +1,5 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -14,7 +15,7 @@ class ConsultationQuestionOpenedView extends StatefulWidget {
   final ConsultationQuestionOpenedViewModel openedQuestion;
   final ConsultationQuestionResponses? previousResponses;
   final int totalQuestions;
-  final Function(String, String) onOpenedResponseInput;
+  final Function(String questionId, String response) onOpenedResponseInput;
   final VoidCallback onBackTap;
 
   ConsultationQuestionOpenedView({
@@ -35,6 +36,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
   String openedResponse = "";
   bool shouldResetPreviousResponses = true;
   late ConsultationQuestionOpenedViewModel openedQuestion;
+  late TextEditingController textEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +50,18 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
       popupDescription: openedQuestion.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: _buildOpenedChoiceResponse() +
-            ConsultationQuestionHelper.buildBackButton(
-              order: openedQuestion.order,
-              onBackTap: widget.onBackTap,
-            ),
+        children: [
+          ..._buildOpenedChoiceResponse(),
+          ...ConsultationQuestionHelper.buildBackButton(
+            order: openedQuestion.order,
+            onBackTap: widget.onBackTap,
+          ),
+          ...ConsultationQuestionHelper.buildIgnoreButton(
+            onPressed: () {
+              widget.onOpenedResponseInput(openedQuestion.id, "");
+            },
+          ),
+        ],
       ),
     );
   }
@@ -68,6 +77,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
       if (previousSelectedResponses != null) {
         openedResponse = previousSelectedResponses.responseText;
       }
+      textEditingController = TextEditingController(text: openedResponse);
       shouldResetPreviousResponses = false;
     }
   }
@@ -78,10 +88,10 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
       SizedBox(height: AgoraSpacings.base),
       AgoraTextField(
         hintText: ConsultationStrings.hintText,
-        controller: TextEditingController(text: openedResponse),
+        controller: textEditingController,
         showCounterText: true,
         onChanged: (openedResponseInput) {
-          openedResponse = openedResponseInput;
+          setState(() => openedResponse = openedResponseInput);
         },
       ),
       SizedBox(height: AgoraSpacings.base),
@@ -91,10 +101,11 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
           totalQuestions: widget.totalQuestions,
         ),
         style: AgoraButtonStyle.primaryButtonStyle,
-        onPressed: () {
-          widget.onOpenedResponseInput(openedQuestion.id, openedResponse);
-          shouldResetPreviousResponses = true;
-        },
+        onPressed: openedResponse.isNotBlank()
+            ? () {
+                widget.onOpenedResponseInput(openedQuestion.id, openedResponse);
+              }
+            : null,
       ),
     ];
   }

@@ -32,11 +32,13 @@ class ConsultationQuestionWithConditionsView extends StatelessWidget {
       popupDescription: questionWithConditions.popupDescription,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: _buildWithConditionsResponse() +
-            ConsultationQuestionHelper.buildBackButton(
-              order: questionWithConditions.order,
-              onBackTap: onBackTap,
-            ),
+        children: [
+          ..._buildWithConditionsResponse(),
+          ...ConsultationQuestionHelper.buildBackButton(
+            order: questionWithConditions.order,
+            onBackTap: onBackTap,
+          ),
+        ],
       ),
     );
   }
