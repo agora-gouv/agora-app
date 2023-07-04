@@ -87,14 +87,16 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                               padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [_buildResponseSection(context, currentStep, responsesStockState.responses)] +
-                                    DemographicHelper.buildBackButton(
-                                      step: currentStep,
-                                      onBackTap: () {
-                                        _trackBackClick();
-                                        setState(() => currentStep--);
-                                      },
-                                    ),
+                                children: [
+                                  _buildResponseSection(context, currentStep, responsesStockState.responses),
+                                  ...DemographicHelper.buildBackButton(
+                                    step: currentStep,
+                                    onBackTap: () {
+                                      _trackBackClick();
+                                      setState(() => currentStep--);
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                           ),

@@ -4,33 +4,17 @@ import 'package:agora/domain/thematique/thematique_with_id.dart';
 class ThematiquePresenter {
   static List<ThematiqueWithIdViewModel> presentFilterThematique(List<ThematiqueWithId> thematiques) {
     return [
-          ThematiqueWithIdViewModel(
-            id: null,
-            picto: "\ud83d\udca1",
-            label: "Toutes",
-          ),
-        ] +
-        thematiques
-            .map(
-              (thematique) => ThematiqueWithIdViewModel(
-                id: thematique.id,
-                picto: thematique.picto,
-                label: thematique.label,
-              ),
-            )
-            .toList();
+      ThematiqueWithIdViewModel(
+        id: null,
+        picto: "\ud83d\udca1",
+        label: "Toutes",
+      ),
+      ..._buildThematiques(thematiques),
+    ];
   }
 
   static List<ThematiqueWithIdViewModel> presentAskQaGThematique(List<ThematiqueWithId> thematiques) {
-    final currentThematiques = thematiques
-        .map(
-          (thematique) => ThematiqueWithIdViewModel(
-            id: thematique.id,
-            picto: thematique.picto,
-            label: thematique.label,
-          ),
-        )
-        .toList();
+    final currentThematiques = _buildThematiques(thematiques);
     final findOtherThematique = currentThematiques.firstWhere((element) => element.label == "Autre");
     currentThematiques.remove(findOtherThematique);
 
@@ -41,5 +25,17 @@ class ThematiquePresenter {
     );
     currentThematiques.insert(0, newOtherThematique);
     return currentThematiques;
+  }
+
+  static List<ThematiqueWithIdViewModel> _buildThematiques(List<ThematiqueWithId> thematiques) {
+    return thematiques
+        .map(
+          (thematique) => ThematiqueWithIdViewModel(
+            id: thematique.id,
+            picto: thematique.picto,
+            label: thematique.label,
+          ),
+        )
+        .toList();
   }
 }

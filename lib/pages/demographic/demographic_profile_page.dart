@@ -115,102 +115,100 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-              Row(
-                children: [
-                  AgoraRichText(
-                    policeStyle: AgoraRichTextPoliceStyle.section,
-                    items: [
-                      AgoraRichTextTextItem(
-                        text: DemographicStrings.informationCapitalize,
-                        style: AgoraRichTextItemStyle.regular,
-                      ),
-                      AgoraRichTextTextItem(
-                        text: DemographicStrings.demographic,
-                        style: AgoraRichTextItemStyle.bold,
-                      ),
-                    ],
+        children: [
+          Row(
+            children: [
+              AgoraRichText(
+                policeStyle: AgoraRichTextPoliceStyle.section,
+                items: [
+                  AgoraRichTextTextItem(
+                    text: DemographicStrings.informationCapitalize,
+                    style: AgoraRichTextItemStyle.regular,
                   ),
-                  Spacer(),
-                  AgoraRoundedButton(
-                    label: GenericStrings.modify,
-                    style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                    onPressed: () {
-                      Navigator.pushNamed(context, DemographicQuestionPage.routeName);
-                    },
+                  AgoraRichTextTextItem(
+                    text: DemographicStrings.demographic,
+                    style: AgoraRichTextItemStyle.bold,
                   ),
                 ],
               ),
-              SizedBox(height: AgoraSpacings.base),
-            ] +
-            _buildDemographicInformation(demographicInformationViewModels) +
-            [
-              SizedBox(height: AgoraSpacings.base),
-              AgoraLittleSeparator(),
-              SizedBox(height: AgoraSpacings.base),
-              Text(DemographicStrings.demographicInformationNotice1, style: AgoraTextStyles.light14),
-              SizedBox(height: AgoraSpacings.x0_5),
-              RichText(
-                text: TextSpan(
-                  style: AgoraTextStyles.light14,
-                  children: [
-                    TextSpan(text: DemographicStrings.demographicInformationNotice2),
-                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                    TextSpan(
-                      text: DemographicStrings.demographicInformationNotice3,
-                      style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: AgoraSpacings.x1_25),
-              BlocListener<SendDemographicResponsesBloc, SendDemographicResponsesState>(
-                listener: (previousState, currentState) {
-                  if (currentState is SendDemographicResponsesSuccessState) {
-                    context.read<DemographicInformationBloc>().add(RemoveDemographicInformationEvent());
-                    _modificationSuccess(context);
-                  } else if (currentState is SendDemographicResponsesFailureState) {
-                    _modificationError(context);
-                  }
+              Spacer(),
+              AgoraRoundedButton(
+                label: GenericStrings.modify,
+                style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+                onPressed: () {
+                  Navigator.pushNamed(context, DemographicQuestionPage.routeName);
                 },
-                child: AgoraButton(
-                  label: DemographicStrings.suppressMyInformation,
-                  style: AgoraButtonStyle.redBorderButtonStyle,
-                  onPressed: () {
-                    showAgoraDialog(
-                      context: context,
-                      columnChildren: [
-                        Text(ProfileStrings.suppressDemographicPopUp, style: AgoraTextStyles.medium16),
-                        SizedBox(height: AgoraSpacings.x0_75),
-                        Row(
-                          children: [
-                            AgoraButton(
-                              label: GenericStrings.yes,
-                              style: AgoraButtonStyle.primaryButtonStyle,
-                              onPressed: () {
-                                context
-                                    .read<SendDemographicResponsesBloc>()
-                                    .add(SendDemographicResponsesEvent(demographicResponses: []));
-                                Navigator.pop(context);
-                              },
-                            ),
-                            SizedBox(width: AgoraSpacings.x0_75),
-                            AgoraButton(
-                              label: GenericStrings.no,
-                              style: AgoraButtonStyle.blueBorderButtonStyle,
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ],
+              ),
+            ],
+          ),
+          SizedBox(height: AgoraSpacings.base),
+          ..._buildDemographicInformation(demographicInformationViewModels),
+          SizedBox(height: AgoraSpacings.base),
+          AgoraLittleSeparator(),
+          SizedBox(height: AgoraSpacings.base),
+          Text(DemographicStrings.demographicInformationNotice1, style: AgoraTextStyles.light14),
+          SizedBox(height: AgoraSpacings.x0_5),
+          RichText(
+            text: TextSpan(
+              style: AgoraTextStyles.light14,
+              children: [
+                TextSpan(text: DemographicStrings.demographicInformationNotice2),
+                WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                TextSpan(
+                  text: DemographicStrings.demographicInformationNotice3,
+                  style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: AgoraSpacings.x1_25),
+          BlocListener<SendDemographicResponsesBloc, SendDemographicResponsesState>(
+            listener: (previousState, currentState) {
+              if (currentState is SendDemographicResponsesSuccessState) {
+                context.read<DemographicInformationBloc>().add(RemoveDemographicInformationEvent());
+                _modificationSuccess(context);
+              } else if (currentState is SendDemographicResponsesFailureState) {
+                _modificationError(context);
+              }
+            },
+            child: AgoraButton(
+              label: DemographicStrings.suppressMyInformation,
+              style: AgoraButtonStyle.redBorderButtonStyle,
+              onPressed: () {
+                showAgoraDialog(
+                  context: context,
+                  columnChildren: [
+                    Text(ProfileStrings.suppressDemographicPopUp, style: AgoraTextStyles.medium16),
+                    SizedBox(height: AgoraSpacings.x0_75),
+                    Row(
+                      children: [
+                        AgoraButton(
+                          label: GenericStrings.yes,
+                          style: AgoraButtonStyle.primaryButtonStyle,
+                          onPressed: () {
+                            context
+                                .read<SendDemographicResponsesBloc>()
+                                .add(SendDemographicResponsesEvent(demographicResponses: []));
+                            Navigator.pop(context);
+                          },
+                        ),
+                        SizedBox(width: AgoraSpacings.x0_75),
+                        AgoraButton(
+                          label: GenericStrings.no,
+                          style: AgoraButtonStyle.blueBorderButtonStyle,
+                          onPressed: () => Navigator.pop(context),
                         ),
                       ],
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: AgoraSpacings.base),
-            ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          SizedBox(height: AgoraSpacings.base),
+        ],
       ),
     );
   }
