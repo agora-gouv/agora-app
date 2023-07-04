@@ -46,14 +46,16 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         : Stack(
             children: [
               _buildFinishedConsultationCard(context, carrouselWidth),
-              AgoraRoundedCard(
-                cardColor: AgoraColors.whiteOpacity90,
-                child: Container(),
+              Positioned.fill(
+                child: AgoraRoundedCard(
+                  cardColor: AgoraColors.whiteOpacity90,
+                  child: Container(),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AgoraSpacings.x0_75,
-                  vertical: AgoraSpacings.x0_5,
+                padding: EdgeInsets.symmetric(
+                  horizontal: style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_75 : AgoraSpacings.base,
+                  vertical: style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_5 : AgoraSpacings.base,
                 ),
                 child: AgoraRoundedCard(
                   cardColor: AgoraColors.lightBrun,
