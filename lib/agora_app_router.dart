@@ -99,7 +99,10 @@ class AgoraAppRouter {
             child: DemographicProfilePage(),
           ),
       // Webview
-      WebviewPage.routeName: (context) => WebviewPage(),
+      WebviewPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.webviewPage,
+            child: WebviewPage(),
+          ),
     };
   }
 

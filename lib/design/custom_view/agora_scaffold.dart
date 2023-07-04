@@ -1,4 +1,6 @@
+import 'package:agora/design/custom_view/agora_responsive_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AgoraScaffold extends StatelessWidget {
@@ -29,13 +31,21 @@ class AgoraScaffold extends StatelessWidget {
           onWillPop: () async {
             return popAction!();
           },
-          child: _buildScaffold(),
+          child: _build(),
         );
       } else {
-        return _buildScaffold();
+        return _build();
       }
     } else {
-      return WillPopScope(onWillPop: () async => false, child: _buildScaffold());
+      return WillPopScope(onWillPop: () async => false, child: _build());
+    }
+  }
+
+  Widget _build() {
+    if (kIsWeb) {
+      return AgoraResponsiveView(child: _buildScaffold());
+    } else {
+      return _buildScaffold();
     }
   }
 
