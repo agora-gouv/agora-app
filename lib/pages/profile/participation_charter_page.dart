@@ -40,30 +40,30 @@ class ParticipationCharterPage extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: _paragraph1() +
-                [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: AgoraButton(
-                          label: GenericStrings.readCompleteCharter,
-                          style: AgoraButtonStyle.blueBorderButtonStyle,
-                          onPressed: () {
-                            LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
-                          },
-                        ),
-                      ),
-                      SizedBox(width: AgoraSpacings.base),
-                      AgoraButton(
-                        label: GenericStrings.back,
-                        style: AgoraButtonStyle.primaryButtonStyle,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  )
+            children: [
+              ..._paragraph1(),
+              Row(
+                children: [
+                  Flexible(
+                    child: AgoraButton(
+                      label: GenericStrings.readCompleteCharter,
+                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      onPressed: () {
+                        LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
+                      },
+                    ),
+                  ),
+                  SizedBox(width: AgoraSpacings.base),
+                  AgoraButton(
+                    label: GenericStrings.back,
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ],
+              )
+            ],
           ),
         ),
       ),

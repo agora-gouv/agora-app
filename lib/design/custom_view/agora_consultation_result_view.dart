@@ -23,11 +23,11 @@ class AgoraConsultationResultView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-              Text(questionTitle, style: AgoraTextStyles.medium17),
-              SizedBox(height: AgoraSpacings.x1_5),
-            ] +
-            _buildResponses(),
+        children: [
+          Text(questionTitle, style: AgoraTextStyles.medium17),
+          SizedBox(height: AgoraSpacings.x1_5),
+          ..._buildResponses(),
+        ],
       ),
     );
   }

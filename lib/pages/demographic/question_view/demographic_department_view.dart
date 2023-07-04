@@ -36,8 +36,7 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
   }
 
   List<Widget> _handleResponse(BuildContext context) {
-    List<Widget> widgets = [];
-    widgets = [
+    final List<Widget> widgets = [
       AgoraTextField(
         hintText: DemographicStrings.departmentHint,
         rightIcon: TextFieldIcon.search,
@@ -85,25 +84,18 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
       widgets.add(SizedBox(height: AgoraSpacings.x0_25));
     }
 
-    widgets = widgets +
-        [
-          SizedBox(height: AgoraSpacings.x1_25),
-          selectedDepartment != null
-              ? AgoraButton(
-                  label: DemographicStrings.continu,
-                  style: AgoraButtonStyle.primaryButtonStyle,
-                  onPressed: () {
-                    setState(() {
-                      widget.onContinuePressed(selectedDepartment!.code);
-                    });
-                  },
-                )
-              : DemographicHelper.buildIgnoreButton(
-                  onPressed: () {
-                    setState(() => widget.onIgnorePressed());
-                  },
-                ),
-        ];
+    widgets.addAll(
+      [
+        SizedBox(height: AgoraSpacings.x1_25),
+        selectedDepartment != null
+            ? AgoraButton(
+                label: DemographicStrings.continu,
+                style: AgoraButtonStyle.primaryButtonStyle,
+                onPressed: () => setState(() => widget.onContinuePressed(selectedDepartment!.code)),
+              )
+            : DemographicHelper.buildIgnoreButton(onPressed: () => setState(() => widget.onIgnorePressed())),
+      ],
+    );
     return widgets;
   }
 }

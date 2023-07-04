@@ -27,39 +27,43 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                    Row(
-                      children: [
-                        SvgPicture.asset("assets/ic_person.svg"),
-                        SizedBox(width: AgoraSpacings.x0_5),
-                        Text(participantCount, style: AgoraTextStyles.light14),
-                      ],
-                    ),
-                    SizedBox(height: AgoraSpacings.base),
-                  ] +
-                  results.map(
-                    (result) {
-                      if (result is ConsultationSummaryUniqueChoiceResultsViewModel) {
-                        return AgoraConsultationResultView(
-                          questionTitle: result.questionTitle,
-                          responses: result.responses,
-                          isMultipleChoice: false,
-                        );
-                      } else if (result is ConsultationSummaryMultipleChoicesResultsViewModel) {
-                        return AgoraConsultationResultView(
-                          questionTitle: result.questionTitle,
-                          responses: result.responses,
-                          isMultipleChoice: true,
-                        );
-                      } else {
-                        throw Exception("Results view model doesn't exists $result");
-                      }
-                    },
-                  ).toList(),
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset("assets/ic_person.svg"),
+                    SizedBox(width: AgoraSpacings.x0_5),
+                    Text(participantCount, style: AgoraTextStyles.light14),
+                  ],
+                ),
+                SizedBox(height: AgoraSpacings.base),
+                ...buildResults(),
+              ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  List<AgoraConsultationResultView> buildResults() {
+    return results.map(
+      (result) {
+        if (result is ConsultationSummaryUniqueChoiceResultsViewModel) {
+          return AgoraConsultationResultView(
+            questionTitle: result.questionTitle,
+            responses: result.responses,
+            isMultipleChoice: false,
+          );
+        } else if (result is ConsultationSummaryMultipleChoicesResultsViewModel) {
+          return AgoraConsultationResultView(
+            questionTitle: result.questionTitle,
+            responses: result.responses,
+            isMultipleChoice: true,
+          );
+        } else {
+          throw Exception("Results view model doesn't exists $result");
+        }
+      },
+    ).toList();
   }
 }
