@@ -6,19 +6,17 @@ class AgoraButton extends StatelessWidget {
   final String label;
   final String? icon;
   final ButtonStyle style;
+  final bool expanded;
   final VoidCallback? onPressed;
-  final bool needFixSize;
-  final double? fixSize;
 
   AgoraButton({
     this.isLoading = false,
     required this.label,
     this.icon,
     required this.style,
+    this.expanded = false,
     required this.onPressed,
-    this.needFixSize = false,
-    this.fixSize,
-  }) : assert(needFixSize == false || (needFixSize == true && fixSize != null));
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +40,8 @@ class AgoraButton extends StatelessWidget {
         );
       }
     }
-    if (needFixSize) {
-      return SizedBox(height: fixSize!, child: child);
+    if (expanded) {
+      child = SizedBox(width: double.infinity, child: child);
     }
     return child;
   }

@@ -6,8 +6,11 @@ class GenericStrings {
 
   static const String retry = "Réessayer";
   static const String contactSupport = "Contacter le support";
+  static const String updateApp = "Mettre à jour l'application";
   static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
   static const String errorMessage = "Une erreur est survenue.";
+  static const String updateAppVersionErrorMessage =
+      "L'application fait peau neuve\u{00A0}! Vous devez la mettre à jour pour bénéficier des derniers changements.";
   static const String timeoutErrorMessage =
       "Oh\u{00A0}! Il semble qu'il y ait un problème de connexion. Vérifiez votre connexion à Internet et ré-essayez plus tard.";
   static const String askNotificationPermissionMessage =

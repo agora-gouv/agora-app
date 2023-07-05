@@ -1,1 +1,1 @@
-enum LoginErrorType { generic, timeout }
+enum LoginErrorType { generic, timeout, updateVersion }

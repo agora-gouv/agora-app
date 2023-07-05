@@ -40,6 +40,7 @@ dependencies:
   webview_flutter: ^4.2.2 # not support for web
   flutter_widget_from_html: ^0.10.2 # only support web
   responsive_framework: ^1.0.0
+  package_info_plus: ^3.1.2
 
 dev_dependencies:
   flutter_test:

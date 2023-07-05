@@ -5,6 +5,9 @@ class FakeLoginSuccessRepository extends LoginRepository {
   @override
   Future<SignupRepositoryResponse> signup({
     required String firebaseMessagingToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     return SignupSucceedResponse(
       userId: "userId",
@@ -18,6 +21,9 @@ class FakeLoginSuccessRepository extends LoginRepository {
   Future<LoginRepositoryResponse> login({
     required String firebaseMessagingToken,
     required String loginToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     return LoginSucceedResponse(
       jwtToken: "jwtToken",
@@ -30,6 +36,9 @@ class FakeLoginTimeoutFailureRepository extends LoginRepository {
   @override
   Future<SignupRepositoryResponse> signup({
     required String firebaseMessagingToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     return SignupFailedResponse(errorType: LoginErrorType.timeout);
   }
@@ -38,6 +47,9 @@ class FakeLoginTimeoutFailureRepository extends LoginRepository {
   Future<LoginRepositoryResponse> login({
     required String firebaseMessagingToken,
     required String loginToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     return LoginFailedResponse(errorType: LoginErrorType.timeout);
   }
@@ -47,6 +59,9 @@ class FakeLoginFailureRepository extends LoginRepository {
   @override
   Future<SignupRepositoryResponse> signup({
     required String firebaseMessagingToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     return SignupFailedResponse();
   }
@@ -55,6 +70,9 @@ class FakeLoginFailureRepository extends LoginRepository {
   Future<LoginRepositoryResponse> login({
     required String firebaseMessagingToken,
     required String loginToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     return LoginFailedResponse();
   }

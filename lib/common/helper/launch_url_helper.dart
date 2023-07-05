@@ -22,6 +22,16 @@ class LaunchUrlHelper {
     }
   }
 
+  static void launchStore() {
+    final isAndroid = PlatformStaticHelper.isAndroid();
+    final isIos = PlatformStaticHelper.isIOS();
+    if (isAndroid || isIos) {
+      final appId = isAndroid ? "fr.gouv.agora" : "6449599025";
+      final url = isAndroid ? "market://details?id=$appId" : "https://apps.apple.com/app/id$appId";
+      _launch(url: url, launchMode: LaunchMode.externalApplication);
+    }
+  }
+
   static void _launch({required String url, LaunchMode launchMode = LaunchMode.inAppWebView}) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {

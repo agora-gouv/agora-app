@@ -16,6 +16,11 @@ void main() {
   const userId = "userId";
   const fcmToken = "fcmToken";
   const loginToken = "loginToken";
+  const appVersion = "1.0.0";
+  const buildNumber = "10";
+  const platformNameAndroid = "android";
+  const platformNameIos = "ios";
+  const platformNameWeb = "web";
 
   group("Signup", () {
     test("when success should return jwtToken & loginToken", () async {
@@ -34,6 +39,9 @@ void main() {
         headers: {
           "accept": "application/json",
           "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameAndroid,
         },
       );
 
@@ -44,6 +52,9 @@ void main() {
       );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameAndroid,
       );
 
       // Then
@@ -74,6 +85,9 @@ void main() {
         headers: {
           "accept": "application/json",
           "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameIos,
         },
       );
 
@@ -84,10 +98,43 @@ void main() {
       );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameIos,
       );
 
       // Then
       expect(response, SignupFailedResponse(errorType: LoginErrorType.timeout));
+    });
+
+    test("when failure with 412 should return update app error", () async {
+      // Given
+      dioAdapter.onPost(
+        "/signup",
+        (server) => server.reply(HttpStatus.preconditionFailed, {}),
+        headers: {
+          "accept": "application/json",
+          "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameWeb,
+        },
+      );
+
+      // When
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.signup(
+        firebaseMessagingToken: fcmToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameWeb,
+      );
+
+      // Then
+      expect(response, SignupFailedResponse(errorType: LoginErrorType.updateVersion));
     });
 
     test("when failure should return failed", () async {
@@ -98,6 +145,9 @@ void main() {
         headers: {
           "accept": "application/json",
           "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameWeb,
         },
       );
 
@@ -108,6 +158,9 @@ void main() {
       );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameWeb,
       );
 
       // Then
@@ -131,6 +184,9 @@ void main() {
         headers: {
           "accept": "application/json",
           "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameWeb,
         },
         data: loginToken,
       );
@@ -143,6 +199,9 @@ void main() {
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameWeb,
       );
 
       // Then
@@ -171,6 +230,9 @@ void main() {
         headers: {
           "accept": "application/json",
           "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameWeb,
         },
         data: loginToken,
       );
@@ -183,10 +245,45 @@ void main() {
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameWeb,
       );
 
       // Then
       expect(response, LoginFailedResponse(errorType: LoginErrorType.timeout));
+    });
+
+    test("when failure with 412 should return update app error", () async {
+      // Given
+      dioAdapter.onPost(
+        "/login",
+        (server) => server.reply(HttpStatus.preconditionFailed, {}),
+        headers: {
+          "accept": "application/json",
+          "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameWeb,
+        },
+        data: loginToken,
+      );
+
+      // When
+      final repository = LoginDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.login(
+        firebaseMessagingToken: fcmToken,
+        loginToken: loginToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameWeb,
+      );
+
+      // Then
+      expect(response, LoginFailedResponse(errorType: LoginErrorType.updateVersion));
     });
 
     test("when failure should return failed", () async {
@@ -197,6 +294,9 @@ void main() {
         headers: {
           "accept": "application/json",
           "fcmToken": fcmToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformNameWeb,
         },
         data: loginToken,
       );
@@ -209,6 +309,9 @@ void main() {
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
         loginToken: loginToken,
+        appVersion: appVersion,
+        buildNumber: buildNumber,
+        platformName: platformNameWeb,
       );
 
       // Then

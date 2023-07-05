@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/login/login_error_type.dart';
@@ -7,11 +9,17 @@ import 'package:equatable/equatable.dart';
 abstract class LoginRepository {
   Future<SignupRepositoryResponse> signup({
     required String firebaseMessagingToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   });
 
   Future<LoginRepositoryResponse> login({
     required String firebaseMessagingToken,
     required String loginToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   });
 }
 
@@ -24,12 +32,18 @@ class LoginDioRepository extends LoginRepository {
   @override
   Future<SignupRepositoryResponse> signup({
     required String firebaseMessagingToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     try {
       final response = await httpClient.post(
         "/signup",
         headers: {
           "fcmToken": firebaseMessagingToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformName,
         },
       );
       return SignupSucceedResponse(
@@ -40,7 +54,11 @@ class LoginDioRepository extends LoginRepository {
       );
     } catch (e, s) {
       if (e is DioException) {
-        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+        final response = e.response;
+        if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
+          crashlyticsHelper.recordError(e, s, reason: "signup failed : should update app version");
+          return SignupFailedResponse(errorType: LoginErrorType.updateVersion);
+        } else if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           crashlyticsHelper.recordError(e, s, reason: "signup failed : timeout error");
           return SignupFailedResponse(errorType: LoginErrorType.timeout);
         }
@@ -54,12 +72,18 @@ class LoginDioRepository extends LoginRepository {
   Future<LoginRepositoryResponse> login({
     required String firebaseMessagingToken,
     required String loginToken,
+    required String appVersion,
+    required String buildNumber,
+    required String platformName,
   }) async {
     try {
       final response = await httpClient.post(
         "/login",
         headers: {
           "fcmToken": firebaseMessagingToken,
+          "versionName": appVersion,
+          "versionCode": buildNumber,
+          "platform": platformName,
         },
         data: loginToken,
       );
@@ -69,7 +93,11 @@ class LoginDioRepository extends LoginRepository {
       );
     } catch (e, s) {
       if (e is DioException) {
-        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+        final response = e.response;
+        if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
+          crashlyticsHelper.recordError(e, s, reason: "login failed : should update app version");
+          return LoginFailedResponse(errorType: LoginErrorType.updateVersion);
+        } else if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           crashlyticsHelper.recordError(e, s, reason: "login failed : timeout error");
           return LoginFailedResponse(errorType: LoginErrorType.timeout);
         }

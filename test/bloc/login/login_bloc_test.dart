@@ -5,7 +5,9 @@ import 'package:agora/domain/login/login_error_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/common/fake_app_version_helper.dart';
 import '../../fakes/common/fake_jwt_helper.dart';
+import '../../fakes/common/fake_platform_helper.dart';
 import '../../fakes/common/fake_role_helper.dart';
 import '../../fakes/login/fake_login_storage_client.dart';
 import '../../fakes/login/fakes_login_repository.dart';
@@ -27,6 +29,8 @@ void main() {
         pushNotificationService: FakePushNotificationService(),
         jwtHelper: jwtHelper1,
         roleHelper: roleHelper1,
+        appVersionHelper: FakeAppVersionHelper(),
+        platformHelper: FakePlatformAndroidHelper(),
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -54,6 +58,8 @@ void main() {
         pushNotificationService: FakePushNotificationService(),
         jwtHelper: jwtHelper2,
         roleHelper: roleHelper2,
+        appVersionHelper: FakeAppVersionHelper(),
+        platformHelper: FakePlatformAndroidHelper(),
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -81,6 +87,8 @@ void main() {
         pushNotificationService: FakePushNotificationService(),
         jwtHelper: jwtHelper3,
         roleHelper: roleHelper3,
+        appVersionHelper: FakeAppVersionHelper(),
+        platformHelper: FakePlatformAndroidHelper(),
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -111,6 +119,8 @@ void main() {
         pushNotificationService: FakePushNotificationService(),
         jwtHelper: jwtHelper1,
         roleHelper: roleHelper1,
+        appVersionHelper: FakeAppVersionHelper(),
+        platformHelper: FakePlatformAndroidHelper(),
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -137,6 +147,8 @@ void main() {
         pushNotificationService: FakePushNotificationService(),
         jwtHelper: jwtHelper2,
         roleHelper: roleHelper2,
+        appVersionHelper: FakeAppVersionHelper(),
+        platformHelper: FakePlatformAndroidHelper(),
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [
@@ -163,6 +175,8 @@ void main() {
         pushNotificationService: FakePushNotificationService(),
         jwtHelper: jwtHelper3,
         roleHelper: roleHelper3,
+        appVersionHelper: FakeAppVersionHelper(),
+        platformHelper: FakePlatformAndroidHelper(),
       ),
       act: (bloc) => bloc.add(CheckLoginEvent()),
       expect: () => [

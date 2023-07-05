@@ -15,6 +15,11 @@ class FakePlatformAndroidHelper extends PlatformHelper {
   bool isWeb() {
     return false;
   }
+
+  @override
+  String getPlatformName() {
+    return "android";
+  }
 }
 
 class FakePlatformIOSHelper extends PlatformHelper {
@@ -31,5 +36,32 @@ class FakePlatformIOSHelper extends PlatformHelper {
   @override
   bool isWeb() {
     return false;
+  }
+
+  @override
+  String getPlatformName() {
+    return "ios";
+  }
+}
+
+class FakePlatformWebHelper extends PlatformHelper {
+  @override
+  bool isAndroid() {
+    return false;
+  }
+
+  @override
+  bool isIOS() {
+    return false;
+  }
+
+  @override
+  bool isWeb() {
+    return true;
+  }
+
+  @override
+  String getPlatformName() {
+    return "web";
   }
 }
