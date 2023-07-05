@@ -6,6 +6,8 @@ import 'package:agora/bloc/notification/notification_bloc.dart';
 import 'package:agora/bloc/notification/notification_event.dart';
 import 'package:agora/bloc/notification/notification_state.dart';
 import 'package:agora/common/helper/clipboard_helper.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -82,6 +84,8 @@ class _LoadingPageState extends State<LoadingPage> {
             pushNotificationService: ServiceManager.getPushNotificationService(),
             jwtHelper: HelperManager.getJwtHelper(),
             roleHelper: HelperManager.getRoleHelper(),
+            appVersionHelper: HelperManager.getAppVersionHelper(),
+            platformHelper: HelperManager.getPlatformHelper(),
           )..add(CheckLoginEvent()),
         ),
       ],
@@ -120,31 +124,41 @@ class _LoadingPageState extends State<LoadingPage> {
                             SvgPicture.asset("assets/ic_oops.svg"),
                             SizedBox(height: AgoraSpacings.x1_25),
                             Text(
-                              loginState.errorType == LoginErrorType.generic
-                                  ? GenericStrings.authenticationErrorMessage
-                                  : GenericStrings.timeoutErrorMessage,
+                              _buildErrorText(loginState.errorType),
                               style: AgoraTextStyles.medium18,
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: AgoraSpacings.x1_25),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Flexible(
-                                  child: AgoraButton(
-                                    label: GenericStrings.contactSupport,
-                                    style: AgoraButtonStyle.blueBorderButtonStyle,
-                                    onPressed: () => ClipboardHelper.copy(context, GenericStrings.mailSupport),
+                            if (loginState.errorType != LoginErrorType.updateVersion) ...[
+                              SizedBox(height: AgoraSpacings.x1_25),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Flexible(
+                                    child: AgoraButton(
+                                      label: GenericStrings.contactSupport,
+                                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                                      onPressed: () => ClipboardHelper.copy(context, GenericStrings.mailSupport),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: AgoraSpacings.base),
-                                AgoraButton(
-                                  label: GenericStrings.retry,
-                                  style: AgoraButtonStyle.primaryButtonStyle,
-                                  onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
-                                ),
-                              ],
-                            ),
+                                  SizedBox(width: AgoraSpacings.base),
+                                  AgoraButton(
+                                    label: GenericStrings.retry,
+                                    style: AgoraButtonStyle.primaryButtonStyle,
+                                    onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
+                                  ),
+                                ],
+                              )
+                            ],
+                            if (loginState.errorType == LoginErrorType.updateVersion &&
+                                (PlatformStaticHelper.isAndroid() || PlatformStaticHelper.isIOS())) ...[
+                              SizedBox(height: AgoraSpacings.x1_25),
+                              AgoraButton(
+                                label: GenericStrings.updateApp,
+                                style: AgoraButtonStyle.primaryButtonStyle,
+                                expanded: true,
+                                onPressed: () => LaunchUrlHelper.launchStore(),
+                              )
+                            ],
                             SizedBox(height: screenHeight * 0.1),
                           ],
                         ),
@@ -185,6 +199,17 @@ class _LoadingPageState extends State<LoadingPage> {
         ),
       ),
     );
+  }
+
+  String _buildErrorText(LoginErrorType errorType) {
+    switch (errorType) {
+      case LoginErrorType.generic:
+        return GenericStrings.authenticationErrorMessage;
+      case LoginErrorType.timeout:
+        return GenericStrings.timeoutErrorMessage;
+      case LoginErrorType.updateVersion:
+        return GenericStrings.updateAppVersionErrorMessage;
+    }
   }
 
   void _pushPageWithCondition(BuildContext context) {

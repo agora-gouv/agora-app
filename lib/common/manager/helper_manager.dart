@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/app_version_helper.dart';
 import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
@@ -79,5 +80,14 @@ class HelperManager {
       GetIt.instance.registerSingleton(helper);
       return helper;
     }
+  }
+
+  static AppVersionHelper getAppVersionHelper() {
+    if (GetIt.instance.isRegistered<AppVersionHelperImpl>()) {
+      return GetIt.instance.get<AppVersionHelperImpl>();
+    }
+    final helper = AppVersionHelperImpl();
+    GetIt.instance.registerSingleton(helper);
+    return helper;
   }
 }

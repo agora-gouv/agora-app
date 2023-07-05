@@ -7,6 +7,7 @@ abstract class PlatformHelper {
   bool isIOS();
   bool isAndroid();
   bool isWeb();
+  String getPlatformName();
 }
 
 class PlatformImplHelper extends PlatformHelper {
@@ -31,6 +32,18 @@ class PlatformImplHelper extends PlatformHelper {
   @override
   bool isWeb() {
     return kIsWeb;
+  }
+
+  @override
+  String getPlatformName() {
+    if (isAndroid()) {
+      return "android";
+    } else if (isIOS()) {
+      return "ios";
+    } else if (isWeb()) {
+      return "web";
+    }
+    throw Exception("Platform not supported");
   }
 }
 
