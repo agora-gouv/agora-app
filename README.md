@@ -81,6 +81,7 @@ This should generate the following files:
 
 ### a. Android
 
+![edit configuration](docs/image/edit_configuration.png)
 ![main_dev](docs/image/main_dev.png)
 ![main_prod](docs/image/main_prod.png)
 
