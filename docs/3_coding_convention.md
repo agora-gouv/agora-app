@@ -1,6 +1,23 @@
-# Flutter
+# Content
+1. [Flutter](#1-flutter)
+   * [Navigation](#a-navigation)
+   * [Widget import](#b-widget-import)
+   * [StatefulWidget vs StatelessWidget](#c-statefulwidget-vs-statelesswidget)
+2. [Dart](#2-dart)
+   * [Order of class members](#a-order-of-class-members)
+   * [Named arguments](#b-named-arguments)
+   * [Enum](#c-enum)
+   * [Equatable](#d-equatable)
+   * [Test](#e-test)
 
-## Navigation
+
+# 1. Flutter
+- [Flutter docs](https://docs.flutter.dev/) 
+- [Flutter bridge with other platform docs](https://docs.flutter.dev/platform-integration/platform-channels?tab=type-mappings-kotlin-tab)
+- [Flutter app links](https://pub.dev/packages/uni_links)
+- [Flutter app links 2](https://docs.flutter.dev/ui/navigation/deep-linking)
+
+## a. Navigation
 
 We're using Flutter navigation:
 
@@ -17,12 +34,12 @@ static const routeName = "/consultationDetailsPage";
   -
 - All routes are pushed with the variations of the `Navigator.pushNamed` method.
 -
-## Widget import
+## b. Widget import
 
 Use `import 'package:flutter/material.dart';` when importing base Flutter classes like
 `StatefulWidget`, `Text`...
 
-## StatefulWidget vs StatelessWidget
+## c. StatefulWidget vs StatelessWidget
 
 - Use StatelessWidget when no attribute in class or all attribute are final in class
 - Use StatefulWidget when at least one attribute is not final in class
@@ -88,9 +105,11 @@ class _WidgetWithNoFinalAttribute extends State<WidgetWithNoFinalAttribute> {
 }
 ```
 
-# Dart
+# 2. Dart
+- [Dart docs](https://dart.dev/language)
+- [Dart evolution](https://dart.dev/guides/language/evolution)
 
-## Order of class members
+## a. Order of class members
 
 1. Static fields
 2. Final properties
@@ -100,7 +119,7 @@ class _WidgetWithNoFinalAttribute extends State<WidgetWithNoFinalAttribute> {
 6. Public methods
 7. Private methods
 
-## Named arguments
+## b. Named arguments
 
 ```dart
 // ❌
@@ -116,13 +135,13 @@ void doSomething({required String a, required String b, required String c}) {}
 void doSomething(String a, {required String b, required String c, required String d}) {}
 ```
 
-## Enum
+## c. Enum
 
 ```dart
 enum ConsultationQuestionType { unique, ouverte, multiple}
 ```
 
-## Equatable
+## d. Equatable
 
 If you need to compare two objects:
 
@@ -138,9 +157,9 @@ class FetchConsultationDetailsEvent extends Equatable {
 ```
 
 
-# Test
+# e. Test
 
-We have 2 tests:
+We have 2 types of test:
 
 - repository test (example : `qag_repository_test.dart`)
 - bloc test  (example : `qag_details_bloc_test.dart`)
