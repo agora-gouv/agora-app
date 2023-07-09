@@ -1,3 +1,4 @@
+import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/thematique/thematique_with_id.dart';
@@ -28,7 +29,7 @@ class ThematiqueDioRepository extends ThematiqueRepository {
           .toList();
       return GetThematiqueSucceedResponse(thematiques: thematiques);
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "fetchThematiques failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchThematiques);
       return GetThematiqueFailedResponse();
     }
   }
