@@ -1,3 +1,4 @@
+import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
@@ -89,11 +90,11 @@ class ConsultationDioRepository extends ConsultationRepository {
     } catch (e, s) {
       if (e is DioException) {
         if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
-          crashlyticsHelper.recordError(e, s, reason: "fetchConsultations failed : timeout error");
+          crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationsTimeout);
           return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
         }
       }
-      crashlyticsHelper.recordError(e, s, reason: "fetchConsultations failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultations);
       return GetConsultationsFailedResponse();
     }
   }
@@ -117,7 +118,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         }).toList(),
       );
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationsFinishedPaginated failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationsFinishedPaginated);
       return GetConsultationsFinishedPaginatedFailedResponse();
     }
   }
@@ -147,7 +148,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         ),
       );
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationDetails failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationDetails);
       return GetConsultationDetailsFailedResponse();
     }
   }
@@ -170,7 +171,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         ),
       );
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationQuestions failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationQuestions);
       return GetConsultationQuestionsFailedResponse();
     }
   }
@@ -200,7 +201,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         shouldDisplayDemographicInformation: response.data["askDemographicInfo"] as bool,
       );
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "sendConsultationResponses failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.sendConsultationResponses);
       return SendConsultationResponsesFailureResponse();
     }
   }
@@ -257,7 +258,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "fetchConsultationSummary failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationSummary);
       return GetConsultationSummaryFailedResponse();
     }
   }

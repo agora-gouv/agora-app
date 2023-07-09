@@ -1,3 +1,4 @@
+import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/demographic_question_type_extension.dart';
 import 'package:agora/common/helper/crashlytics_helper.dart';
@@ -33,7 +34,7 @@ class DemographicDioRepository extends DemographicRepository {
         }).toList(),
       );
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "getDemographicResponses failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.getDemographicResponses);
       return GetDemographicInformationFailureResponse();
     }
   }
@@ -47,13 +48,10 @@ class DemographicDioRepository extends DemographicRepository {
       for (var demographicType in DemographicType.values) {
         data.putIfAbsent(demographicType.toTypeString(), () => _buildResponse(demographicType, demographicResponses));
       }
-      await httpClient.post(
-        "/profile",
-        data: data,
-      );
+      await httpClient.post("/profile", data: data);
       return SendDemographicResponsesSucceedResponse();
     } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, reason: "sendDemographicResponses failed");
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.sendDemographicResponses);
       return SendDemographicResponsesFailureResponse();
     }
   }
