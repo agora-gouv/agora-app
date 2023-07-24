@@ -222,6 +222,13 @@ class FakeQagSuccessRepository extends QagRepository {
   }) async {
     return ModerateQagSuccessResponse();
   }
+
+  @override
+  Future<QagHasSimilarRepositoryResponse> hasSimilarQag({
+    required String title,
+  }) async {
+    return QagHasSimilarSuccessResponse(hasSimilar: true);
+  }
 }
 
 class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagSuccessRepository {
@@ -388,6 +395,13 @@ class FakeQagFailureRepository extends QagRepository {
     required bool isAccepted,
   }) async {
     return ModerateQagFailedResponse();
+  }
+
+  @override
+  Future<QagHasSimilarRepositoryResponse> hasSimilarQag({
+    required String title,
+  }) async {
+    return QagHasSimilarFailedResponse();
   }
 }
 

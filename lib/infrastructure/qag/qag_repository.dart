@@ -63,6 +63,10 @@ abstract class QagRepository {
     required String qagId,
     required bool isAccepted,
   });
+
+  Future<QagHasSimilarRepositoryResponse> hasSimilarQag({
+    required String title,
+  });
 }
 
 class QagDioRepository extends QagRepository {
@@ -320,6 +324,22 @@ class QagDioRepository extends QagRepository {
     }
   }
 
+  @override
+  Future<QagHasSimilarRepositoryResponse> hasSimilarQag({
+    required String title,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/qags/has_similar",
+        data: {"title": title},
+      );
+      return QagHasSimilarSuccessResponse(hasSimilar: response.data["hasSimilar"] as bool);
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.hasSimilarQag);
+      return QagHasSimilarFailedResponse();
+    }
+  }
+
   List<Qag> _transformToQagList(List<dynamic> qags) {
     return qags.map((qag) {
       final support = qag["support"] as Map;
@@ -524,3 +544,19 @@ abstract class ModerateQagRepositoryResponse extends Equatable {
 class ModerateQagSuccessResponse extends ModerateQagRepositoryResponse {}
 
 class ModerateQagFailedResponse extends ModerateQagRepositoryResponse {}
+
+abstract class QagHasSimilarRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class QagHasSimilarSuccessResponse extends QagHasSimilarRepositoryResponse {
+  final bool hasSimilar;
+
+  QagHasSimilarSuccessResponse({required this.hasSimilar});
+
+  @override
+  List<Object> get props => [hasSimilar];
+}
+
+class QagHasSimilarFailedResponse extends QagHasSimilarRepositoryResponse {}

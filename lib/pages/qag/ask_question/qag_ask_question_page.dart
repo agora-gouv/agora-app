@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:agora/bloc/qag/create/qag_create_bloc.dart';
 import 'package:agora/bloc/qag/create/qag_create_event.dart';
 import 'package:agora/bloc/qag/create/qag_create_state.dart';
+import 'package:agora/bloc/qag/has_similar/qag_has_similar_bloc.dart';
+import 'package:agora/bloc/qag/has_similar/qag_has_similar_event.dart';
+import 'package:agora/bloc/qag/has_similar/qag_has_similar_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
@@ -51,6 +56,9 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   bool isCheck = false;
   bool isQuestionLengthValid = false;
 
+  static const countdownDuration = Duration(seconds: 1);
+  Timer? timer;
+
   @override
   Widget build(BuildContext context) {
     final errorCase = ModalRoute.of(context)!.settings.arguments as String?;
@@ -61,6 +69,9 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         ),
         BlocProvider(
           create: (context) => CreateQagBloc(qagRepository: RepositoryManager.getQagRepository()),
+        ),
+        BlocProvider(
+          create: (context) => QagHasSimilarBloc(qagRepository: RepositoryManager.getQagRepository()),
         ),
       ],
       child: AgoraScaffold(
@@ -90,7 +101,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
 
   Widget _buildState(BuildContext context, ThematiqueState state) {
     if (state is ThematiqueSuccessState) {
-      return _buildContent(state.thematiqueViewModels);
+      return _buildContent(context, state.thematiqueViewModels);
     } else if (state is ThematiqueInitialLoadingState) {
       context.read<ThematiqueBloc>().add(FetchAskQaGThematiqueEvent());
       return Column(
@@ -111,7 +122,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
     }
   }
 
-  Widget _buildContent(List<ThematiqueWithIdViewModel> thematiqueViewModels) {
+  Widget _buildContent(BuildContext context, List<ThematiqueWithIdViewModel> thematiqueViewModels) {
     return Column(
       children: [
         Padding(
@@ -153,7 +164,29 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                   setState(() {
                     question = input;
                     isQuestionLengthValid = question.length >= 10;
+                    _startTimer(context, question);
                   });
+                },
+              ),
+              BlocBuilder<QagHasSimilarBloc, QagHasSimilarState>(
+                builder: (context, state) {
+                  switch (state) {
+                    case QagHasSimilarInitialState():
+                    case QagHasSimilarErrorState():
+                      return Container();
+                    case QagHasSimilarLoadingState():
+                      return CircularProgressIndicator();
+                    case QagHasSimilarSuccessState():
+                      if (state.hasSimilar) {
+                        return AgoraButton(
+                          label: QagStrings.similarQagDetected,
+                          style: AgoraButtonStyle.blueBorderButtonStyle,
+                          onPressed: () {},
+                        );
+                      } else {
+                        return Container();
+                      }
+                  }
                 },
               ),
               SizedBox(height: AgoraSpacings.x0_75),
@@ -306,5 +339,13 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
 
   bool _couldSend() {
     return question.length >= 10 && thematique != null && firstname.isNotBlank() && isCheck;
+  }
+
+  void _startTimer(BuildContext context, String inputQuestion) {
+    timer?.cancel();
+    timer = Timer(
+      countdownDuration,
+      () => context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: inputQuestion)),
+    );
   }
 }

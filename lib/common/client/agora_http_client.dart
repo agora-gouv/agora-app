@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 abstract class AgoraHttpClient {
   Future<Response<T>> get<T>(
     String path, {
+    data,
     required Map<String, dynamic> queryParameters,
     required Map<String, dynamic> headers,
   });
@@ -24,6 +25,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   @override
   Future<Response<T>> get<T>(
     String path, {
+    data,
     Map<String, dynamic> queryParameters = const {},
     Map<String, dynamic> headers = const {},
   }) async {
@@ -31,6 +33,7 @@ class AgoraDioHttpClient extends AgoraHttpClient {
       path,
       queryParameters: queryParameters,
       options: Options(headers: buildInitialHeaders()..addAll(headers)),
+      data: data,
     );
   }
 
