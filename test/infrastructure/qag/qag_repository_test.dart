@@ -970,4 +970,53 @@ void main() {
       expect(response, ModerateQagFailedResponse());
     });
   });
+
+  group("Has similar qag", () {
+    test("when success should return success", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/has_similar",
+        (server) => server.reply(HttpStatus.ok, {"hasSimilar": true}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: {
+          "title": "qag title",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.hasSimilarQag(title: "qag title");
+
+      // Then
+      expect(response, QagHasSimilarSuccessResponse(hasSimilar: true));
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/has_similar",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {"accept": "application/json"},
+        data: {
+          "title": "qag title",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.hasSimilarQag(title: "qag title");
+
+      // Then
+      expect(response, QagHasSimilarFailedResponse());
+    });
+  });
 }

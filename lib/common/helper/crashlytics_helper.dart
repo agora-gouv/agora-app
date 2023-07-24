@@ -1,5 +1,4 @@
 import 'package:agora/common/client/agora_dio_exception.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 abstract class CrashlyticsHelper {
@@ -28,7 +27,7 @@ class CrashlyticsHelperImpl extends CrashlyticsHelper {
     bool fatal = false,
   }) {
     crashlytics.recordError(
-      exception is DioException ? exception.toAgoraDioException(exceptionType) : exception,
+      exception,
       stack,
       reason: "$exceptionType failed",
       information: information,
