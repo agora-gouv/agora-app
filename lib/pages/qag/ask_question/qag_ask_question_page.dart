@@ -37,6 +37,7 @@ import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_thematiques_drop_down.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,6 +56,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   ThematiqueWithIdViewModel? thematique;
   bool isCheck = false;
   bool isQuestionLengthValid = false;
+  bool shouldReloadQags = false;
 
   static const countdownDuration = Duration(seconds: 1);
   Timer? timer;
@@ -75,6 +77,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         ),
       ],
       child: AgoraScaffold(
+        popAction: () {
+          _backAction(context);
+          return true;
+        },
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
             return AgoraSecondaryStyleView(
@@ -91,12 +97,27 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                   ),
                 ],
               ),
+              onBackClick: () {
+                _backAction(context);
+              },
               child: errorCase == null ? _buildState(context, state) : _buildErrorCase(context, errorCase),
             );
           },
         ),
       ),
     );
+  }
+
+  void _backAction(BuildContext context) {
+    if (shouldReloadQags) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        QagsPage.routeName,
+        ModalRoute.withName(LoadingPage.routeName),
+      );
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   Widget _buildState(BuildContext context, ThematiqueState state) {
@@ -181,7 +202,14 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         return AgoraButton(
                           label: QagStrings.similarQagDetected,
                           style: AgoraButtonStyle.blueBorderButtonStyle,
-                          onPressed: () {},
+                          icon: "ic_info_2.svg",
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            QagSimilarPage.routeName,
+                            arguments: question,
+                          ).then(
+                            (shouldReloadQags) => setState(() => this.shouldReloadQags = shouldReloadQags as bool),
+                          ),
                         );
                       } else {
                         return Container();

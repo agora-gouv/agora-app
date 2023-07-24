@@ -26,6 +26,7 @@ import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.dart';
+import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:agora/pages/webview/webview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,6 +52,10 @@ class AgoraAppRouter {
       QagAskQuestionPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.qagAskQuestionPage,
             child: QagAskQuestionPage(),
+          ),
+      QagSimilarPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.qagSimilarPage,
+            child: QagSimilarPage(),
           ),
       QagResponsePaginatedPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.qagsResponsePaginatedPage,

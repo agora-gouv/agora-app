@@ -8,6 +8,7 @@ import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
+import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -1017,6 +1018,87 @@ void main() {
 
       // Then
       expect(response, QagHasSimilarFailedResponse());
+    });
+  });
+
+  group("Similar qags", () {
+    test("when success should return similar qag list", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/similar",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "similarQags": [
+              {
+                "id": qagId,
+                "thematique": {"label": "Transports", "picto": "🚊"},
+                "title": "Titre de la QaG",
+                "description": "Description textuelle",
+                "date": "2024-01-23",
+                "username": "Henri J.",
+                "support": {"count": 112, "isSupported": true},
+              },
+            ]
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: {
+          "title": "qag title",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.getSimilarQags(title: "qag title");
+
+      // Then
+      expect(
+        response,
+        QagSimilarSuccessResponse(
+          similarQags: [
+            QagSimilar(
+              id: qagId,
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "Titre de la QaG",
+              description: "Description textuelle",
+              date: DateTime(2024, 1, 23),
+              username: "Henri J.",
+              supportCount: 112,
+              isSupported: true,
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/similar",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: {"title": "qag title"},
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.getSimilarQags(title: "qag title");
+
+      // Then
+      expect(response, QagSimilarFailedResponse());
     });
   });
 }

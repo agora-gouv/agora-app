@@ -6,6 +6,7 @@ import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
+import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
@@ -229,6 +230,26 @@ class FakeQagSuccessRepository extends QagRepository {
   }) async {
     return QagHasSimilarSuccessResponse(hasSimilar: true);
   }
+
+  @override
+  Future<QagSimilarRepositoryResponse> getSimilarQags({
+    required String title,
+  }) async {
+    return QagSimilarSuccessResponse(
+      similarQags: [
+        QagSimilar(
+          id: "id",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title",
+          description: "description",
+          username: "username",
+          date: DateTime(2024, 4, 23),
+          supportCount: 9,
+          isSupported: true,
+        ),
+      ],
+    );
+  }
 }
 
 class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagSuccessRepository {
@@ -402,6 +423,13 @@ class FakeQagFailureRepository extends QagRepository {
     required String title,
   }) async {
     return QagHasSimilarFailedResponse();
+  }
+
+  @override
+  Future<QagSimilarRepositoryResponse> getSimilarQags({
+    required String title,
+  }) async {
+    return QagSimilarFailedResponse();
   }
 }
 

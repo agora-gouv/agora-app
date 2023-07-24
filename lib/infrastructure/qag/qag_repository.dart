@@ -14,6 +14,7 @@ import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
+import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -65,6 +66,10 @@ abstract class QagRepository {
   });
 
   Future<QagHasSimilarRepositoryResponse> hasSimilarQag({
+    required String title,
+  });
+
+  Future<QagSimilarRepositoryResponse> getSimilarQags({
     required String title,
   });
 }
@@ -340,6 +345,35 @@ class QagDioRepository extends QagRepository {
     }
   }
 
+  @override
+  Future<QagSimilarRepositoryResponse> getSimilarQags({required String title}) async {
+    try {
+      final response = await httpClient.get(
+        "/qags/similar",
+        data: {"title": title},
+      );
+      return QagSimilarSuccessResponse(
+        similarQags: (response.data["similarQags"] as List)
+            .map(
+              (qagToModerate) => QagSimilar(
+                id: qagToModerate["id"] as String,
+                thematique: (qagToModerate["thematique"] as Map).toThematique(),
+                title: qagToModerate["title"] as String,
+                description: qagToModerate["description"] as String,
+                date: (qagToModerate["date"] as String).parseToDateTime(),
+                username: qagToModerate["username"] as String,
+                supportCount: qagToModerate["support"]["count"] as int,
+                isSupported: qagToModerate["support"]["isSupported"] as bool,
+              ),
+            )
+            .toList(),
+      );
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.similarQag);
+      return QagSimilarFailedResponse();
+    }
+  }
+
   List<Qag> _transformToQagList(List<dynamic> qags) {
     return qags.map((qag) {
       final support = qag["support"] as Map;
@@ -560,3 +594,19 @@ class QagHasSimilarSuccessResponse extends QagHasSimilarRepositoryResponse {
 }
 
 class QagHasSimilarFailedResponse extends QagHasSimilarRepositoryResponse {}
+
+abstract class QagSimilarRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class QagSimilarSuccessResponse extends QagSimilarRepositoryResponse {
+  final List<QagSimilar> similarQags;
+
+  QagSimilarSuccessResponse({required this.similarQags});
+
+  @override
+  List<Object> get props => [similarQags];
+}
+
+class QagSimilarFailedResponse extends QagSimilarRepositoryResponse {}

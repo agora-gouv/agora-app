@@ -74,10 +74,16 @@ class QagStrings {
       "Si vous pensez qu'elle a pu être modérée par erreur, vous pouvez nous adresser un message à l'adresse";
   static const String qagModerateSeeOther = "Voir les autres questions";
 
+  static const String similarQagTitle1 = "Questions similaires\n";
+  static const String similarQagTitle2 = "à la vôtre";
+  static const String similarQagDescription =
+      "Voici des questions posées par d'autres citoyens qui ressemblent à la vôtre. Voulez-vous les soutenir (♥️) pour avoir plus de chance d'obtenir une réponse ?";
   static const String similarQagDetected = "Question similaire détectée";
 
   static const String shareQaGDeeplink =
       "👋 J'ai posé une question au gouvernement sur l'application Agora. Aide-moi en la soutenant pour qu'elle ait plus de chance d'être vue\u{00A0}!\n%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
   static const String shareQaGAnsweredDeeplink =
       "Je pense que la réponse du gouvernement peut t'intéresser 👉\u{00A0}%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
+
+  static const String returnToQuestion = "Retour à ma question";
 }
