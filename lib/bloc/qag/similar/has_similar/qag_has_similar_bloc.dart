@@ -1,5 +1,5 @@
-import 'package:agora/bloc/qag/has_similar/qag_has_similar_event.dart';
-import 'package:agora/bloc/qag/has_similar/qag_has_similar_state.dart';
+import 'package:agora/bloc/qag/similar/has_similar/qag_has_similar_event.dart';
+import 'package:agora/bloc/qag/similar/has_similar/qag_has_similar_state.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
