@@ -15,6 +15,7 @@ class AnalyticsScreenNames {
   static const String qagsPaginatedSupportingPage = "Liste infinie des QaGs soutenues";
   static const String qagDetailsPage = "Détails d'une QaG";
   static const String qagAskQuestionPage = "Poser une QaG";
+  static const String qagSimilarPage = "Liste des QaGs similaires";
   static const String qagsResponsePaginatedPage = "Liste infinie des réponses aux QaGs";
 
   static const String profilePage = "Profile";
