@@ -2,8 +2,6 @@ import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/onboarding/onboarding_auto_scroll_page.dart';
@@ -12,10 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingView extends StatelessWidget {
-  final VoidCallback onClick;
-
-  const OnboardingView({super.key, required this.onClick});
-
   @override
   Widget build(BuildContext context) {
     return AgoraSingleScrollView(
@@ -80,15 +74,7 @@ class OnboardingView extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  SizedBox(height: AgoraSpacings.x3),
-                  SizedBox(
-                    width: double.infinity,
-                    child: AgoraButton(
-                      label: GenericStrings.onboardingStep0Begin,
-                      style: AgoraButtonStyle.onboardingButtonStyle,
-                      onPressed: () => onClick(),
-                    ),
-                  ),
+                  SizedBox(height: AgoraSpacings.x4),
                 ],
               ),
             ),

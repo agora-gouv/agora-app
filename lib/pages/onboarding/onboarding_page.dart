@@ -1,8 +1,15 @@
+import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/onboarding/onboarding_step_view.dart';
 import 'package:agora/pages/onboarding/onboarding_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingPage extends StatefulWidget {
   static const routeName = "/onboardingPage";
@@ -12,7 +19,9 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
+  static const totalStep = 4;
   final _controller = PageController(initialPage: 0);
+  int step = 0;
 
   @override
   void dispose() {
@@ -25,27 +34,79 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return AgoraScaffold(
       shouldPop: false,
       appBarColor: AgoraColors.primaryBlue,
+      floatingActionButton: Theme(
+        data: _floatingButtonStyle(context),
+        child: _floatingButton(context),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       child: _handleStep(context),
     );
+  }
+
+  ThemeData _floatingButtonStyle(BuildContext context) {
+    return Theme.of(context).copyWith(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        shape: _isSmallFloatingButtonStyle()
+            ? null
+            : RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
+        extendedSizeConstraints: BoxConstraints.tightFor(height: AgoraSpacings.x3),
+        extendedPadding: EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_75),
+        extendedTextStyle: AgoraTextStyles.primaryButton,
+      ),
+    );
+  }
+
+  Widget _floatingButton(BuildContext context) {
+    return _isSmallFloatingButtonStyle() ? _smallFloatingActionButton(context) : _largeFloatingActionButton(context);
+  }
+
+  bool _isSmallFloatingButtonStyle() => step == 1 || step == 2;
+
+  Widget _smallFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: AgoraColors.primaryBlue,
+      child: Semantics(
+        label: SemanticsStrings.nextPage,
+        child: SvgPicture.asset("assets/ic_forward.svg"),
+      ),
+      onPressed: () => _nextPage(context),
+    );
+  }
+
+  Widget _largeFloatingActionButton(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2,
+      child: FloatingActionButton.extended(
+        backgroundColor: AgoraColors.primaryBlue,
+        label: Text(step == 0 ? ConsultationStrings.beginButton : GenericStrings.onboardingStep3LetsGo),
+        onPressed: () => _nextPage(context),
+      ),
+    );
+  }
+
+  void _nextPage(BuildContext context) {
+    setState(() => step++);
+    if (step >= totalStep) {
+      Navigator.pop(context);
+    } else {
+      _controller.jumpToPage(step);
+    }
   }
 
   Widget _handleStep(BuildContext context) {
     return PageView(
       controller: _controller,
+      onPageChanged: (index) {
+        setState(() {
+          step = index;
+        });
+        _controller.jumpToPage(step);
+      },
       children: [
-        OnboardingView(onClick: () => _controller.jumpToPage(1)),
-        OnboardingStepView(
-          step: OnboardingStep.participate,
-          onClick: () => _controller.jumpToPage(2),
-        ),
-        OnboardingStepView(
-          step: OnboardingStep.askYourQuestion,
-          onClick: () => _controller.jumpToPage(3),
-        ),
-        OnboardingStepView(
-          step: OnboardingStep.invent,
-          onClick: () => Navigator.pop(context),
-        ),
+        OnboardingView(),
+        OnboardingStepView(step: OnboardingStep.participate),
+        OnboardingStepView(step: OnboardingStep.askYourQuestion),
+        OnboardingStepView(step: OnboardingStep.invent),
       ],
     );
   }
