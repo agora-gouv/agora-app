@@ -1,15 +1,13 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
-import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
-import 'package:agora/design/style/agora_html_styles.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/question/consultation_question_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 class ConsultationQuestionChapterView extends StatelessWidget {
   final ConsultationQuestionChapterViewModel chapter;
@@ -44,13 +42,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.x0_75),
                 Text(chapter.title, style: AgoraTextStyles.medium19),
                 SizedBox(height: AgoraSpacings.base),
-                Html(
-                  data: chapter.description,
-                  style: AgoraHtmlStyles.htmlStyle,
-                  onLinkTap: (url, _, __, ___) async {
-                    LaunchUrlHelper.webview(context, url);
-                  },
-                ),
+                AgoraHtml(data: chapter.description),
                 SizedBox(height: AgoraSpacings.x1_5),
                 AgoraButton(
                   label: ConsultationQuestionHelper.buildNextButtonLabel(

@@ -19,12 +19,15 @@ class AgoraHtml extends StatelessWidget {
         textStyle: AgoraTextStyles.light14,
       );
     } else {
-      return Html(
-        data: data,
-        style: AgoraHtmlStyles.htmlStyle,
-        onLinkTap: (url, _, __, ___) async {
-          LaunchUrlHelper.webview(context, url);
-        },
+      return MediaQuery(
+        data: MediaQueryData(textScaleFactor: 1),
+        child: Html(
+          data: data,
+          style: AgoraHtmlStyles.htmlStyle(context),
+          onLinkTap: (url, _, __, ___) async {
+            LaunchUrlHelper.webview(context, url);
+          },
+        ),
       );
     }
   }
