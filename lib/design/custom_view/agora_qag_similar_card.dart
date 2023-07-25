@@ -49,9 +49,10 @@ class AgoraQagSimilarCard extends StatelessWidget {
                     ThematiqueHelper.buildCard(context, thematique),
                     SizedBox(width: AgoraSpacings.x0_25),
                     Spacer(),
-                    GestureDetector(
-                      onTap: () => onSupportClick(!isSupported),
-                      child: AgoraLikeView(isSupported: isSupported, supportCount: supportCount),
+                    AgoraLikeView(
+                      isSupported: isSupported,
+                      supportCount: supportCount,
+                      onSupportClick: (support) => onSupportClick(support),
                     ),
                   ],
                 ),

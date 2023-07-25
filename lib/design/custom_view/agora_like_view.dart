@@ -17,6 +17,7 @@ class AgoraLikeView extends StatelessWidget {
   final bool shouldHaveHorizontalPadding;
   final bool shouldHaveVerticalPadding;
   final AgoraLikeStyle style;
+  final Function(bool support)? onSupportClick;
 
   const AgoraLikeView({
     super.key,
@@ -25,11 +26,12 @@ class AgoraLikeView extends StatelessWidget {
     this.shouldHaveHorizontalPadding = true,
     this.shouldHaveVerticalPadding = false,
     this.style = AgoraLikeStyle.police14,
+    this.onSupportClick,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    Widget currentChild = Container(
       color: AgoraColors.transparent,
       child: Padding(
         padding: EdgeInsets.symmetric(
@@ -44,12 +46,21 @@ class AgoraLikeView extends StatelessWidget {
             Text(
               supportCount.toString(),
               style: _buildTextStyle(),
-              semanticsLabel: SemanticsStrings.supportNumber.format(supportCount.toString()),
+              semanticsLabel:
+                  "${isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
             ),
           ],
         ),
       ),
     );
+
+    if (onSupportClick != null) {
+      currentChild = GestureDetector(
+        onTap: () => onSupportClick!(!isSupported),
+        child: currentChild,
+      );
+    }
+    return currentChild;
   }
 
   double _buildIconSize() {
