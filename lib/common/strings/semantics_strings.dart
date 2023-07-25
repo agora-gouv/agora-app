@@ -6,4 +6,7 @@ class SemanticsStrings {
   static const String copyMail = "Copier le mail";
   static const String copyCode = "Copier le code";
   static const String close = "Fermer";
+
+  static const String support = "La question est soutenue de votre part";
+  static const String notSupport = "La question n'est pas soutenue de votre part";
 }
