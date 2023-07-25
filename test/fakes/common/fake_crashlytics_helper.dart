@@ -6,7 +6,8 @@ class FakeCrashlyticsHelper extends CrashlyticsHelper {
   void recordError(
     dynamic exception,
     StackTrace? stack,
-    AgoraDioExceptionType exceptionType, {
+    AgoraDioExceptionType? exceptionType, {
+    String? reason,
     Iterable<Object> information = const [],
     bool? printDetails,
     bool fatal = false,
