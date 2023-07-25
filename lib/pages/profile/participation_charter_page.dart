@@ -41,7 +41,7 @@ class ParticipationCharterPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ..._paragraph1(),
+              ..._paragraph1(context),
               Row(
                 children: [
                   Flexible(
@@ -70,7 +70,7 @@ class ParticipationCharterPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _paragraph1() {
+  List<Widget> _paragraph1(BuildContext context) {
     return [
       Text(PrivacyPolicyStrings.title1, style: AgoraTextStyles.medium18),
       SizedBox(height: AgoraSpacings.x0_75),
@@ -86,14 +86,17 @@ class ParticipationCharterPage extends StatelessWidget {
       SizedBox(height: AgoraSpacings.x0_25),
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description1_3_3),
       SizedBox(height: AgoraSpacings.x0_25),
-      _buildRichText([
-        TextSpan(text: PrivacyPolicyStrings.description1_3_4_1),
-        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-        TextSpan(text: PrivacyPolicyStrings.description1_3_4_2, style: AgoraTextStyles.light14Italic),
-        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-        TextSpan(text: PrivacyPolicyStrings.description1_3_4_3),
-        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-      ]),
+      _buildRichText(
+        context,
+        [
+          TextSpan(text: PrivacyPolicyStrings.description1_3_4_1),
+          WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+          TextSpan(text: PrivacyPolicyStrings.description1_3_4_2, style: AgoraTextStyles.light14Italic),
+          WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+          TextSpan(text: PrivacyPolicyStrings.description1_3_4_3),
+          WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+        ],
+      ),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description1_3_5),
       SizedBox(height: AgoraSpacings.x0_25),
@@ -128,6 +131,7 @@ class ParticipationCharterPage extends StatelessWidget {
   }
 
   Widget _buildRichText(
+    BuildContext context,
     List<InlineSpan> spans, {
     TextStyle style = AgoraTextStyles.light14,
     bool withBulletPoint = true,
@@ -138,11 +142,19 @@ class ParticipationCharterPage extends StatelessWidget {
         children: [
           Text("  \u2022", style: style),
           SizedBox(width: AgoraSpacings.x0_5),
-          Expanded(child: RichText(text: TextSpan(style: style, children: spans))),
+          Expanded(
+            child: RichText(
+              textScaleFactor: MediaQuery.of(context).textScaleFactor,
+              text: TextSpan(style: style, children: spans),
+            ),
+          ),
         ],
       );
     } else {
-      return RichText(text: TextSpan(style: style, children: spans));
+      return RichText(
+        textScaleFactor: MediaQuery.of(context).textScaleFactor,
+        text: TextSpan(style: style, children: spans),
+      );
     }
   }
 }

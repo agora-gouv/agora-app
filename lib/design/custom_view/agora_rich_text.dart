@@ -38,6 +38,7 @@ class AgoraRichText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
+      textScaleFactor: MediaQuery.of(context).textScaleFactor,
       text: TextSpan(
         style: _buildRegularStyle(),
         children: items.map((item) {

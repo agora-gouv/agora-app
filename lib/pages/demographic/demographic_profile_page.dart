@@ -149,6 +149,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
           Text(DemographicStrings.demographicInformationNotice1, style: AgoraTextStyles.light14),
           SizedBox(height: AgoraSpacings.x0_5),
           RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
             text: TextSpan(
               style: AgoraTextStyles.light14,
               children: [

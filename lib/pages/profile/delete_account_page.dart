@@ -49,6 +49,7 @@ class DeleteAccountPage extends StatelessWidget {
                 child: Column(
                   children: [
                     RichText(
+                      textScaleFactor: MediaQuery.of(context).textScaleFactor,
                       text: TextSpan(
                         children: [
                           TextSpan(

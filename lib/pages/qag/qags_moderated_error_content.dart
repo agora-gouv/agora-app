@@ -33,6 +33,7 @@ class QagsModeratedErrorContent extends StatelessWidget {
                 Center(child: Text(QagStrings.qagModerateTitle, style: AgoraTextStyles.medium18)),
                 SizedBox(height: AgoraSpacings.x1_25),
                 _buildRichText(
+                  context,
                   [
                     TextSpan(text: QagStrings.qagModerateDescription1_1),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -48,6 +49,7 @@ class QagsModeratedErrorContent extends StatelessWidget {
                 ),
                 SizedBox(height: AgoraSpacings.base),
                 _buildRichText(
+                  context,
                   [
                     TextSpan(text: QagStrings.qagModerateDescription2),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -75,9 +77,13 @@ class QagsModeratedErrorContent extends StatelessWidget {
   }
 
   Widget _buildRichText(
+    BuildContext context,
     List<InlineSpan> spans, {
     TextStyle style = AgoraTextStyles.light14,
   }) {
-    return RichText(text: TextSpan(style: style, children: spans));
+    return RichText(
+      textScaleFactor: MediaQuery.of(context).textScaleFactor,
+      text: TextSpan(style: style, children: spans),
+    );
   }
 }
