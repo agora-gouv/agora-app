@@ -40,20 +40,22 @@ class ConsultationsFinishedSection extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    AgoraRichText(
-                      items: [
-                        AgoraRichTextTextItem(
-                          text: "${ConsultationStrings.finishConsultationPart1}\n",
-                          style: AgoraRichTextItemStyle.regular,
-                        ),
-                        AgoraRichTextTextItem(
-                          text: ConsultationStrings.finishConsultationPart2,
-                          style: AgoraRichTextItemStyle.bold,
-                        ),
-                      ],
+                    Expanded(
+                      child: AgoraRichText(
+                        items: [
+                          AgoraRichTextTextItem(
+                            text: "${ConsultationStrings.finishConsultationPart1}\n",
+                            style: AgoraRichTextItemStyle.regular,
+                          ),
+                          AgoraRichTextTextItem(
+                            text: ConsultationStrings.finishConsultationPart2,
+                            style: AgoraRichTextItemStyle.bold,
+                          ),
+                        ],
+                      ),
                     ),
                     if (shouldDisplayAllButton) ...[
-                      Spacer(),
+                      SizedBox(width: AgoraSpacings.x0_75),
                       AgoraRoundedButton(
                         label: GenericStrings.all,
                         style: AgoraRoundedButtonStyle.greyBorderButtonStyle,

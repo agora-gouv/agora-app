@@ -11,7 +11,7 @@ Future<T?> showAgoraBottomSheet<T>({
   bool dismissible = false,
 }) {
   return showModalBottomSheet<T>(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded12)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: AgoraCorners.rounded12)),
     context: context,
     builder: (context) => Padding(
       padding: EdgeInsets.symmetric(

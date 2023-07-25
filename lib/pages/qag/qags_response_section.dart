@@ -63,11 +63,13 @@ class QagsResponseSection extends StatelessWidget {
   Widget _buildQagResponseHeader(BuildContext context) {
     return Row(
       children: [
-        AgoraRichText(
-          items: [
-            AgoraRichTextTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
-            AgoraRichTextTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
-          ],
+        Expanded(
+          child: AgoraRichText(
+            items: [
+              AgoraRichTextTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
+              AgoraRichTextTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
+            ],
+          ),
         ),
         SizedBox(width: AgoraSpacings.x0_75),
         AgoraMoreInformation(
@@ -86,7 +88,7 @@ class QagsResponseSection extends StatelessWidget {
             );
           },
         ),
-        Spacer(),
+        SizedBox(width: AgoraSpacings.x0_75),
         AgoraRoundedButton(
           label: GenericStrings.all,
           style: AgoraRoundedButtonStyle.greyBorderButtonStyle,

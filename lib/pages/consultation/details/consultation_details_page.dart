@@ -167,26 +167,25 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
                 children: [
                   SvgPicture.asset("assets/ic_person.svg"),
                   SizedBox(width: spacing),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        viewModel.participantCountText,
-                        style: AgoraTextStyles.light14,
-                      ),
-                      SizedBox(height: AgoraSpacings.x0_5),
-                      AgoraParticipantsProgressBar(
-                        currentNbParticipants: viewModel.participantCount,
-                        objectiveNbParticipants: viewModel.participantCountGoal,
-                        minusPadding: columnPadding * 2 + spacing + icPersonIconSize,
-                      ),
-                      SizedBox(height: AgoraSpacings.x0_5),
-                      Text(
-                        viewModel.participantCountGoalText,
-                        style: AgoraTextStyles.light14,
-                      ),
-                      SizedBox(height: AgoraSpacings.x0_5),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(viewModel.participantCountText, style: AgoraTextStyles.light14),
+                        SizedBox(height: AgoraSpacings.x0_5),
+                        AgoraParticipantsProgressBar(
+                          currentNbParticipants: viewModel.participantCount,
+                          objectiveNbParticipants: viewModel.participantCountGoal,
+                          minusPadding: columnPadding * 2 + spacing + icPersonIconSize,
+                        ),
+                        SizedBox(height: AgoraSpacings.x0_5),
+                        Text(
+                          viewModel.participantCountGoalText,
+                          style: AgoraTextStyles.light14,
+                        ),
+                        SizedBox(height: AgoraSpacings.x0_5),
+                      ],
+                    ),
                   ),
                 ],
               ),
