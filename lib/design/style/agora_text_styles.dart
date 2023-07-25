@@ -115,10 +115,27 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle mediumItalic16 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontStyle: FontStyle.italic,
+    fontSize: 16.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle medium16 = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
     fontSize: 16.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle medium15 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 15.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );
@@ -132,14 +149,6 @@ class AgoraTextStyles {
     height: height,
   );
 
-  static const TextStyle medium15 = TextStyle(
-    fontFamily: marianne,
-    fontWeight: medium,
-    fontSize: 15.0,
-    color: AgoraColors.primaryGrey,
-    height: height,
-  );
-
   static const TextStyle medium14 = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
@@ -148,11 +157,10 @@ class AgoraTextStyles {
     height: height,
   );
 
-  static const TextStyle mediumItalic16 = TextStyle(
+  static const TextStyle medium13 = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
-    fontStyle: FontStyle.italic,
-    fontSize: 16.0,
+    fontSize: 13.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );

@@ -1,9 +1,11 @@
 class AgoraBottomNavigationBarItem {
-  final String icon;
+  final String activateIcon;
+  final String inactivateIcon;
   final String label;
 
   AgoraBottomNavigationBarItem({
-    required this.icon,
+    required this.activateIcon,
+    required this.inactivateIcon,
     required this.label,
   });
 }
