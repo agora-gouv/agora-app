@@ -5,7 +5,8 @@ abstract class CrashlyticsHelper {
   void recordError(
     dynamic exception,
     StackTrace? stack,
-    AgoraDioExceptionType exceptionType, {
+    AgoraDioExceptionType? exceptionType, {
+    String? reason,
     Iterable<Object> information,
     bool? printDetails,
     bool fatal,
@@ -21,7 +22,8 @@ class CrashlyticsHelperImpl extends CrashlyticsHelper {
   void recordError(
     dynamic exception,
     StackTrace? stack,
-    AgoraDioExceptionType exceptionType, {
+    AgoraDioExceptionType? exceptionType, {
+    String? reason,
     Iterable<Object> information = const [],
     bool? printDetails,
     bool fatal = false,
@@ -29,7 +31,7 @@ class CrashlyticsHelperImpl extends CrashlyticsHelper {
     crashlytics.recordError(
       exception,
       stack,
-      reason: "$exceptionType failed",
+      reason: exceptionType != null ? "$exceptionType failed" : reason,
       information: information,
       printDetails: printDetails,
       fatal: fatal,
@@ -42,7 +44,8 @@ class NotImportantCrashlyticsHelperImpl extends CrashlyticsHelper {
   void recordError(
     dynamic exception,
     StackTrace? stack,
-    AgoraDioExceptionType exceptionType, {
+    AgoraDioExceptionType? exceptionType, {
+    String? reason,
     Iterable<Object> information = const [],
     bool? printDetails,
     bool fatal = false,
