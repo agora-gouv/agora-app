@@ -137,6 +137,11 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
         break;
     }
 
-    return RichText(textAlign: textAlign, textDirection: textDirection, text: textSpan);
+    return RichText(
+      textScaleFactor: MediaQuery.of(context).textScaleFactor,
+      textAlign: textAlign,
+      textDirection: textDirection,
+      text: textSpan,
+    );
   }
 }

@@ -45,7 +45,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: _paragraph1() +
                 _paragraph2() +
-                _paragraph3() +
+                _paragraph3(context) +
                 _paragraph4() +
                 _paragraph5() +
                 _paragraph6(context) +
@@ -105,7 +105,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     ];
   }
 
-  List<Widget> _paragraph3() {
+  List<Widget> _paragraph3(BuildContext context) {
     // Quelles sont les données que nous manipulons ?;
     return [
       Text(PrivacyPolicyStrings.title3, style: AgoraTextStyles.medium16),
@@ -113,6 +113,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       Text(PrivacyPolicyStrings.description3_1, style: AgoraTextStyles.light14),
       SizedBox(height: AgoraSpacings.x0_5),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.description3_2_1, style: AgoraTextStyles.medium14),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -175,6 +176,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description6_4),
       SizedBox(height: AgoraSpacings.x0_5),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.description6_5),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -189,6 +191,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       ),
       SizedBox(height: AgoraSpacings.x0_5),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.description6_6),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -207,6 +210,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       Text(PrivacyPolicyStrings.description6_8, style: AgoraTextStyles.light14),
       SizedBox(height: AgoraSpacings.x0_5),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.description6_9),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -283,6 +287,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description9_4),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.descriptionGuaranty),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -305,6 +310,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description9_8),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.descriptionGuaranty),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -325,6 +331,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description9_12),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.descriptionGuaranty),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -345,6 +352,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description9_16),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.descriptionGuaranty),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -382,6 +390,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       _buildTextWithBulletPoint(PrivacyPolicyStrings.description10_8),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildRichText(
+        context,
         [
           TextSpan(text: PrivacyPolicyStrings.descriptionGuaranty),
           WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
@@ -404,6 +413,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       Text(PrivacyPolicyStrings.description11, style: AgoraTextStyles.light14),
       SizedBox(height: AgoraSpacings.x0_5),
       _buildRichText(
+        context,
         [
           TextSpan(
             text: PrivacyPolicyStrings.description11_1_1,
@@ -415,6 +425,7 @@ class PrivacyPolicyPage extends StatelessWidget {
       ),
       SizedBox(height: AgoraSpacings.x0_25),
       _buildRichText(
+        context,
         [
           TextSpan(
             text: PrivacyPolicyStrings.description11_2_1,
@@ -440,6 +451,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   }
 
   Widget _buildRichText(
+    BuildContext context,
     List<InlineSpan> spans, {
     TextStyle style = AgoraTextStyles.light14,
     bool withBulletPoint = true,
@@ -450,11 +462,19 @@ class PrivacyPolicyPage extends StatelessWidget {
         children: [
           Text("  \u2022", style: style),
           SizedBox(width: AgoraSpacings.x0_5),
-          Expanded(child: RichText(text: TextSpan(style: style, children: spans))),
+          Expanded(
+            child: RichText(
+              textScaleFactor: MediaQuery.of(context).textScaleFactor,
+              text: TextSpan(style: style, children: spans),
+            ),
+          ),
         ],
       );
     } else {
-      return RichText(text: TextSpan(style: style, children: spans));
+      return RichText(
+        textScaleFactor: MediaQuery.of(context).textScaleFactor,
+        text: TextSpan(style: style, children: spans),
+      );
     }
   }
 }

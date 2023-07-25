@@ -249,6 +249,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         context: context,
                         columnChildren: [
                           RichText(
+                            textScaleFactor: MediaQuery.of(context).textScaleFactor,
                             text: TextSpan(
                               style: AgoraTextStyles.light16,
                               children: [
