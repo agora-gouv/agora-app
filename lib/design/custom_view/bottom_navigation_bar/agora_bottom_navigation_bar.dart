@@ -29,12 +29,12 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   final double _webBottomBarHeight = 60;
   final double _iosBottomBarHeight = 75;
   final double _androidBottomBarHeight = 60;
-  final double _indicatorHeight = 2;
+  final double _indicatorHeight = 3;
 
-  final Color _activeLabelColor = AgoraColors.primaryGrey;
+  final Color _activeLabelColor = AgoraColors.primaryBlue;
   final Color _inactiveLabelColor = AgoraColors.primaryGreyOpacity80;
   final Color _activeBgColor = AgoraColors.white;
-  final Color _inactiveBgColor = AgoraColors.background;
+  final Color _inactiveBgColor = AgoraColors.white;
   final Color _activeIndicatorColor = AgoraColors.primaryBlue;
   final Color _inactiveIndicatorColor = AgoraColors.superSilver;
 
@@ -60,7 +60,10 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
               ? _iosBottomBarHeight //+ MediaQuery.of(context).viewPadding.bottom,// utils for ios
               : _androidBottomBarHeight,
       width: _width,
-      decoration: BoxDecoration(color: _inactiveIndicatorColor),
+      decoration: BoxDecoration(
+        color: _inactiveIndicatorColor,
+        boxShadow: [BoxShadow(color: AgoraColors.blur, blurRadius: 25, spreadRadius: 25)],
+      ),
       child: Stack(
         children: [
           Positioned(
@@ -123,15 +126,16 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
         children: <Widget>[
           if (PlatformStaticHelper.isIOS()) SizedBox(height: AgoraSpacings.x0_75),
           _setIcon(selectedIndex, item),
-          SizedBox(height: AgoraSpacings.x0_25),
           _setLabel(selectedIndex, item),
         ],
       ),
     );
   }
 
-  Widget _setIcon(int index, AgoraBottomNavigationBarItem item) {
-    return SvgPicture.asset(height: 20, width: 20, "assets/${item.icon}");
+  Widget _setIcon(int selectedIndex, AgoraBottomNavigationBarItem item) {
+    return selectedIndex == _currentSelectedIndex
+        ? SvgPicture.asset(height: 20, width: 20, "assets/${item.activateIcon}")
+        : SvgPicture.asset(height: 20, width: 20, "assets/${item.inactivateIcon}");
   }
 
   Widget _setLabel(int selectedIndex, AgoraBottomNavigationBarItem item) {
@@ -139,8 +143,8 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
       item.label,
       textAlign: TextAlign.center,
       style: selectedIndex == _currentSelectedIndex
-          ? AgoraTextStyles.medium12.copyWith(color: _activeLabelColor)
-          : AgoraTextStyles.medium12.copyWith(color: _inactiveLabelColor),
+          ? AgoraTextStyles.medium13.copyWith(color: _activeLabelColor)
+          : AgoraTextStyles.medium13.copyWith(color: _inactiveLabelColor),
     );
   }
 }

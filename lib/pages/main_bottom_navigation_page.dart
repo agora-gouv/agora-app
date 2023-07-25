@@ -64,12 +64,14 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
     switch (page) {
       case MainBottomNavigationPages.consultation:
         return AgoraBottomNavigationBarItem(
-          icon: "ic_consultation.svg",
+          activateIcon: "ic_consultation.svg",
+          inactivateIcon: "ic_consultation_inactivate.svg",
           label: "Consultations",
         );
       case MainBottomNavigationPages.qag:
         return AgoraBottomNavigationBarItem(
-          icon: "ic_question.svg",
+          activateIcon: "ic_question.svg",
+          inactivateIcon: "ic_question_inactivate.svg",
           label: "Questions citoyennes",
         );
     }
