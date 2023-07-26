@@ -54,9 +54,14 @@ class ConsultationQuestionUniqueChoiceView extends StatelessWidget {
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
           responseLabel: response.label,
+          hasOpenTextField: response.hasOpenTextField,
           isSelected: _isResponseAlreadySelected(response.id),
+          previousOtherResponse: "",
           onTap: (responseId) {
             onUniqueResponseTap(uniqueChoiceQuestion.id, responseId);
+          },
+          onOtherResponseChanged: (responseId, otherResponse) {
+            // TODO
           },
         ),
       );

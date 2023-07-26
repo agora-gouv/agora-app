@@ -73,6 +73,7 @@ class ConsultationQuestionsPresenter {
             id: responseChoice.id,
             label: responseChoice.label,
             order: responseChoice.order,
+            hasOpenTextField: responseChoice.hasOpenTextField,
           ),
         )
         .toList()
@@ -89,6 +90,7 @@ class ConsultationQuestionsPresenter {
             label: responseChoice.label,
             order: responseChoice.order,
             nextQuestionId: responseChoice.nextQuestionId,
+            hasOpenTextField: responseChoice.hasOpenTextField,
           ),
         )
         .toList()
