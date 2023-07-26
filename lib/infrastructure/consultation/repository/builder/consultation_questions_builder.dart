@@ -31,6 +31,7 @@ class ConsultationQuestionsBuilder {
                   id: responseChoice["id"] as String,
                   label: responseChoice["label"] as String,
                   order: responseChoice["order"] as int,
+                  hasOpenTextField: (responseChoice["hasOpenTextField"] as bool?) ?? false, // TODO delete nullable
                 ),
               )
               .toList(),
@@ -75,6 +76,7 @@ class ConsultationQuestionsBuilder {
                   id: responseChoice["id"] as String,
                   label: responseChoice["label"] as String,
                   order: responseChoice["order"] as int,
+                  hasOpenTextField: (responseChoice["hasOpenTextField"] as bool?) ?? false, // TODO delete nullable
                 ),
               )
               .toList(),
@@ -102,6 +104,7 @@ class ConsultationQuestionsBuilder {
                   label: responseChoice["label"] as String,
                   order: responseChoice["order"] as int,
                   nextQuestionId: responseChoice["nextQuestionId"] as String,
+                  hasOpenTextField: (responseChoice["hasOpenTextField"] as bool?) ?? false, // TODO delete nullable
                 ),
               )
               .toList(),

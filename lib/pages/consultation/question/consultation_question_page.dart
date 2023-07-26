@@ -219,7 +219,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
       multipleChoicesQuestion: multipleChoicesQuestion,
       totalQuestions: totalQuestions,
       previousSelectedResponses: questionAlreadyAnswered,
-      onMultipleResponseTap: (questionId, responseIds) {
+      onMultipleResponseTap: (questionId, responseIds, otherResponse) {
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.answerConsultationQuestion.format(multipleChoicesQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
@@ -228,7 +228,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           context: context,
           questionId: questionId,
           responsesIds: responseIds,
-          openedResponse: "",
+          openedResponse: otherResponse,
           nextQuestionId: multipleChoicesQuestion.nextQuestionId,
         );
       },

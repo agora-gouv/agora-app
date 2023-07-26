@@ -16,7 +16,7 @@ class ConsultationQuestionMultipleChoicesView extends StatefulWidget {
   final ConsultationQuestionMultipleViewModel multipleChoicesQuestion;
   final ConsultationQuestionResponses? previousSelectedResponses;
   final int totalQuestions;
-  final Function(String questionId, List<String> responseIds) onMultipleResponseTap;
+  final Function(String questionId, List<String> responseIds, String otherResponse) onMultipleResponseTap;
   final VoidCallback onBackTap;
 
   ConsultationQuestionMultipleChoicesView({
@@ -35,6 +35,7 @@ class ConsultationQuestionMultipleChoicesView extends StatefulWidget {
 class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQuestionMultipleChoicesView> {
   String currentQuestionId = "";
   final List<String> currentResponseIds = [];
+  String otherResponseText = "";
   bool shouldResetPreviousResponses = true;
   late ConsultationQuestionMultipleViewModel multipleChoicesQuestion;
 
@@ -57,7 +58,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
             onBackTap: widget.onBackTap,
           ),
           ...ConsultationQuestionHelper.buildIgnoreButton(
-            onPressed: () => widget.onMultipleResponseTap(multipleChoicesQuestion.id, [UuidUtils.uuidZero]),
+            onPressed: () => widget.onMultipleResponseTap(multipleChoicesQuestion.id, [UuidUtils.uuidZero], ""),
           ),
         ],
       ),
@@ -71,9 +72,11 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
     }
     if (shouldResetPreviousResponses) {
       currentResponseIds.clear();
+      otherResponseText = "";
       final previousSelectedResponses = widget.previousSelectedResponses;
       if (previousSelectedResponses != null && !previousSelectedResponses.responseIds.contains(UuidUtils.uuidZero)) {
         currentResponseIds.addAll(previousSelectedResponses.responseIds);
+        otherResponseText = previousSelectedResponses.responseText;
       }
       shouldResetPreviousResponses = false;
     }
@@ -92,15 +95,25 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
           responseLabel: response.label,
+          hasOpenTextField: response.hasOpenTextField,
           isSelected: _isResponseAlreadySelected(response.id),
+          previousOtherResponse: otherResponseText,
           onTap: (responseId) {
             setState(() {
               if (currentResponseIds.contains(responseId)) {
                 currentResponseIds.remove(responseId);
+                otherResponseText = "";
               } else if (currentResponseIds.length < multipleChoicesQuestion.maxChoices) {
                 currentResponseIds.add(responseId);
               }
             });
+          },
+          onOtherResponseChanged: (responseId, otherResponse) {
+            if (currentResponseIds.contains(responseId)) {
+              setState(() => otherResponseText = otherResponse);
+            } else {
+              setState(() => otherResponseText = "");
+            }
           },
         ),
       );
@@ -116,7 +129,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
         style: AgoraButtonStyle.primaryButtonStyle,
         onPressed: currentResponseIds.isNotEmpty
             ? () {
-                widget.onMultipleResponseTap(multipleChoicesQuestion.id, [...currentResponseIds]);
+                widget.onMultipleResponseTap(multipleChoicesQuestion.id, [...currentResponseIds], otherResponseText);
               }
             : null,
       ),

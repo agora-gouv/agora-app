@@ -144,11 +144,13 @@ class ConsultationQuestionResponseChoiceViewModel extends Equatable {
   final String id;
   final String label;
   final int order;
+  final bool hasOpenTextField;
 
   ConsultationQuestionResponseChoiceViewModel({
     required this.id,
     required this.label,
     required this.order,
+    required this.hasOpenTextField,
   });
 
   @override
@@ -156,6 +158,7 @@ class ConsultationQuestionResponseChoiceViewModel extends Equatable {
         id,
         label,
         order,
+        hasOpenTextField,
       ];
 }
 
@@ -164,12 +167,14 @@ class ConsultationQuestionWithConditionResponseChoiceViewModel extends Equatable
   final String label;
   final int order;
   final String nextQuestionId;
+  final bool hasOpenTextField;
 
   ConsultationQuestionWithConditionResponseChoiceViewModel({
     required this.id,
     required this.label,
     required this.order,
     required this.nextQuestionId,
+    required this.hasOpenTextField,
   });
 
   @override
@@ -178,5 +183,6 @@ class ConsultationQuestionWithConditionResponseChoiceViewModel extends Equatable
         label,
         order,
         nextQuestionId,
+        hasOpenTextField,
       ];
 }

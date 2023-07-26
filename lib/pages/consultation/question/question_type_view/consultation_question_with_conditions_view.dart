@@ -50,9 +50,14 @@ class ConsultationQuestionWithConditionsView extends StatelessWidget {
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
           responseLabel: response.label,
+          hasOpenTextField: response.hasOpenTextField,
           isSelected: _isResponseAlreadySelected(response.id),
+          previousOtherResponse: "",
           onTap: (responseId) {
             onWithConditionResponseTap(questionWithConditions.id, responseId, response.nextQuestionId);
+          },
+          onOtherResponseChanged: (responseId, otherResponse) {
+            // TODO
           },
         ),
       );
