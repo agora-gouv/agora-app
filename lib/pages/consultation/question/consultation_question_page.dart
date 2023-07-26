@@ -183,8 +183,8 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     return ConsultationQuestionUniqueChoiceView(
       uniqueChoiceQuestion: uniqueChoiceQuestion,
       totalQuestions: totalQuestions,
-      previousResponses: questionAlreadyAnswered,
-      onUniqueResponseTap: (questionId, responseId) {
+      previousSelectedResponses: questionAlreadyAnswered,
+      onUniqueResponseTap: (questionId, responseId, otherResponse) {
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.answerConsultationQuestion.format(uniqueChoiceQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
@@ -193,7 +193,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           context: context,
           questionId: questionId,
           responsesIds: [responseId],
-          openedResponse: "",
+          openedResponse: otherResponse,
           nextQuestionId: uniqueChoiceQuestion.nextQuestionId,
         );
       },
