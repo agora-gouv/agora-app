@@ -32,6 +32,7 @@ class AgoraQuestionResponseChoiceView extends StatefulWidget {
 }
 
 class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseChoiceView> {
+  String currentResponseId = "";
   String otherResponse = "";
   TextEditingController? textEditingController;
   bool shouldResetPreviousOtherResponse = true;
@@ -81,14 +82,14 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
 
   void _resetPreviousResponse() {
     if (widget.hasOpenTextField) {
-      if (widget.isSelected) {
-        if (shouldResetPreviousOtherResponse) {
-          otherResponse = widget.previousOtherResponse;
-          textEditingController = TextEditingController(text: otherResponse);
-          shouldResetPreviousOtherResponse = false;
-        }
-      } else {
+      if (currentResponseId != widget.responseId) {
+        currentResponseId = widget.responseId;
         shouldResetPreviousOtherResponse = true;
+      }
+      if (shouldResetPreviousOtherResponse && widget.isSelected) {
+        otherResponse = widget.previousOtherResponse;
+        textEditingController = TextEditingController(text: otherResponse);
+        shouldResetPreviousOtherResponse = false;
       }
     }
   }
