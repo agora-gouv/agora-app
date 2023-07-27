@@ -35,4 +35,10 @@ class ProfileStrings {
   static const String feedbackLink = "https://agora.beta.gouv.fr/retours-application";
   static const String privacyPolicyLink = "https://agora.beta.gouv.fr/politique-confidentialite";
   static const String legalNoticeLink = "https://agora.beta.gouv.fr/mentions-legales";
+
+  static const String displayMore = "Afficher plus de notifications";
+  static const String retry = "Réessayer";
+  static const String inType = "Dans ";
+  static const String byDate = ", le ";
+  static const String parameters = "Paramètres";
 }
