@@ -9,4 +9,6 @@ class SemanticsStrings {
 
   static const String support = "La question est soutenue de votre part";
   static const String notSupport = "La question n'est pas soutenue de votre part";
+
+  static const String ongoingConsultationEmpty = "Vous avez répondu à toutes les consultations en cours";
 }

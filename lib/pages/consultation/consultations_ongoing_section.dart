@@ -1,5 +1,6 @@
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -45,7 +46,20 @@ class ConsultationsOngoingSection extends StatelessWidget {
     if (ongoingViewModels.isEmpty) {
       ongoingConsultationsWidgets.add(Container(width: double.infinity));
       ongoingConsultationsWidgets.add(
-        Center(child: Text(ConsultationStrings.consultationEmpty, style: AgoraTextStyles.medium14)),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AgoraSpacings.horizontalPadding,
+              vertical: AgoraSpacings.x0_75,
+            ),
+            child: Text(
+              ConsultationStrings.ongoingConsultationEmpty,
+              semanticsLabel: SemanticsStrings.ongoingConsultationEmpty,
+              style: AgoraTextStyles.medium14,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       );
       ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
     }
