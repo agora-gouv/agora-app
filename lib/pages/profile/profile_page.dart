@@ -17,6 +17,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
+import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:flutter/material.dart';
@@ -63,13 +64,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.pushNamed(context, DemographicProfilePage.routeName);
               },
             ),
-            // AgoraMenuItem(
-            //   title: ProfileStrings.notification,
-            //   onClick: () {
-            //     _track(AnalyticsEventNames.notification);
-            //     // TODO
-            //   },
-            // ),
+            AgoraMenuItem(
+              title: ProfileStrings.notification,
+              onClick: () {
+                _track(AnalyticsEventNames.notification);
+                Navigator.pushNamed(context, NotificationPage.routeName);
+              },
+            ),
             AgoraMenuItem(
               title: ProfileStrings.tutorial,
               onClick: () {

@@ -279,10 +279,10 @@ class AgoraTextStyles {
     decoration: TextDecoration.underline,
   );
 
-  static const TextStyle light12 = TextStyle(
+  static const TextStyle light15 = TextStyle(
     fontFamily: marianne,
     fontWeight: light,
-    fontSize: 12.0,
+    fontSize: 15.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );
@@ -309,6 +309,14 @@ class AgoraTextStyles {
     fontWeight: light,
     fontStyle: FontStyle.italic,
     fontSize: 14.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle light12 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 12.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );
