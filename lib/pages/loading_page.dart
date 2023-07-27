@@ -2,9 +2,9 @@ import 'package:agora/agora_app.dart';
 import 'package:agora/bloc/login/login_bloc.dart';
 import 'package:agora/bloc/login/login_event.dart';
 import 'package:agora/bloc/login/login_state.dart';
-import 'package:agora/bloc/notification/notification_bloc.dart';
-import 'package:agora/bloc/notification/notification_event.dart';
-import 'package:agora/bloc/notification/notification_state.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_bloc.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_event.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_state.dart';
 import 'package:agora/common/helper/clipboard_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
@@ -69,7 +69,7 @@ class _LoadingPageState extends State<LoadingPage> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => NotificationBloc(
+          create: (context) => NotificationPermissionBloc(
             notificationFirstRequestPermissionStorageClient: StorageManager.getFirstConnectionStorageClient(),
             permissionHelper: HelperManager.getPermissionHelper(),
             platformHelper: HelperManager.getPlatformHelper(),
@@ -91,7 +91,7 @@ class _LoadingPageState extends State<LoadingPage> {
       ],
       child: AgoraScaffold(
         appBarColor: AgoraColors.primaryBlue,
-        child: BlocListener<NotificationBloc, NotificationState>(
+        child: BlocListener<NotificationPermissionBloc, NotificationPermissionState>(
           listener: (context, notificationState) async {
             if (!kIsWeb) {
               if (notificationState is AskNotificationConsentState) {

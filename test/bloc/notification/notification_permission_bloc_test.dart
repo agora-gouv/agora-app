@@ -1,6 +1,6 @@
-import 'package:agora/bloc/notification/notification_bloc.dart';
-import 'package:agora/bloc/notification/notification_event.dart';
-import 'package:agora/bloc/notification/notification_state.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_bloc.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_event.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,7 +16,7 @@ void main() {
     blocTest(
       "when is first connection with notification permission denied and ios platform - should emit auto ask state",
       setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
-      build: () => NotificationBloc(
+      build: () => NotificationPermissionBloc(
         notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsDeniedHelper(),
         platformHelper: FakePlatformIOSHelper(),
@@ -35,7 +35,7 @@ void main() {
     blocTest(
       "when is first connection with notification permission denied and android platform SDK above or equals 33 - should emit auto ask state",
       setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
-      build: () => NotificationBloc(
+      build: () => NotificationPermissionBloc(
         notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsDeniedHelper(),
         platformHelper: FakePlatformAndroidHelper(),
@@ -54,7 +54,7 @@ void main() {
     blocTest(
       "when is first connection with notification permission denied and android platform SDK below 33 - should emit ask state",
       setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
-      build: () => NotificationBloc(
+      build: () => NotificationPermissionBloc(
         notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsDeniedHelper(),
         platformHelper: FakePlatformAndroidHelper(),
@@ -73,7 +73,7 @@ void main() {
     blocTest(
       "when is first connection with notification permission permanently denied - should emit ask state",
       setUp: () => fakeNotificationFirstRequestPermissionStorageClient.save(true),
-      build: () => NotificationBloc(
+      build: () => NotificationPermissionBloc(
         notificationFirstRequestPermissionStorageClient: fakeNotificationFirstRequestPermissionStorageClient,
         permissionHelper: FakeNotificationIsPermanentlyDeniedHelper(),
         platformHelper: FakePlatformAndroidHelper(),
