@@ -6,6 +6,8 @@ import 'package:agora/infrastructure/demographic/demographic_repository.dart';
 import 'package:agora/infrastructure/demographic/mocks_demographic_repository.dart';
 import 'package:agora/infrastructure/login/login_repository.dart';
 import 'package:agora/infrastructure/login/mocks_login_repository.dart';
+import 'package:agora/infrastructure/notification/mocks_notification_repository.dart';
+import 'package:agora/infrastructure/notification/notification_repository.dart';
 import 'package:agora/infrastructure/qag/mocks_qag_repository.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
@@ -133,6 +135,18 @@ class RepositoryManager {
       return GetIt.instance.get<MockDemographicRepository>();
     }
     final repository = MockDemographicRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      crashlyticsHelper: crashlyticsHelper,
+    );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static NotificationRepository getNotificationRepository() {
+    if (GetIt.instance.isRegistered<MockNotificationRepository>()) {
+      return GetIt.instance.get<MockNotificationRepository>();
+    }
+    final repository = MockNotificationRepository(
       httpClient: _getAgoraDioHttpClient(),
       crashlyticsHelper: crashlyticsHelper,
     );

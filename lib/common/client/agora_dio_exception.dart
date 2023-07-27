@@ -34,4 +34,6 @@ enum AgoraDioExceptionType {
   moderateQag,
   hasSimilarQag,
   similarQag,
+  // notification,
+  getNotifications,
 }
