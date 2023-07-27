@@ -288,8 +288,8 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     return ConsultationQuestionWithConditionsView(
       questionWithConditions: questionWithConditions,
       totalQuestions: totalQuestions,
-      previousResponses: questionAlreadyAnswered,
-      onWithConditionResponseTap: (questionId, responseId, nextQuestionId) {
+      previousSelectedResponses: questionAlreadyAnswered,
+      onWithConditionResponseTap: (questionId, responseId, otherResponse, nextQuestionId) {
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.answerConsultationQuestion.format(questionWithConditions.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
@@ -298,7 +298,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           context: context,
           questionId: questionId,
           responsesIds: [responseId],
-          openedResponse: "",
+          openedResponse: otherResponse,
           nextQuestionId: nextQuestionId,
         );
       },
