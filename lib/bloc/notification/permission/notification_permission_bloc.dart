@@ -1,24 +1,24 @@
-import 'package:agora/bloc/notification/notification_event.dart';
-import 'package:agora/bloc/notification/notification_state.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_event.dart';
+import 'package:agora/bloc/notification/permission/notification_permission_state.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
-import 'package:agora/infrastructure/notification/notification_first_request_permission_storage_client.dart';
+import 'package:agora/infrastructure/notification/permission/notification_first_request_permission_storage_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NotificationBloc extends Bloc<NotificationPermissionEvent, NotificationState> {
+class NotificationPermissionBloc extends Bloc<NotificationPermissionEvent, NotificationPermissionState> {
   final NotificationFirstRequestPermissionStorageClient notificationFirstRequestPermissionStorageClient;
   final PermissionHelper permissionHelper;
   final DeviceInfoHelper deviceInfoHelper;
   final PlatformHelper platformHelper;
 
-  NotificationBloc({
+  NotificationPermissionBloc({
     required this.notificationFirstRequestPermissionStorageClient,
     required this.permissionHelper,
     required this.platformHelper,
     required this.deviceInfoHelper,
-  }) : super(NotificationInitialState()) {
+  }) : super(NotificationPermissionInitialState()) {
     on<RequestNotificationPermissionEvent>(_handleFirstTimeAskNotificationPermission);
   }
 
@@ -28,7 +28,7 @@ class NotificationBloc extends Bloc<NotificationPermissionEvent, NotificationSta
   //  - permission.isDenied when release is >=  Android 13 (SDK 33) (have a pop up to ask permission).
   Future<void> _handleFirstTimeAskNotificationPermission(
     RequestNotificationPermissionEvent event,
-    Emitter<NotificationState> emit,
+    Emitter<NotificationPermissionState> emit,
   ) async {
     if (!kIsWeb) {
       final isFirstRequest = await notificationFirstRequestPermissionStorageClient.isFirstRequest();
