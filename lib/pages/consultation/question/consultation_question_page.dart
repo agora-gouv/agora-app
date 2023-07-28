@@ -23,12 +23,23 @@ import 'package:agora/pages/consultation/question/question_type_view/consultatio
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class ConsultationQuestionArguments {
+  final String consultationId;
+  final String consultationTitle;
+
+  ConsultationQuestionArguments({
+    required this.consultationId,
+    required this.consultationTitle,
+  });
+}
+
 class ConsultationQuestionPage extends StatefulWidget {
   static const routeName = "/consultationQuestionPage";
 
   final String consultationId;
+  final String consultationTitle;
 
-  const ConsultationQuestionPage({super.key, required this.consultationId});
+  const ConsultationQuestionPage({super.key, required this.consultationId, required this.consultationTitle});
 
   @override
   State<ConsultationQuestionPage> createState() => _ConsultationQuestionPageState();
@@ -377,6 +388,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
         ConsultationQuestionConfirmationPage.routeName,
         arguments: ConsultationQuestionConfirmationArguments(
           consultationId: widget.consultationId,
+          consultationTitle: widget.consultationTitle,
           consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
         ),
       );

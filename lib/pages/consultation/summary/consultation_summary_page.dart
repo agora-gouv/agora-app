@@ -140,7 +140,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                           AgoraTracker(
                             widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                             child: ConsultationSummaryEtEnsuiteTabContent(
-                              title: viewModel.title,
+                              consultationTitle: viewModel.title,
                               consultationId: consultationId,
                               etEnsuiteViewModel: viewModel.etEnsuite,
                               onBackToConsultationClick: () => _onBackToMenuClick(

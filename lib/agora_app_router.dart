@@ -144,10 +144,13 @@ class AgoraAppRouter {
         );
         break;
       case ConsultationQuestionPage.routeName:
-        final consultationId = settings.arguments as String;
+        final arguments = settings.arguments as ConsultationQuestionArguments;
         currentRoute = AgoraTracker(
-          widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
-          child: ConsultationQuestionPage(consultationId: consultationId),
+          widgetName: "${AnalyticsScreenNames.consultationQuestionPage} ${arguments.consultationId}",
+          child: ConsultationQuestionPage(
+            consultationId: arguments.consultationId,
+            consultationTitle: arguments.consultationTitle,
+          ),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:
@@ -156,7 +159,10 @@ class AgoraAppRouter {
           value: arguments.consultationQuestionsResponsesBloc,
           child: AgoraTracker(
             widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
-            child: ConsultationQuestionConfirmationPage(consultationId: arguments.consultationId),
+            child: ConsultationQuestionConfirmationPage(
+              consultationId: arguments.consultationId,
+              consultationTitle: arguments.consultationTitle,
+            ),
           ),
         );
         break;

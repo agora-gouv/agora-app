@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
-  final String title;
+  final String consultationTitle;
   final String consultationId;
   final ConsultationSummaryEtEnsuiteViewModel etEnsuiteViewModel;
   final VoidCallback onBackToConsultationClick;
@@ -25,7 +25,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
 
   const ConsultationSummaryEtEnsuiteTabContent({
     super.key,
-    required this.title,
+    required this.consultationTitle,
     required this.consultationId,
     required this.etEnsuiteViewModel,
     required this.onBackToConsultationClick,
@@ -130,7 +130,11 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                               clickName: AnalyticsEventNames.shareConsultationResults,
                               widgetName: "${AnalyticsScreenNames.consultationSummaryEtEnsuitePage} $consultationId",
                             );
-                            ShareHelper.shareConsultation(context: context, title: title, id: consultationId);
+                            ShareHelper.shareConsultation(
+                              context: context,
+                              title: consultationTitle,
+                              id: consultationId,
+                            );
                           },
                         ),
                       ],

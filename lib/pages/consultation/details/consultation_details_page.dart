@@ -209,7 +209,10 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
                   Navigator.pushNamed(
                     context,
                     ConsultationQuestionPage.routeName,
-                    arguments: viewModel.id,
+                    arguments: ConsultationQuestionArguments(
+                      consultationId: viewModel.id,
+                      consultationTitle: viewModel.title,
+                    ),
                   );
                 },
               ),
