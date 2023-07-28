@@ -67,6 +67,13 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
+        onTap: () {
+          TrackerHelper.trackClick(
+            clickName: AnalyticsEventNames.participateConsultationByCard.format(consultationId),
+            widgetName: AnalyticsScreenNames.consultationsPage,
+          );
+          _participate(context);
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -114,36 +121,34 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: AgoraButton(
-                    label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
-                    icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
-                    style: AgoraButtonStyle.blueBorderButtonStyle,
-                    onPressed: () {
-                      if (hasAnswered) {
-                        TrackerHelper.trackClick(
-                          clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
-                          widgetName: AnalyticsScreenNames.consultationsPage,
-                        );
-                        Navigator.pushNamed(
-                          context,
-                          ConsultationSummaryPage.routeName,
-                          arguments: ConsultationSummaryArguments(
-                            consultationId: consultationId,
-                            shouldReloadConsultationsWhenPop: false,
-                          ),
-                        );
-                      } else {
-                        TrackerHelper.trackClick(
-                          clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
-                          widgetName: AnalyticsScreenNames.consultationsPage,
-                        );
-                        Navigator.pushNamed(
-                          context,
-                          ConsultationDetailsPage.routeName,
-                          arguments: ConsultationDetailsArguments(consultationId: consultationId),
-                        );
-                      }
-                    },
+                  child: ExcludeSemantics(
+                    child: AgoraButton(
+                      label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
+                      icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
+                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      onPressed: () {
+                        if (hasAnswered) {
+                          TrackerHelper.trackClick(
+                            clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
+                            widgetName: AnalyticsScreenNames.consultationsPage,
+                          );
+                          Navigator.pushNamed(
+                            context,
+                            ConsultationSummaryPage.routeName,
+                            arguments: ConsultationSummaryArguments(
+                              consultationId: consultationId,
+                              shouldReloadConsultationsWhenPop: false,
+                            ),
+                          );
+                        } else {
+                          TrackerHelper.trackClick(
+                            clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
+                            widgetName: AnalyticsScreenNames.consultationsPage,
+                          );
+                          _participate(context);
+                        }
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.base),
@@ -162,6 +167,14 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _participate(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      ConsultationDetailsPage.routeName,
+      arguments: ConsultationDetailsArguments(consultationId: consultationId),
     );
   }
 }
