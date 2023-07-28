@@ -39,15 +39,18 @@ class AgoraLikeView extends StatelessWidget {
           vertical: shouldHaveVerticalPadding ? 2 : 0,
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SvgPicture.asset(_getIcon(), width: _buildIconSize()),
             SizedBox(width: AgoraSpacings.x0_25),
-            Text(
-              supportCount.toString(),
-              style: _buildTextStyle(),
-              semanticsLabel:
-                  "${isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
+            Padding(
+              padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
+              child: Text(
+                supportCount.toString(),
+                style: _buildTextStyle(),
+                semanticsLabel:
+                    "${isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
+              ),
             ),
           ],
         ),

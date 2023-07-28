@@ -43,9 +43,9 @@ class QagDetailsSupportView extends StatelessWidget {
                     child: AgoraRoundedButton(
                       icon: _buildButtonIcon(isSupported, supportState),
                       label: _buildButtonLabel(isSupported, supportState),
-                      style: _buildButtonStyle(isSupported, supportState),
                       isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
-                      contentAlignment: _buildButtonAlignment(isSupported, supportState),
+                      textPadding: _buildTextPadding(isSupported, supportState),
+                      style: _buildButtonStyle(isSupported, supportState),
                       onPressed: () => _buildOnPressed(context, qagId, isSupported, supportState),
                     ),
                   ),
@@ -103,21 +103,21 @@ class QagDetailsSupportView extends StatelessWidget {
     return ""; // value not important
   }
 
-  CrossAxisAlignment _buildButtonAlignment(bool isSupported, QagSupportState supportState) {
+  EdgeInsetsGeometry? _buildTextPadding(bool isSupported, QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       if (isSupported) {
-        return CrossAxisAlignment.center;
+        return null;
       } else {
-        return CrossAxisAlignment.end;
+        return EdgeInsets.only(bottom: AgoraSpacings.x0_25);
       }
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return CrossAxisAlignment.center;
+        return null;
       } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
-        return CrossAxisAlignment.end;
+        return EdgeInsets.only(bottom: AgoraSpacings.x0_25);
       }
     }
-    return CrossAxisAlignment.center; // value not important
+    return null; // value not important
   }
 
   bool _buildIsSupported(bool isSupported, QagSupportState supportState) {

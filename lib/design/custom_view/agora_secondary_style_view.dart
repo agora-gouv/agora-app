@@ -57,7 +57,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                       icon: button!.icon,
                       label: button!.title,
                       style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                      padding: AgoraRoundedButtonPadding.short,
+                      contentPadding: AgoraRoundedButtonPadding.short,
                       onPressed: () => button!.onClick(),
                     ),
                   ]

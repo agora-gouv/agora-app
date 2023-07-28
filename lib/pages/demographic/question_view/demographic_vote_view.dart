@@ -144,6 +144,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
             responseLabel: responseChoice.responseLabel,
             textAlign: TextAlign.center,
             isSelected: isSelected(demographicType: demographicType, responseChoice: responseChoice),
+            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base, horizontal: 0),
             iconPlace: DemographicSelectedIconPlace.centerBottom,
             onTap: () => onPressed(responseChoice.responseCode),
           ),
@@ -151,6 +152,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
       );
       rowWidgets.add(SizedBox(width: AgoraSpacings.x0_75));
     }
+    rowWidgets.removeLast();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: rowWidgets,

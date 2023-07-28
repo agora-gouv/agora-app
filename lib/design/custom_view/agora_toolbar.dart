@@ -32,7 +32,7 @@ class AgoraToolbar extends StatelessWidget {
 
   Widget _buildBack() {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Material(
           color: AgoraColors.transparent,
@@ -45,7 +45,12 @@ class AgoraToolbar extends StatelessWidget {
             child: SvgPicture.asset("assets/ic_back.svg"),
           ),
         ),
-        Text(GenericStrings.back, style: AgoraTextStyles.medium16),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
+            child: Text(GenericStrings.back, style: AgoraTextStyles.medium16),
+          ),
+        ),
       ],
     );
   }

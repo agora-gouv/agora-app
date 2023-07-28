@@ -133,7 +133,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                                 AgoraRoundedButton(
                                   icon: "ic_thumb_white.svg",
                                   label: QagStrings.utils,
-                                  padding: AgoraRoundedButtonPadding.short,
+                                  contentPadding: AgoraRoundedButtonPadding.short,
                                   isLoading: feedbackState is QagFeedbackLoadingState && isThumbUpClicked,
                                   onPressed: () {
                                     _trackFeedback();
@@ -145,7 +145,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                                 AgoraRoundedButton(
                                   icon: "ic_thumb_down_white.svg",
                                   label: QagStrings.notUtils,
-                                  padding: AgoraRoundedButtonPadding.short,
+                                  contentPadding: AgoraRoundedButtonPadding.short,
                                   isLoading: feedbackState is QagFeedbackLoadingState && !isThumbUpClicked,
                                   onPressed: () {
                                     _trackFeedback();
