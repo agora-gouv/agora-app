@@ -118,20 +118,22 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
         children: [
           Row(
             children: [
-              AgoraRichText(
-                policeStyle: AgoraRichTextPoliceStyle.section,
-                items: [
-                  AgoraRichTextTextItem(
-                    text: DemographicStrings.informationCapitalize,
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                  AgoraRichTextTextItem(
-                    text: DemographicStrings.demographic,
-                    style: AgoraRichTextItemStyle.bold,
-                  ),
-                ],
+              Expanded(
+                child: AgoraRichText(
+                  policeStyle: AgoraRichTextPoliceStyle.section,
+                  items: [
+                    AgoraRichTextTextItem(
+                      text: DemographicStrings.informationCapitalize,
+                      style: AgoraRichTextItemStyle.regular,
+                    ),
+                    AgoraRichTextTextItem(
+                      text: DemographicStrings.demographic,
+                      style: AgoraRichTextItemStyle.bold,
+                    ),
+                  ],
+                ),
               ),
-              Spacer(),
+              SizedBox(width: AgoraSpacings.x0_5),
               AgoraRoundedButton(
                 label: GenericStrings.modify,
                 style: AgoraRoundedButtonStyle.greyBorderButtonStyle,

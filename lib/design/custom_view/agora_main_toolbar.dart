@@ -33,7 +33,7 @@ class AgoraMainToolbar extends StatelessWidget {
                     icon: "ic_profile.svg",
                     label: GenericStrings.profil,
                     style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                    padding: AgoraRoundedButtonPadding.short,
+                    contentPadding: AgoraRoundedButtonPadding.short,
                     onPressed: () => onProfileClick(),
                   ),
                 ],

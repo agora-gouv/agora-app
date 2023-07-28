@@ -13,10 +13,10 @@ enum AgoraRoundedButtonPadding { normal, short }
 class AgoraRoundedButton extends StatelessWidget {
   final String? icon;
   final String label;
-  final AgoraRoundedButtonStyle style;
-  final AgoraRoundedButtonPadding padding;
   final bool isLoading;
-  final CrossAxisAlignment contentAlignment;
+  final AgoraRoundedButtonStyle style;
+  final AgoraRoundedButtonPadding contentPadding;
+  final EdgeInsetsGeometry? textPadding;
   final VoidCallback onPressed;
 
   const AgoraRoundedButton({
@@ -24,9 +24,9 @@ class AgoraRoundedButton extends StatelessWidget {
     this.icon,
     required this.label,
     this.isLoading = false,
-    this.contentAlignment = CrossAxisAlignment.center,
     this.style = AgoraRoundedButtonStyle.primaryButtonStyle,
-    this.padding = AgoraRoundedButtonPadding.normal,
+    this.contentPadding = AgoraRoundedButtonPadding.normal,
+    this.textPadding,
     required this.onPressed,
   });
 
@@ -35,23 +35,31 @@ class AgoraRoundedButton extends StatelessWidget {
     if (isLoading) {
       return Center(child: CircularProgressIndicator());
     } else {
-      return AgoraRoundedCard(
-        borderColor: _buildBorderColor(),
-        cornerRadius: AgoraCorners.rounded50,
-        padding: _buildPadding(),
-        cardColor: _buildCardColor(),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: contentAlignment,
-          children: [
-            if (icon != null) ...[
-              SvgPicture.asset("assets/$icon"),
-              SizedBox(width: AgoraSpacings.x0_5),
+      return Semantics(
+        button: true,
+        child: AgoraRoundedCard(
+          borderColor: _buildBorderColor(),
+          cornerRadius: AgoraCorners.rounded50,
+          padding: _buildPadding(),
+          cardColor: _buildCardColor(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (icon != null) ...[
+                SvgPicture.asset("assets/$icon"),
+                SizedBox(width: AgoraSpacings.x0_5),
+              ],
+              Flexible(
+                child: Padding(
+                  padding: textPadding ?? EdgeInsets.all(0),
+                  child: Text(label, style: _buildTextStyle(), textAlign: TextAlign.center),
+                ),
+              ),
             ],
-            Flexible(child: Text(label, style: _buildTextStyle(), textAlign: TextAlign.center)),
-          ],
+          ),
+          onTap: () => onPressed(),
         ),
-        onTap: () => onPressed(),
       );
     }
   }
@@ -90,7 +98,7 @@ class AgoraRoundedButton extends StatelessWidget {
   }
 
   EdgeInsetsGeometry _buildPadding() {
-    switch (padding) {
+    switch (contentPadding) {
       case AgoraRoundedButtonPadding.normal:
         return EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.base);
       case AgoraRoundedButtonPadding.short:
