@@ -2,6 +2,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
@@ -10,24 +11,21 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class DemographicInformationPage extends StatefulWidget {
-  static const routeName = "/demographicInformationPage";
+class ProfileDemographicInformationPage extends StatefulWidget {
+  static const routeName = "/profileDemographicInformationPage";
 
   @override
-  State<DemographicInformationPage> createState() => _DemographicInformationPageState();
+  State<ProfileDemographicInformationPage> createState() => _ProfileDemographicInformationPageState();
 }
 
-class _DemographicInformationPageState extends State<DemographicInformationPage> {
-  bool isReadMore = false;
-
+class _ProfileDemographicInformationPageState extends State<ProfileDemographicInformationPage> {
   @override
   Widget build(BuildContext context) {
-    final consultationId = ModalRoute.of(context)!.settings.arguments as String;
     return AgoraScaffold(
       shouldPop: false,
       appBarColor: AgoraColors.primaryBlue,
@@ -40,7 +38,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
             SizedBox(height: AgoraSpacings.x1_5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-              child: Text(DemographicStrings.informationTitle, style: AgoraTextStyles.medium20),
+              child: Text(ProfileStrings.demographicInformationTitle, style: AgoraTextStyles.medium20),
             ),
             SizedBox(height: AgoraSpacings.x1_5),
             Flexible(
@@ -58,59 +56,47 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DemographicStrings.informationShortDescription,
+                            ProfileStrings.demographicInformationDescription1,
                             style: AgoraTextStyles.regular14,
                           ),
                           SizedBox(height: AgoraSpacings.x1_25),
-                          if (isReadMore) ...[
-                            Text(
-                              DemographicStrings.informationLongDescription1,
-                              style: AgoraTextStyles.regular14,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
-                                SizedBox(width: AgoraSpacings.x0_5),
-                                Expanded(
-                                  child: Text(
-                                    DemographicStrings.informationLongDescription2,
-                                    style: AgoraTextStyles.regular14,
-                                  ),
+                          Text(
+                            ProfileStrings.demographicInformationDescription2,
+                            style: AgoraTextStyles.regular14,
+                          ),
+                          SizedBox(height: AgoraSpacings.x0_75),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
+                              SizedBox(width: AgoraSpacings.x0_5),
+                              Expanded(
+                                child: Text(
+                                  ProfileStrings.demographicInformationDescription3,
+                                  style: AgoraTextStyles.regular14,
                                 ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
-                                SizedBox(width: AgoraSpacings.x0_5),
-                                Expanded(
-                                  child: Text(
-                                    DemographicStrings.informationLongDescription3,
-                                    style: AgoraTextStyles.regular14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              DemographicStrings.informationLongDescription4,
-                              style: AgoraTextStyles.regular14,
-                            ),
-                          ] else
-                            InkWell(
-                              onTap: () {
-                                TrackerHelper.trackClick(
-                                  clickName: AnalyticsEventNames.readMore,
-                                  widgetName: AnalyticsScreenNames.demographicInformationPage,
-                                );
-                                setState(() => isReadMore = true);
-                              },
-                              child: Text(
-                                DemographicStrings.readMore,
-                                style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
                               ),
-                            ),
+                            ],
+                          ),
+                          SizedBox(height: AgoraSpacings.x0_75),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
+                              SizedBox(width: AgoraSpacings.x0_5),
+                              Expanded(
+                                child: Text(
+                                  ProfileStrings.demographicInformationDescription4,
+                                  style: AgoraTextStyles.regular14,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: AgoraSpacings.x1_25),
+                          Text(
+                            ProfileStrings.demographicInformationDescription5,
+                            style: AgoraTextStyles.regular14,
+                          ),
                           SizedBox(height: AgoraSpacings.x1_25),
                           Row(
                             children: [
@@ -120,13 +106,9 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                 onPressed: () {
                                   TrackerHelper.trackClick(
                                     clickName: AnalyticsEventNames.beginDemographic,
-                                    widgetName: AnalyticsScreenNames.demographicInformationPage,
+                                    widgetName: AnalyticsScreenNames.profileDemographicInformationPage,
                                   );
-                                  Navigator.pushNamed(
-                                    context,
-                                    DemographicQuestionPage.routeName,
-                                    arguments: consultationId,
-                                  );
+                                  Navigator.pushNamed(context, DemographicQuestionPage.routeName);
                                 },
                               ),
                               SizedBox(width: AgoraSpacings.base),
@@ -137,13 +119,9 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   onPressed: () {
                                     TrackerHelper.trackClick(
                                       clickName: AnalyticsEventNames.ignoreDemographic,
-                                      widgetName: AnalyticsScreenNames.demographicInformationPage,
+                                      widgetName: AnalyticsScreenNames.profileDemographicInformationPage,
                                     );
-                                    Navigator.pushNamed(
-                                      context,
-                                      ConsultationSummaryPage.routeName,
-                                      arguments: ConsultationSummaryArguments(consultationId: consultationId),
-                                    );
+                                    Navigator.pushReplacementNamed(context, DemographicProfilePage.routeName);
                                   },
                                 ),
                               ),

@@ -19,6 +19,7 @@ import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/profile/privacy_policy_page.dart';
+import 'package:agora/pages/profile/profile_demographic_information_page.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:agora/pages/profile/terms_of_condition_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
@@ -94,6 +95,10 @@ class AgoraAppRouter {
       LegalNoticePage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.legalNoticePage,
             child: LegalNoticePage(),
+          ),
+      ProfileDemographicInformationPage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.profileDemographicInformationPage,
+            child: ProfileDemographicInformationPage(),
           ),
       // Demographique
       DemographicInformationPage.routeName: (context) => AgoraTracker(
