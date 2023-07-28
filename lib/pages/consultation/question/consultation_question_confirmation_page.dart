@@ -4,6 +4,7 @@ import 'package:agora/bloc/consultation/question/response/send/consultation_ques
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -25,10 +26,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationQuestionConfirmationArguments {
   final String consultationId;
+  final String consultationTitle;
   final ConsultationQuestionsResponsesStockBloc consultationQuestionsResponsesBloc;
 
   ConsultationQuestionConfirmationArguments({
     required this.consultationId,
+    required this.consultationTitle,
     required this.consultationQuestionsResponsesBloc,
   });
 }
@@ -37,8 +40,9 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
   static const routeName = "/consultationQuestionConfirmationPage";
 
   final String consultationId;
+  final String consultationTitle;
 
-  ConsultationQuestionConfirmationPage({required this.consultationId});
+  ConsultationQuestionConfirmationPage({required this.consultationId, required this.consultationTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -134,20 +138,40 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                 style: AgoraTextStyles.light16,
               ),
               SizedBox(height: AgoraSpacings.x1_5),
-              AgoraButton(
-                label: ConsultationStrings.goToResult,
-                style: AgoraButtonStyle.primaryButtonStyle,
-                onPressed: () {
-                  TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.goToResult} $consultationId",
-                    widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
-                  );
-                  Navigator.pushNamed(
-                    context,
-                    ConsultationSummaryPage.routeName,
-                    arguments: ConsultationSummaryArguments(consultationId: consultationId),
-                  );
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Flexible(
+                    child: AgoraButton(
+                      label: ConsultationStrings.goToResult,
+                      style: AgoraButtonStyle.primaryButtonStyle,
+                      onPressed: () {
+                        TrackerHelper.trackClick(
+                          clickName: "${AnalyticsEventNames.goToResult} $consultationId",
+                          widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
+                        );
+                        Navigator.pushNamed(
+                          context,
+                          ConsultationSummaryPage.routeName,
+                          arguments: ConsultationSummaryArguments(consultationId: consultationId),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(width: AgoraSpacings.base),
+                  AgoraButton(
+                    label: ConsultationStrings.share,
+                    icon: "ic_share.svg",
+                    style: AgoraButtonStyle.blueBorderButtonStyle,
+                    onPressed: () async {
+                      TrackerHelper.trackClick(
+                        clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
+                        widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
+                      );
+                      ShareHelper.shareConsultation(context: context, title: consultationTitle, id: consultationId);
+                    },
+                  ),
+                ],
               )
             ],
           ),
