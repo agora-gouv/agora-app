@@ -97,7 +97,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       borderColor: AgoraColors.border,
       cardColor: AgoraColors.white,
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: () => onClick(),
+      onTap: step != 1 ? () => onClick() : null,
       child: Column(
         children: [
           style == AgoraConsultationFinishedStyle.small
