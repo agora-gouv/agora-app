@@ -43,47 +43,55 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
 
     Widget currentChild = step != 1
         ? _buildFinishedConsultationCard(context, carrouselWidth)
-        : Stack(
-            children: [
-              _buildFinishedConsultationCard(context, carrouselWidth),
-              Positioned.fill(
-                child: AgoraRoundedCard(
-                  cardColor: AgoraColors.whiteOpacity90,
-                  child: Container(),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_75 : AgoraSpacings.base,
-                  vertical: style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_5 : AgoraSpacings.base,
-                ),
-                child: AgoraRoundedCard(
-                  cardColor: AgoraColors.lightBrun,
-                  padding: const EdgeInsets.only(
-                    top: AgoraSpacings.x0_25,
-                    left: AgoraSpacings.x0_5,
-                    right: AgoraSpacings.x0_5,
-                    bottom: AgoraSpacings.x0_25 - 2.5,
+        : InkWell(
+            onTap: () {
+              // Do nothing
+              // use InkWell to regroup all elements of stack for voice over of accessibility
+            },
+            excludeFromSemantics: true, // exclude from tap voice over
+            child: Stack(
+              children: [
+                _buildFinishedConsultationCard(context, carrouselWidth),
+                Positioned.fill(
+                  child: AgoraRoundedCard(
+                    cardColor: AgoraColors.whiteOpacity90,
+                    child: Container(),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SvgPicture.asset("assets/ic_timer_brun.svg"),
-                      SizedBox(width: AgoraSpacings.x0_25),
-                      Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 2.5),
-                          child: Text(
-                            ConsultationStrings.shortly,
-                            style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.brun),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal:
+                        style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_75 : AgoraSpacings.base,
+                    vertical: style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_5 : AgoraSpacings.base,
+                  ),
+                  child: AgoraRoundedCard(
+                    cardColor: AgoraColors.lightBrun,
+                    padding: const EdgeInsets.only(
+                      top: AgoraSpacings.x0_25,
+                      left: AgoraSpacings.x0_5,
+                      right: AgoraSpacings.x0_5,
+                      bottom: AgoraSpacings.x0_25 - 2.5,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset("assets/ic_timer_brun.svg"),
+                        SizedBox(width: AgoraSpacings.x0_25),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 2.5),
+                            child: Text(
+                              ConsultationStrings.shortly,
+                              style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.brun),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
     if (style == AgoraConsultationFinishedStyle.small) {
       currentChild = SizedBox(width: carrouselWidth, child: currentChild);
@@ -97,7 +105,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       borderColor: AgoraColors.border,
       cardColor: AgoraColors.white,
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: () => onClick(),
+      onTap: step != 1 ? () => onClick() : null,
       child: Column(
         children: [
           style == AgoraConsultationFinishedStyle.small
