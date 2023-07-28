@@ -92,14 +92,11 @@ class AgoraQagIncomingResponseCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: AgoraSpacings.x0_25),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
-                    child: AgoraLikeView(
-                      isSupported: isSupported,
-                      supportCount: supportCount,
-                      style: AgoraLikeStyle.police12,
-                      shouldHaveHorizontalPadding: false,
-                    ),
+                  AgoraLikeView(
+                    isSupported: isSupported,
+                    supportCount: supportCount,
+                    style: AgoraLikeStyle.police12,
+                    shouldHaveHorizontalPadding: false,
                   ),
                 ],
               ),
