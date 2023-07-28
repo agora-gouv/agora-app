@@ -21,6 +21,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
   final String consultationId;
   final ConsultationSummaryEtEnsuiteViewModel etEnsuiteViewModel;
   final VoidCallback onBackToConsultationClick;
+  final ScrollController nestedScrollController;
 
   const ConsultationSummaryEtEnsuiteTabContent({
     super.key,
@@ -28,10 +29,18 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
     required this.consultationId,
     required this.etEnsuiteViewModel,
     required this.onBackToConsultationClick,
+    required this.nestedScrollController,
   });
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      nestedScrollController.animateTo(
+        nestedScrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.fastOutSlowIn,
+      );
+    });
     final video = etEnsuiteViewModel.video;
     final conclusion = etEnsuiteViewModel.conclusion;
     return SingleChildScrollView(
