@@ -57,6 +57,7 @@ class ConsultationSummaryPage extends StatefulWidget {
 
 class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -94,6 +95,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
             if (state is ConsultationSummaryFetchedState) {
               final viewModel = state.viewModel;
               return NestedScrollView(
+                controller: scrollController,
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return [
                     AgoraAppBarWithTabs(
@@ -132,6 +134,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                             child: ConsultationSummaryResultsTabContent(
                               participantCount: viewModel.participantCount,
                               results: viewModel.results,
+                              nestedScrollController: scrollController,
                             ),
                           ),
                           AgoraTracker(
@@ -145,6 +148,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                                 consultationId,
                                 shouldReloadConsultationsWhenPop,
                               ),
+                              nestedScrollController: scrollController,
                             ),
                           ),
                         ],

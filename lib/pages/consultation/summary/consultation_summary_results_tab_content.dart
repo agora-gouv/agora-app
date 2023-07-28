@@ -9,11 +9,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ConsultationSummaryResultsTabContent extends StatelessWidget {
   final String participantCount;
   final List<ConsultationSummaryResultsViewModel> results;
+  final ScrollController nestedScrollController;
 
-  const ConsultationSummaryResultsTabContent({super.key, required this.participantCount, required this.results});
+  const ConsultationSummaryResultsTabContent({
+    super.key,
+    required this.participantCount,
+    required this.results,
+    required this.nestedScrollController,
+  });
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      nestedScrollController.animateTo(
+        nestedScrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.fastOutSlowIn,
+      );
+    });
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: ConstrainedBox(
