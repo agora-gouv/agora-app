@@ -41,4 +41,15 @@ class ProfileStrings {
   static const String inType = "Dans ";
   static const String byDate = ", le ";
   static const String parameters = "Paramètres";
+
+  static const String demographicInformationTitle = "Informations de profil";
+  static const String demographicInformationDescription1 =
+      "Pour analyser les résultats des consultations, cela nous aide beaucoup de connaître un peu mieux le profil des participants. C'est pourquoi nous vous proposons de répondre à quelques questions sur vous.";
+  static const String demographicInformationDescription2 = "Concrètement, cela nous permet :";
+  static const String demographicInformationDescription3 =
+      "De savoir dans quelle mesure les personnes qui répondent sont représentatives de l'ensemble de la population française (plus la représentativité est forte, plus les résultats sont solides et fiables).";
+  static const String demographicInformationDescription4 =
+      "De savoir s'il y a des différences de réponses, par exemple entre les départements ou entre les catégories d'âge.";
+  static const String demographicInformationDescription5 =
+      "Ces informations vous seront demandées une seule fois et vous pourrez les retrouver, les modifier ou les supprimer à tout instant sur cette page.";
 }

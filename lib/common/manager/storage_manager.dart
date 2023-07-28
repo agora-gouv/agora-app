@@ -2,6 +2,7 @@ import 'package:agora/common/storage/secure_storage_client.dart';
 import 'package:agora/infrastructure/login/login_storage_client.dart';
 import 'package:agora/infrastructure/notification/permission/notification_first_request_permission_storage_client.dart';
 import 'package:agora/infrastructure/onboarding/onboarding_storage_client.dart';
+import 'package:agora/infrastructure/profile/profile_demographic_storage_client.dart';
 import 'package:agora/push_notification/push_notification_storage_client.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -52,6 +53,15 @@ class StorageManager {
       return GetIt.instance.get<PushNotificationSharedPreferencesClient>();
     }
     final storage = PushNotificationSharedPreferencesClient();
+    GetIt.instance.registerSingleton(storage);
+    return storage;
+  }
+
+  static ProfileDemographicStorageClient getProfileDemographicStorageClient() {
+    if (GetIt.instance.isRegistered<ProfileDemographicSharedPreferencesClient>()) {
+      return GetIt.instance.get<ProfileDemographicSharedPreferencesClient>();
+    }
+    final storage = ProfileDemographicSharedPreferencesClient();
     GetIt.instance.registerSingleton(storage);
     return storage;
   }

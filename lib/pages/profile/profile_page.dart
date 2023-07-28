@@ -3,6 +3,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_menu_item.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
@@ -19,6 +20,7 @@ import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
+import 'package:agora/pages/profile/profile_demographic_information_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:flutter/material.dart';
 
@@ -57,11 +59,28 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         child: Column(
           children: [
-            AgoraMenuItem(
-              title: ProfileStrings.myInformation,
-              onClick: () {
-                _track(AnalyticsEventNames.myInformation);
-                Navigator.pushNamed(context, DemographicProfilePage.routeName);
+            FutureBuilder<bool>(
+              future: StorageManager.getProfileDemographicStorageClient().isFirstDisplay(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Container();
+                }
+                final isFirstDisplay = snapshot.data!;
+                return AgoraMenuItem(
+                  title: ProfileStrings.myInformation,
+                  onClick: () {
+                    _track(AnalyticsEventNames.myInformation);
+                    if (isFirstDisplay) {
+                      StorageManager.getProfileDemographicStorageClient().save(false);
+                      Navigator.pushNamed(context, ProfileDemographicInformationPage.routeName);
+                      setState(() {
+                        // utils to reload isFirstDisplay after saving in storage client
+                      });
+                    } else {
+                      Navigator.pushNamed(context, DemographicProfilePage.routeName);
+                    }
+                  },
+                );
               },
             ),
             AgoraMenuItem(
