@@ -55,8 +55,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   String firstname = "";
   ThematiqueWithIdViewModel? thematique;
   bool isCheck = false;
-  bool isQuestionLengthValid = false;
   bool shouldReloadQags = false;
+
+  static const questionMinLength = 10;
+  bool isQuestionLengthError = false;
 
   static const countdownDuration = Duration(seconds: 1);
   Timer? timer;
@@ -173,22 +175,25 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
               SizedBox(height: AgoraSpacings.x0_75),
-              if (!isQuestionLengthValid) ...[
-                Text(QagStrings.questionRequiredCondition, style: AgoraTextStyles.light14),
-                SizedBox(height: AgoraSpacings.x1_25),
-              ],
               AgoraTextField(
                 maxLength: 200,
                 hintText: QagStrings.questionHint,
                 showCounterText: true,
+                error: isQuestionLengthError,
                 onChanged: (input) {
                   setState(() {
                     question = input;
-                    isQuestionLengthValid = question.length >= 10;
+                    isQuestionLengthError = (input.isNullOrBlank() && input.isNotEmpty) ||
+                        (input.isNotBlank() && input.length < questionMinLength);
                     _startTimer(context, question);
                   });
                 },
               ),
+              if (isQuestionLengthError) ...[
+                SizedBox(height: AgoraSpacings.x0_75),
+                AgoraErrorView(errorMessage: QagStrings.questionRequiredCondition),
+              ],
+              SizedBox(height: AgoraSpacings.base),
               BlocBuilder<QagHasSimilarBloc, QagHasSimilarState>(
                 builder: (context, state) {
                   switch (state) {
@@ -367,14 +372,22 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   }
 
   bool _couldSend() {
-    return question.length >= 10 && thematique != null && firstname.isNotBlank() && isCheck;
+    return question.isNotBlank() &&
+        question.length >= questionMinLength &&
+        thematique != null &&
+        firstname.isNotBlank() &&
+        isCheck;
   }
 
   void _startTimer(BuildContext context, String inputQuestion) {
     timer?.cancel();
     timer = Timer(
       countdownDuration,
-      () => context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: inputQuestion)),
+      () {
+        if (question.isNotBlank()) {
+          context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: inputQuestion));
+        }
+      },
     );
   }
 }
