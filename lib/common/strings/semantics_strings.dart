@@ -1,4 +1,5 @@
 class SemanticsStrings {
+  static const String step = "Étape %s sur 3";
   static const String share = "Partager";
   static const String moreInformation = "En savoir plus";
   static const String moreInformationAboutGovernmentResponse =

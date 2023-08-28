@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 
@@ -36,6 +37,7 @@ class ConsultationSummaryPresenter {
         ..sort((viewModel1, viewModel2) => viewModel1.order.compareTo(viewModel2.order)),
       etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
         step: ConsultationStrings.step.format(etEnsuite.step.toString()),
+        stepSemanticsLabel: SemanticsStrings.step.format(etEnsuite.step.toString()),
         image: _getImageAsset(etEnsuite.step),
         title: _buildTitle(etEnsuite.step),
         description: etEnsuite.description,

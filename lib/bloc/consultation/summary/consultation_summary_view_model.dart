@@ -76,6 +76,7 @@ class ConsultationSummaryResponseViewModel extends Equatable {
 
 class ConsultationSummaryEtEnsuiteViewModel extends Equatable {
   final String step;
+  final String stepSemanticsLabel;
   final String image;
   final String title;
   final String description;
@@ -86,6 +87,7 @@ class ConsultationSummaryEtEnsuiteViewModel extends Equatable {
 
   ConsultationSummaryEtEnsuiteViewModel({
     required this.step,
+    required this.stepSemanticsLabel,
     required this.image,
     required this.title,
     required this.description,
@@ -98,6 +100,7 @@ class ConsultationSummaryEtEnsuiteViewModel extends Equatable {
   @override
   List<Object?> get props => [
         step,
+        stepSemanticsLabel,
         image,
         title,
         description,
