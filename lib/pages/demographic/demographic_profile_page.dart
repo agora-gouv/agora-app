@@ -7,6 +7,7 @@ import 'package:agora/bloc/demographic/send/demographic_responses_send_event.dar
 import 'package:agora/bloc/demographic/send/demographic_responses_send_state.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
@@ -58,6 +59,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
         BlocProvider(
           create: (BuildContext context) => SendDemographicResponsesBloc(
             demographicRepository: RepositoryManager.getDemographicRepository(),
+            profileDemographicStorageClient: StorageManager.getProfileDemographicStorageClient(),
           ),
         ),
       ],
