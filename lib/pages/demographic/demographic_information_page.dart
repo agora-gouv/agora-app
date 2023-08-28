@@ -2,6 +2,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
@@ -40,7 +41,11 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
             SizedBox(height: AgoraSpacings.x1_5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-              child: Text(DemographicStrings.informationTitle, style: AgoraTextStyles.medium20),
+              child: Text(
+                DemographicStrings.informationTitle,
+                style: AgoraTextStyles.medium20,
+                semanticsLabel: SemanticsStrings.informationTitle,
+              ),
             ),
             SizedBox(height: AgoraSpacings.x1_5),
             Flexible(
