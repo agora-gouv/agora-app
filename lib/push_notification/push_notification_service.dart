@@ -182,6 +182,9 @@ class FirebasePushNotificationService extends PushNotificationService {
             shouldReloadConsultationsWhenPop: false,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
             notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
+            initialTab: (message.data["step"] as int) == 1
+                ? ConsultationSummaryInitialTab.results
+                : ConsultationSummaryInitialTab.etEnsuite,
           ),
         );
         break;

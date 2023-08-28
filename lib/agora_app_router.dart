@@ -173,6 +173,7 @@ class AgoraAppRouter {
           shouldReloadConsultationsWhenPop: arguments.shouldReloadConsultationsWhenPop,
           notificationTitle: arguments.notificationTitle,
           notificationDescription: arguments.notificationDescription,
+          initialTab: arguments.initialTab,
         );
         break;
 

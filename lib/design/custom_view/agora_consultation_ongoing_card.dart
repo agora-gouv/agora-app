@@ -138,6 +138,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                             arguments: ConsultationSummaryArguments(
                               consultationId: consultationId,
                               shouldReloadConsultationsWhenPop: false,
+                              initialTab: ConsultationSummaryInitialTab.results,
                             ),
                           );
                         } else {

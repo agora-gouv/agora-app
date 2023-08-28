@@ -117,6 +117,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
               arguments: ConsultationSummaryArguments(
                 consultationId: finishedViewModel.id,
                 shouldReloadConsultationsWhenPop: false,
+                initialTab: ConsultationSummaryInitialTab.etEnsuite,
               ),
             );
           },

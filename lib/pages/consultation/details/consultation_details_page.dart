@@ -82,6 +82,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
               arguments: ConsultationSummaryArguments(
                 consultationId: widget.consultationId,
                 shouldReloadConsultationsWhenPop: false,
+                initialTab: ConsultationSummaryInitialTab.results,
               ),
             ).then((value) => Navigator.pop(context));
           }
