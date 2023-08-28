@@ -6,6 +6,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
@@ -77,6 +78,10 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                               Text(
                                 DemographicStrings.profileStep.format2(currentStep.toString(), totalStep.toString()),
                                 style: AgoraTextStyles.medium16,
+                                semanticsLabel: SemanticsStrings.profileStep.format2(
+                                  currentStep.toString(),
+                                  totalStep.toString(),
+                                ),
                               ),
                               SizedBox(height: AgoraSpacings.base),
                               Text(

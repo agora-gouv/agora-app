@@ -1,3 +1,4 @@
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -7,6 +8,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 enum DemographicSelectedIconPlace { right, centerBottom }
 
+class DemographicResponseCardSemantic {
+  final int currentIndex;
+  final int totalIndex;
+
+  DemographicResponseCardSemantic({required this.currentIndex, required this.totalIndex});
+}
+
 class AgoraDemographicResponseCard extends StatelessWidget {
   final String responseLabel;
   final TextAlign textAlign;
@@ -14,6 +22,7 @@ class AgoraDemographicResponseCard extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final VoidCallback onTap;
   final DemographicSelectedIconPlace iconPlace;
+  final DemographicResponseCardSemantic semantic;
 
   const AgoraDemographicResponseCard({
     Key? key,
@@ -22,6 +31,7 @@ class AgoraDemographicResponseCard extends StatelessWidget {
     this.iconPlace = DemographicSelectedIconPlace.right,
     required this.isSelected,
     this.padding = const EdgeInsets.all(AgoraSpacings.base),
+    required this.semantic,
     required this.onTap,
   }) : super(key: key);
 
@@ -56,6 +66,8 @@ class AgoraDemographicResponseCard extends StatelessWidget {
                 responseLabel,
                 style: AgoraTextStyles.light14.copyWith(height: 0),
                 textAlign: textAlign,
+                semanticsLabel:
+                    "$responseLabel, ${isSelectedSemantics()}, ${SemanticsStrings.button}, ${semantic.currentIndex} sur ${semantic.totalIndex}",
               ),
             ),
             if (iconPlace == DemographicSelectedIconPlace.right && isSelected) ...[
@@ -66,5 +78,9 @@ class AgoraDemographicResponseCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String isSelectedSemantics() {
+    return isSelected ? SemanticsStrings.select : SemanticsStrings.noSelect;
   }
 }

@@ -65,7 +65,9 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
       SizedBox(height: AgoraSpacings.base),
     ];
 
-    for (final findDepartment in findDepartments) {
+    final totalLength = findDepartments.length;
+    for (var index = 0; index < totalLength; index++) {
+      final findDepartment = findDepartments[index];
       widgets.add(
         AgoraDemographicResponseCard(
           responseLabel: findDepartment.displayedName,
@@ -79,6 +81,10 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
               }
             });
           },
+          semantic: DemographicResponseCardSemantic(
+            currentIndex: index + 1,
+            totalIndex: totalLength,
+          ),
         ),
       );
       widgets.add(SizedBox(height: AgoraSpacings.x0_25));

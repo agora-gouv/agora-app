@@ -111,8 +111,9 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
         if (widget.showCounterText) ...[
           SizedBox(height: AgoraSpacings.x0_25),
           Text(
-            " $textCount/${widget.maxLength}",
+            "$textCount/${widget.maxLength}",
             style: AgoraTextStyles.light12.copyWith(color: AgoraColors.primaryGreyOpacity70),
+            semanticsLabel: "$textCount sur ${widget.maxLength}",
           ),
         ],
       ],
