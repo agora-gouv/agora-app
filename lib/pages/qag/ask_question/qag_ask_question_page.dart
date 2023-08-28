@@ -60,7 +60,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   static const questionMinLength = 10;
   bool isQuestionLengthError = false;
 
-  static const countdownDuration = Duration(seconds: 1);
+  static const countdownDuration = Duration(seconds: 5);
   Timer? timer;
 
   @override
@@ -183,9 +183,14 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 onChanged: (input) {
                   setState(() {
                     question = input;
-                    isQuestionLengthError = (input.isNullOrBlank() && input.isNotEmpty) ||
-                        (input.isNotBlank() && input.length < questionMinLength);
-                    _startTimer(context, question);
+
+                    var shouldCheckQuestionLength = false;
+                    if (question.length >= questionMinLength) {
+                      isQuestionLengthError = false;
+                    } else {
+                      shouldCheckQuestionLength = true;
+                    }
+                    _startTimer(context, shouldCheckQuestionLength: shouldCheckQuestionLength);
                   });
                 },
               ),
@@ -379,14 +384,20 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         isCheck;
   }
 
-  void _startTimer(BuildContext context, String inputQuestion) {
+  void _startTimer(BuildContext context, {required bool shouldCheckQuestionLength}) {
     timer?.cancel();
     timer = Timer(
       countdownDuration,
       () {
         if (question.isNotBlank()) {
-          context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: inputQuestion));
+          context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: question));
         }
+        setState(() {
+          if (shouldCheckQuestionLength) {
+            isQuestionLengthError = (question.isNullOrBlank() && question.isNotEmpty) ||
+                (question.isNotBlank() && question.length < questionMinLength);
+          }
+        });
       },
     );
   }
