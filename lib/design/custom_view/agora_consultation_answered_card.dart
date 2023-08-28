@@ -43,7 +43,11 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
         Navigator.pushNamed(
           context,
           ConsultationSummaryPage.routeName,
-          arguments: ConsultationSummaryArguments(consultationId: id, shouldReloadConsultationsWhenPop: false),
+          arguments: ConsultationSummaryArguments(
+            consultationId: id,
+            shouldReloadConsultationsWhenPop: false,
+            initialTab: ConsultationSummaryInitialTab.etEnsuite,
+          ),
         );
       },
       child: Column(

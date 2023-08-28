@@ -153,7 +153,10 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                         Navigator.pushNamed(
                           context,
                           ConsultationSummaryPage.routeName,
-                          arguments: ConsultationSummaryArguments(consultationId: consultationId),
+                          arguments: ConsultationSummaryArguments(
+                            consultationId: consultationId,
+                            initialTab: ConsultationSummaryInitialTab.results,
+                          ),
                         );
                       },
                     ),

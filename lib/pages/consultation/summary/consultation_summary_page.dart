@@ -26,13 +26,20 @@ class ConsultationSummaryArguments {
   final bool shouldReloadConsultationsWhenPop;
   final String? notificationTitle;
   final String? notificationDescription;
+  final ConsultationSummaryInitialTab initialTab;
 
   ConsultationSummaryArguments({
     required this.consultationId,
     this.shouldReloadConsultationsWhenPop = true,
     this.notificationTitle,
     this.notificationDescription,
+    required this.initialTab,
   });
+}
+
+enum ConsultationSummaryInitialTab {
+  results,
+  etEnsuite,
 }
 
 class ConsultationSummaryPage extends StatefulWidget {
@@ -42,6 +49,7 @@ class ConsultationSummaryPage extends StatefulWidget {
   final bool shouldReloadConsultationsWhenPop;
   final String? notificationTitle;
   final String? notificationDescription;
+  final ConsultationSummaryInitialTab initialTab;
 
   const ConsultationSummaryPage({
     super.key,
@@ -49,6 +57,7 @@ class ConsultationSummaryPage extends StatefulWidget {
     required this.shouldReloadConsultationsWhenPop,
     this.notificationTitle,
     this.notificationDescription,
+    required this.initialTab,
   });
 
   @override
@@ -61,7 +70,14 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    int initialTabIndex;
+    switch (widget.initialTab) {
+      case ConsultationSummaryInitialTab.results:
+        initialTabIndex = 0;
+      case ConsultationSummaryInitialTab.etEnsuite:
+        initialTabIndex = 1;
+    }
+    _tabController = TabController(length: 2, vsync: this, initialIndex: initialTabIndex);
     super.initState();
     NotificationHelper.displayNotificationWithDialog(
       context: context,

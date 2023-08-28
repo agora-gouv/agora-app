@@ -147,7 +147,10 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                     Navigator.pushNamed(
                                       context,
                                       ConsultationSummaryPage.routeName,
-                                      arguments: ConsultationSummaryArguments(consultationId: consultationId),
+                                      arguments: ConsultationSummaryArguments(
+                                        consultationId: consultationId,
+                                        initialTab: ConsultationSummaryInitialTab.results,
+                                      ),
                                     );
                                   },
                                 ),
