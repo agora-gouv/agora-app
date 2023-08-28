@@ -57,9 +57,12 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
               ],
             );
           },
-          child: Text(
-            DemographicStrings.whyAsk,
-            style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
+          child: Semantics(
+            button: true,
+            child: Text(
+              DemographicStrings.whyAsk,
+              style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
+            ),
           ),
         ),
         SizedBox(height: AgoraSpacings.base),
@@ -137,7 +140,10 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
   }) {
     final responseChoices = DemographicResponseHelper.question6ResponseChoice();
     final List<Widget> rowWidgets = [];
-    for (final responseChoice in responseChoices) {
+
+    final totalLength = responseChoices.length;
+    for (var index = 0; index < totalLength; index++) {
+      final responseChoice = responseChoices[index];
       rowWidgets.add(
         Expanded(
           child: AgoraDemographicResponseCard(
@@ -147,6 +153,10 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
             padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base, horizontal: 0),
             iconPlace: DemographicSelectedIconPlace.centerBottom,
             onTap: () => onPressed(responseChoice.responseCode),
+            semantic: DemographicResponseCardSemantic(
+              currentIndex: index + 1,
+              totalIndex: totalLength,
+            ),
           ),
         ),
       );

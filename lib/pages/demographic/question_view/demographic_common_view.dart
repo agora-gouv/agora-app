@@ -57,20 +57,29 @@ class DemographicCommonView extends StatelessWidget {
               ],
             );
           },
-          child: Text(
-            DemographicStrings.whatAbout,
-            style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
+          child: Semantics(
+            button: true,
+            child: Text(
+              DemographicStrings.whatAbout,
+              style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
+            ),
           ),
         ),
       );
       widgets.add(SizedBox(height: AgoraSpacings.base));
     }
-    for (final responseChoice in responseChoices) {
+    final totalLength = responseChoices.length;
+    for (var index = 0; index < totalLength; index++) {
+      final responseChoice = responseChoices[index];
       widgets.add(
         AgoraDemographicResponseCard(
           responseLabel: responseChoice.responseLabel,
           isSelected: oldResponse != null && responseChoice.responseCode == oldResponse!.response,
           onTap: () => onContinuePressed(responseChoice.responseCode),
+          semantic: DemographicResponseCardSemantic(
+            currentIndex: index + 1,
+            totalIndex: totalLength,
+          ),
         ),
       );
       widgets.add(SizedBox(height: AgoraSpacings.x0_25));
