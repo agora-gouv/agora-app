@@ -30,7 +30,7 @@ class ConsultationStrings {
   static const String step1 = "Consultation en cours";
   static const String step2 = "Engagements politiques";
   static const String step3 = "Mise en oeuvre";
-  static const String returnToHome = "Revenir au menu";
+  static const String returnToHome = "Retour à l'accueil";
   static const String share = "Partager";
   static const String notificationInformation = "Vous serez tenu(e) au courant des prochaines étapes\u{00A0}!";
   static const String refuseNotification = "Ne pas recevoir de notifications";

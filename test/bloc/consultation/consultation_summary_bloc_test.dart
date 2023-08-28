@@ -43,6 +43,7 @@ void main() {
             ],
             etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
               step: "Étape 1/3",
+              stepSemanticsLabel: "Étape 1 sur 3",
               image: "assets/ic_summary_consultation_step1.svg",
               title: "Consultation en cours",
               description: "<body>textRiche</body>",
@@ -107,6 +108,7 @@ void main() {
             ],
             etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
               step: "Étape 1/3",
+              stepSemanticsLabel: "Étape 1 sur 3",
               image: "assets/ic_summary_consultation_step1.svg",
               title: "Consultation en cours",
               description: "<body>textRiche</body>",

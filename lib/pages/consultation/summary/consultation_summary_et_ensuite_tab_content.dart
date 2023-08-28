@@ -190,6 +190,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                   Text(
                     etEnsuiteViewModel.step,
                     style: AgoraTextStyles.medium15.copyWith(color: AgoraColors.primaryBlue),
+                    semanticsLabel: etEnsuiteViewModel.stepSemanticsLabel,
                   ),
                   Text(etEnsuiteViewModel.title, style: AgoraTextStyles.medium18),
                 ],
