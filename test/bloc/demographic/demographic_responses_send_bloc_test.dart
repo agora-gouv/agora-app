@@ -6,14 +6,17 @@ import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/demographic/fake_profile_demographic_storage_client.dart';
 import '../../fakes/demographic/fakes_demographic_repository.dart';
 
 void main() {
   group("SendDemographicResponsesEvent", () {
+    final fakeStorageClient1 = FakeProfileDemographicStorageClient();
     blocTest(
       "when repository succeed - should emit success state",
       build: () => SendDemographicResponsesBloc(
         demographicRepository: FakeDemographicSuccessRepository(),
+        profileDemographicStorageClient: fakeStorageClient1,
       ),
       act: (bloc) => bloc.add(
         SendDemographicResponsesEvent(
@@ -29,12 +32,17 @@ void main() {
         SendDemographicResponsesSuccessState(),
       ],
       wait: const Duration(milliseconds: 5),
+      tearDown: () async {
+        expect(await fakeStorageClient1.isFirstDisplay(), false);
+      },
     );
 
+    final fakeStorageClient2 = FakeProfileDemographicStorageClient();
     blocTest(
       "when repository failed - should emit failure state",
       build: () => SendDemographicResponsesBloc(
         demographicRepository: FakeDemographicFailureRepository(),
+        profileDemographicStorageClient: fakeStorageClient2,
       ),
       act: (bloc) => bloc.add(
         SendDemographicResponsesEvent(
@@ -50,6 +58,9 @@ void main() {
         SendDemographicResponsesFailureState(),
       ],
       wait: const Duration(milliseconds: 5),
+      tearDown: () async {
+        expect(await fakeStorageClient2.isFirstDisplay(), true);
+      },
     );
   });
 }

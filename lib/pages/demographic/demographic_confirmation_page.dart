@@ -3,6 +3,7 @@ import 'package:agora/bloc/demographic/send/demographic_responses_send_event.dar
 import 'package:agora/bloc/demographic/send/demographic_responses_send_state.dart';
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_bloc.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -42,6 +43,7 @@ class DemographicConfirmationPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => SendDemographicResponsesBloc(
         demographicRepository: RepositoryManager.getDemographicRepository(),
+        profileDemographicStorageClient: StorageManager.getProfileDemographicStorageClient(),
       )..add(
           SendDemographicResponsesEvent(
             demographicResponses: context.read<DemographicResponsesStockBloc>().state.responses,
