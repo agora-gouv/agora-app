@@ -4,6 +4,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_qag_incoming_response_card.dart';
@@ -73,6 +74,7 @@ class QagsResponseSection extends StatelessWidget {
         ),
         SizedBox(width: AgoraSpacings.x0_75),
         AgoraMoreInformation(
+          semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
           onClick: () {
             showAgoraDialog(
               context: context,

@@ -72,7 +72,7 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
             ),
             if (widget.isSelected) ...[
               SizedBox(width: AgoraSpacings.x0_75),
-              SvgPicture.asset("assets/ic_check.svg"),
+              SvgPicture.asset("assets/ic_check.svg", excludeFromSemantics: true),
             ],
           ],
         ),

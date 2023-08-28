@@ -143,6 +143,7 @@ class _ProfileDemographicInformationPageState extends State<ProfileDemographicIn
                     SvgPicture.asset(
                       "assets/ic_demographic_information.svg",
                       width: MediaQuery.of(context).size.width,
+                      excludeFromSemantics: true,
                     ),
                   ],
                 ),

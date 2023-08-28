@@ -139,7 +139,7 @@ class DeleteAccountPage extends StatelessWidget {
         cornerRadius: AgoraCorners.rounded50,
         onTap: () => onTap(),
         padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-        child: SvgPicture.asset("assets/ic_copy.svg"),
+        child: SvgPicture.asset("assets/ic_copy.svg", excludeFromSemantics: true),
       ),
     );
   }

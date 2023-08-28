@@ -29,7 +29,7 @@ class AgoraButton extends StatelessWidget {
         child = ElevatedButton.icon(
           style: style,
           onPressed: onPressed,
-          icon: SvgPicture.asset("assets/$icon"),
+          icon: SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
           label: buttonLabel,
         );
       } else {

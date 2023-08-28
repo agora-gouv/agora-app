@@ -166,7 +166,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset("assets/ic_person.svg"),
+                  SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
                   SizedBox(width: spacing),
                   Expanded(
                     child: Column(
@@ -232,7 +232,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SvgPicture.asset("assets/$image"),
+        SvgPicture.asset("assets/$image", excludeFromSemantics: true),
         SizedBox(width: AgoraSpacings.x0_5),
         Expanded(child: Text(text, style: textStyle)),
       ],

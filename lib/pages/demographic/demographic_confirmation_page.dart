@@ -101,6 +101,7 @@ class DemographicConfirmationPage extends StatelessWidget {
           SvgPicture.asset(
             "assets/ic_question_confirmation.svg",
             width: MediaQuery.of(context).size.width - AgoraSpacings.base,
+            excludeFromSemantics: true,
           ),
           Padding(
             padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),

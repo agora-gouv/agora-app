@@ -35,7 +35,7 @@ class AgoraDemographicResponseCard extends StatelessWidget {
           child: buildCard(),
         ),
         if (iconPlace == DemographicSelectedIconPlace.centerBottom && isSelected)
-          SvgPicture.asset("assets/ic_check.svg"),
+          SvgPicture.asset("assets/ic_check.svg", excludeFromSemantics: true),
       ],
     );
   }
@@ -60,7 +60,7 @@ class AgoraDemographicResponseCard extends StatelessWidget {
             ),
             if (iconPlace == DemographicSelectedIconPlace.right && isSelected) ...[
               SizedBox(width: AgoraSpacings.x0_75),
-              SvgPicture.asset("assets/ic_check.svg"),
+              SvgPicture.asset("assets/ic_check.svg", excludeFromSemantics: true),
             ],
           ],
         ),

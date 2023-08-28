@@ -28,7 +28,7 @@ class QagsModeratedErrorContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(child: SvgPicture.asset("assets/ic_oops.svg")),
+                Center(child: SvgPicture.asset("assets/ic_oops.svg", excludeFromSemantics: true)),
                 SizedBox(height: AgoraSpacings.x1_25),
                 Center(child: Text(QagStrings.qagModerateTitle, style: AgoraTextStyles.medium18)),
                 SizedBox(height: AgoraSpacings.x1_25),

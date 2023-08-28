@@ -69,8 +69,8 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
         Expanded(child: Text(widget.title, style: AgoraTextStyles.medium16.copyWith(height: 0))),
         SizedBox(width: AgoraSpacings.base),
         isCollapse
-            ? SvgPicture.asset("assets/ic_togglable_bottom.svg")
-            : SvgPicture.asset("assets/ic_togglable_right.svg"),
+            ? SvgPicture.asset("assets/ic_togglable_bottom.svg", excludeFromSemantics: true)
+            : SvgPicture.asset("assets/ic_togglable_right.svg", excludeFromSemantics: true),
       ],
     );
   }

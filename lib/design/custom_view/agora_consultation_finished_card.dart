@@ -75,7 +75,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SvgPicture.asset("assets/ic_timer_brun.svg"),
+                        SvgPicture.asset("assets/ic_timer_brun.svg", excludeFromSemantics: true),
                         SizedBox(width: AgoraSpacings.x0_25),
                         Flexible(
                           child: Padding(
@@ -131,7 +131,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
             roundedCorner: AgoraRoundedCorner.bottomRounded,
             child: Row(
               children: [
-                SvgPicture.asset(_getIcon()),
+                SvgPicture.asset(_getIcon(), excludeFromSemantics: true),
                 SizedBox(width: AgoraSpacings.x0_25),
                 Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
                 SizedBox(width: AgoraSpacings.x0_25),
