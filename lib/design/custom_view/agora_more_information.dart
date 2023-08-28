@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraMoreInformation extends StatelessWidget {
+  final String? semanticsLabel;
   final VoidCallback onClick;
 
-  const AgoraMoreInformation({super.key, required this.onClick});
+  const AgoraMoreInformation({super.key, this.semanticsLabel, required this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: SemanticsStrings.moreInformation,
+      label: semanticsLabel ?? SemanticsStrings.moreInformation,
       child: GestureDetector(
-        child: SvgPicture.asset("assets/ic_info.svg"),
+        child: SvgPicture.asset("assets/ic_info.svg", excludeFromSemantics: true),
         onTap: () => onClick(),
       ),
     );

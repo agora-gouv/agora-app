@@ -22,7 +22,7 @@ class AgoraNextButton extends StatelessWidget {
       child: AgoraRoundedCard(
         cornerRadius: AgoraCorners.round,
         cardColor: AgoraColors.primaryBlue,
-        child: SvgPicture.asset("assets/$icon"),
+        child: SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
         onTap: () => onPressed(),
       ),
     );

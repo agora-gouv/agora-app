@@ -78,7 +78,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
             roundedCorner: AgoraRoundedCorner.bottomRounded,
             child: Row(
               children: [
-                SvgPicture.asset(_getIcon()),
+                SvgPicture.asset(_getIcon(), excludeFromSemantics: true),
                 SizedBox(width: AgoraSpacings.x0_25),
                 Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
                 SizedBox(width: AgoraSpacings.x0_25),

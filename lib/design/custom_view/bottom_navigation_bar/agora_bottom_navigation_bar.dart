@@ -134,8 +134,8 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
 
   Widget _setIcon(int selectedIndex, AgoraBottomNavigationBarItem item) {
     return selectedIndex == _currentSelectedIndex
-        ? SvgPicture.asset(height: 20, width: 20, "assets/${item.activateIcon}")
-        : SvgPicture.asset(height: 20, width: 20, "assets/${item.inactivateIcon}");
+        ? SvgPicture.asset(height: 20, width: 20, "assets/${item.activateIcon}", excludeFromSemantics: true)
+        : SvgPicture.asset(height: 20, width: 20, "assets/${item.inactivateIcon}", excludeFromSemantics: true);
   }
 
   Widget _setLabel(int selectedIndex, AgoraBottomNavigationBarItem item) {

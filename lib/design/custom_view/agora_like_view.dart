@@ -41,7 +41,7 @@ class AgoraLikeView extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SvgPicture.asset(_getIcon(), width: _buildIconSize()),
+            SvgPicture.asset(_getIcon(), width: _buildIconSize(), excludeFromSemantics: true),
             SizedBox(width: AgoraSpacings.x0_25),
             Padding(
               padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),

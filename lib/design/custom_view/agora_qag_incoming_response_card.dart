@@ -80,7 +80,7 @@ class AgoraQagIncomingResponseCard extends StatelessWidget {
               roundedCorner: AgoraRoundedCorner.bottomRounded,
               child: Row(
                 children: [
-                  SvgPicture.asset("assets/ic_consultation_step2_finished.svg"),
+                  SvgPicture.asset("assets/ic_consultation_step2_finished.svg", excludeFromSemantics: true),
                   SizedBox(width: AgoraSpacings.x0_25),
                   Expanded(
                     child: Padding(

@@ -43,7 +43,7 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset("assets/ic_person.svg"),
+                    SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
                     SizedBox(width: AgoraSpacings.x0_5),
                     Text(participantCount, style: AgoraTextStyles.light14),
                   ],

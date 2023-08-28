@@ -31,7 +31,7 @@ Future<T?> showAgoraBottomSheet<T>({
                 button: true,
                 label: SemanticsStrings.close,
                 child: GestureDetector(
-                  child: SvgPicture.asset("assets/ic_close.svg"),
+                  child: SvgPicture.asset("assets/ic_close.svg", excludeFromSemantics: true),
                   onTap: () => Navigator.pop(context),
                 ),
               ),

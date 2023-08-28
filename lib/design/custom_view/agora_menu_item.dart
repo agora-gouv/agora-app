@@ -27,7 +27,7 @@ class AgoraMenuItem extends StatelessWidget {
         child: Row(
           children: [
             Expanded(child: Text(title, style: AgoraTextStyles.regular18)),
-            SvgPicture.asset("assets/ic_next.svg"),
+            SvgPicture.asset("assets/ic_next.svg", excludeFromSemantics: true),
           ],
         ),
       ),

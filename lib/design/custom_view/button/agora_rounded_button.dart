@@ -47,7 +47,7 @@ class AgoraRoundedButton extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (icon != null) ...[
-                SvgPicture.asset("assets/$icon"),
+                SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
                 SizedBox(width: AgoraSpacings.x0_5),
               ],
               Flexible(

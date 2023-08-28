@@ -67,7 +67,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
       backgroundColor: AgoraColors.primaryBlue,
       child: Semantics(
         label: SemanticsStrings.nextPage,
-        child: SvgPicture.asset("assets/ic_forward.svg"),
+        child: SvgPicture.asset("assets/ic_forward.svg", excludeFromSemantics: true),
       ),
       onPressed: () => _nextPage(context),
     );

@@ -26,8 +26,8 @@ class OnboardingView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset("assets/ic_marianne.svg"),
                   SizedBox(height: AgoraSpacings.x2),
+                  SvgPicture.asset("assets/ic_marianne.svg", excludeFromSemantics: true),
                   Text(GenericStrings.onboardingStep0Title, style: AgoraTextStyles.light28),
                   SizedBox(height: AgoraSpacings.x1_5),
                   AgoraRichText(

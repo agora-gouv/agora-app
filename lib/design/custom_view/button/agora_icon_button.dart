@@ -23,7 +23,7 @@ class AgoraIconButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x0_75),
         borderColor: AgoraColors.steam,
         cardColor: AgoraColors.transparent,
-        child: SvgPicture.asset("assets/$icon"),
+        child: SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
         onTap: () {
           onClick();
         },

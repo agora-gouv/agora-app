@@ -143,7 +143,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SvgPicture.asset("assets/ic_bell.svg"),
+                        SvgPicture.asset("assets/ic_bell.svg", excludeFromSemantics: true),
                         SizedBox(width: AgoraSpacings.x0_75),
                         Expanded(
                           child: Text(
@@ -181,7 +181,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SvgPicture.asset(etEnsuiteViewModel.image, width: 115),
+            SvgPicture.asset(etEnsuiteViewModel.image, width: 115, excludeFromSemantics: true),
             SizedBox(width: AgoraSpacings.base),
             Expanded(
               child: Column(

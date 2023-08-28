@@ -48,7 +48,7 @@ class DemographicHelper {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                SvgPicture.asset("assets/ic_backward.svg"),
+                SvgPicture.asset("assets/ic_backward.svg", excludeFromSemantics: true),
                 SizedBox(width: AgoraSpacings.base),
                 Flexible(
                   child: Text(

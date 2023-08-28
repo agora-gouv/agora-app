@@ -102,7 +102,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
               if (widget.rightIcon == TextFieldIcon.search) ...[
                 Padding(
                   padding: const EdgeInsets.only(right: AgoraSpacings.base),
-                  child: SvgPicture.asset("assets/ic_search.svg"),
+                  child: SvgPicture.asset("assets/ic_search.svg", excludeFromSemantics: true),
                 ),
               ]
             ],

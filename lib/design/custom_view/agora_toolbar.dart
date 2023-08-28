@@ -42,7 +42,7 @@ class AgoraToolbar extends StatelessWidget {
               bottom: AgoraSpacings.x0_5,
               right: AgoraSpacings.x0_75,
             ),
-            child: SvgPicture.asset("assets/ic_back.svg"),
+            child: SvgPicture.asset("assets/ic_back.svg", excludeFromSemantics: true),
           ),
         ),
         Flexible(
@@ -70,7 +70,7 @@ class AgoraToolbar extends StatelessWidget {
               bottom: AgoraSpacings.x0_5,
               right: AgoraSpacings.x0_75,
             ),
-            child: SvgPicture.asset("assets/ic_close.svg"),
+            child: SvgPicture.asset("assets/ic_close.svg", excludeFromSemantics: true),
           ),
         ),
       ],
