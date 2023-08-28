@@ -43,7 +43,15 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
     return BlocProvider<DemographicResponsesStockBloc>(
       create: (BuildContext context) => DemographicResponsesStockBloc(),
       child: AgoraScaffold(
-        shouldPop: false,
+        popAction: () {
+          if (currentStep == 1) {
+            Navigator.pop(context);
+            return true;
+          } else {
+            setState(() => currentStep--);
+            return false;
+          }
+        },
         child: BlocBuilder<DemographicResponsesStockBloc, DemographicResponsesStockState>(
           builder: (context, responsesStockState) {
             return Column(
