@@ -46,13 +46,13 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                 ],
               ),
-              button: AgoraSecondaryStyleViewButton(
-                icon: "ic_bell_light_blue.svg",
-                title: ProfileStrings.parameters,
-                onClick: () {
-                  // TODO
-                },
-              ),
+              // button: AgoraSecondaryStyleViewButton(
+              //   icon: "ic_bell_light_blue.svg",
+              //   title: ProfileStrings.parameters,
+              //   onClick: () {
+              //     // TODO next ticket
+              //   },
+              // ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
                 child: Column(children: _buildContent(context, state)),
