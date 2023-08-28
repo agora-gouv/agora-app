@@ -38,7 +38,16 @@ class _ProfileDemographicInformationPageState extends State<ProfileDemographicIn
             SizedBox(height: AgoraSpacings.x1_5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-              child: Text(ProfileStrings.demographicInformationTitle, style: AgoraTextStyles.medium20),
+              child: RichText(
+                textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                text: TextSpan(
+                  style: AgoraTextStyles.light20,
+                  children: [
+                    TextSpan(text: ProfileStrings.demographicInformationTitle1, style: AgoraTextStyles.medium20),
+                    TextSpan(text: ProfileStrings.demographicInformationTitle2),
+                  ],
+                ),
+              ),
             ),
             SizedBox(height: AgoraSpacings.x1_5),
             Flexible(

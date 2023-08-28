@@ -11,4 +11,5 @@ class SemanticsStrings {
   static const String notSupport = "La question n'est pas soutenue de votre part";
 
   static const String ongoingConsultationEmpty = "Vous avez répondu à toutes les consultations en cours";
+  static const String informationTitle = "Nous avons quelques questions supplémentaires pour vous";
 }

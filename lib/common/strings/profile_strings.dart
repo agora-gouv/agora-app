@@ -42,7 +42,8 @@ class ProfileStrings {
   static const String byDate = ", le ";
   static const String parameters = "Paramètres";
 
-  static const String demographicInformationTitle = "Informations de profil";
+  static const String demographicInformationTitle1 = "Informations";
+  static const String demographicInformationTitle2 = " de profil";
   static const String demographicInformationDescription1 =
       "Pour analyser les résultats des consultations, cela nous aide beaucoup de connaître un peu mieux le profil des participants. C'est pourquoi nous vous proposons de répondre à quelques questions sur vous.";
   static const String demographicInformationDescription2 = "Concrètement, cela nous permet :";
