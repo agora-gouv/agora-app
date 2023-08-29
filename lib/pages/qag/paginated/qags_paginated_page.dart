@@ -124,7 +124,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                         ),
                       ),
                       tabChild: [
-                        Tab(text: QagStrings.popular),
+                        Semantics(header: true, child: Tab(text: QagStrings.popular)),
                         Tab(text: QagStrings.latest),
                         Tab(text: QagStrings.supporting),
                       ],

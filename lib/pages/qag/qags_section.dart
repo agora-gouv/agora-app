@@ -267,16 +267,19 @@ class _QagsSectionState extends State<QagsSection> {
         Row(
           children: [
             Expanded(
-              child: _buildTabButton(
-                label: QagStrings.popular,
-                isSelected: currentSelected == QagTab.popular,
-                onTap: () {
-                  TrackerHelper.trackClick(
-                    clickName: AnalyticsEventNames.qagPopular,
-                    widgetName: AnalyticsScreenNames.qagsPage,
-                  );
-                  setState(() => currentSelected = QagTab.popular);
-                },
+              child: Semantics(
+                header: true,
+                child: _buildTabButton(
+                  label: QagStrings.popular,
+                  isSelected: currentSelected == QagTab.popular,
+                  onTap: () {
+                    TrackerHelper.trackClick(
+                      clickName: AnalyticsEventNames.qagPopular,
+                      widgetName: AnalyticsScreenNames.qagsPage,
+                    );
+                    setState(() => currentSelected = QagTab.popular);
+                  },
+                ),
               ),
             ),
             Expanded(
