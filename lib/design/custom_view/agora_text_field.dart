@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -113,7 +114,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
           Text(
             "$textCount/${widget.maxLength}",
             style: AgoraTextStyles.light12.copyWith(color: AgoraColors.primaryGreyOpacity70),
-            semanticsLabel: "$textCount sur ${widget.maxLength}",
+            semanticsLabel: SemanticsHelper.step(textCount, widget.maxLength),
           ),
         ],
       ],

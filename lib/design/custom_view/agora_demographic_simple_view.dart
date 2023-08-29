@@ -1,4 +1,4 @@
-import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -50,37 +50,40 @@ class AgoraDemographicResponseCard extends StatelessWidget {
     );
   }
 
-  AgoraRoundedCard buildCard() {
-    return AgoraRoundedCard(
-      borderColor: isSelected ? AgoraColors.primaryBlue : AgoraColors.border,
-      borderWidth: isSelected ? 2.0 : 1.0,
-      cardColor: AgoraColors.white,
-      padding: padding,
-      onTap: () => onTap(),
-      child: SizedBox(
-        width: double.infinity,
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                responseLabel,
-                style: AgoraTextStyles.light14.copyWith(height: 0),
-                textAlign: textAlign,
-                semanticsLabel:
-                    "$responseLabel, ${isSelectedSemantics()}, ${SemanticsStrings.button}, ${semantic.currentIndex} sur ${semantic.totalIndex}",
+  Widget buildCard() {
+    return Semantics(
+      toggled: isSelected,
+      button: true,
+      child: AgoraRoundedCard(
+        borderColor: isSelected ? AgoraColors.primaryBlue : AgoraColors.border,
+        borderWidth: isSelected ? 2.0 : 1.0,
+        cardColor: AgoraColors.white,
+        padding: padding,
+        onTap: () => onTap(),
+        child: SizedBox(
+          width: double.infinity,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  responseLabel,
+                  style: AgoraTextStyles.light14.copyWith(height: 0),
+                  textAlign: textAlign,
+                  semanticsLabel: SemanticsHelper.cardResponse(
+                    responseLabel: responseLabel,
+                    currentStep: semantic.currentIndex,
+                    totalStep: semantic.totalIndex,
+                  ),
+                ),
               ),
-            ),
-            if (iconPlace == DemographicSelectedIconPlace.right && isSelected) ...[
-              SizedBox(width: AgoraSpacings.x0_75),
-              SvgPicture.asset("assets/ic_check.svg", excludeFromSemantics: true),
+              if (iconPlace == DemographicSelectedIconPlace.right && isSelected) ...[
+                SizedBox(width: AgoraSpacings.x0_75),
+                SvgPicture.asset("assets/ic_check.svg", excludeFromSemantics: true),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
-  }
-
-  String isSelectedSemantics() {
-    return isSelected ? SemanticsStrings.select : SemanticsStrings.noSelect;
   }
 }

@@ -17,7 +17,7 @@ class SemanticsStrings {
   static const String ongoingConsultationEmpty = "Vous avez répondu à toutes les consultations en cours";
   static const String informationTitle = "Nous avons quelques questions supplémentaires pour vous";
 
-  static const String select = "séléctionner";
-  static const String noSelect = "non séléctionner";
+  static const String select = "séléctionné";
+  static const String noSelect = "non séléctionné";
   static const String button = "bouton";
 }

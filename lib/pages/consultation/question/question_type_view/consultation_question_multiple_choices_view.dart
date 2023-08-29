@@ -90,7 +90,11 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       ),
       SizedBox(height: AgoraSpacings.base),
     ];
-    for (final response in multipleChoicesQuestion.responseChoicesViewModels) {
+
+    final responseChoicesViewModels = multipleChoicesQuestion.responseChoicesViewModels;
+    final totalLength = responseChoicesViewModels.length;
+    for (var index = 0; index < totalLength; index++) {
+      final response = responseChoicesViewModels[index];
       responseWidgets.add(
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
@@ -98,6 +102,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
           hasOpenTextField: response.hasOpenTextField,
           isSelected: _isResponseAlreadySelected(response.id),
           previousOtherResponse: otherResponseText,
+          semantic: AgoraQuestionResponseChoiceSemantic(currentIndex: index + 1, totalIndex: totalLength),
           onTap: (responseId) {
             setState(() {
               if (currentResponseIds.contains(responseId)) {
