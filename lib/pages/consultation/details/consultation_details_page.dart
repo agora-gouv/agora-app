@@ -138,7 +138,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
     const icPersonIconSize = 21;
     return Column(
       children: [
-        Image.network(viewModel.coverUrl),
+        Image.network(viewModel.coverUrl, excludeFromSemantics: true),
         Padding(
           padding: const EdgeInsets.all(columnPadding),
           child: Column(

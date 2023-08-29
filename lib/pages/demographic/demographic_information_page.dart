@@ -65,55 +65,66 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                           Text(
                             DemographicStrings.informationShortDescription,
                             style: AgoraTextStyles.regular14,
+                            semanticsLabel:
+                                "${DemographicStrings.informationShortDescription}\n\n${DemographicStrings.informationLongDescription1}${DemographicStrings.informationLongDescription2}${DemographicStrings.informationLongDescription3}\n${DemographicStrings.informationLongDescription4}",
                           ),
                           SizedBox(height: AgoraSpacings.x1_25),
-                          if (isReadMore) ...[
-                            Text(
-                              DemographicStrings.informationLongDescription1,
-                              style: AgoraTextStyles.regular14,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
-                                SizedBox(width: AgoraSpacings.x0_5),
-                                Expanded(
-                                  child: Text(
-                                    DemographicStrings.informationLongDescription2,
+                          if (isReadMore)
+                            ExcludeSemantics(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    DemographicStrings.informationLongDescription1,
                                     style: AgoraTextStyles.regular14,
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
-                                SizedBox(width: AgoraSpacings.x0_5),
-                                Expanded(
-                                  child: Text(
-                                    DemographicStrings.informationLongDescription3,
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
+                                      SizedBox(width: AgoraSpacings.x0_5),
+                                      Expanded(
+                                        child: Text(
+                                          DemographicStrings.informationLongDescription2,
+                                          style: AgoraTextStyles.regular14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
+                                      SizedBox(width: AgoraSpacings.x0_5),
+                                      Expanded(
+                                        child: Text(
+                                          DemographicStrings.informationLongDescription3,
+                                          style: AgoraTextStyles.regular14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    DemographicStrings.informationLongDescription4,
                                     style: AgoraTextStyles.regular14,
                                   ),
+                                ],
+                              ),
+                            )
+                          else
+                            ExcludeSemantics(
+                              child: InkWell(
+                                onTap: () {
+                                  TrackerHelper.trackClick(
+                                    clickName: AnalyticsEventNames.readMore,
+                                    widgetName: AnalyticsScreenNames.demographicInformationPage,
+                                  );
+                                  setState(() => isReadMore = true);
+                                },
+                                child: Text(
+                                  DemographicStrings.readMore,
+                                  style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
                                 ),
-                              ],
-                            ),
-                            Text(
-                              DemographicStrings.informationLongDescription4,
-                              style: AgoraTextStyles.regular14,
-                            ),
-                          ] else
-                            InkWell(
-                              onTap: () {
-                                TrackerHelper.trackClick(
-                                  clickName: AnalyticsEventNames.readMore,
-                                  widgetName: AnalyticsScreenNames.demographicInformationPage,
-                                );
-                                setState(() => isReadMore = true);
-                              },
-                              child: Text(
-                                DemographicStrings.readMore,
-                                style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
                               ),
                             ),
                           SizedBox(height: AgoraSpacings.x1_25),
