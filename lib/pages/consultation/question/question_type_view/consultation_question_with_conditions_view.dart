@@ -83,7 +83,10 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
 
   List<Widget> _buildWithConditionsResponse() {
     final List<Widget> responseWidgets = [];
-    for (final response in widget.questionWithConditions.responseChoicesViewModels) {
+    final responseChoicesViewModels = widget.questionWithConditions.responseChoicesViewModels;
+    final totalLength = responseChoicesViewModels.length;
+    for (var index = 0; index < totalLength; index++) {
+      final response = responseChoicesViewModels[index];
       responseWidgets.add(
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
@@ -91,6 +94,7 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
           hasOpenTextField: response.hasOpenTextField,
           isSelected: _isResponseAlreadySelected(response.id),
           previousOtherResponse: otherResponseText,
+          semantic: AgoraQuestionResponseChoiceSemantic(currentIndex: index + 1, totalIndex: totalLength),
           onTap: (responseId) {
             currentResponseId = responseId;
             currentNextQuestionId = response.nextQuestionId;

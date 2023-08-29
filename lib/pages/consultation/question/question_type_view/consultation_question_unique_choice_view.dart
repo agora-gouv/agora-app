@@ -79,7 +79,10 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
 
   List<Widget> _buildUniqueChoiceResponse() {
     final List<Widget> responseWidgets = [];
-    for (final response in widget.uniqueChoiceQuestion.responseChoicesViewModels) {
+    final responseChoicesViewModels = widget.uniqueChoiceQuestion.responseChoicesViewModels;
+    final totalLength = responseChoicesViewModels.length;
+    for (var index = 0; index < totalLength; index++) {
+      final response = responseChoicesViewModels[index];
       responseWidgets.add(
         AgoraQuestionResponseChoiceView(
           responseId: response.id,
@@ -87,6 +90,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
           hasOpenTextField: response.hasOpenTextField,
           isSelected: _isResponseAlreadySelected(response.id),
           previousOtherResponse: otherResponseText,
+          semantic: AgoraQuestionResponseChoiceSemantic(currentIndex: index + 1, totalIndex: totalLength),
           onTap: (responseId) {
             currentResponseId = responseId;
             if (response.hasOpenTextField) {
