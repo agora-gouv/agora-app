@@ -118,10 +118,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
             children: [readMoreButton],
           );
         } else {
-          textSpan = TextSpan(
-            style: textStyle,
-            text: data,
-          );
+          textSpan = TextSpan(style: textStyle, text: data);
         }
         break;
       case AgoraTrimMode.line:
@@ -137,11 +134,16 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
         break;
     }
 
-    return RichText(
-      textScaleFactor: MediaQuery.of(context).textScaleFactor,
-      textAlign: textAlign,
-      textDirection: textDirection,
-      text: textSpan,
+    return Semantics(
+      label: data,
+      child: ExcludeSemantics(
+        child: RichText(
+          textScaleFactor: MediaQuery.of(context).textScaleFactor,
+          textAlign: textAlign,
+          textDirection: textDirection,
+          text: textSpan,
+        ),
+      ),
     );
   }
 }
