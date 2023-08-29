@@ -29,18 +29,21 @@ class ConsultationsAnsweredSection extends StatelessWidget {
   List<Widget> _buildAnsweredConsultations(BuildContext context) {
     final List<Widget> answeredConsultationsWidgets = List.empty(growable: true);
     answeredConsultationsWidgets.add(
-      AgoraRichText(
-        items: [
-          AgoraRichTextTextItem(
-            text: ConsultationStrings.answeredConsultationPart1,
-            style: AgoraRichTextItemStyle.regular,
-          ),
-          AgoraRichTextSpaceItem(),
-          AgoraRichTextTextItem(
-            text: ConsultationStrings.answeredConsultationPart2,
-            style: AgoraRichTextItemStyle.bold,
-          ),
-        ],
+      Semantics(
+        header: true,
+        child: AgoraRichText(
+          items: [
+            AgoraRichTextTextItem(
+              text: ConsultationStrings.answeredConsultationPart1,
+              style: AgoraRichTextItemStyle.regular,
+            ),
+            AgoraRichTextSpaceItem(),
+            AgoraRichTextTextItem(
+              text: ConsultationStrings.answeredConsultationPart2,
+              style: AgoraRichTextItemStyle.bold,
+            ),
+          ],
+        ),
       ),
     );
     answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));

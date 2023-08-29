@@ -65,11 +65,14 @@ class QagsResponseSection extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: AgoraRichText(
-            items: [
-              AgoraRichTextTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
-              AgoraRichTextTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
-            ],
+          child: Semantics(
+            header: true,
+            child: AgoraRichText(
+              items: [
+                AgoraRichTextTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
+                AgoraRichTextTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
+              ],
+            ),
           ),
         ),
         SizedBox(width: AgoraSpacings.x0_75),

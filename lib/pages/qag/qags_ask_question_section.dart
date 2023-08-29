@@ -26,11 +26,14 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: AgoraRichText(
-                  items: [
-                    AgoraRichTextTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
-                    AgoraRichTextTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
-                  ],
+                child: Semantics(
+                  header: true,
+                  child: AgoraRichText(
+                    items: [
+                      AgoraRichTextTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
+                      AgoraRichTextTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
+                    ],
+                  ),
                 ),
               ),
               AgoraRoundedButton(
