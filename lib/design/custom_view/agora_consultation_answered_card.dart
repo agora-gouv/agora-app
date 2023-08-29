@@ -31,62 +31,65 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AgoraRoundedCard(
-      borderColor: AgoraColors.border,
-      cardColor: AgoraColors.white,
-      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: () {
-        TrackerHelper.trackClick(
-          clickName: "${AnalyticsEventNames.answeredConsultation} $id",
-          widgetName: AnalyticsScreenNames.consultationsPage,
-        );
-        Navigator.pushNamed(
-          context,
-          ConsultationSummaryPage.routeName,
-          arguments: ConsultationSummaryArguments(
-            consultationId: id,
-            shouldReloadConsultationsWhenPop: false,
-            initialTab: ConsultationSummaryInitialTab.etEnsuite,
-          ),
-        );
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-            child: Row(
-              children: [
-                AgoraRoundedImage(imageUrl: imageUrl, size: 70),
-                SizedBox(width: AgoraSpacings.x0_75),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ThematiqueHelper.buildCard(context, thematique),
-                      Text(title, style: AgoraTextStyles.regular16),
-                      SizedBox(height: AgoraSpacings.x0_25),
-                    ],
+    return Semantics(
+      button: true,
+      child: AgoraRoundedCard(
+        borderColor: AgoraColors.border,
+        cardColor: AgoraColors.white,
+        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+        onTap: () {
+          TrackerHelper.trackClick(
+            clickName: "${AnalyticsEventNames.answeredConsultation} $id",
+            widgetName: AnalyticsScreenNames.consultationsPage,
+          );
+          Navigator.pushNamed(
+            context,
+            ConsultationSummaryPage.routeName,
+            arguments: ConsultationSummaryArguments(
+              consultationId: id,
+              shouldReloadConsultationsWhenPop: false,
+              initialTab: ConsultationSummaryInitialTab.etEnsuite,
+            ),
+          );
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+              child: Row(
+                children: [
+                  AgoraRoundedImage(imageUrl: imageUrl, size: 70),
+                  SizedBox(width: AgoraSpacings.x0_75),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ThematiqueHelper.buildCard(context, thematique),
+                        Text(title, style: AgoraTextStyles.regular16),
+                        SizedBox(height: AgoraSpacings.x0_25),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: AgoraSpacings.x0_25),
-          AgoraRoundedCard(
-            cardColor: AgoraColors.doctor,
-            padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-            roundedCorner: AgoraRoundedCorner.bottomRounded,
-            child: Row(
-              children: [
-                SvgPicture.asset(_getIcon(), excludeFromSemantics: true),
-                SizedBox(width: AgoraSpacings.x0_25),
-                Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
-                SizedBox(width: AgoraSpacings.x0_25),
-                AgoraStepCircle(currentStep: step),
-              ],
+            SizedBox(height: AgoraSpacings.x0_25),
+            AgoraRoundedCard(
+              cardColor: AgoraColors.doctor,
+              padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+              roundedCorner: AgoraRoundedCorner.bottomRounded,
+              child: Row(
+                children: [
+                  SvgPicture.asset(_getIcon(), excludeFromSemantics: true),
+                  SizedBox(width: AgoraSpacings.x0_25),
+                  Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
+                  SizedBox(width: AgoraSpacings.x0_25),
+                  AgoraStepCircle(currentStep: step),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

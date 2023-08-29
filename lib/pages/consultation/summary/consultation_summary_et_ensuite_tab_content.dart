@@ -254,7 +254,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
     return [
       AgoraHtml(data: explanation.intro),
       SizedBox(height: AgoraSpacings.base),
-      Image.network(explanation.imageUrl),
+      Image.network(explanation.imageUrl, excludeFromSemantics: true),
       SizedBox(height: AgoraSpacings.base),
       AgoraHtml(data: explanation.description),
     ];

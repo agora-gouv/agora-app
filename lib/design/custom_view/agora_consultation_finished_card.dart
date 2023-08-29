@@ -101,45 +101,48 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
 
   Widget _buildFinishedConsultationCard(BuildContext context, double carrouselWidth) {
     final image = _buildImage(context, carrouselWidth);
-    return AgoraRoundedCard(
-      borderColor: AgoraColors.border,
-      cardColor: AgoraColors.white,
-      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: step != 1 ? () => onClick() : null,
-      child: Column(
-        children: [
-          style == AgoraConsultationFinishedStyle.small
-              ? image
-              : Padding(padding: const EdgeInsets.all(AgoraSpacings.base), child: image),
-          Padding(
-            padding: style == AgoraConsultationFinishedStyle.small
-                ? EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75)
-                : EdgeInsets.only(left: AgoraSpacings.base, right: AgoraSpacings.base, bottom: AgoraSpacings.base),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(width: double.infinity),
-                ThematiqueHelper.buildCard(context, thematique),
-                Text(title, style: AgoraTextStyles.medium18),
-              ],
+    return Semantics(
+      button: true,
+      child: AgoraRoundedCard(
+        borderColor: AgoraColors.border,
+        cardColor: AgoraColors.white,
+        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+        onTap: step != 1 ? () => onClick() : null,
+        child: Column(
+          children: [
+            style == AgoraConsultationFinishedStyle.small
+                ? image
+                : Padding(padding: const EdgeInsets.all(AgoraSpacings.base), child: image),
+            Padding(
+              padding: style == AgoraConsultationFinishedStyle.small
+                  ? EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75)
+                  : EdgeInsets.only(left: AgoraSpacings.base, right: AgoraSpacings.base, bottom: AgoraSpacings.base),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(width: double.infinity),
+                  ThematiqueHelper.buildCard(context, thematique),
+                  Text(title, style: AgoraTextStyles.medium18),
+                ],
+              ),
             ),
-          ),
-          if (style == AgoraConsultationFinishedStyle.small) Spacer(),
-          AgoraRoundedCard(
-            cardColor: AgoraColors.doctor,
-            padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-            roundedCorner: AgoraRoundedCorner.bottomRounded,
-            child: Row(
-              children: [
-                SvgPicture.asset(_getIcon(), excludeFromSemantics: true),
-                SizedBox(width: AgoraSpacings.x0_25),
-                Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
-                SizedBox(width: AgoraSpacings.x0_25),
-                AgoraStepCircle(currentStep: step),
-              ],
+            if (style == AgoraConsultationFinishedStyle.small) Spacer(),
+            AgoraRoundedCard(
+              cardColor: AgoraColors.doctor,
+              padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+              roundedCorner: AgoraRoundedCorner.bottomRounded,
+              child: Row(
+                children: [
+                  SvgPicture.asset(_getIcon(), excludeFromSemantics: true),
+                  SizedBox(width: AgoraSpacings.x0_25),
+                  Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
+                  SizedBox(width: AgoraSpacings.x0_25),
+                  AgoraStepCircle(currentStep: step),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -150,6 +153,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       fit: BoxFit.fitWidth,
       width: carrouselWidth,
       height: carrouselWidth * 0.55,
+      excludeFromSemantics: true,
       loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
         return Center(
           child: loadingProgress == null
