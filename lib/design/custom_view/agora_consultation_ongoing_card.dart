@@ -167,7 +167,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

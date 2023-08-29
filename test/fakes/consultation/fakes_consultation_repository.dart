@@ -24,7 +24,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           endDate: DateTime(2024, 1, 23),
           hasAnswered: false,
           highlightLabel: "Plus que 3 jours",
-        )
+        ),
       ],
       finishedConsultations: [
         ConsultationFinished(
@@ -278,7 +278,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
           endDate: DateTime(2024, 1, 23),
           hasAnswered: false,
           highlightLabel: null,
-        )
+        ),
       ],
       finishedConsultations: [],
       answeredConsultations: [],

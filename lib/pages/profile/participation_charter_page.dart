@@ -62,7 +62,7 @@ class ParticipationCharterPage extends StatelessWidget {
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

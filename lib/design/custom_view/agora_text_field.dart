@@ -105,7 +105,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                   padding: const EdgeInsets.only(right: AgoraSpacings.base),
                   child: SvgPicture.asset("assets/ic_search.svg", excludeFromSemantics: true),
                 ),
-              ]
+              ],
             ],
           ),
         ),

@@ -66,7 +66,7 @@ class QagsModeratedErrorContent extends StatelessWidget {
                   label: QagStrings.qagModerateSeeOther,
                   style: AgoraButtonStyle.blueBorderButtonStyle,
                   onPressed: () => Navigator.pop(context),
-                )
+                ),
               ],
             ),
           ),

@@ -50,7 +50,7 @@ class ConsultationQuestionHelper {
         label: ConsultationStrings.ignoreQuestion,
         style: AgoraButtonStyle.blueBorderButtonStyle,
         onPressed: onPressed,
-      )
+      ),
     ];
   }
 }

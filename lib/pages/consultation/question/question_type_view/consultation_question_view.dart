@@ -75,7 +75,7 @@ class ConsultationQuestionView extends StatelessWidget {
                                 );
                               },
                             ),
-                          ]
+                          ],
                         ],
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),

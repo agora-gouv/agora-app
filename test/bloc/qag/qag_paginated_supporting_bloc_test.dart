@@ -281,7 +281,7 @@ void main() {
           maxPage: 3,
           currentPageNumber: 1,
           qagViewModels: [],
-        )
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );
