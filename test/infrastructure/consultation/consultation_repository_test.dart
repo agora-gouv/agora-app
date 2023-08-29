@@ -406,6 +406,7 @@ void main() {
                 "title": "quel est la fréquence d'utilisation de transport...",
                 "order": 5,
                 "questionProgress": "Question 4/4",
+                "questionProgressA11y": "Question 4 sur 4",
                 "possibleChoices": [
                   {
                     "id": "choice1",
@@ -430,6 +431,7 @@ void main() {
                 "title": "Donnez un feedback",
                 "order": 4,
                 "questionProgress": "Question 3/4",
+                "questionProgressA11y": "Question 3 sur 4",
                 "nextQuestionId": "question1",
                 "popupDescription": null,
               },
@@ -440,6 +442,7 @@ void main() {
                 "title": "Quel types de transports utilisez-vous le plus ?",
                 "order": 1,
                 "questionProgress": "Question 1/4",
+                "questionProgressA11y": "Question 1 sur 4",
                 "nextQuestionId": "question6",
                 "maxChoices": 2,
                 "possibleChoices": [
@@ -471,6 +474,7 @@ void main() {
                 "title": "Avez vous déjà fait du covoiturage ?",
                 "order": 2,
                 "questionProgress": "Question 2/4",
+                "questionProgressA11y": "Question 2 sur 4",
                 "possibleChoices": [
                   {
                     "id": "choice1",
@@ -524,6 +528,7 @@ void main() {
               title: "quel est la fréquence d'utilisation de transport...",
               order: 5,
               questionProgress: "Question 4/4",
+              questionProgressSemanticLabel: "Question 4 sur 4",
               responseChoices: [
                 ConsultationQuestionResponseChoice(
                   id: "choice1",
@@ -546,6 +551,7 @@ void main() {
               title: "Donnez un feedback",
               order: 4,
               questionProgress: "Question 3/4",
+              questionProgressSemanticLabel: "Question 3 sur 4",
               nextQuestionId: "question1",
               popupDescription: null,
             ),
@@ -554,6 +560,7 @@ void main() {
               title: "Quel types de transports utilisez-vous le plus ?",
               order: 1,
               questionProgress: "Question 1/4",
+              questionProgressSemanticLabel: "Question 1 sur 4",
               nextQuestionId: "question6",
               maxChoices: 2,
               responseChoices: [
@@ -573,6 +580,7 @@ void main() {
               title: "Avez vous déjà fait du covoiturage ?",
               order: 2,
               questionProgress: "Question 2/4",
+              questionProgressSemanticLabel: "Question 2 sur 4",
               responseChoices: [
                 ConsultationQuestionResponseWithConditionChoice(
                   id: "choice1",

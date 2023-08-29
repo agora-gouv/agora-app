@@ -12,6 +12,7 @@ class ConsultationQuestionsPresenter {
             title: consultationQuestion.title,
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
+            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
             nextQuestionId: consultationQuestion.nextQuestionId,
             popupDescription: consultationQuestion.popupDescription,
@@ -22,6 +23,7 @@ class ConsultationQuestionsPresenter {
             title: consultationQuestion.title,
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
+            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             maxChoices: consultationQuestion.maxChoices,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
             nextQuestionId: consultationQuestion.nextQuestionId,
@@ -33,6 +35,7 @@ class ConsultationQuestionsPresenter {
             title: consultationQuestion.title,
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
+            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             nextQuestionId: consultationQuestion.nextQuestionId,
             popupDescription: consultationQuestion.popupDescription,
           );
@@ -42,6 +45,7 @@ class ConsultationQuestionsPresenter {
             title: consultationQuestion.title,
             order: consultationQuestion.order,
             questionProgress: consultationQuestion.questionProgress,
+            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             responseChoicesViewModels: _buildResponseWithConditionChoices(consultationQuestion.responseChoices),
             popupDescription: consultationQuestion.popupDescription,
           );

@@ -47,6 +47,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       order: multipleChoicesQuestion.order,
       totalQuestions: widget.totalQuestions,
       questionProgress: multipleChoicesQuestion.questionProgress,
+      questionProgressSemanticLabel: multipleChoicesQuestion.questionProgressSemanticLabel,
       title: multipleChoicesQuestion.title,
       popupDescription: multipleChoicesQuestion.popupDescription,
       child: Column(

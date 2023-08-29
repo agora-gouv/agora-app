@@ -98,6 +98,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Si vous vous lancez dans le co-voiturage, ...",
           order: 4,
           questionProgress: "Question 3/4",
+          questionProgressSemanticLabel: "Question 3 sur 4",
           responseChoices: [
             ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2, hasOpenTextField: false),
             ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1, hasOpenTextField: false),
@@ -116,6 +117,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Question C ?",
           order: 5,
           questionProgress: "Question 4/4",
+          questionProgressSemanticLabel: "Question 4 sur 4",
           nextQuestionId: null,
           popupDescription: null,
         ),
@@ -124,6 +126,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
           order: 1,
           questionProgress: "Question 1/4",
+          questionProgressSemanticLabel: "Question 1 sur 4",
           maxChoices: 2,
           responseChoices: [
             ConsultationQuestionResponseChoice(
@@ -159,6 +162,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Avez vous ...?",
           order: 2,
           questionProgress: "Question 2/4",
+          questionProgressSemanticLabel: "Question 2 sur 4",
           responseChoices: [
             ConsultationQuestionResponseWithConditionChoice(
               id: "choiceAAA",
