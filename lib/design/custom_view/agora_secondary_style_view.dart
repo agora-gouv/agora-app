@@ -60,7 +60,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                       contentPadding: AgoraRoundedButtonPadding.short,
                       onPressed: () => button!.onClick(),
                     ),
-                  ]
+                  ],
                 ],
               ),
               SizedBox(height: AgoraSpacings.x1_25),

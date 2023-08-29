@@ -33,7 +33,7 @@ void main() {
               endDate: "23 janvier",
               hasAnswered: false,
               highlightLabel: "Plus que 3 jours",
-            )
+            ),
           ],
           finishedViewModels: [
             ConsultationFinishedViewModel(
@@ -76,7 +76,7 @@ void main() {
               endDate: "23 janvier",
               hasAnswered: false,
               highlightLabel: null,
-            )
+            ),
           ],
           finishedViewModels: [
             ConsultationFinishedViewModel(

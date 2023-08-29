@@ -27,7 +27,7 @@ void main() {
             ThematiqueWithIdViewModel(id: "8", picto: "\ud83d\ude94", label: "Sécurité"),
             ThematiqueWithIdViewModel(id: "9", picto: "\ud83d\udce6", label: "Autre"),
           ],
-        )
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -59,7 +59,7 @@ void main() {
             ThematiqueWithIdViewModel(id: "7", picto: "\ud83d\ude8a", label: "Transports"),
             ThematiqueWithIdViewModel(id: "8", picto: "\ud83d\ude94", label: "Sécurité"),
           ],
-        )
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );

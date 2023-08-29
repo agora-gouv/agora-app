@@ -291,7 +291,7 @@ void main() {
               isSupported: true,
             ),
           ],
-        )
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );

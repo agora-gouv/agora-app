@@ -246,7 +246,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

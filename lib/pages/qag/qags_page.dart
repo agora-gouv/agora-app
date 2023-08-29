@@ -162,7 +162,7 @@ class _QagsPageState extends State<QagsPage> {
             SizedBox(height: AgoraSpacings.x2),
           ],
         ),
-      )
+      ),
     ];
   }
 }

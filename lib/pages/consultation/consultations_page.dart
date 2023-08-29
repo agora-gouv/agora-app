@@ -118,7 +118,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
             SizedBox(height: AgoraSpacings.x2),
           ],
         ),
-      )
+      ),
     ];
   }
 }

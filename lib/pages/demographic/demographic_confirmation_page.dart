@@ -131,7 +131,7 @@ class DemographicConfirmationPage extends StatelessWidget {
                       ),
                     );
                   },
-                )
+                ),
               ],
             ),
           ),

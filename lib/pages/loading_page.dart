@@ -147,7 +147,7 @@ class _LoadingPageState extends State<LoadingPage> {
                                     onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                             if (loginState.errorType == LoginErrorType.updateVersion &&
                                 (PlatformStaticHelper.isAndroid() || PlatformStaticHelper.isIOS())) ...[
@@ -157,7 +157,7 @@ class _LoadingPageState extends State<LoadingPage> {
                                 style: AgoraButtonStyle.primaryButtonStyle,
                                 expanded: true,
                                 onPressed: () => LaunchUrlHelper.launchStore(),
-                              )
+                              ),
                             ],
                             SizedBox(height: screenHeight * 0.1),
                           ],

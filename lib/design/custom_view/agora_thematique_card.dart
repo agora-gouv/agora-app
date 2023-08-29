@@ -33,7 +33,7 @@ class AgoraThematiqueCard extends StatelessWidget {
             ExcludeSemantics(child: Text(picto, style: AgoraTextStyles.medium14)),
             SizedBox(width: AgoraSpacings.x0_25),
             Flexible(child: Text(label, style: AgoraTextStyles.light14.copyWith(color: AgoraColors.potBlack))),
-          ]
+          ],
         ],
       ),
     );

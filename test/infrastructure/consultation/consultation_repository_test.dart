@@ -48,7 +48,7 @@ void main() {
               "title": "Quelles solutions pour les déserts médicaux ?",
               "coverUrl": "coverUrl2",
               "thematique": {"label": "Santé", "picto": "🩺"},
-              "step": 2
+              "step": 2,
             },
           ],
           "answered": [
@@ -57,9 +57,9 @@ void main() {
               "title": "Quand commencer ?",
               "coverUrl": "coverUrl3",
               "thematique": {"label": "Santé", "picto": "🩺"},
-              "step": 3
+              "step": 3,
             },
-          ]
+          ],
         }),
         headers: {
           "accept": "application/json",
@@ -128,7 +128,7 @@ void main() {
             }
           ],
           "finished": [],
-          "answered": []
+          "answered": [],
         }),
         headers: {
           "accept": "application/json",
@@ -254,7 +254,7 @@ void main() {
               "title": "Quelles solutions pour les déserts médicaux ?",
               "coverUrl": "coverUrl",
               "thematique": {"label": "Santé", "picto": "🩺"},
-              "step": 2
+              "step": 2,
             },
           ],
         }),
@@ -762,7 +762,7 @@ void main() {
                     "label": "Autre",
                     "ratio": 35,
                   },
-                ]
+                ],
               }
             ],
             "resultsMultipleChoice": [
@@ -778,7 +778,7 @@ void main() {
                     "label": "Réponse B",
                     "ratio": 80,
                   },
-                ]
+                ],
               }
             ],
             "etEnsuite": {
@@ -806,8 +806,8 @@ void main() {
               "conclusion": {
                 "title": "conclusion title",
                 "description": "<body>conclusion description</body>",
-              }
-            }
+              },
+            },
           },
         ),
         headers: {
@@ -907,7 +907,7 @@ void main() {
               ],
               "video": null,
               "conclusion": null,
-            }
+            },
           },
         ),
         headers: {

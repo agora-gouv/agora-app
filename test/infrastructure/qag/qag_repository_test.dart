@@ -114,7 +114,7 @@ void main() {
                 "support": {
                   "count": 200,
                   "isSupported": true,
-                }
+                },
               },
             ],
             "responses": [
@@ -124,8 +124,8 @@ void main() {
                 "title": "Pourquoi ... ?",
                 "author": "Olivier Véran",
                 "authorPortraitUrl": "authorPortraitUrl",
-                "responseDate": "2023-01-23"
-              }
+                "responseDate": "2023-01-23",
+              },
             ],
             "qags": {
               "popular": [
@@ -138,7 +138,7 @@ void main() {
                   "support": {
                     "count": 116,
                     "isSupported": true,
-                  }
+                  },
                 },
               ],
               "latest": [
@@ -151,7 +151,7 @@ void main() {
                   "support": {
                     "count": 11,
                     "isSupported": false,
-                  }
+                  },
                 },
               ],
               "supporting": [
@@ -168,7 +168,7 @@ void main() {
                 }
               ],
               "askQagErrorText": null,
-            }
+            },
           },
         ),
         headers: {
@@ -195,7 +195,7 @@ void main() {
               title: "Pourquoi nana... ?",
               supportCount: 200,
               isSupported: true,
-            )
+            ),
           ],
           qagResponses: [
             QagResponse(
@@ -260,7 +260,7 @@ void main() {
               "latest": [],
               "supporting": [],
               "askQagErrorText": "Une erreur est survenue",
-            }
+            },
           },
         ),
         headers: {
@@ -388,7 +388,7 @@ void main() {
                 "support": {
                   "count": 116,
                   "isSupported": true,
-                }
+                },
               },
             ],
           },
@@ -477,7 +477,7 @@ void main() {
                 "title": "Pourquoi ... ?",
                 "author": "Olivier Véran",
                 "authorPortraitUrl": "authorPortraitUrl",
-                "responseDate": "2023-01-23"
+                "responseDate": "2023-01-23",
               }
             ],
           },
@@ -554,7 +554,7 @@ void main() {
             "canShare": true,
             "canSupport": true,
             "support": {"count": 112, "isSupported": true},
-            "response": null
+            "response": null,
           },
         ),
         headers: {
@@ -614,8 +614,8 @@ void main() {
               "videoWidth": 1080,
               "videoHeight": 1920,
               "transcription": "Blablabla",
-              "feedbackStatus": true
-            }
+              "feedbackStatus": true,
+            },
           },
         ),
         headers: {
@@ -858,7 +858,7 @@ void main() {
                 "username": "Henri J.",
                 "support": {"count": 112, "isSupported": true},
               },
-            ]
+            ],
           },
         ),
         headers: {
@@ -1039,7 +1039,7 @@ void main() {
                 "username": "Henri J.",
                 "support": {"count": 112, "isSupported": true},
               },
-            ]
+            ],
           },
         ),
         headers: {

@@ -63,7 +63,7 @@ class QagDetailsSupportView extends StatelessWidget {
             if (supportState is QagSupportErrorState || supportState is QagDeleteSupportErrorState) ...[
               SizedBox(height: AgoraSpacings.base),
               AgoraErrorView(),
-            ]
+            ],
           ],
         );
       },

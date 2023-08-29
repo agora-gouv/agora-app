@@ -195,7 +195,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                   Text(etEnsuiteViewModel.title, style: AgoraTextStyles.medium18),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -88,7 +88,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                     TextSpan(
                       text: widget.detailsViewModel.date,
                       style: AgoraTextStyles.mediumItalic16.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -110,7 +110,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                     TextSpan(
                       text: widget.detailsViewModel.date,
                       style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -158,7 +158,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                             if (feedbackState is QagFeedbackErrorState) ...[
                               SizedBox(height: AgoraSpacings.base),
                               AgoraErrorView(),
-                            ]
+                            ],
                           ],
                         );
                 },

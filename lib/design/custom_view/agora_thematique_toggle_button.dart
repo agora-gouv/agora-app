@@ -35,7 +35,7 @@ class AgoraToggleButton extends StatelessWidget {
             text,
             style: AgoraTextStyles.medium30.copyWith(height: 0),
           ),
-        )
+        ),
       ],
     );
   }

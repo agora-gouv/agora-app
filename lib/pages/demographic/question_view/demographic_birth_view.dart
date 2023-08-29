@@ -77,7 +77,7 @@ class _DemographicBirthViewState extends State<DemographicBirthView> {
             },
           )
         else
-          DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed)
+          DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
       ],
     );
   }
