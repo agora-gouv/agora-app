@@ -50,6 +50,7 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
       order: widget.questionWithConditions.order,
       totalQuestions: widget.totalQuestions,
       questionProgress: widget.questionWithConditions.questionProgress,
+      questionProgressSemanticLabel: widget.questionWithConditions.questionProgressSemanticLabel,
       title: widget.questionWithConditions.title,
       popupDescription: widget.questionWithConditions.popupDescription,
       child: Column(

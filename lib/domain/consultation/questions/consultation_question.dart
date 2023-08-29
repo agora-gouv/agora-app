@@ -18,6 +18,7 @@ abstract class ConsultationQuestion extends Equatable {
 
 class ConsultationQuestionUnique extends ConsultationQuestion {
   final String questionProgress;
+  final String questionProgressSemanticLabel;
   final List<ConsultationQuestionResponseChoice> responseChoices;
   final String? nextQuestionId;
   final String? popupDescription;
@@ -27,6 +28,7 @@ class ConsultationQuestionUnique extends ConsultationQuestion {
     required super.title,
     required super.order,
     required this.questionProgress,
+    required this.questionProgressSemanticLabel,
     required this.responseChoices,
     required this.nextQuestionId,
     required this.popupDescription,
@@ -38,6 +40,7 @@ class ConsultationQuestionUnique extends ConsultationQuestion {
         title,
         order,
         questionProgress,
+        questionProgressSemanticLabel,
         responseChoices,
         nextQuestionId,
         popupDescription,
@@ -46,6 +49,7 @@ class ConsultationQuestionUnique extends ConsultationQuestion {
 
 class ConsultationQuestionMultiple extends ConsultationQuestion {
   final String questionProgress;
+  final String questionProgressSemanticLabel;
   final int maxChoices;
   final List<ConsultationQuestionResponseChoice> responseChoices;
   final String? nextQuestionId;
@@ -56,6 +60,7 @@ class ConsultationQuestionMultiple extends ConsultationQuestion {
     required super.title,
     required super.order,
     required this.questionProgress,
+    required this.questionProgressSemanticLabel,
     required this.maxChoices,
     required this.responseChoices,
     required this.nextQuestionId,
@@ -68,6 +73,7 @@ class ConsultationQuestionMultiple extends ConsultationQuestion {
         title,
         order,
         questionProgress,
+        questionProgressSemanticLabel,
         maxChoices,
         responseChoices,
         nextQuestionId,
@@ -77,6 +83,7 @@ class ConsultationQuestionMultiple extends ConsultationQuestion {
 
 class ConsultationQuestionOpened extends ConsultationQuestion {
   final String questionProgress;
+  final String questionProgressSemanticLabel;
   final String? nextQuestionId;
   final String? popupDescription;
 
@@ -85,6 +92,7 @@ class ConsultationQuestionOpened extends ConsultationQuestion {
     required super.title,
     required super.order,
     required this.questionProgress,
+    required this.questionProgressSemanticLabel,
     required this.nextQuestionId,
     required this.popupDescription,
   });
@@ -95,6 +103,7 @@ class ConsultationQuestionOpened extends ConsultationQuestion {
         title,
         order,
         questionProgress,
+        questionProgressSemanticLabel,
         nextQuestionId,
         popupDescription,
       ];
@@ -118,6 +127,7 @@ class ConsultationQuestionChapter extends ConsultationQuestion {
 
 class ConsultationQuestionWithCondition extends ConsultationQuestion {
   final String questionProgress;
+  final String questionProgressSemanticLabel;
   final List<ConsultationQuestionResponseWithConditionChoice> responseChoices;
   final String? popupDescription;
 
@@ -126,6 +136,7 @@ class ConsultationQuestionWithCondition extends ConsultationQuestion {
     required super.title,
     required super.order,
     required this.questionProgress,
+    required this.questionProgressSemanticLabel,
     required this.responseChoices,
     required this.popupDescription,
   });
@@ -136,6 +147,7 @@ class ConsultationQuestionWithCondition extends ConsultationQuestion {
         title,
         order,
         questionProgress,
+        questionProgressSemanticLabel,
         responseChoices,
         popupDescription,
       ];

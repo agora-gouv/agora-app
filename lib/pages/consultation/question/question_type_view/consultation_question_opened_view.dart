@@ -46,6 +46,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
       order: openedQuestion.order,
       totalQuestions: widget.totalQuestions,
       questionProgress: openedQuestion.questionProgress,
+      questionProgressSemanticLabel: openedQuestion.questionProgressSemanticLabel,
       title: openedQuestion.title,
       popupDescription: openedQuestion.popupDescription,
       child: Column(

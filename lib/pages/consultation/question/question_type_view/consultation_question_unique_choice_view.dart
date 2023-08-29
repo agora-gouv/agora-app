@@ -44,6 +44,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
       order: widget.uniqueChoiceQuestion.order,
       totalQuestions: widget.totalQuestions,
       questionProgress: widget.uniqueChoiceQuestion.questionProgress,
+      questionProgressSemanticLabel: widget.uniqueChoiceQuestion.questionProgressSemanticLabel,
       title: widget.uniqueChoiceQuestion.title,
       popupDescription: widget.uniqueChoiceQuestion.popupDescription,
       child: Column(
