@@ -16,10 +16,26 @@ import 'package:agora/pages/consultation/consultations_finished_section.dart';
 import 'package:agora/pages/consultation/consultations_ongoing_section.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ConsultationsPage extends StatelessWidget {
+class ConsultationsPage extends StatefulWidget {
   static const routeName = "/consultationsPage";
+
+  @override
+  State<ConsultationsPage> createState() => _ConsultationsPageState();
+}
+
+class _ConsultationsPageState extends State<ConsultationsPage> {
+  final GlobalKey toolbarTitleKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +55,7 @@ class ConsultationsPage extends StatelessWidget {
                 children: <Widget>[
                   AgoraMainToolbar(
                     title: AgoraRichText(
+                      key: toolbarTitleKey,
                       policeStyle: AgoraRichTextPoliceStyle.toolbar,
                       items: [
                         AgoraRichTextTextItem(
