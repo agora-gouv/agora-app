@@ -31,6 +31,7 @@ class AgoraRichText extends StatelessWidget {
   final List<AgoraRichTextItem> items;
 
   AgoraRichText({
+    super.key,
     this.policeStyle = AgoraRichTextPoliceStyle.section,
     required this.items,
   });
