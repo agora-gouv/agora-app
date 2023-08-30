@@ -46,12 +46,11 @@ class _ProfilePageState extends State<ProfilePage> {
         title: AgoraRichText(
           policeStyle: AgoraRichTextPoliceStyle.toolbar,
           items: [
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.my,
               style: AgoraRichTextItemStyle.regular,
             ),
-            AgoraRichTextSpaceItem(),
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.profile,
               style: AgoraRichTextItemStyle.bold,
             ),

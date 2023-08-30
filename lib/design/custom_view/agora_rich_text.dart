@@ -1,4 +1,3 @@
-import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +11,11 @@ enum AgoraRichTextPoliceStyle {
 
 enum AgoraRichTextItemStyle { bold, regular }
 
-abstract class AgoraRichTextItem {}
-
-class AgoraRichTextSpaceItem extends AgoraRichTextItem {}
-
-class AgoraRichTextTextItem extends AgoraRichTextItem {
+class AgoraRichTextItem {
   final String text;
   final AgoraRichTextItemStyle style;
 
-  AgoraRichTextTextItem({
+  AgoraRichTextItem({
     required this.text,
     required this.style,
   });
@@ -29,31 +24,35 @@ class AgoraRichTextTextItem extends AgoraRichTextItem {
 class AgoraRichText extends StatelessWidget {
   final AgoraRichTextPoliceStyle policeStyle;
   final List<AgoraRichTextItem> items;
+  final bool isSemanticHeader;
 
   AgoraRichText({
     super.key,
     this.policeStyle = AgoraRichTextPoliceStyle.section,
     required this.items,
+    this.isSemanticHeader = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      textScaleFactor: MediaQuery.of(context).textScaleFactor,
-      text: TextSpan(
-        style: _buildRegularStyle(),
-        children: items.map((item) {
-          if (item is AgoraRichTextTextItem) {
-            switch (item.style) {
-              case AgoraRichTextItemStyle.regular:
-                return TextSpan(text: item.text);
-              case AgoraRichTextItemStyle.bold:
-                return TextSpan(text: item.text, style: _buildBoldStyle());
-            }
-          } else {
-            return WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25));
-          }
-        }).toList(),
+    return Semantics(
+      header: isSemanticHeader,
+      label: items.map((richTextItem) => richTextItem.text.replaceAll("\n", " ")).join(),
+      child: ExcludeSemantics(
+        child: RichText(
+          textScaleFactor: MediaQuery.of(context).textScaleFactor,
+          text: TextSpan(
+            style: _buildRegularStyle(),
+            children: items.map((item) {
+              switch (item.style) {
+                case AgoraRichTextItemStyle.regular:
+                  return TextSpan(text: item.text);
+                case AgoraRichTextItemStyle.bold:
+                  return TextSpan(text: item.text, style: _buildBoldStyle());
+              }
+            }).toList(),
+          ),
+        ),
       ),
     );
   }

@@ -35,9 +35,9 @@ class DemographicStrings {
   static const String yearOfBirthError = "L'année de naissance saisie n'est pas valide.";
   static const String yearOfBirthHint = "1995";
   static const String departmentHint = "Votre numéro ou nom de département";
-  static const String my = "Mes";
+  static const String my = "Mes ";
   static const String information = "informations";
-  static const String delete = "Supprimer";
+  static const String delete = "Supprimer ";
   static const String myAccount = "mon compte";
   static const String informationCapitalize = "Informations\n";
   static const String demographic = "démographiques";

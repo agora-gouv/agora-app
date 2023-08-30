@@ -28,20 +28,17 @@ class ConsultationsOngoingSection extends StatelessWidget {
           horizontal: AgoraSpacings.horizontalPadding,
           vertical: AgoraSpacings.base,
         ),
-        child: Semantics(
-          header: true,
-          child: AgoraRichText(
-            items: [
-              AgoraRichTextTextItem(
-                text: "${ConsultationStrings.ongoingConsultationPart1}\n",
-                style: AgoraRichTextItemStyle.regular,
-              ),
-              AgoraRichTextTextItem(
-                text: ConsultationStrings.ongoingConsultationPart2,
-                style: AgoraRichTextItemStyle.bold,
-              ),
-            ],
-          ),
+        child: AgoraRichText(
+          items: [
+            AgoraRichTextItem(
+              text: "${ConsultationStrings.ongoingConsultationPart1}\n",
+              style: AgoraRichTextItemStyle.regular,
+            ),
+            AgoraRichTextItem(
+              text: ConsultationStrings.ongoingConsultationPart2,
+              style: AgoraRichTextItemStyle.bold,
+            ),
+          ],
         ),
       ),
     );

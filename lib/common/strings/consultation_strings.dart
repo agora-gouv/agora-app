@@ -3,9 +3,9 @@ class ConsultationStrings {
   static const String toolbarPart2 = "consultations";
   static const String ongoingConsultationPart1 = "Consultations";
   static const String ongoingConsultationPart2 = "en cours";
-  static const String finishConsultationPart1 = "Ça a été fait";
+  static const String finishConsultationPart1 = "Ça a été fait\n";
   static const String finishConsultationPart2 = "grâce à vous";
-  static const String answeredConsultationPart1 = "Mes";
+  static const String answeredConsultationPart1 = "Mes ";
   static const String answeredConsultationPart2 = "consultations";
   static const String ongoingConsultationEmpty =
       "✅\u{00A0}Vous avez répondu à toutes les consultations en cours\u{00A0}!";

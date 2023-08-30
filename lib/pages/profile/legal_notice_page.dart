@@ -19,12 +19,11 @@ class LegalNoticePage extends StatelessWidget {
         title: AgoraRichText(
           policeStyle: AgoraRichTextPoliceStyle.toolbar,
           items: [
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.notice,
               style: AgoraRichTextItemStyle.regular,
             ),
-            AgoraRichTextSpaceItem(),
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.legal,
               style: AgoraRichTextItemStyle.bold,
             ),

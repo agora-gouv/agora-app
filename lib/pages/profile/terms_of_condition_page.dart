@@ -19,12 +19,11 @@ class TermsOfConditionPage extends StatelessWidget {
         title: AgoraRichText(
           policeStyle: AgoraRichTextPoliceStyle.toolbar,
           items: [
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.condition,
               style: AgoraRichTextItemStyle.bold,
             ),
-            AgoraRichTextSpaceItem(),
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.term,
               style: AgoraRichTextItemStyle.regular,
             ),

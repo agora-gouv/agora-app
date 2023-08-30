@@ -31,36 +31,41 @@ class _AgoraCheckboxState extends State<AgoraCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.all(AgoraCorners.rounded),
-      onTap: () => setState(() {
-        value = !value;
-        widget.onChanged(value);
-      }),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Checkbox(
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            visualDensity: VisualDensity(
-              horizontal: VisualDensity.minimumDensity,
-              vertical: VisualDensity.minimumDensity,
+    return Semantics(
+      toggled: value,
+      child: InkWell(
+        borderRadius: BorderRadius.all(AgoraCorners.rounded),
+        onTap: () => setState(() {
+          value = !value;
+          widget.onChanged(value);
+        }),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ExcludeSemantics(
+              child: Checkbox(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                visualDensity: VisualDensity(
+                  horizontal: VisualDensity.minimumDensity,
+                  vertical: VisualDensity.minimumDensity,
+                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                fillColor: MaterialStateProperty.all(value ? AgoraColors.primaryBlue : AgoraColors.transparent),
+                value: value,
+                onChanged: (newValue) => setState(
+                  () {
+                    if (newValue != null) {
+                      value = newValue;
+                    }
+                    widget.onChanged(value);
+                  },
+                ),
+              ),
             ),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            fillColor: MaterialStateProperty.all(AgoraColors.primaryBlue),
-            value: value,
-            onChanged: (newValue) => setState(
-              () {
-                if (newValue != null) {
-                  value = newValue;
-                }
-                widget.onChanged(value);
-              },
-            ),
-          ),
-          SizedBox(width: AgoraSpacings.x0_5),
-          Expanded(child: Text(widget.label, style: AgoraTextStyles.medium14)),
-        ],
+            SizedBox(width: AgoraSpacings.x0_5),
+            Expanded(child: Text(widget.label, style: AgoraTextStyles.medium14)),
+          ],
+        ),
       ),
     );
   }

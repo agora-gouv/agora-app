@@ -75,8 +75,8 @@ class _QagsPageState extends State<QagsPage> {
                       key: toolbarTitleKey,
                       policeStyle: AgoraRichTextPoliceStyle.toolbar,
                       items: [
-                        AgoraRichTextTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
-                        AgoraRichTextTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
+                        AgoraRichTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
+                        AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
                       ],
                     ),
                     onProfileClick: () {

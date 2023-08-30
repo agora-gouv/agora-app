@@ -26,19 +26,19 @@ class GenericStrings {
   static const String modificationSuccess = "La modification a été prise en compte.";
 
   static const String onboardingStep0Title = "Bienvenue dans Agora\u{00A0}!";
-  static const String onboardingStep0Description1 = "La première appli qui fait";
-  static const String onboardingStep0Description2 = "dialoguer";
+  static const String onboardingStep0Description1 = "La première appli qui fait ";
+  static const String onboardingStep0Description2 = "dialoguer ";
   static const String onboardingStep0Description3 = "les citoyens et le Gouvernement";
   static const String onboardingStep0Begin = "Commencer";
-  static const String onboardingStep1Title1 = "Participez";
+  static const String onboardingStep1Title1 = "Participez ";
   static const String onboardingStep1Title2 = "à l'action du Gouvernement";
   static const String onboardingStep1Description =
       "Donnez votre avis sur des projets qui vous concernent et suivez leurs avancées.";
-  static const String onboardingStep2Title1 = "Posez vos questions";
+  static const String onboardingStep2Title1 = "Posez vos questions ";
   static const String onboardingStep2Title2 = "au Gouvernement";
   static const String onboardingStep2Description =
       "Chaque semaine, les ministres répondent à la question la plus populaire.";
-  static const String onboardingStep3Title1 = "Inventez";
+  static const String onboardingStep3Title1 = "Inventez ";
   static const String onboardingStep3Title2 = "avec nous le futur de l'appli";
   static const String onboardingStep3Description =
       "L'appli Agora est en expérimentation. Partagez vos idées pour écrire la suite de son histoire\u{00A0}!";

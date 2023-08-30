@@ -38,13 +38,11 @@ class QagResponsePaginatedPage extends StatelessWidget {
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
-              AgoraRichTextTextItem(
+              AgoraRichTextItem(
                 text: QagStrings.qagResponsePart1,
                 style: AgoraRichTextItemStyle.bold,
               ),
-              AgoraRichTextSpaceItem(),
-              AgoraRichTextSpaceItem(),
-              AgoraRichTextTextItem(
+              AgoraRichTextItem(
                 text: QagStrings.qagResponsePart2,
                 style: AgoraRichTextItemStyle.regular,
               ),
