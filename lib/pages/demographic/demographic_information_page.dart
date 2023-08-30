@@ -41,10 +41,13 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
             SizedBox(height: AgoraSpacings.x1_5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-              child: Text(
-                DemographicStrings.informationTitle,
-                style: AgoraTextStyles.medium20,
-                semanticsLabel: SemanticsStrings.informationTitle,
+              child: Semantics(
+                focused: true,
+                child: Text(
+                  DemographicStrings.informationTitle,
+                  style: AgoraTextStyles.medium20,
+                  semanticsLabel: SemanticsStrings.informationTitle,
+                ),
               ),
             ),
             SizedBox(height: AgoraSpacings.x1_5),

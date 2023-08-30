@@ -155,7 +155,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
             children: [
               AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.police14,
-                isSemanticHeader: false,
+                semantic: AgoraRichTextSemantic(header: false),
                 items: [
                   AgoraRichTextItem(
                     text: QagStrings.askQuestionDescription1,

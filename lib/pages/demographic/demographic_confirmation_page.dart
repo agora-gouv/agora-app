@@ -108,15 +108,12 @@ class DemographicConfirmationPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  ConsultationStrings.confirmationTitle,
-                  style: AgoraTextStyles.medium19,
+                Semantics(
+                  focused: true,
+                  child: Text(ConsultationStrings.confirmationTitle, style: AgoraTextStyles.medium19),
                 ),
                 SizedBox(height: AgoraSpacings.base),
-                Text(
-                  ConsultationStrings.confirmationDescription,
-                  style: AgoraTextStyles.light16,
-                ),
+                Text(ConsultationStrings.confirmationDescription, style: AgoraTextStyles.light16),
                 SizedBox(height: AgoraSpacings.x1_5),
                 AgoraButton(
                   label: ConsultationStrings.goToResult,

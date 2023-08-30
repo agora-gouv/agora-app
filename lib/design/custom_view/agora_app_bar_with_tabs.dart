@@ -54,7 +54,13 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (widget.needTopDiagonal) AgoraTopDiagonal(),
-            if (widget.needToolbar) AgoraToolbar(key: _backBarChildKey, onBackClick: widget.onToolbarBackClick),
+            if (widget.needToolbar)
+              AgoraToolbar(
+                key: _backBarChildKey,
+                onBackClick: widget.onToolbarBackClick,
+                // semantic focus is in line 101 => first tab get the semantic focus
+                semantic: AgoraToolbarSemantic(focused: null),
+              ),
             NotificationListener<SizeChangedLayoutNotification>(
               onNotification: (notification) {
                 _buildToolbarSizeOnContentChanged(context);
@@ -90,7 +96,15 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
         unselectedLabelStyle: AgoraTextStyles.light14,
         labelColor: AgoraColors.primaryGrey,
         unselectedLabelColor: AgoraColors.primaryGrey,
-        tabs: widget.tabChild,
+        tabs: widget.tabChild.map((tab) {
+          final index = widget.tabChild.indexOf(tab);
+          if (index == 0) {
+            // first tab get the semantic focus
+            return Semantics(focused: true, child: tab);
+          } else {
+            return tab;
+          }
+        }).toList(),
       ),
     );
   }
