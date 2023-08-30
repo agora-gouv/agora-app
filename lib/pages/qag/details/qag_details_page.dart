@@ -203,7 +203,12 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
+                            Expanded(
+                              child: Semantics(
+                                header: true,
+                                child: Text(viewModel.title, style: AgoraTextStyles.medium18),
+                              ),
+                            ),
                             if (response != null) ...[
                               Padding(
                                 padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
