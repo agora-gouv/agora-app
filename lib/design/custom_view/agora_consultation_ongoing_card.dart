@@ -6,6 +6,7 @@ import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -158,6 +159,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                   SizedBox(width: AgoraSpacings.base),
                   AgoraIconButton(
                     icon: "ic_share.svg",
+                    semanticLabel: "${SemanticsStrings.share} $title",
                     onClick: () {
                       TrackerHelper.trackClick(
                         clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
