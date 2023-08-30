@@ -58,10 +58,15 @@ class AgoraLikeView extends StatelessWidget {
     );
 
     if (onSupportClick != null) {
-      currentChild = GestureDetector(
-        onTap: () => onSupportClick!(!isSupported),
-        child: currentChild,
+      currentChild = Semantics(
+        button: true,
+        child: GestureDetector(
+          onTap: () => onSupportClick!(!isSupported),
+          child: currentChild,
+        ),
       );
+    } else {
+      currentChild = Semantics(button: false, child: currentChild);
     }
     return currentChild;
   }
