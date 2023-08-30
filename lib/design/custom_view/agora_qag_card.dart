@@ -34,47 +34,50 @@ class AgoraQagCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AgoraRoundedCard(
-      borderColor: AgoraColors.border,
-      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: () => onCardClick(),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AgoraSpacings.base),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Semantics(
+      button: true,
+      child: AgoraRoundedCard(
+        borderColor: AgoraColors.border,
+        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+        onTap: () => onCardClick(),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(AgoraSpacings.base),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(child: ThematiqueHelper.buildCard(context, thematique)),
+                      SizedBox(width: AgoraSpacings.x0_25),
+                      AgoraLikeView(
+                        isSupported: isSupported,
+                        supportCount: supportCount,
+                        shouldHaveVerticalPadding: true,
+                        onSupportClick: (support) => onSupportClick(support),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_25),
+                  Text(title, style: AgoraTextStyles.medium16),
+                ],
+              ),
+            ),
+            Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(child: ThematiqueHelper.buildCard(context, thematique)),
-                    SizedBox(width: AgoraSpacings.x0_25),
-                    AgoraLikeView(
-                      isSupported: isSupported,
-                      supportCount: supportCount,
-                      shouldHaveVerticalPadding: true,
-                      onSupportClick: (support) => onSupportClick(support),
-                    ),
-                  ],
+                Expanded(
+                  child: AgoraRoundedCard(
+                    cardColor: AgoraColors.doctor,
+                    padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+                    roundedCorner: AgoraRoundedCorner.bottomRounded,
+                    child: Text(QagStrings.authorAndDate.format2(username, date), style: AgoraTextStyles.light12),
+                  ),
                 ),
-                SizedBox(height: AgoraSpacings.x0_25),
-                Text(title, style: AgoraTextStyles.medium16),
               ],
             ),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: AgoraRoundedCard(
-                  cardColor: AgoraColors.doctor,
-                  padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-                  roundedCorner: AgoraRoundedCorner.bottomRounded,
-                  child: Text(QagStrings.authorAndDate.format2(username, date), style: AgoraTextStyles.light12),
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

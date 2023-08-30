@@ -32,54 +32,57 @@ class AgoraQagResponseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget currentChild = AgoraRoundedCard(
-      borderColor: AgoraColors.border,
-      cardColor: AgoraColors.white,
-      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      onTap: () => onClick(),
-      child: Column(
-        children: [
-          Padding(
-            padding: style == AgoraQagResponseStyle.small
-                ? EdgeInsets.only(
-                    top: AgoraSpacings.x0_5,
-                    bottom: AgoraSpacings.base,
-                    left: AgoraSpacings.x0_75,
-                    right: AgoraSpacings.x0_75,
-                  )
-                : EdgeInsets.all(AgoraSpacings.base),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(width: double.infinity),
-                ThematiqueHelper.buildCard(context, thematique),
-                SizedBox(height: AgoraSpacings.x0_25),
-                Text(title, style: AgoraTextStyles.medium16),
-              ],
+    Widget currentChild = Semantics(
+      button: true,
+      child: AgoraRoundedCard(
+        borderColor: AgoraColors.border,
+        cardColor: AgoraColors.white,
+        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+        onTap: () => onClick(),
+        child: Column(
+          children: [
+            Padding(
+              padding: style == AgoraQagResponseStyle.small
+                  ? EdgeInsets.only(
+                      top: AgoraSpacings.x0_5,
+                      bottom: AgoraSpacings.base,
+                      left: AgoraSpacings.x0_75,
+                      right: AgoraSpacings.x0_75,
+                    )
+                  : EdgeInsets.all(AgoraSpacings.base),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(width: double.infinity),
+                  ThematiqueHelper.buildCard(context, thematique),
+                  SizedBox(height: AgoraSpacings.x0_25),
+                  Text(title, style: AgoraTextStyles.medium16),
+                ],
+              ),
             ),
-          ),
-          if (style == AgoraQagResponseStyle.small) Spacer(),
-          AgoraRoundedCard(
-            cardColor: AgoraColors.doctor,
-            padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-            roundedCorner: AgoraRoundedCorner.bottomRounded,
-            child: Row(
-              children: [
-                AgoraRoundedImage(imageUrl: authorImageUrl, size: 27),
-                SizedBox(width: AgoraSpacings.x0_5),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(author, style: AgoraTextStyles.medium12),
-                      Text(date, style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
-                    ],
+            if (style == AgoraQagResponseStyle.small) Spacer(),
+            AgoraRoundedCard(
+              cardColor: AgoraColors.doctor,
+              padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+              roundedCorner: AgoraRoundedCorner.bottomRounded,
+              child: Row(
+                children: [
+                  AgoraRoundedImage(imageUrl: authorImageUrl, size: 27),
+                  SizedBox(width: AgoraSpacings.x0_5),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(author, style: AgoraTextStyles.medium12),
+                        Text(date, style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
     if (style == AgoraQagResponseStyle.small) {

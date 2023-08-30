@@ -45,75 +45,78 @@ class AgoraQagModerationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AgoraRoundedCard(
-      borderColor: AgoraColors.border,
-      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AgoraSpacings.base),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    ThematiqueHelper.buildCard(context, thematique),
-                    SizedBox(width: AgoraSpacings.x0_25),
-                    Spacer(),
-                    AgoraLikeView(isSupported: isSupported, supportCount: supportCount),
-                  ],
-                ),
-                SizedBox(height: AgoraSpacings.x0_25),
-                Text(title, style: AgoraTextStyles.medium16),
-                SizedBox(height: AgoraSpacings.x0_25),
-                Text(description, style: AgoraTextStyles.regular14),
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: AgoraRoundedCard(
-                  cardColor: AgoraColors.doctor,
-                  padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-                  roundedCorner: AgoraRoundedCorner.bottomRounded,
-                  child: Text(QagStrings.authorAndDate.format2(username, date), style: AgoraTextStyles.light12),
-                ),
+    return Semantics(
+      button: true,
+      child: AgoraRoundedCard(
+        borderColor: AgoraColors.border,
+        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(AgoraSpacings.base),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      ThematiqueHelper.buildCard(context, thematique),
+                      SizedBox(width: AgoraSpacings.x0_25),
+                      Spacer(),
+                      AgoraLikeView(isSupported: isSupported, supportCount: supportCount),
+                    ],
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_25),
+                  Text(title, style: AgoraTextStyles.medium16),
+                  SizedBox(height: AgoraSpacings.x0_25),
+                  Text(description, style: AgoraTextStyles.regular14),
+                ],
               ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AgoraSpacings.horizontalPadding,
-              vertical: AgoraSpacings.x0_5,
             ),
-            child: Row(
+            Row(
               children: [
                 Expanded(
-                  child: AgoraButton(
-                    label: QagStrings.refuse,
-                    isLoading: refuseLoading,
-                    style: AgoraButtonStyle.blueBorderButtonStyle,
-                    onPressed: () => onRefuse(),
-                  ),
-                ),
-                SizedBox(width: AgoraSpacings.base),
-                Expanded(
-                  child: AgoraButton(
-                    label: QagStrings.validate,
-                    isLoading: validateLoading,
-                    style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () => onValidate(),
+                  child: AgoraRoundedCard(
+                    cardColor: AgoraColors.doctor,
+                    padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+                    roundedCorner: AgoraRoundedCorner.bottomRounded,
+                    child: Text(QagStrings.authorAndDate.format2(username, date), style: AgoraTextStyles.light12),
                   ),
                 ),
               ],
             ),
-          ),
-          if (error) ...[
-            AgoraErrorView(),
-            SizedBox(height: AgoraSpacings.base),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AgoraSpacings.horizontalPadding,
+                vertical: AgoraSpacings.x0_5,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: AgoraButton(
+                      label: QagStrings.refuse,
+                      isLoading: refuseLoading,
+                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      onPressed: () => onRefuse(),
+                    ),
+                  ),
+                  SizedBox(width: AgoraSpacings.base),
+                  Expanded(
+                    child: AgoraButton(
+                      label: QagStrings.validate,
+                      isLoading: validateLoading,
+                      style: AgoraButtonStyle.primaryButtonStyle,
+                      onPressed: () => onValidate(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (error) ...[
+              AgoraErrorView(),
+              SizedBox(height: AgoraSpacings.base),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
