@@ -50,12 +50,15 @@ class QagDetailsSupportView extends StatelessWidget {
                     ),
                   ),
                 SizedBox(width: AgoraSpacings.x0_5),
-                GestureDetector(
-                  onTap: canSupport ? () => _buildOnPressed(context, qagId, isSupported, supportState) : null,
-                  child: AgoraLikeView(
-                    isSupported: _buildIsSupported(isSupported, supportState),
-                    supportCount: _buildCount(support, supportState),
-                    shouldHaveVerticalPadding: true,
+                Semantics(
+                  button: canSupport,
+                  child: GestureDetector(
+                    onTap: canSupport ? () => _buildOnPressed(context, qagId, isSupported, supportState) : null,
+                    child: AgoraLikeView(
+                      isSupported: _buildIsSupported(isSupported, supportState),
+                      supportCount: _buildCount(support, supportState),
+                      shouldHaveVerticalPadding: true,
+                    ),
                   ),
                 ),
               ],
