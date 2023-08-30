@@ -1,3 +1,5 @@
+import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +20,12 @@ class AgoraStepCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: _buildStep(),
+    return Semantics(
+      label: SemanticsStrings.stepV2.format2(currentStep.toString(), totalStep.toString()),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: _buildStep(),
+      ),
     );
   }
 
