@@ -89,11 +89,11 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: QagStrings.askQuestionTitle1,
                     style: AgoraRichTextItemStyle.regular,
                   ),
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: QagStrings.askQuestionTitle2,
                     style: AgoraRichTextItemStyle.bold,
                   ),
@@ -155,18 +155,17 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
             children: [
               AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.police14,
+                isSemanticHeader: false,
                 items: [
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: QagStrings.askQuestionDescription1,
                     style: AgoraRichTextItemStyle.regular,
                   ),
-                  AgoraRichTextSpaceItem(),
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: QagStrings.askQuestionDescription2,
                     style: AgoraRichTextItemStyle.bold,
                   ),
-                  AgoraRichTextSpaceItem(),
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: QagStrings.askQuestionDescription3,
                     style: AgoraRichTextItemStyle.regular,
                   ),

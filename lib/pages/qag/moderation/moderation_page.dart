@@ -53,7 +53,7 @@ class _ModerationPageState extends State<ModerationPage> {
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
-              AgoraRichTextTextItem(
+              AgoraRichTextItem(
                 text: ProfileStrings.moderationCapitalize,
                 style: AgoraRichTextItemStyle.bold,
               ),

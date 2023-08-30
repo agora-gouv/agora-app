@@ -28,22 +28,25 @@ class OnboardingView extends StatelessWidget {
                 children: [
                   SizedBox(height: AgoraSpacings.x2),
                   SvgPicture.asset("assets/ic_marianne.svg", excludeFromSemantics: true),
-                  Text(GenericStrings.onboardingStep0Title, style: AgoraTextStyles.light28),
+                  SizedBox(height: AgoraSpacings.base),
+                  Semantics(
+                    header: true,
+                    child: Text(GenericStrings.onboardingStep0Title, style: AgoraTextStyles.light28),
+                  ),
                   SizedBox(height: AgoraSpacings.x1_5),
                   AgoraRichText(
                     policeStyle: AgoraRichTextPoliceStyle.police22,
+                    isSemanticHeader: false,
                     items: [
-                      AgoraRichTextTextItem(
+                      AgoraRichTextItem(
                         text: GenericStrings.onboardingStep0Description1,
                         style: AgoraRichTextItemStyle.regular,
                       ),
-                      AgoraRichTextSpaceItem(),
-                      AgoraRichTextTextItem(
+                      AgoraRichTextItem(
                         text: GenericStrings.onboardingStep0Description2,
                         style: AgoraRichTextItemStyle.bold,
                       ),
-                      AgoraRichTextSpaceItem(),
-                      AgoraRichTextTextItem(
+                      AgoraRichTextItem(
                         text: GenericStrings.onboardingStep0Description3,
                         style: AgoraRichTextItemStyle.regular,
                       ),

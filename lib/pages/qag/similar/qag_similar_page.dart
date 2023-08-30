@@ -62,11 +62,11 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: QagStrings.similarQagTitle1,
                     style: AgoraRichTextItemStyle.bold,
                   ),
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: QagStrings.similarQagTitle2,
                     style: AgoraRichTextItemStyle.regular,
                   ),

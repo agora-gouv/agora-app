@@ -1,7 +1,7 @@
 class QagStrings {
   static const String toolbarPart1 = "Questions";
   static const String toolbarPart2 = "au Gouvernement";
-  static const String qagResponsePart1 = "Les réponses";
+  static const String qagResponsePart1 = "Les réponses ";
   static const String qagResponsePart2 = "à vos questions";
   static const String mostPopularQuestion = "La question la plus populaire";
   static const String incomingResponse = "Réponse à venir";
@@ -19,9 +19,9 @@ class QagStrings {
   static const String share = "Partager";
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";
-  static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement.";
+  static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
   static const String askQuestionDescription2 =
-      "Chaque utilisateur peut poser une question par semaine à partir de chaque mercredi à 14h.";
+      "Chaque utilisateur peut poser une question par semaine à partir de chaque mercredi à 14h. ";
   static const String askQuestionDescription3 =
       "Le Gouvernement répondra directement sur l'appli à la question la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens chaque mercredi à 14h.";
   static const String readNotice = "Lire la charte";

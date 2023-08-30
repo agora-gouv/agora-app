@@ -70,12 +70,11 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: DemographicStrings.my,
                     style: AgoraRichTextItemStyle.regular,
                   ),
-                  AgoraRichTextSpaceItem(),
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: DemographicStrings.information,
                     style: AgoraRichTextItemStyle.bold,
                   ),
@@ -124,11 +123,11 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                 child: AgoraRichText(
                   policeStyle: AgoraRichTextPoliceStyle.section,
                   items: [
-                    AgoraRichTextTextItem(
+                    AgoraRichTextItem(
                       text: DemographicStrings.informationCapitalize,
                       style: AgoraRichTextItemStyle.regular,
                     ),
-                    AgoraRichTextTextItem(
+                    AgoraRichTextItem(
                       text: DemographicStrings.demographic,
                       style: AgoraRichTextItemStyle.bold,
                     ),

@@ -39,13 +39,11 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
-              AgoraRichTextTextItem(
+              AgoraRichTextItem(
                 text: ConsultationStrings.finishConsultationPart1,
                 style: AgoraRichTextItemStyle.regular,
               ),
-              AgoraRichTextSpaceItem(),
-              AgoraRichTextSpaceItem(),
-              AgoraRichTextTextItem(
+              AgoraRichTextItem(
                 text: ConsultationStrings.finishConsultationPart2,
                 style: AgoraRichTextItemStyle.bold,
               ),

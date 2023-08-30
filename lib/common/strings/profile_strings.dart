@@ -1,5 +1,5 @@
 class ProfileStrings {
-  static const String my = "Mon";
+  static const String my = "Mon ";
   static const String profile = "Profil";
   static const String myInformation = "Mes informations";
   static const String notification = "Notifications";
@@ -14,13 +14,13 @@ class ProfileStrings {
   static const String feedbackTipsDescription =
       "Faites-nous remonter les éventuels bugs que vous repérez sur cette version en expérimentation mais aussi vos retours, critiques et idées pour nous aider à améliorer l'application.";
   static const String feedbackTipsButton = "Donner mes retours";
-  static const String charter = "Charte de";
+  static const String charter = "Charte de ";
   static const String participation = "participation";
   static const String policy = "Politique de ";
   static const String privacy = "confidentialité";
-  static const String condition = "Conditions générales";
+  static const String condition = "Conditions générales ";
   static const String term = "d'utilisation";
-  static const String notice = "Mentions";
+  static const String notice = "Mentions ";
   static const String legal = "légales";
 
   static const String deleteAccount1 =

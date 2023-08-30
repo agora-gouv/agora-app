@@ -58,11 +58,11 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
                       key: toolbarTitleKey,
                       policeStyle: AgoraRichTextPoliceStyle.toolbar,
                       items: [
-                        AgoraRichTextTextItem(
+                        AgoraRichTextItem(
                           text: "${ConsultationStrings.toolbarPart1}\n",
                           style: AgoraRichTextItemStyle.regular,
                         ),
-                        AgoraRichTextTextItem(
+                        AgoraRichTextItem(
                           text: ConsultationStrings.toolbarPart2,
                           style: AgoraRichTextItemStyle.bold,
                         ),

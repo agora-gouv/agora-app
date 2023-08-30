@@ -69,36 +69,33 @@ class OnboardingStepView extends StatelessWidget {
     switch (step) {
       case OnboardingStep.participate:
         return [
-          AgoraRichTextTextItem(
+          AgoraRichTextItem(
             text: GenericStrings.onboardingStep1Title1,
             style: AgoraRichTextItemStyle.bold,
           ),
-          AgoraRichTextSpaceItem(),
-          AgoraRichTextTextItem(
+          AgoraRichTextItem(
             text: GenericStrings.onboardingStep1Title2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
       case OnboardingStep.askYourQuestion:
         return [
-          AgoraRichTextTextItem(
+          AgoraRichTextItem(
             text: GenericStrings.onboardingStep2Title1,
             style: AgoraRichTextItemStyle.bold,
           ),
-          AgoraRichTextSpaceItem(),
-          AgoraRichTextTextItem(
+          AgoraRichTextItem(
             text: GenericStrings.onboardingStep2Title2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
       case OnboardingStep.invent:
         return [
-          AgoraRichTextTextItem(
+          AgoraRichTextItem(
             text: GenericStrings.onboardingStep3Title1,
             style: AgoraRichTextItemStyle.bold,
           ),
-          AgoraRichTextSpaceItem(),
-          AgoraRichTextTextItem(
+          AgoraRichTextItem(
             text: GenericStrings.onboardingStep3Title2,
             style: AgoraRichTextItemStyle.regular,
           ),

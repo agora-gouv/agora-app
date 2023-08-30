@@ -24,12 +24,11 @@ class PrivacyPolicyPage extends StatelessWidget {
         title: AgoraRichText(
           policeStyle: AgoraRichTextPoliceStyle.toolbar,
           items: [
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.policy,
               style: AgoraRichTextItemStyle.regular,
             ),
-            AgoraRichTextSpaceItem(),
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: ProfileStrings.privacy,
               style: AgoraRichTextItemStyle.bold,
             ),

@@ -26,12 +26,11 @@ class DeleteAccountPage extends StatelessWidget {
         title: AgoraRichText(
           policeStyle: AgoraRichTextPoliceStyle.toolbar,
           items: [
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: DemographicStrings.delete,
               style: AgoraRichTextItemStyle.bold,
             ),
-            AgoraRichTextSpaceItem(),
-            AgoraRichTextTextItem(
+            AgoraRichTextItem(
               text: DemographicStrings.myAccount,
               style: AgoraRichTextItemStyle.regular,
             ),

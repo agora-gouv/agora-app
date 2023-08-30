@@ -40,7 +40,7 @@ class _NotificationPageState extends State<NotificationPage> {
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
-                  AgoraRichTextTextItem(
+                  AgoraRichTextItem(
                     text: ProfileStrings.notification,
                     style: AgoraRichTextItemStyle.bold,
                   ),
