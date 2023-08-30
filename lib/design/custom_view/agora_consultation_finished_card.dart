@@ -42,16 +42,12 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     }
 
     Widget currentChild = step != 1
-        ? _buildFinishedConsultationCard(context, carrouselWidth)
-        : InkWell(
-            onTap: () {
-              // Do nothing
-              // use InkWell to regroup all elements of stack for voice over of accessibility
-            },
-            excludeFromSemantics: true, // exclude from tap voice over
+        ? _buildFinishedConsultationCard(context, carrouselWidth, true)
+        : Semantics(
+            button: false,
             child: Stack(
               children: [
-                _buildFinishedConsultationCard(context, carrouselWidth),
+                _buildFinishedConsultationCard(context, carrouselWidth, false),
                 Positioned.fill(
                   child: AgoraRoundedCard(
                     cardColor: AgoraColors.whiteOpacity90,
@@ -83,6 +79,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                             child: Text(
                               ConsultationStrings.shortly,
                               style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.brun),
+                              semanticsLabel: ConsultationStrings.shortly.toLowerCase(),
                             ),
                           ),
                         ),
@@ -99,10 +96,14 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     return currentChild;
   }
 
-  Widget _buildFinishedConsultationCard(BuildContext context, double carrouselWidth) {
+  Widget _buildFinishedConsultationCard(
+    BuildContext context,
+    double carrouselWidth,
+    bool isButton,
+  ) {
     final image = _buildImage(context, carrouselWidth);
     return Semantics(
-      button: true,
+      button: isButton,
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
         cardColor: AgoraColors.white,
