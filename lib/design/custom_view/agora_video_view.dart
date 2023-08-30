@@ -1,3 +1,4 @@
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
@@ -70,11 +71,23 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AgoraColors.potBlack,
-      child: AspectRatio(
-        aspectRatio: aspectRatio,
-        child: Chewie(controller: chewieController),
+    return Semantics(
+      label: SemanticsStrings.video,
+      button: true,
+      onTap: () {
+        if (chewieController.isPlaying) {
+          chewieController.pause();
+        } else {
+          chewieController.play();
+        }
+      },
+      onTapHint: SemanticsStrings.onVideoTap,
+      child: Container(
+        color: AgoraColors.potBlack,
+        child: AspectRatio(
+          aspectRatio: aspectRatio,
+          child: Chewie(controller: chewieController),
+        ),
       ),
     );
   }

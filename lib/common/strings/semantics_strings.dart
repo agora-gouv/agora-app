@@ -21,4 +21,7 @@ class SemanticsStrings {
   static const String select = "séléctionné";
   static const String noSelect = "non séléctionné";
   static const String button = "bouton";
+
+  static const String video = "Vidéo";
+  static const String onVideoTap = "lancer ou mettre en pause la vidéo";
 }

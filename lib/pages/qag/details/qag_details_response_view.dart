@@ -55,18 +55,21 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                 },
               ),
               SizedBox(height: AgoraSpacings.base),
-              RichText(
-                textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                text: TextSpan(
-                  style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                  children: [
-                    TextSpan(text: QagStrings.by),
-                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                    TextSpan(
-                      text: response.author,
-                      style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryGreyOpacity90),
-                    ),
-                  ],
+              Semantics(
+                header: true,
+                child: RichText(
+                  textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                  text: TextSpan(
+                    style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                    children: [
+                      TextSpan(text: QagStrings.by),
+                      WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                      TextSpan(
+                        text: response.author,
+                        style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryGreyOpacity90),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: AgoraSpacings.x0_5),
