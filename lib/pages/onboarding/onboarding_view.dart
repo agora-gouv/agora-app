@@ -31,12 +31,13 @@ class OnboardingView extends StatelessWidget {
                   SizedBox(height: AgoraSpacings.base),
                   Semantics(
                     header: true,
+                    focused: true,
                     child: Text(GenericStrings.onboardingStep0Title, style: AgoraTextStyles.light28),
                   ),
                   SizedBox(height: AgoraSpacings.x1_5),
                   AgoraRichText(
                     policeStyle: AgoraRichTextPoliceStyle.police22,
-                    isSemanticHeader: false,
+                    semantic: AgoraRichTextSemantic(header: false),
                     items: [
                       AgoraRichTextItem(
                         text: GenericStrings.onboardingStep0Description1,

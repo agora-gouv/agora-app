@@ -21,22 +21,30 @@ class AgoraRichTextItem {
   });
 }
 
+class AgoraRichTextSemantic {
+  final bool header;
+  final bool? focused;
+
+  const AgoraRichTextSemantic({this.header = true, this.focused});
+}
+
 class AgoraRichText extends StatelessWidget {
   final AgoraRichTextPoliceStyle policeStyle;
   final List<AgoraRichTextItem> items;
-  final bool isSemanticHeader;
+  final AgoraRichTextSemantic semantic;
 
   AgoraRichText({
     super.key,
     this.policeStyle = AgoraRichTextPoliceStyle.section,
     required this.items,
-    this.isSemanticHeader = true,
+    this.semantic = const AgoraRichTextSemantic(),
   });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      header: isSemanticHeader,
+      header: semantic.header,
+      focused: semantic.focused,
       label: items.map((richTextItem) => richTextItem.text.replaceAll("\n", " ")).join(),
       child: ExcludeSemantics(
         child: RichText(

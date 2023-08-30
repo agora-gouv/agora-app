@@ -31,9 +31,12 @@ class OnboardingStepView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AgoraRichText(
-                  policeStyle: AgoraRichTextPoliceStyle.police28,
-                  items: _buildTitle(),
+                Semantics(
+                  focused: true,
+                  child: AgoraRichText(
+                    policeStyle: AgoraRichTextPoliceStyle.police28,
+                    items: _buildTitle(),
+                  ),
                 ),
                 SizedBox(height: AgoraSpacings.x1_5),
                 Text(_buildDescription(), style: AgoraTextStyles.light18),

@@ -123,10 +123,13 @@ class _LoadingPageState extends State<LoadingPage> {
                           children: [
                             SvgPicture.asset("assets/ic_oops.svg", excludeFromSemantics: true),
                             SizedBox(height: AgoraSpacings.x1_25),
-                            Text(
-                              _buildErrorText(loginState.errorType),
-                              style: AgoraTextStyles.medium18,
-                              textAlign: TextAlign.center,
+                            Semantics(
+                              focused: true,
+                              child: Text(
+                                _buildErrorText(loginState.errorType),
+                                style: AgoraTextStyles.medium18,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                             if (loginState.errorType != LoginErrorType.updateVersion) ...[
                               SizedBox(height: AgoraSpacings.x1_25),
@@ -183,13 +186,17 @@ class _LoadingPageState extends State<LoadingPage> {
                   children: [
                     SizedBox(width: 76, height: 76, child: agoraLogoImage),
                     SizedBox(height: AgoraSpacings.x3),
-                    LinearPercentIndicator(
-                      percent: 1,
-                      animation: true,
-                      animationDuration: 2000,
-                      progressColor: AgoraColors.primaryBlue,
-                      restartAnimation: true,
-                      barRadius: AgoraCorners.rounded50,
+                    Semantics(
+                      focused: true,
+                      label: "En cours de chargement",
+                      child: LinearPercentIndicator(
+                        percent: 1,
+                        animation: true,
+                        animationDuration: 2000,
+                        progressColor: AgoraColors.primaryBlue,
+                        restartAnimation: true,
+                        barRadius: AgoraCorners.rounded50,
+                      ),
                     ),
                   ],
                 );

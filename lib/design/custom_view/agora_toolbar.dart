@@ -7,25 +7,41 @@ import 'package:flutter_svg/svg.dart';
 
 enum AgoraToolbarStyle { back, close }
 
+class AgoraToolbarSemantic {
+  final bool? focused;
+
+  const AgoraToolbarSemantic({this.focused = true});
+}
+
 class AgoraToolbar extends StatelessWidget {
   final VoidCallback? onBackClick;
   final AgoraToolbarStyle style;
+  final AgoraToolbarSemantic semantic;
 
-  const AgoraToolbar({super.key, this.onBackClick, this.style = AgoraToolbarStyle.back});
+  const AgoraToolbar({
+    super.key,
+    this.onBackClick,
+    this.style = AgoraToolbarStyle.back,
+    this.semantic = const AgoraToolbarSemantic(),
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x0_5),
-      child: GestureDetector(
-        onTap: () {
-          if (onBackClick != null) {
-            onBackClick!();
-          } else {
-            Navigator.pop(context);
-          }
-        },
-        child: style == AgoraToolbarStyle.back ? _buildBack() : _buildClose(),
+      child: Semantics(
+        button: true,
+        focused: semantic.focused,
+        child: GestureDetector(
+          onTap: () {
+            if (onBackClick != null) {
+              onBackClick!();
+            } else {
+              Navigator.pop(context);
+            }
+          },
+          child: style == AgoraToolbarStyle.back ? _buildBack() : _buildClose(),
+        ),
       ),
     );
   }
