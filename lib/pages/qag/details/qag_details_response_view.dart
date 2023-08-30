@@ -41,7 +41,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17),
+              Semantics(header: true, child: Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17)),
               SizedBox(height: AgoraSpacings.base),
               AgoraVideoView(
                 videoUrl: response.videoUrl,
@@ -115,9 +115,11 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                 ),
               ),
               SizedBox(height: AgoraSpacings.x1_5),
+              Semantics(header: true, child: Text(QagStrings.transcription, style: AgoraTextStyles.medium18)),
+              SizedBox(height: AgoraSpacings.x0_5),
               AgoraReadMoreText(response.transcription),
               SizedBox(height: AgoraSpacings.x2),
-              Text(QagStrings.questionUtilsTitle, style: AgoraTextStyles.medium18),
+              Semantics(header: true, child: Text(QagStrings.questionUtilsTitle, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.base),
               BlocBuilder<QagFeedbackBloc, QagFeedbackState>(
                 builder: (context, feedbackState) {
