@@ -78,7 +78,7 @@ class OnboardingView extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  SizedBox(height: AgoraSpacings.x4),
+                  SizedBox(height: AgoraSpacings.x6),
                 ],
               ),
             ),
