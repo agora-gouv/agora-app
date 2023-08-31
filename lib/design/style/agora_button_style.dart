@@ -2,6 +2,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AgoraButtonStyle {
@@ -22,25 +23,7 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-  );
-
-  static ButtonStyle onboardingButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
-      (states) {
-        if (states.contains(MaterialState.disabled)) {
-          return AgoraColors.gravelFint;
-        } else {
-          return AgoraColors.primaryBlue;
-        }
-      },
-    ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.primaryButton.copyWith(fontSize: 18.0)),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
-    padding: MaterialStateProperty.all(
-      EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x0_75),
-    ),
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
   );
 
   static ButtonStyle blueBorderButtonStyle = ButtonStyle(
@@ -61,6 +44,7 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
   );
 
   static ButtonStyle redBorderButtonStyle = ButtonStyle(
@@ -81,6 +65,7 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
   );
 
   static ButtonStyle greyButtonStyle = ButtonStyle(
@@ -100,6 +85,7 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
   );
 
   static ButtonStyle lightGreyButtonStyle = ButtonStyle(
@@ -119,6 +105,7 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
   );
 
   static ButtonStyle lightGreyWithBorderButtonStyle = ButtonStyle(
@@ -147,5 +134,6 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
   );
 }
