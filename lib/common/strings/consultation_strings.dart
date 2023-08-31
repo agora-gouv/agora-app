@@ -7,8 +7,7 @@ class ConsultationStrings {
   static const String finishConsultationPart2 = "grâce à vous";
   static const String answeredConsultationPart1 = "Mes ";
   static const String answeredConsultationPart2 = "consultations";
-  static const String ongoingConsultationEmpty =
-      "✅\u{00A0}Vous avez répondu à toutes les consultations en cours\u{00A0}!";
+  static const String ongoingConsultationEmpty = "Vous avez répondu à toutes les consultations en cours\u{00A0}!";
   static const String consultationEmpty = "La liste est vide.";
   static const String answeredConsultationEmptyList = "Vous n'avez pas encore participé à une consultation.";
   static const String participate = "Participer";

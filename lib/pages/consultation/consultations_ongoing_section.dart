@@ -21,8 +21,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
   }
 
   List<Widget> _buildOngoingConsultations(BuildContext context) {
-    final List<Widget> ongoingConsultationsWidgets = List.empty(growable: true);
-    ongoingConsultationsWidgets.add(
+    final List<Widget> ongoingConsultationsWidgets = [
       Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AgoraSpacings.horizontalPadding,
@@ -41,7 +40,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ];
 
     if (ongoingViewModels.isEmpty) {
       ongoingConsultationsWidgets.add(Container(width: double.infinity));
@@ -52,11 +51,20 @@ class ConsultationsOngoingSection extends StatelessWidget {
               horizontal: AgoraSpacings.horizontalPadding,
               vertical: AgoraSpacings.x0_75,
             ),
-            child: Text(
-              ConsultationStrings.ongoingConsultationEmpty,
-              semanticsLabel: SemanticsStrings.ongoingConsultationEmpty,
-              style: AgoraTextStyles.medium14,
-              textAlign: TextAlign.center,
+            child: Column(
+              children: [
+                Image.asset(
+                  "assets/ic_consultation_ongoing_empty.png",
+                  width: MediaQuery.of(context).size.width * 0.4,
+                ),
+                SizedBox(height: AgoraSpacings.x1_5),
+                Text(
+                  ConsultationStrings.ongoingConsultationEmpty,
+                  semanticsLabel: SemanticsStrings.ongoingConsultationEmpty,
+                  style: AgoraTextStyles.medium14,
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         ),
