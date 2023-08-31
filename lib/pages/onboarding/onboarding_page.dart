@@ -51,7 +51,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             : RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
         extendedSizeConstraints: BoxConstraints.tightFor(height: AgoraSpacings.x3),
         extendedPadding: EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_75),
-        extendedTextStyle: AgoraTextStyles.primaryButton,
+        extendedTextStyle: AgoraTextStyles.primaryFloatingButton,
       ),
     );
   }

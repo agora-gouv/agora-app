@@ -9,9 +9,7 @@ class AgoraSpacings {
   static const double x2 = base * 2;
   static const double x2_5 = base * 2.5;
   static const double x3 = base * 3;
-  static const double x3_25 = base * 3.25;
-  static const double x4 = base * 4;
-  static const double x5 = base * 5.25;
+  static const double x6 = base * 6;
 
   static const horizontalPadding = x1_25;
 

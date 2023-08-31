@@ -345,6 +345,13 @@ class AgoraTextStyles {
     foreground: Paint()..color = AgoraColors.invertedBlueFrance,
   );
 
+  static TextStyle primaryFloatingButton = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 18.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
+  );
+
   static TextStyle primaryBlueTextButton = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
