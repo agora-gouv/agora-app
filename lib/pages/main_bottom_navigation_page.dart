@@ -4,7 +4,6 @@ import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navi
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,7 +38,7 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
         SystemNavigator.pop();
         return false;
       },
-      child: kIsWeb ? AgoraResponsiveView(child: _buildScaffold()) : _buildScaffold(),
+      child: AgoraResponsiveView(child: _buildScaffold()),
     );
   }
 

@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
@@ -57,7 +60,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget _floatingButton(BuildContext context) {
-    return _isSmallFloatingButtonStyle() ? _smallFloatingActionButton(context) : _largeFloatingActionButton(context);
+    if (_isSmallFloatingButtonStyle()) {
+      return _smallFloatingActionButton(context);
+    } else {
+      return _largeFloatingActionButton(context);
+    }
   }
 
   bool _isSmallFloatingButtonStyle() => step == 1 || step == 2;
@@ -75,7 +82,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Widget _largeFloatingActionButton(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2,
+      width:
+          min(MediaQuery.of(context).size.width, ResponsiveHelper.maxScreenSize) - AgoraSpacings.horizontalPadding * 2,
       child: FloatingActionButton.extended(
         backgroundColor: AgoraColors.primaryBlue,
         label: Text(step == 0 ? ConsultationStrings.beginButton : GenericStrings.onboardingStep3LetsGo),
