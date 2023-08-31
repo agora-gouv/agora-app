@@ -22,6 +22,8 @@ class SemanticsStrings {
   static const String noSelect = "non séléctionné";
   static const String button = "bouton";
 
+  static const String maxChoiceAttempt = "Vous avez atteint le maximum de choix possibles.";
+
   static const String video = "Vidéo";
   static const String onVideoTap = "lancer ou mettre en pause la vidéo";
 }
