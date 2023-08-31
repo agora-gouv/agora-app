@@ -1,6 +1,7 @@
 import 'package:agora/common/log/log.dart';
 import 'package:matomo_tracker/matomo_tracker.dart';
 
+/// see https://pub.dev/packages/matomo
 class TrackerHelper {
   static void trackClick({required String widgetName, required String clickName}) {
     Log.d("AGORA MATOMO TRACK CLICK - $widgetName - $clickName");

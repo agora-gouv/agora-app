@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:agora/common/log/log.dart';
 import 'package:uni_links/uni_links.dart';
 
+/// see https://pub.dev/packages/uni_links
 class DeeplinkHelper {
   static const String _consultationPath = "consultations";
   static const String _qagPath = "qags";

@@ -1,5 +1,6 @@
 import 'package:package_info_plus/package_info_plus.dart';
 
+/// see https://pub.dev/packages/package_info_plus
 abstract class AppVersionHelper {
   Future<String> getVersion();
   Future<String> getBuildNumber();

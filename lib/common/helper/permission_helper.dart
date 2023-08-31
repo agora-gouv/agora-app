@@ -1,5 +1,6 @@
 import 'package:permission_handler/permission_handler.dart';
 
+/// see https://pub.dev/packages/permission_handler
 abstract class PermissionHelper {
   Future<bool> isDenied();
 
