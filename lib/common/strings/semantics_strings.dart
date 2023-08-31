@@ -24,6 +24,9 @@ class SemanticsStrings {
 
   static const String maxChoiceAttempt = "Vous avez atteint le maximum de choix possibles.";
 
+  static const String remainingChar = "Il ne vous reste plus que %s caractères.";
+  static const String maxCharAttempt = "Vous avez atteint le maximum de caractères possibles.";
+
   static const String video = "Vidéo";
   static const String onVideoTap = "lancer ou mettre en pause la vidéo";
 }
