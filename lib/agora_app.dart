@@ -1,5 +1,6 @@
 import 'package:agora/agora_app_router.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
@@ -92,10 +93,26 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [
-          const Breakpoint(start: 0, end: 450, name: MOBILE),
-          const Breakpoint(start: 451, end: 800, name: TABLET),
-          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+          const Breakpoint(
+            start: 0,
+            end: ResponsiveHelper.mobileBreakPoint,
+            name: MOBILE,
+          ),
+          const Breakpoint(
+            start: ResponsiveHelper.mobileBreakPoint + 1,
+            end: ResponsiveHelper.tabletBreakPoint,
+            name: TABLET,
+          ),
+          const Breakpoint(
+            start: ResponsiveHelper.tabletBreakPoint + 1,
+            end: ResponsiveHelper.desktopBreakPoint,
+            name: DESKTOP,
+          ),
+          const Breakpoint(
+            start: ResponsiveHelper.desktopBreakPoint + 1,
+            end: double.infinity,
+            name: '4K',
+          ),
         ],
       ),
       navigatorKey: navigatorKey,
