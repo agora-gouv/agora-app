@@ -27,7 +27,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
   late ChewieController chewieController;
   bool isFirstTimeTrack = true;
 
-  late double aspectRatio;
+  late double videoAspectRatio;
 
   @override
   void initState() {
@@ -36,9 +36,9 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
     final videoWidth = widget.videoWidth;
     final videoHeight = widget.videoHeight;
     if (videoWidth != null && videoHeight != null) {
-      aspectRatio = videoWidth.toDouble() / videoHeight.toDouble();
+      videoAspectRatio = videoWidth.toDouble() / videoHeight.toDouble();
     } else {
-      aspectRatio = 1080 / 1920;
+      videoAspectRatio = 1080.0 / 1920.0;
     }
 
     videoPlayerController = VideoPlayerController.network(widget.videoUrl);
@@ -48,7 +48,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       autoPlay: false,
       allowedScreenSleep: false,
       allowFullScreen: true,
-      aspectRatio: aspectRatio,
+      aspectRatio: videoAspectRatio,
       showControls: true,
     );
     videoPlayerController.addListener(_listener);
@@ -71,6 +71,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Semantics(
       label: SemanticsStrings.video,
       button: true,
@@ -84,8 +85,10 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       onTapHint: SemanticsStrings.onVideoTap,
       child: Container(
         color: AgoraColors.potBlack,
+        width: screenWidth,
+        height: screenWidth * 0.5625,
         child: AspectRatio(
-          aspectRatio: aspectRatio,
+          aspectRatio: videoAspectRatio,
           child: Chewie(controller: chewieController),
         ),
       ),
