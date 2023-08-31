@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:share_plus/share_plus.dart';
 
+/// see https://pub.dev/packages/share_plus
 class ShareHelper {
   static void shareConsultation({required BuildContext context, required String title, required String id}) {
     _share(context, shareText: ConsultationStrings.shareConsultationDeeplink.format2(title, id));

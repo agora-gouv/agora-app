@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// see https://pub.dev/packages/url_launcher
+/// see https://pub.dev/packages/webview_flutter
 class LaunchUrlHelper {
   static void webview(BuildContext context, String? url) {
     if (url != null) {

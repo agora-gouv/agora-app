@@ -1,6 +1,7 @@
 import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
+/// see https://pub.dev/packages/firebase_core
 abstract class CrashlyticsHelper {
   void recordError(
     dynamic exception,

@@ -2,6 +2,7 @@ import 'package:agora/common/helper/platform_helper.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 
+/// see https://pub.dev/packages/device_info_plus
 abstract class DeviceInfoHelper {
   Future<int> getAndroidSdk();
 
