@@ -32,12 +32,14 @@ class AgoraRichText extends StatelessWidget {
   final AgoraRichTextPoliceStyle policeStyle;
   final List<AgoraRichTextItem> items;
   final AgoraRichTextSemantic semantic;
+  final TextAlign textAlign;
 
   AgoraRichText({
     super.key,
     this.policeStyle = AgoraRichTextPoliceStyle.section,
     required this.items,
     this.semantic = const AgoraRichTextSemantic(),
+    this.textAlign = TextAlign.start,
   });
 
   @override
@@ -60,6 +62,7 @@ class AgoraRichText extends StatelessWidget {
               }
             }).toList(),
           ),
+          textAlign: textAlign,
         ),
       ),
     );

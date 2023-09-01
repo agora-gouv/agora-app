@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
@@ -17,6 +18,7 @@ class OnboardingStepView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
     return AgoraSingleScrollView(
       physics: ClampingScrollPhysics(),
       child: Column(
@@ -29,17 +31,22 @@ class OnboardingStepView extends StatelessWidget {
               vertical: AgoraSpacings.x1_25,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
               children: [
                 Semantics(
                   focused: true,
                   child: AgoraRichText(
                     policeStyle: AgoraRichTextPoliceStyle.police28,
                     items: _buildTitle(),
+                    textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.x1_5),
-                Text(_buildDescription(), style: AgoraTextStyles.light18),
+                Text(
+                  _buildDescription(),
+                  style: AgoraTextStyles.light18,
+                  textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
+                ),
               ],
             ),
           ),
