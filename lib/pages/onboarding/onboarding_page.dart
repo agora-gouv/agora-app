@@ -11,6 +11,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/onboarding/onboarding_step_view.dart';
 import 'package:agora/pages/onboarding/onboarding_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -82,8 +83,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Widget _largeFloatingActionButton(BuildContext context) {
     return SizedBox(
-      width:
-          min(MediaQuery.of(context).size.width, ResponsiveHelper.maxScreenSize) - AgoraSpacings.horizontalPadding * 2,
+      width: kIsWeb
+          ? min(MediaQuery.of(context).size.width, ResponsiveHelper.maxScreenSize) - AgoraSpacings.horizontalPadding * 2
+          : MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2,
       child: FloatingActionButton.extended(
         backgroundColor: AgoraColors.primaryBlue,
         label: Text(step == 0 ? ConsultationStrings.beginButton : GenericStrings.onboardingStep3LetsGo),
