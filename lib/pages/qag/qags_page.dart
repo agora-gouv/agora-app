@@ -22,6 +22,7 @@ import 'package:agora/pages/qag/qags_response_section.dart';
 import 'package:agora/pages/qag/qags_section.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsPage extends StatefulWidget {
@@ -32,7 +33,16 @@ class QagsPage extends StatefulWidget {
 }
 
 class _QagsPageState extends State<QagsPage> {
+  final GlobalKey toolbarTitleKey = GlobalKey();
   String? currentThematiqueId;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +72,7 @@ class _QagsPageState extends State<QagsPage> {
                 children: <Widget>[
                   AgoraMainToolbar(
                     title: AgoraRichText(
+                      key: toolbarTitleKey,
                       policeStyle: AgoraRichTextPoliceStyle.toolbar,
                       semantic: AgoraRichTextSemantic(focused: true),
                       items: [
