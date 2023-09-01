@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
@@ -6,12 +7,14 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/onboarding/onboarding_auto_scroll_page.dart';
 import 'package:agora/pages/onboarding/onboarding_thematique_card.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
     return AgoraSingleScrollView(
       physics: ClampingScrollPhysics(),
       child: Column(
@@ -24,20 +27,28 @@ class OnboardingView extends StatelessWidget {
                 vertical: AgoraSpacings.x1_25,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: AgoraSpacings.x2),
-                  SvgPicture.asset("assets/ic_marianne.svg", excludeFromSemantics: true),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: SvgPicture.asset("assets/ic_marianne.svg", excludeFromSemantics: true),
+                  ),
                   SizedBox(height: AgoraSpacings.base),
                   Semantics(
                     header: true,
                     focused: true,
-                    child: Text(GenericStrings.onboardingStep0Title, style: AgoraTextStyles.light28),
+                    child: Text(
+                      GenericStrings.onboardingStep0Title,
+                      style: AgoraTextStyles.light28,
+                      textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
+                    ),
                   ),
                   SizedBox(height: AgoraSpacings.x1_5),
                   AgoraRichText(
                     policeStyle: AgoraRichTextPoliceStyle.police22,
                     semantic: AgoraRichTextSemantic(header: false),
+                    textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
                     items: [
                       AgoraRichTextItem(
                         text: GenericStrings.onboardingStep0Description1,
@@ -55,28 +66,34 @@ class OnboardingView extends StatelessWidget {
                   ),
                   SizedBox(height: AgoraSpacings.x2),
                   Spacer(),
-                  ExcludeSemantics(
-                    child: OnboardingAutoScrollPage(
-                      scrollDirection: Axis.horizontal,
-                      gap: 0,
-                      child: _buildFirstThematiqueList(context),
-                    ),
-                  ),
-                  SizedBox(height: AgoraSpacings.base),
-                  ExcludeSemantics(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: OnboardingAutoScrollPage(
-                            scrollDirection: Axis.horizontal,
-                            reverseScroll: true,
-                            gap: 0,
-                            child: _buildSecondThematiqueList(context),
-                          ),
+                  kIsWeb
+                      ? Center(child: Image.asset("assets/ic_onboarding_web.png", width: 460, height: 400))
+                      : Column(
+                          children: [
+                            ExcludeSemantics(
+                              child: OnboardingAutoScrollPage(
+                                scrollDirection: Axis.horizontal,
+                                gap: 0,
+                                child: _buildFirstThematiqueList(context),
+                              ),
+                            ),
+                            SizedBox(height: AgoraSpacings.base),
+                            ExcludeSemantics(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: OnboardingAutoScrollPage(
+                                      scrollDirection: Axis.horizontal,
+                                      reverseScroll: true,
+                                      gap: 0,
+                                      child: _buildSecondThematiqueList(context),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
                   Spacer(),
                   SizedBox(height: AgoraSpacings.x6),
                 ],

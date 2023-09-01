@@ -108,11 +108,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
           Expanded(
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  _buildSuccessContent(context, state.viewModel),
-                ],
-              ),
+              child: _buildSuccessContent(context, state.viewModel),
             ),
           ),
         ],
