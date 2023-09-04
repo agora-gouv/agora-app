@@ -5,13 +5,13 @@ import 'package:agora/bloc/consultation/details/consultation_details_view_model.
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/notification_helper.dart';
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
-import 'package:agora/design/custom_view/agora_participants_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
@@ -124,63 +124,26 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
   }
 
   Widget _buildSuccessContent(BuildContext context, ConsultationDetailsViewModel viewModel) {
-    const columnPadding = AgoraSpacings.horizontalPadding;
-    const spacing = AgoraSpacings.x0_5;
-    const icPersonIconSize = 21;
+    final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.network(viewModel.coverUrl, excludeFromSemantics: true),
+        if (!largerThanMobile) Image.network(viewModel.coverUrl, excludeFromSemantics: true),
         Padding(
-          padding: const EdgeInsets.all(columnPadding),
+          padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ThematiqueHelper.buildCard(context, viewModel.thematique),
-              SizedBox(height: AgoraSpacings.x0_5),
-              Text(viewModel.title, style: AgoraTextStyles.medium19),
-              SizedBox(height: AgoraSpacings.x1_5),
-              _buildInformationItem(
-                image: "ic_calendar.svg",
-                text: viewModel.endDate,
-                textStyle: AgoraTextStyles.regularItalic14,
-              ),
-              SizedBox(height: AgoraSpacings.x1_5),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(child: _buildInformationItem(image: "ic_timer.svg", text: viewModel.estimatedTime)),
-                  SizedBox(width: AgoraSpacings.x0_75),
-                  Flexible(child: _buildInformationItem(image: "ic_query.svg", text: viewModel.questionCount)),
-                ],
-              ),
-              SizedBox(height: AgoraSpacings.x1_5),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
-                  SizedBox(width: spacing),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(viewModel.participantCountText, style: AgoraTextStyles.light14),
-                        SizedBox(height: AgoraSpacings.x0_5),
-                        AgoraParticipantsProgressBar(
-                          currentNbParticipants: viewModel.participantCount,
-                          objectiveNbParticipants: viewModel.participantCountGoal,
-                          minusPadding: columnPadding * 2 + spacing + icPersonIconSize,
-                        ),
-                        SizedBox(height: AgoraSpacings.x0_5),
-                        Text(
-                          viewModel.participantCountGoalText,
-                          style: AgoraTextStyles.light14,
-                        ),
-                        SizedBox(height: AgoraSpacings.x0_5),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              if (largerThanMobile)
+                Row(
+                  children: [
+                    Expanded(child: Image.network(viewModel.coverUrl, excludeFromSemantics: true)),
+                    SizedBox(width: AgoraSpacings.base),
+                    Expanded(child: _getConsultationInformation(context, viewModel)),
+                  ],
+                )
+              else
+                _getConsultationInformation(context, viewModel),
               Divider(height: AgoraSpacings.x1_5, color: AgoraColors.divider, thickness: 1),
               AgoraHtml(data: viewModel.description),
               SizedBox(height: AgoraSpacings.base),
@@ -210,6 +173,65 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
               ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getConsultationInformation(BuildContext context, ConsultationDetailsViewModel viewModel) {
+    final double progressBarValue = viewModel.participantCount / viewModel.participantCountGoal;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ThematiqueHelper.buildCard(context, viewModel.thematique),
+        SizedBox(height: AgoraSpacings.x0_5),
+        Text(viewModel.title, style: AgoraTextStyles.medium19),
+        SizedBox(height: AgoraSpacings.x1_5),
+        _buildInformationItem(
+          image: "ic_calendar.svg",
+          text: viewModel.endDate,
+          textStyle: AgoraTextStyles.regularItalic14,
+        ),
+        SizedBox(height: AgoraSpacings.x1_5),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(child: _buildInformationItem(image: "ic_timer.svg", text: viewModel.estimatedTime)),
+            SizedBox(width: AgoraSpacings.x0_75),
+            Flexible(child: _buildInformationItem(image: "ic_query.svg", text: viewModel.questionCount)),
+          ],
+        ),
+        SizedBox(height: AgoraSpacings.x1_5),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
+            SizedBox(width: AgoraSpacings.x0_5),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(viewModel.participantCountText, style: AgoraTextStyles.light14),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  ExcludeSemantics(
+                    child: LinearProgressIndicator(
+                      minHeight: AgoraSpacings.x0_5,
+                      backgroundColor: AgoraColors.orochimaru,
+                      valueColor: AlwaysStoppedAnimation<Color>(AgoraColors.mountainLakeAzure),
+                      value: progressBarValue > 1 ? 1 : progressBarValue,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  Text(
+                    viewModel.participantCountGoalText,
+                    style: AgoraTextStyles.light14,
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );
