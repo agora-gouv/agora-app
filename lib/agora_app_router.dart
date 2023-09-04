@@ -15,13 +15,10 @@ import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
-import 'package:agora/pages/profile/legal_notice_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
-import 'package:agora/pages/profile/privacy_policy_page.dart';
 import 'package:agora/pages/profile/profile_demographic_information_page.dart';
 import 'package:agora/pages/profile/profile_page.dart';
-import 'package:agora/pages/profile/terms_of_condition_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
@@ -83,18 +80,6 @@ class AgoraAppRouter {
       ParticipationCharterPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.participationCharterPage,
             child: ParticipationCharterPage(),
-          ),
-      PrivacyPolicyPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.privacyPolicyPage,
-            child: PrivacyPolicyPage(),
-          ),
-      TermsOfConditionPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.termsOfConditionPage,
-            child: TermsOfConditionPage(),
-          ),
-      LegalNoticePage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.legalNoticePage,
-            child: LegalNoticePage(),
           ),
       ProfileDemographicInformationPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.profileDemographicInformationPage,

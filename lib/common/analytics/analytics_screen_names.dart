@@ -29,9 +29,6 @@ class AnalyticsScreenNames {
   static const String deleteAccountPage = "Profile - Supprimer mon compte";
   static const String profileDemographicInformationPage = "Profile - Page descriptive des données démographiques";
   static const String participationCharterPage = "Profil - Charte de participation";
-  static const String privacyPolicyPage = "Profile - Politique de confidentialité";
-  static const String termsOfConditionPage = "Profile - Condition générales d'utilisations";
-  static const String legalNoticePage = "Profile - Mentions légales";
 
   static const String webviewPage = "Page web interne";
 }
