@@ -202,7 +202,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                                 child: Text(viewModel.title, style: AgoraTextStyles.medium18),
                               ),
                             ),
-                            if (response != null) ...[
+                            if (response != null && support.count != 0) ...[
                               Padding(
                                 padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
                                 child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
