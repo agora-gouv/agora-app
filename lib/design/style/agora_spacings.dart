@@ -1,6 +1,7 @@
 class AgoraSpacings {
   static const double base = 16;
   static const double x0_25 = base * 0.25;
+  static const double x0_375 = base * 0.375;
   static const double x0_5 = base * 0.5;
   static const double x0_75 = base * 0.75;
   static const double x1_25 = base * 1.25;
