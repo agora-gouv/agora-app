@@ -16,12 +16,6 @@ class ProfileStrings {
   static const String feedbackTipsButton = "Donner mes retours";
   static const String charter = "Charte de ";
   static const String participation = "participation";
-  static const String policy = "Politique de ";
-  static const String privacy = "confidentialité";
-  static const String condition = "Conditions générales ";
-  static const String term = "d'utilisation";
-  static const String notice = "Mentions ";
-  static const String legal = "légales";
 
   static const String deleteAccount1 =
       "Si vous souhaitez supprimer votre compte et faire valoir votre droit à l'oubli, envoyez votre demande à\u{00A0}:";
