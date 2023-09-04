@@ -19,6 +19,8 @@ import 'package:agora/pages/consultation/details/consultation_details_page.dart'
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 
+enum AgoraConsultationOngoingCardStyle { column, gridLeft, gridRight }
+
 class AgoraConsultationOngoingCard extends StatelessWidget {
   final String consultationId;
   final String imageUrl;
@@ -27,6 +29,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   final String endDate;
   final bool hasAnswered;
   final String? highlightLabel;
+  final AgoraConsultationOngoingCardStyle style;
 
   AgoraConsultationOngoingCard({
     required this.consultationId,
@@ -36,6 +39,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     required this.endDate,
     required this.hasAnswered,
     required this.highlightLabel,
+    required this.style,
   });
 
   @override
@@ -45,9 +49,9 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
             children: [
               _buildCard(context),
               Padding(
-                padding: const EdgeInsets.only(
+                padding: EdgeInsets.only(
                   top: AgoraSpacings.base,
-                  left: AgoraSpacings.base,
+                  left: _getHighLightLeftPadding(),
                   right: AgoraSpacings.x2,
                 ),
                 child: AgoraRoundedCard(
@@ -62,10 +66,11 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.width * 0.55;
+    final isColumnStyle = style == AgoraConsultationOngoingCardStyle.column;
+    final screenWidth = isColumnStyle ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.width / 2;
+    final screenHeight = screenWidth * 0.55;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+      padding: _getCardPadding(),
       child: Semantics(
         button: true,
         child: AgoraRoundedCard(
@@ -80,41 +85,41 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.fitWidth,
-                  width: screenWidth,
-                  height: screenHeight,
-                  excludeFromSemantics: true,
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                    return Center(
-                      child: loadingProgress == null
-                          ? child
-                          : SizedBox(
-                              width: screenWidth,
-                              height: screenHeight,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Spacer(),
-                                  CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                  Spacer(),
-                                ],
-                              ),
+              Image.network(
+                imageUrl,
+                fit: BoxFit.fitWidth,
+                width: screenWidth,
+                height: screenHeight,
+                excludeFromSemantics: true,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  return Center(
+                    child: loadingProgress == null
+                        ? child
+                        : SizedBox(
+                            width: screenWidth,
+                            height: screenHeight,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                                Spacer(),
+                              ],
                             ),
-                    );
-                  },
-                ),
+                          ),
+                  );
+                },
               ),
               SizedBox(height: AgoraSpacings.base),
               ThematiqueHelper.buildCard(context, thematique, size: AgoraThematiqueSize.large),
               SizedBox(height: AgoraSpacings.x0_25),
-              Text(title, style: AgoraTextStyles.medium22),
+              isColumnStyle
+                  ? Text(title, style: AgoraTextStyles.medium22)
+                  : Expanded(child: Text(title, style: AgoraTextStyles.medium22)),
               SizedBox(height: AgoraSpacings.x0_5),
               Text(
                 ConsultationStrings.endDate.format(endDate),
@@ -175,6 +180,28 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  EdgeInsets _getCardPadding() {
+    switch (style) {
+      case AgoraConsultationOngoingCardStyle.column:
+        return const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding);
+      case AgoraConsultationOngoingCardStyle.gridLeft:
+        return const EdgeInsets.only(left: AgoraSpacings.horizontalPadding, right: AgoraSpacings.horizontalPadding / 2);
+      case AgoraConsultationOngoingCardStyle.gridRight:
+        return const EdgeInsets.only(left: AgoraSpacings.horizontalPadding / 2, right: AgoraSpacings.horizontalPadding);
+    }
+  }
+
+  double _getHighLightLeftPadding() {
+    switch (style) {
+      case AgoraConsultationOngoingCardStyle.column:
+        return AgoraSpacings.base;
+      case AgoraConsultationOngoingCardStyle.gridLeft:
+        return AgoraSpacings.base;
+      case AgoraConsultationOngoingCardStyle.gridRight:
+        return AgoraSpacings.x0_375;
+    }
   }
 
   void _participate(BuildContext context) {

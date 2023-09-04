@@ -40,7 +40,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
               AgoraRichTextItem(
-                text: ConsultationStrings.finishConsultationPart1,
+                text: "${ConsultationStrings.finishConsultationPart1} ",
                 style: AgoraRichTextItemStyle.regular,
               ),
               AgoraRichTextItem(
