@@ -37,10 +37,9 @@ class QagsPaginatedArguments {
 class QagsPaginatedPage extends StatefulWidget {
   static const routeName = "/qagsPaginatedPage";
 
-  final String? thematiqueId;
-  final QagPaginatedTab initialTab;
+  final QagsPaginatedArguments arguments;
 
-  const QagsPaginatedPage({super.key, required this.thematiqueId, required this.initialTab});
+  const QagsPaginatedPage({super.key, required this.arguments});
 
   @override
   State<QagsPaginatedPage> createState() => _QagsPaginatedPageState();
@@ -55,7 +54,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   @override
   void initState() {
     super.initState();
-    currentThematiqueId = widget.thematiqueId;
+    currentThematiqueId = widget.arguments.thematiqueId;
     _tabController = TabController(length: 3, vsync: this, initialIndex: _getInitialIndex());
   }
 
@@ -190,7 +189,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
     final qagPaginatedPopularBloc = QagPaginatedPopularBloc(
       qagRepository: RepositoryManager.getQagRepository(),
     );
-    if (widget.initialTab == QagPaginatedTab.popular) {
+    if (widget.arguments.initialTab == QagPaginatedTab.popular) {
       qagPaginatedPopularBloc.add(
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
@@ -205,7 +204,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
     final qagPaginatedLatestBloc = QagPaginatedLatestBloc(
       qagRepository: RepositoryManager.getQagRepository(),
     );
-    if (widget.initialTab == QagPaginatedTab.latest) {
+    if (widget.arguments.initialTab == QagPaginatedTab.latest) {
       qagPaginatedLatestBloc.add(
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
@@ -220,7 +219,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
     final qagPaginatedSupportingBloc = QagPaginatedSupportingBloc(
       qagRepository: RepositoryManager.getQagRepository(),
     );
-    if (widget.initialTab == QagPaginatedTab.supporting) {
+    if (widget.arguments.initialTab == QagPaginatedTab.supporting) {
       qagPaginatedSupportingBloc.add(
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
@@ -272,7 +271,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   }
 
   int _getInitialIndex() {
-    switch (widget.initialTab) {
+    switch (widget.arguments.initialTab) {
       case QagPaginatedTab.popular:
         return 0;
       case QagPaginatedTab.latest:

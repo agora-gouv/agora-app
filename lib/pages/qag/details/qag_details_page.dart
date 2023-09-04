@@ -67,16 +67,9 @@ class QagDetailsBackResult {
 class QagDetailsPage extends StatefulWidget {
   static const routeName = "/qagDetailsPage";
 
-  final String qagId;
-  final String? notificationTitle;
-  final String? notificationDescription;
+  final QagDetailsArguments arguments;
 
-  const QagDetailsPage({
-    super.key,
-    required this.qagId,
-    this.notificationTitle,
-    this.notificationDescription,
-  });
+  const QagDetailsPage({super.key, required this.arguments});
 
   @override
   State<QagDetailsPage> createState() => _QagDetailsPageState();
@@ -90,8 +83,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     super.initState();
     NotificationHelper.displayNotificationWithDialog(
       context: context,
-      notificationTitle: widget.notificationTitle,
-      notificationDescription: widget.notificationDescription,
+      notificationTitle: widget.arguments.notificationTitle,
+      notificationDescription: widget.arguments.notificationDescription,
     );
   }
 
@@ -102,7 +95,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         BlocProvider(
           create: (BuildContext context) => QagDetailsBloc(
             qagRepository: RepositoryManager.getQagRepository(),
-          )..add(FetchQagDetailsEvent(qagId: widget.qagId)),
+          )..add(FetchQagDetailsEvent(qagId: widget.arguments.qagId)),
         ),
         BlocProvider(
           create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),

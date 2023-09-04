@@ -136,21 +136,14 @@ class AgoraAppRouter {
         final arguments = settings.arguments as ConsultationDetailsArguments;
         currentRoute = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${arguments.consultationId}",
-          child: ConsultationDetailsPage(
-            consultationId: arguments.consultationId,
-            notificationTitle: arguments.notificationTitle,
-            notificationDescription: arguments.notificationDescription,
-          ),
+          child: ConsultationDetailsPage(arguments: arguments),
         );
         break;
       case ConsultationQuestionPage.routeName:
         final arguments = settings.arguments as ConsultationQuestionArguments;
         currentRoute = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} ${arguments.consultationId}",
-          child: ConsultationQuestionPage(
-            consultationId: arguments.consultationId,
-            consultationTitle: arguments.consultationTitle,
-          ),
+          child: ConsultationQuestionPage(arguments: arguments),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:
@@ -167,31 +160,18 @@ class AgoraAppRouter {
         );
         break;
       case ConsultationSummaryPage.routeName:
-        final arguments = settings.arguments as ConsultationSummaryArguments;
-        currentRoute = ConsultationSummaryPage(
-          consultationId: arguments.consultationId,
-          shouldReloadConsultationsWhenPop: arguments.shouldReloadConsultationsWhenPop,
-          notificationTitle: arguments.notificationTitle,
-          notificationDescription: arguments.notificationDescription,
-          initialTab: arguments.initialTab,
-        );
+        currentRoute = ConsultationSummaryPage(arguments: settings.arguments as ConsultationSummaryArguments);
         break;
 
       // Qag
       case QagDetailsPage.routeName:
-        final arguments = settings.arguments as QagDetailsArguments;
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagDetailsPage,
-          child: QagDetailsPage(
-            qagId: arguments.qagId,
-            notificationTitle: arguments.notificationTitle,
-            notificationDescription: arguments.notificationDescription,
-          ),
+          child: QagDetailsPage(arguments: settings.arguments as QagDetailsArguments),
         );
         break;
       case QagsPaginatedPage.routeName:
-        final arguments = settings.arguments as QagsPaginatedArguments;
-        currentRoute = QagsPaginatedPage(thematiqueId: arguments.thematiqueId, initialTab: arguments.initialTab);
+        currentRoute = QagsPaginatedPage(arguments: settings.arguments as QagsPaginatedArguments);
         break;
       case DemographicConfirmationPage.routeName:
         final arguments = settings.arguments as DemographicConfirmationArguments;

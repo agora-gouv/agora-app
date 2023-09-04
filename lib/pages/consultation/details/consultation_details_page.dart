@@ -41,16 +41,9 @@ class ConsultationDetailsArguments {
 class ConsultationDetailsPage extends StatefulWidget {
   static const routeName = "/consultationDetailsPage";
 
-  final String consultationId;
-  final String? notificationTitle;
-  final String? notificationDescription;
+  final ConsultationDetailsArguments arguments;
 
-  const ConsultationDetailsPage({
-    super.key,
-    required this.consultationId,
-    this.notificationTitle,
-    this.notificationDescription,
-  });
+  const ConsultationDetailsPage({super.key, required this.arguments});
 
   @override
   State<ConsultationDetailsPage> createState() => _ConsultationDetailsPageState();
@@ -62,17 +55,19 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
     super.initState();
     NotificationHelper.displayNotificationWithDialog(
       context: context,
-      notificationTitle: widget.notificationTitle,
-      notificationDescription: widget.notificationDescription,
+      notificationTitle: widget.arguments.notificationTitle,
+      notificationDescription: widget.arguments.notificationDescription,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => ConsultationDetailsBloc(
-        consultationRepository: RepositoryManager.getConsultationRepository(),
-      )..add(FetchConsultationDetailsEvent(consultationId: widget.consultationId)),
+      create: (BuildContext context) {
+        return ConsultationDetailsBloc(
+          consultationRepository: RepositoryManager.getConsultationRepository(),
+        )..add(FetchConsultationDetailsEvent(consultationId: widget.arguments.consultationId));
+      },
       child: BlocConsumer<ConsultationDetailsBloc, ConsultationDetailsState>(
         listener: (previousState, currentState) {
           if (currentState is ConsultationDetailsFetchedState && currentState.viewModel.hasAnswered) {
@@ -80,7 +75,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
               context,
               ConsultationSummaryPage.routeName,
               arguments: ConsultationSummaryArguments(
-                consultationId: widget.consultationId,
+                consultationId: widget.arguments.consultationId,
                 shouldReloadConsultationsWhenPop: false,
                 initialTab: ConsultationSummaryInitialTab.results,
               ),
@@ -200,7 +195,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
                 style: AgoraButtonStyle.primaryButtonStyle,
                 onPressed: () {
                   TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.startConsultation} ${widget.consultationId}",
+                    clickName: "${AnalyticsEventNames.startConsultation} ${widget.arguments.consultationId}",
                     widgetName: AnalyticsScreenNames.consultationDetailsPage,
                   );
                   Navigator.pushNamed(
