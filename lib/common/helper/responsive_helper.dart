@@ -9,7 +9,7 @@ class ResponsiveHelper {
   static const desktopBreakPoint = 1920.0;
 
   static bool isLargerThanMobile(BuildContext context) {
-    final shortestSide = MediaQuery.of(context).size.shortestSide;
-    return shortestSide > 450;
+    final larger = MediaQuery.of(context).size.width;
+    return larger > 450;
   }
 }
