@@ -199,7 +199,10 @@ class AgoraAppRouter {
           value: arguments.demographicResponsesStockBloc,
           child: AgoraTracker(
             widgetName: AnalyticsScreenNames.demographicConfirmationPage,
-            child: DemographicConfirmationPage(consultationId: arguments.consultationId),
+            child: DemographicConfirmationPage(
+              consultationId: arguments.consultationId,
+              consultationTitle: arguments.consultationTitle,
+            ),
           ),
         );
         break;

@@ -68,7 +68,10 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 DemographicInformationPage.routeName,
-                arguments: consultationId,
+                arguments: DemographicInformationArguments(
+                  consultationId: consultationId,
+                  consultationTitle: consultationTitle,
+                ),
               );
             }
           },
