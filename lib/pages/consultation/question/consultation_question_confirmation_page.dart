@@ -4,6 +4,7 @@ import 'package:agora/bloc/consultation/question/response/send/consultation_ques
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -116,25 +117,37 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
+    final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
     return Column(
+      crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         SizedBox(height: AgoraSpacings.base),
         SvgPicture.asset(
           "assets/ic_question_confirmation.svg",
-          width: MediaQuery.of(context).size.width - AgoraSpacings.base,
+          width: largerThanMobile
+              ? MediaQuery.of(context).size.width * 0.7
+              : MediaQuery.of(context).size.width - AgoraSpacings.base,
           excludeFromSemantics: true,
         ),
         Padding(
           padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
             children: [
               Semantics(
                 focused: true,
-                child: Text(ConsultationStrings.confirmationTitle, style: AgoraTextStyles.medium19),
+                child: Text(
+                  ConsultationStrings.confirmationTitle,
+                  style: AgoraTextStyles.medium19,
+                  textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
+                ),
               ),
               SizedBox(height: AgoraSpacings.base),
-              Text(ConsultationStrings.confirmationDescription, style: AgoraTextStyles.light16),
+              Text(
+                ConsultationStrings.confirmationDescription,
+                style: AgoraTextStyles.light16,
+                textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
+              ),
               SizedBox(height: AgoraSpacings.x1_5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
