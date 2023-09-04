@@ -45,20 +45,9 @@ enum ConsultationSummaryInitialTab {
 class ConsultationSummaryPage extends StatefulWidget {
   static const routeName = "/consultationSummaryPage";
 
-  final String consultationId;
-  final bool shouldReloadConsultationsWhenPop;
-  final String? notificationTitle;
-  final String? notificationDescription;
-  final ConsultationSummaryInitialTab initialTab;
+  final ConsultationSummaryArguments arguments;
 
-  const ConsultationSummaryPage({
-    super.key,
-    required this.consultationId,
-    required this.shouldReloadConsultationsWhenPop,
-    this.notificationTitle,
-    this.notificationDescription,
-    required this.initialTab,
-  });
+  const ConsultationSummaryPage({super.key, required this.arguments});
 
   @override
   State<ConsultationSummaryPage> createState() => _ConsultationSummaryPageState();
@@ -71,7 +60,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
   @override
   void initState() {
     int initialTabIndex;
-    switch (widget.initialTab) {
+    switch (widget.arguments.initialTab) {
       case ConsultationSummaryInitialTab.results:
         initialTabIndex = 0;
       case ConsultationSummaryInitialTab.etEnsuite:
@@ -81,8 +70,8 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
     super.initState();
     NotificationHelper.displayNotificationWithDialog(
       context: context,
-      notificationTitle: widget.notificationTitle,
-      notificationDescription: widget.notificationDescription,
+      notificationTitle: widget.arguments.notificationTitle,
+      notificationDescription: widget.arguments.notificationDescription,
     );
   }
 
@@ -94,8 +83,8 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
 
   @override
   Widget build(BuildContext context) {
-    final consultationId = widget.consultationId;
-    final shouldReloadConsultationsWhenPop = widget.shouldReloadConsultationsWhenPop;
+    final consultationId = widget.arguments.consultationId;
+    final shouldReloadConsultationsWhenPop = widget.arguments.shouldReloadConsultationsWhenPop;
     return BlocProvider(
       create: (BuildContext context) {
         return ConsultationSummaryBloc(consultationRepository: RepositoryManager.getConsultationRepository())

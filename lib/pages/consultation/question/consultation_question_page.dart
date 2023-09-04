@@ -36,10 +36,9 @@ class ConsultationQuestionArguments {
 class ConsultationQuestionPage extends StatefulWidget {
   static const routeName = "/consultationQuestionPage";
 
-  final String consultationId;
-  final String consultationTitle;
+  final ConsultationQuestionArguments arguments;
 
-  const ConsultationQuestionPage({super.key, required this.consultationId, required this.consultationTitle});
+  const ConsultationQuestionPage({super.key, required this.arguments});
 
   @override
   State<ConsultationQuestionPage> createState() => _ConsultationQuestionPageState();
@@ -56,7 +55,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
         BlocProvider<ConsultationQuestionsBloc>(
           create: (BuildContext context) =>
               ConsultationQuestionsBloc(consultationRepository: RepositoryManager.getConsultationRepository())
-                ..add(FetchConsultationQuestionsEvent(consultationId: widget.consultationId)),
+                ..add(FetchConsultationQuestionsEvent(consultationId: widget.arguments.consultationId)),
         ),
         BlocProvider<ConsultationQuestionsResponsesStockBloc>(
           create: (BuildContext context) => ConsultationQuestionsResponsesStockBloc(),
@@ -135,7 +134,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   ) {
     if (currentQuestion is ConsultationQuestionUniqueViewModel) {
       return _handleQuestionUniqueChoice(
-        widget.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -144,7 +143,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
       );
     } else if (currentQuestion is ConsultationQuestionMultipleViewModel) {
       return _handleQuestionMultipleChoices(
-        widget.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -153,7 +152,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
       );
     } else if (currentQuestion is ConsultationQuestionOpenedViewModel) {
       return _handleQuestionOpened(
-        widget.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -163,7 +162,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     }
     if (currentQuestion is ConsultationQuestionWithConditionViewModel) {
       return _handleQuestionWithConditions(
-        widget.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -172,7 +171,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
       );
     } else if (currentQuestion is ConsultationQuestionChapterViewModel) {
       return _handleChapter(
-        widget.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         responsesStockState,
@@ -387,8 +386,8 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
         context,
         ConsultationQuestionConfirmationPage.routeName,
         arguments: ConsultationQuestionConfirmationArguments(
-          consultationId: widget.consultationId,
-          consultationTitle: widget.consultationTitle,
+          consultationId: widget.arguments.consultationId,
+          consultationTitle: widget.arguments.consultationTitle,
           consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
         ),
       );
