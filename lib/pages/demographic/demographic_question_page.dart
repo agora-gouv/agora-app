@@ -26,6 +26,13 @@ import 'package:agora/pages/demographic/question_view/demographic_vote_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class DemographicQuestionArguments {
+  final String consultationId;
+  final String consultationTitle;
+
+  DemographicQuestionArguments({required this.consultationId, required this.consultationTitle});
+}
+
 class DemographicQuestionPage extends StatefulWidget {
   static const routeName = "/demographicQuestionPage";
 
@@ -36,11 +43,11 @@ class DemographicQuestionPage extends StatefulWidget {
 class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
   final int totalStep = 6;
   int currentStep = 1;
-  String? consultationId;
+  DemographicQuestionArguments? arguments;
 
   @override
   Widget build(BuildContext context) {
-    consultationId = ModalRoute.of(context)!.settings.arguments as String?;
+    arguments = ModalRoute.of(context)!.settings.arguments as DemographicQuestionArguments?;
     return BlocProvider<DemographicResponsesStockBloc>(
       create: (BuildContext context) => DemographicResponsesStockBloc(),
       child: AgoraScaffold(
@@ -263,7 +270,8 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         context,
         DemographicConfirmationPage.routeName,
         arguments: DemographicConfirmationArguments(
-          consultationId: consultationId,
+          consultationId: arguments?.consultationId,
+          consultationTitle: arguments?.consultationTitle,
           demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
         ),
       );

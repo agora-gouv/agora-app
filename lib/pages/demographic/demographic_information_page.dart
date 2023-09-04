@@ -16,6 +16,13 @@ import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class DemographicInformationArguments {
+  final String consultationId;
+  final String consultationTitle;
+
+  DemographicInformationArguments({required this.consultationId, required this.consultationTitle});
+}
+
 class DemographicInformationPage extends StatefulWidget {
   static const routeName = "/demographicInformationPage";
 
@@ -28,7 +35,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
 
   @override
   Widget build(BuildContext context) {
-    final consultationId = ModalRoute.of(context)!.settings.arguments as String;
+    final arguments = ModalRoute.of(context)!.settings.arguments as DemographicInformationArguments;
     return AgoraScaffold(
       shouldPop: false,
       appBarColor: AgoraColors.primaryBlue,
@@ -144,7 +151,10 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   Navigator.pushNamed(
                                     context,
                                     DemographicQuestionPage.routeName,
-                                    arguments: consultationId,
+                                    arguments: DemographicQuestionArguments(
+                                      consultationId: arguments.consultationId,
+                                      consultationTitle: arguments.consultationTitle,
+                                    ),
                                   );
                                 },
                               ),
@@ -162,7 +172,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                       context,
                                       ConsultationSummaryPage.routeName,
                                       arguments: ConsultationSummaryArguments(
-                                        consultationId: consultationId,
+                                        consultationId: arguments.consultationId,
                                         initialTab: ConsultationSummaryInitialTab.results,
                                       ),
                                     );
