@@ -1,8 +1,10 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/uuid/uuid_utils.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/pages/consultation/question/consultation_question_helper.dart';
 import 'package:agora/pages/consultation/question/question_type_view/consultation_question_view.dart';
@@ -38,7 +40,6 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
   String currentResponseId = "";
   String otherResponseText = "";
   String currentNextQuestionId = "";
-  bool showNextButton = false;
   bool shouldResetPreviousResponses = true;
 
   @override
@@ -63,18 +64,16 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
                 order: widget.questionWithConditions.order,
                 onBackTap: widget.onBackTap,
               ),
-              if (showNextButton)
+              if (currentResponseId.isNotBlank())
                 ConsultationQuestionHelper.buildNextQuestion(
                   order: widget.questionWithConditions.order,
                   totalQuestions: widget.totalQuestions,
-                  onPressed: currentResponseId.isNotBlank() && otherResponseText.isNotBlank()
-                      ? () => widget.onWithConditionResponseTap(
-                            widget.questionWithConditions.id,
-                            currentResponseId,
-                            otherResponseText,
-                            currentNextQuestionId,
-                          )
-                      : null,
+                  onPressed: () => widget.onWithConditionResponseTap(
+                    widget.questionWithConditions.id,
+                    currentResponseId,
+                    otherResponseText,
+                    currentNextQuestionId,
+                  ),
                 ),
             ],
           ),
@@ -84,7 +83,10 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
   }
 
   List<Widget> _buildWithConditionsResponse() {
-    final List<Widget> responseWidgets = [];
+    final List<Widget> responseWidgets = [
+      Text(ConsultationStrings.withCondition, style: AgoraTextStyles.medium14),
+      SizedBox(height: AgoraSpacings.base),
+    ];
     final responseChoicesViewModels = widget.questionWithConditions.responseChoicesViewModels;
     final totalLength = responseChoicesViewModels.length;
     for (var index = 0; index < totalLength; index++) {
@@ -98,17 +100,21 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
           previousOtherResponse: otherResponseText,
           semantic: AgoraQuestionResponseChoiceSemantic(currentIndex: index + 1, totalIndex: totalLength),
           onTap: (responseId) {
-            currentResponseId = responseId;
-            currentNextQuestionId = response.nextQuestionId;
-            if (response.hasOpenTextField) {
-              setState(() => showNextButton = true);
+            if (currentResponseId == response.id) {
+              setState(() => currentResponseId = "");
             } else {
-              widget.onWithConditionResponseTap(
-                widget.questionWithConditions.id,
-                responseId,
-                otherResponseText,
-                currentNextQuestionId,
-              );
+              setState(() {
+                currentResponseId = responseId;
+                currentNextQuestionId = response.nextQuestionId;
+              });
+              if (!response.hasOpenTextField) {
+                widget.onWithConditionResponseTap(
+                  widget.questionWithConditions.id,
+                  responseId,
+                  otherResponseText,
+                  currentNextQuestionId,
+                );
+              }
             }
           },
           onOtherResponseChanged: (responseId, otherResponse) {
@@ -140,16 +146,9 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
         if (!previousResponseIds.contains(UuidUtils.uuidZero) && previousResponseIds.isNotEmpty) {
           currentResponseId = previousResponseIds[0];
           otherResponseText = previousSelectedResponses.responseText;
-
-          final currentResponseChoiceViewModel = widget.questionWithConditions.responseChoicesViewModels
-              .firstWhere((element) => element.id == currentResponseId);
-          currentNextQuestionId = currentResponseChoiceViewModel.nextQuestionId;
-          final currentResponseHasOpenTextField = currentResponseChoiceViewModel.hasOpenTextField;
-          if (currentResponseHasOpenTextField) {
-            showNextButton = true;
-          } else {
-            showNextButton = false;
-          }
+          currentNextQuestionId = widget.questionWithConditions.responseChoicesViewModels
+              .firstWhere((element) => element.id == currentResponseId)
+              .nextQuestionId;
         }
       }
       shouldResetPreviousResponses = false;
