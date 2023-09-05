@@ -2,8 +2,6 @@ import 'package:agora/bloc/consultation/question/consultation_questions_view_mod
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/uuid/uuid_utils.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/pages/consultation/question/consultation_question_helper.dart';
@@ -51,27 +49,29 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ..._buildUniqueChoiceResponse(),
-          if (showNextButton)
-            AgoraButton(
-              label: ConsultationQuestionHelper.buildNextButtonLabel(
+          SizedBox(height: AgoraSpacings.base),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ConsultationQuestionHelper.buildBackButton(
                 order: widget.uniqueChoiceQuestion.order,
-                totalQuestions: widget.totalQuestions,
+                onBackTap: widget.onBackTap,
               ),
-              style: AgoraButtonStyle.primaryButtonStyle,
-              onPressed: currentResponseId.isNotBlank() && otherResponseText.isNotBlank()
-                  ? () => widget.onUniqueResponseTap(
+              showNextButton && currentResponseId.isNotBlank() && otherResponseText.isNotBlank()
+                  ? ConsultationQuestionHelper.buildNextQuestion(
+                      order: widget.uniqueChoiceQuestion.order,
+                      totalQuestions: widget.totalQuestions,
+                      onPressed: () => widget.onUniqueResponseTap(
                         widget.uniqueChoiceQuestion.id,
                         currentResponseId,
                         otherResponseText,
-                      )
-                  : null,
-            ),
-          ...ConsultationQuestionHelper.buildBackButton(
-            order: widget.uniqueChoiceQuestion.order,
-            onBackTap: widget.onBackTap,
-          ),
-          ...ConsultationQuestionHelper.buildIgnoreButton(
-            onPressed: () => widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, UuidUtils.uuidZero, ""),
+                      ),
+                    )
+                  : ConsultationQuestionHelper.buildIgnoreButton(
+                      onPressed: () =>
+                          widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, UuidUtils.uuidZero, ""),
+                    ),
+            ],
           ),
         ],
       ),

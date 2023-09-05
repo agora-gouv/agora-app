@@ -2,8 +2,6 @@ import 'package:agora/bloc/consultation/question/consultation_questions_view_mod
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/question/consultation_question_helper.dart';
@@ -44,15 +42,17 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.base),
                 AgoraHtml(data: chapter.description),
                 SizedBox(height: AgoraSpacings.x1_5),
-                AgoraButton(
-                  label: ConsultationQuestionHelper.buildNextButtonLabel(
-                    order: chapter.order,
-                    totalQuestions: totalQuestions,
-                  ),
-                  style: AgoraButtonStyle.primaryButtonStyle,
-                  onPressed: () => onNextTap(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ConsultationQuestionHelper.buildBackButton(order: chapter.order, onBackTap: onBackTap),
+                    ConsultationQuestionHelper.buildNextQuestion(
+                      order: chapter.order,
+                      totalQuestions: totalQuestions,
+                      onPressed: () => onNextTap(),
+                    ),
+                  ],
                 ),
-                ...ConsultationQuestionHelper.buildBackButton(order: chapter.order, onBackTap: onBackTap),
               ],
             ),
           ),

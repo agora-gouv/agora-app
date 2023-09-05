@@ -2,8 +2,6 @@ import 'package:agora/bloc/consultation/question/consultation_questions_view_mod
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -53,14 +51,24 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ..._buildOpenedChoiceResponse(),
-          ...ConsultationQuestionHelper.buildBackButton(
-            order: openedQuestion.order,
-            onBackTap: widget.onBackTap,
-          ),
-          ...ConsultationQuestionHelper.buildIgnoreButton(
-            onPressed: () {
-              widget.onOpenedResponseInput(openedQuestion.id, "");
-            },
+          SizedBox(height: AgoraSpacings.base),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ConsultationQuestionHelper.buildBackButton(
+                order: openedQuestion.order,
+                onBackTap: widget.onBackTap,
+              ),
+              openedResponse.isNotBlank()
+                  ? ConsultationQuestionHelper.buildNextQuestion(
+                      order: openedQuestion.order,
+                      totalQuestions: widget.totalQuestions,
+                      onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
+                    )
+                  : ConsultationQuestionHelper.buildIgnoreButton(
+                      onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
+                    ),
+            ],
           ),
         ],
       ),
@@ -94,19 +102,6 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
         onChanged: (openedResponseInput) {
           setState(() => openedResponse = openedResponseInput);
         },
-      ),
-      SizedBox(height: AgoraSpacings.base),
-      AgoraButton(
-        label: ConsultationQuestionHelper.buildNextButtonLabel(
-          order: openedQuestion.order,
-          totalQuestions: widget.totalQuestions,
-        ),
-        style: AgoraButtonStyle.primaryButtonStyle,
-        onPressed: openedResponse.isNotBlank()
-            ? () {
-                widget.onOpenedResponseInput(openedQuestion.id, openedResponse);
-              }
-            : null,
       ),
     ];
   }
