@@ -32,7 +32,6 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
   String currentQuestionId = "";
   String currentResponseId = "";
   String otherResponseText = "";
-  bool showNextButton = false;
   bool shouldResetPreviousResponses = true;
 
   @override
@@ -57,7 +56,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
                 order: widget.uniqueChoiceQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
-              showNextButton && currentResponseId.isNotBlank() && otherResponseText.isNotBlank()
+              currentResponseId.isNotBlank()
                   ? ConsultationQuestionHelper.buildNextQuestion(
                       order: widget.uniqueChoiceQuestion.order,
                       totalQuestions: widget.totalQuestions,
@@ -68,8 +67,9 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
                       ),
                     )
                   : ConsultationQuestionHelper.buildIgnoreButton(
-                      onPressed: () =>
-                          widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, UuidUtils.uuidZero, ""),
+                      onPressed: () {
+                        widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, UuidUtils.uuidZero, "");
+                      },
                     ),
             ],
           ),
@@ -93,11 +93,13 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
           previousOtherResponse: otherResponseText,
           semantic: AgoraQuestionResponseChoiceSemantic(currentIndex: index + 1, totalIndex: totalLength),
           onTap: (responseId) {
-            currentResponseId = responseId;
-            if (response.hasOpenTextField) {
-              setState(() => showNextButton = true);
+            if (currentResponseId == response.id) {
+              setState(() => currentResponseId = "");
             } else {
-              widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, responseId, "");
+              setState(() => currentResponseId = responseId);
+              if (!response.hasOpenTextField) {
+                widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, responseId, "");
+              }
             }
           },
           onOtherResponseChanged: (responseId, otherResponse) {
@@ -128,9 +130,6 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
         if (!previousResponseIds.contains(UuidUtils.uuidZero) && previousResponseIds.isNotEmpty) {
           currentResponseId = previousResponseIds[0];
           otherResponseText = previousSelectedResponses.responseText;
-          if (otherResponseText.isNotBlank()) {
-            showNextButton = true;
-          }
         }
       }
       shouldResetPreviousResponses = false;
