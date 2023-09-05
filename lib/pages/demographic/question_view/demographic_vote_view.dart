@@ -13,6 +13,8 @@ import 'package:agora/pages/demographic/demographic_response_helper.dart';
 import 'package:flutter/material.dart';
 
 class DemographicVoteView extends StatefulWidget {
+  final int step;
+  final int totalStep;
   final List<DemographicResponseChoice> responseChoices;
   final Function(
     String? voteFrequencyCode,
@@ -20,12 +22,16 @@ class DemographicVoteView extends StatefulWidget {
     String? consultationFrequencyCode,
   ) onContinuePressed;
   final VoidCallback onIgnorePressed;
+  final VoidCallback onBackPressed;
 
   const DemographicVoteView({
     super.key,
+    required this.step,
+    required this.totalStep,
     required this.responseChoices,
     required this.onContinuePressed,
     required this.onIgnorePressed,
+    required this.onBackPressed,
   });
 
   @override
@@ -115,21 +121,25 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
           },
         ),
         SizedBox(height: AgoraSpacings.x0_75),
-        voteFrequencyCode != null || publicMeetingFrequencyCode != null || consultationFrequencyCode != null
-            ? AgoraButton(
-                label: DemographicStrings.send,
-                style: AgoraButtonStyle.primaryButtonStyle,
-                onPressed: () {
-                  setState(() {
-                    widget.onContinuePressed(
-                      voteFrequencyCode,
-                      publicMeetingFrequencyCode,
-                      consultationFrequencyCode,
-                    );
-                  });
-                },
-              )
-            : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
+            voteFrequencyCode != null || publicMeetingFrequencyCode != null || consultationFrequencyCode != null
+                ? DemographicHelper.buildNextButton(
+                    step: widget.step,
+                    totalStep: widget.totalStep,
+                    onPressed: () => setState(
+                      () => widget.onContinuePressed(
+                        voteFrequencyCode,
+                        publicMeetingFrequencyCode,
+                        consultationFrequencyCode,
+                      ),
+                    ),
+                  )
+                : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+          ],
+        ),
       ],
     );
   }

@@ -109,13 +109,6 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   _buildResponseSection(context, currentStep, responsesStockState.responses),
-                                  ...DemographicHelper.buildBackButton(
-                                    step: currentStep,
-                                    onBackTap: () {
-                                      _trackBackClick();
-                                      setState(() => currentStep--);
-                                    },
-                                  ),
                                 ],
                               ),
                             ),
@@ -137,6 +130,8 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
     switch (step) {
       case 1:
         return DemographicCommonView(
+          step: currentStep,
+          totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question1ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
             _trackContinueClick(step);
@@ -148,11 +143,14 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             _deleteResponse(context, DemographicType.gender);
             _nextStep(context);
           }),
+          onBackPressed: _onBackClick,
           oldResponse: _getOldResponse(DemographicType.gender, oldResponses),
         );
       case 2:
         final oldResponse = _getOldResponse(DemographicType.yearOfBirth, oldResponses);
         return DemographicBirthView(
+          step: currentStep,
+          totalStep: totalStep,
           onContinuePressed: (String inputYear) => setState(() {
             _trackContinueClick(step);
             _stockResponse(context, DemographicType.yearOfBirth, inputYear);
@@ -163,10 +161,13 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             _deleteResponse(context, DemographicType.yearOfBirth);
             _nextStep(context);
           }),
+          onBackPressed: _onBackClick,
           controller: oldResponse != null ? TextEditingController(text: oldResponse.response) : null,
         );
       case 3:
         return DemographicDepartmentView(
+          step: currentStep,
+          totalStep: totalStep,
           onContinuePressed: (departmentCode) => setState(() {
             _trackContinueClick(step);
             _stockResponse(context, DemographicType.department, departmentCode);
@@ -177,9 +178,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             _deleteResponse(context, DemographicType.department);
             _nextStep(context);
           }),
+          onBackPressed: _onBackClick,
         );
       case 4:
         return DemographicCommonView(
+          step: currentStep,
+          totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question4ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
             _trackContinueClick(step);
@@ -191,10 +195,13 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             _deleteResponse(context, DemographicType.cityType);
             _nextStep(context);
           }),
+          onBackPressed: _onBackClick,
           oldResponse: _getOldResponse(DemographicType.cityType, oldResponses),
         );
       case 5:
         return DemographicCommonView(
+          step: currentStep,
+          totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question5ResponseChoice(),
           onContinuePressed: (responseCode) => setState(() {
             _trackContinueClick(step);
@@ -206,12 +213,15 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             _deleteResponse(context, DemographicType.jobCategory);
             _nextStep(context);
           }),
+          onBackPressed: _onBackClick,
           oldResponse: _getOldResponse(DemographicType.jobCategory, oldResponses),
           showWhatAbout: true,
           whatAboutText: DemographicStrings.question5WhatAbout,
         );
       case 6:
         return DemographicVoteView(
+          step: currentStep,
+          totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question6ResponseChoice(),
           onContinuePressed: (voteFrequencyCode, publicMeetingFrequencyCode, consultationFrequencyCode) => setState(() {
             _trackContinueClick(step);
@@ -233,6 +243,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
             _deleteResponse(context, DemographicType.consultationFrequency);
             _nextStep(context);
           }),
+          onBackPressed: _onBackClick,
         );
       default:
         throw Exception("Demographic response step not exists error");
@@ -258,6 +269,11 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
       clickName: AnalyticsEventNames.backDemographicQuestion.format("$currentStep / $totalStep"),
       widgetName: AnalyticsScreenNames.demographicQuestionPage,
     );
+  }
+
+  void _onBackClick() {
+    _trackBackClick();
+    setState(() => currentStep--);
   }
 
   void _nextStep(BuildContext context) {
