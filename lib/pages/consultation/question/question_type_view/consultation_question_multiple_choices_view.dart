@@ -4,8 +4,6 @@ import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/common/uuid/uuid_utils.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -56,12 +54,34 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ..._buildMultipleChoiceResponse(),
-          ...ConsultationQuestionHelper.buildBackButton(
-            order: multipleChoicesQuestion.order,
-            onBackTap: widget.onBackTap,
-          ),
-          ...ConsultationQuestionHelper.buildIgnoreButton(
-            onPressed: () => widget.onMultipleResponseTap(multipleChoicesQuestion.id, [UuidUtils.uuidZero], ""),
+          SizedBox(height: AgoraSpacings.base),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ConsultationQuestionHelper.buildBackButton(
+                order: multipleChoicesQuestion.order,
+                onBackTap: widget.onBackTap,
+              ),
+              currentResponseIds.isNotEmpty
+                  ? ConsultationQuestionHelper.buildNextQuestion(
+                      order: multipleChoicesQuestion.order,
+                      totalQuestions: widget.totalQuestions,
+                      onPressed: () {
+                        widget.onMultipleResponseTap(
+                          multipleChoicesQuestion.id,
+                          [...currentResponseIds],
+                          otherResponseText,
+                        );
+                      },
+                    )
+                  : ConsultationQuestionHelper.buildIgnoreButton(
+                      onPressed: () => widget.onMultipleResponseTap(
+                        multipleChoicesQuestion.id,
+                        [UuidUtils.uuidZero],
+                        "",
+                      ),
+                    ),
+            ],
           ),
         ],
       ),
@@ -131,21 +151,6 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       );
       responseWidgets.add(SizedBox(height: AgoraSpacings.base));
     }
-
-    responseWidgets.add(
-      AgoraButton(
-        label: ConsultationQuestionHelper.buildNextButtonLabel(
-          order: multipleChoicesQuestion.order,
-          totalQuestions: widget.totalQuestions,
-        ),
-        style: AgoraButtonStyle.primaryButtonStyle,
-        onPressed: currentResponseIds.isNotEmpty
-            ? () {
-                widget.onMultipleResponseTap(multipleChoicesQuestion.id, [...currentResponseIds], otherResponseText);
-              }
-            : null,
-      ),
-    );
     return responseWidgets;
   }
 

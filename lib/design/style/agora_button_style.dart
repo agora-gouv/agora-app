@@ -23,7 +23,8 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle blueBorderButtonStyle = ButtonStyle(
@@ -44,7 +45,8 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle redBorderButtonStyle = ButtonStyle(
@@ -65,7 +67,8 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle greyButtonStyle = ButtonStyle(
@@ -85,7 +88,8 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle lightGreyButtonStyle = ButtonStyle(
@@ -105,7 +109,8 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle lightGreyWithBorderButtonStyle = ButtonStyle(
@@ -134,6 +139,7 @@ class AgoraButtonStyle {
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : null,
+    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 }

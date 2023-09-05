@@ -16,8 +16,7 @@ class ConsultationStrings {
   static const String endDate = "Jusqu'au %s";
   static const String participantCount = "%s participants";
   static const String participantCountGoal = "Prochain objectif\u{00A0}: %s\u{00A0}!";
-  static const String previousQuestion = "Question précédente";
-  static const String ignoreQuestion = "Passer cette question";
+  static const String ignoreQuestion = "Passer cette question →";
   static const String confirmationTitle = "Merci pour votre participation\u{00A0}!";
   static const String confirmationDescription =
       "Vous pouvez maintenant découvrir les résultats de cette consultation et suivre l'avancée des propositions.";
@@ -35,7 +34,8 @@ class ConsultationStrings {
   static const String refuseNotification = "Ne pas recevoir de notifications";
   static const String openedQuestionNotice =
       "Attention à ne pas indiquer de données personnelles qui pourraient vous identifier.";
-  static const String nextQuestion = "Question suivante";
+  static const String previousQuestion = "←";
+  static const String nextQuestion = "Question suivante →";
   static const String validate = "Valider";
   static const String hintText = "Saisissez votre réponse\n\n\n\n\n\n";
   static const String maxChoices = "Vous pouvez choisir jusqu'à %s réponses.";
