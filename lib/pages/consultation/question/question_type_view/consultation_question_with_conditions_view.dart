@@ -140,11 +140,15 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
         if (!previousResponseIds.contains(UuidUtils.uuidZero) && previousResponseIds.isNotEmpty) {
           currentResponseId = previousResponseIds[0];
           otherResponseText = previousSelectedResponses.responseText;
-          currentNextQuestionId = widget.questionWithConditions.responseChoicesViewModels
-              .firstWhere((element) => element.id == currentResponseId)
-              .nextQuestionId;
-          if (otherResponseText.isNotBlank()) {
+
+          final currentResponseChoiceViewModel = widget.questionWithConditions.responseChoicesViewModels
+              .firstWhere((element) => element.id == currentResponseId);
+          currentNextQuestionId = currentResponseChoiceViewModel.nextQuestionId;
+          final currentResponseHasOpenTextField = currentResponseChoiceViewModel.hasOpenTextField;
+          if (currentResponseHasOpenTextField) {
             showNextButton = true;
+          } else {
+            showNextButton = false;
           }
         }
       }

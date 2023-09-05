@@ -28,9 +28,9 @@ class DemographicStrings {
   static const String often = "Souvent";
   static const String sometime = "Parfois";
   static const String never = "Jamais";
-  static const String ignoreQuestion = "Passer cette question";
-  static const String previousQuestion = "Question précédente";
-  static const String continu = "Continuer";
+  static const String ignoreQuestion = "Passer cette question →";
+  static const String previousQuestion = "←";
+  static const String nextQuestion = "Question suivante →";
   static const String send = "Envoyer";
   static const String yearOfBirthError = "L'année de naissance saisie n'est pas valide.";
   static const String yearOfBirthHint = "1995";

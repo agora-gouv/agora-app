@@ -1,11 +1,7 @@
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
-import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class DemographicHelper {
   static String getQuestionTitle(int step) {
@@ -35,34 +31,23 @@ class DemographicHelper {
     );
   }
 
-  static List<Widget> buildBackButton({required int step, required VoidCallback onBackTap}) {
+  static Widget buildBackButton({required int step, required VoidCallback onBackTap}) {
     if (step != 1) {
-      return [
-        SizedBox(height: AgoraSpacings.x1_5),
-        InkWell(
-          onTap: () => onBackTap(),
-          child: Container(
-            padding: EdgeInsets.only(bottom: AgoraSpacings.x0_25),
-            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: AgoraColors.primaryBlue, width: 1))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset("assets/ic_backward.svg", excludeFromSemantics: true),
-                SizedBox(width: AgoraSpacings.base),
-                Flexible(
-                  child: Text(
-                    DemographicStrings.previousQuestion,
-                    style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ];
+      return AgoraButton(
+        label: DemographicStrings.previousQuestion,
+        style: AgoraButtonStyle.blueBorderButtonStyle,
+        onPressed: onBackTap,
+      );
     } else {
-      return [];
+      return Container();
     }
+  }
+
+  static Widget buildNextButton({required int step, required int totalStep, required VoidCallback onPressed}) {
+    return AgoraButton(
+      label: step == totalStep ? DemographicStrings.send : DemographicStrings.nextQuestion,
+      style: AgoraButtonStyle.primaryButtonStyle,
+      onPressed: onPressed,
+    );
   }
 }

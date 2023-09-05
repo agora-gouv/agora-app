@@ -13,18 +13,24 @@ import 'package:agora/pages/demographic/demographic_response_helper.dart';
 import 'package:flutter/material.dart';
 
 class DemographicCommonView extends StatelessWidget {
+  final int step;
+  final int totalStep;
   final List<DemographicResponseChoice> responseChoices;
   final Function(String responseCode) onContinuePressed;
   final VoidCallback onIgnorePressed;
+  final VoidCallback onBackPressed;
   final DemographicResponse? oldResponse;
   final bool showWhatAbout;
   final String? whatAboutText;
 
   const DemographicCommonView({
     super.key,
+    required this.step,
+    required this.totalStep,
     required this.responseChoices,
     required this.onContinuePressed,
     required this.onIgnorePressed,
+    required this.onBackPressed,
     required this.oldResponse,
     this.showWhatAbout = false,
     this.whatAboutText,
@@ -84,8 +90,16 @@ class DemographicCommonView extends StatelessWidget {
       );
       widgets.add(SizedBox(height: AgoraSpacings.x0_25));
     }
-    widgets.add(SizedBox(height: AgoraSpacings.x1_25));
-    widgets.add(DemographicHelper.buildIgnoreButton(onPressed: onIgnorePressed));
+    widgets.addAll([
+      SizedBox(height: AgoraSpacings.x1_25),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          DemographicHelper.buildBackButton(step: step, onBackTap: onBackPressed),
+          DemographicHelper.buildIgnoreButton(onPressed: onIgnorePressed),
+        ],
+      ),
+    ]);
     return widgets;
   }
 }

@@ -1,7 +1,5 @@
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -9,14 +7,20 @@ import 'package:agora/pages/demographic/demographic_helper.dart';
 import 'package:flutter/material.dart';
 
 class DemographicBirthView extends StatefulWidget {
+  final int step;
+  final int totalStep;
   final Function(String) onContinuePressed;
   final VoidCallback onIgnorePressed;
+  final VoidCallback onBackPressed;
   final TextEditingController? controller;
 
   const DemographicBirthView({
     super.key,
+    required this.step,
+    required this.totalStep,
     required this.onContinuePressed,
     required this.onIgnorePressed,
+    required this.onBackPressed,
     this.controller,
   });
 
@@ -63,21 +67,24 @@ class _DemographicBirthViewState extends State<DemographicBirthView> {
           ),
         ],
         SizedBox(height: AgoraSpacings.x1_25),
-        if (year != null && year!.length == 4)
-          AgoraButton(
-            label: DemographicStrings.continu,
-            style: AgoraButtonStyle.primaryButtonStyle,
-            onPressed: () {
-              setState(() {
-                isError = !_isBirthDateValid();
-                if (!isError) {
-                  widget.onContinuePressed(year!);
-                }
-              });
-            },
-          )
-        else
-          DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
+            year != null && year!.length == 4
+                ? DemographicHelper.buildNextButton(
+                    step: widget.step,
+                    totalStep: widget.totalStep,
+                    onPressed: () => setState(() {
+                      isError = !_isBirthDateValid();
+                      if (!isError) {
+                        widget.onContinuePressed(year!);
+                      }
+                    }),
+                  )
+                : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+          ],
+        ),
       ],
     );
   }
