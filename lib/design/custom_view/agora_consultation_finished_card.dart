@@ -11,7 +11,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum AgoraConsultationFinishedStyle { small, large }
+enum AgoraConsultationFinishedStyle { carrousel, column, grid }
 
 class AgoraConsultationFinishedCard extends StatelessWidget {
   final String id;
@@ -35,10 +35,16 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double carrouselWidth;
-    if (style == AgoraConsultationFinishedStyle.small) {
-      carrouselWidth = max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth);
-    } else {
-      carrouselWidth = MediaQuery.of(context).size.width;
+    switch (style) {
+      case AgoraConsultationFinishedStyle.carrousel:
+        carrouselWidth = max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth);
+        break;
+      case AgoraConsultationFinishedStyle.column:
+        carrouselWidth = MediaQuery.of(context).size.width;
+        break;
+      case AgoraConsultationFinishedStyle.grid:
+        carrouselWidth = MediaQuery.of(context).size.width * 0.5;
+        break;
     }
 
     Widget currentChild = step != 1
@@ -57,8 +63,9 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal:
-                        style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_75 : AgoraSpacings.base,
-                    vertical: style == AgoraConsultationFinishedStyle.small ? AgoraSpacings.x0_5 : AgoraSpacings.base,
+                        style == AgoraConsultationFinishedStyle.carrousel ? AgoraSpacings.x0_75 : AgoraSpacings.base,
+                    vertical:
+                        style == AgoraConsultationFinishedStyle.carrousel ? AgoraSpacings.x0_5 : AgoraSpacings.base,
                   ),
                   child: AgoraRoundedCard(
                     cardColor: AgoraColors.lightBrun,
@@ -90,7 +97,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
               ],
             ),
           );
-    if (style == AgoraConsultationFinishedStyle.small) {
+    if (style == AgoraConsultationFinishedStyle.carrousel) {
       currentChild = SizedBox(width: carrouselWidth, child: currentChild);
     }
     return currentChild;
@@ -110,24 +117,16 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
         onTap: step != 1 ? () => onClick() : null,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            style == AgoraConsultationFinishedStyle.small
-                ? image
+            style == AgoraConsultationFinishedStyle.carrousel
+                ? Column(children: [image, SizedBox(height: AgoraSpacings.x0_5)])
                 : Padding(padding: const EdgeInsets.all(AgoraSpacings.base), child: image),
-            Padding(
-              padding: style == AgoraConsultationFinishedStyle.small
-                  ? EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75)
-                  : EdgeInsets.only(left: AgoraSpacings.base, right: AgoraSpacings.base, bottom: AgoraSpacings.base),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(width: double.infinity),
-                  ThematiqueHelper.buildCard(context, thematique),
-                  Text(title, style: AgoraTextStyles.medium18),
-                ],
-              ),
-            ),
-            if (style == AgoraConsultationFinishedStyle.small) Spacer(),
+            _buildPadding(child: ThematiqueHelper.buildCard(context, thematique)),
+            style == AgoraConsultationFinishedStyle.column
+                ? _buildPadding(child: Text(title, style: AgoraTextStyles.medium18))
+                : Expanded(child: _buildPadding(child: Text(title, style: AgoraTextStyles.medium18))),
+            SizedBox(height: AgoraSpacings.x0_5),
             AgoraRoundedCard(
               cardColor: AgoraColors.doctor,
               padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
@@ -145,6 +144,15 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildPadding({required Widget child}) {
+    return Padding(
+      padding: style == AgoraConsultationFinishedStyle.carrousel
+          ? EdgeInsets.only(left: AgoraSpacings.x0_75, right: AgoraSpacings.x0_75, bottom: AgoraSpacings.x0_5)
+          : EdgeInsets.only(left: AgoraSpacings.base, right: AgoraSpacings.base, bottom: AgoraSpacings.x0_5),
+      child: child,
     );
   }
 
