@@ -1,8 +1,10 @@
 import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_bloc.dart';
 import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_event.dart';
 import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_state.dart';
+import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -35,7 +37,6 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
       ],
       child: AgoraScaffold(
         child: AgoraSecondaryStyleView(
-          scrollType: AgoraSecondaryScrollType.custom,
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
@@ -64,33 +65,66 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
 
   List<Widget> _buildContent(BuildContext context, ConsultationFinishedPaginatedState state) {
     final List<Widget> widgets = [];
-    for (final finishedViewModel in state.consultationFinishedViewModels) {
-      widgets.add(
-        AgoraConsultationFinishedCard(
-          id: finishedViewModel.id,
-          title: finishedViewModel.title,
-          thematique: finishedViewModel.thematique,
-          imageUrl: finishedViewModel.coverUrl,
-          step: finishedViewModel.step,
-          style: AgoraConsultationFinishedStyle.large,
-          onClick: () {
-            TrackerHelper.trackClick(
-              clickName: "${AnalyticsEventNames.finishedConsultation} ${finishedViewModel.id}",
-              widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
-            );
-            Navigator.pushNamed(
-              context,
-              ConsultationSummaryPage.routeName,
-              arguments: ConsultationSummaryArguments(
-                consultationId: finishedViewModel.id,
-                shouldReloadConsultationsWhenPop: false,
-                initialTab: ConsultationSummaryInitialTab.etEnsuite,
-              ),
-            );
-          },
-        ),
-      );
-      widgets.add(SizedBox(height: AgoraSpacings.base));
+    final consultationFinishedViewModels = state.consultationFinishedViewModels;
+    final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
+    if (largerThanMobile) {
+      for (var index = 0; index < consultationFinishedViewModels.length; index = index + 2) {
+        final finishedViewModel1 = consultationFinishedViewModels[index];
+        ConsultationFinishedPaginatedViewModel? finishedViewModel2;
+        if (index + 1 < consultationFinishedViewModels.length) {
+          finishedViewModel2 = consultationFinishedViewModels[index + 1];
+        }
+        widgets.add(
+          IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: AgoraConsultationFinishedCard(
+                    id: finishedViewModel1.id,
+                    title: finishedViewModel1.title,
+                    thematique: finishedViewModel1.thematique,
+                    imageUrl: finishedViewModel1.coverUrl,
+                    step: finishedViewModel1.step,
+                    style: AgoraConsultationFinishedStyle.grid,
+                    onClick: () => _onCardClick(context, finishedViewModel1.id),
+                  ),
+                ),
+                SizedBox(width: AgoraSpacings.horizontalPadding),
+                finishedViewModel2 != null
+                    ? Expanded(
+                        child: AgoraConsultationFinishedCard(
+                          id: finishedViewModel2.id,
+                          title: finishedViewModel2.title,
+                          thematique: finishedViewModel2.thematique,
+                          imageUrl: finishedViewModel2.coverUrl,
+                          step: finishedViewModel2.step,
+                          style: AgoraConsultationFinishedStyle.grid,
+                          onClick: () => _onCardClick(context, finishedViewModel2!.id),
+                        ),
+                      )
+                    : Expanded(child: Container()),
+              ],
+            ),
+          ),
+        );
+        widgets.add(SizedBox(height: AgoraSpacings.base));
+      }
+    } else {
+      for (final finishedViewModel in consultationFinishedViewModels) {
+        widgets.add(
+          AgoraConsultationFinishedCard(
+            id: finishedViewModel.id,
+            title: finishedViewModel.title,
+            thematique: finishedViewModel.thematique,
+            imageUrl: finishedViewModel.coverUrl,
+            step: finishedViewModel.step,
+            style: AgoraConsultationFinishedStyle.column,
+            onClick: () => _onCardClick(context, finishedViewModel.id),
+          ),
+        );
+        widgets.add(SizedBox(height: AgoraSpacings.base));
+      }
     }
 
     if (state is ConsultationFinishedPaginatedInitialState || state is ConsultationFinishedPaginatedLoadingState) {
@@ -130,5 +164,21 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     }
     widgets.add(SizedBox(height: AgoraSpacings.x0_5));
     return widgets;
+  }
+
+  void _onCardClick(BuildContext context, String consultationId) {
+    TrackerHelper.trackClick(
+      clickName: "${AnalyticsEventNames.finishedConsultation} $consultationId",
+      widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
+    );
+    Navigator.pushNamed(
+      context,
+      ConsultationSummaryPage.routeName,
+      arguments: ConsultationSummaryArguments(
+        consultationId: consultationId,
+        shouldReloadConsultationsWhenPop: false,
+        initialTab: ConsultationSummaryInitialTab.etEnsuite,
+      ),
+    );
   }
 }
