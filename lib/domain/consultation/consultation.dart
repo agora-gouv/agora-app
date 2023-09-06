@@ -6,7 +6,6 @@ class ConsultationOngoing extends Equatable {
   final String title;
   final String coverUrl;
   final Thematique thematique;
-  final bool hasAnswered;
   final DateTime endDate;
   final String? highlightLabel;
 
@@ -16,7 +15,6 @@ class ConsultationOngoing extends Equatable {
     required this.coverUrl,
     required this.thematique,
     required this.endDate,
-    required this.hasAnswered,
     required this.highlightLabel,
   });
 
@@ -27,7 +25,6 @@ class ConsultationOngoing extends Equatable {
         coverUrl,
         thematique,
         endDate,
-        hasAnswered,
         highlightLabel,
       ];
 }

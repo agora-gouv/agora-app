@@ -16,7 +16,6 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 
 enum AgoraConsultationOngoingCardStyle { column, gridLeft, gridRight }
@@ -27,7 +26,6 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   final ThematiqueViewModel thematique;
   final String title;
   final String endDate;
-  final bool hasAnswered;
   final String? highlightLabel;
   final AgoraConsultationOngoingCardStyle style;
 
@@ -37,7 +35,6 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     required this.thematique,
     required this.title,
     required this.endDate,
-    required this.hasAnswered,
     required this.highlightLabel,
     required this.style,
   });
@@ -132,31 +129,15 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                   Flexible(
                     child: ExcludeSemantics(
                       child: AgoraButton(
-                        label: hasAnswered ? ConsultationStrings.seeResults : ConsultationStrings.participate,
-                        icon: hasAnswered ? "ic_list.svg" : "ic_bubble.svg",
+                        label: ConsultationStrings.participate,
+                        icon: "ic_bubble.svg",
                         style: AgoraButtonStyle.blueBorderButtonStyle,
                         onPressed: () {
-                          if (hasAnswered) {
-                            TrackerHelper.trackClick(
-                              clickName: "${AnalyticsEventNames.seeResultsConsultation} $consultationId",
-                              widgetName: AnalyticsScreenNames.consultationsPage,
-                            );
-                            Navigator.pushNamed(
-                              context,
-                              ConsultationSummaryPage.routeName,
-                              arguments: ConsultationSummaryArguments(
-                                consultationId: consultationId,
-                                shouldReloadConsultationsWhenPop: false,
-                                initialTab: ConsultationSummaryInitialTab.results,
-                              ),
-                            );
-                          } else {
-                            TrackerHelper.trackClick(
-                              clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
-                              widgetName: AnalyticsScreenNames.consultationsPage,
-                            );
-                            _participate(context);
-                          }
+                          TrackerHelper.trackClick(
+                            clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
+                            widgetName: AnalyticsScreenNames.consultationsPage,
+                          );
+                          _participate(context);
                         },
                       ),
                     ),
