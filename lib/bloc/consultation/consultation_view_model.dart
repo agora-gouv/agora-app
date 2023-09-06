@@ -7,7 +7,6 @@ class ConsultationOngoingViewModel extends Equatable {
   final String coverUrl;
   final ThematiqueViewModel thematique;
   final String endDate;
-  final bool hasAnswered;
   final String? highlightLabel;
 
   ConsultationOngoingViewModel({
@@ -16,7 +15,6 @@ class ConsultationOngoingViewModel extends Equatable {
     required this.coverUrl,
     required this.thematique,
     required this.endDate,
-    required this.hasAnswered,
     required this.highlightLabel,
   });
 
@@ -27,7 +25,6 @@ class ConsultationOngoingViewModel extends Equatable {
         coverUrl,
         thematique,
         endDate,
-        hasAnswered,
         highlightLabel,
       ];
 }

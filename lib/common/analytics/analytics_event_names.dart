@@ -1,7 +1,6 @@
 class AnalyticsEventNames {
   static const String participateConsultation = "Participer à la consultation";
   static const String participateConsultationByCard = "Participer à la consultation %s depuis la carte";
-  static const String seeResultsConsultation = "Voir les résultats de la consultation";
   static const String finishedConsultation = "Consultation depuis grâce à vous";
   static const String answeredConsultation = "Consultation depuis mes consultations";
   static const String shareConsultation = "Partager la consultation";
