@@ -461,6 +461,100 @@ void main() {
     });
   });
 
+  group("Fetch qags response", () {
+    test("when success should return qags response", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/responses",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "incomingResponses": [
+              {
+                "qagId": "incomingQagId",
+                "thematique": {"label": "Transports", "picto": "🚊"},
+                "title": "Pourquoi nana... ?",
+                "support": {
+                  "count": 200,
+                  "isSupported": true,
+                },
+              },
+            ],
+            "responses": [
+              {
+                "qagId": "qagId",
+                "thematique": {"label": "Transports", "picto": "🚊"},
+                "title": "Pourquoi ... ?",
+                "author": "Olivier Véran",
+                "authorPortraitUrl": "authorPortraitUrl",
+                "responseDate": "2023-01-23",
+              },
+            ],
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchQagsResponse();
+
+      // Then
+      expect(
+        response,
+        GetQagsResponseSucceedResponse(
+          qagResponsesIncoming: [
+            QagResponseIncoming(
+              qagId: "incomingQagId",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "Pourquoi nana... ?",
+              supportCount: 200,
+              isSupported: true,
+            ),
+          ],
+          qagResponses: [
+            QagResponse(
+              qagId: "qagId",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "Pourquoi ... ?",
+              author: "Olivier Véran",
+              authorPortraitUrl: "authorPortraitUrl",
+              responseDate: DateTime(2023, 1, 23),
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/responses",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.fetchQagsResponse();
+
+      // Then
+      expect(response, GetQagsResponseFailedResponse());
+    });
+  });
+
   group("Fetch qags response paginated", () {
     test("when success should return qags response paginated", () async {
       // Given

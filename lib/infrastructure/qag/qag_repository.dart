@@ -37,6 +37,8 @@ abstract class QagRepository {
     required QagPaginatedFilter filter,
   });
 
+  Future<GetQagsResponseRepositoryResponse> fetchQagsResponse();
+
   Future<GetQagsResponsePaginatedRepositoryResponse> fetchQagsResponsePaginated({
     required int pageNumber,
   });
@@ -174,6 +176,39 @@ class QagDioRepository extends QagRepository {
     } catch (e, s) {
       crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchQagsPaginated);
       return GetQagsPaginatedFailedResponse();
+    }
+  }
+
+  @override
+  Future<GetQagsResponseRepositoryResponse> fetchQagsResponse() async {
+    try {
+      final response = await httpClient.get("/qags/responses");
+      final qagResponsesIncoming = response.data["incomingResponses"] as List;
+      final qagResponses = response.data["responses"] as List;
+      return GetQagsResponseSucceedResponse(
+        qagResponsesIncoming: qagResponsesIncoming.map((qagResponseIncoming) {
+          return QagResponseIncoming(
+            qagId: qagResponseIncoming["qagId"] as String,
+            thematique: (qagResponseIncoming["thematique"] as Map).toThematique(),
+            title: qagResponseIncoming["title"] as String,
+            supportCount: qagResponseIncoming["support"]["count"] as int,
+            isSupported: qagResponseIncoming["support"]["isSupported"] as bool,
+          );
+        }).toList(),
+        qagResponses: qagResponses.map((qagResponse) {
+          return QagResponse(
+            qagId: qagResponse["qagId"] as String,
+            thematique: (qagResponse["thematique"] as Map).toThematique(),
+            title: qagResponse["title"] as String,
+            author: qagResponse["author"] as String,
+            authorPortraitUrl: qagResponse["authorPortraitUrl"] as String,
+            responseDate: (qagResponse["responseDate"] as String).parseToDateTime(),
+          );
+        }).toList(),
+      );
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchQagsResponse);
+      return GetQagsResponseFailedResponse();
     }
   }
 
@@ -491,6 +526,29 @@ class GetQagsPaginatedSucceedResponse extends GetQagsPaginatedRepositoryResponse
 }
 
 class GetQagsPaginatedFailedResponse extends GetQagsPaginatedRepositoryResponse {}
+
+abstract class GetQagsResponseRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetQagsResponseSucceedResponse extends GetQagsResponseRepositoryResponse {
+  final List<QagResponseIncoming> qagResponsesIncoming;
+  final List<QagResponse> qagResponses;
+
+  GetQagsResponseSucceedResponse({
+    required this.qagResponsesIncoming,
+    required this.qagResponses,
+  });
+
+  @override
+  List<Object> get props => [
+        qagResponsesIncoming,
+        qagResponses,
+      ];
+}
+
+class GetQagsResponseFailedResponse extends GetQagsResponseRepositoryResponse {}
 
 abstract class GetQagsResponsePaginatedRepositoryResponse extends Equatable {
   @override
