@@ -18,14 +18,7 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
     Emitter<QagState> emit,
   ) async {
     if (state is QagFetchedState) {
-      emit(
-        QagLoadingState(
-          popularViewModels: [],
-          latestViewModels: [],
-          supportingViewModels: [],
-          errorCase: null,
-        ),
-      );
+      emit(QagLoadingState(popularViewModels: [], latestViewModels: [], supportingViewModels: [], errorCase: null));
     }
     final response = await qagRepository.fetchQags(thematiqueId: event.thematiqueId);
     if (response is GetQagsSucceedResponse) {

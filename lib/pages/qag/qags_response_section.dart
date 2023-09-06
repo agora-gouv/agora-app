@@ -1,4 +1,4 @@
-import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/bloc/qag/response/qag_response_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
