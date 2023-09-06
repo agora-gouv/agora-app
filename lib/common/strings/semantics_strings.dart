@@ -29,4 +29,8 @@ class SemanticsStrings {
 
   static const String video = "Vidéo";
   static const String onVideoTap = "lancer ou mettre en pause la vidéo";
+
+  static const String previousQuestion = "Question précédente";
+  static const String nextQuestion = "Question suivante";
+  static const String ignoreQuestion = "Passer cette question";
 }
