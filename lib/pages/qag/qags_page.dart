@@ -1,6 +1,8 @@
 import 'package:agora/bloc/qag/qag_bloc.dart';
 import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_state.dart';
+import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
+import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
@@ -54,6 +56,11 @@ class _QagsPageState extends State<QagsPage> {
             create: (BuildContext context) => QagBloc(
               qagRepository: RepositoryManager.getQagRepository(),
             )..add(FetchQagsEvent(thematiqueId: currentThematiqueId)),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => QagResponseBloc(
+              qagRepository: RepositoryManager.getQagRepository(),
+            )..add(FetchQagsResponseEvent()),
           ),
           BlocProvider(
             create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
