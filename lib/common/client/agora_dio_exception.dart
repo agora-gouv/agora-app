@@ -23,6 +23,7 @@ enum AgoraDioExceptionType {
   createQag,
   fetchQags,
   fetchQagsTimeout,
+  fetchQagsResponse,
   fetchQagsPaginated,
   fetchQagsResponsePaginated,
   fetchQagDetails,

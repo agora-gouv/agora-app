@@ -1,7 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:equatable/equatable.dart';
 
-class QagsEvent extends Equatable {
+abstract class QagsEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }

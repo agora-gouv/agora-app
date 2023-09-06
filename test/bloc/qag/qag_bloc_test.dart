@@ -24,23 +24,6 @@ void main() {
       act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: null)),
       expect: () => [
         QagFetchedState(
-          qagResponseViewModels: [
-            QagResponseIncomingViewModel(
-              qagId: "qagId2",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la ...",
-              supportCount: 200,
-              isSupported: true,
-            ),
-            QagResponseViewModel(
-              qagId: "qagId",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-              author: "author",
-              authorPortraitUrl: "authorPortraitUrl",
-              responseDate: "a répondu le 23 janvier",
-            ),
-          ],
           popularViewModels: [
             QagViewModel(
               id: "id1",
@@ -88,23 +71,6 @@ void main() {
       act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: null)),
       expect: () => [
         QagFetchedState(
-          qagResponseViewModels: [
-            QagResponseIncomingViewModel(
-              qagId: "qagId2",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la ...",
-              supportCount: 200,
-              isSupported: true,
-            ),
-            QagResponseViewModel(
-              qagId: "qagId",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-              author: "author",
-              authorPortraitUrl: "authorPortraitUrl",
-              responseDate: "a répondu le 23 janvier",
-            ),
-          ],
           popularViewModels: [
             QagViewModel(
               id: "id1",
@@ -150,16 +116,6 @@ void main() {
         qagRepository: FakeQagSuccessRepository(),
       ),
       seed: () => QagFetchedState(
-        qagResponseViewModels: [
-          QagResponseViewModel(
-            qagId: "",
-            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-            title: "",
-            author: "",
-            authorPortraitUrl: "",
-            responseDate: "",
-          ),
-        ],
         popularViewModels: [
           QagViewModel(
             id: "",
@@ -198,30 +154,12 @@ void main() {
       act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: null)),
       expect: () => [
         QagLoadingState(
-          qagResponseViewModels: [],
           popularViewModels: [],
           latestViewModels: [],
           supportingViewModels: [],
           errorCase: null,
         ),
         QagFetchedState(
-          qagResponseViewModels: [
-            QagResponseIncomingViewModel(
-              qagId: "qagId2",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la ...",
-              supportCount: 200,
-              isSupported: true,
-            ),
-            QagResponseViewModel(
-              qagId: "qagId",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-              author: "author",
-              authorPortraitUrl: "authorPortraitUrl",
-              responseDate: "a répondu le 23 janvier",
-            ),
-          ],
           popularViewModels: [
             QagViewModel(
               id: "id1",
@@ -293,16 +231,6 @@ void main() {
         qagRepository: FakeQagSuccessRepository(),
       ),
       seed: () => QagFetchedState(
-        qagResponseViewModels: [
-          QagResponseViewModel(
-            qagId: "qagId",
-            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-            author: "author",
-            authorPortraitUrl: "authorPortraitUrl",
-            responseDate: "a répondu le 23 mars",
-          ),
-        ],
         popularViewModels: [
           QagViewModel(
             id: "id0",
@@ -351,16 +279,6 @@ void main() {
       ),
       expect: () => [
         QagFetchedState(
-          qagResponseViewModels: [
-            QagResponseViewModel(
-              qagId: "qagId",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-              author: "author",
-              authorPortraitUrl: "authorPortraitUrl",
-              responseDate: "a répondu le 23 mars",
-            ),
-          ],
           popularViewModels: [
             QagViewModel(
               id: "id0",
@@ -415,16 +333,6 @@ void main() {
         qagRepository: FakeQagSuccessRepository(),
       ),
       seed: () => QagFetchedState(
-        qagResponseViewModels: [
-          QagResponseViewModel(
-            qagId: "qagId",
-            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-            author: "author",
-            authorPortraitUrl: "authorPortraitUrl",
-            responseDate: "a répondu le 23 mars",
-          ),
-        ],
         popularViewModels: [
           QagViewModel(
             id: "id0",
@@ -472,16 +380,6 @@ void main() {
       ),
       expect: () => [
         QagFetchedState(
-          qagResponseViewModels: [
-            QagResponseViewModel(
-              qagId: "qagId",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
-              title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-              author: "author",
-              authorPortraitUrl: "authorPortraitUrl",
-              responseDate: "a répondu le 23 mars",
-            ),
-          ],
           popularViewModels: [
             QagViewModel(
               id: "id0",
@@ -516,7 +414,6 @@ void main() {
         qagRepository: FakeQagSuccessRepository(),
       ),
       seed: () => QagFetchedState(
-        qagResponseViewModels: [],
         popularViewModels: [
           QagViewModel(
             id: "id0",
@@ -565,7 +462,6 @@ void main() {
       ),
       expect: () => [
         QagFetchedState(
-          qagResponseViewModels: [],
           popularViewModels: [
             QagViewModel(
               id: "id0",

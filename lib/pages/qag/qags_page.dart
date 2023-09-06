@@ -1,6 +1,9 @@
 import 'package:agora/bloc/qag/qag_bloc.dart';
 import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_state.dart';
+import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
+import 'package:agora/bloc/qag/response/qag_response_event.dart';
+import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
@@ -56,6 +59,11 @@ class _QagsPageState extends State<QagsPage> {
             )..add(FetchQagsEvent(thematiqueId: currentThematiqueId)),
           ),
           BlocProvider(
+            create: (BuildContext context) => QagResponseBloc(
+              qagRepository: RepositoryManager.getQagRepository(),
+            )..add(FetchQagsResponseEvent()),
+          ),
+          BlocProvider(
             create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
           ),
           BlocProvider(
@@ -64,8 +72,8 @@ class _QagsPageState extends State<QagsPage> {
             )..add(FetchFilterThematiqueEvent()),
           ),
         ],
-        child: BlocBuilder<QagBloc, QagState>(
-          builder: (context, state) {
+        child: BlocBuilder<QagResponseBloc, QagResponseState>(
+          builder: (context, qagResponseState) {
             return SingleChildScrollView(
               physics: ClampingScrollPhysics(),
               child: Column(
@@ -91,7 +99,21 @@ class _QagsPageState extends State<QagsPage> {
                       );
                     },
                   ),
-                  Column(children: _handleQagState(context, state)),
+                  BlocBuilder<QagBloc, QagState>(
+                    builder: (context, qagState) {
+                      if (qagResponseState is QagResponseInitialLoadingState && qagState is QagInitialLoadingState) {
+                        return _buildGlobalPadding(context, child: CircularProgressIndicator());
+                      } else if (qagResponseState is QagResponseErrorState && qagState is QagErrorState) {
+                        return _buildGlobalPadding(context, child: AgoraErrorView());
+                      }
+                      return Column(
+                        children: [
+                          _handleQagResponseState(qagResponseState),
+                          ..._handleQagState(context, qagState),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             );
@@ -101,10 +123,24 @@ class _QagsPageState extends State<QagsPage> {
     );
   }
 
+  Widget _handleQagResponseState(QagResponseState state) {
+    switch (state) {
+      case QagResponseInitialLoadingState():
+        return _buildLocalPadding(
+          child: Center(child: CircularProgressIndicator()),
+        );
+      case QagResponseFetchedState():
+        return QagsResponseSection(qagResponseViewModels: state.qagResponseViewModels);
+      case QagResponseErrorState():
+        return _buildLocalPadding(
+          child: Center(child: AgoraErrorView()),
+        );
+    }
+  }
+
   List<Widget> _handleQagState(BuildContext context, QagState state) {
-    if (state is QagWithItem) {
+    if (state is QagWithItemState) {
       return [
-        QagsResponseSection(qagResponseViewModels: state.qagResponseViewModels),
         QagsAskQuestionSectionPage(errorCase: state.errorCase),
         QagsThematiqueSection(
           currentThematiqueId: currentThematiqueId,
@@ -136,34 +172,48 @@ class _QagsPageState extends State<QagsPage> {
         ),
       ];
     } else if (state is QagInitialLoadingState) {
-      return _buildPadding(context, CircularProgressIndicator());
-    } else if (state is QagErrorState && state.errorType == QagsErrorType.timeout) {
-      return _buildPadding(
-        context,
-        AgoraErrorView(errorMessage: GenericStrings.timeoutErrorMessage, textAlign: TextAlign.center),
-      );
-    } else if (state is QagErrorState && state.errorType == QagsErrorType.generic) {
-      return _buildPadding(context, AgoraErrorView());
+      return [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x2),
+          child: CircularProgressIndicator(),
+        ),
+      ];
+    } else if (state is QagErrorState) {
+      switch (state.errorType) {
+        case QagsErrorType.generic:
+          return [_buildLocalPadding(child: AgoraErrorView())];
+        case QagsErrorType.timeout:
+          return [
+            _buildLocalPadding(
+              child: AgoraErrorView(errorMessage: GenericStrings.timeoutErrorMessage, textAlign: TextAlign.center),
+            ),
+          ];
+      }
     }
     return [];
   }
 
-  List<Widget> _buildPadding(BuildContext context, Widget child) {
-    return [
-      Padding(
-        padding: EdgeInsets.only(
-          left: AgoraSpacings.horizontalPadding,
-          top: AgoraSpacings.base,
-          right: AgoraSpacings.horizontalPadding,
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-            Center(child: child),
-            SizedBox(height: AgoraSpacings.x2),
-          ],
-        ),
+  Widget _buildGlobalPadding(BuildContext context, {required Widget child}) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+        right: AgoraSpacings.horizontalPadding,
       ),
-    ];
+      child: Column(
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          Center(child: child),
+          SizedBox(height: AgoraSpacings.x2),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLocalPadding({required Widget child}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x2),
+      child: child,
+    );
   }
 }
