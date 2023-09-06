@@ -115,29 +115,8 @@ class QagDioRepository extends QagRepository {
         "/qags",
         queryParameters: {"thematiqueId": thematiqueId},
       );
-      final qagResponsesIncoming = response.data["incomingResponses"] as List;
-      final qagResponses = response.data["responses"] as List;
       final qags = response.data["qags"] as Map;
       return GetQagsSucceedResponse(
-        qagResponsesIncoming: qagResponsesIncoming.map((qagResponseIncoming) {
-          return QagResponseIncoming(
-            qagId: qagResponseIncoming["qagId"] as String,
-            thematique: (qagResponseIncoming["thematique"] as Map).toThematique(),
-            title: qagResponseIncoming["title"] as String,
-            supportCount: qagResponseIncoming["support"]["count"] as int,
-            isSupported: qagResponseIncoming["support"]["isSupported"] as bool,
-          );
-        }).toList(),
-        qagResponses: qagResponses.map((qagResponse) {
-          return QagResponse(
-            qagId: qagResponse["qagId"] as String,
-            thematique: (qagResponse["thematique"] as Map).toThematique(),
-            title: qagResponse["title"] as String,
-            author: qagResponse["author"] as String,
-            authorPortraitUrl: qagResponse["authorPortraitUrl"] as String,
-            responseDate: (qagResponse["responseDate"] as String).parseToDateTime(),
-          );
-        }).toList(),
         qagPopular: _transformToQagList(qags["popular"] as List),
         qagLatest: _transformToQagList(qags["latest"] as List),
         qagSupporting: _transformToQagList(qags["supporting"] as List),
@@ -475,16 +454,12 @@ abstract class GetQagsRepositoryResponse extends Equatable {
 }
 
 class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
-  final List<QagResponseIncoming> qagResponsesIncoming;
-  final List<QagResponse> qagResponses;
   final List<Qag> qagPopular;
   final List<Qag> qagLatest;
   final List<Qag> qagSupporting;
   final String? errorCase;
 
   GetQagsSucceedResponse({
-    required this.qagResponsesIncoming,
-    required this.qagResponses,
     required this.qagPopular,
     required this.qagLatest,
     required this.qagSupporting,
@@ -493,8 +468,6 @@ class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
 
   @override
   List<Object> get props => [
-        qagResponsesIncoming,
-        qagResponses,
         qagPopular,
         qagLatest,
         qagSupporting,

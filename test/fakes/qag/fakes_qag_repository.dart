@@ -27,25 +27,6 @@ class FakeQagSuccessRepository extends QagRepository {
     required String? thematiqueId,
   }) async {
     return GetQagsSucceedResponse(
-      qagResponsesIncoming: [
-        QagResponseIncoming(
-          qagId: "qagId2",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "Pour la ...",
-          supportCount: 200,
-          isSupported: true,
-        ),
-      ],
-      qagResponses: [
-        QagResponse(
-          qagId: "qagId",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-          author: "author",
-          authorPortraitUrl: "authorPortraitUrl",
-          responseDate: DateTime(2024, 1, 23),
-        ),
-      ],
       qagPopular: [
         Qag(
           id: "id1",
@@ -314,25 +295,6 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
     required String? thematiqueId,
   }) async {
     return GetQagsSucceedResponse(
-      qagResponsesIncoming: [
-        QagResponseIncoming(
-          qagId: "qagId2",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "Pour la ...",
-          supportCount: 200,
-          isSupported: true,
-        ),
-      ],
-      qagResponses: [
-        QagResponse(
-          qagId: "qagId",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
-          author: "author",
-          authorPortraitUrl: "authorPortraitUrl",
-          responseDate: DateTime(2024, 1, 23),
-        ),
-      ],
       qagPopular: [
         Qag(
           id: "id1",

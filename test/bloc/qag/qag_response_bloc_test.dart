@@ -1,7 +1,7 @@
-import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
+import 'package:agora/bloc/qag/response/qag_response_view_model.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';

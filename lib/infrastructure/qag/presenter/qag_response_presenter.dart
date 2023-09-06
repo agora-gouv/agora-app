@@ -1,4 +1,4 @@
-import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/bloc/qag/response/qag_response_view_model.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';

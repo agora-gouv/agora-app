@@ -106,27 +106,6 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
-            "incomingResponses": [
-              {
-                "qagId": "incomingQagId",
-                "thematique": {"label": "Transports", "picto": "🚊"},
-                "title": "Pourquoi nana... ?",
-                "support": {
-                  "count": 200,
-                  "isSupported": true,
-                },
-              },
-            ],
-            "responses": [
-              {
-                "qagId": "qagId",
-                "thematique": {"label": "Transports", "picto": "🚊"},
-                "title": "Pourquoi ... ?",
-                "author": "Olivier Véran",
-                "authorPortraitUrl": "authorPortraitUrl",
-                "responseDate": "2023-01-23",
-              },
-            ],
             "qags": {
               "popular": [
                 {
@@ -188,25 +167,6 @@ void main() {
       expect(
         response,
         GetQagsSucceedResponse(
-          qagResponsesIncoming: [
-            QagResponseIncoming(
-              qagId: "incomingQagId",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "Pourquoi nana... ?",
-              supportCount: 200,
-              isSupported: true,
-            ),
-          ],
-          qagResponses: [
-            QagResponse(
-              qagId: "qagId",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "Pourquoi ... ?",
-              author: "Olivier Véran",
-              authorPortraitUrl: "authorPortraitUrl",
-              responseDate: DateTime(2023, 1, 23),
-            ),
-          ],
           qagPopular: [
             Qag(
               id: "id1",
@@ -280,8 +240,6 @@ void main() {
       expect(
         response,
         GetQagsSucceedResponse(
-          qagResponsesIncoming: [],
-          qagResponses: [],
           qagPopular: [],
           qagLatest: [],
           qagSupporting: [],

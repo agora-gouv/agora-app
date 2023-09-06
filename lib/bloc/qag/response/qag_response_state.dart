@@ -1,4 +1,4 @@
-import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/bloc/qag/response/qag_response_view_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagResponseState extends Equatable {
