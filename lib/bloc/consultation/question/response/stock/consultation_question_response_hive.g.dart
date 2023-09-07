@@ -6,8 +6,7 @@ part of 'consultation_question_response_hive.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ConsultationQuestionResponsesHiveAdapter
-    extends TypeAdapter<ConsultationQuestionResponsesHive> {
+class ConsultationQuestionResponsesHiveAdapter extends TypeAdapter<ConsultationQuestionResponsesHive> {
   @override
   final int typeId = 1;
 
@@ -42,7 +41,5 @@ class ConsultationQuestionResponsesHiveAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ConsultationQuestionResponsesHiveAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is ConsultationQuestionResponsesHiveAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

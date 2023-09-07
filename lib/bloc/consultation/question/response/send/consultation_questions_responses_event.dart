@@ -3,15 +3,15 @@ import 'package:equatable/equatable.dart';
 
 class SendConsultationQuestionsResponsesEvent extends Equatable {
   final String consultationId;
-  final List<String> questionsStack;
+  final List<String> questionIdStack;
   final List<ConsultationQuestionResponses> questionsResponses;
 
   SendConsultationQuestionsResponsesEvent({
     required this.consultationId,
-    required this.questionsStack,
+    required this.questionIdStack,
     required this.questionsResponses,
   });
 
   @override
-  List<Object> get props => [consultationId, questionsStack, questionsResponses];
+  List<Object> get props => [consultationId, questionIdStack, questionsResponses];
 }

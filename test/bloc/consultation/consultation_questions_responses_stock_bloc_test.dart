@@ -16,7 +16,7 @@ void main() {
       "when add response - should update state with the new response",
       build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorage1),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionsStack: ["questionId"],
+        questionIdStack: ["questionId"],
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
         ],
@@ -33,7 +33,7 @@ void main() {
       ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionsStack: ["questionId", "questionId2"],
+          questionIdStack: ["questionId", "questionId2"],
           questionsResponses: [
             ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
             ConsultationQuestionResponses(questionId: "questionId2", responseIds: [], responseText: "opened response"),
@@ -43,7 +43,7 @@ void main() {
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorage1.consultationId, consultationId);
-        expect(fakeStorage1.questionsStack, ["questionId", "questionId2"]);
+        expect(fakeStorage1.questionIdStack, ["questionId", "questionId2"]);
         expect(
           fakeStorage1.questionsResponses,
           [
@@ -63,7 +63,7 @@ void main() {
       "when add response for a specific questionId and this questionId already exists - should replace the previous one",
       build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorage2),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionsStack: ["questionId"],
+        questionIdStack: ["questionId"],
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ConsultationQuestionResponses(questionId: "questionId2", responseIds: [], responseText: "opened response"),
@@ -81,7 +81,7 @@ void main() {
       ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionsStack: ["questionId", "questionId2"],
+          questionIdStack: ["questionId", "questionId2"],
           questionsResponses: [
             ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
             ConsultationQuestionResponses(
@@ -95,7 +95,7 @@ void main() {
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorage2.consultationId, consultationId);
-        expect(fakeStorage2.questionsStack, ["questionId", "questionId2"]);
+        expect(fakeStorage2.questionIdStack, ["questionId", "questionId2"]);
         expect(
           fakeStorage2.questionsResponses,
           [
@@ -117,7 +117,7 @@ void main() {
       "when add chapter in stack - should update state with the new chapter",
       build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorageClient),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionsStack: ["questionId"],
+        questionIdStack: ["questionId"],
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
         ],
@@ -125,7 +125,7 @@ void main() {
       act: (bloc) => bloc.add(AddConsultationChapterStockEvent(consultationId: consultationId, chapterId: "chapterId")),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionsStack: ["questionId", "chapterId"],
+          questionIdStack: ["questionId", "chapterId"],
           questionsResponses: [
             ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
@@ -134,7 +134,7 @@ void main() {
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorageClient.consultationId, consultationId);
-        expect(fakeStorageClient.questionsStack, ["questionId", "chapterId"]);
+        expect(fakeStorageClient.questionIdStack, ["questionId", "chapterId"]);
         expect(
           fakeStorageClient.questionsResponses,
           [
@@ -152,7 +152,7 @@ void main() {
         storageClient: FakeConsultationQuestionStorageClient(),
       ),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionsStack: ["questionId", "chapterId"],
+        questionIdStack: ["questionId", "chapterId"],
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
         ],
@@ -160,7 +160,7 @@ void main() {
       act: (bloc) => bloc.add(RemoveConsultationQuestionEvent()),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionsStack: ["questionId"],
+          questionIdStack: ["questionId"],
           questionsResponses: [
             ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
@@ -174,7 +174,7 @@ void main() {
     final fakeStorageClient = FakeConsultationQuestionStorageClient();
     fakeStorageClient.save(
       consultationId: consultationId,
-      questionsStack: ["questionId"],
+      questionIdStack: ["questionId"],
       questionsResponses: [
         ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
       ],
@@ -185,7 +185,7 @@ void main() {
       act: (bloc) => bloc.add(RestoreSavingConsultationResponseEvent(consultationId: consultationId)),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionsStack: ["questionId"],
+          questionIdStack: ["questionId"],
           questionsResponses: [
             ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
@@ -194,7 +194,7 @@ void main() {
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorageClient.consultationId, consultationId);
-        expect(fakeStorageClient.questionsStack, ["questionId"]);
+        expect(fakeStorageClient.questionIdStack, ["questionId"]);
         expect(
           fakeStorageClient.questionsResponses,
           [
@@ -209,7 +209,7 @@ void main() {
     final fakeStorageClient = FakeConsultationQuestionStorageClient();
     fakeStorageClient.save(
       consultationId: consultationId,
-      questionsStack: ["questionId"],
+      questionIdStack: ["questionId"],
       questionsResponses: [
         ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
       ],
@@ -222,7 +222,7 @@ void main() {
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorageClient.consultationId, null);
-        expect(fakeStorageClient.questionsStack, []);
+        expect(fakeStorageClient.questionIdStack, []);
         expect(fakeStorageClient.questionsResponses, []);
       },
     );

@@ -19,7 +19,7 @@ class ConsultationQuestionsResponsesBloc
     Emitter<SendConsultationQuestionsResponsesState> emit,
   ) async {
     final questionResponses = ConsultationQuestionsResponsesBuilder.build(
-      questionsStack: event.questionsStack,
+      questionIdStack: event.questionIdStack,
       questionsResponses: event.questionsResponses,
     );
 

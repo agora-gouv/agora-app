@@ -7,10 +7,7 @@ void main() {
     test("when stack contains questionId of question response should do nothing", () async {
       // When
       final results = ConsultationQuestionsResponsesBuilder.build(
-        questionsStack: [
-          "questionId",
-          "questionId2",
-        ],
+        questionIdStack: ["questionId", "questionId2"],
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),
@@ -30,9 +27,7 @@ void main() {
     test("when stack not contains questionId of question response should filter it", () async {
       // When
       final results = ConsultationQuestionsResponsesBuilder.build(
-        questionsStack: [
-          "questionId",
-        ],
+        questionIdStack: ["questionId"],
         questionsResponses: [
           ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ConsultationQuestionResponses(questionId: "questionId2", responseIds: ["responseId2"], responseText: ""),

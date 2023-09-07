@@ -55,7 +55,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
           ..add(
             SendConsultationQuestionsResponsesEvent(
               consultationId: consultationId,
-              questionsStack: questionsResponsesStockState.questionsStack,
+              questionIdStack: questionsResponsesStockState.questionIdStack,
               questionsResponses: questionsResponsesStockState.questionsResponses,
             ),
           );
