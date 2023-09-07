@@ -2,6 +2,7 @@ import 'package:agora/bloc/consultation/question/response/send/consultation_ques
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_event.dart';
 import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_state.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_event.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
@@ -64,15 +65,20 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
         appBarColor: AgoraColors.primaryBlue,
         child: BlocConsumer<ConsultationQuestionsResponsesBloc, SendConsultationQuestionsResponsesState>(
           listener: (context, state) {
-            if (_shouldDisplayDemographicQuiz(state)) {
-              Navigator.pushNamed(
-                context,
-                DemographicInformationPage.routeName,
-                arguments: DemographicInformationArguments(
-                  consultationId: consultationId,
-                  consultationTitle: consultationTitle,
-                ),
-              );
+            if (state is SendConsultationQuestionsResponsesSuccessState) {
+              context
+                  .read<ConsultationQuestionsResponsesStockBloc>()
+                  .add(DeleteSavingConsultationResponseEvent(consultationId: consultationId));
+              if (state.shouldDisplayDemographicInformation) {
+                Navigator.pushNamed(
+                  context,
+                  DemographicInformationPage.routeName,
+                  arguments: DemographicInformationArguments(
+                    consultationId: consultationId,
+                    consultationTitle: consultationTitle,
+                  ),
+                );
+              }
             }
           },
           builder: (context, state) {

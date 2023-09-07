@@ -41,7 +41,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       videoAspectRatio = 1080.0 / 1920.0;
     }
 
-    videoPlayerController = VideoPlayerController.network(widget.videoUrl);
+    videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
       autoInitialize: true,

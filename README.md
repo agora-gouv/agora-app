@@ -95,3 +95,4 @@ This should generate the following files:
 ## 4. Read other docs
 - `agora/docs/2_git.md`
 - `agora/docs/3_coding_convention.md`
+- `agora/docs/4_hive.md`

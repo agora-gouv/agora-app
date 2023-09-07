@@ -7,21 +7,41 @@ abstract class ConsultationQuestionsResponsesStockEvent extends Equatable {
 }
 
 class AddConsultationChapterStockEvent extends ConsultationQuestionsResponsesStockEvent {
+  final String consultationId;
   final String chapterId;
 
-  AddConsultationChapterStockEvent({required this.chapterId});
+  AddConsultationChapterStockEvent({required this.consultationId, required this.chapterId});
 
   @override
-  List<Object> get props => [chapterId];
+  List<Object> get props => [consultationId, chapterId];
 }
 
 class AddConsultationQuestionsResponseStockEvent extends ConsultationQuestionsResponsesStockEvent {
+  final String consultationId;
   final ConsultationQuestionResponses questionResponse;
 
-  AddConsultationQuestionsResponseStockEvent({required this.questionResponse});
+  AddConsultationQuestionsResponseStockEvent({required this.consultationId, required this.questionResponse});
 
   @override
-  List<Object> get props => [questionResponse];
+  List<Object> get props => [consultationId, questionResponse];
 }
 
 class RemoveConsultationQuestionEvent extends ConsultationQuestionsResponsesStockEvent {}
+
+class RestoreSavingConsultationResponseEvent extends ConsultationQuestionsResponsesStockEvent {
+  final String consultationId;
+
+  RestoreSavingConsultationResponseEvent({required this.consultationId});
+
+  @override
+  List<Object> get props => [consultationId];
+}
+
+class DeleteSavingConsultationResponseEvent extends ConsultationQuestionsResponsesStockEvent {
+  final String consultationId;
+
+  DeleteSavingConsultationResponseEvent({required this.consultationId});
+
+  @override
+  List<Object> get props => [consultationId];
+}

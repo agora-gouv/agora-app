@@ -10,6 +10,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
@@ -52,130 +53,136 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<ConsultationQuestionsResponsesStockBloc>(
+          create: (BuildContext context) => ConsultationQuestionsResponsesStockBloc(
+            storageClient: StorageManager.getConsultationQuestionStorageClient(),
+          )..add(RestoreSavingConsultationResponseEvent(consultationId: widget.arguments.consultationId)),
+        ),
         BlocProvider<ConsultationQuestionsBloc>(
           create: (BuildContext context) =>
               ConsultationQuestionsBloc(consultationRepository: RepositoryManager.getConsultationRepository())
                 ..add(FetchConsultationQuestionsEvent(consultationId: widget.arguments.consultationId)),
         ),
-        BlocProvider<ConsultationQuestionsResponsesStockBloc>(
-          create: (BuildContext context) => ConsultationQuestionsResponsesStockBloc(),
-        ),
       ],
-      child: BlocBuilder<ConsultationQuestionsBloc, ConsultationQuestionsState>(
-        builder: (context, questionsState) {
-          if (questionsState is ConsultationQuestionsFetchedState) {
-            return _handleQuestionsFetchedState(questionsState);
-          } else if (questionsState is ConsultationQuestionsErrorState) {
-            return AgoraScaffold(
-              child: Column(
-                children: [
-                  AgoraToolbar(style: AgoraToolbarStyle.close),
-                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-                  Center(child: AgoraErrorView()),
-                ],
-              ),
-            );
-          } else {
-            return AgoraScaffold(
-              child: Column(
-                children: [
-                  AgoraToolbar(style: AgoraToolbarStyle.close),
-                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-                  Center(child: CircularProgressIndicator()),
-                ],
-              ),
-            );
-          }
+      child: BlocBuilder<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
+        builder: (context, responsesStockState) {
+          return BlocBuilder<ConsultationQuestionsBloc, ConsultationQuestionsState>(
+            builder: (context, questionsState) {
+              if (questionsState is ConsultationQuestionsFetchedState) {
+                return _handleQuestionsFetchedState(context, responsesStockState, questionsState);
+              } else if (questionsState is ConsultationQuestionsErrorState) {
+                return AgoraScaffold(
+                  child: Column(
+                    children: [
+                      AgoraToolbar(style: AgoraToolbarStyle.close),
+                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                      Center(child: AgoraErrorView()),
+                    ],
+                  ),
+                );
+              } else {
+                return AgoraScaffold(
+                  child: Column(
+                    children: [
+                      AgoraToolbar(style: AgoraToolbarStyle.close),
+                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                      Center(child: CircularProgressIndicator()),
+                    ],
+                  ),
+                );
+              }
+            },
+          );
         },
       ),
     );
   }
 
-  Widget _handleQuestionsFetchedState(ConsultationQuestionsFetchedState questionsState) {
-    return BlocBuilder<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
-      builder: (context, responsesStockState) {
-        currentQuestionId ??= questionsState.viewModels[0].id;
-        questionsStack = responsesStockState.questionsStack;
-        final currentQuestion = questionsState.viewModels.firstWhere((element) => element.id == currentQuestionId);
-        final totalQuestions = questionsState.viewModels.length;
-        final questionAlreadyAnswered = _getPreviousResponses(
-          questionId: currentQuestion.id,
-          inStockResponses: responsesStockState.questionsResponses,
-        );
-        return AgoraScaffold(
-          popAction: () {
-            try {
-              final previousQuestion = questionsStack.last;
-              _removeAndGoToPreviousQuestion(context, previousQuestion);
-              return false;
-            } catch (e) {
-              Navigator.pop(context);
-              return true;
-            }
-          },
-          child: _buildContent(
-            currentQuestion,
-            totalQuestions,
-            questionAlreadyAnswered,
-            responsesStockState,
-            context,
-          ),
-        );
+  Widget _handleQuestionsFetchedState(
+    BuildContext context,
+    ConsultationQuestionsResponsesStockState responsesStockState,
+    ConsultationQuestionsFetchedState questionsState,
+  ) {
+    currentQuestionId ??= responsesStockState.questionsStack.lastOrNull ?? questionsState.viewModels[0].id;
+    questionsStack = responsesStockState.questionsStack;
+    final currentQuestion = questionsState.viewModels.firstWhere((element) => element.id == currentQuestionId);
+    final totalQuestions = questionsState.viewModels.length;
+    final questionAlreadyAnswered = _getPreviousResponses(
+      questionId: currentQuestion.id,
+      inStockResponses: responsesStockState.questionsResponses,
+    );
+    return AgoraScaffold(
+      popAction: () {
+        try {
+          final previousQuestion = questionsStack.last;
+          _removeAndGoToPreviousQuestion(context, previousQuestion);
+          return false;
+        } catch (e) {
+          Navigator.pop(context);
+          return true;
+        }
       },
+      child: _buildContent(
+        context,
+        currentQuestion,
+        totalQuestions,
+        questionAlreadyAnswered,
+        responsesStockState,
+      ),
     );
   }
 
   Widget _buildContent(
+    BuildContext context,
     ConsultationQuestionViewModel currentQuestion,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
     ConsultationQuestionsResponsesStockState responsesStockState,
-    BuildContext context,
   ) {
     if (currentQuestion is ConsultationQuestionUniqueViewModel) {
       return _handleQuestionUniqueChoice(
+        context,
         widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
         responsesStockState,
-        context,
       );
     } else if (currentQuestion is ConsultationQuestionMultipleViewModel) {
       return _handleQuestionMultipleChoices(
+        context,
         widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
         responsesStockState,
-        context,
       );
     } else if (currentQuestion is ConsultationQuestionOpenedViewModel) {
       return _handleQuestionOpened(
+        context,
         widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
         responsesStockState,
-        context,
       );
     }
     if (currentQuestion is ConsultationQuestionWithConditionViewModel) {
       return _handleQuestionWithConditions(
+        context,
         widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
         responsesStockState,
-        context,
       );
     } else if (currentQuestion is ConsultationQuestionChapterViewModel) {
       return _handleChapter(
+        context,
         widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         responsesStockState,
-        context,
       );
     } else {
       return Container();
@@ -183,12 +190,12 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   }
 
   ConsultationQuestionUniqueChoiceView _handleQuestionUniqueChoice(
+    BuildContext context,
     String consultationId,
     ConsultationQuestionUniqueViewModel uniqueChoiceQuestion,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
     ConsultationQuestionsResponsesStockState stockState,
-    BuildContext context,
   ) {
     return ConsultationQuestionUniqueChoiceView(
       uniqueChoiceQuestion: uniqueChoiceQuestion,
@@ -218,12 +225,12 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   }
 
   ConsultationQuestionMultipleChoicesView _handleQuestionMultipleChoices(
+    BuildContext context,
     String consultationId,
     ConsultationQuestionMultipleViewModel multipleChoicesQuestion,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
     ConsultationQuestionsResponsesStockState stockState,
-    BuildContext context,
   ) {
     return ConsultationQuestionMultipleChoicesView(
       multipleChoicesQuestion: multipleChoicesQuestion,
@@ -253,12 +260,12 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   }
 
   ConsultationQuestionOpenedView _handleQuestionOpened(
+    BuildContext context,
     String consultationId,
     ConsultationQuestionOpenedViewModel openedQuestion,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
     ConsultationQuestionsResponsesStockState stockState,
-    BuildContext context,
   ) {
     return ConsultationQuestionOpenedView(
       openedQuestion: openedQuestion,
@@ -288,12 +295,12 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   }
 
   ConsultationQuestionWithConditionsView _handleQuestionWithConditions(
+    BuildContext context,
     String consultationId,
     ConsultationQuestionWithConditionViewModel questionWithConditions,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
     ConsultationQuestionsResponsesStockState stockState,
-    BuildContext context,
   ) {
     return ConsultationQuestionWithConditionsView(
       questionWithConditions: questionWithConditions,
@@ -323,11 +330,11 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   }
 
   ConsultationQuestionChapterView _handleChapter(
+    BuildContext context,
     String consultationId,
     ConsultationQuestionChapterViewModel chapter,
     int totalQuestions,
     ConsultationQuestionsResponsesStockState stockState,
-    BuildContext context,
   ) {
     return ConsultationQuestionChapterView(
       chapter: chapter,
@@ -365,12 +372,16 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     required String? nextQuestionId,
   }) {
     if (isChapter) {
-      context
-          .read<ConsultationQuestionsResponsesStockBloc>()
-          .add(AddConsultationChapterStockEvent(chapterId: questionId));
+      context.read<ConsultationQuestionsResponsesStockBloc>().add(
+            AddConsultationChapterStockEvent(
+              consultationId: widget.arguments.consultationId,
+              chapterId: questionId,
+            ),
+          );
     } else {
       context.read<ConsultationQuestionsResponsesStockBloc>().add(
             AddConsultationQuestionsResponseStockEvent(
+              consultationId: widget.arguments.consultationId,
               questionResponse: ConsultationQuestionResponses(
                 questionId: questionId,
                 responseIds: responsesIds,
