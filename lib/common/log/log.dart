@@ -10,14 +10,14 @@ class Log {
   /// Log a message at level [Level.debug].
   static void d(String message, [dynamic error, StackTrace? stackTrace]) {
     if (!kIsWeb) {
-      _simpleLogger.d(message, error, stackTrace);
+      _simpleLogger.d(message, error: error, stackTrace: stackTrace);
     }
   }
 
   /// Log a message at level [Level.error].
   static void e(String message, [dynamic error, StackTrace? stackTrace]) {
     if (!kIsWeb) {
-      _prettyLogger.e(message, error, stackTrace);
+      _prettyLogger.e(message, error: error, stackTrace: stackTrace);
     }
   }
 }
