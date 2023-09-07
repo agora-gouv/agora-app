@@ -2,11 +2,11 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:equatable/equatable.dart';
 
 class ConsultationQuestionsResponsesStockState extends Equatable {
-  final List<String> questionsStack;
+  final List<String> questionIdStack;
   final List<ConsultationQuestionResponses> questionsResponses;
 
-  ConsultationQuestionsResponsesStockState({required this.questionsStack, required this.questionsResponses});
+  ConsultationQuestionsResponsesStockState({required this.questionIdStack, required this.questionsResponses});
 
   @override
-  List<Object> get props => [questionsStack, questionsResponses];
+  List<Object> get props => [questionIdStack, questionsResponses];
 }

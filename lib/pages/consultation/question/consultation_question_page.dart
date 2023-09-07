@@ -47,7 +47,7 @@ class ConsultationQuestionPage extends StatefulWidget {
 
 class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
   String? currentQuestionId;
-  List<String> questionsStack = [];
+  List<String> questionIdStack = [];
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +103,8 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     ConsultationQuestionsResponsesStockState responsesStockState,
     ConsultationQuestionsFetchedState questionsState,
   ) {
-    currentQuestionId ??= responsesStockState.questionsStack.lastOrNull ?? questionsState.viewModels[0].id;
-    questionsStack = responsesStockState.questionsStack;
+    currentQuestionId ??= responsesStockState.questionIdStack.lastOrNull ?? questionsState.viewModels[0].id;
+    questionIdStack = responsesStockState.questionIdStack;
     final currentQuestion = questionsState.viewModels.firstWhere((element) => element.id == currentQuestionId);
     final totalQuestions = questionsState.viewModels.length;
     final questionAlreadyAnswered = _getPreviousResponses(
@@ -114,8 +114,8 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     return AgoraScaffold(
       popAction: () {
         try {
-          final previousQuestion = questionsStack.last;
-          _removeAndGoToPreviousQuestion(context, previousQuestion);
+          final previousQuestionId = questionIdStack.last;
+          _removeAndGoToPreviousQuestion(context, previousQuestionId);
           return false;
         } catch (e) {
           Navigator.pop(context);
@@ -219,7 +219,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(uniqueChoiceQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionsStack.last);
+        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
       },
     );
   }
@@ -254,7 +254,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(multipleChoicesQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionsStack.last);
+        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
       },
     );
   }
@@ -289,7 +289,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(openedQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionsStack.last);
+        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
       },
     );
   }
@@ -324,7 +324,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(questionWithConditions.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionsStack.last);
+        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
       },
     );
   }
@@ -358,7 +358,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.chapterDescription,
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionsStack.last);
+        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
       },
     );
   }

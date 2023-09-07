@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 abstract class ConsultationQuestionStorageClient {
   Future<void> save({
     required String consultationId,
-    required List<String> questionsStack,
+    required List<String> questionIdStack,
     required List<ConsultationQuestionResponses> questionsResponses,
   });
 
@@ -20,11 +20,11 @@ class ConsultationQuestionHiveStorageClient extends ConsultationQuestionStorageC
   @override
   Future<void> save({
     required String consultationId,
-    required List<String> questionsStack,
+    required List<String> questionIdStack,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     final box = await _getBox();
-    box.put("questionsStack_$consultationId", questionsStack);
+    box.put("questionIdStack_$consultationId", questionIdStack);
     box.put(
       "questionsResponses_$consultationId",
       questionsResponses
@@ -42,8 +42,10 @@ class ConsultationQuestionHiveStorageClient extends ConsultationQuestionStorageC
   @override
   Future<(List<String>, List<ConsultationQuestionResponses>)> get(String consultationId) async {
     final box = await _getBox();
-    final localStack =
-        box.get("questionsStack_$consultationId")?.map((localQuestionStack) => localQuestionStack as String).toList();
+    final localStack = box
+        .get("questionIdStack_$consultationId")
+        ?.map((localQuestionIdStack) => localQuestionIdStack as String)
+        .toList();
     final localResponses = box
         .get("questionsResponses_$consultationId")
         ?.map((localQuestionResponses) => localQuestionResponses as ConsultationQuestionResponsesHive)
@@ -61,7 +63,7 @@ class ConsultationQuestionHiveStorageClient extends ConsultationQuestionStorageC
   @override
   Future<void> clear(String consultationId) async {
     final box = await _getBox();
-    box.deleteAll(["questionsStack_$consultationId", "questionsResponses_$consultationId"]);
+    box.deleteAll(["questionIdStack_$consultationId", "questionsResponses_$consultationId"]);
   }
 
   Future<Box<List<dynamic>>> _getBox() async {

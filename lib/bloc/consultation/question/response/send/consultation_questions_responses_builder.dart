@@ -2,11 +2,11 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 
 class ConsultationQuestionsResponsesBuilder {
   static List<ConsultationQuestionResponses> build({
-    required List<String> questionsStack,
+    required List<String> questionIdStack,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) {
     final filteredQuestionResponses = [...questionsResponses];
-    filteredQuestionResponses.removeWhere((item) => !questionsStack.contains(item.questionId));
+    filteredQuestionResponses.removeWhere((item) => !questionIdStack.contains(item.questionId));
     return filteredQuestionResponses;
   }
 }

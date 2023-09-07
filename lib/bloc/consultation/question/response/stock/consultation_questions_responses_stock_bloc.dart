@@ -10,7 +10,7 @@ class ConsultationQuestionsResponsesStockBloc
 
   ConsultationQuestionsResponsesStockBloc({required this.storageClient})
       : super(
-          ConsultationQuestionsResponsesStockState(questionsStack: [], questionsResponses: []),
+          ConsultationQuestionsResponsesStockState(questionIdStack: [], questionsResponses: []),
         ) {
     on<AddConsultationQuestionsResponseStockEvent>(_handleAddConsultationQuestionsStockResponse);
     on<AddConsultationChapterStockEvent>(_handleAddConsultationChapterStock);
@@ -24,8 +24,8 @@ class ConsultationQuestionsResponsesStockBloc
     Emitter<ConsultationQuestionsResponsesStockState> emit,
   ) async {
     // [...x] clone list x
-    final questionsStack = [...state.questionsStack];
-    questionsStack.add(event.questionResponse.questionId);
+    final questionIdStack = [...state.questionIdStack];
+    questionIdStack.add(event.questionResponse.questionId);
 
     final questionsResponses = [...state.questionsResponses];
     questionsResponses.removeWhere(
@@ -35,13 +35,13 @@ class ConsultationQuestionsResponsesStockBloc
 
     storageClient.save(
       consultationId: event.consultationId,
-      questionsStack: questionsStack,
+      questionIdStack: questionIdStack,
       questionsResponses: questionsResponses,
     );
 
     emit(
       ConsultationQuestionsResponsesStockState(
-        questionsStack: questionsStack,
+        questionIdStack: questionIdStack,
         questionsResponses: questionsResponses,
       ),
     );
@@ -51,18 +51,18 @@ class ConsultationQuestionsResponsesStockBloc
     AddConsultationChapterStockEvent event,
     Emitter<ConsultationQuestionsResponsesStockState> emit,
   ) async {
-    final questionsStack = [...state.questionsStack];
-    questionsStack.add(event.chapterId);
+    final questionIdStack = [...state.questionIdStack];
+    questionIdStack.add(event.chapterId);
 
     storageClient.save(
       consultationId: event.consultationId,
-      questionsStack: questionsStack,
+      questionIdStack: questionIdStack,
       questionsResponses: state.questionsResponses,
     );
 
     emit(
       ConsultationQuestionsResponsesStockState(
-        questionsStack: questionsStack,
+        questionIdStack: questionIdStack,
         questionsResponses: state.questionsResponses,
       ),
     );
@@ -72,11 +72,11 @@ class ConsultationQuestionsResponsesStockBloc
     RemoveConsultationQuestionEvent event,
     Emitter<ConsultationQuestionsResponsesStockState> emit,
   ) async {
-    final questionsStack = [...state.questionsStack];
-    questionsStack.removeLast();
+    final questionIdStack = [...state.questionIdStack];
+    questionIdStack.removeLast();
     emit(
       ConsultationQuestionsResponsesStockState(
-        questionsStack: questionsStack,
+        questionIdStack: questionIdStack,
         questionsResponses: state.questionsResponses,
       ),
     );
@@ -86,11 +86,11 @@ class ConsultationQuestionsResponsesStockBloc
     RestoreSavingConsultationResponseEvent event,
     Emitter<ConsultationQuestionsResponsesStockState> emit,
   ) async {
-    final (localStack, localResponses) = await storageClient.get(event.consultationId);
+    final (localQuestionIdStack, localQuestionsResponses) = await storageClient.get(event.consultationId);
     emit(
       ConsultationQuestionsResponsesStockState(
-        questionsStack: localStack,
-        questionsResponses: localResponses
+        questionIdStack: localQuestionIdStack,
+        questionsResponses: localQuestionsResponses
             .map(
               (localResponse) => ConsultationQuestionResponses(
                 questionId: localResponse.questionId,

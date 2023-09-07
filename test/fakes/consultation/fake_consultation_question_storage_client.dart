@@ -3,24 +3,24 @@ import 'package:agora/pages/consultation/question/consultation_question_storage_
 
 class FakeConsultationQuestionStorageClient extends ConsultationQuestionStorageClient {
   String? consultationId;
-  List<String> questionsStack = [];
+  List<String> questionIdStack = [];
   List<ConsultationQuestionResponses> questionsResponses = [];
 
   @override
   Future<void> save({
     required String consultationId,
-    required List<String> questionsStack,
+    required List<String> questionIdStack,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     this.consultationId = consultationId;
-    this.questionsStack = questionsStack;
+    this.questionIdStack = questionIdStack;
     this.questionsResponses = questionsResponses;
   }
 
   @override
   Future<(List<String>, List<ConsultationQuestionResponses>)> get(String consultationId) async {
     if (this.consultationId == consultationId) {
-      return (questionsStack, questionsResponses);
+      return (questionIdStack, questionsResponses);
     } else {
       return (<String>[], <ConsultationQuestionResponses>[]);
     }
@@ -30,7 +30,7 @@ class FakeConsultationQuestionStorageClient extends ConsultationQuestionStorageC
   Future<void> clear(String consultationId) async {
     if (this.consultationId == consultationId) {
       this.consultationId = null;
-      questionsStack = [];
+      questionIdStack = [];
       questionsResponses = [];
     }
   }

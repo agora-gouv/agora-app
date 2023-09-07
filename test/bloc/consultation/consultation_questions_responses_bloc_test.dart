@@ -17,7 +17,7 @@ void main() {
       act: (bloc) => bloc.add(
         SendConsultationQuestionsResponsesEvent(
           consultationId: "consultationId",
-          questionsStack: ["questionId"],
+          questionIdStack: ["questionId"],
           questionsResponses: [
             ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
@@ -37,7 +37,7 @@ void main() {
       act: (bloc) => bloc.add(
         SendConsultationQuestionsResponsesEvent(
           consultationId: "consultationId",
-          questionsStack: ["questionId"],
+          questionIdStack: ["questionId"],
           questionsResponses: [
             ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
           ],
