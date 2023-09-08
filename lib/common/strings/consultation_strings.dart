@@ -22,6 +22,7 @@ class ConsultationStrings {
   static const String goToResult = "Voir les résultats";
   static const String summaryTabResult = "Résultats";
   static const String summaryTabEtEnsuite = "Et ensuite ?";
+  static const String summaryTabPresentation = "Présentation";
   static const String percentage = "%s\u{00A0}%";
   static const String step = "Étape %s/3";
   static const String step1 = "Consultation en cours";

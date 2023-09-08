@@ -16,6 +16,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_et_ensuite_tab_content.dart';
+import 'package:agora/pages/consultation/summary/consultation_summary_presentation_tab_content.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_results_tab_content.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +123,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                         ],
                       ),
                       tabChild: [
+                        Tab(text: ConsultationStrings.summaryTabPresentation),
                         Tab(text: ConsultationStrings.summaryTabResult),
                         Tab(text: ConsultationStrings.summaryTabEtEnsuite),
                       ],
@@ -134,6 +136,13 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       child: TabBarView(
                         controller: _tabController,
                         children: [
+                          AgoraTracker(
+                            widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
+                            child: ConsultationSummaryPresentationTabContent(
+                              description: 'description',
+                              tipDescription: 'tip description',
+                            ),
+                          ),
                           AgoraTracker(
                             widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
                             child: ConsultationSummaryResultsTabContent(
