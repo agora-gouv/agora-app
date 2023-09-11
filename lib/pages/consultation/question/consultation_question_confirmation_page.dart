@@ -79,6 +79,10 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                   ),
                 );
               }
+            } else if (state is SendConsultationQuestionsResponsesFailureState) {
+              context
+                  .read<ConsultationQuestionsResponsesStockBloc>()
+                  .add(ResetToLastQuestionEvent(consultationId: consultationId));
             }
           },
           builder: (context, state) {

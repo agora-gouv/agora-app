@@ -5,24 +5,27 @@ class FakeConsultationQuestionStorageClient extends ConsultationQuestionStorageC
   String? consultationId;
   List<String> questionIdStack = [];
   List<ConsultationQuestionResponses> questionsResponses = [];
+  String? restoreQuestionId;
 
   @override
   Future<void> save({
     required String consultationId,
     required List<String> questionIdStack,
     required List<ConsultationQuestionResponses> questionsResponses,
+    required String? restoreQuestionId,
   }) async {
     this.consultationId = consultationId;
     this.questionIdStack = questionIdStack;
     this.questionsResponses = questionsResponses;
+    this.restoreQuestionId = restoreQuestionId;
   }
 
   @override
-  Future<(List<String>, List<ConsultationQuestionResponses>)> get(String consultationId) async {
+  Future<(List<String>, List<ConsultationQuestionResponses>, String?)> get(String consultationId) async {
     if (this.consultationId == consultationId) {
-      return (questionIdStack, questionsResponses);
+      return (questionIdStack, questionsResponses, restoreQuestionId!);
     } else {
-      return (<String>[], <ConsultationQuestionResponses>[]);
+      return (<String>[], <ConsultationQuestionResponses>[], null);
     }
   }
 
@@ -32,6 +35,7 @@ class FakeConsultationQuestionStorageClient extends ConsultationQuestionStorageC
       this.consultationId = null;
       questionIdStack = [];
       questionsResponses = [];
+      restoreQuestionId = null;
     }
   }
 }

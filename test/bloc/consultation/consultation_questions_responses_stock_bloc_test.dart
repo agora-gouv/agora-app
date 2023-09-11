@@ -16,45 +16,65 @@ void main() {
       "when add response - should update state with the new response",
       build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorage1),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionIdStack: ["questionId"],
+        questionIdStack: ["previousQuestionId"],
         questionsResponses: [
-          ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+          ConsultationQuestionResponses(
+            questionId: "previousQuestionId",
+            responseIds: ["responseId"],
+            responseText: "",
+          ),
         ],
+        currentQuestionId: "currentQuestionId",
       ),
       act: (bloc) => bloc.add(
         AddConsultationQuestionsResponseStockEvent(
           consultationId: consultationId,
           questionResponse: ConsultationQuestionResponses(
-            questionId: "questionId2",
+            questionId: "currentQuestionId",
             responseIds: [],
             responseText: "opened response",
           ),
+          nextQuestionId: "nextQuestionId",
         ),
       ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionIdStack: ["questionId", "questionId2"],
+          questionIdStack: ["previousQuestionId", "currentQuestionId"],
           questionsResponses: [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
-            ConsultationQuestionResponses(questionId: "questionId2", responseIds: [], responseText: "opened response"),
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
+            ConsultationQuestionResponses(
+              questionId: "currentQuestionId",
+              responseIds: [],
+              responseText: "opened response",
+            ),
           ],
+          currentQuestionId: "nextQuestionId",
         ),
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorage1.consultationId, consultationId);
-        expect(fakeStorage1.questionIdStack, ["questionId", "questionId2"]);
+        expect(fakeStorage1.questionIdStack, ["previousQuestionId", "currentQuestionId"]);
         expect(
           fakeStorage1.questionsResponses,
           [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
             ConsultationQuestionResponses(
-              questionId: "questionId2",
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
+            ConsultationQuestionResponses(
+              questionId: "currentQuestionId",
               responseIds: [],
               responseText: "opened response",
             ),
           ],
         );
+        expect(fakeStorage1.restoreQuestionId, "nextQuestionId");
       },
     );
 
@@ -63,50 +83,70 @@ void main() {
       "when add response for a specific questionId and this questionId already exists - should replace the previous one",
       build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorage2),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionIdStack: ["questionId"],
+        questionIdStack: ["previousQuestionId"],
         questionsResponses: [
-          ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
-          ConsultationQuestionResponses(questionId: "questionId2", responseIds: [], responseText: "opened response"),
+          ConsultationQuestionResponses(
+            questionId: "previousQuestionId",
+            responseIds: ["responseId"],
+            responseText: "",
+          ),
+          ConsultationQuestionResponses(
+            questionId: "currentQuestionId",
+            responseIds: [],
+            responseText: "opened response",
+          ),
         ],
+        currentQuestionId: "currentQuestionId",
       ),
       act: (bloc) => bloc.add(
         AddConsultationQuestionsResponseStockEvent(
           consultationId: consultationId,
           questionResponse: ConsultationQuestionResponses(
-            questionId: "questionId2",
+            questionId: "currentQuestionId",
             responseIds: [],
             responseText: "opened response new",
           ),
+          nextQuestionId: "nextQuestionId",
         ),
       ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionIdStack: ["questionId", "questionId2"],
+          questionIdStack: ["previousQuestionId", "currentQuestionId"],
           questionsResponses: [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
             ConsultationQuestionResponses(
-              questionId: "questionId2",
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
+            ConsultationQuestionResponses(
+              questionId: "currentQuestionId",
               responseIds: [],
               responseText: "opened response new",
             ),
           ],
+          currentQuestionId: "nextQuestionId",
         ),
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorage2.consultationId, consultationId);
-        expect(fakeStorage2.questionIdStack, ["questionId", "questionId2"]);
+        expect(fakeStorage2.questionIdStack, ["previousQuestionId", "currentQuestionId"]);
         expect(
           fakeStorage2.questionsResponses,
           [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
             ConsultationQuestionResponses(
-              questionId: "questionId2",
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
+            ConsultationQuestionResponses(
+              questionId: "currentQuestionId",
               responseIds: [],
               responseText: "opened response new",
             ),
           ],
         );
+        expect(fakeStorage2.restoreQuestionId, "nextQuestionId");
       },
     );
   });
@@ -117,53 +157,112 @@ void main() {
       "when add chapter in stack - should update state with the new chapter",
       build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorageClient),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionIdStack: ["questionId"],
+        questionIdStack: ["previousQuestionId"],
         questionsResponses: [
-          ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+          ConsultationQuestionResponses(
+            questionId: "previousQuestionId",
+            responseIds: ["responseId"],
+            responseText: "",
+          ),
         ],
+        currentQuestionId: "nextQuestionId",
       ),
-      act: (bloc) => bloc.add(AddConsultationChapterStockEvent(consultationId: consultationId, chapterId: "chapterId")),
+      act: (bloc) => bloc.add(
+        AddConsultationChapterStockEvent(
+          consultationId: consultationId,
+          chapterId: "chapterId",
+          nextQuestionId: "nextQuestionId",
+        ),
+      ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionIdStack: ["questionId", "chapterId"],
+          questionIdStack: ["previousQuestionId", "chapterId"],
           questionsResponses: [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
           ],
+          currentQuestionId: "nextQuestionId",
         ),
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorageClient.consultationId, consultationId);
-        expect(fakeStorageClient.questionIdStack, ["questionId", "chapterId"]);
+        expect(fakeStorageClient.questionIdStack, ["previousQuestionId", "chapterId"]);
         expect(
           fakeStorageClient.questionsResponses,
           [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
           ],
         );
+        expect(fakeStorageClient.restoreQuestionId, "nextQuestionId");
       },
     );
   });
 
   group("RemoveConsultationQuestionEvent", () {
     blocTest<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
-      "when remove chapter or question in stack - should update state with the new chapter",
+      "when remove chapter or question in stack - should update state with the updated stack",
       build: () => ConsultationQuestionsResponsesStockBloc(
         storageClient: FakeConsultationQuestionStorageClient(),
       ),
       seed: () => ConsultationQuestionsResponsesStockState(
-        questionIdStack: ["questionId", "chapterId"],
+        questionIdStack: ["previousQuestionId", "chapterId"],
         questionsResponses: [
-          ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+          ConsultationQuestionResponses(
+            questionId: "previousQuestionId",
+            responseIds: ["responseId"],
+            responseText: "",
+          ),
         ],
+        currentQuestionId: "nextQuestionId",
       ),
       act: (bloc) => bloc.add(RemoveConsultationQuestionEvent()),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionIdStack: ["questionId"],
+          questionIdStack: ["previousQuestionId"],
           questionsResponses: [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
           ],
+          currentQuestionId: "chapterId",
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
+      "when stack is empty - should update state with shouldPop = true",
+      build: () => ConsultationQuestionsResponsesStockBloc(
+        storageClient: FakeConsultationQuestionStorageClient(),
+      ),
+      seed: () => ConsultationQuestionsResponsesStockState(
+        questionIdStack: [],
+        questionsResponses: [
+          ConsultationQuestionResponses(
+            questionId: "previousQuestionId",
+            responseIds: ["responseId"],
+            responseText: "",
+          ),
+        ],
+        currentQuestionId: "nextQuestionId",
+      ),
+      act: (bloc) => bloc.add(RemoveConsultationQuestionEvent()),
+      expect: () => [
+        ConsultationQuestionsResponsesStockState(
+          questionIdStack: [],
+          questionsResponses: [],
+          currentQuestionId: null,
+          shouldPop: true,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -174,10 +273,11 @@ void main() {
     final fakeStorageClient = FakeConsultationQuestionStorageClient();
     fakeStorageClient.save(
       consultationId: consultationId,
-      questionIdStack: ["questionId"],
+      questionIdStack: ["previousQuestionId"],
       questionsResponses: [
-        ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+        ConsultationQuestionResponses(questionId: "previousQuestionId", responseIds: ["responseId"], responseText: ""),
       ],
+      restoreQuestionId: "currentQuestionId",
     );
     blocTest<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
       "Restore state from local response",
@@ -185,22 +285,32 @@ void main() {
       act: (bloc) => bloc.add(RestoreSavingConsultationResponseEvent(consultationId: consultationId)),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionIdStack: ["questionId"],
+          questionIdStack: ["previousQuestionId"],
           questionsResponses: [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
           ],
+          currentQuestionId: "currentQuestionId",
         ),
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorageClient.consultationId, consultationId);
-        expect(fakeStorageClient.questionIdStack, ["questionId"]);
+        expect(fakeStorageClient.questionIdStack, ["previousQuestionId"]);
         expect(
           fakeStorageClient.questionsResponses,
           [
-            ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
           ],
         );
+        expect(fakeStorageClient.restoreQuestionId, "currentQuestionId");
       },
     );
   });
@@ -209,21 +319,93 @@ void main() {
     final fakeStorageClient = FakeConsultationQuestionStorageClient();
     fakeStorageClient.save(
       consultationId: consultationId,
-      questionIdStack: ["questionId"],
+      questionIdStack: ["previousQuestionId"],
       questionsResponses: [
-        ConsultationQuestionResponses(questionId: "questionId", responseIds: ["responseId"], responseText: ""),
+        ConsultationQuestionResponses(questionId: "previousQuestionId", responseIds: ["responseId"], responseText: ""),
       ],
+      restoreQuestionId: "lastQuestionId",
     );
     blocTest<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
       "Delete local response",
       build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorageClient),
       act: (bloc) => bloc.add(DeleteSavingConsultationResponseEvent(consultationId: consultationId)),
-      expect: () => [],
+      expect: () => [
+        ConsultationQuestionsResponsesStockState(
+          questionIdStack: [],
+          questionsResponses: [],
+          currentQuestionId: null,
+        ),
+      ],
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorageClient.consultationId, null);
         expect(fakeStorageClient.questionIdStack, []);
         expect(fakeStorageClient.questionsResponses, []);
+        expect(fakeStorageClient.restoreQuestionId, null);
+      },
+    );
+  });
+
+  group("ResetToLastQuestionEvent", () {
+    final fakeStorageClient = FakeConsultationQuestionStorageClient();
+    blocTest<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
+      "when send responses to server failed - should reset to last question",
+      build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorageClient),
+      seed: () => ConsultationQuestionsResponsesStockState(
+        questionIdStack: ["previousQuestionId", "lastQuestionId"],
+        questionsResponses: [
+          ConsultationQuestionResponses(
+            questionId: "previousQuestionId",
+            responseIds: ["responseId"],
+            responseText: "",
+          ),
+          ConsultationQuestionResponses(
+            questionId: "lastQuestionId",
+            responseIds: [],
+            responseText: "response",
+          ),
+        ],
+        currentQuestionId: null,
+      ),
+      act: (bloc) => bloc.add(ResetToLastQuestionEvent(consultationId: consultationId)),
+      expect: () => [
+        ConsultationQuestionsResponsesStockState(
+          questionIdStack: ["previousQuestionId"],
+          questionsResponses: [
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
+            ConsultationQuestionResponses(
+              questionId: "lastQuestionId",
+              responseIds: [],
+              responseText: "response",
+            ),
+          ],
+          currentQuestionId: "lastQuestionId",
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+      tearDown: () async {
+        expect(fakeStorageClient.consultationId, consultationId);
+        expect(fakeStorageClient.questionIdStack, ["previousQuestionId"]);
+        expect(
+          fakeStorageClient.questionsResponses,
+          [
+            ConsultationQuestionResponses(
+              questionId: "previousQuestionId",
+              responseIds: ["responseId"],
+              responseText: "",
+            ),
+            ConsultationQuestionResponses(
+              questionId: "lastQuestionId",
+              responseIds: [],
+              responseText: "response",
+            ),
+          ],
+        );
+        expect(fakeStorageClient.restoreQuestionId, "lastQuestionId");
       },
     );
   });
