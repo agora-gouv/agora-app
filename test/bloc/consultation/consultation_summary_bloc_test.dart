@@ -4,10 +4,14 @@ import 'package:agora/bloc/consultation/summary/consultation_summary_state.dart'
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 import '../../fakes/consultation/fakes_consultation_repository.dart';
 
 void main() {
+  Intl.defaultLocale = "fr_FR";
+  initializeDateFormatting('fr_FR', null);
   const consultationId = "consultationId";
 
   group("fetchConsultationSummaryEvent", () {
@@ -70,6 +74,11 @@ void main() {
                 description: "<body>conclusion description</body>",
               ),
             ),
+            presentation: ConsultationSummaryPresentationViewModel(
+              rangeDate: "Du 1 août 2023 au 31 août 2023",
+              description: "description",
+              tipDescription: "tip description",
+            ),
           ),
         ),
       ],
@@ -124,6 +133,11 @@ void main() {
               ],
               video: null,
               conclusion: null,
+            ),
+            presentation: ConsultationSummaryPresentationViewModel(
+              rangeDate: "Du 1 août 2023 au 31 août 2023",
+              description: "description",
+              tipDescription: "tip description",
             ),
           ),
         ),

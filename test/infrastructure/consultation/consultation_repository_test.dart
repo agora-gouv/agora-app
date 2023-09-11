@@ -9,6 +9,7 @@ import 'package:agora/domain/consultation/questions/consultation_question_respon
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
@@ -806,6 +807,12 @@ void main() {
                 "description": "<body>conclusion description</body>",
               },
             },
+            "presentation": {
+              "startDate": "2023-08-01",
+              "endDate": "2023-08-31",
+              "description": "description",
+              "tipsDescription": "tip description",
+            },
           },
         ),
         headers: {
@@ -873,6 +880,12 @@ void main() {
                 description: "<body>conclusion description</body>",
               ),
             ),
+            presentation: ConsultationSummaryPresentation(
+              startDate: DateTime(2023, 8, 1),
+              endDate: DateTime(2023, 8, 31),
+              description: "description",
+              tipDescription: "tip description",
+            ),
           ),
         ),
       );
@@ -905,6 +918,12 @@ void main() {
               ],
               "video": null,
               "conclusion": null,
+            },
+            "presentation": {
+              "startDate": "2023-08-01",
+              "endDate": "2023-08-31",
+              "description": "description",
+              "tipsDescription": "tip description",
             },
           },
         ),
@@ -945,6 +964,12 @@ void main() {
               ],
               video: null,
               conclusion: null,
+            ),
+            presentation: ConsultationSummaryPresentation(
+              startDate: DateTime(2023, 8, 1),
+              endDate: DateTime(2023, 8, 31),
+              description: "description",
+              tipDescription: "tip description",
             ),
           ),
         ),

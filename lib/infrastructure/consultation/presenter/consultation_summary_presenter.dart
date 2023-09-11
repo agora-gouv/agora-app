@@ -1,4 +1,5 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
+import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
@@ -67,6 +68,14 @@ class ConsultationSummaryPresenter {
                 description: etEnsuiteConclusion.description,
               )
             : null,
+      ),
+      presentation: ConsultationSummaryPresentationViewModel(
+        rangeDate: ConsultationStrings.rangeDate.format2(
+          consultationSummary.presentation.startDate.formatToDayMonthYear(),
+          consultationSummary.presentation.endDate.formatToDayMonthYear(),
+        ),
+        description: consultationSummary.presentation.description,
+        tipDescription: consultationSummary.presentation.tipDescription,
       ),
     );
   }
