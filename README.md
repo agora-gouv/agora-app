@@ -96,3 +96,4 @@ This should generate the following files:
 - `agora/docs/2_git.md`
 - `agora/docs/3_coding_convention.md`
 - `agora/docs/4_hive.md`
+- `agora/docs/5_generate_app_logo.md`

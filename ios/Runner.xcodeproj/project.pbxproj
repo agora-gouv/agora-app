@@ -432,7 +432,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 335B094107BD37DFECF3A20E /* Pods-Runner.profile-dev.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-dev;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -520,7 +520,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 773E2CEEA10770DA5B1F1018 /* Pods-Runner.debug-prod.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-prod;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-PROD.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -604,7 +604,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2B915A401C1F9739F0CFBA59 /* Pods-Runner.release-prod.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-prod;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-PROD.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: Gouvernement Francais (PR958DC548)";
@@ -687,7 +687,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EFD8EBF3FB8DF4A5F4F939F8 /* Pods-Runner.profile-prod.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-prod;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-PROD.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -827,7 +827,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F917269136B377A57DFC96C1 /* Pods-Runner.debug-dev.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-dev;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -859,7 +859,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 92916D16B89C2FAC61827AB6 /* Pods-Runner.release-dev.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-dev;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Octo Technology Mobile (8PN3J7J93H)";
