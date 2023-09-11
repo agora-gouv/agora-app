@@ -48,7 +48,7 @@ class QagDetailsSupport extends Equatable {
   QagDetailsSupport({required this.count, required this.isSupported});
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         count,
         isSupported,
       ];
@@ -59,8 +59,8 @@ class QagDetailsResponse extends Equatable {
   final String authorDescription;
   final DateTime responseDate;
   final String videoUrl;
-  final int? videoWidth;
-  final int? videoHeight;
+  final int videoWidth;
+  final int videoHeight;
   final String transcription;
   final bool feedbackStatus;
 
@@ -76,7 +76,7 @@ class QagDetailsResponse extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         author,
         authorDescription,
         responseDate,
