@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_bloc.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_event.dart';
 import 'package:agora/bloc/consultation/summary/consultation_summary_state.dart';
+import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/notification_helper.dart';
@@ -13,6 +14,7 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_et_ensuite_tab_content.dart';
@@ -21,6 +23,7 @@ import 'package:agora/pages/consultation/summary/consultation_summary_results_ta
 import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationSummaryArguments {
   final String consultationId;
@@ -41,6 +44,7 @@ class ConsultationSummaryArguments {
 enum ConsultationSummaryInitialTab {
   results,
   etEnsuite,
+  presentation,
 }
 
 class ConsultationSummaryPage extends StatefulWidget {
@@ -62,12 +66,14 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
   void initState() {
     int initialTabIndex;
     switch (widget.arguments.initialTab) {
-      case ConsultationSummaryInitialTab.results:
+      case ConsultationSummaryInitialTab.presentation:
         initialTabIndex = 0;
-      case ConsultationSummaryInitialTab.etEnsuite:
+      case ConsultationSummaryInitialTab.results:
         initialTabIndex = 1;
+      case ConsultationSummaryInitialTab.etEnsuite:
+        initialTabIndex = 2;
     }
-    _tabController = TabController(length: 2, vsync: this, initialIndex: initialTabIndex);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: initialTabIndex);
     super.initState();
     NotificationHelper.displayNotificationWithDialog(
       context: context,
@@ -116,10 +122,15 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       topChild: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            viewModel.title,
-                            style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                            child: Text(
+                              viewModel.title,
+                              style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                            ),
                           ),
+                          SizedBox(height: AgoraSpacings.base),
+                          _buildStepHeadband(viewModel.etEnsuite),
                         ],
                       ),
                       tabChild: [
@@ -137,10 +148,11 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                         controller: _tabController,
                         children: [
                           AgoraTracker(
-                            widgetName: "${AnalyticsScreenNames.consultationSummaryResultPage} $consultationId",
+                            widgetName: "${AnalyticsScreenNames.consultationSummaryPresentationPage} $consultationId",
                             child: ConsultationSummaryPresentationTabContent(
-                              description: 'description',
-                              tipDescription: 'tip description',
+                              rangeDate: viewModel.presentation.rangeDate,
+                              description: viewModel.presentation.description,
+                              tipDescription: viewModel.presentation.tipDescription,
                             ),
                           ),
                           AgoraTracker(
@@ -201,6 +213,37 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
               );
             }
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStepHeadband(ConsultationSummaryEtEnsuiteViewModel data) {
+    return Container(
+      color: AgoraColors.stoicWhite,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: AgoraSpacings.horizontalPadding,
+          vertical: AgoraSpacings.base,
+        ),
+        child: Row(
+          children: [
+            SvgPicture.asset(data.image, width: 115, excludeFromSemantics: true),
+            SizedBox(width: AgoraSpacings.base),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    data.step,
+                    style: AgoraTextStyles.medium15.copyWith(color: AgoraColors.primaryBlue),
+                    semanticsLabel: data.stepSemanticsLabel,
+                  ),
+                  Text(data.title, style: AgoraTextStyles.medium18),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

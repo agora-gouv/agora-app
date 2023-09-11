@@ -4,6 +4,7 @@ class AnalyticsScreenNames {
   static const String consultationDetailsPage = "Détails d'une consultation";
   static const String consultationQuestionPage = "Questionnaire d'une consultation";
   static const String consultationQuestionConfirmationPage = "Envoi des réponses d'une consultation";
+  static const String consultationSummaryPresentationPage = "Présentation d'une consultation";
   static const String consultationSummaryResultPage = "Résultats d'une consultation";
   static const String consultationSummaryEtEnsuitePage = "Et ensuite d'une consultation";
   static const String consultationsFinishedPaginatedPage = "Liste infinie des consultations finis";

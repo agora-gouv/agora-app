@@ -70,7 +70,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
                 child: Padding(
                   key: _contentChildKey,
                   padding: widget.needToolbar == true
-                      ? EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding)
+                      ? EdgeInsets.symmetric(horizontal: 0)
                       : EdgeInsets.only(
                           left: AgoraSpacings.horizontalPadding,
                           right: AgoraSpacings.horizontalPadding,

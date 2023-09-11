@@ -5,12 +5,14 @@ class ConsultationSummaryViewModel extends Equatable {
   final String participantCount;
   final List<ConsultationSummaryResultsViewModel> results;
   final ConsultationSummaryEtEnsuiteViewModel etEnsuite;
+  final ConsultationSummaryPresentationViewModel presentation;
 
   ConsultationSummaryViewModel({
     required this.title,
     required this.participantCount,
     required this.results,
     required this.etEnsuite,
+    required this.presentation,
   });
 
   @override
@@ -19,6 +21,7 @@ class ConsultationSummaryViewModel extends Equatable {
         participantCount,
         results,
         etEnsuite,
+        presentation,
       ];
 }
 
@@ -177,5 +180,24 @@ class ConsultationSummaryEtEnsuiteConclusionViewModel extends Equatable {
   List<Object> get props => [
         title,
         description,
+      ];
+}
+
+class ConsultationSummaryPresentationViewModel extends Equatable {
+  final String rangeDate;
+  final String description;
+  final String tipDescription;
+
+  ConsultationSummaryPresentationViewModel({
+    required this.rangeDate,
+    required this.description,
+    required this.tipDescription,
+  });
+
+  @override
+  List<Object> get props => [
+        rangeDate,
+        description,
+        tipDescription,
       ];
 }

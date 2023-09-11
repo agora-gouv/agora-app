@@ -70,6 +70,11 @@ void main() {
                 description: "<body>conclusion description</body>",
               ),
             ),
+            presentation: ConsultationSummaryPresentationViewModel(
+              rangeDate: "du 1 August 2023 au 31 August 2023",
+              description: "description",
+              tipDescription: "tip description",
+            ),
           ),
         ),
       ],
@@ -124,6 +129,11 @@ void main() {
               ],
               video: null,
               conclusion: null,
+            ),
+            presentation: ConsultationSummaryPresentationViewModel(
+              rangeDate: "du 1 August 2023 au 31 August 2023",
+              description: "description",
+              tipDescription: "tip description",
             ),
           ),
         ),

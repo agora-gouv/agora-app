@@ -7,6 +7,7 @@ import 'package:agora/domain/consultation/questions/consultation_question_respon
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
@@ -259,6 +260,12 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             description: "<body>conclusion description</body>",
           ),
         ),
+        presentation: ConsultationSummaryPresentation(
+          startDate: DateTime(2023, 8, 1),
+          endDate: DateTime(2023, 8, 31),
+          description: "description",
+          tipDescription: "tip description",
+        ),
       ),
     );
   }
@@ -377,6 +384,12 @@ class FakeConsultationEtEnsuiteWithNullElementsRepository extends FakeConsultati
           ],
           video: null,
           conclusion: null,
+        ),
+        presentation: ConsultationSummaryPresentation(
+          startDate: DateTime(2023, 8, 1),
+          endDate: DateTime(2023, 8, 31),
+          description: "description",
+          tipDescription: "tip description",
         ),
       ),
     );

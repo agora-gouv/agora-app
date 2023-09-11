@@ -52,7 +52,6 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildStepHeadband(),
               SizedBox(height: AgoraSpacings.x1_5),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -166,37 +165,6 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStepHeadband() {
-    return Container(
-      color: AgoraColors.stoicWhite,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AgoraSpacings.horizontalPadding,
-          vertical: AgoraSpacings.base,
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(etEnsuiteViewModel.image, width: 115, excludeFromSemantics: true),
-            SizedBox(width: AgoraSpacings.base),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    etEnsuiteViewModel.step,
-                    style: AgoraTextStyles.medium15.copyWith(color: AgoraColors.primaryBlue),
-                    semanticsLabel: etEnsuiteViewModel.stepSemanticsLabel,
-                  ),
-                  Text(etEnsuiteViewModel.title, style: AgoraTextStyles.medium18),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );

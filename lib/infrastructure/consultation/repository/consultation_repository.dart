@@ -11,6 +11,7 @@ import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
 import 'package:dio/dio.dart';
@@ -214,6 +215,11 @@ class ConsultationDioRepository extends ConsultationRepository {
         "/consultations/$consultationId/responses",
       );
       final etEnsuite = response.data["etEnsuite"];
+      final presentation = response.data["presentation"];
+      final presentationDescription = presentation["description"] as String;
+      final presentationTipDescription = presentation["tipsDescription"] as String;
+      final presentationStartDate = (presentation["startDate"] as String).parseToDateTime();
+      final presentationEndDate = (presentation["endDate"] as String).parseToDateTime();
       final explanations = etEnsuite["explanations"] as List;
       final etEnsuiteVideo = etEnsuite["video"] as Map?;
       final etEnsuiteConclusion = etEnsuite["conclusion"] as Map?;
@@ -254,7 +260,12 @@ class ConsultationDioRepository extends ConsultationRepository {
                 )
               : null,
         ),
-        // presentation:
+        presentation: ConsultationSummaryPresentation(
+          startDate: presentationStartDate,
+          endDate: presentationEndDate,
+          description: presentationDescription,
+          tipDescription: presentationTipDescription,
+        ),
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);
     } catch (e, s) {
