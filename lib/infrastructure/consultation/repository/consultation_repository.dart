@@ -216,10 +216,6 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       final etEnsuite = response.data["etEnsuite"];
       final presentation = response.data["presentation"];
-      final presentationDescription = presentation["description"] as String;
-      final presentationTipDescription = presentation["tipsDescription"] as String;
-      final presentationStartDate = (presentation["startDate"] as String).parseToDateTime();
-      final presentationEndDate = (presentation["endDate"] as String).parseToDateTime();
       final explanations = etEnsuite["explanations"] as List;
       final etEnsuiteVideo = etEnsuite["video"] as Map?;
       final etEnsuiteConclusion = etEnsuite["conclusion"] as Map?;
@@ -261,10 +257,10 @@ class ConsultationDioRepository extends ConsultationRepository {
               : null,
         ),
         presentation: ConsultationSummaryPresentation(
-          startDate: presentationStartDate,
-          endDate: presentationEndDate,
-          description: presentationDescription,
-          tipDescription: presentationTipDescription,
+          startDate: (presentation["startDate"] as String).parseToDateTime(),
+          endDate: (presentation["endDate"] as String).parseToDateTime(),
+          description: presentation["description"] as String,
+          tipDescription: presentation["tipsDescription"] as String,
         ),
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);

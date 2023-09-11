@@ -114,6 +114,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
+                      initialToolBarHeight: 200,
                       onToolbarBackClick: () => _onBackClick(
                         context,
                         consultationId,

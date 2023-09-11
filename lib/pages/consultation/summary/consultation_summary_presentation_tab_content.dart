@@ -4,6 +4,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationSummaryPresentationTabContent extends StatelessWidget {
   final String rangeDate;
@@ -33,10 +34,8 @@ class ConsultationSummaryPresentationTabContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  rangeDate,
-                  style: AgoraTextStyles.light14,
-                ),
+                _buildInformationItem(image: "ic_calendar.svg", text: rangeDate),
+                SizedBox(height: AgoraSpacings.base),
                 AgoraHtml(data: description),
                 SizedBox(height: AgoraSpacings.base),
                 AgoraRoundedCard(
@@ -50,6 +49,21 @@ class ConsultationSummaryPresentationTabContent extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInformationItem({
+    required String image,
+    required String text,
+    TextStyle textStyle = AgoraTextStyles.medium14,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SvgPicture.asset("assets/$image", excludeFromSemantics: true),
+        SizedBox(width: AgoraSpacings.x0_5),
+        Expanded(child: Text(text, style: textStyle)),
+      ],
     );
   }
 }

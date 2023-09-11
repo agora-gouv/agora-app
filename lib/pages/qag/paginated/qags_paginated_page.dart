@@ -17,6 +17,7 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_latest_content.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_popular_content.dart';
@@ -100,26 +101,29 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                       topChild: SingleChildScrollView(
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        child: ThematiqueHelper.buildThematiques(
-                          thematiques: thematiqueState.thematiqueViewModels,
-                          selectedThematiqueId: currentThematiqueId,
-                          onThematiqueIdSelected: (thematiqueId) {
-                            if (currentThematiqueId != null || thematiqueId != null) {
-                              setState(() {
-                                if (thematiqueId == currentThematiqueId) {
-                                  currentThematiqueId = null;
-                                } else {
-                                  currentThematiqueId = thematiqueId;
-                                }
-                                TrackerHelper.trackClick(
-                                  clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
-                                  widgetName: AnalyticsScreenNames.qagsPaginatedPage,
-                                );
-                                _call(context);
-                              });
-                            }
-                          },
-                          needHorizontalSpacing: false,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                          child: ThematiqueHelper.buildThematiques(
+                            thematiques: thematiqueState.thematiqueViewModels,
+                            selectedThematiqueId: currentThematiqueId,
+                            onThematiqueIdSelected: (thematiqueId) {
+                              if (currentThematiqueId != null || thematiqueId != null) {
+                                setState(() {
+                                  if (thematiqueId == currentThematiqueId) {
+                                    currentThematiqueId = null;
+                                  } else {
+                                    currentThematiqueId = thematiqueId;
+                                  }
+                                  TrackerHelper.trackClick(
+                                    clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
+                                    widgetName: AnalyticsScreenNames.qagsPaginatedPage,
+                                  );
+                                  _call(context);
+                                });
+                              }
+                            },
+                            needHorizontalSpacing: false,
+                          ),
                         ),
                       ),
                       tabChild: [
