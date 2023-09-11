@@ -2,16 +2,16 @@ class QagStrings {
   static const String toolbarPart1 = "Questions";
   static const String toolbarPart2 = "au Gouvernement";
   static const String qagResponsePart1 = "Les réponses ";
-  static const String qagResponsePart2 = "à vos questions";
+  static const String qagResponsePart2 = "aux questions";
   static const String mostPopularQuestion = "La question la plus populaire";
   static const String incomingResponse = "Réponse à venir";
   static const String qagResponseInfoBubble =
       "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens le mercredi à 14h.";
-  static const String allQagPart1 = "Toutes vos";
+  static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
   static const String popular = "Populaires";
   static const String latest = "Récentes";
-  static const String supporting = "Soutenues";
+  static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";
   static const String by = "Par";
   static const String at = "le";
@@ -20,10 +20,9 @@ class QagStrings {
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
-  static const String askQuestionDescription2 =
-      "Chaque utilisateur peut poser une question par semaine à partir de chaque mercredi à 14h. ";
+  static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine ";
   static const String askQuestionDescription3 =
-      "Le Gouvernement répondra directement sur l'appli à la question la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens chaque mercredi à 14h.";
+      "(remise à zéro des compteurs le mercredi à 14h 🕑).\n\nLe Gouvernement répondra directement sur l'appli à la question la plus populaire chaque semaine.";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
@@ -43,7 +42,7 @@ class QagStrings {
   static const String yourNameInfoBubble2 = "lire la politique de confidentialité.";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
-      "Toutes les questions sont bienvenues, du moment qu'elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. Attention, une fois envoyée, vous ne pourrez plus modifier votre question.";
+      "Toutes les questions sont bienvenues, du moment qu'elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. Attention, une fois envoyée, vous ne pourrez plus modifier ou supprimer votre question.";
   static const String askQuestionCheckboxLabel = "Ma question respecte la charte";
   static const String send = "Envoyer";
 
@@ -87,4 +86,5 @@ class QagStrings {
       "Je pense que la réponse du gouvernement peut t'intéresser 👉\u{00A0}%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
 
   static const String returnToQuestion = "Retour à ma question";
+  static const String goToAllQuestion = "Voir les questions";
 }

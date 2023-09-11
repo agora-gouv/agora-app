@@ -41,7 +41,7 @@ class GenericStrings {
   static const String onboardingStep3Title1 = "Inventez ";
   static const String onboardingStep3Title2 = "avec nous le futur de l'appli";
   static const String onboardingStep3Description =
-      "L'appli Agora est en expérimentation. Partagez vos idées pour écrire la suite de son histoire\u{00A0}!";
+      "Vous allez découvrir la première version de l'appli Agora. Aidez-nous à l'améliorer\u{00A0}!";
   static const String onboardingStep3LetsGo = "C'est parti";
 
   static const String yes = "Oui";

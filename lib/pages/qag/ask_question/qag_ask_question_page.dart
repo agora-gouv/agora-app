@@ -28,6 +28,7 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -36,6 +37,7 @@ import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_thematiques_drop_down.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:flutter/gestures.dart';
@@ -368,9 +370,24 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   Widget _buildErrorCase(BuildContext context, String errorCase) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Text(errorCase, style: AgoraTextStyles.light14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(errorCase, style: AgoraTextStyles.light14),
+          SizedBox(height: AgoraSpacings.x1_5, width: double.infinity),
+          Center(
+            child: AgoraRoundedButton(
+              label: QagStrings.goToAllQuestion,
+              onPressed: () {
+                Navigator.pushReplacementNamed(
+                  context,
+                  QagsPaginatedPage.routeName,
+                  arguments: QagsPaginatedArguments(thematiqueId: null, initialTab: QagPaginatedTab.popular),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

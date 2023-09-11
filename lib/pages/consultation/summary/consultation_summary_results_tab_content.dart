@@ -1,4 +1,5 @@
 import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -50,6 +51,7 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
                 ),
                 SizedBox(height: AgoraSpacings.base),
                 ...buildResults(),
+                Text(ConsultationStrings.summaryInformation, style: AgoraTextStyles.light14),
               ],
             ),
           ),

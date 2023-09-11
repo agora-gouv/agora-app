@@ -34,7 +34,7 @@ class AnalyticsEventNames {
   static const String thematique = "Thematique";
   static const String qagPopular = "QaG populaires";
   static const String qagLatest = "QaG récentes";
-  static const String qagSupporting = "QaG soutenues";
+  static const String qagSupporting = "QaG suivies";
   static const String likeQag = "Like une QaG directement";
   static const String unlikeQag = "Unlike une QaG directement";
   static const String likeQagDetails = "Like une QaG à partir de détails";
@@ -44,7 +44,7 @@ class AnalyticsEventNames {
   static const String notification = "Notifications";
   static const String tutorial = "Tutoriel";
   static const String moderationCapitalize = "Modération";
-  static const String deleteAccount = "Supprimer mon compte";
+  static const String deleteAccount = "Supprimer mon application";
   static const String participationCharter = "Charte de participation";
   static const String privacyPolicy = "Politique de confidentialité";
   static const String termsOfService = "Conditions générales d'utilisation";
