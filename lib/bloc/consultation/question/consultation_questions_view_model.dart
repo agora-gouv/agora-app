@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class ConsultationQuestionViewModel extends Equatable {
+sealed class ConsultationQuestionViewModel extends Equatable {
   final String id;
   final String title;
   final int order;

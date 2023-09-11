@@ -34,20 +34,12 @@ class ConsultationQuestionArguments {
   });
 }
 
-class ConsultationQuestionPage extends StatefulWidget {
+class ConsultationQuestionPage extends StatelessWidget {
   static const routeName = "/consultationQuestionPage";
 
   final ConsultationQuestionArguments arguments;
 
   const ConsultationQuestionPage({super.key, required this.arguments});
-
-  @override
-  State<ConsultationQuestionPage> createState() => _ConsultationQuestionPageState();
-}
-
-class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
-  String? currentQuestionId;
-  List<String> questionIdStack = [];
 
   @override
   Widget build(BuildContext context) {
@@ -56,44 +48,67 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
         BlocProvider<ConsultationQuestionsResponsesStockBloc>(
           create: (BuildContext context) => ConsultationQuestionsResponsesStockBloc(
             storageClient: StorageManager.getConsultationQuestionStorageClient(),
-          )..add(RestoreSavingConsultationResponseEvent(consultationId: widget.arguments.consultationId)),
+          )..add(RestoreSavingConsultationResponseEvent(consultationId: arguments.consultationId)),
         ),
         BlocProvider<ConsultationQuestionsBloc>(
           create: (BuildContext context) =>
               ConsultationQuestionsBloc(consultationRepository: RepositoryManager.getConsultationRepository())
-                ..add(FetchConsultationQuestionsEvent(consultationId: widget.arguments.consultationId)),
+                ..add(FetchConsultationQuestionsEvent(consultationId: arguments.consultationId)),
         ),
       ],
-      child: BlocBuilder<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
+      child: BlocConsumer<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
+        listener: (context, responsesStockState) {
+          if (responsesStockState.shouldPop) {
+            Navigator.pop(context);
+          } else if (_isLastQuestion(responsesStockState.currentQuestionId, responsesStockState.questionIdStack)) {
+            Navigator.pushNamed(
+              context,
+              ConsultationQuestionConfirmationPage.routeName,
+              arguments: ConsultationQuestionConfirmationArguments(
+                consultationId: arguments.consultationId,
+                consultationTitle: arguments.consultationTitle,
+                consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
+              ),
+            );
+          }
+        },
+        buildWhen: (_, responsesStockState) {
+          final currentQuestionId = responsesStockState.currentQuestionId;
+          return currentQuestionId != null || _isFirstQuestion(currentQuestionId, responsesStockState.questionIdStack);
+        },
         builder: (context, responsesStockState) {
           return BlocBuilder<ConsultationQuestionsBloc, ConsultationQuestionsState>(
             builder: (context, questionsState) {
               if (questionsState is ConsultationQuestionsFetchedState) {
                 return _handleQuestionsFetchedState(context, responsesStockState, questionsState);
               } else if (questionsState is ConsultationQuestionsErrorState) {
-                return AgoraScaffold(
-                  child: Column(
-                    children: [
-                      AgoraToolbar(style: AgoraToolbarStyle.close),
-                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-                      Center(child: AgoraErrorView()),
-                    ],
-                  ),
-                );
+                return _buildCommonState(context, AgoraErrorView());
               } else {
-                return AgoraScaffold(
-                  child: Column(
-                    children: [
-                      AgoraToolbar(style: AgoraToolbarStyle.close),
-                      SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-                      Center(child: CircularProgressIndicator()),
-                    ],
-                  ),
-                );
+                return _buildCommonState(context, CircularProgressIndicator());
               }
             },
           );
         },
+      ),
+    );
+  }
+
+  bool _isFirstQuestion(String? currentQuestionId, List<String> questionIdStack) {
+    return currentQuestionId == null && questionIdStack.isEmpty;
+  }
+
+  bool _isLastQuestion(String? currentQuestionId, List<String> questionIdStack) {
+    return currentQuestionId == null && questionIdStack.isNotEmpty;
+  }
+
+  Widget _buildCommonState(BuildContext context, Widget child) {
+    return AgoraScaffold(
+      child: Column(
+        children: [
+          AgoraToolbar(style: AgoraToolbarStyle.close),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: child),
+        ],
       ),
     );
   }
@@ -103,8 +118,10 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     ConsultationQuestionsResponsesStockState responsesStockState,
     ConsultationQuestionsFetchedState questionsState,
   ) {
-    currentQuestionId ??= responsesStockState.questionIdStack.lastOrNull ?? questionsState.viewModels[0].id;
-    questionIdStack = responsesStockState.questionIdStack;
+    var currentQuestionId = responsesStockState.currentQuestionId;
+    if (_isFirstQuestion(currentQuestionId, responsesStockState.questionIdStack)) {
+      currentQuestionId = questionsState.viewModels[0].id;
+    }
     final currentQuestion = questionsState.viewModels.firstWhere((element) => element.id == currentQuestionId);
     final totalQuestions = questionsState.viewModels.length;
     final questionAlreadyAnswered = _getPreviousResponses(
@@ -113,14 +130,8 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     );
     return AgoraScaffold(
       popAction: () {
-        try {
-          final previousQuestionId = questionIdStack.last;
-          _removeAndGoToPreviousQuestion(context, previousQuestionId);
-          return false;
-        } catch (e) {
-          Navigator.pop(context);
-          return true;
-        }
+        _removeAndGoToPreviousQuestion(context);
+        return false;
       },
       child: _buildContent(
         context,
@@ -142,47 +153,42 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     if (currentQuestion is ConsultationQuestionUniqueViewModel) {
       return _handleQuestionUniqueChoice(
         context,
-        widget.arguments.consultationId,
+        arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
-        responsesStockState,
       );
     } else if (currentQuestion is ConsultationQuestionMultipleViewModel) {
       return _handleQuestionMultipleChoices(
         context,
-        widget.arguments.consultationId,
+        arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
-        responsesStockState,
       );
     } else if (currentQuestion is ConsultationQuestionOpenedViewModel) {
       return _handleQuestionOpened(
         context,
-        widget.arguments.consultationId,
+        arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
-        responsesStockState,
       );
     }
     if (currentQuestion is ConsultationQuestionWithConditionViewModel) {
       return _handleQuestionWithConditions(
         context,
-        widget.arguments.consultationId,
+        arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
-        responsesStockState,
       );
     } else if (currentQuestion is ConsultationQuestionChapterViewModel) {
       return _handleChapter(
         context,
-        widget.arguments.consultationId,
+        arguments.consultationId,
         currentQuestion,
         totalQuestions,
-        responsesStockState,
       );
     } else {
       return Container();
@@ -195,7 +201,6 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     ConsultationQuestionUniqueViewModel uniqueChoiceQuestion,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
-    ConsultationQuestionsResponsesStockState stockState,
   ) {
     return ConsultationQuestionUniqueChoiceView(
       uniqueChoiceQuestion: uniqueChoiceQuestion,
@@ -219,7 +224,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(uniqueChoiceQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
+        _removeAndGoToPreviousQuestion(context);
       },
     );
   }
@@ -230,7 +235,6 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     ConsultationQuestionMultipleViewModel multipleChoicesQuestion,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
-    ConsultationQuestionsResponsesStockState stockState,
   ) {
     return ConsultationQuestionMultipleChoicesView(
       multipleChoicesQuestion: multipleChoicesQuestion,
@@ -254,7 +258,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(multipleChoicesQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
+        _removeAndGoToPreviousQuestion(context);
       },
     );
   }
@@ -265,7 +269,6 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     ConsultationQuestionOpenedViewModel openedQuestion,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
-    ConsultationQuestionsResponsesStockState stockState,
   ) {
     return ConsultationQuestionOpenedView(
       openedQuestion: openedQuestion,
@@ -289,7 +292,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(openedQuestion.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
+        _removeAndGoToPreviousQuestion(context);
       },
     );
   }
@@ -300,7 +303,6 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     ConsultationQuestionWithConditionViewModel questionWithConditions,
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
-    ConsultationQuestionsResponsesStockState stockState,
   ) {
     return ConsultationQuestionWithConditionsView(
       questionWithConditions: questionWithConditions,
@@ -324,7 +326,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.backConsultationQuestion.format(questionWithConditions.questionProgress),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
+        _removeAndGoToPreviousQuestion(context);
       },
     );
   }
@@ -334,7 +336,6 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     String consultationId,
     ConsultationQuestionChapterViewModel chapter,
     int totalQuestions,
-    ConsultationQuestionsResponsesStockState stockState,
   ) {
     return ConsultationQuestionChapterView(
       chapter: chapter,
@@ -358,7 +359,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
           clickName: AnalyticsEventNames.chapterDescription,
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
-        _removeAndGoToPreviousQuestion(context, stockState.questionIdStack.last);
+        _removeAndGoToPreviousQuestion(context);
       },
     );
   }
@@ -374,43 +375,28 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     if (isChapter) {
       context.read<ConsultationQuestionsResponsesStockBloc>().add(
             AddConsultationChapterStockEvent(
-              consultationId: widget.arguments.consultationId,
+              consultationId: arguments.consultationId,
               chapterId: questionId,
+              nextQuestionId: nextQuestionId,
             ),
           );
     } else {
       context.read<ConsultationQuestionsResponsesStockBloc>().add(
             AddConsultationQuestionsResponseStockEvent(
-              consultationId: widget.arguments.consultationId,
+              consultationId: arguments.consultationId,
               questionResponse: ConsultationQuestionResponses(
                 questionId: questionId,
                 responseIds: responsesIds,
                 responseText: openedResponse,
               ),
+              nextQuestionId: nextQuestionId,
             ),
           );
     }
-    if (nextQuestionId != null) {
-      setState(() => currentQuestionId = nextQuestionId);
-    } else {
-      Navigator.pushNamed(
-        context,
-        ConsultationQuestionConfirmationPage.routeName,
-        arguments: ConsultationQuestionConfirmationArguments(
-          consultationId: widget.arguments.consultationId,
-          consultationTitle: widget.arguments.consultationTitle,
-          consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
-        ),
-      );
-    }
   }
 
-  void _removeAndGoToPreviousQuestion(
-    BuildContext context,
-    String previousQuestionId,
-  ) {
+  void _removeAndGoToPreviousQuestion(BuildContext context) {
     context.read<ConsultationQuestionsResponsesStockBloc>().add(RemoveConsultationQuestionEvent());
-    setState(() => currentQuestionId = previousQuestionId);
   }
 
   ConsultationQuestionResponses? _getPreviousResponses({
