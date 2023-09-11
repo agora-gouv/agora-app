@@ -195,14 +195,10 @@ class _QagsPageState extends State<QagsPage> {
 
   Widget _buildGlobalPadding(BuildContext context, {required Widget child}) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
-        right: AgoraSpacings.horizontalPadding,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
           Center(child: child),
           SizedBox(height: AgoraSpacings.x2),
         ],

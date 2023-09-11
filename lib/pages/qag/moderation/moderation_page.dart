@@ -73,14 +73,14 @@ class _ModerationPageState extends State<ModerationPage> {
                   qagModerationListState is QagModerationListLoadingState) {
                 return Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+                    SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
                     Center(child: CircularProgressIndicator()),
                   ],
                 );
               } else {
                 return Column(
                   children: [
-                    SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+                    SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
                     Center(child: AgoraErrorView()),
                   ],
                 );

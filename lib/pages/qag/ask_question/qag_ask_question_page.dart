@@ -130,14 +130,14 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       context.read<ThematiqueBloc>().add(FetchAskQaGThematiqueEvent());
       return Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
           Center(child: CircularProgressIndicator()),
         ],
       );
     } else if (state is ThematiqueErrorState) {
       return Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
           Center(child: AgoraErrorView()),
         ],
       );
