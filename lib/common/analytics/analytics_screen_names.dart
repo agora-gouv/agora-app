@@ -12,7 +12,7 @@ class AnalyticsScreenNames {
   static const String qagsPaginatedPage = "Liste infinie des QaGs";
   static const String qagsPaginatedPopularPage = "Liste infinie des QaGs populaires";
   static const String qagsPaginatedLatestPage = "Liste infinie des QaGs récentes";
-  static const String qagsPaginatedSupportingPage = "Liste infinie des QaGs soutenues";
+  static const String qagsPaginatedSupportingPage = "Liste infinie des QaGs suivies";
   static const String qagDetailsPage = "Détails d'une QaG";
   static const String qagAskQuestionPage = "Poser une QaG";
   static const String qagSimilarPage = "Liste des QaGs similaires";
@@ -26,7 +26,7 @@ class AnalyticsScreenNames {
   static const String demographicQuestionPage = "Questionnaire sur les données démographiques";
   static const String demographicConfirmationPage = "Envoi des réponses des données démographiques";
   static const String demographicProfilePage = "Profile - Données démographique";
-  static const String deleteAccountPage = "Profile - Supprimer mon compte";
+  static const String deleteAccountPage = "Profile - Supprimer mon application";
   static const String profileDemographicInformationPage = "Profile - Page descriptive des données démographiques";
   static const String participationCharterPage = "Profil - Charte de participation";
 
