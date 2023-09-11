@@ -131,7 +131,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
       return Column(
         children: [
           AgoraToolbar(),
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
           Center(child: CircularProgressIndicator()),
         ],
       );

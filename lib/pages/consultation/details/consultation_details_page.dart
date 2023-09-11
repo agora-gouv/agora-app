@@ -116,7 +116,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
       child: Column(
         children: [
           AgoraToolbar(),
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
           Center(child: widget),
         ],
       ),
