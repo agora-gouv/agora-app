@@ -94,14 +94,14 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
     } else if (state is GetDemographicInformationInitialLoadingState) {
       return Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
           Center(child: CircularProgressIndicator()),
         ],
       );
     } else {
       return Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
           Center(child: AgoraErrorView()),
         ],
       );

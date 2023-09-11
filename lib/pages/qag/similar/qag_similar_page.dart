@@ -133,14 +133,14 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
       case QagSimilarLoadingState():
         return Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+            SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
             Center(child: CircularProgressIndicator()),
           ],
         );
       case QagSimilarErrorState():
         return Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+            SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
             Center(child: AgoraErrorView()),
           ],
         );
