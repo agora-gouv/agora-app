@@ -4,7 +4,6 @@ import 'package:agora/bloc/qag/create/qag_create_bloc.dart';
 import 'package:agora/bloc/qag/create/qag_create_event.dart';
 import 'package:agora/bloc/qag/create/qag_create_state.dart';
 import 'package:agora/bloc/qag/similar/has_similar/qag_has_similar_bloc.dart';
-import 'package:agora/bloc/qag/similar/has_similar/qag_has_similar_event.dart';
 import 'package:agora/bloc/qag/similar/has_similar/qag_has_similar_state.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
@@ -405,9 +404,9 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
     timer = Timer(
       countdownDuration,
       () {
-        if (question.isNotBlank()) {
-          context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: question));
-        }
+        // if (question.isNotBlank()) {
+        //   context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: question));
+        // }
         setState(() {
           if (shouldCheckQuestionLength) {
             isQuestionLengthError = (question.isNullOrBlank() && question.isNotEmpty) ||
