@@ -811,8 +811,8 @@ void main() {
               "startDate": "2023-08-01",
               "endDate": "2023-08-31",
               "description": "description",
-              "tipsDescription": "tip description"
-            }
+              "tipsDescription": "tip description",
+            },
           },
         ),
         headers: {
@@ -923,8 +923,8 @@ void main() {
               "startDate": "2023-08-01",
               "endDate": "2023-08-31",
               "description": "description",
-              "tipsDescription": "tip description"
-            }
+              "tipsDescription": "tip description",
+            },
           },
         ),
         headers: {

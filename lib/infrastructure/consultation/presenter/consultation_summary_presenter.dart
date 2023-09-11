@@ -12,71 +12,72 @@ class ConsultationSummaryPresenter {
     final etEnsuiteVideo = etEnsuite.video;
     final etEnsuiteConclusion = etEnsuite.conclusion;
     return ConsultationSummaryViewModel(
-        title: consultationSummary.title,
-        participantCount: ConsultationStrings.participantCount.format(consultationSummary.participantCount.toString()),
-        results: consultationSummary.results.map(
-          (consultationResult) {
-            if (consultationResult is ConsultationSummaryUniqueChoiceResults) {
-              return ConsultationSummaryUniqueChoiceResultsViewModel(
-                questionTitle: consultationResult.questionTitle,
-                order: consultationResult.order,
-                responses: _buildResponses(consultationResult.responses),
-              );
-            } else if (consultationResult is ConsultationSummaryMultipleChoicesResults) {
-              return ConsultationSummaryMultipleChoicesResultsViewModel(
-                questionTitle: consultationResult.questionTitle,
-                order: consultationResult.order,
-                responses: _buildResponses(consultationResult.responses),
-              );
-            } else {
-              throw Exception(
-                "ConsultationSummaryPresenter : convert failed, type ${consultationResult.runtimeType} not handle",
-              );
-            }
-          },
-        ).toList()
-          ..sort((viewModel1, viewModel2) => viewModel1.order.compareTo(viewModel2.order)),
-        etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
-          step: ConsultationStrings.step.format(etEnsuite.step.toString()),
-          stepSemanticsLabel: SemanticsStrings.step.format(etEnsuite.step.toString()),
-          image: _getImageAsset(etEnsuite.step),
-          title: _buildTitle(etEnsuite.step),
-          description: etEnsuite.description,
-          explanationsTitle: etEnsuite.explanationsTitle,
-          explanations: etEnsuite.explanations.map((explanation) {
-            return ConsultationSummaryEtEnsuiteExplanationViewModel(
-              isTogglable: explanation.isTogglable,
-              title: explanation.title,
-              intro: explanation.intro,
-              imageUrl: explanation.imageUrl,
-              description: explanation.description,
+      title: consultationSummary.title,
+      participantCount: ConsultationStrings.participantCount.format(consultationSummary.participantCount.toString()),
+      results: consultationSummary.results.map(
+        (consultationResult) {
+          if (consultationResult is ConsultationSummaryUniqueChoiceResults) {
+            return ConsultationSummaryUniqueChoiceResultsViewModel(
+              questionTitle: consultationResult.questionTitle,
+              order: consultationResult.order,
+              responses: _buildResponses(consultationResult.responses),
             );
-          }).toList(),
-          video: etEnsuiteVideo != null
-              ? ConsultationSummaryEtEnsuiteVideoViewModel(
-                  title: etEnsuiteVideo.title,
-                  intro: etEnsuiteVideo.intro,
-                  videoUrl: etEnsuiteVideo.videoUrl,
-                  videoWidth: etEnsuiteVideo.videoWidth,
-                  videoHeight: etEnsuiteVideo.videoHeight,
-                  transcription: etEnsuiteVideo.transcription,
-                )
-              : null,
-          conclusion: etEnsuiteConclusion != null
-              ? ConsultationSummaryEtEnsuiteConclusionViewModel(
-                  title: etEnsuiteConclusion.title,
-                  description: etEnsuiteConclusion.description,
-                )
-              : null,
+          } else if (consultationResult is ConsultationSummaryMultipleChoicesResults) {
+            return ConsultationSummaryMultipleChoicesResultsViewModel(
+              questionTitle: consultationResult.questionTitle,
+              order: consultationResult.order,
+              responses: _buildResponses(consultationResult.responses),
+            );
+          } else {
+            throw Exception(
+              "ConsultationSummaryPresenter : convert failed, type ${consultationResult.runtimeType} not handle",
+            );
+          }
+        },
+      ).toList()
+        ..sort((viewModel1, viewModel2) => viewModel1.order.compareTo(viewModel2.order)),
+      etEnsuite: ConsultationSummaryEtEnsuiteViewModel(
+        step: ConsultationStrings.step.format(etEnsuite.step.toString()),
+        stepSemanticsLabel: SemanticsStrings.step.format(etEnsuite.step.toString()),
+        image: _getImageAsset(etEnsuite.step),
+        title: _buildTitle(etEnsuite.step),
+        description: etEnsuite.description,
+        explanationsTitle: etEnsuite.explanationsTitle,
+        explanations: etEnsuite.explanations.map((explanation) {
+          return ConsultationSummaryEtEnsuiteExplanationViewModel(
+            isTogglable: explanation.isTogglable,
+            title: explanation.title,
+            intro: explanation.intro,
+            imageUrl: explanation.imageUrl,
+            description: explanation.description,
+          );
+        }).toList(),
+        video: etEnsuiteVideo != null
+            ? ConsultationSummaryEtEnsuiteVideoViewModel(
+                title: etEnsuiteVideo.title,
+                intro: etEnsuiteVideo.intro,
+                videoUrl: etEnsuiteVideo.videoUrl,
+                videoWidth: etEnsuiteVideo.videoWidth,
+                videoHeight: etEnsuiteVideo.videoHeight,
+                transcription: etEnsuiteVideo.transcription,
+              )
+            : null,
+        conclusion: etEnsuiteConclusion != null
+            ? ConsultationSummaryEtEnsuiteConclusionViewModel(
+                title: etEnsuiteConclusion.title,
+                description: etEnsuiteConclusion.description,
+              )
+            : null,
+      ),
+      presentation: ConsultationSummaryPresentationViewModel(
+        rangeDate: ConsultationStrings.rangeDate.format2(
+          consultationSummary.presentation.startDate.formatToDayMonthYear(),
+          consultationSummary.presentation.endDate.formatToDayMonthYear(),
         ),
-        presentation: ConsultationSummaryPresentationViewModel(
-          rangeDate: ConsultationStrings.rangeDate.format2(
-            consultationSummary.presentation.startDate.formatToDayMonthYear(),
-            consultationSummary.presentation.endDate.formatToDayMonthYear(),
-          ),
-          description: consultationSummary.presentation.description,
-          tipDescription: consultationSummary.presentation.tipDescription,
-        ));
+        description: consultationSummary.presentation.description,
+        tipDescription: consultationSummary.presentation.tipDescription,
+      ),
+    );
   }
 
   static List<ConsultationSummaryResponseViewModel> _buildResponses(List<ConsultationSummaryResponse> responses) {
