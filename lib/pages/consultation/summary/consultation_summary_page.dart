@@ -80,6 +80,13 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
       notificationTitle: widget.arguments.notificationTitle,
       notificationDescription: widget.arguments.notificationDescription,
     );
+
+    const loaderStep1 = SvgAssetLoader("assets/ic_summary_consultation_step1.svg");
+    const loaderStep2 = SvgAssetLoader("assets/ic_summary_consultation_step2.svg");
+    const loaderStep3 = SvgAssetLoader("assets/ic_summary_consultation_step3.svg");
+    svg.cache.putIfAbsent(loaderStep1.cacheKey(null), () => loaderStep1.loadBytes(null));
+    svg.cache.putIfAbsent(loaderStep2.cacheKey(null), () => loaderStep2.loadBytes(null));
+    svg.cache.putIfAbsent(loaderStep3.cacheKey(null), () => loaderStep3.loadBytes(null));
   }
 
   @override
