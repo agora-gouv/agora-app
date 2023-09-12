@@ -84,6 +84,7 @@ class QagsPaginatedContentBuilder {
               date: qagPaginatedViewModel.date,
               supportCount: qagPaginatedViewModel.supportCount,
               isSupported: qagPaginatedViewModel.isSupported,
+              isAuthor: qagPaginatedViewModel.isAuthor,
               onSupportClick: (support) {
                 _track(paginatedTab: paginatedTab, isSupport: support);
                 if (support) {

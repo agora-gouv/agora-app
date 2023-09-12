@@ -22,11 +22,7 @@ class QagsPaginatedLatestContent extends StatelessWidget {
         return SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.only(
-              left: AgoraSpacings.horizontalPadding,
-              right: AgoraSpacings.horizontalPadding,
-              top: AgoraSpacings.base,
-            ),
+            padding: const EdgeInsets.only(top: AgoraSpacings.base),
             child: Column(
               children: QagsPaginatedContentBuilder.buildWidgets(
                 context: context,

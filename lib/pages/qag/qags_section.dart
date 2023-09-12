@@ -64,34 +64,33 @@ class _QagsSectionState extends State<QagsSection> {
     return Column(
       children: [
         _buildTabBar(),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: AgoraSpacings.horizontalPadding,
-            right: AgoraSpacings.horizontalPadding,
-            top: AgoraSpacings.base,
-          ),
-          child: widget.isLoading
-              ? Column(
+        widget.isLoading
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                child: Column(
                   children: [
-                    SizedBox(height: AgoraSpacings.base),
+                    SizedBox(height: AgoraSpacings.x2),
                     CircularProgressIndicator(),
                     SizedBox(height: AgoraSpacings.x3 * 2),
                   ],
-                )
-              : _buildQags(context),
-        ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+                child: Column(children: _buildQags(context)),
+              ),
       ],
     );
   }
 
-  Widget _buildQags(BuildContext context) {
+  List<Widget> _buildQags(BuildContext context) {
     switch (currentSelected) {
       case QagTab.popular:
-        return Column(children: _buildQagWidgets(context, widget.popularViewModels, currentSelected));
+        return _buildQagWidgets(context, widget.popularViewModels, currentSelected);
       case QagTab.latest:
-        return Column(children: _buildQagWidgets(context, widget.latestViewModels, currentSelected));
+        return _buildQagWidgets(context, widget.latestViewModels, currentSelected);
       case QagTab.supporting:
-        return Column(children: _buildQagWidgets(context, widget.supportingViewModels, currentSelected));
+        return _buildQagWidgets(context, widget.supportingViewModels, currentSelected);
     }
   }
 
@@ -152,6 +151,7 @@ class _QagsSectionState extends State<QagsSection> {
                 date: qagViewModel.date,
                 supportCount: qagViewModel.supportCount,
                 isSupported: qagViewModel.isSupported,
+                isAuthor: qagViewModel.isAuthor,
                 onSupportClick: (support) {
                   if (support) {
                     TrackerHelper.trackClick(
@@ -200,39 +200,39 @@ class _QagsSectionState extends State<QagsSection> {
       switch (qagTab) {
         case QagTab.popular:
           qagsWidgets.add(_buildAllButton(QagPaginatedTab.popular));
-          qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
           break;
         case QagTab.latest:
           qagsWidgets.add(_buildAllButton(QagPaginatedTab.latest));
-          qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
           break;
         case QagTab.supporting:
           qagsWidgets.add(_buildAllButton(QagPaginatedTab.supporting));
-          qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
           break;
       }
       return qagsWidgets;
     } else {
       return [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: AgoraSpacings.base),
-            Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
-            SizedBox(height: AgoraSpacings.x1_5),
-            AgoraRoundedButton(
-              label: QagStrings.askQuestion,
-              onPressed: () {
-                TrackerHelper.trackClick(
-                  clickName: AnalyticsEventNames.askQuestionInEmptyList,
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                );
-                Navigator.pushNamed(context, QagAskQuestionPage.routeName, arguments: widget.askQuestionErrorCase);
-              },
-            ),
-            SizedBox(height: AgoraSpacings.x3 * 2),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: AgoraSpacings.base),
+              Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
+              SizedBox(height: AgoraSpacings.x1_5),
+              AgoraRoundedButton(
+                label: QagStrings.askQuestion,
+                onPressed: () {
+                  TrackerHelper.trackClick(
+                    clickName: AnalyticsEventNames.askQuestionInEmptyList,
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
+                  Navigator.pushNamed(context, QagAskQuestionPage.routeName, arguments: widget.askQuestionErrorCase);
+                },
+              ),
+              SizedBox(height: AgoraSpacings.x3 * 2),
+            ],
+          ),
         ),
       ];
     }
