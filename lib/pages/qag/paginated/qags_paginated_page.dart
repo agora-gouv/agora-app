@@ -102,7 +102,11 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                         physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                          padding: EdgeInsets.only(
+                            left: AgoraSpacings.horizontalPadding,
+                            right: AgoraSpacings.horizontalPadding,
+                            top: AgoraSpacings.x0_25,
+                          ),
                           child: ThematiqueHelper.buildThematiques(
                             thematiques: thematiqueState.thematiqueViewModels,
                             selectedThematiqueId: currentThematiqueId,
