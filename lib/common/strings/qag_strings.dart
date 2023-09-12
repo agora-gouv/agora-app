@@ -87,4 +87,5 @@ class QagStrings {
 
   static const String returnToQuestion = "Retour à ma question";
   static const String goToAllQuestion = "Voir les questions";
+  static const String yourQuestion = "Votre question";
 }

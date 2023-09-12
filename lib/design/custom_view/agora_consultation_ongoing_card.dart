@@ -7,6 +7,7 @@ import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/design/custom_view/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -41,25 +42,23 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return highlightLabel != null
-        ? Stack(
-            children: [
-              _buildCard(context),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: AgoraSpacings.base,
-                  left: _getHighLightLeftPadding(),
-                  right: AgoraSpacings.x2,
-                ),
-                child: AgoraRoundedCard(
-                  cardColor: AgoraColors.fluorescentRed,
-                  padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5, vertical: AgoraSpacings.x0_25),
-                  child: Text(highlightLabel!, style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.white)),
-                ),
+    return Semantics(
+      button: true,
+      child: Stack(
+        children: [
+          _buildCard(context),
+          if (highlightLabel != null)
+            Padding(
+              padding: EdgeInsets.only(
+                top: AgoraSpacings.base,
+                left: _getHighLightLeftPadding(),
+                right: AgoraSpacings.x2,
               ),
-            ],
-          )
-        : _buildCard(context);
+              child: AgoraHighLightCard(label: highlightLabel!),
+            ),
+        ],
+      ),
+    );
   }
 
   Widget _buildCard(BuildContext context) {
@@ -68,96 +67,93 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     final screenHeight = screenWidth * 0.55;
     return Padding(
       padding: _getCardPadding(),
-      child: Semantics(
-        button: true,
-        child: AgoraRoundedCard(
-          borderColor: AgoraColors.border,
-          onTap: () {
-            TrackerHelper.trackClick(
-              clickName: AnalyticsEventNames.participateConsultationByCard.format(consultationId),
-              widgetName: AnalyticsScreenNames.consultationsPage,
-            );
-            _participate(context);
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(
-                imageUrl,
-                fit: BoxFit.fitWidth,
-                width: screenWidth,
-                height: screenHeight,
-                excludeFromSemantics: true,
-                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                  return Center(
-                    child: loadingProgress == null
-                        ? child
-                        : SizedBox(
-                            width: screenWidth,
-                            height: screenHeight,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Spacer(),
-                                CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                                Spacer(),
-                              ],
-                            ),
+      child: AgoraRoundedCard(
+        borderColor: AgoraColors.border,
+        onTap: () {
+          TrackerHelper.trackClick(
+            clickName: AnalyticsEventNames.participateConsultationByCard.format(consultationId),
+            widgetName: AnalyticsScreenNames.consultationsPage,
+          );
+          _participate(context);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.network(
+              imageUrl,
+              fit: BoxFit.fitWidth,
+              width: screenWidth,
+              height: screenHeight,
+              excludeFromSemantics: true,
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                return Center(
+                  child: loadingProgress == null
+                      ? child
+                      : SizedBox(
+                          width: screenWidth,
+                          height: screenHeight,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Spacer(),
+                              CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                              Spacer(),
+                            ],
                           ),
-                  );
-                },
-              ),
-              SizedBox(height: AgoraSpacings.base),
-              ThematiqueHelper.buildCard(context, thematique, size: AgoraThematiqueSize.large),
-              SizedBox(height: AgoraSpacings.x0_25),
-              isColumnStyle
-                  ? Text(title, style: AgoraTextStyles.medium22)
-                  : Expanded(child: Text(title, style: AgoraTextStyles.medium22)),
-              SizedBox(height: AgoraSpacings.x0_5),
-              Text(
-                ConsultationStrings.endDate.format(endDate),
-                style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.rhineCastle),
-              ),
-              SizedBox(height: AgoraSpacings.x1_25),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    child: ExcludeSemantics(
-                      child: AgoraButton(
-                        label: ConsultationStrings.participate,
-                        icon: "ic_bubble.svg",
-                        style: AgoraButtonStyle.blueBorderButtonStyle,
-                        onPressed: () {
-                          TrackerHelper.trackClick(
-                            clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
-                            widgetName: AnalyticsScreenNames.consultationsPage,
-                          );
-                          _participate(context);
-                        },
-                      ),
+                        ),
+                );
+              },
+            ),
+            SizedBox(height: AgoraSpacings.base),
+            ThematiqueHelper.buildCard(context, thematique, size: AgoraThematiqueSize.large),
+            SizedBox(height: AgoraSpacings.x0_25),
+            isColumnStyle
+                ? Text(title, style: AgoraTextStyles.medium22)
+                : Expanded(child: Text(title, style: AgoraTextStyles.medium22)),
+            SizedBox(height: AgoraSpacings.x0_5),
+            Text(
+              ConsultationStrings.endDate.format(endDate),
+              style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.rhineCastle),
+            ),
+            SizedBox(height: AgoraSpacings.x1_25),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: ExcludeSemantics(
+                    child: AgoraButton(
+                      label: ConsultationStrings.participate,
+                      icon: "ic_bubble.svg",
+                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      onPressed: () {
+                        TrackerHelper.trackClick(
+                          clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
+                          widgetName: AnalyticsScreenNames.consultationsPage,
+                        );
+                        _participate(context);
+                      },
                     ),
                   ),
-                  SizedBox(width: AgoraSpacings.base),
-                  AgoraIconButton(
-                    icon: "ic_share.svg",
-                    semanticLabel: "${SemanticsStrings.share} $title",
-                    onClick: () {
-                      TrackerHelper.trackClick(
-                        clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
-                        widgetName: AnalyticsScreenNames.consultationsPage,
-                      );
-                      ShareHelper.shareConsultation(context: context, title: title, id: consultationId);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                SizedBox(width: AgoraSpacings.base),
+                AgoraIconButton(
+                  icon: "ic_share.svg",
+                  semanticLabel: "${SemanticsStrings.share} $title",
+                  onClick: () {
+                    TrackerHelper.trackClick(
+                      clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
+                      widgetName: AnalyticsScreenNames.consultationsPage,
+                    );
+                    ShareHelper.shareConsultation(context: context, title: title, id: consultationId);
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
