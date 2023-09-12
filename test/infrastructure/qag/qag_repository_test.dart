@@ -118,6 +118,7 @@ void main() {
                     "count": 116,
                     "isSupported": true,
                   },
+                  "isAuthor": true,
                 },
               ],
               "latest": [
@@ -131,6 +132,7 @@ void main() {
                     "count": 11,
                     "isSupported": false,
                   },
+                  "isAuthor": false,
                 },
               ],
               "supporting": [
@@ -144,6 +146,7 @@ void main() {
                     "count": 2,
                     "isSupported": true,
                   },
+                  "isAuthor": true,
                 }
               ],
               "askQagErrorText": null,
@@ -176,6 +179,7 @@ void main() {
               date: DateTime(2023, 1, 1),
               supportCount: 116,
               isSupported: true,
+              isAuthor: true,
             ),
           ],
           qagLatest: [
@@ -187,6 +191,7 @@ void main() {
               date: DateTime(2023, 2, 1),
               supportCount: 11,
               isSupported: false,
+              isAuthor: false,
             ),
           ],
           qagSupporting: [
@@ -198,6 +203,7 @@ void main() {
               date: DateTime(2023, 3, 1),
               supportCount: 2,
               isSupported: true,
+              isAuthor: true,
             ),
           ],
           errorCase: null,
@@ -347,6 +353,7 @@ void main() {
                   "count": 116,
                   "isSupported": true,
                 },
+                "isAuthor": true,
               },
             ],
           },
@@ -382,6 +389,7 @@ void main() {
               date: DateTime(2023, 1, 1),
               supportCount: 116,
               isSupported: true,
+              isAuthor: true,
             ),
           ],
         ),
@@ -605,6 +613,7 @@ void main() {
             "username": "Henri J.",
             "canShare": true,
             "canSupport": true,
+            "isAuthor": true,
             "support": {"count": 112, "isSupported": true},
             "response": null,
           },
@@ -635,6 +644,7 @@ void main() {
             username: "Henri J.",
             canShare: true,
             canSupport: true,
+            isAuthor: true,
             support: QagDetailsSupport(count: 112, isSupported: true),
             response: null,
           ),
@@ -657,6 +667,7 @@ void main() {
             "username": "Henri J.",
             "canShare": false,
             "canSupport": false,
+            "isAuthor": false,
             "support": {"count": 112, "isSupported": true},
             "response": {
               "author": "Olivier Véran",
@@ -696,6 +707,7 @@ void main() {
             username: "Henri J.",
             canShare: false,
             canSupport: false,
+            isAuthor: false,
             support: QagDetailsSupport(count: 112, isSupported: true),
             response: QagDetailsResponse(
               author: "Olivier Véran",

@@ -31,6 +31,7 @@ class QagPaginatedLatestBloc extends QagPaginatedBloc {
           date: updatedLatest.date,
           supportCount: event.supportCount,
           isSupported: event.isSupported,
+          isAuthor: updatedLatest.isAuthor,
         );
       }
 

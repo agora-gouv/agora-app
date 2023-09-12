@@ -31,6 +31,7 @@ class QagPaginatedPopularBloc extends QagPaginatedBloc {
           date: updatedPopular.date,
           supportCount: event.supportCount,
           isSupported: event.isSupported,
+          isAuthor: updatedPopular.isAuthor,
         );
       }
 

@@ -9,6 +9,7 @@ class QagPaginatedViewModel extends Equatable {
   final String date;
   final int supportCount;
   final bool isSupported;
+  final bool isAuthor;
 
   QagPaginatedViewModel({
     required this.id,
@@ -18,6 +19,7 @@ class QagPaginatedViewModel extends Equatable {
     required this.date,
     required this.supportCount,
     required this.isSupported,
+    required this.isAuthor,
   });
 
   @override
@@ -29,5 +31,6 @@ class QagPaginatedViewModel extends Equatable {
         date,
         supportCount,
         isSupported,
+        isAuthor,
       ];
 }

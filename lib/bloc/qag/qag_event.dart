@@ -23,6 +23,7 @@ class UpdateQagsEvent extends QagsEvent {
   final String date;
   final int supportCount;
   final bool isSupported;
+  final bool isAuthor;
 
   UpdateQagsEvent({
     required this.qagId,
@@ -32,6 +33,7 @@ class UpdateQagsEvent extends QagsEvent {
     required this.date,
     required this.supportCount,
     required this.isSupported,
+    required this.isAuthor,
   });
 
   @override
@@ -43,5 +45,6 @@ class UpdateQagsEvent extends QagsEvent {
         date,
         supportCount,
         isSupported,
+        isAuthor,
       ];
 }

@@ -6,7 +6,6 @@ import 'package:agora/bloc/qag/paginated/qag_paginated_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
@@ -51,10 +50,6 @@ class QagsPaginatedContentBuilder {
                 context: context,
                 paginatedTab: paginatedTab,
                 qagId: qagPaginatedViewModel.id,
-                thematique: qagPaginatedViewModel.thematique,
-                title: qagPaginatedViewModel.title,
-                username: qagPaginatedViewModel.username,
-                date: qagPaginatedViewModel.date,
                 supportCount: newSupportCount,
                 isSupported: newIsSupported,
               );
@@ -109,10 +104,6 @@ class QagsPaginatedContentBuilder {
                       context: context,
                       paginatedTab: paginatedTab,
                       qagId: qagDetailsBackResult.qagId,
-                      thematique: qagDetailsBackResult.thematique,
-                      title: qagDetailsBackResult.title,
-                      username: qagDetailsBackResult.username,
-                      date: qagDetailsBackResult.date,
                       supportCount: qagDetailsBackResult.supportCount,
                       isSupported: qagDetailsBackResult.isSupported,
                     );
@@ -167,10 +158,6 @@ class QagsPaginatedContentBuilder {
     required BuildContext context,
     required QagPaginatedTab paginatedTab,
     required String qagId,
-    required ThematiqueViewModel thematique,
-    required String title,
-    required String username,
-    required String date,
     required int supportCount,
     required bool isSupported,
   }) {
@@ -179,10 +166,6 @@ class QagsPaginatedContentBuilder {
         context.read<QagPaginatedPopularBloc>().add(
               UpdateQagsPaginatedEvent(
                 qagId: qagId,
-                thematique: thematique,
-                title: title,
-                username: username,
-                date: date,
                 supportCount: supportCount,
                 isSupported: isSupported,
               ),
@@ -192,10 +175,6 @@ class QagsPaginatedContentBuilder {
         context.read<QagPaginatedLatestBloc>().add(
               UpdateQagsPaginatedEvent(
                 qagId: qagId,
-                thematique: thematique,
-                title: title,
-                username: username,
-                date: date,
                 supportCount: supportCount,
                 isSupported: isSupported,
               ),
@@ -205,10 +184,6 @@ class QagsPaginatedContentBuilder {
         context.read<QagPaginatedSupportingBloc>().add(
               UpdateQagsPaginatedEvent(
                 qagId: qagId,
-                thematique: thematique,
-                title: title,
-                username: username,
-                date: date,
                 supportCount: supportCount,
                 isSupported: isSupported,
               ),

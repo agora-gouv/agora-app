@@ -16,6 +16,7 @@ class QagDetailsPresenter {
       username: qagDetails.username,
       canShare: qagDetails.canShare,
       canSupport: qagDetails.canSupport,
+      isAuthor: qagDetails.isAuthor,
       support: QagDetailsSupportViewModel(
         count: support.count,
         isSupported: support.isSupported,

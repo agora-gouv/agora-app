@@ -52,6 +52,7 @@ class QagDetailsBackResult {
   final String date;
   final int supportCount;
   final bool isSupported;
+  final bool isAuthor;
 
   QagDetailsBackResult({
     required this.qagId,
@@ -61,6 +62,7 @@ class QagDetailsBackResult {
     required this.date,
     required this.supportCount,
     required this.isSupported,
+    required this.isAuthor,
   });
 }
 
@@ -232,6 +234,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                                 date: viewModel.date,
                                 supportCount: supportCount,
                                 isSupported: isSupported,
+                                isAuthor: viewModel.isAuthor,
                               );
                             },
                           ),
