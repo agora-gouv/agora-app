@@ -10,6 +10,6 @@ class ResponsiveHelper {
 
   static bool isLargerThanMobile(BuildContext context) {
     final larger = MediaQuery.of(context).size.width;
-    return larger > 450;
+    return larger > 600;
   }
 }
