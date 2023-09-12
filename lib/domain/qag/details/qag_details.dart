@@ -10,6 +10,7 @@ class QagDetails extends Equatable {
   final String username;
   final bool canShare;
   final bool canSupport;
+  final bool isAuthor;
   final QagDetailsSupport support;
   final QagDetailsResponse? response;
 
@@ -22,6 +23,7 @@ class QagDetails extends Equatable {
     required this.username,
     required this.canShare,
     required this.canSupport,
+    required this.isAuthor,
     required this.support,
     required this.response,
   });
@@ -36,6 +38,7 @@ class QagDetails extends Equatable {
         username,
         canShare,
         canSupport,
+        isAuthor,
         support,
         response,
       ];

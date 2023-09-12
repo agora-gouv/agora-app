@@ -118,6 +118,7 @@ class _QagsSectionState extends State<QagsSection> {
                         date: qagViewModel.date,
                         supportCount: _buildCount(qagViewModel, currentState),
                         isSupported: !qagViewModel.isSupported,
+                        isAuthor: qagViewModel.isAuthor,
                       ),
                     );
               } else if (currentState is QagSupportErrorState || currentState is QagDeleteSupportErrorState) {
@@ -183,6 +184,7 @@ class _QagsSectionState extends State<QagsSection> {
                               date: qagDetailsBackResult.date,
                               supportCount: qagDetailsBackResult.supportCount,
                               isSupported: qagDetailsBackResult.isSupported,
+                              isAuthor: qagDetailsBackResult.isAuthor,
                             ),
                           );
                       setState(() {}); // do not remove: utils to update screen

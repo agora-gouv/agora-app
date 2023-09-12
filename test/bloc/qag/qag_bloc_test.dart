@@ -33,6 +33,7 @@ void main() {
               date: "23 janvier",
               supportCount: 7,
               isSupported: true,
+              isAuthor: true,
             ),
           ],
           latestViewModels: [
@@ -44,6 +45,7 @@ void main() {
               date: "23 février",
               supportCount: 8,
               isSupported: false,
+              isAuthor: false,
             ),
           ],
           supportingViewModels: [
@@ -55,6 +57,7 @@ void main() {
               date: "23 mars",
               supportCount: 9,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           errorCase: null,
@@ -80,6 +83,7 @@ void main() {
               date: "23 janvier",
               supportCount: 7,
               isSupported: true,
+              isAuthor: true,
             ),
           ],
           latestViewModels: [
@@ -91,6 +95,7 @@ void main() {
               date: "23 février",
               supportCount: 8,
               isSupported: false,
+              isAuthor: false,
             ),
           ],
           supportingViewModels: [
@@ -102,6 +107,7 @@ void main() {
               date: "23 mars",
               supportCount: 9,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           errorCase: "Une erreur est survenue",
@@ -125,6 +131,7 @@ void main() {
             date: "",
             supportCount: 7,
             isSupported: true,
+            isAuthor: false,
           ),
         ],
         latestViewModels: [
@@ -136,6 +143,7 @@ void main() {
             date: "",
             supportCount: 8,
             isSupported: false,
+            isAuthor: false,
           ),
         ],
         supportingViewModels: [
@@ -147,6 +155,7 @@ void main() {
             date: "",
             supportCount: 9,
             isSupported: true,
+            isAuthor: false,
           ),
         ],
         errorCase: null,
@@ -169,6 +178,7 @@ void main() {
               date: "23 janvier",
               supportCount: 7,
               isSupported: true,
+              isAuthor: true,
             ),
           ],
           latestViewModels: [
@@ -180,6 +190,7 @@ void main() {
               date: "23 février",
               supportCount: 8,
               isSupported: false,
+              isAuthor: false,
             ),
           ],
           supportingViewModels: [
@@ -191,6 +202,7 @@ void main() {
               date: "23 mars",
               supportCount: 9,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           errorCase: null,
@@ -240,6 +252,7 @@ void main() {
             date: "23 janvier",
             supportCount: 8,
             isSupported: true,
+            isAuthor: false,
           ),
         ],
         latestViewModels: [
@@ -251,6 +264,7 @@ void main() {
             date: "23 février",
             supportCount: 6,
             isSupported: false,
+            isAuthor: true,
           ),
         ],
         supportingViewModels: [
@@ -262,6 +276,7 @@ void main() {
             date: "23 janvier",
             supportCount: 8,
             isSupported: true,
+            isAuthor: false,
           ),
         ],
         errorCase: null,
@@ -275,6 +290,7 @@ void main() {
           date: "23 février",
           supportCount: 7,
           isSupported: true,
+          isAuthor: false,
         ),
       ),
       expect: () => [
@@ -288,6 +304,7 @@ void main() {
               date: "23 janvier",
               supportCount: 8,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           latestViewModels: [
@@ -299,6 +316,7 @@ void main() {
               date: "23 février",
               supportCount: 7,
               isSupported: true,
+              isAuthor: true,
             ),
           ],
           supportingViewModels: [
@@ -310,6 +328,7 @@ void main() {
               date: "23 février",
               supportCount: 7,
               isSupported: true,
+              isAuthor: false,
             ),
             QagViewModel(
               id: "id0",
@@ -319,6 +338,7 @@ void main() {
               date: "23 janvier",
               supportCount: 8,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           errorCase: null,
@@ -342,6 +362,7 @@ void main() {
             date: "23 janvier",
             supportCount: 7,
             isSupported: true,
+            isAuthor: true,
           ),
           QagViewModel(
             id: "id1",
@@ -351,6 +372,7 @@ void main() {
             date: "23 février",
             supportCount: 7,
             isSupported: true,
+            isAuthor: true,
           ),
         ],
         latestViewModels: [],
@@ -363,6 +385,7 @@ void main() {
             date: "23 février",
             supportCount: 7,
             isSupported: true,
+            isAuthor: true,
           ),
         ],
         errorCase: null,
@@ -376,6 +399,7 @@ void main() {
           date: "23 février",
           supportCount: 6,
           isSupported: false,
+          isAuthor: true,
         ),
       ),
       expect: () => [
@@ -389,6 +413,7 @@ void main() {
               date: "23 janvier",
               supportCount: 7,
               isSupported: true,
+              isAuthor: true,
             ),
             QagViewModel(
               id: "id1",
@@ -398,6 +423,7 @@ void main() {
               date: "23 février",
               supportCount: 6,
               isSupported: false,
+              isAuthor: true,
             ),
           ],
           latestViewModels: [],
@@ -423,6 +449,7 @@ void main() {
             date: "23 janvier",
             supportCount: 7,
             isSupported: false,
+            isAuthor: false,
           ),
         ],
         latestViewModels: [
@@ -434,6 +461,7 @@ void main() {
             date: "23 janvier",
             supportCount: 7,
             isSupported: false,
+            isAuthor: false,
           ),
         ],
         supportingViewModels: [
@@ -445,6 +473,7 @@ void main() {
             date: "23 janvier",
             supportCount: 7,
             isSupported: false,
+            isAuthor: false,
           ),
         ],
         errorCase: null,
@@ -458,6 +487,7 @@ void main() {
           date: "23 janvier",
           supportCount: 8,
           isSupported: true,
+          isAuthor: false,
         ),
       ),
       expect: () => [
@@ -471,6 +501,7 @@ void main() {
               date: "23 janvier",
               supportCount: 8,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           latestViewModels: [
@@ -482,6 +513,7 @@ void main() {
               date: "23 janvier",
               supportCount: 8,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           supportingViewModels: [
@@ -493,6 +525,7 @@ void main() {
               date: "23 janvier",
               supportCount: 8,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
           errorCase: null,

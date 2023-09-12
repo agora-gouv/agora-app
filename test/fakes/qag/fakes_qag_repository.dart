@@ -36,6 +36,7 @@ class FakeQagSuccessRepository extends QagRepository {
           date: DateTime(2024, 1, 23),
           supportCount: 7,
           isSupported: true,
+          isAuthor: true,
         ),
       ],
       qagLatest: [
@@ -47,6 +48,7 @@ class FakeQagSuccessRepository extends QagRepository {
           date: DateTime(2024, 2, 23),
           supportCount: 8,
           isSupported: false,
+          isAuthor: false,
         ),
       ],
       qagSupporting: [
@@ -58,6 +60,7 @@ class FakeQagSuccessRepository extends QagRepository {
           date: DateTime(2024, 3, 23),
           supportCount: 9,
           isSupported: true,
+          isAuthor: false,
         ),
       ],
       errorCase: null,
@@ -83,6 +86,7 @@ class FakeQagSuccessRepository extends QagRepository {
               date: DateTime(2024, 2, 23),
               supportCount: 8,
               isSupported: false,
+              isAuthor: true,
             ),
           ],
         );
@@ -98,6 +102,7 @@ class FakeQagSuccessRepository extends QagRepository {
               date: DateTime(2024, 3, 23),
               supportCount: 9,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
         );
@@ -113,6 +118,7 @@ class FakeQagSuccessRepository extends QagRepository {
               date: DateTime(2024, 4, 23),
               supportCount: 9,
               isSupported: true,
+              isAuthor: false,
             ),
           ],
         );
@@ -177,6 +183,7 @@ class FakeQagSuccessRepository extends QagRepository {
         username: "CollectifSauvonsLaRetraite",
         canShare: false,
         canSupport: false,
+        isAuthor: false,
         support: QagDetailsSupport(count: 112, isSupported: true),
         response: null,
       ),
@@ -273,6 +280,7 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
         username: "CollectifSauvonsLaRetraite",
         canShare: true,
         canSupport: true,
+        isAuthor: true,
         support: QagDetailsSupport(count: 112, isSupported: true),
         response: QagDetailsResponse(
           author: "Olivier Véran",
@@ -304,6 +312,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
           date: DateTime(2024, 1, 23),
           supportCount: 7,
           isSupported: true,
+          isAuthor: true,
         ),
       ],
       qagLatest: [
@@ -315,6 +324,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
           date: DateTime(2024, 2, 23),
           supportCount: 8,
           isSupported: false,
+          isAuthor: false,
         ),
       ],
       qagSupporting: [
@@ -326,6 +336,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
           date: DateTime(2024, 3, 23),
           supportCount: 9,
           isSupported: true,
+          isAuthor: false,
         ),
       ],
       errorCase: "Une erreur est survenue",

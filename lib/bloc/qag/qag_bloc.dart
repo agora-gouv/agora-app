@@ -63,6 +63,7 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           date: updatedPopular.date,
           supportCount: event.supportCount,
           isSupported: event.isSupported,
+          isAuthor: updatedPopular.isAuthor,
         );
       }
       if (updatedLatestIndex != -1) {
@@ -75,6 +76,7 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           date: updatedLatest.date,
           supportCount: event.supportCount,
           isSupported: event.isSupported,
+          isAuthor: updatedLatest.isAuthor,
         );
       }
       if (event.isSupported) {
@@ -89,17 +91,20 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
               date: event.date,
               supportCount: event.supportCount,
               isSupported: event.isSupported,
+              isAuthor: event.isAuthor,
             ),
           );
         } else {
+          final updatedSupporting = supportingViewModelsCopy[updatedSupportingIndex];
           supportingViewModelsCopy[updatedSupportingIndex] = QagViewModel(
-            id: event.qagId,
-            thematique: event.thematique,
-            title: event.title,
-            username: event.username,
-            date: event.date,
+            id: updatedSupporting.id,
+            thematique: updatedSupporting.thematique,
+            title: updatedSupporting.title,
+            username: updatedSupporting.username,
+            date: updatedSupporting.date,
             supportCount: event.supportCount,
             isSupported: event.isSupported,
+            isAuthor: updatedSupporting.isAuthor,
           );
         }
       } else {

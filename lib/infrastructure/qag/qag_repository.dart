@@ -225,6 +225,7 @@ class QagDioRepository extends QagRepository {
           username: response.data["username"] as String,
           canShare: response.data["canShare"] as bool,
           canSupport: response.data["canSupport"] as bool,
+          isAuthor: response.data["isAuthor"] as bool? ?? false,
           support: QagDetailsSupport(
             count: qagDetailsSupport["count"] as int,
             isSupported: qagDetailsSupport["isSupported"] as bool,
@@ -399,6 +400,7 @@ class QagDioRepository extends QagRepository {
         date: (qag["date"] as String).parseToDateTime(),
         supportCount: support["count"] as int,
         isSupported: support["isSupported"] as bool,
+        isAuthor: qag["isAuthor"] as bool? ?? false,
       );
     }).toList();
   }
@@ -414,6 +416,7 @@ class QagDioRepository extends QagRepository {
         date: (qag["date"] as String).parseToDateTime(),
         supportCount: support["count"] as int,
         isSupported: support["isSupported"] as bool,
+        isAuthor: qag["isAuthor"] as bool? ?? false,
       );
     }).toList();
   }

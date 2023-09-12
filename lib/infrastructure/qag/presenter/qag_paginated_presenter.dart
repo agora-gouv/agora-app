@@ -15,6 +15,7 @@ class QagPaginatedPresenter {
             date: qag.date.formatToDayMonth(),
             supportCount: qag.supportCount,
             isSupported: qag.isSupported,
+            isAuthor: qag.isAuthor,
           ),
         )
         .toList();
