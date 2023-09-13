@@ -10,16 +10,25 @@ class ConsultationSummaryPresentationTabContent extends StatelessWidget {
   final String rangeDate;
   final String description;
   final String tipDescription;
+  final ScrollController nestedScrollController;
 
   const ConsultationSummaryPresentationTabContent({
     super.key,
     required this.rangeDate,
     required this.description,
     required this.tipDescription,
+    required this.nestedScrollController,
   });
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      nestedScrollController.animateTo(
+        nestedScrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.fastOutSlowIn,
+      );
+    });
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: ConstrainedBox(
