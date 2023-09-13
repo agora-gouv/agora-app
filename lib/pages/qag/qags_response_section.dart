@@ -120,7 +120,7 @@ class QagsResponseSection extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 QagDetailsPage.routeName,
-                arguments: QagDetailsArguments(qagId: qagResponse.qagId),
+                arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null),
               );
             },
           ),
@@ -140,7 +140,7 @@ class QagsResponseSection extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 QagDetailsPage.routeName,
-                arguments: QagDetailsArguments(qagId: qagResponse.qagId),
+                arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null),
               );
             },
           ),

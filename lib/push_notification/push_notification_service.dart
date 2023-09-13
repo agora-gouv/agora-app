@@ -161,6 +161,7 @@ class FirebasePushNotificationService extends PushNotificationService {
             qagId: message.data["qagId"] as String,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
             notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
+            reload: QagReload.qagsPage,
           ),
         );
         break;

@@ -10,6 +10,7 @@ class QagDetailsViewModel extends Equatable {
   final String date;
   final bool canShare;
   final bool canSupport;
+  final bool canDelete;
   final bool isAuthor;
   final QagDetailsSupportViewModel support;
   final QagDetailsResponseViewModel? response;
@@ -23,6 +24,7 @@ class QagDetailsViewModel extends Equatable {
     required this.date,
     required this.canShare,
     required this.canSupport,
+    required this.canDelete,
     required this.isAuthor,
     required this.support,
     required this.response,
@@ -38,6 +40,7 @@ class QagDetailsViewModel extends Equatable {
         date,
         canShare,
         canSupport,
+        canDelete,
         isAuthor,
         support,
         response,

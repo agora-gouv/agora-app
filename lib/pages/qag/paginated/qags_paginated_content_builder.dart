@@ -97,7 +97,7 @@ class QagsPaginatedContentBuilder {
                 Navigator.pushNamed(
                   context,
                   QagDetailsPage.routeName,
-                  arguments: QagDetailsArguments(qagId: qagPaginatedViewModel.id),
+                  arguments: QagDetailsArguments(qagId: qagPaginatedViewModel.id, reload: QagReload.qagsPaginatedPage),
                 ).then((result) {
                   final qagDetailsBackResult = result as QagDetailsBackResult?;
                   if (qagDetailsBackResult != null) {

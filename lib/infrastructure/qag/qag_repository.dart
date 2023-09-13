@@ -47,6 +47,10 @@ abstract class QagRepository {
     required String qagId,
   });
 
+  Future<DeleteQagRepositoryResponse> deleteQag({
+    required String qagId,
+  });
+
   Future<SupportQagRepositoryResponse> supportQag({
     required String qagId,
   });
@@ -225,6 +229,7 @@ class QagDioRepository extends QagRepository {
           username: response.data["username"] as String,
           canShare: response.data["canShare"] as bool,
           canSupport: response.data["canSupport"] as bool,
+          canDelete: response.data["canDelete"] as bool? ?? false,
           isAuthor: response.data["isAuthor"] as bool? ?? false,
           support: QagDetailsSupport(
             count: qagDetailsSupport["count"] as int,
@@ -254,6 +259,17 @@ class QagDioRepository extends QagRepository {
       }
       crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchQagDetails);
       return GetQagDetailsFailedResponse();
+    }
+  }
+
+  @override
+  Future<DeleteQagRepositoryResponse> deleteQag({required String qagId}) async {
+    try {
+      await httpClient.delete("/qags/$qagId");
+      return DeleteQagSucceedResponse();
+    } catch (e, s) {
+      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.deleteQag);
+      return DeleteQagFailedResponse();
     }
   }
 
@@ -560,6 +576,15 @@ class GetQagDetailsSucceedResponse extends GetQagDetailsRepositoryResponse {
 class GetQagDetailsModerateFailedResponse extends GetQagDetailsRepositoryResponse {}
 
 class GetQagDetailsFailedResponse extends GetQagDetailsRepositoryResponse {}
+
+abstract class DeleteQagRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class DeleteQagSucceedResponse extends DeleteQagRepositoryResponse {}
+
+class DeleteQagFailedResponse extends DeleteQagRepositoryResponse {}
 
 abstract class SupportQagRepositoryResponse extends Equatable {
   @override

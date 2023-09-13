@@ -171,7 +171,7 @@ class _QagsSectionState extends State<QagsSection> {
                   Navigator.pushNamed(
                     context,
                     QagDetailsPage.routeName,
-                    arguments: QagDetailsArguments(qagId: qagViewModel.id),
+                    arguments: QagDetailsArguments(qagId: qagViewModel.id, reload: QagReload.qagsPage),
                   ).then((result) {
                     final qagDetailsBackResult = result as QagDetailsBackResult?;
                     if (qagDetailsBackResult != null) {

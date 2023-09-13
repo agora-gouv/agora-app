@@ -27,6 +27,7 @@ enum AgoraDioExceptionType {
   fetchQagsPaginated,
   fetchQagsResponsePaginated,
   fetchQagDetails,
+  deleteQag,
   fetchQagDetailsModerated,
   supportQag,
   deleteSupportQag,

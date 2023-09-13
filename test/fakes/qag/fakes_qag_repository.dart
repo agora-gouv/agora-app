@@ -183,11 +183,17 @@ class FakeQagSuccessRepository extends QagRepository {
         username: "CollectifSauvonsLaRetraite",
         canShare: false,
         canSupport: false,
+        canDelete: false,
         isAuthor: false,
         support: QagDetailsSupport(count: 112, isSupported: true),
         response: null,
       ),
     );
+  }
+
+  @override
+  Future<DeleteQagRepositoryResponse> deleteQag({required String qagId}) async {
+    return DeleteQagSucceedResponse();
   }
 
   @override
@@ -280,6 +286,7 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
         username: "CollectifSauvonsLaRetraite",
         canShare: true,
         canSupport: true,
+        canDelete: true,
         isAuthor: true,
         support: QagDetailsSupport(count: 112, isSupported: true),
         response: QagDetailsResponse(
@@ -388,6 +395,11 @@ class FakeQagFailureRepository extends QagRepository {
     required String qagId,
   }) async {
     return GetQagDetailsFailedResponse();
+  }
+
+  @override
+  Future<DeleteQagRepositoryResponse> deleteQag({required String qagId}) async {
+    return DeleteQagFailedResponse();
   }
 
   @override

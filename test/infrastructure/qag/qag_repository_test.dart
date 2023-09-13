@@ -613,6 +613,7 @@ void main() {
             "username": "Henri J.",
             "canShare": true,
             "canSupport": true,
+            "canDelete": true,
             "isAuthor": true,
             "support": {"count": 112, "isSupported": true},
             "response": null,
@@ -644,6 +645,7 @@ void main() {
             username: "Henri J.",
             canShare: true,
             canSupport: true,
+            canDelete: true,
             isAuthor: true,
             support: QagDetailsSupport(count: 112, isSupported: true),
             response: null,
@@ -667,6 +669,7 @@ void main() {
             "username": "Henri J.",
             "canShare": false,
             "canSupport": false,
+            "canDelete": false,
             "isAuthor": false,
             "support": {"count": 112, "isSupported": true},
             "response": {
@@ -707,6 +710,7 @@ void main() {
             username: "Henri J.",
             canShare: false,
             canSupport: false,
+            canDelete: false,
             isAuthor: false,
             support: QagDetailsSupport(count: 112, isSupported: true),
             response: QagDetailsResponse(
@@ -766,6 +770,49 @@ void main() {
 
       // Then
       expect(response, GetQagDetailsFailedResponse());
+    });
+  });
+
+  group("Delete qag", () {
+    test("when success should return success", () async {
+      // Given
+      dioAdapter.onDelete(
+        "/qags/$qagId",
+        (server) => server.reply(HttpStatus.ok, null),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.deleteQag(qagId: qagId);
+
+      // Then
+      expect(response, DeleteQagSucceedResponse());
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onDelete(
+        "/qags/$qagId",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {"accept": "application/json"},
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        crashlyticsHelper: fakeCrashlyticsHelper,
+      );
+      final response = await repository.deleteQag(qagId: qagId);
+
+      // Then
+      expect(response, DeleteQagFailedResponse());
     });
   });
 
