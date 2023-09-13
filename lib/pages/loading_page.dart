@@ -225,7 +225,7 @@ class _LoadingPageState extends State<LoadingPage> {
       Navigator.pushNamed(
         context,
         QagDetailsPage.routeName,
-        arguments: QagDetailsArguments(qagId: widget.redirection.qagId!),
+        arguments: QagDetailsArguments(qagId: widget.redirection.qagId!, reload: QagReload.qagsPage),
       );
     } else {
       Navigator.pushNamed(context, ConsultationsPage.routeName);

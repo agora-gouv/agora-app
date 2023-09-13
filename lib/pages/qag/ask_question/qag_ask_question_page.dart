@@ -319,7 +319,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                     Navigator.pushNamed(
                       context,
                       QagDetailsPage.routeName,
-                      arguments: QagDetailsArguments(qagId: createQagState.qagId),
+                      arguments: QagDetailsArguments(qagId: createQagState.qagId, reload: QagReload.qagsPage),
                     );
                   }
                 },

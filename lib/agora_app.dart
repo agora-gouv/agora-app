@@ -59,7 +59,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         onQagSuccessCallback: (id) {
           navigatorKey.currentState?.pushNamed(
             QagDetailsPage.routeName,
-            arguments: QagDetailsArguments(qagId: id),
+            arguments: QagDetailsArguments(qagId: id, reload: QagReload.qagsPage),
           );
         },
       );

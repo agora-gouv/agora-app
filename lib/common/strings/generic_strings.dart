@@ -22,6 +22,7 @@ class GenericStrings {
   static const String back = "Retour";
   static const String modify = "Modifier";
   static const String close = "Fermer";
+  static const String delete = "Supprimer";
   static const String readCompleteCharter = "Lire la charte complète";
   static const String modificationSuccess = "La modification a été prise en compte.";
 

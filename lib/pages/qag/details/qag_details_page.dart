@@ -13,6 +13,7 @@ import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
@@ -26,21 +27,26 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dart';
 import 'package:agora/pages/qag/details/qag_details_response_view.dart';
 import 'package:agora/pages/qag/details/qag_details_support_view.dart';
 import 'package:agora/pages/qag/qags_moderated_error_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+enum QagReload { qagsPage, qagsPaginatedPage }
+
 class QagDetailsArguments {
   final String qagId;
   final String? notificationTitle;
   final String? notificationDescription;
+  final QagReload? reload;
 
   QagDetailsArguments({
     required this.qagId,
     this.notificationTitle,
     this.notificationDescription,
+    required this.reload,
   });
 }
 
@@ -238,6 +244,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                               );
                             },
                           ),
+                          _buildDeleteQag(context, viewModel.id),
                         ] else
                           AgoraReadMoreText(viewModel.description, trimLines: 3),
                       ],
@@ -250,6 +257,33 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Column _buildDeleteQag(BuildContext context, String id) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: AgoraSpacings.base),
+        Divider(color: AgoraColors.divider, thickness: 1),
+        SizedBox(height: AgoraSpacings.base),
+        Text(QagStrings.deleteQagTitle, style: AgoraTextStyles.medium18),
+        SizedBox(height: AgoraSpacings.base),
+        Text(QagStrings.deleteQagDetails, style: AgoraTextStyles.light14),
+        SizedBox(height: AgoraSpacings.base),
+        AgoraButton(
+          label: GenericStrings.delete,
+          style: AgoraButtonStyle.redBorderButtonStyle,
+          onPressed: () => Navigator.pushNamed(
+            context,
+            QagDetailsDeleteConfirmationPage.routeName,
+            arguments: QagDetailsDeleteConfirmationArguments(
+              qagId: id,
+              reload: widget.arguments.reload!,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

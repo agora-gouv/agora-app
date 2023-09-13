@@ -34,6 +34,7 @@ void main() {
             username: "CollectifSauvonsLaRetraite",
             canShare: false,
             canSupport: false,
+            canDelete: false,
             isAuthor: false,
             support: QagDetailsSupportViewModel(count: 112, isSupported: true),
             response: null,
@@ -60,6 +61,7 @@ void main() {
             username: "CollectifSauvonsLaRetraite",
             canShare: true,
             canSupport: true,
+            canDelete: true,
             isAuthor: true,
             support: QagDetailsSupportViewModel(count: 112, isSupported: true),
             response: QagDetailsResponseViewModel(
