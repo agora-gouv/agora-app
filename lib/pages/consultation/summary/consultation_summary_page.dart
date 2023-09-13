@@ -161,6 +161,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                               rangeDate: viewModel.presentation.rangeDate,
                               description: viewModel.presentation.description,
                               tipDescription: viewModel.presentation.tipDescription,
+                              nestedScrollController: scrollController,
                             ),
                           ),
                           AgoraTracker(
