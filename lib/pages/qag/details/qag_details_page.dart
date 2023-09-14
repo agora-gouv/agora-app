@@ -244,7 +244,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                               );
                             },
                           ),
-                          _buildDeleteQag(context, viewModel.id),
+                          if (viewModel.canDelete) _buildDeleteQag(context, viewModel.id),
                         ] else
                           AgoraReadMoreText(viewModel.description, trimLines: 3),
                       ],
