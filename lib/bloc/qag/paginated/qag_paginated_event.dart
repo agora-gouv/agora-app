@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class QagsPaginatedEvent extends Equatable {
+abstract class QagsPaginatedEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }

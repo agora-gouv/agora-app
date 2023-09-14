@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_latest_bloc.dart';
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_popular_bloc.dart';
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_supporting_bloc.dart';
@@ -11,6 +9,7 @@ import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -56,8 +55,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   String? currentKeywords;
   bool shouldInitializeListener = true;
 
-  static const countdownDuration = Duration(seconds: 3);
-  Timer? timer;
+  final timerHelper = TimerHelper(countdownDurationInSecond: 3);
 
   @override
   void initState() {
@@ -156,7 +154,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               onChanged: (String input) {
                                 currentKeywords = input;
                                 _displayLoader(context);
-                                _startTimer(context);
+                                timerHelper.startTimer(() => _loadQags(context));
                               },
                             ),
                           ),
@@ -289,13 +287,6 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
       });
       shouldInitializeListener = false;
     }
-  }
-
-  void _startTimer(BuildContext context) {
-    timer?.cancel();
-    timer = Timer(countdownDuration, () {
-      _loadQags(context);
-    });
   }
 
   void _loadQags(BuildContext context) {
