@@ -20,7 +20,7 @@ void main() {
       build: () => QagPaginatedSupportingBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
-      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 1)),
+      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 1, keywords: "mot clé")),
       expect: () => [
         QagPaginatedLoadingState(
           maxPage: -1,
@@ -68,7 +68,7 @@ void main() {
           ),
         ],
       ),
-      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 2)),
+      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 2, keywords: null)),
       expect: () => [
         QagPaginatedLoadingState(
           maxPage: 3,
@@ -147,7 +147,7 @@ void main() {
           ),
         ],
       ),
-      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 1)),
+      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 1, keywords: "mot clé")),
       expect: () => [
         QagPaginatedLoadingState(
           maxPage: -1,
@@ -179,7 +179,7 @@ void main() {
       build: () => QagPaginatedSupportingBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
-      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 1)),
+      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 1, keywords: null)),
       expect: () => [
         QagPaginatedLoadingState(
           maxPage: -1,
@@ -216,7 +216,7 @@ void main() {
           ),
         ],
       ),
-      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 2)),
+      act: (bloc) => bloc.add(FetchQagsPaginatedEvent(thematiqueId: null, pageNumber: 2, keywords: "mot clé")),
       expect: () => [
         QagPaginatedLoadingState(
           maxPage: 3,
@@ -250,6 +250,20 @@ void main() {
             ),
           ],
         ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
+
+  group("QagPaginatedDisplayLoaderEvent", () {
+    blocTest(
+      "should emit loading state",
+      build: () => QagPaginatedSupportingBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      act: (bloc) => bloc.add(QagPaginatedDisplayLoaderEvent()),
+      expect: () => [
+        QagPaginatedLoadingState(maxPage: -1, currentPageNumber: -1, qagViewModels: []),
       ],
       wait: const Duration(milliseconds: 5),
     );

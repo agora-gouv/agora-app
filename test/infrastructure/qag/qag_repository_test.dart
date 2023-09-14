@@ -337,6 +337,7 @@ void main() {
         queryParameters: {
           "thematiqueId": thematiqueId,
           "filterType": "popular",
+          "keywords": "mot clé",
         },
         (server) => server.reply(
           HttpStatus.ok,
@@ -373,6 +374,7 @@ void main() {
         pageNumber: 1,
         thematiqueId: thematiqueId,
         filter: QagPaginatedFilter.popular,
+        keywords: "mot clé",
       );
 
       // Then
@@ -403,6 +405,7 @@ void main() {
         queryParameters: {
           "thematiqueId": thematiqueId,
           "filterType": "popular",
+          "keywords": null,
         },
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
@@ -420,6 +423,7 @@ void main() {
         pageNumber: 1,
         thematiqueId: thematiqueId,
         filter: QagPaginatedFilter.popular,
+        keywords: null,
       );
 
       // Then
