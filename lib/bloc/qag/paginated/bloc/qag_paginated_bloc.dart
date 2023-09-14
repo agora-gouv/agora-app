@@ -32,6 +32,7 @@ abstract class QagPaginatedBloc extends Bloc<QagsPaginatedEvent, QagPaginatedSta
       pageNumber: event.pageNumber,
       thematiqueId: event.thematiqueId,
       filter: qagPaginatedFilter,
+      keywords: event.keywords,
     );
     if (response is GetQagsPaginatedSucceedResponse) {
       final viewModels = QagPaginatedPresenter.presentQagPaginated(response.paginatedQags);

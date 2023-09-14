@@ -7,12 +7,13 @@ class QagsPaginatedEvent extends Equatable {
 
 class FetchQagsPaginatedEvent extends QagsPaginatedEvent {
   final String? thematiqueId;
+  final String? keywords;
   final int pageNumber;
 
-  FetchQagsPaginatedEvent({required this.thematiqueId, required this.pageNumber});
+  FetchQagsPaginatedEvent({required this.thematiqueId, required this.keywords, required this.pageNumber});
 
   @override
-  List<Object?> get props => [thematiqueId, pageNumber];
+  List<Object?> get props => [thematiqueId, keywords, pageNumber];
 }
 
 class UpdateQagsPaginatedEvent extends QagsPaginatedEvent {

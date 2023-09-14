@@ -9,10 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsPaginatedSupportingContent extends StatelessWidget {
   final String? thematiqueId;
+  final String? keywords;
 
   const QagsPaginatedSupportingContent({
     super.key,
     required this.thematiqueId,
+    required this.keywords,
   });
 
   @override
@@ -33,6 +35,7 @@ class QagsPaginatedSupportingContent extends StatelessWidget {
                         FetchQagsPaginatedEvent(
                           thematiqueId: thematiqueId,
                           pageNumber: state.currentPageNumber + 1,
+                          keywords: keywords,
                         ),
                       );
                 },
@@ -41,6 +44,7 @@ class QagsPaginatedSupportingContent extends StatelessWidget {
                         FetchQagsPaginatedEvent(
                           thematiqueId: thematiqueId,
                           pageNumber: state.currentPageNumber,
+                          keywords: keywords,
                         ),
                       );
                 },

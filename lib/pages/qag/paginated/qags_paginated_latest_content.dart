@@ -9,10 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsPaginatedLatestContent extends StatelessWidget {
   final String? thematiqueId;
+  final String? keywords;
 
   const QagsPaginatedLatestContent({
     super.key,
     required this.thematiqueId,
+    required this.keywords,
   });
 
   @override
@@ -32,12 +34,14 @@ class QagsPaginatedLatestContent extends StatelessWidget {
                       FetchQagsPaginatedEvent(
                         thematiqueId: thematiqueId,
                         pageNumber: state.currentPageNumber + 1,
+                        keywords: keywords,
                       ),
                     ),
                 onRetryClick: () => context.read<QagPaginatedLatestBloc>().add(
                       FetchQagsPaginatedEvent(
                         thematiqueId: thematiqueId,
                         pageNumber: state.currentPageNumber,
+                        keywords: keywords,
                       ),
                     ),
               ),
