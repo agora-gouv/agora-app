@@ -15,6 +15,7 @@ abstract class QagPaginatedBloc extends Bloc<QagsPaginatedEvent, QagPaginatedSta
   }) : super(QagPaginatedInitialState()) {
     on<FetchQagsPaginatedEvent>(_handleFetchQagPaginated);
     on<UpdateQagsPaginatedEvent>(handleUpdateQagsPaginated);
+    on<QagPaginatedDisplayLoaderEvent>(_handleQagPaginatedDisplayLoader);
   }
 
   Future<void> _handleFetchQagPaginated(
@@ -52,6 +53,13 @@ abstract class QagPaginatedBloc extends Bloc<QagsPaginatedEvent, QagPaginatedSta
         ),
       );
     }
+  }
+
+  Future<void> _handleQagPaginatedDisplayLoader(
+    QagPaginatedDisplayLoaderEvent event,
+    Emitter<QagPaginatedState> emit,
+  ) async {
+    emit(QagPaginatedLoadingState(maxPage: -1, currentPageNumber: -1, qagViewModels: []));
   }
 
   Future<void> handleUpdateQagsPaginated(

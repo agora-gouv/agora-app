@@ -16,6 +16,8 @@ class FetchQagsPaginatedEvent extends QagsPaginatedEvent {
   List<Object?> get props => [thematiqueId, keywords, pageNumber];
 }
 
+class QagPaginatedDisplayLoaderEvent extends QagsPaginatedEvent {}
+
 class UpdateQagsPaginatedEvent extends QagsPaginatedEvent {
   final String qagId;
   final int supportCount;

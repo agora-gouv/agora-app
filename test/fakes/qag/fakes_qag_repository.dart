@@ -72,6 +72,7 @@ class FakeQagSuccessRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagPaginatedFilter filter,
+    required String? keywords,
   }) async {
     switch (pageNumber) {
       case 1:
@@ -374,6 +375,7 @@ class FakeQagFailureRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagPaginatedFilter filter,
+    required String? keywords,
   }) async {
     return GetQagsPaginatedFailedResponse();
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_latest_bloc.dart';
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_popular_bloc.dart';
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_supporting_bloc.dart';
@@ -54,6 +56,9 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   String? currentKeywords;
   bool shouldInitializeListener = true;
 
+  static const countdownDuration = Duration(seconds: 3);
+  Timer? timer;
+
   @override
   void initState() {
     super.initState();
@@ -99,6 +104,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                       tabController: _tabController,
                       needTopDiagonal: false,
                       needToolbar: true,
+                      initialToolBarHeight: 200,
                       onToolbarBackClick: () => _popWithBackResult(context),
                       topChild: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +133,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                                         clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
                                         widgetName: AnalyticsScreenNames.qagsPaginatedPage,
                                       );
-                                      _call(context);
+                                      _loadQags(context);
                                     });
                                   }
                                 },
@@ -142,10 +148,15 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               top: AgoraSpacings.base,
                             ),
                             child: AgoraTextField(
-                              hintText: "Rechercher une question",
+                              hintText: QagStrings.searchQuestion,
                               rightIcon: TextFieldIcon.search,
+                              textInputAction: TextInputAction.search,
+                              maxLength: 75,
+                              showCounterText: true,
                               onChanged: (String input) {
                                 currentKeywords = input;
+                                _displayLoader(context);
+                                _startTimer(context);
                               },
                             ),
                           ),
@@ -274,13 +285,20 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   void _initializeTabBarListener(BuildContext context) {
     if (shouldInitializeListener) {
       _tabController.addListener(() {
-        _call(context);
+        _loadQags(context);
       });
       shouldInitializeListener = false;
     }
   }
 
-  void _call(BuildContext context) {
+  void _startTimer(BuildContext context) {
+    timer?.cancel();
+    timer = Timer(countdownDuration, () {
+      _loadQags(context);
+    });
+  }
+
+  void _loadQags(BuildContext context) {
     switch (_tabController.index) {
       case 0:
         context.read<QagPaginatedPopularBloc>().add(
@@ -308,6 +326,22 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                 keywords: currentKeywords,
               ),
             );
+        break;
+      default:
+        throw Exception("QaGs paginated : tab index not exists");
+    }
+  }
+
+  void _displayLoader(BuildContext context) {
+    switch (_tabController.index) {
+      case 0:
+        context.read<QagPaginatedPopularBloc>().add(QagPaginatedDisplayLoaderEvent());
+        break;
+      case 1:
+        context.read<QagPaginatedLatestBloc>().add(QagPaginatedDisplayLoaderEvent());
+        break;
+      case 2:
+        context.read<QagPaginatedSupportingBloc>().add(QagPaginatedDisplayLoaderEvent());
         break;
       default:
         throw Exception("QaGs paginated : tab index not exists");
