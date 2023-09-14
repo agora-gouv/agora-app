@@ -8,6 +8,7 @@ import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
@@ -152,7 +153,11 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               maxLength: 75,
                               showCounterText: true,
                               onChanged: (String input) {
-                                currentKeywords = input;
+                                if (input.isNullOrBlank()) {
+                                  currentKeywords = null;
+                                } else {
+                                  currentKeywords = input;
+                                }
                                 _displayLoader(context);
                                 timerHelper.startTimer(() => _loadQags(context));
                               },
