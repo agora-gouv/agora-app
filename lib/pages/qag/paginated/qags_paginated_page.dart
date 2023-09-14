@@ -15,6 +15,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -50,6 +51,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   final initialPage = 1;
   late TabController _tabController;
   String? currentThematiqueId;
+  String? currentKeywords;
   bool shouldInitializeListener = true;
 
   @override
@@ -98,37 +100,56 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                       needTopDiagonal: false,
                       needToolbar: true,
                       onToolbarBackClick: () => _popWithBackResult(context),
-                      topChild: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: AgoraSpacings.horizontalPadding,
-                            right: AgoraSpacings.horizontalPadding,
-                            top: AgoraSpacings.x0_25,
-                          ),
-                          child: ThematiqueHelper.buildThematiques(
-                            thematiques: thematiqueState.thematiqueViewModels,
-                            selectedThematiqueId: currentThematiqueId,
-                            onThematiqueIdSelected: (thematiqueId) {
-                              if (currentThematiqueId != null || thematiqueId != null) {
-                                setState(() {
-                                  if (thematiqueId == currentThematiqueId) {
-                                    currentThematiqueId = null;
-                                  } else {
-                                    currentThematiqueId = thematiqueId;
+                      topChild: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: AgoraSpacings.horizontalPadding,
+                                right: AgoraSpacings.horizontalPadding,
+                                top: AgoraSpacings.x0_25,
+                              ),
+                              child: ThematiqueHelper.buildThematiques(
+                                thematiques: thematiqueState.thematiqueViewModels,
+                                selectedThematiqueId: currentThematiqueId,
+                                onThematiqueIdSelected: (thematiqueId) {
+                                  if (currentThematiqueId != null || thematiqueId != null) {
+                                    setState(() {
+                                      if (thematiqueId == currentThematiqueId) {
+                                        currentThematiqueId = null;
+                                      } else {
+                                        currentThematiqueId = thematiqueId;
+                                      }
+                                      TrackerHelper.trackClick(
+                                        clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
+                                        widgetName: AnalyticsScreenNames.qagsPaginatedPage,
+                                      );
+                                      _call(context);
+                                    });
                                   }
-                                  TrackerHelper.trackClick(
-                                    clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
-                                    widgetName: AnalyticsScreenNames.qagsPaginatedPage,
-                                  );
-                                  _call(context);
-                                });
-                              }
-                            },
-                            needHorizontalSpacing: false,
+                                },
+                                needHorizontalSpacing: false,
+                              ),
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: AgoraSpacings.horizontalPadding,
+                              right: AgoraSpacings.horizontalPadding,
+                              top: AgoraSpacings.base,
+                            ),
+                            child: AgoraTextField(
+                              hintText: "Rechercher une question",
+                              rightIcon: TextFieldIcon.search,
+                              onChanged: (String input) {
+                                currentKeywords = input;
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       tabChild: [
                         Semantics(header: true, child: Tab(text: QagStrings.popular)),
@@ -146,15 +167,24 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                         children: [
                           AgoraTracker(
                             widgetName: AnalyticsScreenNames.qagsPaginatedPopularPage,
-                            child: QagsPaginatedPopularContent(thematiqueId: currentThematiqueId),
+                            child: QagsPaginatedPopularContent(
+                              thematiqueId: currentThematiqueId,
+                              keywords: currentKeywords,
+                            ),
                           ),
                           AgoraTracker(
                             widgetName: AnalyticsScreenNames.qagsPaginatedLatestPage,
-                            child: QagsPaginatedLatestContent(thematiqueId: currentThematiqueId),
+                            child: QagsPaginatedLatestContent(
+                              thematiqueId: currentThematiqueId,
+                              keywords: currentKeywords,
+                            ),
                           ),
                           AgoraTracker(
                             widgetName: AnalyticsScreenNames.qagsPaginatedSupportingPage,
-                            child: QagsPaginatedSupportingContent(thematiqueId: currentThematiqueId),
+                            child: QagsPaginatedSupportingContent(
+                              thematiqueId: currentThematiqueId,
+                              keywords: currentKeywords,
+                            ),
                           ),
                         ],
                       ),
@@ -202,6 +232,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
           pageNumber: initialPage,
+          keywords: currentKeywords,
         ),
       );
     }
@@ -217,6 +248,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
           pageNumber: initialPage,
+          keywords: currentKeywords,
         ),
       );
     }
@@ -232,6 +264,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
         FetchQagsPaginatedEvent(
           thematiqueId: currentThematiqueId,
           pageNumber: initialPage,
+          keywords: currentKeywords,
         ),
       );
     }
@@ -254,6 +287,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
                 pageNumber: initialPage,
+                keywords: currentKeywords,
               ),
             );
         break;
@@ -262,6 +296,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
                 pageNumber: initialPage,
+                keywords: currentKeywords,
               ),
             );
         break;
@@ -270,6 +305,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
                 pageNumber: initialPage,
+                keywords: currentKeywords,
               ),
             );
         break;

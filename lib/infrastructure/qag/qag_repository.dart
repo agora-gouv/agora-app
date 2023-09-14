@@ -35,6 +35,7 @@ abstract class QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagPaginatedFilter filter,
+    required String? keywords,
   });
 
   Future<GetQagsResponseRepositoryResponse> fetchQagsResponse();
@@ -143,6 +144,7 @@ class QagDioRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagPaginatedFilter filter,
+    required String? keywords,
   }) async {
     try {
       final response = await httpClient.get(
@@ -150,6 +152,7 @@ class QagDioRepository extends QagRepository {
         queryParameters: {
           "thematiqueId": thematiqueId,
           "filterType": filter.toFilterString(),
+          "keywords": keywords,
         },
       );
       return GetQagsPaginatedSucceedResponse(
