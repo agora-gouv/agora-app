@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:agora/bloc/qag/create/qag_create_bloc.dart';
 import 'package:agora/bloc/qag/create/qag_create_event.dart';
 import 'package:agora/bloc/qag/create/qag_create_state.dart';
@@ -13,6 +11,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
@@ -61,8 +60,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   static const questionMinLength = 10;
   bool isQuestionLengthError = false;
 
-  static const countdownDuration = Duration(seconds: 5);
-  Timer? timer;
+  final timerHelper = TimerHelper(countdownDurationInSecond: 5);
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +188,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                     } else {
                       shouldCheckQuestionLength = true;
                     }
-                    _startTimer(context, shouldCheckQuestionLength: shouldCheckQuestionLength);
+                    timerHelper.startTimer(() {
+                      _searchSimilarQags(context);
+                      _checkError(shouldCheckQuestionLength: shouldCheckQuestionLength);
+                    });
                   });
                 },
               ),
@@ -399,21 +400,18 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         isCheck;
   }
 
-  void _startTimer(BuildContext context, {required bool shouldCheckQuestionLength}) {
-    timer?.cancel();
-    timer = Timer(
-      countdownDuration,
-      () {
-        // if (question.isNotBlank()) {
-        //   context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: question));
-        // }
-        setState(() {
-          if (shouldCheckQuestionLength) {
-            isQuestionLengthError = (question.isNullOrBlank() && question.isNotEmpty) ||
-                (question.isNotBlank() && question.length < questionMinLength);
-          }
-        });
-      },
-    );
+  void _searchSimilarQags(BuildContext context) {
+    // if (question.isNotBlank()) {
+    //   context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: question));
+    // }
+  }
+
+  void _checkError({required bool shouldCheckQuestionLength}) {
+    setState(() {
+      if (shouldCheckQuestionLength) {
+        isQuestionLengthError = (question.isNullOrBlank() && question.isNotEmpty) ||
+            (question.isNotBlank() && question.length < questionMinLength);
+      }
+    });
   }
 }
