@@ -2,6 +2,7 @@ import 'package:agora/bloc/notification/get/notification_bloc.dart';
 import 'package:agora/bloc/notification/get/notification_event.dart';
 import 'package:agora/bloc/notification/get/notification_state.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_notification_card.dart';
@@ -10,6 +11,7 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -66,7 +68,9 @@ class _NotificationPageState extends State<NotificationPage> {
 
   List<Widget> _buildContent(BuildContext context, NotificationState state) {
     final List<Widget> widgets = [];
-    for (final notificationViewModel in state.notificationViewModels) {
+
+    final notificationViewModels = state.notificationViewModels;
+    for (final notificationViewModel in notificationViewModels) {
       widgets.add(
         AgoraNotificationCard(
           title: notificationViewModel.title,
@@ -75,6 +79,16 @@ class _NotificationPageState extends State<NotificationPage> {
         ),
       );
       widgets.add(SizedBox(height: AgoraSpacings.base));
+    }
+    if (notificationViewModels.isEmpty) {
+      widgets.add(SizedBox(height: AgoraSpacings.x0_5));
+      widgets.add(
+        Text(
+          GenericStrings.notificationEmpty,
+          style: AgoraTextStyles.medium14,
+          textAlign: TextAlign.center,
+        ),
+      );
     }
 
     if (state is NotificationInitialState || state is NotificationLoadingState) {

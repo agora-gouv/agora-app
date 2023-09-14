@@ -47,4 +47,6 @@ class GenericStrings {
 
   static const String yes = "Oui";
   static const String no = "Non";
+
+  static const String notificationEmpty = "Vous n'avez pas encore de notification.";
 }
