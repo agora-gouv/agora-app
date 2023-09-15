@@ -271,7 +271,107 @@ void main() {
 
   group("UpdateQagsPaginatedEvent", () {
     blocTest<QagPaginatedSupportingBloc, QagPaginatedState>(
-      "when update qags - should emit success state",
+      "when like my own qag - should emit success state",
+      build: () => QagPaginatedSupportingBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagPaginatedFetchedState(
+        maxPage: 3,
+        currentPageNumber: 1,
+        qagViewModels: [
+          QagPaginatedViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 8,
+            isSupported: false,
+            isAuthor: true,
+          ),
+        ],
+      ),
+      act: (bloc) => bloc.add(
+        UpdateQagsPaginatedEvent(
+          qagId: "id1",
+          supportCount: 9,
+          isSupported: true,
+          isAuthor: true,
+        ),
+      ),
+      expect: () => [
+        QagPaginatedFetchedState(
+          maxPage: 3,
+          currentPageNumber: 1,
+          qagViewModels: [
+            QagPaginatedViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 9,
+              isSupported: true,
+              isAuthor: true,
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagPaginatedSupportingBloc, QagPaginatedState>(
+      "when unlike my own qag - should emit success state",
+      build: () => QagPaginatedSupportingBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagPaginatedFetchedState(
+        maxPage: 3,
+        currentPageNumber: 1,
+        qagViewModels: [
+          QagPaginatedViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 9,
+            isSupported: true,
+            isAuthor: true,
+          ),
+        ],
+      ),
+      act: (bloc) => bloc.add(
+        UpdateQagsPaginatedEvent(
+          qagId: "id1",
+          supportCount: 8,
+          isSupported: false,
+          isAuthor: true,
+        ),
+      ),
+      expect: () => [
+        QagPaginatedFetchedState(
+          maxPage: 3,
+          currentPageNumber: 1,
+          qagViewModels: [
+            QagPaginatedViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 8,
+              isSupported: false,
+              isAuthor: true,
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagPaginatedSupportingBloc, QagPaginatedState>(
+      "when unlike not my own qag  - should emit success state",
       build: () => QagPaginatedSupportingBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
@@ -296,6 +396,7 @@ void main() {
           qagId: "id1",
           supportCount: 8,
           isSupported: false,
+          isAuthor: false,
         ),
       ),
       expect: () => [

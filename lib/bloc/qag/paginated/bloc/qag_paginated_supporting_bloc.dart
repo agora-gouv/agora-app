@@ -1,6 +1,7 @@
 import 'package:agora/bloc/qag/paginated/bloc/qag_paginated_bloc.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_event.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_state.dart';
+import 'package:agora/bloc/qag/paginated/qag_paginated_view_model.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +23,21 @@ class QagPaginatedSupportingBloc extends QagPaginatedBloc {
           supportingQagViewModelsCopy.indexWhere((supporting) => supporting.id == event.qagId);
 
       if (updatedSupportingIndex != -1) {
-        supportingQagViewModelsCopy.removeAt(updatedSupportingIndex);
+        final updatedSupportingQag = supportingQagViewModelsCopy[updatedSupportingIndex];
+        if (updatedSupportingQag.isAuthor) {
+          supportingQagViewModelsCopy[updatedSupportingIndex] = QagPaginatedViewModel(
+            id: updatedSupportingQag.id,
+            thematique: updatedSupportingQag.thematique,
+            title: updatedSupportingQag.title,
+            username: updatedSupportingQag.username,
+            date: updatedSupportingQag.date,
+            supportCount: event.supportCount,
+            isSupported: event.isSupported,
+            isAuthor: updatedSupportingQag.isAuthor,
+          );
+        } else {
+          supportingQagViewModelsCopy.removeAt(updatedSupportingIndex);
+        }
       }
 
       emit(

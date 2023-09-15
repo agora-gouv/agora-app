@@ -22,11 +22,13 @@ class UpdateQagsPaginatedEvent extends QagsPaginatedEvent {
   final String qagId;
   final int supportCount;
   final bool isSupported;
+  final bool isAuthor;
 
   UpdateQagsPaginatedEvent({
     required this.qagId,
     required this.supportCount,
     required this.isSupported,
+    required this.isAuthor,
   });
 
   @override
@@ -34,5 +36,6 @@ class UpdateQagsPaginatedEvent extends QagsPaginatedEvent {
         qagId,
         supportCount,
         isSupported,
+        isAuthor,
       ];
 }
