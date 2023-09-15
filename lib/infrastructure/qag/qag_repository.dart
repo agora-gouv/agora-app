@@ -233,7 +233,7 @@ class QagDioRepository extends QagRepository {
           canShare: response.data["canShare"] as bool,
           canSupport: response.data["canSupport"] as bool,
           canDelete: response.data["canDelete"] as bool? ?? false,
-          isAuthor: response.data["isAuthor"] as bool? ?? false,
+          isAuthor: response.data["isAuthor"] as bool,
           support: QagDetailsSupport(
             count: qagDetailsSupport["count"] as int,
             isSupported: qagDetailsSupport["isSupported"] as bool,
@@ -419,7 +419,7 @@ class QagDioRepository extends QagRepository {
         date: (qag["date"] as String).parseToDateTime(),
         supportCount: support["count"] as int,
         isSupported: support["isSupported"] as bool,
-        isAuthor: qag["isAuthor"] as bool? ?? false,
+        isAuthor: qag["isAuthor"] as bool,
       );
     }).toList();
   }
@@ -435,7 +435,7 @@ class QagDioRepository extends QagRepository {
         date: (qag["date"] as String).parseToDateTime(),
         supportCount: support["count"] as int,
         isSupported: support["isSupported"] as bool,
-        isAuthor: qag["isAuthor"] as bool? ?? false,
+        isAuthor: qag["isAuthor"] as bool,
       );
     }).toList();
   }
