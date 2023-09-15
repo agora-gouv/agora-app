@@ -110,7 +110,21 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
       } else {
         // Not supported
         if (updatedSupportingIndex != -1) {
-          supportingViewModelsCopy.removeAt(updatedSupportingIndex);
+          final updatedSupporting = supportingViewModelsCopy[updatedSupportingIndex];
+          if (updatedSupporting.isAuthor) {
+            supportingViewModelsCopy[updatedSupportingIndex] = QagViewModel(
+              id: updatedSupporting.id,
+              thematique: updatedSupporting.thematique,
+              title: updatedSupporting.title,
+              username: updatedSupporting.username,
+              date: updatedSupporting.date,
+              supportCount: event.supportCount,
+              isSupported: event.isSupported,
+              isAuthor: updatedSupporting.isAuthor,
+            );
+          } else {
+            supportingViewModelsCopy.removeAt(updatedSupportingIndex);
+          }
         }
       }
       if (supportingViewModelsCopy.length > 10) {
