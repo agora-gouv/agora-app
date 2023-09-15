@@ -296,6 +296,7 @@ void main() {
           qagId: "id1",
           supportCount: 9,
           isSupported: true,
+          isAuthor: true,
         ),
       ),
       expect: () => [

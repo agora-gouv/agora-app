@@ -52,6 +52,7 @@ class QagsPaginatedContentBuilder {
                 qagId: qagPaginatedViewModel.id,
                 supportCount: newSupportCount,
                 isSupported: newIsSupported,
+                isAuthor: qagPaginatedViewModel.isAuthor,
               );
             } else if (currentState is QagSupportErrorState || currentState is QagDeleteSupportErrorState) {
               showAgoraDialog(
@@ -107,6 +108,7 @@ class QagsPaginatedContentBuilder {
                       qagId: qagDetailsBackResult.qagId,
                       supportCount: qagDetailsBackResult.supportCount,
                       isSupported: qagDetailsBackResult.isSupported,
+                      isAuthor: qagDetailsBackResult.isAuthor,
                     );
                   }
                 });
@@ -161,6 +163,7 @@ class QagsPaginatedContentBuilder {
     required String qagId,
     required int supportCount,
     required bool isSupported,
+    required bool isAuthor,
   }) {
     switch (paginatedTab) {
       case QagPaginatedTab.popular:
@@ -169,6 +172,7 @@ class QagsPaginatedContentBuilder {
                 qagId: qagId,
                 supportCount: supportCount,
                 isSupported: isSupported,
+                isAuthor: isAuthor,
               ),
             );
         break;
@@ -178,6 +182,7 @@ class QagsPaginatedContentBuilder {
                 qagId: qagId,
                 supportCount: supportCount,
                 isSupported: isSupported,
+                isAuthor: isAuthor,
               ),
             );
         break;
@@ -187,6 +192,7 @@ class QagsPaginatedContentBuilder {
                 qagId: qagId,
                 supportCount: supportCount,
                 isSupported: isSupported,
+                isAuthor: isAuthor,
               ),
             );
         break;
