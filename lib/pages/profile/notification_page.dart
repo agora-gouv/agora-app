@@ -80,16 +80,6 @@ class _NotificationPageState extends State<NotificationPage> {
       );
       widgets.add(SizedBox(height: AgoraSpacings.base));
     }
-    if (notificationViewModels.isEmpty) {
-      widgets.add(SizedBox(height: AgoraSpacings.x0_5));
-      widgets.add(
-        Text(
-          GenericStrings.notificationEmpty,
-          style: AgoraTextStyles.medium14,
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
 
     if (state is NotificationInitialState || state is NotificationLoadingState) {
       widgets.add(Center(child: CircularProgressIndicator()));
@@ -122,6 +112,16 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
         );
         widgets.add(SizedBox(height: AgoraSpacings.base));
+      }
+      if (notificationViewModels.isEmpty) {
+        widgets.add(SizedBox(height: AgoraSpacings.x0_5));
+        widgets.add(
+          Text(
+            GenericStrings.notificationEmpty,
+            style: AgoraTextStyles.medium14,
+            textAlign: TextAlign.center,
+          ),
+        );
       }
     }
     widgets.add(SizedBox(height: AgoraSpacings.x0_5));
