@@ -233,7 +233,7 @@ class QagDioRepository extends QagRepository {
           canShare: response.data["canShare"] as bool,
           canSupport: response.data["canSupport"] as bool,
           canDelete: response.data["canDelete"] as bool? ?? false,
-          isAuthor: response.data["isAuthor"] as bool,
+          isAuthor: response.data["isAuthor"] as bool? ?? false,
           support: QagDetailsSupport(
             count: qagDetailsSupport["count"] as int,
             isSupported: qagDetailsSupport["isSupported"] as bool,
