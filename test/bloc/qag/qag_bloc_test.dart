@@ -348,7 +348,7 @@ void main() {
     );
 
     blocTest<QagBloc, QagState>(
-      "when delete support to qags - should emit updated state",
+      "when delete support to my own qags - should emit updated state",
       build: () => QagBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
@@ -424,6 +424,104 @@ void main() {
               supportCount: 6,
               isSupported: false,
               isAuthor: true,
+            ),
+          ],
+          latestViewModels: [],
+          supportingViewModels: [
+            QagViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 6,
+              isSupported: false,
+              isAuthor: true,
+            ),
+          ],
+          errorCase: null,
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagBloc, QagState>(
+      "when delete support to not my own qags - should emit updated state",
+      build: () => QagBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      seed: () => QagFetchedState(
+        popularViewModels: [
+          QagViewModel(
+            id: "id0",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title0",
+            username: "username0",
+            date: "23 janvier",
+            supportCount: 7,
+            isSupported: true,
+            isAuthor: false,
+          ),
+          QagViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 7,
+            isSupported: true,
+            isAuthor: false,
+          ),
+        ],
+        latestViewModels: [],
+        supportingViewModels: [
+          QagViewModel(
+            id: "id1",
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "title1",
+            username: "username1",
+            date: "23 février",
+            supportCount: 7,
+            isSupported: true,
+            isAuthor: false,
+          ),
+        ],
+        errorCase: null,
+      ),
+      act: (bloc) => bloc.add(
+        UpdateQagsEvent(
+          qagId: "id1",
+          thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+          title: "title1",
+          username: "username1",
+          date: "23 février",
+          supportCount: 6,
+          isSupported: false,
+          isAuthor: false,
+        ),
+      ),
+      expect: () => [
+        QagFetchedState(
+          popularViewModels: [
+            QagViewModel(
+              id: "id0",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title0",
+              username: "username0",
+              date: "23 janvier",
+              supportCount: 7,
+              isSupported: true,
+              isAuthor: false,
+            ),
+            QagViewModel(
+              id: "id1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: "23 février",
+              supportCount: 6,
+              isSupported: false,
+              isAuthor: false,
             ),
           ],
           latestViewModels: [],
