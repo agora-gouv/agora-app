@@ -1,1 +1,1 @@
-web: bin/run
+web: bin/setup-htpasswd.sh && bin/run
