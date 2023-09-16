@@ -2,10 +2,10 @@ server {
     server_name localhost;
     listen <%= ENV['PORT'] %>;
 
-    <% if ENV['NGINX_PASSWORD'] -%>
+    <% if ENV['NGINX_PASSWORD'] %>
     auth_basic           "Protected Site User: <%= ENV['NGINX_USER'] %>";
     auth_basic_user_file "/app/config/htpasswd";
-    <% end -%>
+    <% end %>
 
     charset utf-8;
     autoindex off;
