@@ -1,0 +1,8 @@
+server {
+    server_name localhost;
+    listen <%= ENV['PORT'] %>;
+
+    charset utf-8;
+    autoindex off;
+    root /app/public_html;
+}
