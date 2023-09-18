@@ -6,7 +6,7 @@ server {
     auth_basic           "Protected Site User: <%= ENV['NGINX_USER'] %>";
     auth_basic_user_file "/app/config/htpasswd";
     <% end %>
-
+                              
     charset utf-8;
     autoindex off;
     root /app/public_html;
