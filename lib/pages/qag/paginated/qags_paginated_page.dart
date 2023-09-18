@@ -140,29 +140,30 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: AgoraSpacings.horizontalPadding,
-                              right: AgoraSpacings.horizontalPadding,
-                              top: AgoraSpacings.base,
+                          if (false)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: AgoraSpacings.horizontalPadding,
+                                right: AgoraSpacings.horizontalPadding,
+                                top: AgoraSpacings.base,
+                              ),
+                              child: AgoraTextField(
+                                hintText: QagStrings.searchQuestion,
+                                rightIcon: TextFieldIcon.search,
+                                textInputAction: TextInputAction.search,
+                                maxLength: 75,
+                                showCounterText: true,
+                                onChanged: (String input) {
+                                  if (input.isNullOrBlank()) {
+                                    currentKeywords = null;
+                                  } else {
+                                    currentKeywords = input;
+                                  }
+                                  _displayLoader(context);
+                                  timerHelper.startTimer(() => _loadQags(context));
+                                },
+                              ),
                             ),
-                            child: AgoraTextField(
-                              hintText: QagStrings.searchQuestion,
-                              rightIcon: TextFieldIcon.search,
-                              textInputAction: TextInputAction.search,
-                              maxLength: 75,
-                              showCounterText: true,
-                              onChanged: (String input) {
-                                if (input.isNullOrBlank()) {
-                                  currentKeywords = null;
-                                } else {
-                                  currentKeywords = input;
-                                }
-                                _displayLoader(context);
-                                timerHelper.startTimer(() => _loadQags(context));
-                              },
-                            ),
-                          ),
                         ],
                       ),
                       tabChild: [
