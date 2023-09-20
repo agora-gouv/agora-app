@@ -88,7 +88,7 @@ class QagStrings {
   static const String returnToQuestion = "Retour à ma question";
   static const String goToAllQuestion = "Voir les questions";
   static const String deleteQagTitle = "Supprimer ma question";
-  static const String deleteQagDetails = "Vous avez envoyé votre question par erreur ou avez changé d'avis ?";
+  static const String deleteQagDetails = "Vous avez changé d'avis ?";
   static const String deleteQagConfirmationTitle = "Vous êtes sur le point de supprimer votre question";
   static const String deleteQagConfirmationDetails =
       "Votre question ne sera plus accessible aux utilisateurs d’Agora et ne pourra recevoir de réponse de la part des membres du gouvernement.";
