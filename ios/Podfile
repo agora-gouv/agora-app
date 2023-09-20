@@ -45,6 +45,14 @@ post_install do |installer|
         '$(inherited)',
         'PERMISSION_NOTIFICATIONS=1'
       ]
+      
+      # Temporary XCode 15 fix
+      target.build_configurations.each do |config|
+        if config.base_configuration_reference.is_a? Xcodeproj::Project::Object::PBXFileReference
+          xcconfig_path = config.base_configuration_reference.real_path
+          IO.write(xcconfig_path, IO.read(xcconfig_path).gsub("DT_TOOLCHAIN_DIR", "TOOLCHAIN_DIR"))
+        end
+      end
      end
      # End of the permission_handler configuration
   end
