@@ -86,7 +86,9 @@ class LoginDioRepository extends LoginRepository {
           "versionCode": buildNumber,
           "platform": platformName,
         },
-        data: loginToken,
+        data: {
+          "loginToken": loginToken,
+        },
       );
       return LoginSucceedResponse(
         jwtToken: response.data["jwtToken"] as String,
