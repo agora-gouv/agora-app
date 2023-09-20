@@ -188,7 +188,9 @@ void main() {
           "versionCode": buildNumber,
           "platform": platformNameWeb,
         },
-        data: loginToken,
+        data: {
+          "loginToken": loginToken,
+        },
       );
 
       // When
@@ -234,7 +236,9 @@ void main() {
           "versionCode": buildNumber,
           "platform": platformNameWeb,
         },
-        data: loginToken,
+        data: {
+          "loginToken": loginToken,
+        },
       );
 
       // When
@@ -266,7 +270,9 @@ void main() {
           "versionCode": buildNumber,
           "platform": platformNameWeb,
         },
-        data: loginToken,
+        data: {
+          "loginToken": loginToken,
+        },
       );
 
       // When
@@ -298,7 +304,9 @@ void main() {
           "versionCode": buildNumber,
           "platform": platformNameWeb,
         },
-        data: loginToken,
+        data: {
+          "loginToken": loginToken,
+        },
       );
 
       // When
