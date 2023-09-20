@@ -80,11 +80,13 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     if (jwtHelper != null) {
       return {
         "accept": "application/json",
+        "charset": "UTF-8",
         "Authorization": "Bearer ${jwtHelper!.getJwtToken()}",
       };
     } else {
       return {
         "accept": "application/json",
+        "charset": "UTF-8",
       };
     }
   }
