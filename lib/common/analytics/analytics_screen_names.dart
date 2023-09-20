@@ -20,7 +20,7 @@ class AnalyticsScreenNames {
   static const String qagSimilarPage = "Liste des QaGs similaires";
   static const String qagsResponsePaginatedPage = "Liste infinie des réponses aux QaGs";
 
-  static const String profilePage = "Profile";
+  static const String profilePage = "Profil";
   static const String moderationPage = "Modération";
   static const String notificationPage = "Liste des notifications";
 

@@ -44,11 +44,6 @@ class QagsLoadingSkeleton extends StatelessWidget {
                 width: 76.0,
                 height: 76.0,
               ),
-              SizedBox(width: AgoraSpacings.x0_75),
-              SkeletonBox(
-                width: 76.0,
-                height: 76.0,
-              ),
             ],
           ),
           SizedBox(height: AgoraSpacings.x0_75),

@@ -4,71 +4,6 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class DocumentItemSkeleton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => ColoredBox(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 24, bottom: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SizedBox(height: 32),
-              SkeletonBox(width: 225.0),
-              SizedBox(height: 12),
-              SkeletonBox(width: 121.0),
-              SizedBox(height: 32),
-              SkeletonBox(width: 72.0),
-            ],
-          ),
-        ),
-      );
-}
-
-class ListItemSkeleton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => ColoredBox(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 24, bottom: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SizedBox(height: 32),
-              SkeletonBox(width: 225.0),
-              SizedBox(height: 24),
-              SkeletonBox(width: 121.0),
-              SizedBox(height: 12),
-              SkeletonBox(width: 174.0),
-            ],
-          ),
-        ),
-      );
-}
-
-class ParametersItemSkeleton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: DecoratedBox(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0), color: AgoraColors.white),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SkeletonItem(),
-              const Divider(height: 2, color: AgoraColors.orochimaru),
-              SkeletonItem(),
-              const Divider(height: 2, color: AgoraColors.orochimaru),
-              SkeletonItem(),
-              const Divider(height: 2, color: AgoraColors.orochimaru),
-              SkeletonItem(),
-            ],
-          ),
-        ),
-      );
-}
-
 class SkeletonItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -92,8 +27,12 @@ class SkeletonBox extends StatelessWidget {
   final double? height;
   final double radius;
 
-  const SkeletonBox(
-      {super.key, this.width, this.height = AgoraSpacings.x0_75, this.radius = AgoraCorners.defaultRadius});
+  const SkeletonBox({
+    super.key,
+    this.width,
+    this.height = AgoraSpacings.x0_75,
+    this.radius = AgoraCorners.defaultRadius,
+  });
 
   @override
   Widget build(BuildContext context) => SizedBox(
@@ -103,7 +42,7 @@ class SkeletonBox extends StatelessWidget {
           baseColor: AgoraColors.orochimaru,
           highlightColor: AgoraColors.superSilver,
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius), color: Colors.white),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius), color: AgoraColors.white),
             height: 12,
             width: width,
           ),
@@ -124,7 +63,7 @@ class SkeletonCircle extends StatelessWidget {
           baseColor: AgoraColors.orochimaru,
           highlightColor: AgoraColors.steam,
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius), color: Colors.white),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius), color: AgoraColors.white),
             height: radius,
             width: radius,
           ),
@@ -161,7 +100,7 @@ class SkeletonProfileItem extends StatelessWidget {
 class ProfileItemSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0), color: Colors.white),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.0), color: AgoraColors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
