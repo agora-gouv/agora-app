@@ -21,6 +21,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
+import 'package:agora/pages/qag/qags_loading_skeleton.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
 import 'package:agora/pages/qag/qags_section.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
@@ -102,7 +103,7 @@ class _QagsPageState extends State<QagsPage> {
                   BlocBuilder<QagBloc, QagState>(
                     builder: (context, qagState) {
                       if (qagResponseState is QagResponseInitialLoadingState && qagState is QagInitialLoadingState) {
-                        return _buildGlobalPadding(context, child: CircularProgressIndicator());
+                        return QagsLoadingSkeleton();
                       } else if (qagResponseState is QagResponseErrorState && qagState is QagErrorState) {
                         return _buildGlobalPadding(context, child: AgoraErrorView());
                       }
