@@ -39,10 +39,4 @@ class MockQagRepository extends QagDioRepository {
       ],
     );
   }
-
-  @override
-  Future<DeleteQagRepositoryResponse> deleteQag({required String qagId}) async {
-    await Future.delayed(Duration(milliseconds: 500));
-    return DeleteQagSucceedResponse();
-  }
 }
