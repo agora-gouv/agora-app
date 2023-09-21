@@ -13,6 +13,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/pages/consultation/consultations_answered_section.dart';
 import 'package:agora/pages/consultation/consultations_finished_section.dart';
+import 'package:agora/pages/consultation/consultations_loading_skeleton.dart';
 import 'package:agora/pages/consultation/consultations_ongoing_section.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
         ConsultationsAnsweredSection(answeredViewModels: state.answeredViewModels),
       ];
     } else if (state is ConsultationInitialLoadingState) {
-      return _buildPadding(context, CircularProgressIndicator());
+      return [ConsultationsLoadingSkeleton()];
     } else if (state is ConsultationErrorState && state.errorType == ConsultationsErrorType.timeout) {
       return _buildPadding(
         context,
