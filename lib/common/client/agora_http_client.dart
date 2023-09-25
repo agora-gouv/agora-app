@@ -1,3 +1,4 @@
+import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:dio/dio.dart';
 
@@ -19,8 +20,9 @@ abstract class AgoraHttpClient {
 class AgoraDioHttpClient extends AgoraHttpClient {
   final Dio dio;
   final JwtHelper? jwtHelper;
+  final UserAgentBuilder userAgentBuilder;
 
-  AgoraDioHttpClient({required this.dio, this.jwtHelper});
+  AgoraDioHttpClient({required this.dio, this.jwtHelper, required this.userAgentBuilder});
 
   @override
   Future<Response<T>> get<T>(
@@ -32,7 +34,10 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     return dio.get<T>(
       path,
       queryParameters: queryParameters,
-      options: Options(headers: buildInitialHeaders()..addAll(headers)),
+      options: Options(
+        headers: await buildInitialHeaders()
+          ..addAll(headers),
+      ),
       data: data,
     );
   }
@@ -45,7 +50,10 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   }) async {
     return dio.put<T>(
       path,
-      options: Options(headers: buildInitialHeaders()..addAll(headers)),
+      options: Options(
+        headers: await buildInitialHeaders()
+          ..addAll(headers),
+      ),
       data: data,
     );
   }
@@ -58,7 +66,10 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   }) async {
     return dio.post<T>(
       path,
-      options: Options(headers: buildInitialHeaders()..addAll(headers)),
+      options: Options(
+        headers: await buildInitialHeaders()
+          ..addAll(headers),
+      ),
       data: data,
     );
   }
@@ -71,23 +82,44 @@ class AgoraDioHttpClient extends AgoraHttpClient {
   }) async {
     return dio.delete<T>(
       path,
-      options: Options(headers: buildInitialHeaders()..addAll(headers)),
+      options: Options(
+        headers: await buildInitialHeaders()
+          ..addAll(headers),
+      ),
       data: data,
     );
   }
 
-  Map<String, dynamic> buildInitialHeaders() {
+  Future<Map<String, dynamic>> buildInitialHeaders() async {
+    final userAgent = await userAgentBuilder.getUserAgent();
     if (jwtHelper != null) {
-      return {
-        "accept": "application/json",
-        "charset": "UTF-8",
-        "Authorization": "Bearer ${jwtHelper!.getJwtToken()}",
-      };
+      if (userAgent == null) {
+        return {
+          "accept": "application/json",
+          "charset": "UTF-8",
+          "Authorization": "Bearer ${jwtHelper!.getJwtToken()}",
+        };
+      } else {
+        return {
+          "accept": "application/json",
+          "charset": "UTF-8",
+          "User-Agent": userAgent,
+          "Authorization": "Bearer ${jwtHelper!.getJwtToken()}",
+        };
+      }
     } else {
-      return {
-        "accept": "application/json",
-        "charset": "UTF-8",
-      };
+      if (userAgent == null) {
+        return {
+          "accept": "application/json",
+          "charset": "UTF-8",
+        };
+      } else {
+        return {
+          "accept": "application/json",
+          "User-Agent": userAgent,
+          "charset": "UTF-8",
+        };
+      }
     }
   }
 }
