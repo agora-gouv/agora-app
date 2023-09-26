@@ -16,9 +16,10 @@ class PrivacyPolicyStrings {
       "un individu, qu'il soit ou non membre du Gouvernement, ou portant atteinte à sa vie privée\u{00A0};";
   static const String description1_3_5 =
       "Les spams et les contenus de nature commerciale ou faisant la promotion d'un service ou d'une organisation\u{00A0};";
-  static const String description1_3_6 =
-      "N'ayant pas une formulation interrogative (hors «\u{00A0}détails supplémentaires\u{00A0}»)";
+  static const String description1_3_6 = "Contenant un lien vers un site internet\u{00A0};";
   static const String description1_3_7 =
+      "N'ayant pas une formulation interrogative (hors «\u{00A0}détails supplémentaires\u{00A0}»)";
+  static const String description1_3_8 =
       "Ne portant pas sur l'action du Gouvernement ou relevant manifestement du hors-sujet.";
   static const String description1_4 =
       "Lorsque vous posez une question au Gouvernement, il vous est demandé de\u{00A0}:";
