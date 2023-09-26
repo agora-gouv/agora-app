@@ -6,7 +6,7 @@ class QagStrings {
   static const String mostPopularQuestion = "La question la plus populaire";
   static const String incomingResponse = "Réponse à venir";
   static const String qagResponseInfoBubble =
-      "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens le mercredi à 14h.";
+      "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens le mardi à 14h.";
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
   static const String popular = "Populaires";
@@ -22,7 +22,7 @@ class QagStrings {
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
   static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine ";
   static const String askQuestionDescription3 =
-      "(remise à zéro des compteurs le mercredi à 14h 🕑).\n\nLe Gouvernement répondra directement sur l'appli à la question la plus populaire chaque semaine.";
+      "(remise à zéro des compteurs le mardi à 14h 🕑).\n\nLe Gouvernement répondra directement sur l'appli à la question la plus populaire chaque semaine.";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
@@ -38,7 +38,7 @@ class QagStrings {
   static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Mon prénom";
   static const String yourNameInfoBubble1 =
-      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs. Lorsque votre question sera archivée au bout de 15 jours, le Prénom sera définitivement supprimé.\n\nPour en savoir plus,";
+      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profile que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée au bout de 15 jours, le Prénom sera définitivement supprimé.\n\nPour en savoir plus,";
   static const String yourNameInfoBubble2 = "lire la politique de confidentialité.";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =

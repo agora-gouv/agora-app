@@ -1,7 +1,7 @@
 class DemographicStrings {
   static const String informationTitle = "Psst… nous avons quelques questions supplémentaires pour vous 👀";
   static const String informationShortDescription =
-      "Pour analyser les résultats des consultations, cela nous aide beaucoup de connaître un peu mieux le profil des participants.\n\nVous pouvez retrouver, modifier ou supprimer toutes ces informations directement dans l'onglet \"Profil\".";
+      "Pour analyser les résultats des consultations, cela nous aide beaucoup de connaître un peu mieux le profil des participants.\n\nCes informations ne permettent pas de vous identifier. Vous pourrez les retrouver, les modifier ou les supprimer directement dans l’onglet \"Profil\" à tout instant.";
   static const String informationLongDescription1 = "Concrètement, cela nous permet\u{00A0}:\n";
   static const String informationLongDescription2 =
       "De savoir dans quelle mesure les personnes qui répondent sont représentatives de l'ensemble de la population française (plus la représentativité est forte, plus les résultats sont solides et fiables).\n";
@@ -83,4 +83,6 @@ class DemographicStrings {
 
   static const String unknown = "Je ne sais pas";
   static const String notSpecified = "Non renseigné";
+  static const String moreInformations = "Pour en savoir plus, lire la ";
+  static const String moreInformationsLink = "politique de confidentialité.";
 }

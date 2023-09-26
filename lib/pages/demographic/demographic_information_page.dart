@@ -1,7 +1,9 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
@@ -13,6 +15,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -117,6 +120,24 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   Text(
                                     DemographicStrings.informationLongDescription4,
                                     style: AgoraTextStyles.regular14,
+                                  ),
+                                  SizedBox(height: AgoraSpacings.x1_25),
+                                  RichText(
+                                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                                    text: TextSpan(
+                                      style: AgoraTextStyles.regular14,
+                                      children: [
+                                        TextSpan(text: DemographicStrings.moreInformations),
+                                        TextSpan(
+                                          text: DemographicStrings.moreInformationsLink,
+                                          style:
+                                              AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () =>
+                                                LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
