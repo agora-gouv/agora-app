@@ -22,7 +22,7 @@ class RepositoryManager {
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
 
-  static final userAgentBuilder = UserAgentBuilder(appVersionHelper: HelperManager.getAppVersionHelper());
+  static final userAgentBuilder = UserAgentBuilderImpl(appVersionHelper: HelperManager.getAppVersionHelper());
   static final crashlyticsHelper = HelperManager.getCrashlyticsHelper();
 
   static void initRepositoryManager({required String baseUrl}) {
