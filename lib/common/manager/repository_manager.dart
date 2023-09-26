@@ -1,4 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/repository/mocks_consultation_repository.dart';
@@ -21,6 +22,7 @@ class RepositoryManager {
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
 
+  static final userAgentBuilder = UserAgentBuilderImpl(appVersionHelper: HelperManager.getAppVersionHelper());
   static final crashlyticsHelper = HelperManager.getCrashlyticsHelper();
 
   static void initRepositoryManager({required String baseUrl}) {
@@ -65,7 +67,10 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _noAuthenticationHttpClient)) {
       return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _noAuthenticationHttpClient);
     }
-    final agoraDioHttpClient = AgoraDioHttpClient(dio: _getDio());
+    final agoraDioHttpClient = AgoraDioHttpClient(
+      dio: _getDio(),
+      userAgentBuilder: userAgentBuilder,
+    );
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _noAuthenticationHttpClient);
     return agoraDioHttpClient;
   }
@@ -77,6 +82,7 @@ class RepositoryManager {
     final agoraDioHttpClient = AgoraDioHttpClient(
       dio: _getDio(),
       jwtHelper: HelperManager.getJwtHelper(),
+      userAgentBuilder: userAgentBuilder,
     );
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _authenticatedHttpClient);
     return agoraDioHttpClient;
