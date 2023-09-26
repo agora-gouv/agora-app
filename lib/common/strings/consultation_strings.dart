@@ -34,7 +34,7 @@ class ConsultationStrings {
   static const String notificationInformation = "Vous serez tenu(e) au courant des prochaines étapes\u{00A0}!";
   static const String refuseNotification = "Ne pas recevoir de notifications";
   static const String openedQuestionNotice =
-      "Attention à ne pas indiquer de données personnelles qui pourraient vous identifier.";
+      "Attention à n'indiquer ni données personnelles qui pourraient vous identifier, ni de lien vers un site internet.";
   static const String previousQuestion = "←";
   static const String nextQuestion = "Question suivante →";
   static const String validate = "Valider";
