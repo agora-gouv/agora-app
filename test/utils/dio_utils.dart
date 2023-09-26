@@ -6,7 +6,7 @@ import 'package:http_mock_adapter/http_mock_adapter.dart';
 
 class DioUtils {
   static final _dio = Dio(BaseOptions());
-  static late final UserAgentBuilder userAgentBuilder;
+  static final userAgentBuilder = FakeUserAgentBuilder();
 
   static DioAdapter dioAdapter() {
     return DioAdapter(dio: _dio);
