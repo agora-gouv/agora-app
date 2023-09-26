@@ -1,5 +1,6 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
@@ -13,6 +14,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -105,9 +107,21 @@ class _ProfileDemographicInformationPageState extends State<ProfileDemographicIn
                             ],
                           ),
                           SizedBox(height: AgoraSpacings.x1_25),
-                          Text(
-                            ProfileStrings.demographicInformationDescription5,
-                            style: AgoraTextStyles.regular14,
+                          RichText(
+                            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                            text: TextSpan(
+                              style: AgoraTextStyles.regular14,
+                              children: [
+                                TextSpan(text: ProfileStrings.demographicInformationDescription5),
+                                WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                                TextSpan(
+                                  text: ProfileStrings.demographicInformationDescription6,
+                                  style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(height: AgoraSpacings.x1_25),
                           Row(
