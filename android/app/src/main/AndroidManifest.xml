@@ -57,7 +57,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="agora.beta.gouv.fr" />
+                <data android:scheme="https" android:host="www.agora.beta.gouv.fr" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
