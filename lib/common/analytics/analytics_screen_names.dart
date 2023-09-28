@@ -27,8 +27,8 @@ class AnalyticsScreenNames {
   static const String demographicInformationPage = "Page descriptive des données démographiques";
   static const String demographicQuestionPage = "Questionnaire sur les données démographiques";
   static const String demographicConfirmationPage = "Envoi des réponses des données démographiques";
-  static const String demographicProfilePage = "Profile - Données démographique";
-  static const String deleteAccountPage = "Profile - Supprimer mon application";
+  static const String demographicProfilePage = "Profil - Données démographique";
+  static const String deleteAccountPage = "Profil - Supprimer mon application";
   static const String profileDemographicInformationPage = "Profile - Page descriptive des données démographiques";
   static const String participationCharterPage = "Profil - Charte de participation";
 

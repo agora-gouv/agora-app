@@ -15,9 +15,9 @@ class UserAgentBuilderImpl extends UserAgentBuilder {
   Future<String?> getUserAgent() async {
     final versionInfos = appVersionHelper;
     if (Platform.isAndroid) {
-      return "Android: fr.agora.gouv/${versionInfos.getVersion()} Android/${versionInfos.getAndroidVersion()}";
+      return "Android: fr.agora.gouv/${await versionInfos.getVersion()} Android/${await versionInfos.getAndroidVersion()}";
     } else if (Platform.isIOS) {
-      return "iOS: fr.agora.gouv/${versionInfos.getVersion()} iOS/${versionInfos.getIosVersion()}";
+      return "iOS: fr.agora.gouv/${await versionInfos.getVersion()} iOS/${await versionInfos.getIosVersion()}";
     } else {
       return null;
     }
