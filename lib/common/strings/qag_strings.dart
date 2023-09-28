@@ -38,7 +38,7 @@ class QagStrings {
   static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Mon prénom";
   static const String yourNameInfoBubble1 =
-      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profile que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée au bout de 15 jours, le Prénom sera définitivement supprimé.\n\nPour en savoir plus,";
+      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profil que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée au bout de 15 jours, le Prénom sera définitivement supprimé.\n\nPour en savoir plus,";
   static const String yourNameInfoBubble2 = "lire la politique de confidentialité.";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
