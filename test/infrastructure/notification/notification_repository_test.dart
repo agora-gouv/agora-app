@@ -4,13 +4,11 @@ import 'package:agora/domain/notification/notification.dart';
 import 'package:agora/infrastructure/notification/notification_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../fakes/common/fake_crashlytics_helper.dart';
 import '../../utils/dio_utils.dart';
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
-  final fakeCrashlyticsHelper = FakeCrashlyticsHelper();
 
   group("Get notifications", () {
     const pageNumber = 1;
@@ -41,7 +39,6 @@ void main() {
       // When
       final repository = NotificationDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.getNotifications(pageNumber: pageNumber);
 
@@ -77,7 +74,6 @@ void main() {
       // When
       final repository = NotificationDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.getNotifications(pageNumber: pageNumber);
 

@@ -1,8 +1,6 @@
-import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
-import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
@@ -44,9 +42,8 @@ abstract class ConsultationRepository {
 
 class ConsultationDioRepository extends ConsultationRepository {
   final AgoraDioHttpClient httpClient;
-  final CrashlyticsHelper crashlyticsHelper;
 
-  ConsultationDioRepository({required this.httpClient, required this.crashlyticsHelper});
+  ConsultationDioRepository({required this.httpClient});
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
@@ -87,14 +84,12 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e, s) {
+    } catch (e) {
       if (e is DioException) {
         if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
-          crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationsTimeout);
           return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
         }
       }
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultations);
       return GetConsultationsFailedResponse();
     }
   }
@@ -117,8 +112,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationsFinishedPaginated);
+    } catch (e) {
       return GetConsultationsFinishedPaginatedFailedResponse();
     }
   }
@@ -147,8 +141,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           hasAnswered: response.data["hasAnswered"] as bool,
         ),
       );
-    } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationDetails);
+    } catch (e) {
       return GetConsultationDetailsFailedResponse();
     }
   }
@@ -170,8 +163,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           chapters: response.data["chapters"] as List,
         ),
       );
-    } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationQuestions);
+    } catch (e) {
       return GetConsultationQuestionsFailedResponse();
     }
   }
@@ -200,8 +192,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       return SendConsultationResponsesSucceedResponse(
         shouldDisplayDemographicInformation: response.data["askDemographicInfo"] as bool,
       );
-    } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.sendConsultationResponses);
+    } catch (e) {
       return SendConsultationResponsesFailureResponse();
     }
   }
@@ -264,8 +255,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         ),
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);
-    } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchConsultationSummary);
+    } catch (e) {
       return GetConsultationSummaryFailedResponse();
     }
   }

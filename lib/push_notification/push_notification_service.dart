@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:agora/common/extension/notification_message_type_extension.dart';
-import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/config_manager.dart';
-import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
@@ -87,22 +85,18 @@ class FirebasePushNotificationService extends PushNotificationService {
 
   @override
   Future<String> getMessagingToken() async {
-    const errorText = "Firebase messaging token fetch error for %s time, waiting for APNs to be initialized...";
     await _messaging.requestPermission();
     try {
       return await _fetchMessagingToken();
     } catch (e) {
-      HelperManager.getCrashlyticsHelper().recordError(e, null, null, reason: errorText.format("first"));
       await Future.delayed(Duration(seconds: _fcmTokenErrorWaitDelayInSeconds));
       try {
         return await _fetchMessagingToken();
       } catch (e) {
-        HelperManager.getCrashlyticsHelper().recordError(e, null, null, reason: errorText.format("second"));
         await Future.delayed(Duration(seconds: _fcmTokenErrorWaitDelayInSeconds));
         try {
           return await _fetchMessagingToken();
         } catch (e) {
-          HelperManager.getCrashlyticsHelper().recordError(e, null, null, reason: errorText.format("third"));
           rethrow;
         }
       }

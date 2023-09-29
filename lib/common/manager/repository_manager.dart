@@ -23,7 +23,6 @@ class RepositoryManager {
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
 
   static final userAgentBuilder = UserAgentBuilderImpl(appVersionHelper: HelperManager.getAppVersionHelper());
-  static final crashlyticsHelper = HelperManager.getCrashlyticsHelper();
 
   static void initRepositoryManager({required String baseUrl}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
@@ -94,7 +93,6 @@ class RepositoryManager {
     }
     final repository = ThematiqueDioRepository(
       httpClient: _getAgoraDioHttpClient(),
-      crashlyticsHelper: crashlyticsHelper,
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -106,7 +104,6 @@ class RepositoryManager {
     }
     final repository = MockConsultationRepository(
       httpClient: _getAgoraDioHttpClient(),
-      crashlyticsHelper: crashlyticsHelper,
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -118,7 +115,6 @@ class RepositoryManager {
     }
     final repository = MockQagRepository(
       httpClient: _getAgoraDioHttpClient(),
-      crashlyticsHelper: crashlyticsHelper,
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -130,7 +126,6 @@ class RepositoryManager {
     }
     final repository = MockLoginRepository(
       httpClient: getAgoraDioHttpClientWithoutAuthentication(),
-      crashlyticsHelper: crashlyticsHelper,
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -142,7 +137,6 @@ class RepositoryManager {
     }
     final repository = MockDemographicRepository(
       httpClient: _getAgoraDioHttpClient(),
-      crashlyticsHelper: crashlyticsHelper,
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -154,7 +148,6 @@ class RepositoryManager {
     }
     final repository = MockNotificationRepository(
       httpClient: _getAgoraDioHttpClient(),
-      crashlyticsHelper: crashlyticsHelper,
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
