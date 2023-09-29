@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/login/login_error_type.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -26,9 +24,8 @@ abstract class LoginRepository {
 
 class LoginDioRepository extends LoginRepository {
   final AgoraDioHttpClient httpClient;
-  final CrashlyticsHelper crashlyticsHelper;
 
-  LoginDioRepository({required this.httpClient, required this.crashlyticsHelper});
+  LoginDioRepository({required this.httpClient});
 
   @override
   Future<SignupRepositoryResponse> signup({
@@ -53,18 +50,15 @@ class LoginDioRepository extends LoginRepository {
         loginToken: response.data["loginToken"] as String,
         isModerator: response.data["isModerator"] as bool,
       );
-    } catch (e, s) {
+    } catch (e) {
       if (e is DioException) {
         final response = e.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
-          crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.signUpUpdateVersion);
           return SignupFailedResponse(errorType: LoginErrorType.updateVersion);
         } else if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
-          crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.signUpTimeout);
           return SignupFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.signUp);
       return SignupFailedResponse();
     }
   }
@@ -94,18 +88,15 @@ class LoginDioRepository extends LoginRepository {
         jwtToken: response.data["jwtToken"] as String,
         isModerator: response.data["isModerator"] as bool,
       );
-    } catch (e, s) {
+    } catch (e) {
       if (e is DioException) {
         final response = e.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
-          crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.loginUpdateVersion);
           return LoginFailedResponse(errorType: LoginErrorType.updateVersion);
         } else if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
-          crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.loginTimeout);
           return LoginFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.login);
       return LoginFailedResponse();
     }
   }

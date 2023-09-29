@@ -1,7 +1,5 @@
-import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
-import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/notification/notification.dart';
 import 'package:equatable/equatable.dart';
 
@@ -13,9 +11,8 @@ abstract class NotificationRepository {
 
 class NotificationDioRepository extends NotificationRepository {
   final AgoraDioHttpClient httpClient;
-  final CrashlyticsHelper crashlyticsHelper;
 
-  NotificationDioRepository({required this.httpClient, required this.crashlyticsHelper});
+  NotificationDioRepository({required this.httpClient});
 
   @override
   Future<GetNotificationsRepositoryResponse> getNotifications({
@@ -35,8 +32,7 @@ class NotificationDioRepository extends NotificationRepository {
           }).toList(),
         ),
       );
-    } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.getNotifications);
+    } catch (e) {
       return GetNotificationsFailureResponse();
     }
   }

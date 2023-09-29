@@ -15,13 +15,11 @@ import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../fakes/common/fake_crashlytics_helper.dart';
 import '../../utils/dio_utils.dart';
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
-  final fakeCrashlyticsHelper = FakeCrashlyticsHelper();
 
   const qagId = "qagId";
   const thematiqueId = "thematiqueId";
@@ -50,7 +48,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.createQag(
         title: "qag title",
@@ -83,7 +80,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.createQag(
         title: "qag title",
@@ -162,7 +158,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQags(thematiqueId: thematiqueId);
 
@@ -238,7 +233,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQags(thematiqueId: thematiqueId);
 
@@ -272,7 +266,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQags(thematiqueId: thematiqueId);
 
@@ -298,7 +291,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQags(thematiqueId: thematiqueId);
 
@@ -320,7 +312,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQags(thematiqueId: thematiqueId);
 
@@ -368,7 +359,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagsPaginated(
         pageNumber: 1,
@@ -417,7 +407,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagsPaginated(
         pageNumber: 1,
@@ -471,7 +460,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagsResponse();
 
@@ -516,7 +504,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagsResponse();
 
@@ -555,7 +542,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagsResponsePaginated(pageNumber: 1);
 
@@ -592,7 +578,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagsResponsePaginated(pageNumber: 1);
 
@@ -632,7 +617,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -697,7 +681,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -746,7 +729,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -768,7 +750,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -792,7 +773,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.deleteQag(qagId: qagId);
 
@@ -811,7 +791,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.deleteQag(qagId: qagId);
 
@@ -835,7 +814,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.supportQag(qagId: qagId);
 
@@ -854,7 +832,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.supportQag(qagId: qagId);
 
@@ -878,7 +855,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.deleteSupportQag(qagId: qagId);
 
@@ -897,7 +873,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.deleteSupportQag(qagId: qagId);
 
@@ -922,7 +897,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
@@ -945,7 +919,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
@@ -985,7 +958,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagModerationList();
 
@@ -1026,7 +998,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.fetchQagModerationList();
 
@@ -1053,7 +1024,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.moderateQag(qagId: qagId, isAccepted: true);
 
@@ -1078,7 +1048,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.moderateQag(qagId: qagId, isAccepted: true);
 
@@ -1105,7 +1074,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.hasSimilarQag(title: "qag title");
 
@@ -1127,7 +1095,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.hasSimilarQag(title: "qag title");
 
@@ -1169,7 +1136,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.getSimilarQags(title: "qag title");
 
@@ -1208,7 +1174,6 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.getSimilarQags(title: "qag title");
 

@@ -36,7 +36,6 @@ dependencies:
   flutter_secure_storage: ^8.1.0
   matomo_tracker: ^3.1.0
   percent_indicator: ^4.2.3
-  firebase_crashlytics: ^3.3.5 # not support for web
   webview_flutter: ^4.2.4 # not support for web
   flutter_widget_from_html: ^0.10.2 # only support web
   responsive_framework: ^1.1.0

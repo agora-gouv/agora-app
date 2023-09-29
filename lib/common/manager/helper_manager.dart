@@ -1,11 +1,9 @@
 import 'package:agora/common/helper/app_version_helper.dart';
-import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
@@ -62,24 +60,6 @@ class HelperManager {
     final helper = RoleHelperImpl();
     GetIt.instance.registerSingleton(helper);
     return helper;
-  }
-
-  static CrashlyticsHelper getCrashlyticsHelper() {
-    if (kIsWeb) {
-      if (GetIt.instance.isRegistered<NotImportantCrashlyticsHelperImpl>()) {
-        return GetIt.instance.get<NotImportantCrashlyticsHelperImpl>();
-      }
-      final helper = NotImportantCrashlyticsHelperImpl();
-      GetIt.instance.registerSingleton(helper);
-      return helper;
-    } else {
-      if (GetIt.instance.isRegistered<CrashlyticsHelperImpl>()) {
-        return GetIt.instance.get<CrashlyticsHelperImpl>();
-      }
-      final helper = CrashlyticsHelperImpl(FirebaseCrashlytics.instance);
-      GetIt.instance.registerSingleton(helper);
-      return helper;
-    }
   }
 
   static AppVersionHelper getAppVersionHelper() {

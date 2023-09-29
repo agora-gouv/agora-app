@@ -6,13 +6,11 @@ import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../fakes/common/fake_crashlytics_helper.dart';
 import '../../utils/dio_utils.dart';
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
-  final fakeCrashlyticsHelper = FakeCrashlyticsHelper();
 
   group("Get demographic information", () {
     test("when success should return information", () async {
@@ -41,7 +39,6 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.getDemographicResponses();
 
@@ -77,7 +74,6 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.getDemographicResponses();
 
@@ -111,7 +107,6 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.sendDemographicResponses(
         demographicResponses: [
@@ -150,7 +145,6 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
-        crashlyticsHelper: fakeCrashlyticsHelper,
       );
       final response = await repository.sendDemographicResponses(
         demographicResponses: [

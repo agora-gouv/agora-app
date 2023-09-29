@@ -1,6 +1,4 @@
-import 'package:agora/common/client/agora_dio_exception.dart';
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/common/helper/crashlytics_helper.dart';
 import 'package:agora/domain/thematique/thematique_with_id.dart';
 import 'package:equatable/equatable.dart';
 
@@ -10,9 +8,8 @@ abstract class ThematiqueRepository {
 
 class ThematiqueDioRepository extends ThematiqueRepository {
   final AgoraDioHttpClient httpClient;
-  final CrashlyticsHelper crashlyticsHelper;
 
-  ThematiqueDioRepository({required this.httpClient, required this.crashlyticsHelper});
+  ThematiqueDioRepository({required this.httpClient});
 
   @override
   Future<ThematiqueRepositoryResponse> fetchThematiques() async {
@@ -28,8 +25,7 @@ class ThematiqueDioRepository extends ThematiqueRepository {
           )
           .toList();
       return GetThematiqueSucceedResponse(thematiques: thematiques);
-    } catch (e, s) {
-      crashlyticsHelper.recordError(e, s, AgoraDioExceptionType.fetchThematiques);
+    } catch (e) {
       return GetThematiqueFailedResponse();
     }
   }
