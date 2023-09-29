@@ -1,0 +1,4 @@
+enum ConsultationsErrorType {
+  generic,
+  timeout,
+}

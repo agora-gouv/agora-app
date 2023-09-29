@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/domain/thematique/thematique_with_id.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -14,19 +14,19 @@ void main() {
     test("when success should return thematiques", () async {
       // Given
       dioAdapter.onGet(
-        "todo/thematique",
+        "/thematiques",
         (server) => server.reply(
           HttpStatus.ok,
           {
             "thematiques": [
               {
-                "id": 1,
+                "id": "1",
                 "label": "Travail & emploi",
                 "picto": "\uD83D\uDCBC",
                 "color": "#FFCFDEFC",
               },
               {
-                "id": 2,
+                "id": "2",
                 "label": "Transition écologique",
                 "picto": "\uD83D\uDCBC",
                 "color": "#FFCFFCD9",
@@ -38,7 +38,9 @@ void main() {
       );
 
       // When
-      final repository = ThematiqueDioRepository(httpClient: httpClient);
+      final repository = ThematiqueDioRepository(
+        httpClient: httpClient,
+      );
       final response = await repository.fetchThematiques();
 
       // Then
@@ -46,8 +48,8 @@ void main() {
         response,
         GetThematiqueSucceedResponse(
           thematiques: [
-            Thematique(id: 1, picto: "\uD83D\uDCBC", label: "Travail & emploi", color: "#FFCFDEFC"),
-            Thematique(id: 2, picto: "\uD83D\uDCBC", label: "Transition écologique", color: "#FFCFFCD9"),
+            ThematiqueWithId(id: "1", picto: "\uD83D\uDCBC", label: "Travail & emploi"),
+            ThematiqueWithId(id: "2", picto: "\uD83D\uDCBC", label: "Transition écologique"),
           ],
         ),
       );
@@ -56,13 +58,15 @@ void main() {
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
-        "todo/thematique",
+        "/thematiques",
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {"accept": "application/json"},
       );
 
       // When
-      final repository = ThematiqueDioRepository(httpClient: httpClient);
+      final repository = ThematiqueDioRepository(
+        httpClient: httpClient,
+      );
       final response = await repository.fetchThematiques();
 
       // Then

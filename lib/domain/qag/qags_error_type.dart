@@ -1,0 +1,4 @@
+enum QagsErrorType {
+  generic,
+  timeout,
+}

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "575887202735",
+    "project_id": "agora-prod-83c6c",
+    "storage_bucket": "agora-prod-83c6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575887202735:android:af7eba78e9331af470f75a",
+        "android_client_info": {
+          "package_name": "fr.gouv.agora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575887202735-lteg7ob4nppur417c1jh09kdtseoq51i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.gouv.agora",
+            "certificate_hash": "72f0e298879335d63b646dcc390bb9c75119d027"
+          }
+        },
+        {
+          "client_id": "575887202735-n3kmu88dotrl52c6h8dkbp149r2f7tch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA8FxjUTLzhHEhVn3Kf_7GH-flqerqSro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575887202735-n3kmu88dotrl52c6h8dkbp149r2f7tch.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

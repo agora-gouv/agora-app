@@ -1,17 +1,17 @@
-import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_corners.dart';
-import 'package:agora/design/agora_spacings.dart';
+import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
 class AgoraQuestionsProgressBar extends StatelessWidget {
   const AgoraQuestionsProgressBar({
     Key? key,
-    required this.nbQuestionsRepondues,
-    required this.nbQuestionsTotales,
+    required this.currentQuestionOrder,
+    required this.totalQuestions,
   }) : super(key: key);
 
-  final int nbQuestionsRepondues;
-  final int nbQuestionsTotales;
+  final int currentQuestionOrder;
+  final int totalQuestions;
 
   static const _barHeight = 10.0;
 
@@ -22,12 +22,12 @@ class AgoraQuestionsProgressBar extends StatelessWidget {
 
   List<Widget> _buildProgressBar() {
     final List<Widget> widgets = List.empty(growable: true);
-    for (int i = 0; i < nbQuestionsRepondues; i++) {
-      widgets.add(_buildBox(AgoraColors.primaryGreen));
+    for (int i = 0; i < currentQuestionOrder; i++) {
+      widgets.add(_buildBox(AgoraColors.primaryBlue));
       widgets.add(SizedBox(width: AgoraSpacings.x0_5));
     }
-    for (int i = nbQuestionsRepondues; i < nbQuestionsTotales; i++) {
-      widgets.add(_buildBox(AgoraColors.grey));
+    for (int i = currentQuestionOrder; i < totalQuestions; i++) {
+      widgets.add(_buildBox(AgoraColors.orochimaru));
       widgets.add(SizedBox(width: AgoraSpacings.x0_5));
     }
     widgets.removeLast();

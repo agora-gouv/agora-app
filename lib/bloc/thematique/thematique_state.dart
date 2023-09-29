@@ -1,3 +1,4 @@
+import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ThematiqueState extends Equatable {
@@ -5,24 +6,15 @@ abstract class ThematiqueState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ThematiqueInitialState extends ThematiqueState {}
+class ThematiqueInitialLoadingState extends ThematiqueState {}
 
 class ThematiqueSuccessState extends ThematiqueState {
-  final List<ThematiqueViewModel> viewModel;
+  final List<ThematiqueWithIdViewModel> thematiqueViewModels;
 
-  ThematiqueSuccessState(this.viewModel);
+  ThematiqueSuccessState(this.thematiqueViewModels);
+
+  @override
+  List<Object?> get props => [thematiqueViewModels];
 }
 
 class ThematiqueErrorState extends ThematiqueState {}
-
-class ThematiqueViewModel extends Equatable {
-  final int id;
-  final String picto;
-  final String label;
-  final int color;
-
-  ThematiqueViewModel({required this.id, required this.picto, required this.label, required this.color});
-
-  @override
-  List<Object> get props => [id, picto, label, color];
-}

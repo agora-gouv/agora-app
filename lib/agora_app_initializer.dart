@@ -1,36 +1,58 @@
 import 'package:agora/agora_app.dart';
-import 'package:agora/common/agora_http_client.dart';
-import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:agora/bloc/consultation/question/response/stock/consultation_question_response_hive.dart';
+import 'package:agora/common/manager/config_manager.dart';
+import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/service_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
+import 'package:equatable/equatable.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+import 'package:matomo_tracker/matomo_tracker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AgoraInitializer {
-  static void initializeApp() async {
-    final agoraHttpClient = AgoraDioHttpClient(dio: initializeDio());
-    runApp(AgoraApp(agoraDioHttpClient: agoraHttpClient));
+  static void initializeApp(AgoraAppConfig appConfig) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Intl.defaultLocale = "fr_FR";
+    initializeDateFormatting('fr_FR', null);
+
+    await _setupNotification();
+    await _setupMatomo();
+    RepositoryManager.initRepositoryManager(baseUrl: appConfig.baseUrl);
+
+    await Hive.initFlutter();
+    Hive.registerAdapter(ConsultationQuestionResponsesHiveAdapter());
+
+    final sharedPref = await SharedPreferences.getInstance();
+    final isFirstConnection = await StorageManager.getOnboardingStorageClient().isFirstTime();
+    runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection));
   }
 
-  static Dio initializeDio() {
-    // final options = BaseOptions(baseUrl: "//todo http://agora");
-    // final dio = Dio(options);
-    final dio = Dio();
-    final dioLoggerInterceptor = PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-    );
-    final dioCacheInterceptor = DioCacheInterceptor(
-      options: CacheOptions(
-        store: MemCacheStore(),
-        policy: CachePolicy.request,
-        maxStale: const Duration(days: 14),
-      ),
-    );
-    dio.interceptors
-      ..add(dioLoggerInterceptor)
-      ..add(dioCacheInterceptor);
-    return dio;
+  static Future<void> _setupNotification() async {
+    if (!kIsWeb) {
+      await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
+      await ServiceManager.getPushNotificationService().setupNotifications();
+    }
   }
+
+  static Future<void> _setupMatomo() async {
+    final matomoConfig = ConfigManager.getMatomoConfig();
+    await MatomoTracker.instance.initialize(
+      siteId: matomoConfig.siteId,
+      url: matomoConfig.url,
+    );
+  }
+}
+
+class AgoraAppConfig extends Equatable {
+  final String baseUrl;
+
+  AgoraAppConfig({required this.baseUrl});
+
+  @override
+  List<Object?> get props => [baseUrl];
 }

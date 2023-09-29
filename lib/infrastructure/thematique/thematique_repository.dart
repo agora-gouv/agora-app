@@ -1,5 +1,5 @@
-import 'package:agora/common/agora_http_client.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/domain/thematique/thematique_with_id.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ThematiqueRepository {
@@ -14,16 +14,13 @@ class ThematiqueDioRepository extends ThematiqueRepository {
   @override
   Future<ThematiqueRepositoryResponse> fetchThematiques() async {
     try {
-      final response = await httpClient.get(
-        "todo/thematique",
-      );
+      final response = await httpClient.get("/thematiques");
       final thematiques = (response.data["thematiques"] as List)
           .map(
-            (thematique) => Thematique(
-              id: thematique["id"] as int,
+            (thematique) => ThematiqueWithId(
+              id: thematique["id"] as String,
               picto: thematique["picto"] as String,
               label: thematique["label"] as String,
-              color: thematique["color"] as String,
             ),
           )
           .toList();
@@ -40,7 +37,7 @@ abstract class ThematiqueRepositoryResponse extends Equatable {
 }
 
 class GetThematiqueSucceedResponse extends ThematiqueRepositoryResponse {
-  final List<Thematique> thematiques;
+  final List<ThematiqueWithId> thematiques;
 
   GetThematiqueSucceedResponse({required this.thematiques});
 

@@ -1,23 +1,48 @@
+import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/agora_top_diagonal.dart';
+import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:agora/design/agora_colors.dart';
-import 'package:agora/design/agora_spacings.dart';
-import 'package:agora/design/agora_text_styles.dart';
 
-class AgoraAppBarWithTabs extends StatelessWidget {
+class AgoraAppBarWithTabs extends StatefulWidget {
   final TabController tabController;
-  final double toolbarHeight;
   final Widget topChild;
   final List<Widget> tabChild;
+  final bool needTopDiagonal;
+  final bool needToolbar;
+  final double initialToolBarHeight;
+  final VoidCallback? onToolbarBackClick;
 
   AgoraAppBarWithTabs({
     required this.topChild,
     required this.tabChild,
     required this.tabController,
-    this.toolbarHeight = kToolbarHeight,
-  });
+    this.needTopDiagonal = true,
+    this.needToolbar = false,
+    this.onToolbarBackClick,
+    this.initialToolBarHeight = 112,
+  }) : assert(onToolbarBackClick == null || needToolbar);
+
+  @override
+  State<AgoraAppBarWithTabs> createState() => _AgoraAppBarWithTabsState();
+}
+
+class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
+  final GlobalKey _backBarChildKey = GlobalKey();
+  final GlobalKey _contentChildKey = GlobalKey();
+  bool isHeightCalculated = false;
+  double height = 0;
+
+  @override
+  void initState() {
+    height = widget.initialToolBarHeight;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    _buildToolbarHeightOnCreation(context);
     return SliverAppBar(
       pinned: true,
       floating: true,
@@ -27,53 +52,92 @@ class AgoraAppBarWithTabs extends StatelessWidget {
         collapseMode: CollapseMode.pin,
         background: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ClipPath(
-              clipper: TopDiagonalClipper(),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.02,
-                color: AgoraColors.primaryGreen,
+          children: [
+            if (widget.needTopDiagonal) AgoraTopDiagonal(),
+            if (widget.needToolbar)
+              AgoraToolbar(
+                key: _backBarChildKey,
+                onBackClick: widget.onToolbarBackClick,
+                // semantic focus is in line 101 => first tab get the semantic focus
+                semantic: AgoraToolbarSemantic(focused: null),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: AgoraSpacings.base,
-                top: AgoraSpacings.base,
-                right: AgoraSpacings.base,
+            NotificationListener<SizeChangedLayoutNotification>(
+              onNotification: (notification) {
+                _buildToolbarSizeOnContentChanged(context);
+                return false;
+              },
+              child: SizeChangedLayoutNotifier(
+                child: Padding(
+                  key: _contentChildKey,
+                  padding: widget.needToolbar == true
+                      ? EdgeInsets.symmetric(horizontal: 0)
+                      : EdgeInsets.only(
+                          left: AgoraSpacings.horizontalPadding,
+                          right: AgoraSpacings.horizontalPadding,
+                          top: AgoraSpacings.base,
+                        ),
+                  child: isHeightCalculated
+                      ? widget.topChild
+                      : SizedBox(
+                          height: widget.initialToolBarHeight,
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
+                ),
               ),
-              child: topChild,
             ),
           ],
         ),
       ),
-      toolbarHeight: toolbarHeight,
+      toolbarHeight: height,
       bottom: TabBar(
-        controller: tabController,
-        indicatorColor: AgoraColors.blueFrance,
+        controller: widget.tabController,
+        indicatorColor: AgoraColors.primaryBlue,
         labelStyle: AgoraTextStyles.medium14,
         unselectedLabelStyle: AgoraTextStyles.light14,
         labelColor: AgoraColors.primaryGrey,
         unselectedLabelColor: AgoraColors.primaryGrey,
-        tabs: tabChild,
+        tabs: widget.tabChild.map((tab) {
+          final index = widget.tabChild.indexOf(tab);
+          if (index == 0) {
+            // first tab get the semantic focus
+            return Semantics(focused: true, child: tab);
+          } else {
+            return tab;
+          }
+        }).toList(),
       ),
     );
   }
-}
 
-class TopDiagonalClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final diagonalPath = Path();
-    const double initialX = 0;
-    const double initialY = 0;
-    diagonalPath.lineTo(initialX, initialY);
-    diagonalPath.lineTo(initialX, size.height);
-    diagonalPath.lineTo(size.width, size.height * 0.5);
-    diagonalPath.lineTo(size.width, initialY);
-    return diagonalPath;
+  void _buildToolbarHeightOnCreation(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (!isHeightCalculated) {
+        _calculateToolbarHeight(context);
+      }
+    });
   }
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+  void _buildToolbarSizeOnContentChanged(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _calculateToolbarHeight(context);
+    });
+  }
+
+  void _calculateToolbarHeight(BuildContext context) {
+    final contentHeight = (_contentChildKey.currentContext?.findRenderObject() as RenderBox).size.height;
+    const addSpacingBetweenContentAndTabBar = AgoraSpacings.x0_5;
+    setState(() {
+      isHeightCalculated = true;
+      height = contentHeight;
+      if (widget.needTopDiagonal) {
+        final topDiagonalHeight = MediaQuery.of(context).size.height * 0.02;
+        height = height + topDiagonalHeight;
+      }
+      if (widget.needToolbar) {
+        final backBarHeight = (_backBarChildKey.currentContext?.findRenderObject() as RenderBox).size.height;
+        height = height + backBarHeight;
+      }
+      height = height + addSpacingBetweenContentAndTabBar;
+    });
+  }
 }

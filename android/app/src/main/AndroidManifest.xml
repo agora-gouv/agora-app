@@ -1,6 +1,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.social.gouv.agora.agora">
-   <application
+    package="fr.social.gouv.agora">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Provide required visibility configuration for API level 30 and above -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
+        <!--        <intent>-->
+        <!--            <action android:name="android.intent.action.VIEW" />-->
+        <!--            <data android:scheme="sms" />-->
+        <!--        </intent>-->
+        <!--        <intent>-->
+        <!--            <action android:name="android.intent.action.VIEW" />-->
+        <!--            <data android:scheme="tel" />-->
+        <!--        </intent>-->
+    </queries>
+
+    <application
         android:label="agora"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -17,12 +45,19 @@
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              />
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"
+            />
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="agora.beta.gouv.fr" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
