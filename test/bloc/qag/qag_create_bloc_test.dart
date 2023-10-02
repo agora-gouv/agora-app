@@ -47,5 +47,25 @@ void main() {
       ],
       wait: const Duration(milliseconds: 5),
     );
+
+    blocTest(
+      "when repository failed by unauthorised - should emit failure unauthorised state",
+      build: () => CreateQagBloc(
+        qagRepository: FakeQagFailureUnauthorisedRepository(),
+      ),
+      act: (bloc) => bloc.add(
+        CreateQagEvent(
+          title: "title",
+          description: "description",
+          author: "author",
+          thematiqueId: "thematiqueId",
+        ),
+      ),
+      expect: () => [
+        CreateQagLoadingState(),
+        CreateQagErrorUnauthorizedState(),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
   });
 }

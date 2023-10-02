@@ -103,6 +103,9 @@ class QagDioRepository extends QagRepository {
       );
       return CreateQagSucceedResponse(qagId: response.data["qagId"] as String);
     } catch (e) {
+      if ((e as DioException).response?.statusCode == 403) {
+        return CreateQagFailedUnauthorizedResponse();
+      }
       return CreateQagFailedResponse();
     }
   }
@@ -450,6 +453,8 @@ class CreateQagSucceedResponse extends CreateQagRepositoryResponse {
 }
 
 class CreateQagFailedResponse extends CreateQagRepositoryResponse {}
+
+class CreateQagFailedUnauthorizedResponse extends CreateQagRepositoryResponse {}
 
 abstract class GetQagsRepositoryResponse extends Equatable {
   @override

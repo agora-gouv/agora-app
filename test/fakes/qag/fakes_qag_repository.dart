@@ -450,6 +450,18 @@ class FakeQagFailureRepository extends QagRepository {
   }
 }
 
+class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {
+  @override
+  Future<CreateQagRepositoryResponse> createQag({
+    required String title,
+    required String description,
+    required String author,
+    required String thematiqueId,
+  }) async {
+    return CreateQagFailedUnauthorizedResponse();
+  }
+}
+
 class FakeQagTimeoutFailureRepository extends FakeQagFailureRepository {
   @override
   Future<GetQagsRepositoryResponse> fetchQags({
