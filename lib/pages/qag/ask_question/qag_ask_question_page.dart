@@ -333,6 +333,11 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         AgoraErrorView(),
                         SizedBox(height: AgoraSpacings.base),
                       ],
+                      if (createQagState is CreateQagErrorUnauthorizedState) ...[
+                        SizedBox(height: AgoraSpacings.base),
+                        AgoraErrorView(errorMessage: GenericStrings.errorUnauthorizedMessage),
+                        SizedBox(height: AgoraSpacings.base),
+                      ],
                       if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),
                       AgoraButton(
                         label: QagStrings.send,

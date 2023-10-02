@@ -91,6 +91,38 @@ void main() {
       // Then
       expect(response, CreateQagFailedResponse());
     });
+
+    test("when failure by unauthorized should return failed", () async {
+      // Given
+      dioAdapter.onPost(
+        "/qags",
+        (server) => server.reply(HttpStatus.forbidden, {}),
+        data: {
+          "title": "qag title",
+          "description": "qag description",
+          "author": "qag author",
+          "thematiqueId": "thematiqueId",
+        },
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+      );
+      final response = await repository.createQag(
+        title: "qag title",
+        description: "qag description",
+        author: "qag author",
+        thematiqueId: thematiqueId,
+      );
+
+      // Then
+      expect(response, CreateQagFailedUnauthorizedResponse());
+    });
   });
 
   group("Fetch qags", () {
