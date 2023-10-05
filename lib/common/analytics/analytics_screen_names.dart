@@ -9,6 +9,8 @@ class AnalyticsScreenNames {
   static const String consultationSummaryEtEnsuitePage = "Et ensuite d'une consultation";
   static const String consultationsFinishedPaginatedPage = "Liste infinie des consultations finis";
 
+  static const String loadingApp = "Page de chargement";
+
   static const String qagsPage = "Liste des QaGs";
   static const String qagsPaginatedPage = "Liste infinie des QaGs";
   static const String qagsPaginatedPopularPage = "Liste infinie des QaGs populaires";

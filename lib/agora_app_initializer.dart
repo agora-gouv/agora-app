@@ -1,5 +1,6 @@
 import 'package:agora/agora_app.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_question_response_hive.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
@@ -41,10 +42,13 @@ class AgoraInitializer {
 
   static Future<void> _setupMatomo() async {
     final matomoConfig = ConfigManager.getMatomoConfig();
+
     await MatomoTracker.instance.initialize(
       siteId: matomoConfig.siteId,
       url: matomoConfig.url,
     );
+
+    TrackerHelper.trackDimension();
   }
 }
 

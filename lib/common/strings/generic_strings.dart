@@ -10,7 +10,7 @@ class GenericStrings {
   static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
   static const String errorMessage = "Une erreur est survenue.";
   static const String errorUnauthorizedMessage =
-      "L'action a été bloquée pour des raisons de sécurité. L'équipe Agora a été avertie et pourra investiguer la raison.";
+      "L'action a été bloquée pour des raisons de sécurité. L'équipe Agora a été avertie et investiguera si la raison de ce blocage est bien valide.";
   static const String updateAppVersionErrorMessage =
       "L'application fait peau neuve\u{00A0}! Vous devez la mettre à jour pour bénéficier des derniers changements.";
   static const String timeoutErrorMessage =
