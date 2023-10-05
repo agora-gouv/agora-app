@@ -25,6 +25,7 @@ class AnalyticsScreenNames {
   static const String profilePage = "Profil";
   static const String moderationPage = "Modération";
   static const String notificationPage = "Liste des notifications";
+  static const String notificationCenterPage = "Notification in-app";
 
   static const String demographicInformationPage = "Page descriptive des données démographiques";
   static const String demographicQuestionPage = "Questionnaire sur les données démographiques";

@@ -21,15 +21,14 @@ class AgoraNotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TrackerHelper.trackEvent(
+      eventName: AnalyticsEventNames.notificationEvent,
+      widgetName: AnalyticsScreenNames.notificationCenterPage,
+    );
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
       padding: EdgeInsets.symmetric(vertical: AgoraSpacings.base, horizontal: AgoraSpacings.base),
-      onTap: () {
-        TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.notificationClicked,
-          widgetName: AnalyticsScreenNames.notificationPage,
-        );
-      },
+      onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
