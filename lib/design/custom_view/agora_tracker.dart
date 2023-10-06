@@ -1,7 +1,6 @@
 import 'package:agora/agora_app.dart';
-import 'package:agora/common/log/log.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:matomo_tracker/matomo_tracker.dart';
 
 class AgoraTracker extends StatefulWidget {
   final String widgetName;
@@ -46,10 +45,6 @@ class _AgoraTrackerState extends State<AgoraTracker> with RouteAware {
   }
 
   void _track() {
-    Log.d("AGORA MATOMO TRACK SCREEN - ${widget.widgetName}");
-    MatomoTracker.instance.trackScreenWithName(
-      widgetName: widget.widgetName,
-      eventName: "CreatedPage",
-    );
+    TrackerHelper.trackScreen(screenName: widget.widgetName);
   }
 }

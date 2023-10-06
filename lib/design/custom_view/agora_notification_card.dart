@@ -1,6 +1,3 @@
-import 'package:agora/common/analytics/analytics_event_names.dart';
-import 'package:agora/common/analytics/analytics_screen_names.dart';
-import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -21,10 +18,6 @@ class AgoraNotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TrackerHelper.trackEvent(
-      eventName: AnalyticsEventNames.notificationEvent,
-      widgetName: AnalyticsScreenNames.notificationCenterPage,
-    );
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
       padding: EdgeInsets.symmetric(vertical: AgoraSpacings.base, horizontal: AgoraSpacings.base),

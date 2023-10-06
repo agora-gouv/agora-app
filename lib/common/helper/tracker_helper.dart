@@ -29,6 +29,14 @@ class TrackerHelper {
     MatomoTracker.instance.trackDimensions(dimension);
   }
 
+  static void trackScreen({required String screenName}) {
+    Log.d("AGORA MATOMO TRACK SCREEN - $screenName");
+    MatomoTracker.instance.trackScreenWithName(
+      widgetName: screenName,
+      eventName: "CreatedPage",
+    );
+  }
+
   static void trackEvent({required String widgetName, required String eventName}) {
     Log.d("AGORA MATOMO TRACK EVENT - $widgetName - $eventName");
     MatomoTracker.instance.trackEvent(
