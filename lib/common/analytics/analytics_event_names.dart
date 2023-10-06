@@ -42,7 +42,6 @@ class AnalyticsEventNames {
 
   static const String myInformation = "Mes informations";
   static const String notification = "Notifications";
-  static const String notificationEvent = "Affichage d'une notification";
   static const String tutorial = "Tutoriel";
   static const String moderationCapitalize = "Modération";
   static const String deleteAccount = "Supprimer mon application";

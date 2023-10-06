@@ -21,7 +21,6 @@ class AgoraNotificationCard extends StatelessWidget {
     return AgoraRoundedCard(
       borderColor: AgoraColors.border,
       padding: EdgeInsets.symmetric(vertical: AgoraSpacings.base, horizontal: AgoraSpacings.base),
-      onTap: () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
