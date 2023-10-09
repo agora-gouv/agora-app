@@ -20,9 +20,9 @@ class QagStrings {
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
-  static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine ";
+  static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine. \n";
   static const String askQuestionDescription3 =
-      "(remise à zéro des compteurs le mardi à 14h 🕑).\n\nLe Gouvernement répondra directement sur l'appli à la question la plus populaire chaque semaine.";
+      "<b>Tous les mardis à 14h :</b> \n<ul><li> La question la plus populaire est sélectionnée automatiquement pour obtenir une réponse du Gouvernement.</li> <li>Les autres questions sont archivées et les compteurs sont remis à zéro.</li></ul>";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
@@ -38,7 +38,7 @@ class QagStrings {
   static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Mon prénom";
   static const String yourNameInfoBubble1 =
-      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profil que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée au bout de 15 jours, le Prénom sera définitivement supprimé.\n\nPour en savoir plus,";
+      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profil que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée le mardi suivant sa publication, le Prénom sera définitivement supprimé (délai maximum de 7 jours).\n\nPour en savoir plus,";
   static const String yourNameInfoBubble2 = "lire la politique de confidentialité.";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
