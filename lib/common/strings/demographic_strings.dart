@@ -74,7 +74,7 @@ class DemographicStrings {
   static const String farmer = "Agriculteurs";
   static const String craftsmen = "Artisans, commerçants, chefs d'entreprise";
   static const String managerialStaff = "Cadres";
-  static const String intermediateProfessions = "Intermediate professions";
+  static const String intermediateProfessions = "Professions intermédiaires";
   static const String employees = "Employés";
   static const String workers = "Ouvriers";
   static const String student = "Etudiants";

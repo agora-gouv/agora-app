@@ -27,8 +27,8 @@ class AgoraBottomNavigationBar extends StatefulWidget {
 
 class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   final double _webBottomBarHeight = 60;
-  final double _iosBottomBarHeight = 75;
-  final double _androidBottomBarHeight = 60;
+  final double _iosBottomBarHeight = 85;
+  final double _androidBottomBarHeight = 70;
   final double _indicatorHeight = 3;
 
   final Color _activeLabelColor = AgoraColors.primaryBlue;

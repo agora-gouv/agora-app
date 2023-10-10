@@ -89,7 +89,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                     TextSpan(text: QagStrings.at),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(
-                      text: widget.detailsViewModel.date,
+                      text: response.responseDate,
                       style: AgoraTextStyles.mediumItalic16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                     ),
                   ],

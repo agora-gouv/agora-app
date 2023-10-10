@@ -20,6 +20,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -162,13 +163,12 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                   ),
                   AgoraRichTextItem(
                     text: QagStrings.askQuestionDescription2,
-                    style: AgoraRichTextItemStyle.bold,
-                  ),
-                  AgoraRichTextItem(
-                    text: QagStrings.askQuestionDescription3,
                     style: AgoraRichTextItemStyle.regular,
                   ),
                 ],
+              ),
+              AgoraHtml(
+                data: QagStrings.askQuestionDescription3,
               ),
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
@@ -331,6 +331,11 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       if (createQagState is CreateQagErrorState) ...[
                         SizedBox(height: AgoraSpacings.base),
                         AgoraErrorView(),
+                        SizedBox(height: AgoraSpacings.base),
+                      ],
+                      if (createQagState is CreateQagErrorUnauthorizedState) ...[
+                        SizedBox(height: AgoraSpacings.base),
+                        AgoraErrorView(errorMessage: GenericStrings.errorUnauthorizedMessage),
                         SizedBox(height: AgoraSpacings.base),
                       ],
                       if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),

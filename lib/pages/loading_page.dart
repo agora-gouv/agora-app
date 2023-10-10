@@ -8,6 +8,7 @@ import 'package:agora/bloc/notification/permission/notification_permission_state
 import 'package:agora/common/helper/clipboard_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -98,6 +99,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 _showNotificationDialog(context);
               } else if (notificationState is AutoAskNotificationConsentState) {
                 await Permission.notification.request();
+                TrackerHelper.trackDimension();
               }
             }
           },

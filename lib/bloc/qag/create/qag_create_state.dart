@@ -19,3 +19,5 @@ class CreateQagSuccessState extends CreateQagState {
 }
 
 class CreateQagErrorState extends CreateQagState {}
+
+class CreateQagErrorUnauthorizedState extends CreateQagState {}

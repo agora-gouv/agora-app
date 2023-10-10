@@ -23,6 +23,8 @@ class CreateQagBloc extends Bloc<CreateQagEvent, CreateQagState> {
     );
     if (response is CreateQagSucceedResponse) {
       emit(CreateQagSuccessState(qagId: response.qagId));
+    } else if (response is CreateQagFailedUnauthorizedResponse) {
+      emit(CreateQagErrorUnauthorizedState());
     } else {
       emit(CreateQagErrorState());
     }

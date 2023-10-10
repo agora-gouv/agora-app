@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/notification_message_type_extension.dart';
 import 'package:agora/common/helper/platform_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
@@ -63,6 +65,7 @@ class FirebasePushNotificationService extends PushNotificationService {
       Log.d(
         "FirebaseMessaging - New notification while app is in foreground: ${message.notification?.title} ${message.notification?.body}",
       );
+      TrackerHelper.trackScreen(screenName: AnalyticsScreenNames.notificationInApp);
       _redirectionFromNotificationMessage(message, true);
     });
 
@@ -117,6 +120,10 @@ class FirebasePushNotificationService extends PushNotificationService {
     final String? savedNotificationMessage = await StorageManager.getPushNotificationStorageClient().getMessage();
     Log.d("$logMessage $savedNotificationMessage");
     if (savedNotificationMessage != null) {
+      TrackerHelper.trackClick(
+        widgetName: AnalyticsScreenNames.notificationSystemWidget,
+        clickName: AnalyticsScreenNames.notificationSystem,
+      );
       final RemoteMessage message = RemoteMessage.fromMap(jsonDecode(savedNotificationMessage) as Map<String, dynamic>);
       _redirectionFromNotificationMessage(message, false);
       _clearNotificationMessage();
