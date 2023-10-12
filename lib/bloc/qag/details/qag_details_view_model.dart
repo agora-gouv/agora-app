@@ -68,7 +68,7 @@ class QagDetailsResponseViewModel extends Equatable {
   final int videoWidth;
   final int videoHeight;
   final String transcription;
-  final bool feedbackStatus;
+  final QagDetailsFeedbackViewModel feedbackResults;
 
   QagDetailsResponseViewModel({
     required this.author,
@@ -78,7 +78,7 @@ class QagDetailsResponseViewModel extends Equatable {
     required this.videoWidth,
     required this.videoHeight,
     required this.transcription,
-    required this.feedbackStatus,
+    required this.feedbackResults,
   });
 
   @override
@@ -90,6 +90,33 @@ class QagDetailsResponseViewModel extends Equatable {
         videoWidth,
         videoHeight,
         transcription,
-        feedbackStatus,
+        feedbackResults,
       ];
+}
+
+abstract class QagDetailsFeedbackViewModel extends Equatable {}
+
+class QagDetailsFeedbackResultsNotAnsweredViewModel extends QagDetailsFeedbackViewModel {
+  @override
+  List<Object?> get props => [];
+}
+
+class QagDetailsFeedbackResultsAnsweredNoResultsViewModel extends QagDetailsFeedbackViewModel {
+  @override
+  List<Object?> get props => [];
+}
+
+class QagDetailsFeedbackResultsViewModel extends QagDetailsFeedbackViewModel {
+  final int positiveRatio;
+  final int negativeRatio;
+  final int count;
+
+  QagDetailsFeedbackResultsViewModel({
+    required this.positiveRatio,
+    required this.negativeRatio,
+    required this.count,
+  });
+
+  @override
+  List<Object?> get props => [positiveRatio, negativeRatio, count];
 }
