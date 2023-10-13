@@ -31,9 +31,21 @@ class QagDetailsPresenter {
               videoWidth: response.videoWidth,
               videoHeight: response.videoHeight,
               transcription: response.transcription,
-              feedbackStatus: response.feedbackStatus,
             )
           : null,
+      feedback: _presentFeedback(response),
     );
+  }
+
+  static QagDetailsFeedbackViewModel? _presentFeedback(QagDetailsResponse? qagDetailsResponse) {
+    if (qagDetailsResponse == null) {
+      return null;
+    } else if (qagDetailsResponse.feedbackStatus == false) {
+      return QagDetailsFeedbackNotAnsweredViewModel(feedbackResults: qagDetailsResponse.feedbackResults);
+    } else if (qagDetailsResponse.feedbackResults == null) {
+      return QagDetailsFeedbackAnsweredNoResultsViewModel();
+    } else {
+      return QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: qagDetailsResponse.feedbackResults!);
+    }
   }
 }

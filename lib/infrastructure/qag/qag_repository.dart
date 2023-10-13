@@ -216,6 +216,7 @@ class QagDioRepository extends QagRepository {
       final response = await httpClient.get("/qags/$qagId");
       final qagDetailsSupport = response.data["support"] as Map;
       final qagDetailsResponse = response.data["response"] as Map?;
+      final qagDetailsFeedbackResults = qagDetailsResponse?["feedbackResults"];
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
@@ -242,6 +243,13 @@ class QagDioRepository extends QagRepository {
                   videoHeight: qagDetailsResponse["videoHeight"] as int,
                   transcription: qagDetailsResponse["transcription"] as String,
                   feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool,
+                  feedbackResults: qagDetailsFeedbackResults != null
+                      ? QagFeedbackResults(
+                          positiveRatio: qagDetailsFeedbackResults["positiveRatio"] as int,
+                          negativeRatio: qagDetailsFeedbackResults["negativeRatio"] as int,
+                          count: qagDetailsFeedbackResults["count"] as int,
+                        )
+                      : null,
                 )
               : null,
         ),

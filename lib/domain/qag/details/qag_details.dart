@@ -30,6 +30,26 @@ class QagDetails extends Equatable {
     required this.response,
   });
 
+  factory QagDetails.copyWithNewResponse({
+    required QagDetails qagDetails,
+    required QagDetailsResponse? response,
+  }) {
+    return QagDetails(
+      id: qagDetails.id,
+      thematique: qagDetails.thematique,
+      title: qagDetails.title,
+      description: qagDetails.description,
+      date: qagDetails.date,
+      username: qagDetails.username,
+      canShare: qagDetails.canShare,
+      canSupport: qagDetails.canSupport,
+      canDelete: qagDetails.canDelete,
+      isAuthor: qagDetails.isAuthor,
+      support: qagDetails.support,
+      response: response,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,
@@ -69,6 +89,7 @@ class QagDetailsResponse extends Equatable {
   final int videoHeight;
   final String transcription;
   final bool feedbackStatus;
+  final QagFeedbackResults? feedbackResults;
 
   QagDetailsResponse({
     required this.author,
@@ -79,7 +100,26 @@ class QagDetailsResponse extends Equatable {
     required this.videoHeight,
     required this.transcription,
     required this.feedbackStatus,
+    required this.feedbackResults,
   });
+
+  factory QagDetailsResponse.copyWithNewFeedback({
+    required QagDetailsResponse response,
+    required bool feedbackStatus,
+    required QagFeedbackResults? feedbackResults,
+  }) {
+    return QagDetailsResponse(
+      author: response.author,
+      authorDescription: response.authorDescription,
+      responseDate: response.responseDate,
+      videoUrl: response.videoUrl,
+      videoWidth: response.videoWidth,
+      videoHeight: response.videoHeight,
+      transcription: response.transcription,
+      feedbackStatus: feedbackStatus,
+      feedbackResults: feedbackResults,
+    );
+  }
 
   @override
   List<Object> get props => [
@@ -92,4 +132,19 @@ class QagDetailsResponse extends Equatable {
         transcription,
         feedbackStatus,
       ];
+}
+
+class QagFeedbackResults extends Equatable {
+  final int positiveRatio;
+  final int negativeRatio;
+  final int count;
+
+  QagFeedbackResults({
+    required this.positiveRatio,
+    required this.negativeRatio,
+    required this.count,
+  });
+
+  @override
+  List<Object?> get props => [positiveRatio, negativeRatio, count];
 }
