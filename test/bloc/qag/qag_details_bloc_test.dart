@@ -263,7 +263,7 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackLoadingViewModel(),
+            feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: true),
           ),
         ),
         QagDetailsFetchedState(
@@ -292,7 +292,7 @@ void main() {
       ),
       act: (bloc) => bloc
         ..add(FetchQagDetailsEvent(qagId: qagId))
-        ..add(SendFeedbackEvent(qagId: qagId, isHelpful: true)),
+        ..add(SendFeedbackEvent(qagId: qagId, isHelpful: false)),
       expect: () => [
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
@@ -303,7 +303,7 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackLoadingViewModel(),
+            feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: false),
           ),
         ),
         QagDetailsFetchedState(
@@ -353,7 +353,7 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackLoadingViewModel(),
+            feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: true),
           ),
         ),
         QagDetailsFetchedState(

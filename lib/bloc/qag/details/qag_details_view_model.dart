@@ -119,8 +119,12 @@ class QagDetailsResponseViewModel extends Equatable {
 abstract class QagDetailsFeedbackViewModel extends Equatable {}
 
 class QagDetailsFeedbackLoadingViewModel extends QagDetailsFeedbackViewModel {
+  final bool isHelpfulClicked;
+
+  QagDetailsFeedbackLoadingViewModel({required this.isHelpfulClicked});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [isHelpfulClicked];
 }
 
 class QagDetailsFeedbackErrorViewModel extends QagDetailsFeedbackViewModel {

@@ -41,7 +41,7 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
             QagDetailsFetchedState(
               QagDetailsViewModel.copyWithNewFeedback(
                 viewModel: fetchedState.viewModel,
-                feedback: QagDetailsFeedbackLoadingViewModel(),
+                feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: event.isHelpful),
               ),
             ),
           );
@@ -65,7 +65,6 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
                 ),
               ),
             );
-            // emit(QagFeedbackSuccessState());
           } else {
             emit(
               QagDetailsFetchedState(
@@ -75,7 +74,6 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
                 ),
               ),
             );
-            // emit(QagFeedbackErrorState());
           }
         }
       }

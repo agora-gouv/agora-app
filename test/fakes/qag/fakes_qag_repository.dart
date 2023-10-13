@@ -302,8 +302,10 @@ class FakeQagDetailsSuccessAndFeedbackFailureRepository extends FakeQagSuccessRe
   }
 
   @override
-  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback(
-      {required String qagId, required bool isHelpful}) async {
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required bool isHelpful,
+  }) async {
     return QagFeedbackFailedResponse();
   }
 }

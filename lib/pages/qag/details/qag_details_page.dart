@@ -2,7 +2,6 @@ import 'package:agora/bloc/qag/details/qag_details_bloc.dart';
 import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
 import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
-import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
@@ -28,6 +27,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dart';
+import 'package:agora/pages/qag/details/qag_details_feedback_widget.dart';
 import 'package:agora/pages/qag/details/qag_details_response_view.dart';
 import 'package:agora/pages/qag/details/qag_details_support_view.dart';
 import 'package:agora/pages/qag/qags_moderated_error_content.dart';
@@ -107,9 +107,6 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         ),
         BlocProvider(
           create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => QagFeedbackBloc(qagRepository: RepositoryManager.getQagRepository()),
         ),
       ],
       child: AgoraScaffold(
@@ -251,6 +248,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                     ),
                   ),
                   if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                  QagDetailsFeedbackWidget(),
                 ],
               ),
             ),
