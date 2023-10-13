@@ -30,6 +30,26 @@ class QagDetails extends Equatable {
     required this.response,
   });
 
+  factory QagDetails.copyWithNewResponse({
+    required QagDetails qagDetails,
+    required QagDetailsResponse? response,
+  }) {
+    return QagDetails(
+      id: qagDetails.id,
+      thematique: qagDetails.thematique,
+      title: qagDetails.title,
+      description: qagDetails.description,
+      date: qagDetails.date,
+      username: qagDetails.username,
+      canShare: qagDetails.canShare,
+      canSupport: qagDetails.canSupport,
+      canDelete: qagDetails.canDelete,
+      isAuthor: qagDetails.isAuthor,
+      support: qagDetails.support,
+      response: response,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,
@@ -82,6 +102,24 @@ class QagDetailsResponse extends Equatable {
     required this.feedbackStatus,
     required this.feedbackResults,
   });
+
+  factory QagDetailsResponse.copyWithNewFeedback({
+    required QagDetailsResponse response,
+    required bool feedbackStatus,
+    required QagFeedbackResults? feedbackResults,
+  }) {
+    return QagDetailsResponse(
+      author: response.author,
+      authorDescription: response.authorDescription,
+      responseDate: response.responseDate,
+      videoUrl: response.videoUrl,
+      videoWidth: response.videoWidth,
+      videoHeight: response.videoHeight,
+      transcription: response.transcription,
+      feedbackStatus: feedbackStatus,
+      feedbackResults: feedbackResults,
+    );
+  }
 
   @override
   List<Object> get props => [

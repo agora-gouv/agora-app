@@ -31,24 +31,21 @@ class QagDetailsPresenter {
               videoWidth: response.videoWidth,
               videoHeight: response.videoHeight,
               transcription: response.transcription,
-              feedbackResults: _present(response),
             )
           : null,
+      feedback: _presentFeedback(response),
     );
   }
 
-  static QagDetailsFeedbackViewModel _present(QagDetailsResponse qagDetailsResponse) {
-    if (qagDetailsResponse.feedbackStatus == false) {
-      return QagDetailsFeedbackResultsNotAnsweredViewModel();
+  static QagDetailsFeedbackViewModel? _presentFeedback(QagDetailsResponse? qagDetailsResponse) {
+    if (qagDetailsResponse == null) {
+      return null;
+    } else if (qagDetailsResponse.feedbackStatus == false) {
+      return QagDetailsFeedbackNotAnsweredViewModel(feedbackResults: qagDetailsResponse.feedbackResults);
     } else if (qagDetailsResponse.feedbackResults == null) {
-      return QagDetailsFeedbackResultsAnsweredNoResultsViewModel();
+      return QagDetailsFeedbackAnsweredNoResultsViewModel();
     } else {
-      final feedbackResults = qagDetailsResponse.feedbackResults!;
-      return QagDetailsFeedbackResultsViewModel(
-        positiveRatio: feedbackResults.positiveRatio,
-        negativeRatio: feedbackResults.negativeRatio,
-        count: feedbackResults.count,
-      );
+      return QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: qagDetailsResponse.feedbackResults!);
     }
   }
 }
