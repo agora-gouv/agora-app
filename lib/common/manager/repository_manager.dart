@@ -1,4 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/client/auth_interceptor.dart';
 import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
@@ -21,6 +22,8 @@ class RepositoryManager {
   static const String _baseUrl = "baseUrl";
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
+  static const String _noAuthenticationDio = "noAuthenticationDio";
+  static const String _authenticatedDio = "authenticatedDio";
 
   static final userAgentBuilder = UserAgentBuilderImpl(appVersionHelper: HelperManager.getAppVersionHelper());
 
@@ -29,8 +32,8 @@ class RepositoryManager {
   }
 
   static Dio _getDio() {
-    if (GetIt.instance.isRegistered<Dio>()) {
-      return GetIt.instance.get<Dio>();
+    if (GetIt.instance.isRegistered<Dio>(instanceName: _authenticatedDio)) {
+      return GetIt.instance.get<Dio>(instanceName: _authenticatedDio);
     }
     if (!GetIt.instance.isRegistered<String>(instanceName: _baseUrl)) {
       throw Exception("RepositoryManager has not been initialized");
@@ -58,7 +61,41 @@ class RepositoryManager {
     dio.interceptors
       ..add(dioLoggerInterceptor)
       ..add(dioCacheInterceptor);
-    GetIt.instance.registerSingleton(dio);
+    GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
+    return dio;
+  }
+
+  static Dio _getDioWithoutAuth() {
+    if (GetIt.instance.isRegistered<Dio>(instanceName: _noAuthenticationDio)) {
+      return GetIt.instance.get<Dio>(instanceName: _noAuthenticationDio);
+    }
+    if (!GetIt.instance.isRegistered<String>(instanceName: _baseUrl)) {
+      throw Exception("RepositoryManager has not been initialized");
+    }
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
+        connectTimeout: Duration(seconds: 60),
+        receiveTimeout: Duration(seconds: 60),
+      ),
+    );
+    final dioLoggerInterceptor = PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
+    );
+    final dioCacheInterceptor = DioCacheInterceptor(
+      options: CacheOptions(
+        store: MemCacheStore(),
+        policy: CachePolicy.request,
+        maxStale: const Duration(days: 14),
+      ),
+    );
+    dio.interceptors
+      ..add(dioLoggerInterceptor)
+      ..add(dioCacheInterceptor);
+    GetIt.instance.registerSingleton(dio, instanceName: _noAuthenticationDio);
     return dio;
   }
 
@@ -67,7 +104,7 @@ class RepositoryManager {
       return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _noAuthenticationHttpClient);
     }
     final agoraDioHttpClient = AgoraDioHttpClient(
-      dio: _getDio(),
+      dio: _getDioWithoutAuth(),
       userAgentBuilder: userAgentBuilder,
     );
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _noAuthenticationHttpClient);
@@ -78,11 +115,13 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient)) {
       return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient);
     }
+    final authInterceptor = AuthInterceptor();
     final agoraDioHttpClient = AgoraDioHttpClient(
       dio: _getDio(),
       jwtHelper: HelperManager.getJwtHelper(),
       userAgentBuilder: userAgentBuilder,
     );
+    agoraDioHttpClient.dio.interceptors.add(authInterceptor);
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _authenticatedHttpClient);
     return agoraDioHttpClient;
   }

@@ -14,6 +14,7 @@ class FakeLoginSuccessRepository extends LoginRepository {
       jwtToken: "jwtToken",
       loginToken: "loginToken",
       isModerator: true,
+      jwtExpirationEpochMilli: 1234567890,
     );
   }
 
@@ -28,6 +29,7 @@ class FakeLoginSuccessRepository extends LoginRepository {
     return LoginSucceedResponse(
       jwtToken: "jwtToken",
       isModerator: false,
+      jwtExpirationEpochMilli: 1234567890,
     );
   }
 }

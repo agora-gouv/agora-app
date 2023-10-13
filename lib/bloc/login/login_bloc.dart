@@ -79,6 +79,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (response is LoginSucceedResponse) {
       jwtHelper.setJwtToken(response.jwtToken);
       roleHelper.setIsModerator(response.isModerator);
+      jwtHelper.setJwtExpiration(response.jwtExpirationEpochMilli);
       return LoginSuccessState();
     } else {
       final errorResponse = response as LoginFailedResponse;
@@ -101,6 +102,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (response is SignupSucceedResponse) {
       loginStorageClient.save(userId: response.userId, loginToken: response.loginToken);
       jwtHelper.setJwtToken(response.jwtToken);
+      jwtHelper.setJwtExpiration(response.jwtExpirationEpochMilli);
       roleHelper.setIsModerator(response.isModerator);
       return LoginSuccessState();
     } else {
