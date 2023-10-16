@@ -2,6 +2,8 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
 import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/manager/helper_manager.dart';
+import 'package:agora/common/manager/service_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/repository/mocks_consultation_repository.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
@@ -115,7 +117,14 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient)) {
       return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient);
     }
-    final authInterceptor = AuthInterceptor();
+    final authInterceptor = AuthInterceptor(
+      repository: RepositoryManager.getLoginRepository(),
+      loginStorageClient: StorageManager.getLoginStorageClient(),
+      pushNotificationService: ServiceManager.getPushNotificationService(),
+      jwtHelper: HelperManager.getJwtHelper(),
+      appVersionHelper: HelperManager.getAppVersionHelper(),
+      platformHelper: HelperManager.getPlatformHelper(),
+    );
     final agoraDioHttpClient = AgoraDioHttpClient(
       dio: _getDio(),
       jwtHelper: HelperManager.getJwtHelper(),

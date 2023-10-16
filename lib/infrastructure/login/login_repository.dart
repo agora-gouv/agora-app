@@ -49,7 +49,7 @@ class LoginDioRepository extends LoginRepository {
         jwtToken: response.data["jwtToken"] as String,
         loginToken: response.data["loginToken"] as String,
         isModerator: response.data["isModerator"] as bool,
-        jwtExpirationEpochMilli: response.data["isModerator"] as int,
+        jwtExpirationEpochMilli: response.data["jwtExpirationEpochMilli"] as int,
       );
     } catch (e) {
       if (e is DioException) {
