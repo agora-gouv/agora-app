@@ -14,6 +14,7 @@ import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/agora_app_bar_with_tabs.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -153,17 +154,18 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               maxLength: 75,
                               showCounterText: true,
                               onChanged: (String input) {
+                                final sanitizedInput = StringUtils.replaceDiacriticsAndRemoveSpecialChars(input);
                                 bool reloadQags = false;
-                                if (input.isNullOrBlank() || input.length < 3) {
+                                if (sanitizedInput.isNullOrBlank() || sanitizedInput.length < 3) {
                                   if ((currentKeywords?.length ?? 0) >= 3) {
                                     reloadQags = true;
                                   }
                                   currentKeywords = null;
                                 } else {
-                                  if ((currentKeywords?.length ?? 0) != input.length) {
+                                  if ((currentKeywords?.length ?? 0) != sanitizedInput.length) {
                                     reloadQags = true;
                                   }
-                                  currentKeywords = input;
+                                  currentKeywords = sanitizedInput;
                                 }
                                 if (reloadQags) {
                                   _displayLoader(context);
