@@ -153,13 +153,22 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               maxLength: 75,
                               showCounterText: true,
                               onChanged: (String input) {
-                                if (input.isNullOrBlank()) {
+                                bool reloadQags = false;
+                                if (input.isNullOrBlank() || input.length < 3) {
+                                  if ((currentKeywords?.length ?? 0) >= 3) {
+                                    reloadQags = true;
+                                  }
                                   currentKeywords = null;
                                 } else {
+                                  if ((currentKeywords?.length ?? 0) != input.length) {
+                                    reloadQags = true;
+                                  }
                                   currentKeywords = input;
                                 }
-                                _displayLoader(context);
-                                timerHelper.startTimer(() => _loadQags(context));
+                                if (reloadQags) {
+                                  _displayLoader(context);
+                                  timerHelper.startTimer(() => _loadQags(context));
+                                }
                               },
                             ),
                           ),
@@ -295,8 +304,10 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   }
 
   void _loadQags(BuildContext context) {
+    final String widgetName;
     switch (_tabController.index) {
       case 0:
+        widgetName = AnalyticsScreenNames.qagsPaginatedPopularPage;
         context.read<QagPaginatedPopularBloc>().add(
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
@@ -306,6 +317,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
             );
         break;
       case 1:
+        widgetName = AnalyticsScreenNames.qagsPaginatedLatestPage;
         context.read<QagPaginatedLatestBloc>().add(
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
@@ -315,6 +327,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
             );
         break;
       case 2:
+        widgetName = AnalyticsScreenNames.qagsPaginatedSupportingPage;
         context.read<QagPaginatedSupportingBloc>().add(
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
@@ -325,6 +338,17 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
         break;
       default:
         throw Exception("QaGs paginated : tab index not exists");
+    }
+    _trackSearchedKeywords(widgetName);
+  }
+
+  void _trackSearchedKeywords(String widgetName) {
+    if (currentKeywords != null && currentKeywords?.isNotEmpty == true) {
+      TrackerHelper.trackSearch(
+        widgetName: widgetName,
+        searchName: AnalyticsEventNames.qagsSearch,
+        searchedKeywords: currentKeywords!,
+      );
     }
   }
 

@@ -95,5 +95,5 @@ class QagStrings {
       "Votre question ne sera plus accessible aux utilisateurs d’Agora et ne pourra recevoir de réponse de la part des membres du gouvernement.";
   static const String yourQuestion = "Votre question";
   static const String suppressSucceed = "La suppression a été prise en compte.";
-  static const String searchQuestion = "Rechercher une question";
+  static const String searchQuestion = "Rechercher un mot-clef";
 }
