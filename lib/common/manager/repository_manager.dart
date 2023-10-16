@@ -40,29 +40,17 @@ class RepositoryManager {
     if (!GetIt.instance.isRegistered<String>(instanceName: _baseUrl)) {
       throw Exception("RepositoryManager has not been initialized");
     }
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
-        connectTimeout: Duration(seconds: 60),
-        receiveTimeout: Duration(seconds: 60),
+    final Dio dio = _createBaseDio();
+    dio.interceptors.add(
+      AuthInterceptor(
+        repository: RepositoryManager.getLoginRepository(),
+        loginStorageClient: StorageManager.getLoginStorageClient(),
+        pushNotificationService: ServiceManager.getPushNotificationService(),
+        jwtHelper: HelperManager.getJwtHelper(),
+        appVersionHelper: HelperManager.getAppVersionHelper(),
+        platformHelper: HelperManager.getPlatformHelper(),
       ),
     );
-    final dioLoggerInterceptor = PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-    );
-    final dioCacheInterceptor = DioCacheInterceptor(
-      options: CacheOptions(
-        store: MemCacheStore(),
-        policy: CachePolicy.request,
-        maxStale: const Duration(days: 14),
-      ),
-    );
-    dio.interceptors
-      ..add(dioLoggerInterceptor)
-      ..add(dioCacheInterceptor);
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
     return dio;
   }
@@ -74,6 +62,12 @@ class RepositoryManager {
     if (!GetIt.instance.isRegistered<String>(instanceName: _baseUrl)) {
       throw Exception("RepositoryManager has not been initialized");
     }
+    final Dio dio = _createBaseDio();
+    GetIt.instance.registerSingleton(dio, instanceName: _noAuthenticationDio);
+    return dio;
+  }
+
+  static Dio _createBaseDio() {
     final dio = Dio(
       BaseOptions(
         baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
@@ -97,7 +91,6 @@ class RepositoryManager {
     dio.interceptors
       ..add(dioLoggerInterceptor)
       ..add(dioCacheInterceptor);
-    GetIt.instance.registerSingleton(dio, instanceName: _noAuthenticationDio);
     return dio;
   }
 
@@ -117,20 +110,11 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient)) {
       return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient);
     }
-    final authInterceptor = AuthInterceptor(
-      repository: RepositoryManager.getLoginRepository(),
-      loginStorageClient: StorageManager.getLoginStorageClient(),
-      pushNotificationService: ServiceManager.getPushNotificationService(),
-      jwtHelper: HelperManager.getJwtHelper(),
-      appVersionHelper: HelperManager.getAppVersionHelper(),
-      platformHelper: HelperManager.getPlatformHelper(),
-    );
     final agoraDioHttpClient = AgoraDioHttpClient(
       dio: _getDio(),
       jwtHelper: HelperManager.getJwtHelper(),
       userAgentBuilder: userAgentBuilder,
     );
-    agoraDioHttpClient.dio.interceptors.add(authInterceptor);
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _authenticatedHttpClient);
     return agoraDioHttpClient;
   }
