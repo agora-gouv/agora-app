@@ -49,6 +49,7 @@ class LoginDioRepository extends LoginRepository {
         jwtToken: response.data["jwtToken"] as String,
         loginToken: response.data["loginToken"] as String,
         isModerator: response.data["isModerator"] as bool,
+        jwtExpirationEpochMilli: response.data["jwtExpirationEpochMilli"] as int,
       );
     } catch (e) {
       if (e is DioException) {
@@ -87,6 +88,7 @@ class LoginDioRepository extends LoginRepository {
       return LoginSucceedResponse(
         jwtToken: response.data["jwtToken"] as String,
         isModerator: response.data["isModerator"] as bool,
+        jwtExpirationEpochMilli: response.data["jwtExpirationEpochMilli"] as int,
       );
     } catch (e) {
       if (e is DioException) {
@@ -112,16 +114,24 @@ class SignupSucceedResponse extends SignupRepositoryResponse {
   final String jwtToken;
   final String loginToken;
   final bool isModerator;
+  final int jwtExpirationEpochMilli;
 
   SignupSucceedResponse({
     required this.userId,
     required this.jwtToken,
     required this.loginToken,
     required this.isModerator,
+    required this.jwtExpirationEpochMilli,
   });
 
   @override
-  List<Object> get props => [userId, jwtToken, loginToken, isModerator];
+  List<Object> get props => [
+        userId,
+        jwtToken,
+        loginToken,
+        isModerator,
+        jwtExpirationEpochMilli,
+      ];
 }
 
 class SignupFailedResponse extends SignupRepositoryResponse {
@@ -141,11 +151,16 @@ abstract class LoginRepositoryResponse extends Equatable {
 class LoginSucceedResponse extends LoginRepositoryResponse {
   final String jwtToken;
   final bool isModerator;
+  final int jwtExpirationEpochMilli;
 
-  LoginSucceedResponse({required this.jwtToken, required this.isModerator});
+  LoginSucceedResponse({
+    required this.jwtToken,
+    required this.isModerator,
+    required this.jwtExpirationEpochMilli,
+  });
 
   @override
-  List<Object> get props => [jwtToken, isModerator];
+  List<Object> get props => [jwtToken, isModerator, jwtExpirationEpochMilli];
 }
 
 class LoginFailedResponse extends LoginRepositoryResponse {

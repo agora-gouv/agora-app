@@ -1,11 +1,16 @@
 abstract class JwtHelper {
   String? getJwtToken();
 
+  int? getJwtExpirationEpochMilli();
+
   void setJwtToken(String jwtToken);
+
+  void setJwtExpiration(int jwtExpirationEpochMilli);
 }
 
 class JwtHelperImpl extends JwtHelper {
   String? _jwtToken;
+  int? _jwtExpirationEpochMilli;
 
   @override
   String? getJwtToken() {
@@ -13,7 +18,17 @@ class JwtHelperImpl extends JwtHelper {
   }
 
   @override
+  int? getJwtExpirationEpochMilli() {
+    return _jwtExpirationEpochMilli;
+  }
+
+  @override
   void setJwtToken(String jwtToken) {
     _jwtToken = jwtToken;
+  }
+
+  @override
+  void setJwtExpiration(int jwtExpirationEpochMilli) {
+    _jwtExpirationEpochMilli = jwtExpirationEpochMilli;
   }
 }

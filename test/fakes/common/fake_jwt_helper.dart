@@ -2,6 +2,7 @@ import 'package:agora/common/helper/jwt_helper.dart';
 
 class FakeJwtHelper extends JwtHelper {
   String? _jwtToken;
+  int? _jwtExpirationEpochMilli;
 
   @override
   String? getJwtToken() {
@@ -9,7 +10,17 @@ class FakeJwtHelper extends JwtHelper {
   }
 
   @override
+  int? getJwtExpirationEpochMilli() {
+    return _jwtExpirationEpochMilli;
+  }
+
+  @override
   void setJwtToken(String jwtToken) {
     _jwtToken = jwtToken;
+  }
+
+  @override
+  void setJwtExpiration(int jwtExpirationEpochMilli) {
+    _jwtExpirationEpochMilli = jwtExpirationEpochMilli;
   }
 }

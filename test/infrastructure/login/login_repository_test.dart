@@ -32,6 +32,7 @@ void main() {
             "jwtToken": "jwtToken",
             "loginToken": "loginToken",
             "isModerator": true,
+            "jwtExpirationEpochMilli": 1234567890,
           },
         ),
         headers: {
@@ -62,6 +63,7 @@ void main() {
           jwtToken: "jwtToken",
           loginToken: "loginToken",
           isModerator: true,
+          jwtExpirationEpochMilli: 1234567890,
         ),
       );
     });
@@ -173,6 +175,7 @@ void main() {
             "jwtToken": "jwtToken",
             "loginToken": "loginToken",
             "isModerator": false,
+            "jwtExpirationEpochMilli": 1234567890,
           },
         ),
         headers: {
@@ -205,6 +208,7 @@ void main() {
         LoginSucceedResponse(
           jwtToken: "jwtToken",
           isModerator: false,
+          jwtExpirationEpochMilli: 1234567890,
         ),
       );
     });
