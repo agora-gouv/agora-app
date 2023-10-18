@@ -58,6 +58,7 @@ class QagStrings {
   static const String readMore = "Lire la suite";
   static const String readLess = "Lire moins";
   static const String feedback = "Merci pour votre réponse.";
+  static const String feedbackAnswerCount = "%s personnes ont répondu.";
   static const String answeredAt = "a répondu le %s";
   static const String emptyList = "Pas de question en ce moment";
   static const String displayMore = "Afficher plus";
@@ -94,5 +95,5 @@ class QagStrings {
       "Votre question ne sera plus accessible aux utilisateurs d’Agora et ne pourra recevoir de réponse de la part des membres du gouvernement.";
   static const String yourQuestion = "Votre question";
   static const String suppressSucceed = "La suppression a été prise en compte.";
-  static const String searchQuestion = "Rechercher une question";
+  static const String searchQuestion = "Rechercher un mot-clef";
 }

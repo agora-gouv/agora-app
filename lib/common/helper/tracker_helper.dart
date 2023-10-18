@@ -7,6 +7,7 @@ import 'package:matomo_tracker/matomo_tracker.dart';
 class TrackerHelper {
   static const matomoNotificationTrackerDimension = "1";
   static const matomoVersionTrackerDimension = "2";
+  static const matomoSearchedKeywordsTrackerDimension = "3";
 
   static void trackClick({required String widgetName, required String clickName}) {
     Log.d("AGORA MATOMO TRACK CLICK - $widgetName - $clickName");
@@ -43,6 +44,16 @@ class TrackerHelper {
       eventCategory: widgetName,
       action: "event",
       eventName: eventName,
+    );
+  }
+
+  static void trackSearch({required String widgetName, required String searchName, required String searchedKeywords}) {
+    Log.d("AGORA MATOMO TRACK EVENT - $widgetName - $searchName");
+    MatomoTracker.instance.trackEvent(
+      eventCategory: widgetName,
+      action: "search",
+      eventName: searchName,
+      dimensions: {matomoSearchedKeywordsTrackerDimension: searchedKeywords},
     );
   }
 }

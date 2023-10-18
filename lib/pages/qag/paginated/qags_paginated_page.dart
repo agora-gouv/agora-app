@@ -138,29 +138,39 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               ),
                             ),
                           ),
-                          /*Padding(
-                            padding: EdgeInsets.only(
-                              left: AgoraSpacings.horizontalPadding,
-                              right: AgoraSpacings.horizontalPadding,
-                              top: AgoraSpacings.base,
-                            ),
-                            child: AgoraTextField(
-                              hintText: QagStrings.searchQuestion,
-                              rightIcon: TextFieldIcon.search,
-                              textInputAction: TextInputAction.search,
-                              maxLength: 75,
-                              showCounterText: true,
-                              onChanged: (String input) {
-                                if (input.isNullOrBlank()) {
-                                  currentKeywords = null;
-                                } else {
-                                  currentKeywords = input;
-                                }
-                                _displayLoader(context);
-                                timerHelper.startTimer(() => _loadQags(context));
-                              },
-                            ),
-                          ),*/
+                          // Padding(
+                          //   padding: EdgeInsets.only(
+                          //     left: AgoraSpacings.horizontalPadding,
+                          //     right: AgoraSpacings.horizontalPadding,
+                          //     top: AgoraSpacings.base,
+                          //   ),
+                          //   child: AgoraTextField(
+                          //     hintText: QagStrings.searchQuestion,
+                          //     rightIcon: TextFieldIcon.search,
+                          //     textInputAction: TextInputAction.search,
+                          //     maxLength: 75,
+                          //     showCounterText: true,
+                          //     onChanged: (String input) {
+                          //       final sanitizedInput = StringUtils.replaceDiacriticsAndRemoveSpecialChars(input);
+                          //       bool reloadQags = false;
+                          //       if (sanitizedInput.isNullOrBlank() || sanitizedInput.length < 3) {
+                          //         if ((currentKeywords?.length ?? 0) >= 3) {
+                          //           reloadQags = true;
+                          //         }
+                          //         currentKeywords = null;
+                          //       } else {
+                          //         if ((currentKeywords?.length ?? 0) != sanitizedInput.length) {
+                          //           reloadQags = true;
+                          //         }
+                          //         currentKeywords = sanitizedInput;
+                          //       }
+                          //       if (reloadQags) {
+                          //         _displayLoader(context);
+                          //         timerHelper.startTimer(() => _loadQags(context));
+                          //       }
+                          //     },
+                          //   ),
+                          // ),
                         ],
                       ),
                       tabChild: [
@@ -293,8 +303,10 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
   }
 
   void _loadQags(BuildContext context) {
+    final String widgetName;
     switch (_tabController.index) {
       case 0:
+        widgetName = AnalyticsScreenNames.qagsPaginatedPopularPage;
         context.read<QagPaginatedPopularBloc>().add(
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
@@ -304,6 +316,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
             );
         break;
       case 1:
+        widgetName = AnalyticsScreenNames.qagsPaginatedLatestPage;
         context.read<QagPaginatedLatestBloc>().add(
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
@@ -313,6 +326,7 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
             );
         break;
       case 2:
+        widgetName = AnalyticsScreenNames.qagsPaginatedSupportingPage;
         context.read<QagPaginatedSupportingBloc>().add(
               FetchQagsPaginatedEvent(
                 thematiqueId: currentThematiqueId,
@@ -324,23 +338,34 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
       default:
         throw Exception("QaGs paginated : tab index not exists");
     }
+    _trackSearchedKeywords(widgetName);
   }
 
-  /*void _displayLoader(BuildContext context) {
-    switch (_tabController.index) {
-      case 0:
-        context.read<QagPaginatedPopularBloc>().add(QagPaginatedDisplayLoaderEvent());
-        break;
-      case 1:
-        context.read<QagPaginatedLatestBloc>().add(QagPaginatedDisplayLoaderEvent());
-        break;
-      case 2:
-        context.read<QagPaginatedSupportingBloc>().add(QagPaginatedDisplayLoaderEvent());
-        break;
-      default:
-        throw Exception("QaGs paginated : tab index not exists");
+  void _trackSearchedKeywords(String widgetName) {
+    if (currentKeywords != null && currentKeywords?.isNotEmpty == true) {
+      TrackerHelper.trackSearch(
+        widgetName: widgetName,
+        searchName: AnalyticsEventNames.qagsSearch,
+        searchedKeywords: currentKeywords!,
+      );
     }
-  }*/
+  }
+
+  // void _displayLoader(BuildContext context) {
+  //   switch (_tabController.index) {
+  //     case 0:
+  //       context.read<QagPaginatedPopularBloc>().add(QagPaginatedDisplayLoaderEvent());
+  //       break;
+  //     case 1:
+  //       context.read<QagPaginatedLatestBloc>().add(QagPaginatedDisplayLoaderEvent());
+  //       break;
+  //     case 2:
+  //       context.read<QagPaginatedSupportingBloc>().add(QagPaginatedDisplayLoaderEvent());
+  //       break;
+  //     default:
+  //       throw Exception("QaGs paginated : tab index not exists");
+  //   }
+  // }
 
   int _getInitialIndex() {
     switch (widget.arguments.initialTab) {

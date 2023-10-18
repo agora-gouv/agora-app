@@ -272,7 +272,45 @@ class FakeQagSuccessRepository extends QagRepository {
   }
 }
 
-class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagSuccessRepository {
+class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
+  final QagDetails qagDetails;
+
+  FakeQagDetailsSuccessRepository({required this.qagDetails});
+
+  @override
+  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
+    required String qagId,
+  }) async {
+    return GetQagDetailsSucceedResponse(
+      qagDetails: qagDetails,
+    );
+  }
+}
+
+class FakeQagDetailsSuccessAndFeedbackFailureRepository extends FakeQagSuccessRepository {
+  final QagDetails qagDetails;
+
+  FakeQagDetailsSuccessAndFeedbackFailureRepository({required this.qagDetails});
+
+  @override
+  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
+    required String qagId,
+  }) async {
+    return GetQagDetailsSucceedResponse(
+      qagDetails: qagDetails,
+    );
+  }
+
+  @override
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required bool isHelpful,
+  }) async {
+    return QagFeedbackFailedResponse();
+  }
+}
+
+class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSuccessRepository {
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
@@ -299,6 +337,49 @@ class FakeQagSuccessWithSupportNullAndResponseNotNullRepository extends FakeQagS
           videoHeight: 1920,
           transcription: "Blablabla",
           feedbackStatus: true,
+          feedbackResults: QagFeedbackResults(
+            positiveRatio: 79,
+            negativeRatio: 21,
+            count: 31415,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuccessRepository {
+  @override
+  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
+    required String qagId,
+  }) async {
+    return GetQagDetailsSucceedResponse(
+      qagDetails: QagDetails(
+        id: qagId,
+        thematique: Thematique(picto: "🚊", label: "Transports"),
+        title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+        description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
+        date: DateTime(2024, 1, 23),
+        username: "CollectifSauvonsLaRetraite",
+        canShare: true,
+        canSupport: true,
+        canDelete: true,
+        isAuthor: true,
+        support: QagDetailsSupport(count: 112, isSupported: true),
+        response: QagDetailsResponse(
+          author: "Olivier Véran",
+          authorDescription: "Ministre délégué auprès de...",
+          responseDate: DateTime(2024, 2, 20),
+          videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+          videoWidth: 1080,
+          videoHeight: 1920,
+          transcription: "Blablabla",
+          feedbackStatus: false,
+          feedbackResults: QagFeedbackResults(
+            positiveRatio: 79,
+            negativeRatio: 21,
+            count: 31415,
+          ),
         ),
       ),
     );

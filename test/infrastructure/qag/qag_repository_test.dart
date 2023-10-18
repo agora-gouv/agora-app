@@ -701,6 +701,11 @@ void main() {
               "videoHeight": 1920,
               "transcription": "Blablabla",
               "feedbackStatus": true,
+              "feedbackResult": {
+                "positiveRatio": 95,
+                "negativeRatio": 5,
+                "count": 117,
+              },
             },
           },
         ),
@@ -741,6 +746,11 @@ void main() {
               videoHeight: 1920,
               transcription: "Blablabla",
               feedbackStatus: true,
+              feedbackResults: QagFeedbackResults(
+                positiveRatio: 95,
+                negativeRatio: 5,
+                count: 117,
+              ),
             ),
           ),
         ),

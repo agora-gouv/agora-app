@@ -1,4 +1,5 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:equatable/equatable.dart';
 
 class QagDetailsViewModel extends Equatable {
@@ -14,6 +15,7 @@ class QagDetailsViewModel extends Equatable {
   final bool isAuthor;
   final QagDetailsSupportViewModel support;
   final QagDetailsResponseViewModel? response;
+  final QagDetailsFeedbackViewModel? feedback;
 
   QagDetailsViewModel({
     required this.id,
@@ -28,7 +30,29 @@ class QagDetailsViewModel extends Equatable {
     required this.isAuthor,
     required this.support,
     required this.response,
+    required this.feedback,
   });
+
+  factory QagDetailsViewModel.copyWithNewFeedback({
+    required QagDetailsViewModel viewModel,
+    required QagDetailsFeedbackViewModel? feedback,
+  }) {
+    return QagDetailsViewModel(
+      id: viewModel.id,
+      thematique: viewModel.thematique,
+      title: viewModel.title,
+      description: viewModel.description,
+      username: viewModel.username,
+      date: viewModel.date,
+      canShare: viewModel.canShare,
+      canSupport: viewModel.canSupport,
+      canDelete: viewModel.canDelete,
+      isAuthor: viewModel.isAuthor,
+      support: viewModel.support,
+      response: viewModel.response,
+      feedback: feedback,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -44,6 +68,7 @@ class QagDetailsViewModel extends Equatable {
         isAuthor,
         support,
         response,
+        feedback,
       ];
 }
 
@@ -68,7 +93,6 @@ class QagDetailsResponseViewModel extends Equatable {
   final int videoWidth;
   final int videoHeight;
   final String transcription;
-  final bool feedbackStatus;
 
   QagDetailsResponseViewModel({
     required this.author,
@@ -78,7 +102,6 @@ class QagDetailsResponseViewModel extends Equatable {
     required this.videoWidth,
     required this.videoHeight,
     required this.transcription,
-    required this.feedbackStatus,
   });
 
   @override
@@ -90,6 +113,46 @@ class QagDetailsResponseViewModel extends Equatable {
         videoWidth,
         videoHeight,
         transcription,
-        feedbackStatus,
       ];
+}
+
+abstract class QagDetailsFeedbackViewModel extends Equatable {}
+
+class QagDetailsFeedbackLoadingViewModel extends QagDetailsFeedbackViewModel {
+  final bool isHelpfulClicked;
+
+  QagDetailsFeedbackLoadingViewModel({required this.isHelpfulClicked});
+
+  @override
+  List<Object?> get props => [isHelpfulClicked];
+}
+
+class QagDetailsFeedbackErrorViewModel extends QagDetailsFeedbackViewModel {
+  @override
+  List<Object?> get props => [];
+}
+
+class QagDetailsFeedbackNotAnsweredViewModel extends QagDetailsFeedbackViewModel {
+  final QagFeedbackResults? feedbackResults;
+
+  QagDetailsFeedbackNotAnsweredViewModel({required this.feedbackResults});
+
+  @override
+  List<Object?> get props => [feedbackResults];
+}
+
+class QagDetailsFeedbackAnsweredNoResultsViewModel extends QagDetailsFeedbackViewModel {
+  @override
+  List<Object?> get props => [];
+}
+
+class QagDetailsFeedbackAnsweredResultsViewModel extends QagDetailsFeedbackViewModel {
+  final QagFeedbackResults feedbackResults;
+
+  QagDetailsFeedbackAnsweredResultsViewModel({
+    required this.feedbackResults,
+  });
+
+  @override
+  List<Object?> get props => [feedbackResults];
 }

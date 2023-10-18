@@ -1,37 +1,24 @@
 import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
-import 'package:agora/bloc/qag/feedback/qag_feedback_bloc.dart';
-import 'package:agora/bloc/qag/feedback/qag_feedback_event.dart';
-import 'package:agora/bloc/qag/feedback/qag_feedback_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_video_view.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class QagDetailsResponseView extends StatefulWidget {
+class QagDetailsResponseView extends StatelessWidget {
   final String qagId;
   final QagDetailsViewModel detailsViewModel;
 
   const QagDetailsResponseView({super.key, required this.qagId, required this.detailsViewModel});
 
   @override
-  State<QagDetailsResponseView> createState() => _QagDetailsResponseViewState();
-}
-
-class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
-  bool isThumbUpClicked = true;
-
-  @override
   Widget build(BuildContext context) {
-    final response = widget.detailsViewModel.response!;
+    final response = detailsViewModel.response!;
     return Flexible(
       child: Container(
         width: double.infinity,
@@ -49,7 +36,7 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                 videoHeight: response.videoHeight,
                 onVideoStartMoreThan5Sec: () {
                   TrackerHelper.trackEvent(
-                    eventName: "${AnalyticsEventNames.video} ${widget.qagId}",
+                    eventName: "${AnalyticsEventNames.video} $qagId",
                     widgetName: AnalyticsScreenNames.qagDetailsPage,
                   );
                 },
@@ -104,14 +91,14 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
                     TextSpan(text: QagStrings.answerTo),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(
-                      text: widget.detailsViewModel.username,
+                      text: detailsViewModel.username,
                       style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
                     ),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(text: QagStrings.at),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(
-                      text: widget.detailsViewModel.date,
+                      text: detailsViewModel.date,
                       style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
                     ),
                   ],
@@ -122,63 +109,10 @@ class _QagDetailsResponseViewState extends State<QagDetailsResponseView> {
               SizedBox(height: AgoraSpacings.x0_5),
               AgoraReadMoreText(response.transcription),
               SizedBox(height: AgoraSpacings.x2),
-              Semantics(header: true, child: Text(QagStrings.questionUtilsTitle, style: AgoraTextStyles.medium18)),
-              SizedBox(height: AgoraSpacings.base),
-              BlocBuilder<QagFeedbackBloc, QagFeedbackState>(
-                builder: (context, feedbackState) {
-                  final qagFeedbackBloc = context.read<QagFeedbackBloc>();
-                  return feedbackState is QagFeedbackSuccessState ||
-                          (feedbackState is QagFeedbackInitialState && response.feedbackStatus)
-                      ? Text(QagStrings.feedback)
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                AgoraRoundedButton(
-                                  icon: "ic_thumb_white.svg",
-                                  label: QagStrings.utils,
-                                  contentPadding: AgoraRoundedButtonPadding.short,
-                                  isLoading: feedbackState is QagFeedbackLoadingState && isThumbUpClicked,
-                                  onPressed: () {
-                                    _trackFeedback();
-                                    setState(() => isThumbUpClicked = true);
-                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: true));
-                                  },
-                                ),
-                                SizedBox(width: AgoraSpacings.base),
-                                AgoraRoundedButton(
-                                  icon: "ic_thumb_down_white.svg",
-                                  label: QagStrings.notUtils,
-                                  contentPadding: AgoraRoundedButtonPadding.short,
-                                  isLoading: feedbackState is QagFeedbackLoadingState && !isThumbUpClicked,
-                                  onPressed: () {
-                                    _trackFeedback();
-                                    setState(() => isThumbUpClicked = false);
-                                    qagFeedbackBloc.add(QagFeedbackEvent(qagId: widget.qagId, isHelpful: false));
-                                  },
-                                ),
-                              ],
-                            ),
-                            if (feedbackState is QagFeedbackErrorState) ...[
-                              SizedBox(height: AgoraSpacings.base),
-                              AgoraErrorView(),
-                            ],
-                          ],
-                        );
-                },
-              ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  void _trackFeedback() {
-    TrackerHelper.trackClick(
-      clickName: "${AnalyticsEventNames.giveQagFeedback} ${widget.qagId}",
-      widgetName: AnalyticsScreenNames.qagDetailsPage,
     );
   }
 }
