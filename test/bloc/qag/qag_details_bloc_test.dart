@@ -309,7 +309,13 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackAnsweredNoResultsViewModel(),
+            feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+              feedbackResults: QagFeedbackResults(
+                positiveRatio: 79,
+                negativeRatio: 21,
+                count: 31415,
+              ),
+            ),
           ),
         ),
       ],

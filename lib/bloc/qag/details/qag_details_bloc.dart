@@ -51,11 +51,20 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
             isHelpful: event.isHelpful,
           );
 
-          if (response is QagFeedbackSuccessResponse) {
-            final oldFeedbackViewModel = fetchedState.viewModel.feedback as QagDetailsFeedbackNotAnsweredViewModel;
-            final newFeedbackViewModel = oldFeedbackViewModel.feedbackResults != null
-                ? QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: oldFeedbackViewModel.feedbackResults!)
-                : QagDetailsFeedbackAnsweredNoResultsViewModel();
+          if (response is QagFeedbackSuccessBodyResponse) {
+            final newFeedbackViewModel = QagDetailsFeedbackAnsweredNoResultsViewModel();
+
+            emit(
+              QagDetailsFetchedState(
+                QagDetailsViewModel.copyWithNewFeedback(
+                  viewModel: fetchedState.viewModel,
+                  feedback: newFeedbackViewModel,
+                ),
+              ),
+            );
+          } else if (response is QagFeedbackSuccessBodyWithRatioResponse) {
+            final newFeedbackViewModel =
+                QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: response.feedbackBody);
 
             emit(
               QagDetailsFetchedState(

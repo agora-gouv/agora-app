@@ -943,7 +943,7 @@ void main() {
       final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
       // Then
-      expect(response, QagFeedbackSuccessResponse());
+      expect(response, QagFeedbackSuccessBodyResponse());
     });
 
     test("when failure should return failed", () async {

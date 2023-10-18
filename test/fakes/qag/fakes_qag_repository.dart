@@ -212,7 +212,7 @@ class FakeQagSuccessRepository extends QagRepository {
     required String qagId,
     required bool isHelpful,
   }) async {
-    return QagFeedbackSuccessResponse();
+    return QagFeedbackSuccessBodyResponse();
   }
 
   @override
@@ -283,6 +283,20 @@ class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
   }) async {
     return GetQagDetailsSucceedResponse(
       qagDetails: qagDetails,
+    );
+  }
+
+  @override
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required bool isHelpful,
+  }) async {
+    return QagFeedbackSuccessBodyWithRatioResponse(
+      feedbackBody: QagFeedbackResults(
+        positiveRatio: 79,
+        negativeRatio: 21,
+        count: 31415,
+      ),
     );
   }
 }
