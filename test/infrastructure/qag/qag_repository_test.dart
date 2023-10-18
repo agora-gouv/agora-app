@@ -932,9 +932,9 @@ void main() {
           HttpStatus.ok,
           {
             "feedbackResults": {
-              "positiveRatio": 68, // Int entre 0 et 100
-              "negativeRatio": 32, // Int entre 0 et 100
-              "count": 14034, // Int
+              "positiveRatio": 68,
+              "negativeRatio": 32,
+              "count": 14034,
             },
           },
         ),

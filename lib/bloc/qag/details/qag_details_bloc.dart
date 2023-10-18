@@ -52,25 +52,20 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
           );
 
           if (response is QagFeedbackSuccessBodyResponse) {
-            final newFeedbackViewModel = QagDetailsFeedbackAnsweredNoResultsViewModel();
-
             emit(
               QagDetailsFetchedState(
                 QagDetailsViewModel.copyWithNewFeedback(
                   viewModel: fetchedState.viewModel,
-                  feedback: newFeedbackViewModel,
+                  feedback: QagDetailsFeedbackAnsweredNoResultsViewModel(),
                 ),
               ),
             );
           } else if (response is QagFeedbackSuccessBodyWithRatioResponse) {
-            final newFeedbackViewModel =
-                QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: response.feedbackBody);
-
             emit(
               QagDetailsFetchedState(
                 QagDetailsViewModel.copyWithNewFeedback(
                   viewModel: fetchedState.viewModel,
-                  feedback: newFeedbackViewModel,
+                  feedback: QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: response.feedbackBody),
                 ),
               ),
             );

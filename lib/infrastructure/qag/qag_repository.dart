@@ -308,9 +308,9 @@ class QagDioRepository extends QagRepository {
         data: {"isHelpful": isHelpful},
       );
 
-      if (response.data != null) {
-        return QagFeedbackSuccessBodyResponse();
-      } else {
+      if (response.data["positiveRatio"] != null &&
+          response.data["negativeRatio"] != null &&
+          response.data["count"] != null) {
         return QagFeedbackSuccessBodyWithRatioResponse(
           feedbackBody: QagFeedbackResults(
             positiveRatio: response.data["positiveRatio"] as int,
@@ -318,6 +318,8 @@ class QagDioRepository extends QagRepository {
             count: response.data["count"] as int,
           ),
         );
+      } else {
+        return QagFeedbackSuccessBodyResponse();
       }
     } catch (e) {
       return QagFeedbackFailedResponse();
