@@ -928,7 +928,16 @@ void main() {
       // Given
       dioAdapter.onPost(
         "/qags/$qagId/feedback",
-        (server) => server.reply(HttpStatus.ok, null),
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "feedbackResults": {
+              "positiveRatio": 68,
+              "negativeRatio": 32,
+              "count": 14034,
+            },
+          },
+        ),
         headers: {
           "accept": "application/json",
           "Authorization": "Bearer jwtToken",
@@ -943,7 +952,7 @@ void main() {
       final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
       // Then
-      expect(response, QagFeedbackSuccessResponse());
+      expect(response, QagFeedbackSuccessBodyResponse());
     });
 
     test("when failure should return failed", () async {

@@ -303,11 +303,24 @@ class QagDioRepository extends QagRepository {
     required bool isHelpful,
   }) async {
     try {
-      await httpClient.post(
+      final response = await httpClient.post(
         "/qags/$qagId/feedback",
         data: {"isHelpful": isHelpful},
       );
-      return QagFeedbackSuccessResponse();
+
+      if (response.data["positiveRatio"] != null &&
+          response.data["negativeRatio"] != null &&
+          response.data["count"] != null) {
+        return QagFeedbackSuccessBodyWithRatioResponse(
+          feedbackBody: QagFeedbackResults(
+            positiveRatio: response.data["positiveRatio"] as int,
+            negativeRatio: response.data["negativeRatio"] as int,
+            count: response.data["count"] as int,
+          ),
+        );
+      } else {
+        return QagFeedbackSuccessBodyResponse();
+      }
     } catch (e) {
       return QagFeedbackFailedResponse();
     }
@@ -606,7 +619,13 @@ abstract class QagFeedbackRepositoryResponse extends Equatable {
   List<Object> get props => [];
 }
 
-class QagFeedbackSuccessResponse extends QagFeedbackRepositoryResponse {}
+class QagFeedbackSuccessBodyResponse extends QagFeedbackRepositoryResponse {}
+
+class QagFeedbackSuccessBodyWithRatioResponse extends QagFeedbackRepositoryResponse {
+  final QagFeedbackResults feedbackBody;
+
+  QagFeedbackSuccessBodyWithRatioResponse({required this.feedbackBody});
+}
 
 class QagFeedbackFailedResponse extends QagFeedbackRepositoryResponse {}
 
