@@ -69,7 +69,7 @@ class AgoraQagCard extends StatelessWidget {
                   _buildYourQuestion(context),
                   if (isAuthor) ThematiqueHelper.buildCard(context, thematique),
                   SizedBox(height: AgoraSpacings.x0_25),
-                  Text(title, style: AgoraTextStyles.medium16),
+                  Text(title, style: AgoraTextStyles.regular16),
                 ],
               ),
             ),

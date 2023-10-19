@@ -30,7 +30,7 @@ class AgoraThematiqueCard extends StatelessWidget {
             SizedBox(width: AgoraSpacings.x0_25),
             Flexible(child: Text(label, style: AgoraTextStyles.light18.copyWith(color: AgoraColors.potBlack))),
           ] else if (size == AgoraThematiqueSize.medium) ...[
-            ExcludeSemantics(child: Text(picto, style: AgoraTextStyles.medium14)),
+            ExcludeSemantics(child: Text(picto, style: AgoraTextStyles.light12)),
             SizedBox(width: AgoraSpacings.x0_25),
             Flexible(child: Text(label, style: AgoraTextStyles.light14.copyWith(color: AgoraColors.potBlack))),
           ],

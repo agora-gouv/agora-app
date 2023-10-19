@@ -56,7 +56,7 @@ class AgoraQagResponseCard extends StatelessWidget {
                   Container(width: double.infinity),
                   ThematiqueHelper.buildCard(context, thematique),
                   SizedBox(height: AgoraSpacings.x0_25),
-                  Text(title, style: AgoraTextStyles.medium16),
+                  Text(title, style: AgoraTextStyles.regular16),
                 ],
               ),
             ),
@@ -87,7 +87,7 @@ class AgoraQagResponseCard extends StatelessWidget {
     );
     if (style == AgoraQagResponseStyle.small) {
       currentChild = SizedBox(
-        width: max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth),
+        width: max(MediaQuery.of(context).size.width * 0.65, AgoraSpacings.carrouselMinWidth),
         child: currentChild,
       );
     }
