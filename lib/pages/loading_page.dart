@@ -5,7 +5,6 @@ import 'package:agora/bloc/login/login_state.dart';
 import 'package:agora/bloc/notification/permission/notification_permission_bloc.dart';
 import 'package:agora/bloc/notification/permission/notification_permission_event.dart';
 import 'package:agora/bloc/notification/permission/notification_permission_state.dart';
-import 'package:agora/common/helper/clipboard_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
@@ -37,6 +36,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoadingPage extends StatefulWidget {
   static const routeName = "/";
@@ -142,7 +142,14 @@ class _LoadingPageState extends State<LoadingPage> {
                                     child: AgoraButton(
                                       label: GenericStrings.contactSupport,
                                       style: AgoraButtonStyle.blueBorderButtonStyle,
-                                      onPressed: () => ClipboardHelper.copy(context, GenericStrings.mailSupport),
+                                      onPressed: () {
+                                        final Uri emailUri = Uri(
+                                          scheme: 'mailto',
+                                          path: GenericStrings.mailSupport,
+                                        );
+
+                                        launchUrl(emailUri);
+                                      },
                                     ),
                                   ),
                                   SizedBox(width: AgoraSpacings.base),
