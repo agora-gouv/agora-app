@@ -43,6 +43,14 @@ class AuthInterceptor extends Interceptor {
           options.headers["Authorization"] = "Bearer ${response.jwtToken}";
         }
       }
+    } else {
+      final response = await login();
+
+      if (response is LoginSucceedResponse) {
+        HelperManager.getJwtHelper().setJwtExpiration(response.jwtExpirationEpochMilli);
+        HelperManager.getJwtHelper().setJwtToken(response.jwtToken);
+        options.headers["Authorization"] = "Bearer ${response.jwtToken}";
+      }
     }
 
     return handler.next(options);
