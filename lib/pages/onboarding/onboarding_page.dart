@@ -26,6 +26,128 @@ class _OnboardingPageState extends State<OnboardingPage> {
   static const totalStep = 4;
   final _controller = PageController(initialPage: 0);
   int step = 0;
+  final List<dynamic> iconsTheme = [
+    {
+      "id": "5cdb4732-0153-11ee-be56-0242ac120002",
+      "label": "Agriculture & alimentation",
+      "picto": "🌾",
+    },
+    {
+      "id": "3953a966-015e-11ee-be56-0242ac120002",
+      "label": "Autonomie",
+      "picto": "👵",
+    },
+    {
+      "id": "01c4789a-015e-11ee-be56-0242ac120002",
+      "label": "Culture",
+      "picto": "🎭",
+    },
+    {
+      "id": "30671310-ee62-11ed-a05b-0242ac120003",
+      "label": "Démocratie",
+      "picto": "🗳",
+    },
+    {
+      "id": "c97c3afd-1940-4b6d-950a-734b885ee5cb",
+      "label": "Economie",
+      "picto": "📈",
+    },
+    {
+      "id": "5b9180e6-3e43-4c63-bcb5-4eab621fc016",
+      "label": "Education & jeunesse",
+      "picto": "🎓",
+    },
+    {
+      "id": "73fa6438-015e-11ee-be56-0242ac120002",
+      "label": "Egalité",
+      "picto": "👥",
+    },
+    {
+      "id": "5e6bed94-015e-11ee-be56-0242ac120002",
+      "label": "Energie",
+      "picto": "⚡",
+    },
+    {
+      "id": "801e3eb0-015e-11ee-be56-0242ac120002",
+      "label": "Enfance",
+      "picto": "👶",
+    },
+    {
+      "id": "0ca6f2f6-015e-11ee-be56-0242ac120002",
+      "label": "Etudes sup. & recherche",
+      "picto": "🧬",
+    },
+    {
+      "id": "8e200137-df3b-4bde-9981-b39a3d326da7",
+      "label": "Europe & international",
+      "picto": "🌏",
+    },
+    {
+      "id": "41dcc98c-015e-11ee-be56-0242ac120002",
+      "label": "Handicap",
+      "picto": "🧑‍🦽",
+    },
+    {
+      "id": "2186bc60-015e-11ee-be56-0242ac120002",
+      "label": "Justice",
+      "picto": "⚖️",
+    },
+    {
+      "id": "8a4e95e2-015e-11ee-be56-0242ac120002",
+      "label": "Logement",
+      "picto": "🏡",
+    },
+    {
+      "id": "175ab0b6-015e-11ee-be56-0242ac120002",
+      "label": "Outre-mer",
+      "picto": "🌍",
+    },
+    {
+      "id": "a4bb4b27-3271-4278-83c9-79ac3eee843a",
+      "label": "Santé",
+      "picto": "🏥",
+    },
+    {
+      "id": "5531afc0-015e-11ee-be56-0242ac120002",
+      "label": "Services publics",
+      "picto": "🏛",
+    },
+    {
+      "id": "2d1c72fe-015e-11ee-be56-0242ac120002",
+      "label": "Solidarités",
+      "picto": "🤝",
+    },
+    {
+      "id": "4c379646-015e-11ee-be56-0242ac120002",
+      "label": "Sport",
+      "picto": "🏀",
+    },
+    {
+      "id": "b276606e-f251-454e-9a73-9b70a6f30bfd",
+      "label": "Sécurité & défense",
+      "picto": "🛡",
+    },
+    {
+      "id": "bb051bf2-644b-47b6-9488-7759fa727dc0",
+      "label": "Transition écologique",
+      "picto": "🌱",
+    },
+    {
+      "id": "0f644115-08f3-46ff-b776-51f19c65fdd1",
+      "label": "Transports",
+      "picto": "🚊",
+    },
+    {
+      "id": "1f3dbdc6-cff7-4d6a-88b5-c5ec84c55d15",
+      "label": "Travail",
+      "picto": "💼",
+    },
+    {
+      "id": "47897e51-8e94-4920-a26a-1b1e5e232e82",
+      "label": "Autre",
+      "picto": "📦",
+    }
+  ];
 
   @override
   void dispose() {
@@ -43,7 +165,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: _floatingButton(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      child: _handleStep(context),
+      child: GridView.count(
+        crossAxisCount: 4,
+        children: List.generate(
+          iconsTheme.length,
+          (index) => Center(
+            child: Text(
+              iconsTheme[index]["picto"] as String,
+              style: AgoraTextStyles.medium32,
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -103,7 +236,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     }
   }
 
-  Widget _handleStep(BuildContext context) {
+/* Widget _handleStep(BuildContext context) {
     return PageView(
       controller: _controller,
       onPageChanged: (index) {
@@ -119,5 +252,5 @@ class _OnboardingPageState extends State<OnboardingPage> {
         OnboardingStepView(step: OnboardingStep.invent),
       ],
     );
-  }
+  }*/
 }
