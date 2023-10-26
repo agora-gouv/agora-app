@@ -29,33 +29,37 @@ class _OnboardingPageState extends State<OnboardingPage> {
   final List<dynamic> iconsTheme = [
     {
       "id": "5cdb4732-0153-11ee-be56-0242ac120002",
-      "label": "Agriculture & alimentation",
-      "picto": "🌾",
+      "label": "Handicap",
+      "picto": "🧑‍🦯 👩‍🦯 👨‍🦯",
     },
     {
       "id": "3953a966-015e-11ee-be56-0242ac120002",
-      "label": "Autonomie",
-      "picto": "👵",
+      "label": "Handicap",
+      "picto": "👩‍🦽 🧑‍🦽 👨‍🦽",
+    },{
+      "id": "3953a966-015e-11ee-be56-0242ac120002",
+      "label": "Handicap",
+      "picto": "♿️",
     },
     {
       "id": "01c4789a-015e-11ee-be56-0242ac120002",
-      "label": "Culture",
-      "picto": "🎭",
+      "label": "Etudes sup. & recherche",
+      "picto": "🎓 🥽 🛰️",
     },
     {
       "id": "30671310-ee62-11ed-a05b-0242ac120003",
-      "label": "Démocratie",
-      "picto": "🗳",
+      "label": "Etudes sup. & recherche",
+      "picto": "🚀 ⚖️ 🩺",
     },
     {
       "id": "c97c3afd-1940-4b6d-950a-734b885ee5cb",
-      "label": "Economie",
-      "picto": "📈",
+      "label": "Etudes sup. & recherche",
+      "picto": "🖋️ 🖊️ ✒️",
     },
     {
       "id": "5b9180e6-3e43-4c63-bcb5-4eab621fc016",
-      "label": "Education & jeunesse",
-      "picto": "🎓",
+      "label": "Etudes sup. & recherche",
+      "picto": "🔍 🔎 🧮",
     },
     {
       "id": "73fa6438-015e-11ee-be56-0242ac120002",
