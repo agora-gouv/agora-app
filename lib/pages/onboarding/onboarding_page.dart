@@ -36,10 +36,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
       "id": "3953a966-015e-11ee-be56-0242ac120002",
       "label": "Handicap",
       "picto": "👩‍🦽 🧑‍🦽 👨‍🦽",
-    },{
+    },
+    {
       "id": "3953a966-015e-11ee-be56-0242ac120002",
       "label": "Handicap",
-      "picto": "♿️",
+      "picto": "♿️ 🦽 ⚗️",
     },
     {
       "id": "01c4789a-015e-11ee-be56-0242ac120002",
@@ -52,9 +53,19 @@ class _OnboardingPageState extends State<OnboardingPage> {
       "picto": "🚀 ⚖️ 🩺",
     },
     {
+      "id": "30671310-ee62-11ed-a05b-0242ac120003",
+      "label": "Etudes sup. & recherche",
+      "picto": "🔭 🧬 🔬",
+    },
+    {
       "id": "c97c3afd-1940-4b6d-950a-734b885ee5cb",
       "label": "Etudes sup. & recherche",
       "picto": "🖋️ 🖊️ ✒️",
+    },
+    {
+      "id": "c97c3afd-1940-4b6d-950a-734b885ee5cb",
+      "label": "Etudes sup. & recherche",
+      "picto": "💉🧪🦠",
     },
     {
       "id": "5b9180e6-3e43-4c63-bcb5-4eab621fc016",
