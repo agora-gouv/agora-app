@@ -27,7 +27,7 @@ import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum QagTab { popular, latest, supporting }
+enum QagTab { search, popular, latest, supporting }
 
 class QagsSection extends StatefulWidget {
   final bool isLoading;
@@ -137,6 +137,8 @@ class _QagsSectionState extends State<QagsSection> {
 
   List<Widget> _buildQags(BuildContext context) {
     switch (currentSelected) {
+      case QagTab.search:
+        return _buildQagWidgets(context, widget.popularViewModels, currentSelected);
       case QagTab.popular:
         return _buildQagWidgets(context, widget.popularViewModels, currentSelected);
       case QagTab.latest:
@@ -250,6 +252,8 @@ class _QagsSectionState extends State<QagsSection> {
         qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       }
       switch (qagTab) {
+        case QagTab.search:
+          qagsWidgets.add(_buildAllButton(QagPaginatedTab.popular));
         case QagTab.popular:
           qagsWidgets.add(_buildAllButton(QagPaginatedTab.popular));
           break;
@@ -320,6 +324,7 @@ class _QagsSectionState extends State<QagsSection> {
         SizedBox(height: AgoraSpacings.base),
         Row(
           children: [
+            Text(QagStrings.search),
             Expanded(
               child: Semantics(
                 header: true,

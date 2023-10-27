@@ -143,6 +143,7 @@ class _QagsPageState extends State<QagsPage> {
     if (state is QagWithItemState) {
       return [
         QagsAskQuestionSectionPage(errorCase: state.errorCase),
+        // Structure à modifier
         QagsThematiqueSection(
           currentThematiqueId: currentThematiqueId,
           onThematiqueIdSelected: (String? thematiqueId) {
