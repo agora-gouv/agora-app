@@ -132,7 +132,6 @@ class QagDetailsFeedbackLoadingViewModel extends QagDetailsFeedbackViewModel {
 }
 
 class QagDetailsFeedbackErrorViewModel extends QagDetailsFeedbackViewModel {
-
   QagDetailsFeedbackErrorViewModel({required super.feedbackQuestion});
 
   @override
@@ -149,7 +148,6 @@ class QagDetailsFeedbackNotAnsweredViewModel extends QagDetailsFeedbackViewModel
 }
 
 class QagDetailsFeedbackAnsweredNoResultsViewModel extends QagDetailsFeedbackViewModel {
-
   QagDetailsFeedbackAnsweredNoResultsViewModel({required super.feedbackQuestion});
 
   @override
