@@ -350,6 +350,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
           videoWidth: 1080,
           videoHeight: 1920,
           transcription: "Blablabla",
+          feedbackQuestion: 'feedbackQuestion',
           feedbackStatus: true,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 79,
@@ -388,6 +389,7 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
           videoWidth: 1080,
           videoHeight: 1920,
           transcription: "Blablabla",
+          feedbackQuestion: 'feedbackQuestion',
           feedbackStatus: false,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 79,

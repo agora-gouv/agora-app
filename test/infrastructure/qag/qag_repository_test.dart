@@ -700,6 +700,7 @@ void main() {
               "videoWidth": 1080,
               "videoHeight": 1920,
               "transcription": "Blablabla",
+              "feedbackQuestion": 'feedbackQuestion',
               "feedbackStatus": true,
               "feedbackResult": {
                 "positiveRatio": 95,
@@ -745,6 +746,7 @@ void main() {
               videoWidth: 1080,
               videoHeight: 1920,
               transcription: "Blablabla",
+              feedbackQuestion: 'feedbackQuestion',
               feedbackStatus: true,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 95,

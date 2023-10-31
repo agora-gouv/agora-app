@@ -242,6 +242,7 @@ class QagDioRepository extends QagRepository {
                   videoWidth: qagDetailsResponse["videoWidth"] as int,
                   videoHeight: qagDetailsResponse["videoHeight"] as int,
                   transcription: qagDetailsResponse["transcription"] as String,
+                  feedbackQuestion: qagDetailsResponse["feedbackQuestion"] as String,
                   feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool,
                   feedbackResults: qagDetailsFeedbackResults != null
                       ? QagFeedbackResults(

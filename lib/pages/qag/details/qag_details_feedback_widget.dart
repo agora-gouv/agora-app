@@ -43,7 +43,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Semantics(header: true, child: Text(QagStrings.questionUtilsTitle, style: AgoraTextStyles.medium18)),
+          Semantics(header: true, child: Text(viewModel.viewModel.feedbackQuestion, style: AgoraTextStyles.medium18)),
           SizedBox(height: AgoraSpacings.base),
           _build(context, viewModel.qagId, viewModel.viewModel),
         ],

@@ -116,43 +116,52 @@ class QagDetailsResponseViewModel extends Equatable {
       ];
 }
 
-abstract class QagDetailsFeedbackViewModel extends Equatable {}
+abstract class QagDetailsFeedbackViewModel extends Equatable {
+  final String feedbackQuestion;
+
+  QagDetailsFeedbackViewModel({required this.feedbackQuestion});
+}
 
 class QagDetailsFeedbackLoadingViewModel extends QagDetailsFeedbackViewModel {
   final bool isHelpfulClicked;
 
-  QagDetailsFeedbackLoadingViewModel({required this.isHelpfulClicked});
+  QagDetailsFeedbackLoadingViewModel({required super.feedbackQuestion, required this.isHelpfulClicked});
 
   @override
-  List<Object?> get props => [isHelpfulClicked];
+  List<Object?> get props => [feedbackQuestion, isHelpfulClicked];
 }
 
 class QagDetailsFeedbackErrorViewModel extends QagDetailsFeedbackViewModel {
+  QagDetailsFeedbackErrorViewModel({required super.feedbackQuestion});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [feedbackQuestion];
 }
 
 class QagDetailsFeedbackNotAnsweredViewModel extends QagDetailsFeedbackViewModel {
   final QagFeedbackResults? feedbackResults;
 
-  QagDetailsFeedbackNotAnsweredViewModel({required this.feedbackResults});
+  QagDetailsFeedbackNotAnsweredViewModel({required super.feedbackQuestion, required this.feedbackResults});
 
   @override
-  List<Object?> get props => [feedbackResults];
+  List<Object?> get props => [feedbackQuestion, feedbackResults];
 }
 
 class QagDetailsFeedbackAnsweredNoResultsViewModel extends QagDetailsFeedbackViewModel {
+  QagDetailsFeedbackAnsweredNoResultsViewModel({required super.feedbackQuestion});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [feedbackQuestion];
 }
 
 class QagDetailsFeedbackAnsweredResultsViewModel extends QagDetailsFeedbackViewModel {
   final QagFeedbackResults feedbackResults;
 
   QagDetailsFeedbackAnsweredResultsViewModel({
+    required super.feedbackQuestion,
     required this.feedbackResults,
   });
 
   @override
-  List<Object?> get props => [feedbackResults];
+  List<Object?> get props => [feedbackQuestion, feedbackResults];
 }
