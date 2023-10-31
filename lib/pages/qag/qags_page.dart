@@ -7,9 +7,7 @@ import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
-import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
-import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -24,7 +22,6 @@ import 'package:agora/pages/qag/qags_ask_question_section.dart';
 import 'package:agora/pages/qag/qags_loading_skeleton.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
 import 'package:agora/pages/qag/qags_section.dart';
-import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,25 +141,6 @@ class _QagsPageState extends State<QagsPage> {
       return [
         QagsAskQuestionSectionPage(errorCase: state.errorCase),
         // Structure à modifier
-        QagsThematiqueSection(
-          currentThematiqueId: currentThematiqueId,
-          onThematiqueIdSelected: (String? thematiqueId) {
-            if (currentThematiqueId != null || thematiqueId != null) {
-              setState(() {
-                if (thematiqueId == currentThematiqueId) {
-                  currentThematiqueId = null;
-                } else {
-                  currentThematiqueId = thematiqueId;
-                }
-                TrackerHelper.trackClick(
-                  clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                );
-                context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
-              });
-            }
-          },
-        ),
         QagsSection(
           isLoading: state is QagLoadingState,
           defaultSelected: QagTab.popular,

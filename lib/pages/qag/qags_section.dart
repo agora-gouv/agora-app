@@ -13,6 +13,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
+import 'package:agora/design/custom_view/agora_search_bar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
@@ -24,6 +25,7 @@ import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
+import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,6 +59,8 @@ class QagsSection extends StatefulWidget {
 
 class _QagsSectionState extends State<QagsSection> {
   late QagTab currentSelected;
+  String? currentThematiqueId;
+  bool activeSearchBar = false;
 
   @override
   void initState() {
@@ -69,6 +73,25 @@ class _QagsSectionState extends State<QagsSection> {
     return Column(
       children: [
         _buildTabBar(),
+        QagsThematiqueSection(
+          currentThematiqueId: currentThematiqueId,
+          onThematiqueIdSelected: (String? thematiqueId) {
+            if (currentThematiqueId != null || thematiqueId != null) {
+              setState(() {
+                if (thematiqueId == currentThematiqueId) {
+                  currentThematiqueId = null;
+                } else {
+                  currentThematiqueId = thematiqueId;
+                }
+                TrackerHelper.trackClick(
+                  clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                );
+                context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
+              });
+            }
+          },
+        ),
         widget.isLoading
             ? Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -319,52 +342,84 @@ class _QagsSectionState extends State<QagsSection> {
   }
 
   Widget _buildTabBar() {
+    final TextEditingController textController = TextEditingController();
+
+    textController.addListener(() {
+      activeSearchBar = true;
+    });
+
     return Column(
       children: [
         SizedBox(height: AgoraSpacings.base),
         Row(
           children: [
-            Text(QagStrings.search),
-            Expanded(
-              child: Semantics(
-                header: true,
+            AnimSearchBar(
+              width: 400,
+              textController: textController,
+              boxShadow: false,
+              onSuffixTap: () {
+                setState(() {
+                  textController.clear();
+                });
+                debugPrint('Agora - onSuffixTap');
+              },
+              onSubmitted: (String e) {
+                debugPrint('Agora - onSubmitted');
+              },
+              autoFocus: true,
+              searchBarOpen: (int status) => {
+                activeSearchBar = status == 1,
+              },
+            ),
+            Visibility(
+              visible: !activeSearchBar,
+              child: Expanded(
+                child: Semantics(
+                  header: true,
+                  child: _buildTabButton(
+                    label: QagStrings.popular,
+                    isSelected: currentSelected == QagTab.popular,
+                    onTap: () {
+                      TrackerHelper.trackClick(
+                        clickName: AnalyticsEventNames.qagPopular,
+                        widgetName: AnalyticsScreenNames.qagsPage,
+                      );
+                      setState(() => currentSelected = QagTab.popular);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: !activeSearchBar,
+              child: Expanded(
                 child: _buildTabButton(
-                  label: QagStrings.popular,
-                  isSelected: currentSelected == QagTab.popular,
+                  label: QagStrings.latest,
+                  isSelected: currentSelected == QagTab.latest,
                   onTap: () {
                     TrackerHelper.trackClick(
-                      clickName: AnalyticsEventNames.qagPopular,
+                      clickName: AnalyticsEventNames.qagLatest,
                       widgetName: AnalyticsScreenNames.qagsPage,
                     );
-                    setState(() => currentSelected = QagTab.popular);
+                    setState(() => currentSelected = QagTab.latest);
                   },
                 ),
               ),
             ),
-            Expanded(
-              child: _buildTabButton(
-                label: QagStrings.latest,
-                isSelected: currentSelected == QagTab.latest,
-                onTap: () {
-                  TrackerHelper.trackClick(
-                    clickName: AnalyticsEventNames.qagLatest,
-                    widgetName: AnalyticsScreenNames.qagsPage,
-                  );
-                  setState(() => currentSelected = QagTab.latest);
-                },
-              ),
-            ),
-            Expanded(
-              child: _buildTabButton(
-                label: QagStrings.supporting,
-                isSelected: currentSelected == QagTab.supporting,
-                onTap: () {
-                  TrackerHelper.trackClick(
-                    clickName: AnalyticsEventNames.qagSupporting,
-                    widgetName: AnalyticsScreenNames.qagsPage,
-                  );
-                  setState(() => currentSelected = QagTab.supporting);
-                },
+            Visibility(
+              visible: !activeSearchBar,
+              child: Expanded(
+                child: _buildTabButton(
+                  label: QagStrings.supporting,
+                  isSelected: currentSelected == QagTab.supporting,
+                  onTap: () {
+                    TrackerHelper.trackClick(
+                      clickName: AnalyticsEventNames.qagSupporting,
+                      widgetName: AnalyticsScreenNames.qagsPage,
+                    );
+                    setState(() => currentSelected = QagTab.supporting);
+                  },
+                ),
               ),
             ),
           ],
