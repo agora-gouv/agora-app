@@ -41,7 +41,10 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
             QagDetailsFetchedState(
               QagDetailsViewModel.copyWithNewFeedback(
                 viewModel: fetchedState.viewModel,
-                feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: event.isHelpful),
+                feedback: QagDetailsFeedbackLoadingViewModel(
+                  feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                  isHelpfulClicked: event.isHelpful,
+                ),
               ),
             ),
           );
@@ -56,7 +59,9 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
               QagDetailsFetchedState(
                 QagDetailsViewModel.copyWithNewFeedback(
                   viewModel: fetchedState.viewModel,
-                  feedback: QagDetailsFeedbackAnsweredNoResultsViewModel(),
+                  feedback: QagDetailsFeedbackAnsweredNoResultsViewModel(
+                    feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                  ),
                 ),
               ),
             );
@@ -65,7 +70,10 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
               QagDetailsFetchedState(
                 QagDetailsViewModel.copyWithNewFeedback(
                   viewModel: fetchedState.viewModel,
-                  feedback: QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: response.feedbackBody),
+                  feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+                    feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                    feedbackResults: response.feedbackBody,
+                  ),
                 ),
               ),
             );
@@ -74,7 +82,9 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
               QagDetailsFetchedState(
                 QagDetailsViewModel.copyWithNewFeedback(
                   viewModel: fetchedState.viewModel,
-                  feedback: QagDetailsFeedbackErrorViewModel(),
+                  feedback: QagDetailsFeedbackErrorViewModel(
+                    feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                  ),
                 ),
               ),
             );

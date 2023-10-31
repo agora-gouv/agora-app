@@ -38,6 +38,7 @@ void main() {
       videoWidth: 1080,
       videoHeight: 1920,
       transcription: "Blablabla",
+      feedbackQuestion: 'feedbackQuestion',
       feedbackStatus: true,
       feedbackResults: QagFeedbackResults(
         positiveRatio: 79,
@@ -69,6 +70,7 @@ void main() {
       transcription: "Blablabla",
     ),
     feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+      feedbackQuestion: 'feedbackQuestion',
       feedbackResults: QagFeedbackResults(
         positiveRatio: 79,
         negativeRatio: 21,
@@ -136,6 +138,7 @@ void main() {
               transcription: "Blablabla",
             ),
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+              feedbackQuestion: 'feedbackQuestion',
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 79,
                 negativeRatio: 21,
@@ -257,19 +260,25 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackNotAnsweredViewModel(feedbackResults: null),
+            feedback: QagDetailsFeedbackNotAnsweredViewModel(
+              feedbackQuestion: 'feedbackQuestion',
+              feedbackResults: null,
+            ),
           ),
         ),
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: true),
+            feedback: QagDetailsFeedbackLoadingViewModel(
+              feedbackQuestion: 'feedbackQuestion',
+              isHelpfulClicked: true,
+            ),
           ),
         ),
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackErrorViewModel(),
+            feedback: QagDetailsFeedbackErrorViewModel(feedbackQuestion: 'feedbackQuestion'),
           ),
         ),
       ],
@@ -297,19 +306,26 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackNotAnsweredViewModel(feedbackResults: null),
+            feedback: QagDetailsFeedbackNotAnsweredViewModel(
+              feedbackQuestion: 'feedbackQuestion',
+              feedbackResults: null,
+            ),
           ),
         ),
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: false),
+            feedback: QagDetailsFeedbackLoadingViewModel(
+              feedbackQuestion: 'feedbackQuestion',
+              isHelpfulClicked: false,
+            ),
           ),
         ),
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+              feedbackQuestion: 'feedbackQuestion',
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 79,
                 negativeRatio: 21,
@@ -348,6 +364,7 @@ void main() {
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
             feedback: QagDetailsFeedbackNotAnsweredViewModel(
+              feedbackQuestion: 'feedbackQuestion',
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 79,
                 negativeRatio: 21,
@@ -359,13 +376,17 @@ void main() {
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackLoadingViewModel(isHelpfulClicked: true),
+            feedback: QagDetailsFeedbackLoadingViewModel(
+              feedbackQuestion: 'feedbackQuestion',
+              isHelpfulClicked: true,
+            ),
           ),
         ),
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+              feedbackQuestion: 'feedbackQuestion',
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 79,
                 negativeRatio: 21,

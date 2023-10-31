@@ -52,7 +52,6 @@ class QagStrings {
   static const String governmentResponseTitle = "Réponse du gouvernement";
   static const String answerTo = "En réponse à";
   static const String transcription = "Transcription";
-  static const String questionUtilsTitle = "Le ministre a-t-il répondu à votre question\u{00A0}?";
   static const String utils = "Oui\u{00A0}!";
   static const String notUtils = "Non\u{00A0}!";
   static const String readMore = "Lire la suite";
