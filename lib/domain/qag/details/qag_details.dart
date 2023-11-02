@@ -88,6 +88,7 @@ class QagDetailsResponse extends Equatable {
   final int videoWidth;
   final int videoHeight;
   final String transcription;
+  final String feedbackQuestion;
   final bool feedbackStatus;
   final QagFeedbackResults? feedbackResults;
 
@@ -99,6 +100,7 @@ class QagDetailsResponse extends Equatable {
     required this.videoWidth,
     required this.videoHeight,
     required this.transcription,
+    required this.feedbackQuestion,
     required this.feedbackStatus,
     required this.feedbackResults,
   });
@@ -116,6 +118,7 @@ class QagDetailsResponse extends Equatable {
       videoWidth: response.videoWidth,
       videoHeight: response.videoHeight,
       transcription: response.transcription,
+      feedbackQuestion: response.feedbackQuestion,
       feedbackStatus: feedbackStatus,
       feedbackResults: feedbackResults,
     );
@@ -130,6 +133,7 @@ class QagDetailsResponse extends Equatable {
         videoWidth,
         videoHeight,
         transcription,
+        feedbackQuestion,
         feedbackStatus,
       ];
 }

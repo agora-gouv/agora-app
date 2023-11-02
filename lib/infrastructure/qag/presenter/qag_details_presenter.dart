@@ -41,11 +41,17 @@ class QagDetailsPresenter {
     if (qagDetailsResponse == null) {
       return null;
     } else if (qagDetailsResponse.feedbackStatus == false) {
-      return QagDetailsFeedbackNotAnsweredViewModel(feedbackResults: qagDetailsResponse.feedbackResults);
+      return QagDetailsFeedbackNotAnsweredViewModel(
+        feedbackQuestion: qagDetailsResponse.feedbackQuestion,
+        feedbackResults: qagDetailsResponse.feedbackResults,
+      );
     } else if (qagDetailsResponse.feedbackResults == null) {
-      return QagDetailsFeedbackAnsweredNoResultsViewModel();
+      return QagDetailsFeedbackAnsweredNoResultsViewModel(feedbackQuestion: qagDetailsResponse.feedbackQuestion);
     } else {
-      return QagDetailsFeedbackAnsweredResultsViewModel(feedbackResults: qagDetailsResponse.feedbackResults!);
+      return QagDetailsFeedbackAnsweredResultsViewModel(
+        feedbackQuestion: qagDetailsResponse.feedbackQuestion,
+        feedbackResults: qagDetailsResponse.feedbackResults!,
+      );
     }
   }
 }

@@ -31,7 +31,6 @@ class QagsResponseSection extends StatelessWidget {
         padding: EdgeInsets.only(
           left: AgoraSpacings.horizontalPadding,
           top: AgoraSpacings.base,
-          right: AgoraSpacings.horizontalPadding,
           bottom: AgoraSpacings.x2,
         ),
         child: Column(
@@ -62,41 +61,44 @@ class QagsResponseSection extends StatelessWidget {
   }
 
   Widget _buildQagResponseHeader(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: AgoraRichText(
-            items: [
-              AgoraRichTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
-              AgoraRichTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
-            ],
-          ),
-        ),
-        SizedBox(width: AgoraSpacings.x0_75),
-        AgoraMoreInformation(
-          semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
-          onClick: () {
-            showAgoraDialog(
-              context: context,
-              columnChildren: [
-                Text(QagStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
-                SizedBox(height: AgoraSpacings.x0_75),
-                AgoraButton(
-                  label: GenericStrings.close,
-                  style: AgoraButtonStyle.primaryButtonStyle,
-                  onPressed: () => Navigator.pop(context),
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(right: AgoraSpacings.horizontalPadding),
+      child: Row(
+        children: [
+          Expanded(
+            child: AgoraRichText(
+              items: [
+                AgoraRichTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
+                AgoraRichTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
               ],
-            );
-          },
-        ),
-        SizedBox(width: AgoraSpacings.x0_75),
-        AgoraRoundedButton(
-          label: GenericStrings.all,
-          style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-          onPressed: () => Navigator.pushNamed(context, QagResponsePaginatedPage.routeName),
-        ),
-      ],
+            ),
+          ),
+          SizedBox(width: AgoraSpacings.x0_75),
+          AgoraMoreInformation(
+            semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
+            onClick: () {
+              showAgoraDialog(
+                context: context,
+                columnChildren: [
+                  Text(QagStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
+                  SizedBox(height: AgoraSpacings.x0_75),
+                  AgoraButton(
+                    label: GenericStrings.close,
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              );
+            },
+          ),
+          SizedBox(width: AgoraSpacings.x0_75),
+          AgoraRoundedButton(
+            label: GenericStrings.all,
+            style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+            onPressed: () => Navigator.pushNamed(context, QagResponsePaginatedPage.routeName),
+          ),
+        ],
+      ),
     );
   }
 

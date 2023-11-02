@@ -212,7 +212,7 @@ class FakeQagSuccessRepository extends QagRepository {
     required String qagId,
     required bool isHelpful,
   }) async {
-    return QagFeedbackSuccessResponse();
+    return QagFeedbackSuccessBodyResponse();
   }
 
   @override
@@ -285,6 +285,20 @@ class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
       qagDetails: qagDetails,
     );
   }
+
+  @override
+  Future<QagFeedbackRepositoryResponse> giveQagResponseFeedback({
+    required String qagId,
+    required bool isHelpful,
+  }) async {
+    return QagFeedbackSuccessBodyWithRatioResponse(
+      feedbackBody: QagFeedbackResults(
+        positiveRatio: 79,
+        negativeRatio: 21,
+        count: 31415,
+      ),
+    );
+  }
 }
 
 class FakeQagDetailsSuccessAndFeedbackFailureRepository extends FakeQagSuccessRepository {
@@ -336,6 +350,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
           videoWidth: 1080,
           videoHeight: 1920,
           transcription: "Blablabla",
+          feedbackQuestion: 'feedbackQuestion',
           feedbackStatus: true,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 79,
@@ -374,6 +389,7 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
           videoWidth: 1080,
           videoHeight: 1920,
           transcription: "Blablabla",
+          feedbackQuestion: 'feedbackQuestion',
           feedbackStatus: false,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 79,
