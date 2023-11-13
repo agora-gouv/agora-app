@@ -1,5 +1,6 @@
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
+import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
@@ -64,6 +65,7 @@ class FakeQagSuccessRepository extends QagRepository {
         ),
       ],
       errorCase: null,
+      popupQag: null,
     );
   }
 
@@ -445,6 +447,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
         ),
       ],
       errorCase: "Une erreur est survenue",
+      popupQag: PopupQag(title: "Titre de popup", description: "Description de popup"),
     );
   }
 }

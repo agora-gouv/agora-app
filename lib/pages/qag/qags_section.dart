@@ -1,3 +1,4 @@
+import 'package:agora/bloc/qag/popup_view_model.dart';
 import 'package:agora/bloc/qag/qag_bloc.dart';
 import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_view_model.dart';
@@ -16,6 +17,7 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
@@ -34,6 +36,7 @@ class QagsSection extends StatefulWidget {
   final List<QagViewModel> supportingViewModels;
   final String? selectedThematiqueId;
   final String? askQuestionErrorCase;
+  final PopupQagViewModel? popupViewModel;
 
   const QagsSection({
     super.key,
@@ -44,6 +47,7 @@ class QagsSection extends StatefulWidget {
     required this.supportingViewModels,
     required this.selectedThematiqueId,
     required this.askQuestionErrorCase,
+    required this.popupViewModel,
   });
 
   @override
@@ -77,10 +81,51 @@ class _QagsSectionState extends State<QagsSection> {
               )
             : Padding(
                 padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-                child: Column(children: _buildQags(context)),
+                child: Column(
+                  children: [
+                    _getPopupWidget(context) ?? SizedBox(),
+                    Column(children: _buildQags(context)),
+                  ],
+                ),
               ),
       ],
     );
+  }
+
+  Widget? _getPopupWidget(BuildContext context) {
+    if (widget.popupViewModel != null) {
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(AgoraCorners.rounded2),
+                color: Color(0x336A6AF4),
+              ),
+              padding: const EdgeInsets.all(AgoraSpacings.base),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.popupViewModel!.title,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: AgoraSpacings.base),
+                    child: Text(widget.popupViewModel!.description),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: AgoraSpacings.base),
+        ],
+      );
+    }
+    return null;
   }
 
   List<Widget> _buildQags(BuildContext context) {

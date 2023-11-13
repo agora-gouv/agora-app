@@ -6,6 +6,7 @@ import 'package:agora/common/extension/qag_paginated_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
+import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_paginated.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
@@ -120,11 +121,18 @@ class QagDioRepository extends QagRepository {
         queryParameters: {"thematiqueId": thematiqueId},
       );
       final qags = response.data["qags"] as Map;
+      final popupQag = response.data["popup"] as Map?;
       return GetQagsSucceedResponse(
         qagPopular: _transformToQagList(qags["popular"] as List),
         qagLatest: _transformToQagList(qags["latest"] as List),
         qagSupporting: _transformToQagList(qags["supporting"] as List),
         errorCase: response.data["askQagErrorText"] as String?,
+        popupQag: popupQag != null
+            ? PopupQag(
+                title: popupQag["title"] as String,
+                description: popupQag["description"] as String,
+              )
+            : null,
       );
     } catch (e) {
       if (e is DioException) {
@@ -480,7 +488,7 @@ class CreateQagFailedUnauthorizedResponse extends CreateQagRepositoryResponse {}
 
 abstract class GetQagsRepositoryResponse extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
@@ -488,16 +496,18 @@ class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
   final List<Qag> qagLatest;
   final List<Qag> qagSupporting;
   final String? errorCase;
+  final PopupQag? popupQag;
 
   GetQagsSucceedResponse({
     required this.qagPopular,
     required this.qagLatest,
     required this.qagSupporting,
     required this.errorCase,
+    required this.popupQag,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         qagPopular,
         qagLatest,
         qagSupporting,

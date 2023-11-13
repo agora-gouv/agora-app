@@ -170,6 +170,7 @@ class _QagsPageState extends State<QagsPage> {
           supportingViewModels: state.supportingViewModels,
           selectedThematiqueId: currentThematiqueId,
           askQuestionErrorCase: state.errorCase,
+          popupViewModel: state.popupViewModel,
         ),
       ];
     } else if (state is QagInitialLoadingState) {
