@@ -20,6 +20,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
@@ -96,28 +97,31 @@ class _QagsSectionState extends State<QagsSection> {
     if (widget.popupViewModel != null) {
       return Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.all(AgoraCorners.rounded2),
-                color: Color(0x336A6AF4),
-              ),
-              padding: const EdgeInsets.all(AgoraSpacings.base),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.popupViewModel!.title,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: AgoraSpacings.base),
-                    child: Text(widget.popupViewModel!.description),
-                  ),
-                ],
+          InkWell(
+            onTap: () => {Navigator.pushNamed(context, ParticipationCharterPage.routeName)},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(AgoraCorners.rounded2),
+                  color: Color(0x336A6AF4),
+                ),
+                padding: const EdgeInsets.all(AgoraSpacings.base),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.popupViewModel!.title,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: AgoraSpacings.base),
+                      child: Text(widget.popupViewModel!.description),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
