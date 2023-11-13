@@ -97,15 +97,15 @@ class _QagsSectionState extends State<QagsSection> {
     if (widget.popupViewModel != null) {
       return Column(
         children: [
-          InkWell(
-            onTap: () => {Navigator.pushNamed(context, ParticipationCharterPage.routeName)},
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+            child: InkWell(
+              onTap: () => {Navigator.pushNamed(context, ParticipationCharterPage.routeName)},
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(AgoraCorners.rounded2),
-                  color: Color(0x336A6AF4),
+                  borderRadius: BorderRadius.all(AgoraCorners.rounded),
+                  color: AgoraColors.blue525opacity06,
                 ),
                 padding: const EdgeInsets.all(AgoraSpacings.base),
                 child: Column(

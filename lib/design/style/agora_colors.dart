@@ -26,6 +26,7 @@ class AgoraColors {
   static const Color primaryBlueOpacity50 = Color(0x80000091);
   static const Color primaryBlueOpacity10 = Color(0x1A000091);
   static const Color blue525 = Color(0xFF6A6AF4);
+  static const Color blue525opacity06 = Color(0x0F6A6AF4);
   static const Color grey425 = Color(0xFF666666);
   static const Color grey425Opacity40 = Color(0x66666666);
   static const Color transparent = Color(0x00000000);
