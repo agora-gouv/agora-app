@@ -107,15 +107,15 @@ class _QagsSectionState extends State<QagsSection> {
         ),
         widget.isLoading
             ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-          child: Column(
-            children: [
-              SizedBox(height: AgoraSpacings.x2),
-              CircularProgressIndicator(),
-              SizedBox(height: AgoraSpacings.x3 * 2),
-            ],
-          ),
-        )
+                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                child: Column(
+                  children: [
+                    SizedBox(height: AgoraSpacings.x2),
+                    CircularProgressIndicator(),
+                    SizedBox(height: AgoraSpacings.x3 * 2),
+                  ],
+                ),
+              )
             : Padding(
                 padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
                 child: Column(
@@ -199,17 +199,17 @@ class _QagsSectionState extends State<QagsSection> {
             listener: (previousState, currentState) {
               if (currentState is QagSupportSuccessState || currentState is QagDeleteSupportSuccessState) {
                 context.read<QagBloc>().add(
-                  UpdateQagsEvent(
-                    qagId: qagViewModel.id,
-                    thematique: qagViewModel.thematique,
-                    title: qagViewModel.title,
-                    username: qagViewModel.username,
-                    date: qagViewModel.date,
-                    supportCount: _buildCount(qagViewModel, currentState),
-                    isSupported: !qagViewModel.isSupported,
-                    isAuthor: qagViewModel.isAuthor,
-                  ),
-                );
+                      UpdateQagsEvent(
+                        qagId: qagViewModel.id,
+                        thematique: qagViewModel.thematique,
+                        title: qagViewModel.title,
+                        username: qagViewModel.username,
+                        date: qagViewModel.date,
+                        supportCount: _buildCount(qagViewModel, currentState),
+                        isSupported: !qagViewModel.isSupported,
+                        isAuthor: qagViewModel.isAuthor,
+                      ),
+                    );
               } else if (currentState is QagSupportErrorState || currentState is QagDeleteSupportErrorState) {
                 showAgoraDialog(
                   context: context,
@@ -266,17 +266,17 @@ class _QagsSectionState extends State<QagsSection> {
                     final qagDetailsBackResult = result as QagDetailsBackResult?;
                     if (qagDetailsBackResult != null) {
                       context.read<QagBloc>().add(
-                        UpdateQagsEvent(
-                          qagId: qagDetailsBackResult.qagId,
-                          thematique: qagDetailsBackResult.thematique,
-                          title: qagDetailsBackResult.title,
-                          username: qagDetailsBackResult.username,
-                          date: qagDetailsBackResult.date,
-                          supportCount: qagDetailsBackResult.supportCount,
-                          isSupported: qagDetailsBackResult.isSupported,
-                          isAuthor: qagDetailsBackResult.isAuthor,
-                        ),
-                      );
+                            UpdateQagsEvent(
+                              qagId: qagDetailsBackResult.qagId,
+                              thematique: qagDetailsBackResult.thematique,
+                              title: qagDetailsBackResult.title,
+                              username: qagDetailsBackResult.username,
+                              date: qagDetailsBackResult.date,
+                              supportCount: qagDetailsBackResult.supportCount,
+                              isSupported: qagDetailsBackResult.isSupported,
+                              isAuthor: qagDetailsBackResult.isAuthor,
+                            ),
+                          );
                       setState(() {}); // do not remove: utils to update screen
                     }
                   });
@@ -392,18 +392,11 @@ class _QagsSectionState extends State<QagsSection> {
                   activeSearchBar = false;
                   currentSelected = QagTab.popular;
                 });
-                debugPrint('Agora - icon onSuffixTap ${textController.text}');
               },
-              onClearText: () {
-                debugPrint('Agora - icon onClearText');
-              },
-              onSubmitted: (String e) {
-                debugPrint('Agora - icon onSubmitted');
-              },
+              onClearText: () {},
+              onSubmitted: (String e) {},
               autoFocus: false,
-              searchBarOpen: (bool isSearchOpen) =>
-              {
-                debugPrint('Agora - icon searchBarOpen'),
+              searchBarOpen: (bool isSearchOpen) => {
                 setState(() {
                   activeSearchBar = isSearchOpen;
                   activeThematiqueBar = !isSearchOpen;
@@ -490,10 +483,7 @@ class _QagsSectionState extends State<QagsSection> {
             Container(
               color: AgoraColors.blue525,
               height: 3,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.3,
+              width: MediaQuery.of(context).size.width * 0.3,
             ),
         ],
       ),
@@ -501,7 +491,6 @@ class _QagsSectionState extends State<QagsSection> {
   }
 
   void _loadQags(BuildContext context, String keywords) {
-    debugPrint('Agora - icon Searching');
     context.read<QagSearchBloc>().add(FetchQagsSearchEvent(keywords: keywords));
     const String widgetName = AnalyticsScreenNames.qagsPaginatedPopularPage;
 
