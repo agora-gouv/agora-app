@@ -12,6 +12,7 @@ import 'package:agora/infrastructure/login/login_repository.dart';
 import 'package:agora/infrastructure/login/mocks_login_repository.dart';
 import 'package:agora/infrastructure/notification/mocks_notification_repository.dart';
 import 'package:agora/infrastructure/notification/notification_repository.dart';
+import 'package:agora/infrastructure/participation_charter/mocks_participation_charter_repository.dart';
 import 'package:agora/infrastructure/qag/mocks_qag_repository.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
@@ -158,6 +159,17 @@ class RepositoryManager {
     }
     final repository = MockLoginRepository(
       httpClient: getAgoraDioHttpClientWithoutAuthentication(),
+    );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static MockParticipationCharterRepository getParticipationCharterRepository() {
+    if (GetIt.instance.isRegistered<MockParticipationCharterRepository>()) {
+      return GetIt.instance.get<MockParticipationCharterRepository>();
+    }
+    final repository = MockParticipationCharterRepository(
+      httpClient: _getAgoraDioHttpClient(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
