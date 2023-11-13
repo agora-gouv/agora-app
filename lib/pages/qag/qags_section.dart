@@ -114,11 +114,14 @@ class _QagsSectionState extends State<QagsSection> {
                     Text(
                       widget.popupViewModel!.title,
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: AgoraTextStyles.medium14,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: AgoraSpacings.base),
-                      child: Text(widget.popupViewModel!.description),
+                      child: Text(
+                        widget.popupViewModel!.description,
+                        style: AgoraTextStyles.regular14,
+                      ),
                     ),
                   ],
                 ),
