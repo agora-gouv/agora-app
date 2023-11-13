@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Widget forked from https://github.com/Imgkl/anim_search_bar/
+
 class AnimSearchBar extends StatefulWidget {
   ///  width - double ,isRequired : Yes
   ///  textController - TextEditingController  ,isRequired : Yes
@@ -30,7 +32,7 @@ class AnimSearchBar extends StatefulWidget {
   final Icon? prefixIcon;
   final String helpText;
   final int animationDurationInMilli;
-  final onSuffixTap;
+  final Function() onClose;
   final bool rtl;
   final bool autoFocus;
   final TextStyle? style;
@@ -43,7 +45,8 @@ class AnimSearchBar extends StatefulWidget {
   final bool boxShadow;
   final Function(String) onSubmitted;
   final TextInputAction textInputAction;
-  final Function(int) searchBarOpen;
+  final Function(bool) searchBarOpen;
+  final Function() onClearText;
   const AnimSearchBar({
     Key? key,
 
@@ -72,8 +75,8 @@ class AnimSearchBar extends StatefulWidget {
     this.textFieldIconColor = Colors.black,
     this.textInputAction = TextInputAction.done,
 
-    /// The onSuffixTap cannot be null
-    required this.onSuffixTap,
+    required this.onClose,
+    required this.onClearText,
     this.animationDurationInMilli = 375,
 
     /// The onSubmitted cannot be null
@@ -102,15 +105,14 @@ class AnimSearchBar extends StatefulWidget {
   _AnimSearchBarState createState() => _AnimSearchBarState();
 }
 
-///toggle - 0 => false or closed
-///toggle 1 => true or open
-int toggle = 0;
-
-/// * use this variable to check current text from OnChange
-String textFieldValue = '';
-
 class _AnimSearchBarState extends State<AnimSearchBar>
     with SingleTickerProviderStateMixin {
+  ///toggle - 0 => false or closed
+  ///toggle 1 => true or open
+  int toggle = 0;
+
+  /// * use this variable to check current text from OnChange
+  String textFieldValue = '';
   ///initializing the AnimationController
   late AnimationController _con;
   FocusNode focusNode = FocusNode();
@@ -196,11 +198,9 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     child: GestureDetector(
                       onTap: () {
                         try {
-                          ///trying to execute the onSuffixTap function
-                          widget.onSuffixTap();
-
                           // * if field empty then the user trying to close bar
                           if (textFieldValue == '') {
+                            widget.onClose();
                             unfocusKeyboard();
                             setState(() {
                               toggle = 0;
@@ -208,11 +208,11 @@ class _AnimSearchBarState extends State<AnimSearchBar>
 
                             ///reverse == close
                             _con.reverse();
+                          } else {
+                            widget.textController.clear();
+                            textFieldValue = '';
+                            widget.onClearText();
                           }
-
-                          // * why not clear textfield here?
-                          widget.textController.clear();
-                          textFieldValue = '';
 
                           ///closeSearchOnSuffixTap will execute if it's true
                           if (widget.closeSearchOnSuffixTap) {
@@ -268,17 +268,10 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     onSubmitted: (value) => {
                       widget.onSubmitted(value),
                       unfocusKeyboard(),
-                      setState(() {
-                        toggle = 0;
-                      }),
-                      widget.textController.clear(),
                     },
                     onEditingComplete: () {
                       /// on editing complete the keyboard will be closed and the search bar will be closed
                       unfocusKeyboard();
-                      setState(() {
-                        toggle = 0;
-                      });
                     },
 
                     ///style is of type TextStyle, the default is just a color black
@@ -362,7 +355,7 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     },
 
                   );
-                  widget.searchBarOpen(toggle);
+                  widget.searchBarOpen(toggle == 1);
                 },
               ),
             ),

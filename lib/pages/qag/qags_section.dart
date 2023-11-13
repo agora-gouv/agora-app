@@ -2,14 +2,19 @@ import 'package:agora/bloc/qag/popup_view_model.dart';
 import 'package:agora/bloc/qag/qag_bloc.dart';
 import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
+import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
 import 'package:agora/bloc/qag/support/qag_support_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
@@ -25,6 +30,7 @@ import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
+import 'package:agora/pages/qag/qags_search.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +66,11 @@ class QagsSection extends StatefulWidget {
 class _QagsSectionState extends State<QagsSection> {
   late QagTab currentSelected;
   String? currentThematiqueId;
+  String previousSearchKeywords = '';
   bool activeSearchBar = false;
+  bool activeThematiqueBar = true;
+
+  final timerHelper = TimerHelper(countdownDurationInSecond: 3);
 
   @override
   void initState() {
@@ -73,36 +83,39 @@ class _QagsSectionState extends State<QagsSection> {
     return Column(
       children: [
         _buildTabBar(),
-        QagsThematiqueSection(
-          currentThematiqueId: currentThematiqueId,
-          onThematiqueIdSelected: (String? thematiqueId) {
-            if (currentThematiqueId != null || thematiqueId != null) {
-              setState(() {
-                if (thematiqueId == currentThematiqueId) {
-                  currentThematiqueId = null;
-                } else {
-                  currentThematiqueId = thematiqueId;
-                }
-                TrackerHelper.trackClick(
-                  clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                );
-                context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
-              });
-            }
-          },
+        Visibility(
+          visible: activeThematiqueBar,
+          child: QagsThematiqueSection(
+            currentThematiqueId: currentThematiqueId,
+            onThematiqueIdSelected: (String? thematiqueId) {
+              if (currentThematiqueId != null || thematiqueId != null) {
+                setState(() {
+                  if (thematiqueId == currentThematiqueId) {
+                    currentThematiqueId = null;
+                  } else {
+                    currentThematiqueId = thematiqueId;
+                  }
+                  TrackerHelper.trackClick(
+                    clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
+                  context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
+                });
+              }
+            },
+          ),
         ),
         widget.isLoading
             ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                child: Column(
-                  children: [
-                    SizedBox(height: AgoraSpacings.x2),
-                    CircularProgressIndicator(),
-                    SizedBox(height: AgoraSpacings.x3 * 2),
-                  ],
-                ),
-              )
+          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+          child: Column(
+            children: [
+              SizedBox(height: AgoraSpacings.x2),
+              CircularProgressIndicator(),
+              SizedBox(height: AgoraSpacings.x3 * 2),
+            ],
+          ),
+        )
             : Padding(
                 padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
                 child: Column(
@@ -161,7 +174,7 @@ class _QagsSectionState extends State<QagsSection> {
   List<Widget> _buildQags(BuildContext context) {
     switch (currentSelected) {
       case QagTab.search:
-        return _buildQagWidgets(context, widget.popularViewModels, currentSelected);
+        return [QagSearch()];
       case QagTab.popular:
         return _buildQagWidgets(context, widget.popularViewModels, currentSelected);
       case QagTab.latest:
@@ -186,17 +199,17 @@ class _QagsSectionState extends State<QagsSection> {
             listener: (previousState, currentState) {
               if (currentState is QagSupportSuccessState || currentState is QagDeleteSupportSuccessState) {
                 context.read<QagBloc>().add(
-                      UpdateQagsEvent(
-                        qagId: qagViewModel.id,
-                        thematique: qagViewModel.thematique,
-                        title: qagViewModel.title,
-                        username: qagViewModel.username,
-                        date: qagViewModel.date,
-                        supportCount: _buildCount(qagViewModel, currentState),
-                        isSupported: !qagViewModel.isSupported,
-                        isAuthor: qagViewModel.isAuthor,
-                      ),
-                    );
+                  UpdateQagsEvent(
+                    qagId: qagViewModel.id,
+                    thematique: qagViewModel.thematique,
+                    title: qagViewModel.title,
+                    username: qagViewModel.username,
+                    date: qagViewModel.date,
+                    supportCount: _buildCount(qagViewModel, currentState),
+                    isSupported: !qagViewModel.isSupported,
+                    isAuthor: qagViewModel.isAuthor,
+                  ),
+                );
               } else if (currentState is QagSupportErrorState || currentState is QagDeleteSupportErrorState) {
                 showAgoraDialog(
                   context: context,
@@ -253,17 +266,17 @@ class _QagsSectionState extends State<QagsSection> {
                     final qagDetailsBackResult = result as QagDetailsBackResult?;
                     if (qagDetailsBackResult != null) {
                       context.read<QagBloc>().add(
-                            UpdateQagsEvent(
-                              qagId: qagDetailsBackResult.qagId,
-                              thematique: qagDetailsBackResult.thematique,
-                              title: qagDetailsBackResult.title,
-                              username: qagDetailsBackResult.username,
-                              date: qagDetailsBackResult.date,
-                              supportCount: qagDetailsBackResult.supportCount,
-                              isSupported: qagDetailsBackResult.isSupported,
-                              isAuthor: qagDetailsBackResult.isAuthor,
-                            ),
-                          );
+                        UpdateQagsEvent(
+                          qagId: qagDetailsBackResult.qagId,
+                          thematique: qagDetailsBackResult.thematique,
+                          title: qagDetailsBackResult.title,
+                          username: qagDetailsBackResult.username,
+                          date: qagDetailsBackResult.date,
+                          supportCount: qagDetailsBackResult.supportCount,
+                          isSupported: qagDetailsBackResult.isSupported,
+                          isAuthor: qagDetailsBackResult.isAuthor,
+                        ),
+                      );
                       setState(() {}); // do not remove: utils to update screen
                     }
                   });
@@ -345,7 +358,21 @@ class _QagsSectionState extends State<QagsSection> {
     final TextEditingController textController = TextEditingController();
 
     textController.addListener(() {
-      activeSearchBar = true;
+      final sanitizedInput = StringUtils.replaceDiacriticsAndRemoveSpecialChars(textController.text);
+      bool reloadQags = false;
+      if (sanitizedInput.isNullOrBlank() || sanitizedInput.length < 3) {
+        context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
+        previousSearchKeywords = '';
+      } else {
+        if (previousSearchKeywords.length != sanitizedInput.length) {
+          reloadQags = true;
+        }
+        previousSearchKeywords = sanitizedInput;
+      }
+      if (reloadQags) {
+        context.read<QagSearchBloc>().add(FetchQagsLoadingEvent());
+        timerHelper.startTimer(() => _loadQags(context, sanitizedInput));
+      }
     });
 
     return Column(
@@ -354,21 +381,34 @@ class _QagsSectionState extends State<QagsSection> {
         Row(
           children: [
             AnimSearchBar(
-              width: 400,
+              height: 40,
+              width: 350,
               textController: textController,
               boxShadow: false,
-              onSuffixTap: () {
+              onClose: () {
                 setState(() {
                   textController.clear();
+                  activeThematiqueBar = false;
+                  activeSearchBar = false;
+                  currentSelected = QagTab.popular;
                 });
-                debugPrint('Agora - onSuffixTap');
+                debugPrint('Agora - icon onSuffixTap ${textController.text}');
+              },
+              onClearText: () {
+                debugPrint('Agora - icon onClearText');
               },
               onSubmitted: (String e) {
-                debugPrint('Agora - onSubmitted');
+                debugPrint('Agora - icon onSubmitted');
               },
-              autoFocus: true,
-              searchBarOpen: (int status) => {
-                activeSearchBar = status == 1,
+              autoFocus: false,
+              searchBarOpen: (bool isSearchOpen) =>
+              {
+                debugPrint('Agora - icon searchBarOpen'),
+                setState(() {
+                  activeSearchBar = isSearchOpen;
+                  activeThematiqueBar = !isSearchOpen;
+                  currentSelected = isSearchOpen ? QagTab.search : QagTab.popular;
+                }),
               },
             ),
             Visibility(
@@ -450,10 +490,31 @@ class _QagsSectionState extends State<QagsSection> {
             Container(
               color: AgoraColors.blue525,
               height: 3,
-              width: MediaQuery.of(context).size.width * 0.3,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.3,
             ),
         ],
       ),
     );
+  }
+
+  void _loadQags(BuildContext context, String keywords) {
+    debugPrint('Agora - icon Searching');
+    context.read<QagSearchBloc>().add(FetchQagsSearchEvent(keywords: keywords));
+    const String widgetName = AnalyticsScreenNames.qagsPaginatedPopularPage;
+
+    _trackSearchedKeywords(widgetName, keywords);
+  }
+
+  void _trackSearchedKeywords(String widgetName, String currentKeywords) {
+    if (currentKeywords.isNotEmpty == true) {
+      TrackerHelper.trackSearch(
+        widgetName: widgetName,
+        searchName: AnalyticsEventNames.qagsSearch,
+        searchedKeywords: currentKeywords,
+      );
+    }
   }
 }
