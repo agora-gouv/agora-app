@@ -190,6 +190,7 @@ class FakeQagSuccessRepository extends QagRepository {
         isAuthor: false,
         support: QagDetailsSupport(count: 112, isSupported: true),
         response: null,
+        textResponse: null,
       ),
     );
   }
@@ -360,6 +361,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
             count: 31415,
           ),
         ),
+        textResponse: null,
       ),
     );
   }
@@ -397,6 +399,92 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
             positiveRatio: 79,
             negativeRatio: 21,
             count: 31415,
+          ),
+        ),
+        textResponse: null,
+      ),
+    );
+  }
+}
+
+class FakeQagSuccessWithTextResponse extends FakeQagSuccessRepository {
+  @override
+  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
+    required String qagId,
+  }) async {
+    return GetQagDetailsSucceedResponse(
+      qagDetails: QagDetails(
+        id: qagId,
+        thematique: Thematique(picto: "🚊", label: "Transports"),
+        title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+        description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
+        date: DateTime(2024, 1, 23),
+        username: "CollectifSauvonsLaRetraite",
+        canShare: true,
+        canSupport: true,
+        canDelete: true,
+        isAuthor: true,
+        support: QagDetailsSupport(count: 112, isSupported: true),
+        response: null,
+        textResponse: QagDetailsTextResponse(
+          responseLabel: "responseLabel",
+          responseText: "responseText",
+          feedbackQuestion: "feedbackQuestionFromTextResponse",
+          feedbackStatus: true,
+          feedbackResults: QagFeedbackResults(
+            positiveRatio: 51,
+            negativeRatio: 49,
+            count: 123,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
+  @override
+  Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
+    required String qagId,
+  }) async {
+    return GetQagDetailsSucceedResponse(
+      qagDetails: QagDetails(
+        id: qagId,
+        thematique: Thematique(picto: "🚊", label: "Transports"),
+        title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+        description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
+        date: DateTime(2024, 1, 23),
+        username: "CollectifSauvonsLaRetraite",
+        canShare: true,
+        canSupport: true,
+        canDelete: true,
+        isAuthor: true,
+        support: QagDetailsSupport(count: 112, isSupported: true),
+        response: QagDetailsResponse(
+          author: "Olivier Véran",
+          authorDescription: "Ministre délégué auprès de...",
+          responseDate: DateTime(2024, 2, 20),
+          videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+          videoWidth: 1080,
+          videoHeight: 1920,
+          transcription: "Blablabla",
+          feedbackQuestion: 'feedbackQuestion',
+          feedbackStatus: true,
+          feedbackResults: QagFeedbackResults(
+            positiveRatio: 79,
+            negativeRatio: 21,
+            count: 31415,
+          ),
+        ),
+        textResponse: QagDetailsTextResponse(
+          responseLabel: "responseLabel",
+          responseText: "responseText",
+          feedbackQuestion: "feedbackQuestionFromTextResponse",
+          feedbackStatus: true,
+          feedbackResults: QagFeedbackResults(
+            positiveRatio: 51,
+            negativeRatio: 49,
+            count: 123,
           ),
         ),
       ),

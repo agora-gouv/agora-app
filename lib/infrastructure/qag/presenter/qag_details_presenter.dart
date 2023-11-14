@@ -6,7 +6,7 @@ import 'package:agora/domain/qag/details/qag_details.dart';
 class QagDetailsPresenter {
   static QagDetailsViewModel present(QagDetails qagDetails) {
     final support = qagDetails.support;
-    final response = qagDetails.response;
+    final videoResponse = _presentResponse(qagDetails.response);
     return QagDetailsViewModel(
       id: qagDetails.id,
       thematique: qagDetails.thematique.toThematiqueViewModel(),
@@ -22,35 +22,65 @@ class QagDetailsPresenter {
         count: support.count,
         isSupported: support.isSupported,
       ),
-      response: response != null
-          ? QagDetailsResponseViewModel(
-              author: response.author,
-              authorDescription: response.authorDescription,
-              responseDate: response.responseDate.formatToDayMonth(),
-              videoUrl: response.videoUrl,
-              videoWidth: response.videoWidth,
-              videoHeight: response.videoHeight,
-              transcription: response.transcription,
-            )
-          : null,
-      feedback: _presentFeedback(response),
+      response: videoResponse,
+      textResponse: videoResponse == null ? _presentTextResponse(qagDetails.textResponse) : null,
+      feedback: _presentFeedbackFromVideoResponse(qagDetails.response) ??
+          _presentFeedbackFromTextResponse(qagDetails.textResponse),
     );
   }
 
-  static QagDetailsFeedbackViewModel? _presentFeedback(QagDetailsResponse? qagDetailsResponse) {
-    if (qagDetailsResponse == null) {
+  static QagDetailsResponseViewModel? _presentResponse(QagDetailsResponse? response) {
+    return response != null
+        ? QagDetailsResponseViewModel(
+            author: response.author,
+            authorDescription: response.authorDescription,
+            responseDate: response.responseDate.formatToDayMonth(),
+            videoUrl: response.videoUrl,
+            videoWidth: response.videoWidth,
+            videoHeight: response.videoHeight,
+            transcription: response.transcription,
+          )
+        : null;
+  }
+
+  static QagDetailsTextResponseViewModel? _presentTextResponse(QagDetailsTextResponse? response) {
+    return response != null
+        ? QagDetailsTextResponseViewModel(responseLabel: response.responseLabel, responseText: response.responseText)
+        : null;
+  }
+
+  static QagDetailsFeedbackViewModel? _presentFeedbackFromVideoResponse(QagDetailsResponse? response) {
+    if (response == null) {
       return null;
-    } else if (qagDetailsResponse.feedbackStatus == false) {
+    } else if (response.feedbackStatus == false) {
       return QagDetailsFeedbackNotAnsweredViewModel(
-        feedbackQuestion: qagDetailsResponse.feedbackQuestion,
-        feedbackResults: qagDetailsResponse.feedbackResults,
+        feedbackQuestion: response.feedbackQuestion,
+        feedbackResults: response.feedbackResults,
       );
-    } else if (qagDetailsResponse.feedbackResults == null) {
-      return QagDetailsFeedbackAnsweredNoResultsViewModel(feedbackQuestion: qagDetailsResponse.feedbackQuestion);
+    } else if (response.feedbackResults == null) {
+      return QagDetailsFeedbackAnsweredNoResultsViewModel(feedbackQuestion: response.feedbackQuestion);
     } else {
       return QagDetailsFeedbackAnsweredResultsViewModel(
-        feedbackQuestion: qagDetailsResponse.feedbackQuestion,
-        feedbackResults: qagDetailsResponse.feedbackResults!,
+        feedbackQuestion: response.feedbackQuestion,
+        feedbackResults: response.feedbackResults!,
+      );
+    }
+  }
+
+  static QagDetailsFeedbackViewModel? _presentFeedbackFromTextResponse(QagDetailsTextResponse? response) {
+    if (response == null) {
+      return null;
+    } else if (response.feedbackStatus == false) {
+      return QagDetailsFeedbackNotAnsweredViewModel(
+        feedbackQuestion: response.feedbackQuestion,
+        feedbackResults: response.feedbackResults,
+      );
+    } else if (response.feedbackResults == null) {
+      return QagDetailsFeedbackAnsweredNoResultsViewModel(feedbackQuestion: response.feedbackQuestion);
+    } else {
+      return QagDetailsFeedbackAnsweredResultsViewModel(
+        feedbackQuestion: response.feedbackQuestion,
+        feedbackResults: response.feedbackResults!,
       );
     }
   }

@@ -46,6 +46,17 @@ void main() {
         count: 31415,
       ),
     ),
+    textResponse: QagDetailsTextResponse(
+      responseLabel: "responseLabel",
+      responseText: "responseText",
+      feedbackQuestion: 'feedbackQuestion',
+      feedbackStatus: true,
+      feedbackResults: QagFeedbackResults(
+        positiveRatio: 79,
+        negativeRatio: 21,
+        count: 31415,
+      ),
+    ),
   );
 
   final expectedViewModel = QagDetailsViewModel(
@@ -77,6 +88,7 @@ void main() {
         count: 31415,
       ),
     ),
+    textResponse: null,
   );
 
   group("fetchQagDetailsEvent", () {
@@ -101,6 +113,7 @@ void main() {
             isAuthor: false,
             support: QagDetailsSupportViewModel(count: 112, isSupported: true),
             response: null,
+            textResponse: null,
             feedback: null,
           ),
         ),
@@ -137,6 +150,90 @@ void main() {
               videoHeight: 1920,
               transcription: "Blablabla",
             ),
+            textResponse: null,
+            feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+              feedbackQuestion: 'feedbackQuestion',
+              feedbackResults: QagFeedbackResults(
+                positiveRatio: 79,
+                negativeRatio: 21,
+                count: 31415,
+              ),
+            ),
+          ),
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest(
+      "when repository succeed with text response - should emit success state",
+      build: () => QagDetailsBloc(
+        qagRepository: FakeQagSuccessWithTextResponse(),
+      ),
+      act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
+      expect: () => [
+        QagDetailsFetchedState(
+          QagDetailsViewModel(
+            id: qagId,
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+            description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
+            date: "23 janvier",
+            username: "CollectifSauvonsLaRetraite",
+            canShare: true,
+            canSupport: true,
+            canDelete: true,
+            isAuthor: true,
+            support: QagDetailsSupportViewModel(count: 112, isSupported: true),
+            response: null,
+            textResponse: QagDetailsTextResponseViewModel(
+              responseLabel: "responseLabel",
+              responseText: "responseText",
+            ),
+            feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+              feedbackQuestion: 'feedbackQuestionFromTextResponse',
+              feedbackResults: QagFeedbackResults(
+                positiveRatio: 51,
+                negativeRatio: 49,
+                count: 123,
+              ),
+            ),
+          ),
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest(
+      "when repository succeed with both video and text response - should emit success state with only video response",
+      build: () => QagDetailsBloc(
+        qagRepository: FakeQagSuccessWithVideoAndTextResponse(),
+      ),
+      act: (bloc) => bloc.add(FetchQagDetailsEvent(qagId: qagId)),
+      expect: () => [
+        QagDetailsFetchedState(
+          QagDetailsViewModel(
+            id: qagId,
+            thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+            title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
+            description: "Le conseil d'orientation des retraites indique que les comptes sont à l'équilibre.",
+            date: "23 janvier",
+            username: "CollectifSauvonsLaRetraite",
+            canShare: true,
+            canSupport: true,
+            canDelete: true,
+            isAuthor: true,
+            support: QagDetailsSupportViewModel(count: 112, isSupported: true),
+            response: QagDetailsResponseViewModel(
+              author: "Olivier Véran",
+              authorDescription: "Ministre délégué auprès de...",
+              responseDate: "20 février",
+              videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
+              videoWidth: 1080,
+              videoHeight: 1920,
+              transcription: "Blablabla",
+            ),
+            textResponse: null,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
               feedbackQuestion: 'feedbackQuestion',
               feedbackResults: QagFeedbackResults(
@@ -209,6 +306,7 @@ void main() {
             isAuthor: false,
             support: QagDetailsSupportViewModel(count: 112, isSupported: true),
             response: null,
+            textResponse: null,
             feedback: null,
           ),
         ),

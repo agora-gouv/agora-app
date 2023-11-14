@@ -15,6 +15,7 @@ class QagDetailsViewModel extends Equatable {
   final bool isAuthor;
   final QagDetailsSupportViewModel support;
   final QagDetailsResponseViewModel? response;
+  final QagDetailsTextResponseViewModel? textResponse;
   final QagDetailsFeedbackViewModel? feedback;
 
   QagDetailsViewModel({
@@ -30,6 +31,7 @@ class QagDetailsViewModel extends Equatable {
     required this.isAuthor,
     required this.support,
     required this.response,
+    required this.textResponse,
     required this.feedback,
   });
 
@@ -50,6 +52,7 @@ class QagDetailsViewModel extends Equatable {
       isAuthor: viewModel.isAuthor,
       support: viewModel.support,
       response: viewModel.response,
+      textResponse: viewModel.textResponse,
       feedback: feedback,
     );
   }
@@ -68,6 +71,7 @@ class QagDetailsViewModel extends Equatable {
         isAuthor,
         support,
         response,
+        textResponse,
         feedback,
       ];
 }
@@ -113,6 +117,22 @@ class QagDetailsResponseViewModel extends Equatable {
         videoWidth,
         videoHeight,
         transcription,
+      ];
+}
+
+class QagDetailsTextResponseViewModel extends Equatable {
+  final String responseLabel;
+  final String responseText;
+
+  QagDetailsTextResponseViewModel({
+    required this.responseLabel,
+    required this.responseText,
+  });
+
+  @override
+  List<Object> get props => [
+        responseLabel,
+        responseText,
       ];
 }
 
