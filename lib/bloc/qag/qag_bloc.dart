@@ -1,3 +1,4 @@
+import 'package:agora/bloc/qag/popup_view_model.dart';
 import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/qag/qag_view_model.dart';
@@ -18,7 +19,15 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
     Emitter<QagState> emit,
   ) async {
     if (state is QagFetchedState) {
-      emit(QagLoadingState(popularViewModels: [], latestViewModels: [], supportingViewModels: [], errorCase: null));
+      emit(
+        QagLoadingState(
+          popularViewModels: [],
+          latestViewModels: [],
+          supportingViewModels: [],
+          errorCase: null,
+          popupViewModel: null,
+        ),
+      );
     }
     final response = await qagRepository.fetchQags(thematiqueId: event.thematiqueId);
     if (response is GetQagsSucceedResponse) {
@@ -31,6 +40,12 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           latestViewModels: qagLatestViewModels,
           supportingViewModels: qagSupportingViewModels,
           errorCase: response.errorCase,
+          popupViewModel: response.popupQag != null
+              ? PopupQagViewModel(
+                  title: response.popupQag!.title,
+                  description: response.popupQag!.description,
+                )
+              : null,
         ),
       );
     } else if (response is GetQagsFailedResponse) {
@@ -137,6 +152,7 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           latestViewModels: latestViewModelsCopy,
           supportingViewModels: supportingViewModelsCopy,
           errorCase: currentState.errorCase,
+          popupViewModel: currentState.popupViewModel,
         ),
       );
     }

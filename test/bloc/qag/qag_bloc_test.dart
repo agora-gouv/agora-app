@@ -1,3 +1,4 @@
+import 'package:agora/bloc/qag/popup_view_model.dart';
 import 'package:agora/bloc/qag/qag_bloc.dart';
 import 'package:agora/bloc/qag/qag_event.dart';
 import 'package:agora/bloc/qag/qag_state.dart';
@@ -61,6 +62,7 @@ void main() {
             ),
           ],
           errorCase: null,
+          popupViewModel: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -111,6 +113,10 @@ void main() {
             ),
           ],
           errorCase: "Une erreur est survenue",
+          popupViewModel: PopupQagViewModel(
+            title: "Titre de popup",
+            description: "Description de popup",
+          ),
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -159,6 +165,7 @@ void main() {
           ),
         ],
         errorCase: null,
+        popupViewModel: null,
       ),
       act: (bloc) => bloc.add(FetchQagsEvent(thematiqueId: null)),
       expect: () => [
@@ -167,6 +174,7 @@ void main() {
           latestViewModels: [],
           supportingViewModels: [],
           errorCase: null,
+          popupViewModel: null,
         ),
         QagFetchedState(
           popularViewModels: [
@@ -206,6 +214,7 @@ void main() {
             ),
           ],
           errorCase: null,
+          popupViewModel: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -280,6 +289,7 @@ void main() {
           ),
         ],
         errorCase: null,
+        popupViewModel: null,
       ),
       act: (bloc) => bloc.add(
         UpdateQagsEvent(
@@ -342,6 +352,7 @@ void main() {
             ),
           ],
           errorCase: null,
+          popupViewModel: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -389,6 +400,7 @@ void main() {
           ),
         ],
         errorCase: null,
+        popupViewModel: null,
       ),
       act: (bloc) => bloc.add(
         UpdateQagsEvent(
@@ -440,6 +452,7 @@ void main() {
             ),
           ],
           errorCase: null,
+          popupViewModel: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -487,6 +500,7 @@ void main() {
           ),
         ],
         errorCase: null,
+        popupViewModel: null,
       ),
       act: (bloc) => bloc.add(
         UpdateQagsEvent(
@@ -527,6 +541,7 @@ void main() {
           latestViewModels: [],
           supportingViewModels: [],
           errorCase: null,
+          popupViewModel: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -575,6 +590,7 @@ void main() {
           ),
         ],
         errorCase: null,
+        popupViewModel: null,
       ),
       act: (bloc) => bloc.add(
         UpdateQagsEvent(
@@ -627,6 +643,7 @@ void main() {
             ),
           ],
           errorCase: null,
+          popupViewModel: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),
