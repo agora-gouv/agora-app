@@ -131,7 +131,12 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
 
   Widget _buildState(BuildContext context, QagDetailsState detailsState) {
     if (detailsState is QagDetailsFetchedState) {
-      return _buildContent(context, detailsState.viewModel);
+      if (detailsState.viewModel.textResponse is QagDetailsTextResponseViewModel &&
+          detailsState.viewModel.textResponse != null) {
+        return _buildTextContent(context, detailsState.viewModel.textResponse!);
+      } else {
+        return _buildContent(context, detailsState.viewModel);
+      }
     } else if (detailsState is QagDetailsInitialLoadingState) {
       return Column(
         children: [
@@ -248,6 +253,46 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                     ),
                   ),
                   if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                  QagDetailsFeedbackWidget(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextContent(BuildContext context, QagDetailsTextResponseViewModel viewModel) {
+    return Expanded(
+      child: Column(
+        children: [
+          Expanded(
+            child: AgoraSingleScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: AgoraSpacings.x0_5),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Semantics(
+                                header: true,
+                                child: Text(viewModel.responseText, style: AgoraTextStyles.medium18),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: AgoraSpacings.base),
+                      ],
+                    ),
+                  ),
                   QagDetailsFeedbackWidget(),
                 ],
               ),
