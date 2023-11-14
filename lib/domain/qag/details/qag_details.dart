@@ -14,6 +14,7 @@ class QagDetails extends Equatable {
   final bool isAuthor;
   final QagDetailsSupport support;
   final QagDetailsResponse? response;
+  final QagDetailsTextResponse? textResponse;
 
   QagDetails({
     required this.id,
@@ -28,6 +29,7 @@ class QagDetails extends Equatable {
     required this.isAuthor,
     required this.support,
     required this.response,
+    required this.textResponse,
   });
 
   factory QagDetails.copyWithNewResponse({
@@ -47,6 +49,7 @@ class QagDetails extends Equatable {
       isAuthor: qagDetails.isAuthor,
       support: qagDetails.support,
       response: response,
+      textResponse: qagDetails.textResponse,
     );
   }
 
@@ -64,6 +67,7 @@ class QagDetails extends Equatable {
         isAuthor,
         support,
         response,
+        textResponse,
       ];
 }
 
@@ -125,7 +129,7 @@ class QagDetailsResponse extends Equatable {
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         author,
         authorDescription,
         responseDate,
@@ -135,6 +139,32 @@ class QagDetailsResponse extends Equatable {
         transcription,
         feedbackQuestion,
         feedbackStatus,
+        feedbackResults,
+      ];
+}
+
+class QagDetailsTextResponse extends Equatable {
+  final String responseLabel;
+  final String responseText;
+  final String feedbackQuestion;
+  final bool feedbackStatus;
+  final QagFeedbackResults? feedbackResults;
+
+  QagDetailsTextResponse({
+    required this.responseLabel,
+    required this.responseText,
+    required this.feedbackQuestion,
+    required this.feedbackStatus,
+    required this.feedbackResults,
+  });
+
+  @override
+  List<Object?> get props => [
+        responseLabel,
+        responseText,
+        feedbackQuestion,
+        feedbackStatus,
+        feedbackResults,
       ];
 }
 

@@ -680,6 +680,7 @@ void main() {
             isAuthor: true,
             support: QagDetailsSupport(count: 112, isSupported: true),
             response: null,
+            textResponse: null,
           ),
         ),
       );
@@ -713,12 +714,13 @@ void main() {
               "transcription": "Blablabla",
               "feedbackQuestion": 'feedbackQuestion',
               "feedbackStatus": true,
-              "feedbackResult": {
+              "feedbackResults": {
                 "positiveRatio": 95,
                 "negativeRatio": 5,
                 "count": 117,
               },
             },
+            "textResponse": null,
           },
         ),
         headers: {
@@ -758,6 +760,84 @@ void main() {
               videoHeight: 1920,
               transcription: "Blablabla",
               feedbackQuestion: 'feedbackQuestion',
+              feedbackStatus: true,
+              feedbackResults: QagFeedbackResults(
+                positiveRatio: 95,
+                negativeRatio: 5,
+                count: 117,
+              ),
+            ),
+            textResponse: null,
+          ),
+        ),
+      );
+    });
+
+    test("when success with textResponse not null should return qag details", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/$qagId",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "id": "qagId",
+            "thematique": {"label": "Transports", "picto": "🚊"},
+            "title": "Titre de la QaG",
+            "description": "Description textuelle",
+            "date": "2024-01-23",
+            "username": "Henri J.",
+            "canShare": false,
+            "canSupport": false,
+            "canDelete": false,
+            "isAuthor": false,
+            "support": {"count": 112, "isSupported": true},
+            "response": null,
+            "textResponse": {
+              "responseLabel": "Réponse d'Agora",
+              "responseText": "La réponse textuelle de la part de l'équipe Agora",
+              "feedbackQuestion": 'feedbackQuestion',
+              "feedbackStatus": true,
+              "feedbackResults": {
+                "positiveRatio": 95,
+                "negativeRatio": 5,
+                "count": 117,
+              },
+            },
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+      );
+      final response = await repository.fetchQagDetails(qagId: qagId);
+
+      // Then
+      expect(
+        response,
+        GetQagDetailsSucceedResponse(
+          qagDetails: QagDetails(
+            id: qagId,
+            thematique: Thematique(picto: "🚊", label: "Transports"),
+            title: "Titre de la QaG",
+            description: "Description textuelle",
+            date: DateTime(2024, 1, 23),
+            username: "Henri J.",
+            canShare: false,
+            canSupport: false,
+            canDelete: false,
+            isAuthor: false,
+            support: QagDetailsSupport(count: 112, isSupported: true),
+            response: null,
+            textResponse: QagDetailsTextResponse(
+              responseLabel: "Réponse d'Agora",
+              responseText: "La réponse textuelle de la part de l'équipe Agora",
+              feedbackQuestion: "feedbackQuestion",
               feedbackStatus: true,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 95,
