@@ -15,7 +15,6 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -31,6 +30,7 @@ import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dar
 import 'package:agora/pages/qag/details/qag_details_feedback_widget.dart';
 import 'package:agora/pages/qag/details/qag_details_response_view.dart';
 import 'package:agora/pages/qag/details/qag_details_support_view.dart';
+import 'package:agora/pages/qag/details/qag_details_text_response_view.dart';
 import 'package:agora/pages/qag/qags_moderated_error_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,12 +132,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
 
   Widget _buildState(BuildContext context, QagDetailsState detailsState) {
     if (detailsState is QagDetailsFetchedState) {
-      if (detailsState.viewModel.textResponse is QagDetailsTextResponseViewModel &&
-          detailsState.viewModel.textResponse != null) {
-        return _buildTextContent(context, detailsState.viewModel);
-      } else {
-        return _buildContent(context, detailsState.viewModel);
-      }
+      return _buildContent(context, detailsState.viewModel);
     } else if (detailsState is QagDetailsInitialLoadingState) {
       return Column(
         children: [
@@ -162,6 +157,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
   Widget _buildContent(BuildContext context, QagDetailsViewModel viewModel) {
     final support = viewModel.support;
     final response = viewModel.response;
+    final textResponse = viewModel.textResponse;
     return Expanded(
       child: Column(
         children: [
@@ -180,7 +176,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                             clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
                             widgetName: AnalyticsScreenNames.qagDetailsPage,
                           );
-                          if (viewModel.response == null) {
+                          if (response == null && textResponse == null) {
                             ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
                           } else {
                             ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
@@ -193,8 +189,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                 )
               : _buildAgoraToolbarWithPopAction(context),
           Expanded(
-            child: AgoraSingleScrollView(
-              physics: BouncingScrollPhysics(),
+            child: _buildScrollView(
+              viewModel: viewModel,
               child: Column(
                 children: [
                   Padding(
@@ -213,7 +209,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                                 child: Text(viewModel.title, style: AgoraTextStyles.medium18),
                               ),
                             ),
-                            if (response != null && support.count != 0) ...[
+                            if ((response != null || textResponse != null) && support.count != 0) ...[
                               Padding(
                                 padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
                                 child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
@@ -222,7 +218,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                           ],
                         ),
                         SizedBox(height: AgoraSpacings.base),
-                        if (response == null) ...[
+                        if (response == null && textResponse == null) ...[
                           Text(viewModel.description, style: AgoraTextStyles.light14),
                           SizedBox(height: AgoraSpacings.base),
                           Text(
@@ -254,75 +250,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                     ),
                   ),
                   if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                  QagDetailsFeedbackWidget(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTextContent(BuildContext context, QagDetailsViewModel viewModel) {
-    return Expanded(
-      child: Column(
-        children: [
-          viewModel.canShare
-              ? Row(
-            children: [
-              Expanded(child: _buildAgoraToolbarWithPopAction(context)),
-              Padding(
-                padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-                child: AgoraButton(
-                  icon: "ic_share.svg",
-                  label: QagStrings.share,
-                  style: AgoraButtonStyle.lightGreyButtonStyle,
-                  onPressed: () {
-                    TrackerHelper.trackClick(
-                      clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
-                      widgetName: AnalyticsScreenNames.qagDetailsPage,
-                    );
-                    if (viewModel.response == null) {
-                      ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
-                    } else {
-                      ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
-                    }
-                  },
-                ),
-              ),
-              SizedBox(width: AgoraSpacings.horizontalPadding),
-            ],
-          )
-              : _buildAgoraToolbarWithPopAction(context),
-          Expanded(
-            child: AgoraSingleScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: AgoraSpacings.x0_5),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Semantics(
-                                header: true,
-                                child: Text(viewModel.textResponse!.responseLabel, style: AgoraTextStyles.medium18),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: AgoraSpacings.base),
-                        Text(viewModel.textResponse!.responseText, style: AgoraTextStyles.light14),
-                        SizedBox(height: AgoraSpacings.base),
-                      ],
-                    ),
-                  ),
+                  if (textResponse != null)
+                    QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                   QagDetailsFeedbackWidget(),
                 ],
               ),
@@ -358,6 +287,14 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         ),
       ],
     );
+  }
+
+  Widget _buildScrollView({required QagDetailsViewModel viewModel, required Widget child}) {
+    if (viewModel.textResponse != null) {
+      return SingleChildScrollView(child: child);
+    } else {
+      return AgoraSingleScrollView(child: child);
+    }
   }
 
   AgoraToolbar _buildAgoraToolbarWithPopAction(BuildContext context) =>
