@@ -133,7 +133,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     if (detailsState is QagDetailsFetchedState) {
       if (detailsState.viewModel.textResponse is QagDetailsTextResponseViewModel &&
           detailsState.viewModel.textResponse != null) {
-        return _buildTextContent(context, detailsState.viewModel.textResponse!);
+        return _buildTextContent(context, detailsState.viewModel);
       } else {
         return _buildContent(context, detailsState.viewModel);
       }
@@ -263,10 +263,37 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     );
   }
 
-  Widget _buildTextContent(BuildContext context, QagDetailsTextResponseViewModel viewModel) {
+  Widget _buildTextContent(BuildContext context, QagDetailsViewModel viewModel) {
     return Expanded(
       child: Column(
         children: [
+          viewModel.canShare
+              ? Row(
+            children: [
+              Expanded(child: _buildAgoraToolbarWithPopAction(context)),
+              Padding(
+                padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+                child: AgoraButton(
+                  icon: "ic_share.svg",
+                  label: QagStrings.share,
+                  style: AgoraButtonStyle.lightGreyButtonStyle,
+                  onPressed: () {
+                    TrackerHelper.trackClick(
+                      clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
+                      widgetName: AnalyticsScreenNames.qagDetailsPage,
+                    );
+                    if (viewModel.response == null) {
+                      ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
+                    } else {
+                      ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
+                    }
+                  },
+                ),
+              ),
+              SizedBox(width: AgoraSpacings.horizontalPadding),
+            ],
+          )
+              : _buildAgoraToolbarWithPopAction(context),
           Expanded(
             child: AgoraSingleScrollView(
               physics: BouncingScrollPhysics(),
@@ -284,9 +311,10 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                             Expanded(
                               child: Semantics(
                                 header: true,
-                                child: Text(viewModel.responseText, style: AgoraTextStyles.medium18),
+                                child: Text(viewModel.textResponse!.responseLabel, style: AgoraTextStyles.medium18),
                               ),
                             ),
+                            Text(viewModel.textResponse!.responseText, style: AgoraTextStyles.light14),
                           ],
                         ),
                         SizedBox(height: AgoraSpacings.base),
