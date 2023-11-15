@@ -1,4 +1,3 @@
-import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
