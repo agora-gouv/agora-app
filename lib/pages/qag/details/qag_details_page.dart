@@ -30,6 +30,7 @@ import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dar
 import 'package:agora/pages/qag/details/qag_details_feedback_widget.dart';
 import 'package:agora/pages/qag/details/qag_details_response_view.dart';
 import 'package:agora/pages/qag/details/qag_details_support_view.dart';
+import 'package:agora/pages/qag/details/qag_details_text_response_view.dart';
 import 'package:agora/pages/qag/qags_moderated_error_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -156,6 +157,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
   Widget _buildContent(BuildContext context, QagDetailsViewModel viewModel) {
     final support = viewModel.support;
     final response = viewModel.response;
+    final textResponse = viewModel.textResponse;
     return Expanded(
       child: Column(
         children: [
@@ -174,7 +176,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                             clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
                             widgetName: AnalyticsScreenNames.qagDetailsPage,
                           );
-                          if (viewModel.response == null) {
+                          if (response == null && textResponse == null) {
                             ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
                           } else {
                             ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
@@ -187,8 +189,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                 )
               : _buildAgoraToolbarWithPopAction(context),
           Expanded(
-            child: AgoraSingleScrollView(
-              physics: BouncingScrollPhysics(),
+            child: _buildScrollView(
+              viewModel: viewModel,
               child: Column(
                 children: [
                   Padding(
@@ -207,7 +209,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                                 child: Text(viewModel.title, style: AgoraTextStyles.medium18),
                               ),
                             ),
-                            if (response != null && support.count != 0) ...[
+                            if ((response != null || textResponse != null) && support.count != 0) ...[
                               Padding(
                                 padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
                                 child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
@@ -216,7 +218,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                           ],
                         ),
                         SizedBox(height: AgoraSpacings.base),
-                        if (response == null) ...[
+                        if (response == null && textResponse == null) ...[
                           Text(viewModel.description, style: AgoraTextStyles.light14),
                           SizedBox(height: AgoraSpacings.base),
                           Text(
@@ -248,6 +250,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                     ),
                   ),
                   if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                  if (textResponse != null)
+                    QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                   QagDetailsFeedbackWidget(),
                 ],
               ),
@@ -283,6 +287,14 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         ),
       ],
     );
+  }
+
+  Widget _buildScrollView({required QagDetailsViewModel viewModel, required Widget child}) {
+    if (viewModel.textResponse != null) {
+      return SingleChildScrollView(child: child);
+    } else {
+      return AgoraSingleScrollView(child: child);
+    }
   }
 
   AgoraToolbar _buildAgoraToolbarWithPopAction(BuildContext context) =>

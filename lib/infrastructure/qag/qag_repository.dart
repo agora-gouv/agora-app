@@ -224,7 +224,9 @@ class QagDioRepository extends QagRepository {
       final response = await httpClient.get("/qags/$qagId");
       final qagDetailsSupport = response.data["support"] as Map;
       final qagDetailsResponse = response.data["response"] as Map?;
-      final qagDetailsFeedbackResults = qagDetailsResponse?["feedbackResults"];
+      final qagDetailsTextResponse = response.data["textResponse"] as Map?;
+      final qagDetailsFeedbackResults =
+          qagDetailsResponse?["feedbackResults"] ?? qagDetailsTextResponse?["feedbackResults"];
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
@@ -252,6 +254,21 @@ class QagDioRepository extends QagRepository {
                   transcription: qagDetailsResponse["transcription"] as String,
                   feedbackQuestion: qagDetailsResponse["feedbackQuestion"] as String,
                   feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool,
+                  feedbackResults: qagDetailsFeedbackResults != null
+                      ? QagFeedbackResults(
+                          positiveRatio: qagDetailsFeedbackResults["positiveRatio"] as int,
+                          negativeRatio: qagDetailsFeedbackResults["negativeRatio"] as int,
+                          count: qagDetailsFeedbackResults["count"] as int,
+                        )
+                      : null,
+                )
+              : null,
+          textResponse: qagDetailsTextResponse != null
+              ? QagDetailsTextResponse(
+                  responseLabel: qagDetailsTextResponse["responseLabel"] as String,
+                  responseText: qagDetailsTextResponse["responseText"] as String,
+                  feedbackQuestion: qagDetailsTextResponse["feedbackQuestion"] as String,
+                  feedbackStatus: qagDetailsTextResponse["feedbackStatus"] as bool,
                   feedbackResults: qagDetailsFeedbackResults != null
                       ? QagFeedbackResults(
                           positiveRatio: qagDetailsFeedbackResults["positiveRatio"] as int,
