@@ -23,10 +23,8 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
@@ -120,7 +118,8 @@ class _QagsSectionState extends State<QagsSection> {
                 padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
                 child: Column(
                   children: [
-                    _getPopupWidget(context) ?? SizedBox(),
+                    //Todo popup Qag
+                    // _getPopupWidget(context) ?? SizedBox(),
                     Column(children: _buildQags(context)),
                   ],
                 ),
@@ -129,7 +128,8 @@ class _QagsSectionState extends State<QagsSection> {
     );
   }
 
-  Widget? _getPopupWidget(BuildContext context) {
+  //Todo popup Qag
+  /*Widget? _getPopupWidget(BuildContext context) {
     if (widget.popupViewModel != null) {
       return Column(
         children: [
@@ -169,7 +169,7 @@ class _QagsSectionState extends State<QagsSection> {
       );
     }
     return null;
-  }
+  }*/
 
   List<Widget> _buildQags(BuildContext context) {
     switch (currentSelected) {
@@ -382,7 +382,7 @@ class _QagsSectionState extends State<QagsSection> {
           children: [
             AnimSearchBar(
               height: 40,
-              width: 350,
+              width: MediaQuery.of(context).size.width,
               textController: textController,
               boxShadow: false,
               onClose: () {
