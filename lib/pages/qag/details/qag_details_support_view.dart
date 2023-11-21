@@ -124,12 +124,10 @@ class QagDetailsSupportView extends StatelessWidget {
   }
 
   bool _buildIsSupported(bool isSupported, QagSupportState supportState) {
-    if (supportState is QagSupportInitialState || supportState is QagSupportLoadingState) {
-      if (isSupported) {
-        return true;
-      } else {
-        return false;
-      }
+    if (supportState is QagSupportInitialState) {
+      return isSupported;
+    } else if (supportState is QagSupportLoadingState) {
+      return !isSupported;
     } else {
       if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
         return true;
