@@ -45,6 +45,7 @@ dependencies:
   hive_generator: ^2.0.1
   shimmer: ^3.0.0
   diacritic: ^0.1.4
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,7 @@ flutter:
   assets:
     - assets/
     - assets/launcher_icons/
+    - assets/animations/
   fonts:
     - family: Marianne
       fonts:
