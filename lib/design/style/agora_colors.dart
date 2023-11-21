@@ -33,6 +33,8 @@ class AgoraColors {
   static const Color divider = Color(0x1A000000);
   static const Color fluorescentRed = Color(0xFFFF5655);
   static const Color red = Color(0xFFCE0500);
+  static const Color lightRedOpacity19 = Color(0x30CB2C31);
+  static const Color lightRedOpacity4 = Color(0x0ACB2C31);
   static const Color brun = Color(0xFF716043);
   static const Color lightBrun = Color(0xFFFEECC2);
   static const Color blur = Color(0x123D3C49);
