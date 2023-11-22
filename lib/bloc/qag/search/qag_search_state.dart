@@ -1,4 +1,4 @@
-import 'package:agora/bloc/qag/qag_view_model.dart';
+import 'package:agora/domain/qag/qag.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagSearchState extends Equatable {
@@ -11,10 +11,10 @@ class QagSearchInitialState extends QagSearchState {}
 class QagSearchLoadingState extends QagSearchState {}
 
 class QagSearchLoadedState extends QagSearchState {
-  final List<QagViewModel> qagViewModels;
+  final List<Qag> qags;
 
   QagSearchLoadedState({
-    required this.qagViewModels,
+    required this.qags,
   });
 }
 

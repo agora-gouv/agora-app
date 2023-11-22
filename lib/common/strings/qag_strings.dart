@@ -14,6 +14,8 @@ class QagStrings {
   static const String latest = "Récentes";
   static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";
+  static const String searchQagEmptyList = "Pas de résultat.";
+  static const String searchQagHint = "Rechercher un mot-clef";
   static const String by = "Par";
   static const String at = "le";
   static const String authorAndDate = "De %1s - le %2s";

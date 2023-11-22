@@ -1,6 +1,5 @@
 import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/bloc/qag/search/qag_search_state.dart';
-import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,10 +34,9 @@ class QagSearchBloc extends Bloc<QagSearchEvent, QagSearchState> {
   ) async {
     final response = await qagRepository.fetchSearchQags(keywords: event.keywords);
     if (response is GetSearchQagsSucceedResponse) {
-      final viewModels = QagPresenter.presentQag(response.searchQags);
       emit(
         QagSearchLoadedState(
-          qagViewModels: viewModels,
+          qags: response.searchQags,
         ),
       );
     } else {

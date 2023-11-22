@@ -5,7 +5,6 @@ import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
-import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
@@ -61,9 +60,6 @@ class _QagsPageState extends State<QagsPage> {
             create: (BuildContext context) => QagResponseBloc(
               qagRepository: RepositoryManager.getQagRepository(),
             )..add(FetchQagsResponseEvent()),
-          ),
-          BlocProvider(
-            create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
           ),
           BlocProvider(
             create: (context) => ThematiqueBloc(
@@ -146,7 +142,6 @@ class _QagsPageState extends State<QagsPage> {
     if (state is QagWithItemState) {
       return [
         QagsAskQuestionSectionPage(errorCase: state.errorCase),
-        // Structure à modifier
         QagsSection(
           isLoading: state is QagLoadingState,
           defaultSelected: QagTab.popular,

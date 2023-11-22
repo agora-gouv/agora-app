@@ -3,12 +3,17 @@ import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/bloc/qag/support/qag_support_event.dart';
+import 'package:agora/bloc/qag/support/qag_support_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
+import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,24 +24,56 @@ class QagSearch extends StatelessWidget {
     return BlocSelector<QagSearchBloc, QagSearchState, _ViewModel>(
       selector: _ViewModel.fromState,
       builder: (context, viewModel) {
-        if (viewModel is _QagSearchLoadedViewModel) {
-          return ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: viewModel.qags.length,
-            itemBuilder: (context, index) {
-              final item = viewModel.qags[index];
-              return Column(
-                children: [
-                  AgoraQagCard(
+        if (viewModel is _QagSearchWithResultViewModel) {
+          return Column(
+            children: [
+              _buildQagSearchListView(context, viewModel.qags),
+            ],
+          );
+        } else if (viewModel is _QagSearchLoadingViewModel) {
+          return CircularProgressIndicator();
+        } else if (viewModel is _QagSearchNoResultViewModel) {
+          return Column(
+            children: [
+              SizedBox(height: AgoraSpacings.base),
+              Text(
+                QagStrings.searchQagEmptyList,
+                style: AgoraTextStyles.regular14,
+              ),
+              SizedBox(height: AgoraSpacings.base),
+            ],
+          );
+        } else if (viewModel is _QagSearchEmptyViewModel) {
+          return SizedBox(height: AgoraSpacings.base);
+        } else {
+          return AgoraErrorView();
+        }
+      },
+    );
+  }
+
+  ListView _buildQagSearchListView(BuildContext context, List<QagViewModel> viewModel) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: viewModel.length,
+      itemBuilder: (context, index) {
+        final item = viewModel[index];
+        return BlocProvider.value(
+          value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+          child: Column(
+            children: [
+              BlocBuilder<QagSupportBloc, QagSupportState>(
+                builder: (context, state) {
+                  return AgoraQagCard(
                     id: item.id,
                     thematique: item.thematique,
                     title: item.title,
                     username: item.username,
                     date: item.date,
-                    supportCount: item.supportCount,
-                    isSupported: item.isSupported,
+                    supportCount: _buildCount(item, state),
+                    isSupported: _buildIsSupported(item.isSupported, state),
                     isAuthor: item.isAuthor,
                     onSupportClick: (bool support) {
                       if (support) {
@@ -60,29 +97,52 @@ class QagSearch extends StatelessWidget {
                         arguments: QagDetailsArguments(qagId: item.id, reload: QagReload.qagsPaginatedPage),
                       );
                     },
-                  ),
-                  SizedBox(height: AgoraSpacings.base),
-                ],
-              );
-            },
-          );
-        } else if (viewModel is _QagSearchLoadingViewModel) {
-          return CircularProgressIndicator();
-        } else if (viewModel is _QagSearchEmptyViewModel) {
-          return SizedBox(height: AgoraSpacings.base);
-        } else {
-          return AgoraErrorView();
-        }
+                  );
+                },
+              ),
+              SizedBox(height: AgoraSpacings.base),
+            ],
+          ),
+        );
       },
     );
+  }
+
+  int _buildCount(QagViewModel qagViewModel, QagSupportState supportState) {
+    final supportCount = qagViewModel.supportCount - (qagViewModel.isSupported ? 1 : 0);
+    if (supportState is QagSupportInitialState) {
+      return qagViewModel.supportCount;
+    } else if (supportState is QagSupportSuccessState) {
+      return supportCount + 1;
+    } else if (supportState is QagDeleteSupportSuccessState) {
+      return supportCount;
+    }
+    return supportCount;
+  }
+
+  bool _buildIsSupported(bool isSupported, QagSupportState supportState) {
+    if (supportState is QagSupportInitialState) {
+      return isSupported;
+    } else if (supportState is QagSupportLoadingState) {
+      return !isSupported;
+    } else {
+      if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
+        return true;
+      } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
+        return false;
+      }
+    }
+    return false;
   }
 }
 
 abstract class _ViewModel {
   static _ViewModel fromState(QagSearchState state) {
-    if (state is QagSearchLoadedState) {
-      return _QagSearchLoadedViewModel(
-        qags: state.qagViewModels,
+    if (state is QagSearchLoadedState && state.qags.isEmpty) {
+      return _QagSearchNoResultViewModel();
+    } else if (state is QagSearchLoadedState && state.qags.isNotEmpty) {
+      return _QagSearchWithResultViewModel(
+        qags: QagPresenter.presentQag(state.qags),
       );
     } else if (state is QagSearchLoadingState) {
       return _QagSearchLoadingViewModel();
@@ -94,11 +154,13 @@ abstract class _ViewModel {
   }
 }
 
-class _QagSearchLoadedViewModel extends _ViewModel {
+class _QagSearchWithResultViewModel extends _ViewModel {
   final List<QagViewModel> qags;
 
-  _QagSearchLoadedViewModel({required this.qags});
+  _QagSearchWithResultViewModel({required this.qags});
 }
+
+class _QagSearchNoResultViewModel extends _ViewModel {}
 
 class _QagSearchLoadingViewModel extends _ViewModel {}
 

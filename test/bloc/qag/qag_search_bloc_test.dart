@@ -1,8 +1,8 @@
-import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/bloc/qag/search/qag_search_state.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/domain/qag/qag.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -25,13 +25,13 @@ void main() {
       ),
       expect: () => [
         QagSearchLoadedState(
-          qagViewModels: [
-            QagViewModel(
+          qags: [
+            Qag(
               id: "id0",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title0",
               username: "username0",
-              date: DateTime(2024, 4, 23).toString(),
+              date: DateTime(2024, 4, 23),
               supportCount: 8,
               isSupported: true,
               isAuthor: false,

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -285,11 +286,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                       isDense: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: widget.helpText,
-                      labelStyle: TextStyle(
-                        color: Color(0xff5B5B5B),
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      labelStyle: AgoraTextStyles.regular14,
                       alignLabelWithHint: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -349,6 +346,8 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                         setState(() {
                           if (widget.autoFocus) unFocusKeyboard();
                         });
+
+                        widget.onClose();
 
                         ///reverse == close
                         _con.reverse();

@@ -12,6 +12,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/string_utils.dart';
@@ -67,8 +68,7 @@ class _QagsSectionState extends State<QagsSection> {
   late QagTab currentSelected;
   String? currentThematiqueId;
   String previousSearchKeywords = '';
-  bool activeSearchBar = false;
-  bool activeThematiqueBar = true;
+  bool isActiveSearchBar = false;
 
   final timerHelper = TimerHelper(countdownDurationInSecond: 3);
 
@@ -84,7 +84,7 @@ class _QagsSectionState extends State<QagsSection> {
       children: [
         _buildTabBar(),
         Visibility(
-          visible: activeThematiqueBar,
+          visible: !isActiveSearchBar,
           child: QagsThematiqueSection(
             currentThematiqueId: currentThematiqueId,
             onThematiqueIdSelected: (String? thematiqueId) {
@@ -120,7 +120,7 @@ class _QagsSectionState extends State<QagsSection> {
                 padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
                 child: Column(
                   children: [
-                    if (activeThematiqueBar) _getPopupWidget(context) ?? SizedBox(),
+                    if (!isActiveSearchBar) _getPopupWidget(context) ?? SizedBox(),
                     Column(children: _buildQags(context)),
                   ],
                 ),
@@ -129,7 +129,6 @@ class _QagsSectionState extends State<QagsSection> {
     );
   }
 
-  //Todo popup Qag
   Widget? _getPopupWidget(BuildContext context) {
     if (widget.popupViewModel != null) {
       return Column(
@@ -190,107 +189,110 @@ class _QagsSectionState extends State<QagsSection> {
     if (qagViewModels.isNotEmpty) {
       for (final qagViewModel in qagViewModels) {
         qagsWidgets.add(
-          BlocConsumer<QagSupportBloc, QagSupportState>(
-            listenWhen: (previousState, currentState) {
-              return (currentState is QagSupportSuccessState && currentState.qagId == qagViewModel.id) ||
-                  (currentState is QagDeleteSupportSuccessState && currentState.qagId == qagViewModel.id) ||
-                  (currentState is QagSupportErrorState && currentState.qagId == qagViewModel.id) ||
-                  (currentState is QagDeleteSupportErrorState && currentState.qagId == qagViewModel.id);
-            },
-            listener: (previousState, currentState) {
-              if (currentState is QagSupportSuccessState || currentState is QagDeleteSupportSuccessState) {
-                context.read<QagBloc>().add(
-                      UpdateQagsEvent(
-                        qagId: qagViewModel.id,
-                        thematique: qagViewModel.thematique,
-                        title: qagViewModel.title,
-                        username: qagViewModel.username,
-                        date: qagViewModel.date,
-                        supportCount: _buildCount(qagViewModel, currentState),
-                        isSupported: !qagViewModel.isSupported,
-                        isAuthor: qagViewModel.isAuthor,
+          BlocProvider.value(
+            value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+            child: BlocConsumer<QagSupportBloc, QagSupportState>(
+              listenWhen: (previousState, currentState) {
+                return (currentState is QagSupportSuccessState && currentState.qagId == qagViewModel.id) ||
+                    (currentState is QagDeleteSupportSuccessState && currentState.qagId == qagViewModel.id) ||
+                    (currentState is QagSupportErrorState && currentState.qagId == qagViewModel.id) ||
+                    (currentState is QagDeleteSupportErrorState && currentState.qagId == qagViewModel.id);
+              },
+              listener: (previousState, currentState) {
+                if (currentState is QagSupportSuccessState || currentState is QagDeleteSupportSuccessState) {
+                  context.read<QagBloc>().add(
+                        UpdateQagsEvent(
+                          qagId: qagViewModel.id,
+                          thematique: qagViewModel.thematique,
+                          title: qagViewModel.title,
+                          username: qagViewModel.username,
+                          date: qagViewModel.date,
+                          supportCount: _buildCount(qagViewModel, currentState),
+                          isSupported: !qagViewModel.isSupported,
+                          isAuthor: qagViewModel.isAuthor,
+                        ),
+                      );
+                } else if (currentState is QagSupportErrorState || currentState is QagDeleteSupportErrorState) {
+                  showAgoraDialog(
+                    context: context,
+                    columnChildren: [
+                      AgoraErrorView(),
+                      SizedBox(height: AgoraSpacings.x0_75),
+                      AgoraButton(
+                        label: GenericStrings.close,
+                        style: AgoraButtonStyle.primaryButtonStyle,
+                        onPressed: () => Navigator.pop(context),
                       ),
-                    );
-              } else if (currentState is QagSupportErrorState || currentState is QagDeleteSupportErrorState) {
-                showAgoraDialog(
-                  context: context,
-                  columnChildren: [
-                    AgoraErrorView(),
-                    SizedBox(height: AgoraSpacings.x0_75),
-                    AgoraButton(
-                      label: GenericStrings.close,
-                      style: AgoraButtonStyle.primaryButtonStyle,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                );
-              }
-            },
-            buildWhen: (previousState, currentState) {
-              return currentState is QagSupportInitialState ||
-                  currentState is QagSupportLoadingState ||
-                  currentState is QagDeleteSupportLoadingState ||
-                  (currentState is QagSupportSuccessState && currentState.qagId == qagViewModel.id) ||
-                  (currentState is QagDeleteSupportSuccessState && currentState.qagId == qagViewModel.id);
-            },
-            builder: (context, state) {
-              return AgoraQagCard(
-                id: qagViewModel.id,
-                thematique: qagViewModel.thematique,
-                title: qagViewModel.title,
-                username: qagViewModel.username,
-                date: qagViewModel.date,
-                supportCount: qagViewModel.supportCount,
-                isSupported: qagViewModel.isSupported,
-                isAuthor: qagViewModel.isAuthor,
-                onSupportClick: (support) {
-                  if (support) {
-                    TrackerHelper.trackClick(
-                      clickName: AnalyticsEventNames.likeQag,
-                      widgetName: AnalyticsScreenNames.qagsPage,
-                    );
-                    context.read<QagSupportBloc>().add(SupportQagEvent(qagId: qagViewModel.id));
-                  } else {
-                    TrackerHelper.trackClick(
-                      clickName: AnalyticsEventNames.unlikeQag,
-                      widgetName: AnalyticsScreenNames.qagsPage,
-                    );
-                    context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: qagViewModel.id));
-                  }
-                },
-                onCardClick: () {
-                  Navigator.pushNamed(
-                    context,
-                    QagDetailsPage.routeName,
-                    arguments: QagDetailsArguments(qagId: qagViewModel.id, reload: QagReload.qagsPage),
-                  ).then((result) {
-                    final qagDetailsBackResult = result as QagDetailsBackResult?;
-                    if (qagDetailsBackResult != null) {
-                      context.read<QagBloc>().add(
-                            UpdateQagsEvent(
-                              qagId: qagDetailsBackResult.qagId,
-                              thematique: qagDetailsBackResult.thematique,
-                              title: qagDetailsBackResult.title,
-                              username: qagDetailsBackResult.username,
-                              date: qagDetailsBackResult.date,
-                              supportCount: qagDetailsBackResult.supportCount,
-                              isSupported: qagDetailsBackResult.isSupported,
-                              isAuthor: qagDetailsBackResult.isAuthor,
-                            ),
-                          );
-                      setState(() {}); // do not remove: utils to update screen
+                    ],
+                  );
+                }
+              },
+              buildWhen: (previousState, currentState) {
+                return currentState is QagSupportInitialState ||
+                    currentState is QagSupportLoadingState ||
+                    currentState is QagDeleteSupportLoadingState ||
+                    (currentState is QagSupportSuccessState && currentState.qagId == qagViewModel.id) ||
+                    (currentState is QagDeleteSupportSuccessState && currentState.qagId == qagViewModel.id);
+              },
+              builder: (context, state) {
+                return AgoraQagCard(
+                  id: qagViewModel.id,
+                  thematique: qagViewModel.thematique,
+                  title: qagViewModel.title,
+                  username: qagViewModel.username,
+                  date: qagViewModel.date,
+                  supportCount: qagViewModel.supportCount,
+                  isSupported: qagViewModel.isSupported,
+                  isAuthor: qagViewModel.isAuthor,
+                  onSupportClick: (support) {
+                    if (support) {
+                      TrackerHelper.trackClick(
+                        clickName: AnalyticsEventNames.likeQag,
+                        widgetName: AnalyticsScreenNames.qagsPage,
+                      );
+                      context.read<QagSupportBloc>().add(SupportQagEvent(qagId: qagViewModel.id));
+                    } else {
+                      TrackerHelper.trackClick(
+                        clickName: AnalyticsEventNames.unlikeQag,
+                        widgetName: AnalyticsScreenNames.qagsPage,
+                      );
+                      context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: qagViewModel.id));
                     }
-                  });
-                },
-              );
-            },
+                  },
+                  onCardClick: () {
+                    Navigator.pushNamed(
+                      context,
+                      QagDetailsPage.routeName,
+                      arguments: QagDetailsArguments(qagId: qagViewModel.id, reload: QagReload.qagsPage),
+                    ).then((result) {
+                      final qagDetailsBackResult = result as QagDetailsBackResult?;
+                      if (qagDetailsBackResult != null) {
+                        context.read<QagBloc>().add(
+                              UpdateQagsEvent(
+                                qagId: qagDetailsBackResult.qagId,
+                                thematique: qagDetailsBackResult.thematique,
+                                title: qagDetailsBackResult.title,
+                                username: qagDetailsBackResult.username,
+                                date: qagDetailsBackResult.date,
+                                supportCount: qagDetailsBackResult.supportCount,
+                                isSupported: qagDetailsBackResult.isSupported,
+                                isAuthor: qagDetailsBackResult.isAuthor,
+                              ),
+                            );
+                        setState(() {}); // do not remove: utils to update screen
+                      }
+                    });
+                  },
+                );
+              },
+            ),
           ),
         );
         qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       }
       switch (qagTab) {
         case QagTab.search:
-          qagsWidgets.add(_buildAllButton(QagPaginatedTab.popular));
+          break;
         case QagTab.popular:
           qagsWidgets.add(_buildAllButton(QagPaginatedTab.popular));
           break;
@@ -389,24 +391,24 @@ class _QagsSectionState extends State<QagsSection> {
               onClose: () {
                 setState(() {
                   textController.clear();
-                  activeThematiqueBar = false;
-                  activeSearchBar = false;
+                  isActiveSearchBar = false;
                   currentSelected = QagTab.popular;
                 });
+                context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
               },
+              helpText: QagStrings.searchQagHint,
               onClearText: () {},
               onSubmitted: (String e) {},
               autoFocus: false,
               searchBarOpen: (bool isSearchOpen) => {
                 setState(() {
-                  activeSearchBar = isSearchOpen;
-                  activeThematiqueBar = !isSearchOpen;
+                  isActiveSearchBar = isSearchOpen;
                   currentSelected = isSearchOpen ? QagTab.search : QagTab.popular;
                 }),
               },
             ),
             Visibility(
-              visible: !activeSearchBar,
+              visible: !isActiveSearchBar,
               child: Expanded(
                 child: Semantics(
                   header: true,
@@ -425,7 +427,7 @@ class _QagsSectionState extends State<QagsSection> {
               ),
             ),
             Visibility(
-              visible: !activeSearchBar,
+              visible: !isActiveSearchBar,
               child: Expanded(
                 child: _buildTabButton(
                   label: QagStrings.latest,
@@ -441,7 +443,7 @@ class _QagsSectionState extends State<QagsSection> {
               ),
             ),
             Visibility(
-              visible: !activeSearchBar,
+              visible: !isActiveSearchBar,
               child: Expanded(
                 child: _buildTabButton(
                   label: QagStrings.supporting,
@@ -472,12 +474,7 @@ class _QagsSectionState extends State<QagsSection> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              left: AgoraSpacings.horizontalPadding,
-              right: AgoraSpacings.horizontalPadding,
-              top: AgoraSpacings.base,
-              bottom: AgoraSpacings.base,
-            ),
+            padding: const EdgeInsets.all(AgoraSpacings.base),
             child: Text(label, style: isSelected ? AgoraTextStyles.medium14 : AgoraTextStyles.light14),
           ),
           if (isSelected)
@@ -493,17 +490,12 @@ class _QagsSectionState extends State<QagsSection> {
 
   void _loadQags(BuildContext context, String keywords) {
     context.read<QagSearchBloc>().add(FetchQagsSearchEvent(keywords: keywords));
-    const String widgetName = AnalyticsScreenNames.qagsPaginatedPopularPage;
 
-    _trackSearchedKeywords(widgetName, keywords);
-  }
-
-  void _trackSearchedKeywords(String widgetName, String currentKeywords) {
-    if (currentKeywords.isNotEmpty == true) {
+    if (keywords.isNotEmpty == true) {
       TrackerHelper.trackSearch(
-        widgetName: widgetName,
+        widgetName: AnalyticsScreenNames.qagsSearchPage,
         searchName: AnalyticsEventNames.qagsSearch,
-        searchedKeywords: currentKeywords,
+        searchedKeywords: keywords,
       );
     }
   }
