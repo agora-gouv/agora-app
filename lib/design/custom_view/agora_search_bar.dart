@@ -271,6 +271,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                     },
                     onSubmitted: (value) => {
                       widget.onSubmitted(value),
+                      textFieldValue = value,
                       unFocusKeyboard(),
                     },
                     onEditingComplete: () {

@@ -493,7 +493,7 @@ class _QagsSectionState extends State<QagsSection> {
 
     if (keywords.isNotEmpty == true) {
       TrackerHelper.trackSearch(
-        widgetName: AnalyticsScreenNames.qagsSearchPage,
+        widgetName: AnalyticsScreenNames.qagsPage,
         searchName: AnalyticsEventNames.qagsSearch,
         searchedKeywords: keywords,
       );
