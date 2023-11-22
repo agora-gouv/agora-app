@@ -153,7 +153,7 @@ class _AgoraLikeAnimationViewState extends State<_AgoraLikeAnimationView> with S
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 1),
     vsync: this,
-  )..repeat(reverse: false);
+  )..forward();
 
   @override
   void initState() {
@@ -191,9 +191,11 @@ class _AgoraLikePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    drawable
-      ..setProgress(progress)
-      ..draw(canvas, Rect.fromLTRB(-10, -28, iconSize * 3, iconSize * 3));
+    if (progress < 1) {
+      drawable
+        ..setProgress(progress)
+        ..draw(canvas, Rect.fromLTRB(-2, -14, iconSize * 2.5, iconSize * 2.5));
+    }
   }
 
   @override
