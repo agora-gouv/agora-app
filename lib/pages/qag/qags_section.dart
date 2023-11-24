@@ -388,7 +388,7 @@ class _QagsSectionState extends State<QagsSection> {
           children: [
             AnimSearchBar(
               height: 40,
-              width: MediaQuery.of(context).size.width*0.95,
+              width: MediaQuery.of(context).size.width * 0.95,
               textController: textController,
               boxShadow: false,
               textFieldColor: AgoraColors.doctor,
