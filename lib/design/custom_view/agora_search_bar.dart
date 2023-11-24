@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +158,6 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
         decoration: BoxDecoration(
           /// can add custom  color or the color will be white
           color: toggle == 1 ? widget.textFieldColor : widget.color,
-          borderRadius: BorderRadius.circular(30.0),
 
           /// show boxShadow unless false was passed
           boxShadow: !widget.boxShadow
@@ -176,8 +176,8 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
             ///Using Animated Positioned widget to expand and shrink the widget
             AnimatedPositioned(
               duration: Duration(milliseconds: widget.animationDurationInMilli),
-              top: 6.0,
-              right: 7.0,
+              top: 2.0,
+              right: 6.0,
               curve: Curves.easeOut,
               child: AnimatedOpacity(
                 opacity: (toggle == 0) ? 0.0 : 1.0,
@@ -236,8 +236,8 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                       child: widget.suffixIcon ??
                           Icon(
                             Icons.close,
-                            size: 20.0,
-                            color: widget.textFieldIconColor,
+                            size: 22.0,
+                            color: AgoraColors.primaryBlue,
                           ),
                     ),
                   ),
@@ -248,7 +248,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
               duration: Duration(milliseconds: widget.animationDurationInMilli),
               left: (toggle == 0) ? 20.0 : 40.0,
               curve: Curves.easeOut,
-              top: 11.0,
+              top: 9.0,
 
               ///Using Animated opacity to change the opacity of th textField while expanding
               child: AnimatedOpacity(
@@ -287,7 +287,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                       isDense: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       labelText: widget.helpText,
-                      labelStyle: AgoraTextStyles.regular14,
+                      labelStyle: AgoraTextStyles.light14,
                       alignLabelWithHint: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -304,7 +304,6 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
               /// can add custom color or the color will be white
               /// toggle button color based on toggle state
               color: toggle == 0 ? widget.color : widget.textFieldColor,
-              borderRadius: BorderRadius.circular(30.0),
               child: IconButton(
                 splashRadius: 19.0,
 
@@ -322,7 +321,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                         toggle == 1 ? Icons.arrow_back_ios : Icons.search,
                         // search icon color when closed
                         color: toggle == 0 ? widget.searchIconColor : widget.textFieldIconColor,
-                        size: 20.0,
+                        size: 22.0,
                       ),
                 onPressed: () {
                   setState(

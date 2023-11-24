@@ -68,6 +68,7 @@ class _QagsSectionState extends State<QagsSection> {
   late QagTab currentSelected;
   String? currentThematiqueId;
   String previousSearchKeywords = '';
+  String previousSearchKeywordsSanitized = '';
   bool isActiveSearchBar = false;
 
   final timerHelper = TimerHelper(countdownDurationInSecond: 3);
@@ -358,19 +359,20 @@ class _QagsSectionState extends State<QagsSection> {
   }
 
   Widget _buildTabBar() {
-    final TextEditingController textController = TextEditingController();
+    final TextEditingController textController = TextEditingController(text: previousSearchKeywords);
 
     textController.addListener(() {
+      previousSearchKeywords = textController.text;
       final sanitizedInput = StringUtils.replaceDiacriticsAndRemoveSpecialChars(textController.text);
       bool reloadQags = false;
       if (sanitizedInput.isNullOrBlank() || sanitizedInput.length < 3) {
         context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
-        previousSearchKeywords = '';
+        previousSearchKeywordsSanitized = '';
       } else {
-        if (previousSearchKeywords.length != sanitizedInput.length) {
+        if (previousSearchKeywordsSanitized.length != sanitizedInput.length) {
           reloadQags = true;
         }
-        previousSearchKeywords = sanitizedInput;
+        previousSearchKeywordsSanitized = sanitizedInput;
       }
       if (reloadQags) {
         context.read<QagSearchBloc>().add(FetchQagsLoadingEvent());
@@ -382,12 +384,15 @@ class _QagsSectionState extends State<QagsSection> {
       children: [
         SizedBox(height: AgoraSpacings.base),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AnimSearchBar(
               height: 40,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(context).size.width*0.95,
               textController: textController,
               boxShadow: false,
+              textFieldColor: AgoraColors.doctor,
+              color: AgoraColors.transparent,
               onClose: () {
                 setState(() {
                   textController.clear();
@@ -397,9 +402,10 @@ class _QagsSectionState extends State<QagsSection> {
                 context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
               },
               helpText: QagStrings.searchQagHint,
+              textInputAction: TextInputAction.search,
               onClearText: () {},
               onSubmitted: (String e) {},
-              autoFocus: false,
+              autoFocus: true,
               searchBarOpen: (bool isSearchOpen) => {
                 setState(() {
                   isActiveSearchBar = isSearchOpen;
