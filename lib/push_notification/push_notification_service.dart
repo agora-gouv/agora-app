@@ -13,6 +13,7 @@ import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -189,6 +190,9 @@ class FirebasePushNotificationService extends PushNotificationService {
                 : ConsultationSummaryInitialTab.etEnsuite,
           ),
         );
+        break;
+      case NotificationMessageType.homeQags:
+        navigatorKey.currentState?.pushNamed(QagsPage.routeName);
         break;
     }
   }
