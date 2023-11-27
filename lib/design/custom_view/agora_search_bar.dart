@@ -299,7 +299,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                       contentPadding: const EdgeInsets.only(bottom: 5),
                       isDense: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      labelText: widget.helpText,
+                      hintText: widget.helpText,
                       labelStyle: AgoraTextStyles.light14,
                       alignLabelWithHint: true,
                       border: OutlineInputBorder(

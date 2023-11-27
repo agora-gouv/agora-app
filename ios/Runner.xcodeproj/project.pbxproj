@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -891,7 +891,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.social.gouv.agora.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "Agora Ad Hoc";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Agora DEV Profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Agora App Store";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
