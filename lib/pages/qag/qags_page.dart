@@ -36,12 +36,14 @@ class QagsPage extends StatefulWidget {
 class _QagsPageState extends State<QagsPage> {
   final GlobalKey toolbarTitleKey = GlobalKey();
   String? currentThematiqueId;
+  late final GlobalKey searchBarKey;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
+      searchBarKey = GlobalKey();
     });
   }
 
@@ -141,7 +143,10 @@ class _QagsPageState extends State<QagsPage> {
   List<Widget> _handleQagState(BuildContext context, QagState state) {
     if (state is QagWithItemState) {
       return [
-        QagsAskQuestionSectionPage(errorCase: state.errorCase),
+        QagsAskQuestionSectionPage(
+          key: searchBarKey,
+          errorCase: state.errorCase,
+        ),
         QagsSection(
           isLoading: state is QagLoadingState,
           defaultSelected: QagTab.popular,
@@ -151,6 +156,15 @@ class _QagsPageState extends State<QagsPage> {
           selectedThematiqueId: currentThematiqueId,
           askQuestionErrorCase: state.errorCase,
           popupViewModel: state.popupViewModel,
+          onSearchBarOpen: (bool isSearchOpen) {
+            if (isSearchOpen) {
+              Scrollable.ensureVisible(
+                searchBarKey.currentContext!,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+              );
+            }
+          },
         ),
       ];
     } else if (state is QagInitialLoadingState) {
