@@ -70,6 +70,7 @@ class _QagsSectionState extends State<QagsSection> {
   String previousSearchKeywords = '';
   String previousSearchKeywordsSanitized = '';
   bool isActiveSearchBar = false;
+  late final GlobalKey searchBarKey;
 
   final timerHelper = TimerHelper(countdownDurationInSecond: 3);
 
@@ -77,11 +78,13 @@ class _QagsSectionState extends State<QagsSection> {
   void initState() {
     super.initState();
     currentSelected = widget.defaultSelected;
+    searchBarKey = GlobalKey();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: searchBarKey,
       children: [
         _buildTabBar(),
         Visibility(
@@ -411,6 +414,7 @@ class _QagsSectionState extends State<QagsSection> {
                   isActiveSearchBar = isSearchOpen;
                   currentSelected = isSearchOpen ? QagTab.search : QagTab.popular;
                 }),
+                Scrollable.ensureVisible(searchBarKey.currentContext!),
               },
             ),
             Visibility(

@@ -24,30 +24,30 @@ class QagSearch extends StatelessWidget {
     return BlocSelector<QagSearchBloc, QagSearchState, _ViewModel>(
       selector: _ViewModel.fromState,
       builder: (context, viewModel) {
+        final Widget section;
+
         if (viewModel is _QagSearchWithResultViewModel) {
-          return Column(
-            children: [
-              _buildQagSearchListView(context, viewModel.qags),
-            ],
-          );
+          section = _buildQagSearchListView(context, viewModel.qags);
         } else if (viewModel is _QagSearchLoadingViewModel) {
-          return CircularProgressIndicator();
+          section = Center(child: CircularProgressIndicator());
         } else if (viewModel is _QagSearchNoResultViewModel) {
-          return Column(
-            children: [
-              SizedBox(height: AgoraSpacings.base),
-              Text(
-                QagStrings.searchQagEmptyList,
-                style: AgoraTextStyles.regular14,
-              ),
-              SizedBox(height: AgoraSpacings.base),
-            ],
+          section = Center(
+            child: Text(
+              QagStrings.searchQagEmptyList,
+              style: AgoraTextStyles.regular14,
+            ),
           );
         } else if (viewModel is _QagSearchEmptyViewModel) {
-          return SizedBox(height: AgoraSpacings.base);
+          section = Center();
         } else {
-          return AgoraErrorView();
+          section = Center(child: AgoraErrorView());
         }
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height * 0.70,
+          ),
+          child: section,
+        );
       },
     );
   }

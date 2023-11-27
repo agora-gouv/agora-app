@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/foundation.dart';
@@ -213,7 +214,9 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                             _con.reverse();
                           } else {
                             widget.textController.clear();
-                            textFieldValue = '';
+                            setState(() {
+                              textFieldValue = '';
+                            });
                             widget.onClearText();
                           }
 
@@ -233,12 +236,18 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                       },
 
                       ///suffixIcon is of type Icon
-                      child: widget.suffixIcon ??
-                          Icon(
-                            Icons.close,
-                            size: 22.0,
-                            color: AgoraColors.primaryBlue,
-                          ),
+                      child: Semantics(
+                        button: true,
+                        label:
+                            textFieldValue.isNotEmpty ? GenericStrings.searchBarDelete : GenericStrings.searchBarClose,
+                        child: widget.suffixIcon ??
+                            Icon(
+                              semanticLabel: "",
+                              Icons.close,
+                              size: 22.0,
+                              color: AgoraColors.primaryBlue,
+                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -267,11 +276,15 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                     cursorRadius: Radius.circular(10.0),
                     cursorWidth: 2.0,
                     onChanged: (value) {
-                      textFieldValue = value;
+                      setState(() {
+                        textFieldValue = value;
+                      });
                     },
                     onSubmitted: (value) => {
                       widget.onSubmitted(value),
-                      textFieldValue = value,
+                      setState(() {
+                        textFieldValue = value;
+                      }),
                       unFocusKeyboard(),
                     },
                     onEditingComplete: () {
@@ -307,22 +320,26 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
               child: IconButton(
                 splashRadius: 19.0,
 
-                ///if toggle is 1, which means it's open. so show the back icon, which will close it.
+                ///if toggle is 1, wxhich means it's open. so show the back icon, which will close it.
                 ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
                 ///prefixIcon is of type Icon
-                icon: widget.prefixIcon != null
-                    ? toggle == 1
-                        ? Icon(
-                            Icons.arrow_back_ios,
-                            color: widget.textFieldIconColor,
-                          )
-                        : widget.prefixIcon!
-                    : Icon(
-                        toggle == 1 ? Icons.arrow_back_ios : Icons.search,
-                        // search icon color when closed
-                        color: toggle == 0 ? widget.searchIconColor : widget.textFieldIconColor,
-                        size: 22.0,
-                      ),
+                icon: Semantics(
+                  button: true,
+                  label: toggle == 1 ? GenericStrings.searchBarClose : GenericStrings.searchBarOpen,
+                  child: widget.prefixIcon != null
+                      ? toggle == 1
+                          ? Icon(
+                              Icons.arrow_back_ios,
+                              color: widget.textFieldIconColor,
+                            )
+                          : widget.prefixIcon!
+                      : Icon(
+                          toggle == 1 ? Icons.arrow_back_ios : Icons.search,
+                          // search icon color when closed
+                          color: toggle == 0 ? widget.searchIconColor : widget.textFieldIconColor,
+                          size: 22.0,
+                        ),
+                ),
                 onPressed: () {
                   setState(
                     () {
