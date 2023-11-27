@@ -30,6 +30,10 @@ abstract class QagRepository {
     required String? thematiqueId,
   });
 
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
+    required String? keywords,
+  });
+
   Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
     required int pageNumber,
     required String? thematiqueId,
@@ -141,6 +145,25 @@ class QagDioRepository extends QagRepository {
         }
       }
       return GetQagsFailedResponse();
+    }
+  }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
+    required String? keywords,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/qags/search",
+        queryParameters: {
+          "keywords": keywords,
+        },
+      );
+      return GetSearchQagsSucceedResponse(
+        searchQags: _transformToQagList(response.data["results"] as List),
+      );
+    } catch (e) {
+      return GetSearchQagsFailedResponse();
     }
   }
 
@@ -539,6 +562,22 @@ class GetQagsFailedResponse extends GetQagsRepositoryResponse {
   @override
   List<Object> get props => [errorType];
 }
+
+abstract class GetSearchQagsRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetSearchQagsSucceedResponse extends GetSearchQagsRepositoryResponse {
+  final List<Qag> searchQags;
+
+  GetSearchQagsSucceedResponse({required this.searchQags});
+
+  @override
+  List<Object> get props => [searchQags];
+}
+
+class GetSearchQagsFailedResponse extends GetSearchQagsRepositoryResponse {}
 
 abstract class GetQagsPaginatedRepositoryResponse extends Equatable {
   @override
