@@ -15,6 +15,15 @@ class FetchQagsEvent extends QagsEvent {
   List<Object?> get props => [thematiqueId];
 }
 
+class FetchSearchQagsEvent extends QagsEvent {
+  final String keywords;
+
+  FetchSearchQagsEvent({required this.keywords});
+
+  @override
+  List<Object?> get props => [keywords];
+}
+
 class UpdateQagsEvent extends QagsEvent {
   final String qagId;
   final ThematiqueViewModel thematique;

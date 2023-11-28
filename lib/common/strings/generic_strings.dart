@@ -1,5 +1,5 @@
 class GenericStrings {
-  static const String mailSupport = "agora@beta.gouv.fr";
+  static const String mailSupport = "contact@agora.gouv.fr";
   static const String address =
       "Direction interministérielle de la transformation publique\u{00A0}- TSA 70732\u{00A0}- 75334 Paris Cedex 07";
   static const String cnil = "https://www.cnil.fr";
@@ -25,6 +25,9 @@ class GenericStrings {
   static const String modify = "Modifier";
   static const String close = "Fermer";
   static const String delete = "Supprimer";
+  static const String searchBarDelete = "Effacer la saisie";
+  static const String searchBarClose = "Quitter la recherche";
+  static const String searchBarOpen = "Commencer une recherche";
   static const String readCompleteCharter = "Lire la charte complète";
   static const String modificationSuccess = "La modification a été prise en compte.";
 

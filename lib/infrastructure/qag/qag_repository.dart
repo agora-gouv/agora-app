@@ -30,6 +30,10 @@ abstract class QagRepository {
     required String? thematiqueId,
   });
 
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
+    required String? keywords,
+  });
+
   Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
     required int pageNumber,
     required String? thematiqueId,
@@ -145,6 +149,25 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
+    required String? keywords,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/qags/search",
+        queryParameters: {
+          "keywords": keywords,
+        },
+      );
+      return GetSearchQagsSucceedResponse(
+        searchQags: _transformToQagList(response.data["results"] as List),
+      );
+    } catch (e) {
+      return GetSearchQagsFailedResponse();
+    }
+  }
+
+  @override
   Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
     required int pageNumber,
     required String? thematiqueId,
@@ -227,6 +250,7 @@ class QagDioRepository extends QagRepository {
       final qagDetailsTextResponse = response.data["textResponse"] as Map?;
       final qagDetailsFeedbackResults =
           qagDetailsResponse?["feedbackResults"] ?? qagDetailsTextResponse?["feedbackResults"];
+      final qagDetailsResponseAdditionalInfo = qagDetailsResponse?["additionalInfo"];
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
@@ -259,6 +283,12 @@ class QagDioRepository extends QagRepository {
                           positiveRatio: qagDetailsFeedbackResults["positiveRatio"] as int,
                           negativeRatio: qagDetailsFeedbackResults["negativeRatio"] as int,
                           count: qagDetailsFeedbackResults["count"] as int,
+                        )
+                      : null,
+                  additionalInfo: qagDetailsResponseAdditionalInfo != null
+                      ? QagDetailsResponseAdditionalInfo(
+                          title: qagDetailsResponseAdditionalInfo["title"] as String,
+                          description: qagDetailsResponseAdditionalInfo["description"] as String,
                         )
                       : null,
                 )
@@ -539,6 +569,22 @@ class GetQagsFailedResponse extends GetQagsRepositoryResponse {
   @override
   List<Object> get props => [errorType];
 }
+
+abstract class GetSearchQagsRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class GetSearchQagsSucceedResponse extends GetSearchQagsRepositoryResponse {
+  final List<Qag> searchQags;
+
+  GetSearchQagsSucceedResponse({required this.searchQags});
+
+  @override
+  List<Object> get props => [searchQags];
+}
+
+class GetSearchQagsFailedResponse extends GetSearchQagsRepositoryResponse {}
 
 abstract class GetQagsPaginatedRepositoryResponse extends Equatable {
   @override

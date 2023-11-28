@@ -273,6 +273,24 @@ class FakeQagSuccessRepository extends QagRepository {
       ],
     );
   }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsSucceedResponse(
+      searchQags: [
+        Qag(
+          id: "id0",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title0",
+          username: "username0",
+          date: DateTime(2024, 4, 23),
+          supportCount: 8,
+          isSupported: true,
+          isAuthor: false,
+        ),
+      ],
+    );
+  }
 }
 
 class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
@@ -302,6 +320,24 @@ class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
       ),
     );
   }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsSucceedResponse(
+      searchQags: [
+        Qag(
+          id: "id",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title",
+          username: "username",
+          date: DateTime(2024, 4, 23),
+          supportCount: 9,
+          isSupported: true,
+          isAuthor: false,
+        ),
+      ],
+    );
+  }
 }
 
 class FakeQagDetailsSuccessAndFeedbackFailureRepository extends FakeQagSuccessRepository {
@@ -324,6 +360,24 @@ class FakeQagDetailsSuccessAndFeedbackFailureRepository extends FakeQagSuccessRe
     required bool isHelpful,
   }) async {
     return QagFeedbackFailedResponse();
+  }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsSucceedResponse(
+      searchQags: [
+        Qag(
+          id: "id",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title",
+          username: "username",
+          date: DateTime(2024, 4, 23),
+          supportCount: 9,
+          isSupported: true,
+          isAuthor: false,
+        ),
+      ],
+    );
   }
 }
 
@@ -360,9 +414,31 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
             negativeRatio: 21,
             count: 31415,
           ),
+          additionalInfo: QagDetailsResponseAdditionalInfo(
+            title: "Information complémentaires",
+            description: "Description d'infos complémentaires",
+          ),
         ),
         textResponse: null,
       ),
+    );
+  }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsSucceedResponse(
+      searchQags: [
+        Qag(
+          id: "id",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title",
+          username: "username",
+          date: DateTime(2024, 4, 23),
+          supportCount: 9,
+          isSupported: true,
+          isAuthor: false,
+        ),
+      ],
     );
   }
 }
@@ -399,6 +475,10 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
             positiveRatio: 79,
             negativeRatio: 21,
             count: 31415,
+          ),
+          additionalInfo: QagDetailsResponseAdditionalInfo(
+            title: "Information complémentaires",
+            description: "Description d'infos complémentaires",
           ),
         ),
         textResponse: null,
@@ -475,6 +555,10 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
             negativeRatio: 21,
             count: 31415,
           ),
+          additionalInfo: QagDetailsResponseAdditionalInfo(
+            title: "Information complémentaires",
+            description: "Description d'infos complémentaires",
+          ),
         ),
         textResponse: QagDetailsTextResponse(
           responseLabel: "responseLabel",
@@ -488,6 +572,24 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsSucceedResponse(
+      searchQags: [
+        Qag(
+          id: "id",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title",
+          username: "username",
+          date: DateTime(2024, 4, 23),
+          supportCount: 9,
+          isSupported: true,
+          isAuthor: false,
+        ),
+      ],
     );
   }
 }
@@ -536,6 +638,24 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
       ],
       errorCase: "Une erreur est survenue",
       popupQag: PopupQag(title: "Titre de popup", description: "Description de popup"),
+    );
+  }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsSucceedResponse(
+      searchQags: [
+        Qag(
+          id: "id",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title",
+          username: "username",
+          date: DateTime(2024, 4, 23),
+          supportCount: 9,
+          isSupported: true,
+          isAuthor: false,
+        ),
+      ],
     );
   }
 }
@@ -636,6 +756,24 @@ class FakeQagFailureRepository extends QagRepository {
   }) async {
     return QagSimilarFailedResponse();
   }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsSucceedResponse(
+      searchQags: [
+        Qag(
+          id: "id",
+          thematique: Thematique(picto: "🚊", label: "Transports"),
+          title: "title",
+          username: "username",
+          date: DateTime(2024, 4, 23),
+          supportCount: 9,
+          isSupported: true,
+          isAuthor: false,
+        ),
+      ],
+    );
+  }
 }
 
 class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {
@@ -648,6 +786,11 @@ class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {
   }) async {
     return CreateQagFailedUnauthorizedResponse();
   }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsFailedResponse();
+  }
 }
 
 class FakeQagTimeoutFailureRepository extends FakeQagFailureRepository {
@@ -657,6 +800,11 @@ class FakeQagTimeoutFailureRepository extends FakeQagFailureRepository {
   }) async {
     return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
   }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsFailedResponse();
+  }
 }
 
 class FakeQagDetailsModerateFailureRepository extends FakeQagFailureRepository {
@@ -665,5 +813,10 @@ class FakeQagDetailsModerateFailureRepository extends FakeQagFailureRepository {
     required String qagId,
   }) async {
     return GetQagDetailsModerateFailedResponse();
+  }
+
+  @override
+  Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
+    return GetSearchQagsFailedResponse();
   }
 }

@@ -9,10 +9,13 @@ class QagStrings {
       "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens le mardi à 14h.";
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
+  static const String search = "🔍";
   static const String popular = "Populaires";
   static const String latest = "Récentes";
   static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";
+  static const String searchQagEmptyList = "Pas de résultat.";
+  static const String searchQagHint = "Rechercher un mot-clef";
   static const String by = "Par";
   static const String at = "le";
   static const String authorAndDate = "De %1s - le %2s";

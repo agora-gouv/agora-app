@@ -4,7 +4,7 @@ import 'package:agora/bloc/qag/qag_state.dart';
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
-import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
+import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
@@ -24,7 +24,6 @@ import 'package:agora/pages/qag/qags_ask_question_section.dart';
 import 'package:agora/pages/qag/qags_loading_skeleton.dart';
 import 'package:agora/pages/qag/qags_response_section.dart';
 import 'package:agora/pages/qag/qags_section.dart';
-import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,12 +38,14 @@ class QagsPage extends StatefulWidget {
 class _QagsPageState extends State<QagsPage> {
   final GlobalKey toolbarTitleKey = GlobalKey();
   String? currentThematiqueId;
+  late final GlobalKey searchBarKey;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
+      searchBarKey = GlobalKey();
     });
   }
 
@@ -65,12 +66,14 @@ class _QagsPageState extends State<QagsPage> {
             )..add(FetchQagsResponseEvent()),
           ),
           BlocProvider(
-            create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-          ),
-          BlocProvider(
             create: (context) => ThematiqueBloc(
               repository: RepositoryManager.getThematiqueRepository(),
             )..add(FetchFilterThematiqueEvent()),
+          ),
+          BlocProvider(
+            create: (context) => QagSearchBloc(
+              qagRepository: RepositoryManager.getQagRepository(),
+            ),
           ),
         ],
         child: BlocBuilder<QagResponseBloc, QagResponseState>(
@@ -142,25 +145,9 @@ class _QagsPageState extends State<QagsPage> {
   List<Widget> _handleQagState(BuildContext context, QagState state) {
     if (state is QagWithItemState) {
       return [
-        QagsAskQuestionSectionPage(errorCase: state.errorCase),
-        QagsThematiqueSection(
-          currentThematiqueId: currentThematiqueId,
-          onThematiqueIdSelected: (String? thematiqueId) {
-            if (currentThematiqueId != null || thematiqueId != null) {
-              setState(() {
-                if (thematiqueId == currentThematiqueId) {
-                  currentThematiqueId = null;
-                } else {
-                  currentThematiqueId = thematiqueId;
-                }
-                TrackerHelper.trackClick(
-                  clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                );
-                context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
-              });
-            }
-          },
+        QagsAskQuestionSectionPage(
+          key: searchBarKey,
+          errorCase: state.errorCase,
         ),
         QagsSection(
           isLoading: state is QagLoadingState,
@@ -171,6 +158,19 @@ class _QagsPageState extends State<QagsPage> {
           selectedThematiqueId: currentThematiqueId,
           askQuestionErrorCase: state.errorCase,
           popupViewModel: state.popupViewModel,
+          onSearchBarOpen: (bool isSearchOpen) {
+            if (isSearchOpen) {
+              TrackerHelper.trackEvent(
+                widgetName: AnalyticsScreenNames.qagsPage,
+                eventName: AnalyticsEventNames.qagsSearch,
+              );
+              Scrollable.ensureVisible(
+                searchBarKey.currentContext!,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+              );
+            }
+          },
         ),
       ];
     } else if (state is QagInitialLoadingState) {

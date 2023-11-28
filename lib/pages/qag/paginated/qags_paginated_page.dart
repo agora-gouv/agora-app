@@ -138,39 +138,6 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
                               ),
                             ),
                           ),
-                          // Padding(
-                          //   padding: EdgeInsets.only(
-                          //     left: AgoraSpacings.horizontalPadding,
-                          //     right: AgoraSpacings.horizontalPadding,
-                          //     top: AgoraSpacings.base,
-                          //   ),
-                          //   child: AgoraTextField(
-                          //     hintText: QagStrings.searchQuestion,
-                          //     rightIcon: TextFieldIcon.search,
-                          //     textInputAction: TextInputAction.search,
-                          //     maxLength: 75,
-                          //     showCounterText: true,
-                          //     onChanged: (String input) {
-                          //       final sanitizedInput = StringUtils.replaceDiacriticsAndRemoveSpecialChars(input);
-                          //       bool reloadQags = false;
-                          //       if (sanitizedInput.isNullOrBlank() || sanitizedInput.length < 3) {
-                          //         if ((currentKeywords?.length ?? 0) >= 3) {
-                          //           reloadQags = true;
-                          //         }
-                          //         currentKeywords = null;
-                          //       } else {
-                          //         if ((currentKeywords?.length ?? 0) != sanitizedInput.length) {
-                          //           reloadQags = true;
-                          //         }
-                          //         currentKeywords = sanitizedInput;
-                          //       }
-                          //       if (reloadQags) {
-                          //         _displayLoader(context);
-                          //         timerHelper.startTimer(() => _loadQags(context));
-                          //       }
-                          //     },
-                          //   ),
-                          // ),
                         ],
                       ),
                       tabChild: [
@@ -350,22 +317,6 @@ class _QagsPaginatedPageState extends State<QagsPaginatedPage> with SingleTicker
       );
     }
   }
-
-  // void _displayLoader(BuildContext context) {
-  //   switch (_tabController.index) {
-  //     case 0:
-  //       context.read<QagPaginatedPopularBloc>().add(QagPaginatedDisplayLoaderEvent());
-  //       break;
-  //     case 1:
-  //       context.read<QagPaginatedLatestBloc>().add(QagPaginatedDisplayLoaderEvent());
-  //       break;
-  //     case 2:
-  //       context.read<QagPaginatedSupportingBloc>().add(QagPaginatedDisplayLoaderEvent());
-  //       break;
-  //     default:
-  //       throw Exception("QaGs paginated : tab index not exists");
-  //   }
-  // }
 
   int _getInitialIndex() {
     switch (widget.arguments.initialTab) {

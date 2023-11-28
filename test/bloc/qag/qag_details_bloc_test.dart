@@ -45,6 +45,10 @@ void main() {
         negativeRatio: 21,
         count: 31415,
       ),
+      additionalInfo: QagDetailsResponseAdditionalInfo(
+        title: "Information complémentaires",
+        description: "Description d'infos complémentaires",
+      ),
     ),
     textResponse: QagDetailsTextResponse(
       responseLabel: "responseLabel",
@@ -79,6 +83,10 @@ void main() {
       videoWidth: 1080,
       videoHeight: 1920,
       transcription: "Blablabla",
+      additionalInfo: QagDetailsResponseAdditionalInfoViewModel(
+        title: "Information complémentaires",
+        description: "Description d'infos complémentaires",
+      ),
     ),
     feedback: QagDetailsFeedbackAnsweredResultsViewModel(
       feedbackQuestion: 'feedbackQuestion',
@@ -149,6 +157,10 @@ void main() {
               videoWidth: 1080,
               videoHeight: 1920,
               transcription: "Blablabla",
+              additionalInfo: QagDetailsResponseAdditionalInfoViewModel(
+                title: "Information complémentaires",
+                description: "Description d'infos complémentaires",
+              ),
             ),
             textResponse: null,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
@@ -232,6 +244,10 @@ void main() {
               videoWidth: 1080,
               videoHeight: 1920,
               transcription: "Blablabla",
+              additionalInfo: QagDetailsResponseAdditionalInfoViewModel(
+                title: "Information complémentaires",
+                description: "Description d'infos complémentaires",
+              ),
             ),
             textResponse: null,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
