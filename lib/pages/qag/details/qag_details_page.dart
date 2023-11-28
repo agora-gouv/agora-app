@@ -312,16 +312,6 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     );
   }
 
-  //
-  // Widget _buildScrollView({required QagDetailsViewModel viewModel, required Widget child}) {
-  //   // if (viewModel.textResponse != null) {
-  //   //   return SingleChildScrollView(child: child);
-  //   // } else {
-  //   //   return AgoraSingleScrollView(child: child);
-  //   // }
-  //   return CustomScrollView(child: child);
-  // }
-
   AgoraToolbar _buildAgoraToolbarWithPopAction(BuildContext context) =>
       AgoraToolbar(onBackClick: () => _popWithBackResult(context));
 
