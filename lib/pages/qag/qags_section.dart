@@ -422,6 +422,7 @@ class _QagsSectionState extends State<QagsSection> {
               Visibility(
                 visible: !isActiveSearchBar,
                 child: Expanded(
+                  flex: 4,
                   child: Semantics(
                     header: true,
                     child: _buildTabButton(
@@ -441,6 +442,7 @@ class _QagsSectionState extends State<QagsSection> {
               Visibility(
                 visible: !isActiveSearchBar,
                 child: Expanded(
+                  flex: 4,
                   child: _buildTabButton(
                     label: QagStrings.latest,
                     isSelected: currentSelected == QagTab.latest,
@@ -457,6 +459,7 @@ class _QagsSectionState extends State<QagsSection> {
               Visibility(
                 visible: !isActiveSearchBar,
                 child: Expanded(
+                  flex: 3,
                   child: _buildTabButton(
                     label: QagStrings.supporting,
                     isSelected: currentSelected == QagTab.supporting,
