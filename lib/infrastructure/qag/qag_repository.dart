@@ -250,6 +250,7 @@ class QagDioRepository extends QagRepository {
       final qagDetailsTextResponse = response.data["textResponse"] as Map?;
       final qagDetailsFeedbackResults =
           qagDetailsResponse?["feedbackResults"] ?? qagDetailsTextResponse?["feedbackResults"];
+      final qagDetailsResponseAdditionalInfo = qagDetailsResponse?["additionalInfo"];
       return GetQagDetailsSucceedResponse(
         qagDetails: QagDetails(
           id: response.data["id"] as String,
@@ -282,6 +283,12 @@ class QagDioRepository extends QagRepository {
                           positiveRatio: qagDetailsFeedbackResults["positiveRatio"] as int,
                           negativeRatio: qagDetailsFeedbackResults["negativeRatio"] as int,
                           count: qagDetailsFeedbackResults["count"] as int,
+                        )
+                      : null,
+                  additionalInfo: qagDetailsResponseAdditionalInfo != null
+                      ? QagDetailsResponseAdditionalInfo(
+                          title: qagDetailsResponseAdditionalInfo["title"] as String,
+                          description: qagDetailsResponseAdditionalInfo["description"] as String,
                         )
                       : null,
                 )

@@ -3,6 +3,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_video_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -108,11 +109,26 @@ class QagDetailsResponseView extends StatelessWidget {
               Semantics(header: true, child: Text(QagStrings.transcription, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.x0_5),
               AgoraReadMoreText(response.transcription),
+              ..._buildAdditionalInfo(),
               SizedBox(height: AgoraSpacings.x2),
             ],
           ),
         ),
       ),
     );
+  }
+
+  List<Widget> _buildAdditionalInfo() {
+    if (detailsViewModel.response!.additionalInfo != null) {
+      final additionalInfo = detailsViewModel.response!.additionalInfo!;
+      return [
+        SizedBox(height: AgoraSpacings.x1_5),
+        Semantics(header: true, child: Text(additionalInfo.title, style: AgoraTextStyles.medium18)),
+        SizedBox(height: AgoraSpacings.base),
+        AgoraHtml(data: additionalInfo.description),
+      ];
+    } else {
+      return [];
+    }
   }
 }
