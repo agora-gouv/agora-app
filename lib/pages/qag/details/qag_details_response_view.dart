@@ -20,99 +20,97 @@ class QagDetailsResponseView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final response = detailsViewModel.response!;
-    return Flexible(
-      child: Container(
-        width: double.infinity,
-        color: AgoraColors.background,
-        child: Padding(
-          padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Semantics(header: true, child: Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17)),
-              SizedBox(height: AgoraSpacings.base),
-              AgoraVideoView(
-                videoUrl: response.videoUrl,
-                videoWidth: response.videoWidth,
-                videoHeight: response.videoHeight,
-                onVideoStartMoreThan5Sec: () {
-                  TrackerHelper.trackEvent(
-                    eventName: "${AnalyticsEventNames.video} $qagId",
-                    widgetName: AnalyticsScreenNames.qagDetailsPage,
-                  );
-                },
-              ),
-              SizedBox(height: AgoraSpacings.base),
-              Semantics(
-                header: true,
-                child: RichText(
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                  text: TextSpan(
-                    style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                    children: [
-                      TextSpan(text: QagStrings.by),
-                      WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                      TextSpan(
-                        text: response.author,
-                        style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryGreyOpacity90),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: AgoraSpacings.x0_5),
-              Padding(
-                padding: const EdgeInsets.only(left: AgoraSpacings.horizontalPadding),
-                child: Text(
-                  response.authorDescription,
-                  style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                ),
-              ),
-              SizedBox(height: AgoraSpacings.x0_5),
-              RichText(
+    return Container(
+      width: double.infinity,
+      color: AgoraColors.background,
+      child: Padding(
+        padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Semantics(header: true, child: Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17)),
+            SizedBox(height: AgoraSpacings.base),
+            AgoraVideoView(
+              videoUrl: response.videoUrl,
+              videoWidth: response.videoWidth,
+              videoHeight: response.videoHeight,
+              onVideoStartMoreThan5Sec: () {
+                TrackerHelper.trackEvent(
+                  eventName: "${AnalyticsEventNames.video} $qagId",
+                  widgetName: AnalyticsScreenNames.qagDetailsPage,
+                );
+              },
+            ),
+            SizedBox(height: AgoraSpacings.base),
+            Semantics(
+              header: true,
+              child: RichText(
                 textScaleFactor: MediaQuery.of(context).textScaleFactor,
                 text: TextSpan(
                   style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                   children: [
-                    TextSpan(text: QagStrings.at),
+                    TextSpan(text: QagStrings.by),
                     WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
                     TextSpan(
-                      text: response.responseDate,
-                      style: AgoraTextStyles.mediumItalic16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                      text: response.author,
+                      style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryGreyOpacity90),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: AgoraSpacings.x1_5),
-              RichText(
-                textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                text: TextSpan(
-                  style: AgoraTextStyles.regularItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                  children: [
-                    TextSpan(text: QagStrings.answerTo),
-                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                    TextSpan(
-                      text: detailsViewModel.username,
-                      style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                    ),
-                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                    TextSpan(text: QagStrings.at),
-                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                    TextSpan(
-                      text: detailsViewModel.date,
-                      style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                    ),
-                  ],
-                ),
+            ),
+            SizedBox(height: AgoraSpacings.x0_5),
+            Padding(
+              padding: const EdgeInsets.only(left: AgoraSpacings.horizontalPadding),
+              child: Text(
+                response.authorDescription,
+                style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
               ),
-              SizedBox(height: AgoraSpacings.x1_5),
-              Semantics(header: true, child: Text(QagStrings.transcription, style: AgoraTextStyles.medium18)),
-              SizedBox(height: AgoraSpacings.x0_5),
-              AgoraReadMoreText(response.transcription),
-              ..._buildAdditionalInfo(),
-              SizedBox(height: AgoraSpacings.x2),
-            ],
-          ),
+            ),
+            SizedBox(height: AgoraSpacings.x0_5),
+            RichText(
+              textScaleFactor: MediaQuery.of(context).textScaleFactor,
+              text: TextSpan(
+                style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                children: [
+                  TextSpan(text: QagStrings.at),
+                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                  TextSpan(
+                    text: response.responseDate,
+                    style: AgoraTextStyles.mediumItalic16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: AgoraSpacings.x1_5),
+            RichText(
+              textScaleFactor: MediaQuery.of(context).textScaleFactor,
+              text: TextSpan(
+                style: AgoraTextStyles.regularItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                children: [
+                  TextSpan(text: QagStrings.answerTo),
+                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                  TextSpan(
+                    text: detailsViewModel.username,
+                    style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                  ),
+                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                  TextSpan(text: QagStrings.at),
+                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                  TextSpan(
+                    text: detailsViewModel.date,
+                    style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: AgoraSpacings.x1_5),
+            Semantics(header: true, child: Text(QagStrings.transcription, style: AgoraTextStyles.medium18)),
+            SizedBox(height: AgoraSpacings.x0_5),
+            AgoraReadMoreText(response.transcription),
+            ..._buildAdditionalInfo(),
+            SizedBox(height: AgoraSpacings.x2),
+          ],
         ),
       ),
     );
