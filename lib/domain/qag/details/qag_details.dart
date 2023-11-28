@@ -95,6 +95,7 @@ class QagDetailsResponse extends Equatable {
   final String feedbackQuestion;
   final bool feedbackStatus;
   final QagFeedbackResults? feedbackResults;
+  final QagDetailsResponseAdditionalInfo? additionalInfo;
 
   QagDetailsResponse({
     required this.author,
@@ -107,6 +108,7 @@ class QagDetailsResponse extends Equatable {
     required this.feedbackQuestion,
     required this.feedbackStatus,
     required this.feedbackResults,
+    required this.additionalInfo,
   });
 
   factory QagDetailsResponse.copyWithNewFeedback({
@@ -125,6 +127,7 @@ class QagDetailsResponse extends Equatable {
       feedbackQuestion: response.feedbackQuestion,
       feedbackStatus: feedbackStatus,
       feedbackResults: feedbackResults,
+      additionalInfo: response.additionalInfo,
     );
   }
 
@@ -140,6 +143,7 @@ class QagDetailsResponse extends Equatable {
         feedbackQuestion,
         feedbackStatus,
         feedbackResults,
+        additionalInfo,
       ];
 }
 
@@ -181,4 +185,15 @@ class QagFeedbackResults extends Equatable {
 
   @override
   List<Object?> get props => [positiveRatio, negativeRatio, count];
+}
+
+class QagDetailsResponseAdditionalInfo extends Equatable {
+  final String title;
+  final String description;
+
+  QagDetailsResponseAdditionalInfo({required this.title, required this.description});
+
+  @override
+  List<Object?> get props => [title, description];
+
 }

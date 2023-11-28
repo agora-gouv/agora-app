@@ -719,6 +719,10 @@ void main() {
                 "negativeRatio": 5,
                 "count": 117,
               },
+              "additionalInfo": {
+                "title": "Information complémentaires",
+                "description": "Description d'infos complémentaires"
+              }
             },
             "textResponse": null,
           },
@@ -765,6 +769,10 @@ void main() {
                 positiveRatio: 95,
                 negativeRatio: 5,
                 count: 117,
+              ),
+              additionalInfo: QagDetailsResponseAdditionalInfo(
+                title: "Information complémentaires",
+                description: "Description d'infos complémentaires",
               ),
             ),
             textResponse: null,
