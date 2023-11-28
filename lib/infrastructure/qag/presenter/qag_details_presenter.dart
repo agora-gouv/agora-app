@@ -39,6 +39,7 @@ class QagDetailsPresenter {
             videoWidth: response.videoWidth,
             videoHeight: response.videoHeight,
             transcription: response.transcription,
+            additionalInfo: _presentAdditionalInfo(response.additionalInfo),
           )
         : null;
   }
@@ -83,5 +84,16 @@ class QagDetailsPresenter {
         feedbackResults: response.feedbackResults!,
       );
     }
+  }
+
+  static QagDetailsResponseAdditionalInfoViewModel? _presentAdditionalInfo(
+    QagDetailsResponseAdditionalInfo? additionalInfo,
+  ) {
+    return additionalInfo != null
+        ? QagDetailsResponseAdditionalInfoViewModel(
+            title: additionalInfo.title,
+            description: additionalInfo.description,
+          )
+        : null;
   }
 }

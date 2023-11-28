@@ -414,6 +414,10 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
             negativeRatio: 21,
             count: 31415,
           ),
+          additionalInfo: QagDetailsResponseAdditionalInfo(
+            title: "Information complémentaires",
+            description: "Description d'infos complémentaires",
+          ),
         ),
         textResponse: null,
       ),
@@ -471,6 +475,10 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
             positiveRatio: 79,
             negativeRatio: 21,
             count: 31415,
+          ),
+          additionalInfo: QagDetailsResponseAdditionalInfo(
+            title: "Information complémentaires",
+            description: "Description d'infos complémentaires",
           ),
         ),
         textResponse: null,
@@ -546,6 +554,10 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
             positiveRatio: 79,
             negativeRatio: 21,
             count: 31415,
+          ),
+          additionalInfo: QagDetailsResponseAdditionalInfo(
+            title: "Information complémentaires",
+            description: "Description d'infos complémentaires",
           ),
         ),
         textResponse: QagDetailsTextResponse(

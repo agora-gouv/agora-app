@@ -97,6 +97,7 @@ class QagDetailsResponseViewModel extends Equatable {
   final int videoWidth;
   final int videoHeight;
   final String transcription;
+  final QagDetailsResponseAdditionalInfoViewModel? additionalInfo;
 
   QagDetailsResponseViewModel({
     required this.author,
@@ -106,6 +107,7 @@ class QagDetailsResponseViewModel extends Equatable {
     required this.videoWidth,
     required this.videoHeight,
     required this.transcription,
+    required this.additionalInfo,
   });
 
   @override
@@ -118,6 +120,16 @@ class QagDetailsResponseViewModel extends Equatable {
         videoHeight,
         transcription,
       ];
+}
+
+class QagDetailsResponseAdditionalInfoViewModel extends Equatable {
+  final String title;
+  final String description;
+
+  QagDetailsResponseAdditionalInfoViewModel({required this.title, required this.description});
+
+  @override
+  List<Object?> get props => [title, description];
 }
 
 class QagDetailsTextResponseViewModel extends Equatable {
