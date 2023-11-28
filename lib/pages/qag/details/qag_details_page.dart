@@ -18,7 +18,6 @@ import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -189,76 +188,100 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                 )
               : _buildAgoraToolbarWithPopAction(context),
           Expanded(
-            child: _buildScrollView(
-              viewModel: viewModel,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ThematiqueHelper.buildCard(context, viewModel.thematique),
-                        SizedBox(height: AgoraSpacings.x0_5),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Semantics(
-                                header: true,
-                                child: Text(viewModel.title, style: AgoraTextStyles.medium18),
-                              ),
-                            ),
-                            if ((response != null || textResponse != null) && support.count != 0) ...[
-                              Padding(
-                                padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
-                                child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
-                              ),
-                            ],
-                          ],
+            child: CustomScrollView(
+              slivers: [
+                _buildSliverContainer(
+                  horizontalPadding: AgoraSpacings.base,
+                  bottomSpacing: AgoraSpacings.x0_5,
+                  child: ThematiqueHelper.buildCard(context, viewModel.thematique),
+                ),
+                _buildSliverContainer(
+                  horizontalPadding: AgoraSpacings.base,
+                  bottomSpacing: AgoraSpacings.base,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Semantics(
+                          header: true,
+                          child: Text(viewModel.title, style: AgoraTextStyles.medium18),
                         ),
-                        SizedBox(height: AgoraSpacings.base),
-                        if (response == null && textResponse == null) ...[
-                          Text(viewModel.description, style: AgoraTextStyles.light14),
-                          SizedBox(height: AgoraSpacings.base),
-                          Text(
-                            QagStrings.authorAndDate.format2(viewModel.username, viewModel.date),
-                            style: AgoraTextStyles.medium14,
-                          ),
-                          SizedBox(height: AgoraSpacings.x3),
-                          QagDetailsSupportView(
-                            qagId: viewModel.id,
-                            canSupport: viewModel.canSupport,
-                            support: support,
-                            onSupportChange: (supportCount, isSupported) {
-                              backResult = QagDetailsBackResult(
-                                qagId: viewModel.id,
-                                thematique: viewModel.thematique,
-                                title: viewModel.title,
-                                username: viewModel.username,
-                                date: viewModel.date,
-                                supportCount: supportCount,
-                                isSupported: isSupported,
-                                isAuthor: viewModel.isAuthor,
-                              );
-                            },
-                          ),
-                          if (viewModel.canDelete) _buildDeleteQag(context, viewModel.id),
-                        ] else
-                          AgoraReadMoreText(viewModel.description, trimLines: 3),
+                      ),
+                      if ((response != null || textResponse != null) && support.count != 0) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
+                          child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
+                        ),
                       ],
-                    ),
+                    ],
                   ),
-                  if (response != null) QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                  if (textResponse != null)
-                    QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                  QagDetailsFeedbackWidget(),
-                ],
-              ),
+                ),
+                _buildSliverContainer(
+                  horizontalPadding: AgoraSpacings.base,
+                  bottomSpacing: AgoraSpacings.base,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (response == null && textResponse == null) ...[
+                        Text(viewModel.description, style: AgoraTextStyles.light14),
+                        SizedBox(height: AgoraSpacings.base),
+                        Text(
+                          QagStrings.authorAndDate.format2(viewModel.username, viewModel.date),
+                          style: AgoraTextStyles.medium14,
+                        ),
+                        SizedBox(height: AgoraSpacings.x3),
+                        QagDetailsSupportView(
+                          qagId: viewModel.id,
+                          canSupport: viewModel.canSupport,
+                          support: support,
+                          onSupportChange: (supportCount, isSupported) {
+                            backResult = QagDetailsBackResult(
+                              qagId: viewModel.id,
+                              thematique: viewModel.thematique,
+                              title: viewModel.title,
+                              username: viewModel.username,
+                              date: viewModel.date,
+                              supportCount: supportCount,
+                              isSupported: isSupported,
+                              isAuthor: viewModel.isAuthor,
+                            );
+                          },
+                        ),
+                        if (viewModel.canDelete) _buildDeleteQag(context, viewModel.id),
+                      ] else
+                        AgoraReadMoreText(viewModel.description, trimLines: 3),
+                    ],
+                  ),
+                ),
+                response != null
+                    ? _buildSliverContainer(
+                        child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                      )
+                    : SliverToBoxAdapter(),
+                textResponse != null
+                    ? _buildSliverContainer(
+                        child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                      )
+                    : SliverToBoxAdapter(),
+                _buildSliverContainer(
+                  child: QagDetailsFeedbackWidget(),
+                ),
+              ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSliverContainer({
+    double horizontalPadding = 0,
+    double bottomSpacing = 0,
+    required Widget child,
+  }) {
+    return SliverPadding(
+      padding: EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, bottom: bottomSpacing),
+      sliver: SliverToBoxAdapter(child: child),
     );
   }
 
@@ -289,13 +312,15 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     );
   }
 
-  Widget _buildScrollView({required QagDetailsViewModel viewModel, required Widget child}) {
-    if (viewModel.textResponse != null) {
-      return SingleChildScrollView(child: child);
-    } else {
-      return AgoraSingleScrollView(child: child);
-    }
-  }
+  //
+  // Widget _buildScrollView({required QagDetailsViewModel viewModel, required Widget child}) {
+  //   // if (viewModel.textResponse != null) {
+  //   //   return SingleChildScrollView(child: child);
+  //   // } else {
+  //   //   return AgoraSingleScrollView(child: child);
+  //   // }
+  //   return CustomScrollView(child: child);
+  // }
 
   AgoraToolbar _buildAgoraToolbarWithPopAction(BuildContext context) =>
       AgoraToolbar(onBackClick: () => _popWithBackResult(context));

@@ -195,5 +195,4 @@ class QagDetailsResponseAdditionalInfo extends Equatable {
 
   @override
   List<Object?> get props => [title, description];
-
 }

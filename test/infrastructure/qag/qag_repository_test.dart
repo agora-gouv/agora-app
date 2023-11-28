@@ -721,8 +721,8 @@ void main() {
               },
               "additionalInfo": {
                 "title": "Information complémentaires",
-                "description": "Description d'infos complémentaires"
-              }
+                "description": "Description d'infos complémentaires",
+              },
             },
             "textResponse": null,
           },
