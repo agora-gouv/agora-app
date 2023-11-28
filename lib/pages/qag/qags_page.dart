@@ -7,7 +7,9 @@ import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_event.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -158,6 +160,10 @@ class _QagsPageState extends State<QagsPage> {
           popupViewModel: state.popupViewModel,
           onSearchBarOpen: (bool isSearchOpen) {
             if (isSearchOpen) {
+              TrackerHelper.trackEvent(
+                widgetName: AnalyticsScreenNames.qagsPage,
+                eventName: AnalyticsEventNames.qagsSearch,
+              );
               Scrollable.ensureVisible(
                 searchBarKey.currentContext!,
                 duration: const Duration(milliseconds: 400),
