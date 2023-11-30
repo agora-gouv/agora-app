@@ -31,61 +31,67 @@ class QagDetailsSupportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeAnimationView = AgoraLikeAnimationView();
+    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey());
 
-    return BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
-      selector: (supportState) => _toViewModel(supportState),
-      builder: (context, viewModel) {
-        onSupportChange(viewModel.supportCount(), viewModel.isSupported());
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            likeAnimationView,
-            BlocListener<QagSupportBloc, QagSupportState>(
-              listenWhen: (previousState, currentState) {
-                if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
-                  // TODO
-                  likeAnimationView.animate();
-                }
-                return true;
-              },
-              listener: (context, state) => {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (canSupport)
-                    Flexible(
+    return Stack(
+      children: [
+        BlocListener<QagSupportBloc, QagSupportState>(
+          listenWhen: (previousState, currentState) {
+            if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
+              likeAnimationView.animate();
+            }
+            return false;
+          },
+          listener: (context, state) => {},
+          child: likeAnimationView,
+        ),
+        BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
+          selector: (supportState) => _toViewModel(supportState),
+          builder: (context, viewModel) {
+            onSupportChange(viewModel.supportCount(), viewModel.isSupported());
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (canSupport)
+                      Flexible(
                         child: AgoraRoundedButton(
-                      icon: _buildButtonIcon(viewModel.isSupported()),
-                      label: _buildButtonLabel(viewModel.isSupported()),
-                      isLoading: viewModel.isLoading,
-                      style: _buildButtonStyle(viewModel.isSupported()),
-                      onPressed: () => _buildOnPressed(context, qagId, viewModel.isSupported(), viewModel.isLoading),
-                    )),
-                  SizedBox(width: AgoraSpacings.x0_5),
-                  Semantics(
-                    button: canSupport,
-                    child: GestureDetector(
-                      onTap: canSupport
-                          ? () => _buildOnPressed(context, qagId, viewModel.isSupported(), viewModel.isLoading)
-                          : null,
-                      child: AgoraLikeView(
-                        isSupported: viewModel.isSupported(),
-                        supportCount: viewModel.supportCount(),
-                        shouldHaveVerticalPadding: true,
+                          icon: _buildButtonIcon(viewModel.isSupported()),
+                          label: _buildButtonLabel(viewModel.isSupported()),
+                          isLoading: viewModel.isLoading,
+                          style: _buildButtonStyle(viewModel.isSupported()),
+                          onPressed: () =>
+                              _buildOnPressed(context, qagId, viewModel.isSupported(), viewModel.isLoading),
+                        ),
+                      ),
+                    SizedBox(width: AgoraSpacings.x0_5),
+                    Semantics(
+                      button: canSupport,
+                      child: GestureDetector(
+                        onTap: canSupport
+                            ? () => _buildOnPressed(context, qagId, viewModel.isSupported(), viewModel.isLoading)
+                            : null,
+                        child: AgoraLikeView(
+                          isSupported: viewModel.isSupported(),
+                          supportCount: viewModel.supportCount(),
+                          shouldHaveVerticalPadding: true,
+                          onDisplayRectAvailable: likeAnimationView.notifyDisplayRectAvailable,
+                        ),
                       ),
                     ),
-                  ),
+                  ],
+                ),
+                if (viewModel.hasError) ...[
+                  SizedBox(height: AgoraSpacings.base),
+                  AgoraErrorView(),
                 ],
-              ),
-            ),
-            if (viewModel.hasError) ...[
-              SizedBox(height: AgoraSpacings.base),
-              AgoraErrorView(),
-            ],
-          ],
-        );
-      },
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 

@@ -20,6 +20,7 @@ class AgoraLikeView extends StatefulWidget {
   final bool shouldHaveVerticalPadding;
   final AgoraLikeStyle style;
   final Function(bool support)? onSupportClick;
+  final Function(Rect displayRect)? onDisplayRectAvailable;
 
   const AgoraLikeView({
     super.key,
@@ -29,6 +30,7 @@ class AgoraLikeView extends StatefulWidget {
     this.shouldHaveVerticalPadding = false,
     this.style = AgoraLikeStyle.police14,
     this.onSupportClick,
+    this.onDisplayRectAvailable,
   });
 
   @override
@@ -43,9 +45,18 @@ class _AgoraLikeViewState extends State<AgoraLikeView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        final RenderBox rb = _key.currentContext?.findRenderObject() as RenderBox;
-        final position = rb.localToGlobal(Offset.zero);
-        debugPrint("dx = ${position.dx} / dy = ${position.dy}");
+        if (widget.onDisplayRectAvailable != null) {
+          final RenderBox renderBox = _key.currentContext?.findRenderObject() as RenderBox;
+          final position = renderBox.localToGlobal(Offset.zero);
+          widget.onDisplayRectAvailable!(
+            Rect.fromLTWH(
+              position.dx,
+              position.dy,
+              renderBox.size.width,
+              renderBox.size.height,
+            ),
+          );
+        }
       },
     );
   }
