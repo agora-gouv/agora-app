@@ -2,19 +2,14 @@ import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
-import 'package:agora/bloc/qag/support/qag_support_event.dart';
-import 'package:agora/bloc/qag/support/qag_support_state.dart';
-import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
-import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_qag_card.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/agora_qag_supportable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,41 +59,9 @@ class QagSearch extends StatelessWidget {
           value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
           child: Column(
             children: [
-              BlocBuilder<QagSupportBloc, QagSupportState>(
-                builder: (context, state) {
-                  return AgoraQagCard(
-                    id: item.id,
-                    thematique: item.thematique,
-                    title: item.title,
-                    username: item.username,
-                    date: item.date,
-                    supportCount: _buildCount(item, state),
-                    isSupported: _buildIsSupported(item.isSupported, state),
-                    isAuthor: item.isAuthor,
-                    onSupportClick: (bool support) {
-                      if (support) {
-                        TrackerHelper.trackClick(
-                          clickName: AnalyticsEventNames.likeQag,
-                          widgetName: AnalyticsScreenNames.qagsPage,
-                        );
-                        context.read<QagSupportBloc>().add(SupportQagEvent(qagId: item.id));
-                      } else {
-                        TrackerHelper.trackClick(
-                          clickName: AnalyticsEventNames.unlikeQag,
-                          widgetName: AnalyticsScreenNames.qagsPage,
-                        );
-                        context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: item.id));
-                      }
-                    },
-                    onCardClick: () {
-                      Navigator.pushNamed(
-                        context,
-                        QagDetailsPage.routeName,
-                        arguments: QagDetailsArguments(qagId: item.id, reload: QagReload.qagsPaginatedPage),
-                      );
-                    },
-                  );
-                },
+              AgoraQagSupportableCard(
+                qagViewModel: item,
+                widgetName: AnalyticsScreenNames.qagsPage,
               ),
               SizedBox(height: AgoraSpacings.base),
             ],
@@ -106,33 +69,6 @@ class QagSearch extends StatelessWidget {
         );
       },
     );
-  }
-
-  int _buildCount(QagViewModel qagViewModel, QagSupportState supportState) {
-    final supportCount = qagViewModel.supportCount - (qagViewModel.isSupported ? 1 : 0);
-    if (supportState is QagSupportInitialState) {
-      return qagViewModel.supportCount;
-    } else if (supportState is QagSupportSuccessState) {
-      return supportCount + 1;
-    } else if (supportState is QagDeleteSupportSuccessState) {
-      return supportCount;
-    }
-    return supportCount;
-  }
-
-  bool _buildIsSupported(bool isSupported, QagSupportState supportState) {
-    if (supportState is QagSupportInitialState) {
-      return isSupported;
-    } else if (supportState is QagSupportLoadingState) {
-      return !isSupported;
-    } else {
-      if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return true;
-      } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
-        return false;
-      }
-    }
-    return false;
   }
 }
 

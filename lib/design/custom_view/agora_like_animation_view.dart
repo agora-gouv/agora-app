@@ -61,7 +61,7 @@ class _AgoraAnimatedLikeView extends StatefulWidget {
 
 class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 1),
+    duration: const Duration(milliseconds: 750),
     vsync: this,
   );
   Rect _currentDisplayRect = Rect.fromLTRB(0, 0, 0, 0);
@@ -124,8 +124,8 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
     final width = _likeDisplayRect.right - _likeDisplayRect.left;
     final height = _likeDisplayRect.bottom - _likeDisplayRect.top;
 
-    final targetWidth = width * 2.8;
-    final targetHeight = height * 2.8;
+    final targetWidth = width * 3.8;
+    final targetHeight = height * 3.8;
 
     return Rect.fromLTWH(
       _likeDisplayRect.left - (targetWidth - width) / 2,

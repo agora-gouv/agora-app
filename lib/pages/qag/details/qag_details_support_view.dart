@@ -35,16 +35,6 @@ class QagDetailsSupportView extends StatelessWidget {
 
     return Stack(
       children: [
-        BlocListener<QagSupportBloc, QagSupportState>(
-          listenWhen: (previousState, currentState) {
-            if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
-              likeAnimationView.animate();
-            }
-            return false;
-          },
-          listener: (context, state) => {},
-          child: likeAnimationView,
-        ),
         BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
           selector: (supportState) => _toViewModel(supportState),
           builder: (context, viewModel) {
@@ -90,6 +80,16 @@ class QagDetailsSupportView extends StatelessWidget {
               ],
             );
           },
+        ),
+        BlocListener<QagSupportBloc, QagSupportState>(
+          listenWhen: (previousState, currentState) {
+            if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
+              likeAnimationView.animate();
+            }
+            return false;
+          },
+          listener: (context, state) => {},
+          child: likeAnimationView,
         ),
       ],
     );
