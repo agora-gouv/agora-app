@@ -759,20 +759,7 @@ class FakeQagFailureRepository extends QagRepository {
 
   @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
-    return GetSearchQagsSucceedResponse(
-      searchQags: [
-        Qag(
-          id: "id",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title",
-          username: "username",
-          date: DateTime(2024, 4, 23),
-          supportCount: 9,
-          isSupported: true,
-          isAuthor: false,
-        ),
-      ],
-    );
+    return GetSearchQagsFailedResponse();
   }
 }
 

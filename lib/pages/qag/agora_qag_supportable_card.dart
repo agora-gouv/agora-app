@@ -7,6 +7,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/design/custom_view/agora_like_animation_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
+import 'package:agora/domain/qag/qag_support.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,11 +16,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AgoraQagSupportableCard extends StatelessWidget {
   final QagViewModel qagViewModel;
   final String widgetName;
+  final Function(QagSupport)? onQagSupportChange;
 
   const AgoraQagSupportableCard({
     super.key,
     required this.qagViewModel,
     required this.widgetName,
+    this.onQagSupportChange,
   });
 
   @override
@@ -60,7 +63,17 @@ class AgoraQagSupportableCard extends StatelessWidget {
                   context,
                   QagDetailsPage.routeName,
                   arguments: QagDetailsArguments(qagId: qagViewModel.id, reload: QagReload.qagsPage), // FIXME
-                );
+                ).then((result) {
+                  if (onQagSupportChange != null && result != null && result is QagDetailsBackResult) {
+                    onQagSupportChange!(
+                      QagSupport(
+                        qagId: result.qagId,
+                        isSupported: result.isSupported,
+                        supportCount: result.supportCount,
+                      ),
+                    );
+                  }
+                });
               },
               onDisplayRectAvailable: likeAnimationView.notifyDisplayRectAvailable,
             );
