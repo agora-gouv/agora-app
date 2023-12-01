@@ -268,22 +268,23 @@ class _QagsSectionState extends State<QagsSection> {
                       QagDetailsPage.routeName,
                       arguments: QagDetailsArguments(qagId: qagViewModel.id, reload: QagReload.qagsPage),
                     ).then((result) {
-                      final qagDetailsBackResult = result as QagDetailsBackResult?;
-                      if (qagDetailsBackResult != null) {
-                        context.read<QagBloc>().add(
-                              UpdateQagsEvent(
-                                qagId: qagDetailsBackResult.qagId,
-                                thematique: qagDetailsBackResult.thematique,
-                                title: qagDetailsBackResult.title,
-                                username: qagDetailsBackResult.username,
-                                date: qagDetailsBackResult.date,
-                                supportCount: qagDetailsBackResult.supportCount,
-                                isSupported: qagDetailsBackResult.isSupported,
-                                isAuthor: qagDetailsBackResult.isAuthor,
-                              ),
-                            );
-                        setState(() {}); // do not remove: utils to update screen
-                      }
+                      // FIXME
+                      // final qagDetailsBackResult = result as QagDetailsBackResult?;
+                      // if (qagDetailsBackResult != null) {
+                      //   context.read<QagBloc>().add(
+                      //         UpdateQagsEvent(
+                      //           qagId: qagDetailsBackResult.qagId,
+                      //           thematique: qagDetailsBackResult.thematique,
+                      //           title: qagDetailsBackResult.title,
+                      //           username: qagDetailsBackResult.username,
+                      //           date: qagDetailsBackResult.date,
+                      //           supportCount: qagDetailsBackResult.supportCount,
+                      //           isSupported: qagDetailsBackResult.isSupported,
+                      //           isAuthor: qagDetailsBackResult.isAuthor,
+                      //         ),
+                      //       );
+                      //   setState(() {}); // do not remove: utils to update screen
+                      // }
                     });
                   },
                 );

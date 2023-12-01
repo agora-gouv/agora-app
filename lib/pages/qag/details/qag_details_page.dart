@@ -3,7 +3,6 @@ import 'package:agora/bloc/qag/details/qag_details_event.dart';
 import 'package:agora/bloc/qag/details/qag_details_state.dart';
 import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
@@ -52,23 +51,13 @@ class QagDetailsArguments {
 
 class QagDetailsBackResult {
   final String qagId;
-  final ThematiqueViewModel thematique;
-  final String title;
-  final String username;
-  final String date;
   final int supportCount;
   final bool isSupported;
-  final bool isAuthor;
 
   QagDetailsBackResult({
     required this.qagId,
-    required this.thematique,
-    required this.title,
-    required this.username,
-    required this.date,
     required this.supportCount,
     required this.isSupported,
-    required this.isAuthor,
   });
 }
 
@@ -237,13 +226,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                           onSupportChange: (supportCount, isSupported) {
                             backResult = QagDetailsBackResult(
                               qagId: viewModel.id,
-                              thematique: viewModel.thematique,
-                              title: viewModel.title,
-                              username: viewModel.username,
-                              date: viewModel.date,
                               supportCount: supportCount,
                               isSupported: isSupported,
-                              isAuthor: viewModel.isAuthor,
                             );
                           },
                         ),

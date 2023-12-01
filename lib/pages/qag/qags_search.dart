@@ -1,5 +1,6 @@
 import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
+import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/bloc/qag/search/qag_search_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
@@ -62,6 +63,9 @@ class QagSearch extends StatelessWidget {
               AgoraQagSupportableCard(
                 qagViewModel: item,
                 widgetName: AnalyticsScreenNames.qagsPage,
+                onQagSupportChange: (qagSupport) {
+                  context.read<QagSearchBloc>().add(UpdateQagSupportEvent(qagSupport));
+                },
               ),
               SizedBox(height: AgoraSpacings.base),
             ],

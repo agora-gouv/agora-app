@@ -16,6 +16,9 @@ class QagSearchLoadedState extends QagSearchState {
   QagSearchLoadedState({
     required this.qags,
   });
+
+  @override
+  List<Object?> get props => [qags];
 }
 
 class QagSearchErrorState extends QagSearchState {}

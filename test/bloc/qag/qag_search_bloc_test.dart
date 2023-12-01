@@ -16,7 +16,7 @@ void main() {
 
   group("FetchQagsLoadedEvent", () {
     blocTest<QagSearchBloc, QagSearchState>(
-      "when qags is going to be search - should emit loading state",
+      "when fetch qags with success - should emit loaded state",
       build: () => QagSearchBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
@@ -34,6 +34,100 @@ void main() {
               date: DateTime(2024, 4, 23),
               supportCount: 8,
               isSupported: true,
+              isAuthor: false,
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagSearchBloc, QagSearchState>(
+      "when fetch qags with failure - should emit failure state",
+      build: () => QagSearchBloc(
+        qagRepository: FakeQagFailureRepository(),
+      ),
+      act: (bloc) => bloc.add(
+        FetchQagsSearchEvent(keywords: 'test'),
+      ),
+      expect: () => [
+        QagSearchErrorState(),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
+
+  group("UpdateQagSupportEvent", () {
+    blocTest<QagSearchBloc, QagSearchState>(
+      "when qag support support is in non loaded state - should emit nothing",
+      build: () => QagSearchBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      act: (bloc) => bloc.add(UpdateQagSupportEvent.create(qagId: "id0", isSupported: false, supportCount: 7)),
+      expect: () => [],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagSearchBloc, QagSearchState>(
+      "when qag support support is loaded but could not find qag to update - should emit nothing more than first loaded state",
+      build: () => QagSearchBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      act: (bloc) => bloc
+        ..add(FetchQagsSearchEvent(keywords: 'test'))
+        ..add(UpdateQagSupportEvent.create(qagId: "idUnknown", isSupported: false, supportCount: 66)),
+      expect: () => [
+        QagSearchLoadedState(
+          qags: [
+            Qag(
+              id: "id0",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title0",
+              username: "username0",
+              date: DateTime(2024, 4, 23),
+              supportCount: 8,
+              isSupported: true,
+              isAuthor: false,
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagSearchBloc, QagSearchState>(
+      "when qag support support is loaded and find qag to update - should emit first loaded state then updated loaded state",
+      build: () => QagSearchBloc(
+        qagRepository: FakeQagSuccessRepository(),
+      ),
+      act: (bloc) => bloc
+        ..add(FetchQagsSearchEvent(keywords: 'test'))
+        ..add(UpdateQagSupportEvent.create(qagId: "id0", isSupported: false, supportCount: 7)),
+      expect: () => [
+        QagSearchLoadedState(
+          qags: [
+            Qag(
+              id: "id0",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title0",
+              username: "username0",
+              date: DateTime(2024, 4, 23),
+              supportCount: 8,
+              isSupported: true,
+              isAuthor: false,
+            ),
+          ],
+        ),
+        QagSearchLoadedState(
+          qags: [
+            Qag(
+              id: "id0",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title0",
+              username: "username0",
+              date: DateTime(2024, 4, 23),
+              supportCount: 7,
+              isSupported: false,
               isAuthor: false,
             ),
           ],

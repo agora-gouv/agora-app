@@ -108,7 +108,7 @@ class QagsPaginatedContentBuilder {
                       qagId: qagDetailsBackResult.qagId,
                       supportCount: qagDetailsBackResult.supportCount,
                       isSupported: qagDetailsBackResult.isSupported,
-                      isAuthor: qagDetailsBackResult.isAuthor,
+                      isAuthor: false, // FIXME
                     );
                   }
                 });
