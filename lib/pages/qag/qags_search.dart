@@ -63,12 +63,9 @@ class QagSearch extends StatelessWidget {
               AgoraQagSupportableCard(
                 qagViewModel: item,
                 widgetName: AnalyticsScreenNames.qagsPage,
-<<<<<<< HEAD
                 onQagSupportChange: (qagSupport) {
                   context.read<QagSearchBloc>().add(UpdateQagSupportEvent(qagSupport));
                 },
-=======
->>>>>>> 84cc3d4 (Add animation on QagSearch)
               ),
               SizedBox(height: AgoraSpacings.base),
             ],

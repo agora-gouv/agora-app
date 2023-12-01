@@ -7,10 +7,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/design/custom_view/agora_like_animation_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_qag_card.dart';
-<<<<<<< HEAD
 import 'package:agora/domain/qag/qag_support.dart';
-=======
->>>>>>> 84cc3d4 (Add animation on QagSearch)
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,19 +16,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AgoraQagSupportableCard extends StatelessWidget {
   final QagViewModel qagViewModel;
   final String widgetName;
-<<<<<<< HEAD
   final Function(QagSupport)? onQagSupportChange;
-=======
->>>>>>> 84cc3d4 (Add animation on QagSearch)
 
   const AgoraQagSupportableCard({
     super.key,
     required this.qagViewModel,
     required this.widgetName,
-<<<<<<< HEAD
     this.onQagSupportChange,
-=======
->>>>>>> 84cc3d4 (Add animation on QagSearch)
   });
 
   @override
@@ -72,7 +63,6 @@ class AgoraQagSupportableCard extends StatelessWidget {
                   context,
                   QagDetailsPage.routeName,
                   arguments: QagDetailsArguments(qagId: qagViewModel.id, reload: QagReload.qagsPage), // FIXME
-<<<<<<< HEAD
                 ).then((result) {
                   if (onQagSupportChange != null && result != null && result is QagDetailsBackResult) {
                     onQagSupportChange!(
@@ -84,9 +74,6 @@ class AgoraQagSupportableCard extends StatelessWidget {
                     );
                   }
                 });
-=======
-                );
->>>>>>> 84cc3d4 (Add animation on QagSearch)
               },
               onDisplayRectAvailable: likeAnimationView.notifyDisplayRectAvailable,
             );
