@@ -9,6 +9,7 @@ import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
+import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 
@@ -290,6 +291,12 @@ class FakeQagSuccessRepository extends QagRepository {
         ),
       ],
     );
+  }
+
+  @override
+  Future<GetQagsListRepositoryResponse> fetchQagList({required int pageNumber, required String? thematiqueId, required QagListFilter filter}) {
+    // TODO: implement fetchQagList
+    throw UnimplementedError();
   }
 }
 
@@ -760,6 +767,12 @@ class FakeQagFailureRepository extends QagRepository {
   @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
     return GetSearchQagsFailedResponse();
+  }
+
+  @override
+  Future<GetQagsListRepositoryResponse> fetchQagList({required int pageNumber, required String? thematiqueId, required QagListFilter filter}) {
+    // TODO: implement fetchQagList
+    throw UnimplementedError();
   }
 }
 
