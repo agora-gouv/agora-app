@@ -7,12 +7,11 @@
    * [Update flutter](#b-update-flutter)
    * [Android module Gradle setup](#c-android-module-gradle-setup)
    * [Configure Dart style](#d-configure-dart-style)
-   * [Add githooks / Remove githooks (optional)](#e-add-githooks--remove-githooks-optional)
-2. [Firebase](#2-firebase)
-3. [Compile the project](#3-compile-the-project)
+   * [Add/Remove GitHooks (optional)](#e-addremove-githooks-optional)
+2. [Compile project](#2-compile-project)
    * [Android](#a-android)
    * [iOS](#b-ios)
-4. [Read other docs](#4-read-other-docs)
+3. [Read other docs](#4-read-other-docs)
 
 
 ## 1. Setting project
@@ -42,8 +41,6 @@
         cache: true
   ```
 
-
-
 ### c. Android module Gradle setup
 - Go to `agora/android/build.gradle` right click on it and click on `Link Gradle Project`.
 - Open the `Gradle Tool Window` (if tab doesn't appear, click on `IntelliJ IDEA` > `View` > `Tool Windows` > `Gradle`), click on `+` and select the `android/` folder.
@@ -53,7 +50,7 @@
 - Open `IntelliJ IDEA` > `Preferences` > `Editor` > `Code Style` > `Dart`, Change Line Length to `120`
 - `shift` + `option` + `Command` + `l` > `pop-up opened` > select `Optimize imports`
 
-### e. Add githooks / Remove githooks (optional)
+### e. Add/Remove GitHooks (optional)
 This command will format code, launch test, etc. when you `git commit` and `git push`
 ```shell
   git config core.hooksPath .githooks/
@@ -62,34 +59,38 @@ This command will format code, launch test, etc. when you `git commit` and `git 
   git config --unset core.hooksPath
 ```
 
-## 2. Firebase
+## 2. Compile project
 
-- Download and install [Firebase CLI](https://firebase.google.com/docs/cli)
-- run `firebase login`
-- run `dart pub global activate flutterfire_cli`
-- add `flutterfire` to your path running `export PATH="$PATH":"$HOME/.pub-cache/bin"` (you can also put it on your default in your .zshrc)
-- run `flutterfire configure --project=agora-dev-6c6bd`
-
-This should generate the following files:
-- /ios/firebase_app_id_file.json
-- /ios/Runner/GoogleService-Info.plist
-- /lib/firebase_options.dart
-- /android/app/google-services.json
-
-
-## 3. Compile the project
+Current list of valid environments:
+- Dev, to target a testing environment
+- Prod, to target production environment
+  Please make sure to use `Dev` environment for testings purposes.
 
 ### a. Android
 
+#### i. Using Android Studio
+Make sure to change the target environment before attempting to compile project with Android Studio:
 ![edit configuration](docs/image/edit_configuration.png)
 ![main_dev](docs/image/main_dev.png)
 ![main_prod](docs/image/main_prod.png)
 
 - Configure `--dart-define=app.flavor=XX` and `Build flavor : XX` => XX must be identical.
-- `--dart-define=app.flavor=XX` is used in `FlavorHelper`.
+- `--dart-define=app.flavor=XX` is used in `flavor_helper.dart` file.
+
+#### ii. Using command line scripts
+
+Use either:
+- `agora/generateDevApk.sh` to have a build that targets Dev environment
+- `agora/generateReleaseBundle.sh` to have a build that targets Prod environment
 
 ### b. iOS
-- Launch command line in `agora/generateReleaseIpa.sh` first (maybe error appeared or not...)
+
+Launch a command line script first to choose the target environment (an error will appear but no worries...)
+- `agora/generateDevIpa.sh`, to have a build that targets Dev environment
+- `agora/generateReleaseIpa.sh`, to have a build that targets Prod environment
+- On `Xcode`, choose the scheme (middle top of the screen) that matches chosen target
+![xcode_scheme](docs/image/xcode_scheme.png)
+
 - Now you can build and launch iOS app in `Xcode`
 
 ## 4. Read other docs
