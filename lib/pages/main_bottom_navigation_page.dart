@@ -33,10 +33,9 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (_) async {
         SystemNavigator.pop();
-        return false;
       },
       child: AgoraResponsiveView(child: _buildScaffold()),
     );
