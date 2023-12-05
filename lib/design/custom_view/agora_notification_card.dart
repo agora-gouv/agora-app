@@ -28,7 +28,7 @@ class AgoraNotificationCard extends StatelessWidget {
           Text(title, style: AgoraTextStyles.light15),
           SizedBox(height: AgoraSpacings.base),
           RichText(
-            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            textScaler: MediaQuery.of(context).textScaler,
             text: TextSpan(
               style: AgoraTextStyles.medium13.copyWith(color: AgoraColors.primaryGrey),
               children: [

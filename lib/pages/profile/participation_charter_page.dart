@@ -183,7 +183,7 @@ class ParticipationCharterPage extends StatelessWidget {
           SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
             child: RichText(
-              textScaleFactor: MediaQuery.of(context).textScaleFactor,
+              textScaler: MediaQuery.of(context).textScaler,
               text: TextSpan(style: style, children: spans),
             ),
           ),
@@ -191,7 +191,7 @@ class ParticipationCharterPage extends StatelessWidget {
       );
     } else {
       return RichText(
-        textScaleFactor: MediaQuery.of(context).textScaleFactor,
+        textScaler: MediaQuery.of(context).textScaler,
         text: TextSpan(style: style, children: spans),
       );
     }

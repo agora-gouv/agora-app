@@ -138,7 +138,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
       label: data,
       child: ExcludeSemantics(
         child: RichText(
-          textScaleFactor: MediaQuery.of(context).textScaleFactor,
+          textScaler: MediaQuery.of(context).textScaler,
           textAlign: textAlign,
           textDirection: textDirection,
           text: textSpan,
