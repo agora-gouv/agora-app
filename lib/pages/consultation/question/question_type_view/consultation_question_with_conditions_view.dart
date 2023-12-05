@@ -23,13 +23,13 @@ class ConsultationQuestionWithConditionsView extends StatefulWidget {
   final VoidCallback onBackTap;
 
   ConsultationQuestionWithConditionsView({
-    Key? key,
+    super.key,
     required this.questionWithConditions,
     required this.previousSelectedResponses,
     required this.totalQuestions,
     required this.onWithConditionResponseTap,
     required this.onBackTap,
-  }) : super(key: key);
+  });
 
   @override
   State<ConsultationQuestionWithConditionsView> createState() => _ConsultationQuestionWithConditionsViewState();

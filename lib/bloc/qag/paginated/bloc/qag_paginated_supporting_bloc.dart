@@ -3,12 +3,10 @@ import 'package:agora/bloc/qag/paginated/qag_paginated_event.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_state.dart';
 import 'package:agora/bloc/qag/paginated/qag_paginated_view_model.dart';
 import 'package:agora/domain/qag/qag_paginated_filter.dart';
-import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagPaginatedSupportingBloc extends QagPaginatedBloc {
-  QagPaginatedSupportingBloc({required QagRepository qagRepository})
-      : super(qagRepository: qagRepository, qagPaginatedFilter: QagPaginatedFilter.supporting);
+  QagPaginatedSupportingBloc({required super.qagRepository}) : super(qagPaginatedFilter: QagPaginatedFilter.supporting);
 
   @override
   Future<void> handleUpdateQagsPaginated(

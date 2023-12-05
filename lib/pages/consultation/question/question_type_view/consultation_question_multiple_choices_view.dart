@@ -20,13 +20,13 @@ class ConsultationQuestionMultipleChoicesView extends StatefulWidget {
   final VoidCallback onBackTap;
 
   ConsultationQuestionMultipleChoicesView({
-    Key? key,
+    super.key,
     required this.multipleChoicesQuestion,
     required this.totalQuestions,
     required this.previousSelectedResponses,
     required this.onMultipleResponseTap,
     required this.onBackTap,
-  }) : super(key: key);
+  });
 
   @override
   State<ConsultationQuestionMultipleChoicesView> createState() => _ConsultationQuestionMultipleChoicesViewState();

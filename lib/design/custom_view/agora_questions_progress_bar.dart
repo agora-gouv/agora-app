@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 
 class AgoraQuestionsProgressBar extends StatelessWidget {
   const AgoraQuestionsProgressBar({
-    Key? key,
+    super.key,
     required this.currentQuestionOrder,
     required this.totalQuestions,
-  }) : super(key: key);
+  });
 
   final int currentQuestionOrder;
   final int totalQuestions;

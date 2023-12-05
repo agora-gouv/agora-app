@@ -31,6 +31,6 @@ class AppVersionHelperImpl extends AppVersionHelper {
   @override
   Future<String> getIosVersion() async {
     final deviceInfo = await DeviceInfoPlugin().iosInfo;
-    return deviceInfo.systemVersion == null ? "" : deviceInfo.systemVersion!;
+    return deviceInfo.systemVersion;
   }
 }

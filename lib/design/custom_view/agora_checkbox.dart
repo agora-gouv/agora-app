@@ -10,11 +10,11 @@ class AgoraCheckbox extends StatefulWidget {
   final Function(bool) onChanged;
 
   const AgoraCheckbox({
-    Key? key,
+    super.key,
     required this.defaultValue,
     required this.label,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<AgoraCheckbox> createState() => _AgoraCheckboxState();

@@ -6,7 +6,7 @@ class AgoraTracker extends StatefulWidget {
   final String widgetName;
   final Widget child;
 
-  const AgoraTracker({Key? key, required this.widgetName, required this.child}) : super(key: key);
+  const AgoraTracker({super.key, required this.widgetName, required this.child});
 
   @override
   State<AgoraTracker> createState() => _AgoraTrackerState();

@@ -26,9 +26,7 @@ class DeviceInfoPluginHelper extends DeviceInfoHelper {
   Future<bool> isIpad() async {
     if (!kIsWeb) {
       final iosInfo = await deviceInfo.iosInfo;
-      if (iosInfo.model != null) {
-        return iosInfo.model!.toLowerCase().contains('ipad');
-      }
+      return iosInfo.model.toLowerCase().contains('ipad');
     }
     return false;
   }
