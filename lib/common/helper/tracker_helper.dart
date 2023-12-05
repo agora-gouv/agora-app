@@ -5,16 +5,18 @@ import 'package:matomo_tracker/matomo_tracker.dart';
 
 /// see https://pub.dev/packages/matomo
 class TrackerHelper {
-  static const matomoNotificationTrackerDimension = "1";
-  static const matomoVersionTrackerDimension = "2";
-  static const matomoSearchedKeywordsTrackerDimension = "3";
+  static const matomoNotificationTrackerDimension = "dimension1";
+  static const matomoVersionTrackerDimension = "dimension2";
+  static const matomoSearchedKeywordsTrackerDimension = "dimension3";
 
   static void trackClick({required String widgetName, required String clickName}) {
     Log.d("AGORA MATOMO TRACK CLICK - $widgetName - $clickName");
     MatomoTracker.instance.trackEvent(
-      eventCategory: widgetName,
-      action: "click",
-      eventName: clickName,
+      eventInfo: EventInfo(
+        category: widgetName,
+        action: "click",
+        name: clickName,
+      ),
     );
   }
 
@@ -27,32 +29,34 @@ class TrackerHelper {
     };
 
     Log.d("AGORA MATOMO TRACK DIMENSION - $dimension");
-    MatomoTracker.instance.trackDimensions(dimension);
+    MatomoTracker.instance.trackDimensions(dimensions: dimension);
   }
 
   static void trackScreen({required String screenName}) {
     Log.d("AGORA MATOMO TRACK SCREEN - $screenName");
-    MatomoTracker.instance.trackScreenWithName(
-      widgetName: screenName,
-      eventName: "CreatedPage",
-    );
+    MatomoTracker.instance.trackPageViewWithName(actionName: screenName);
   }
 
   static void trackEvent({required String widgetName, required String eventName}) {
     Log.d("AGORA MATOMO TRACK EVENT - $widgetName - $eventName");
     MatomoTracker.instance.trackEvent(
-      eventCategory: widgetName,
-      action: "event",
-      eventName: eventName,
+      eventInfo: EventInfo(
+        category: widgetName,
+        action: "event",
+        name: eventName,
+      ),
     );
   }
 
   static void trackSearch({required String widgetName, required String searchName, required String searchedKeywords}) {
     Log.d("AGORA MATOMO TRACK EVENT - $widgetName - $searchName");
+
     MatomoTracker.instance.trackEvent(
-      eventCategory: widgetName,
-      action: "search",
-      eventName: searchName,
+      eventInfo: EventInfo(
+        category: widgetName,
+        action: "search",
+        name: searchName,
+      ),
       dimensions: {matomoSearchedKeywordsTrackerDimension: searchedKeywords},
     );
   }
