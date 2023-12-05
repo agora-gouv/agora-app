@@ -208,7 +208,7 @@ class QagDioRepository extends QagRepository {
   }) async {
     try {
       final response = await httpClient.get(
-        "v2/qags/",
+        "/v2/qags",
         queryParameters: {
           "pageNumber": pageNumber,
           "thematiqueId": thematiqueId,

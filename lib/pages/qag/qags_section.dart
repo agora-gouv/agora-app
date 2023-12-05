@@ -125,107 +125,13 @@ class _QagsSectionState extends State<QagsSection> {
       case QagTab.search:
         return QagSearch();
       case QagTab.popular:
-        return QagListSection(qagFilter: QagListFilter.popular);
+        return QagListSection(qagFilter: QagListFilter.top);
       case QagTab.latest:
         return QagListSection(qagFilter: QagListFilter.latest);
       case QagTab.supporting:
         return QagListSection(qagFilter: QagListFilter.supporting);
     }
   }
-
-  /*Widget _buildQagSection(List<QagViewModel> qagViewModels) {
-    if (qagViewModels.isNotEmpty) {
-      return _buildQagWidgets(context, qagViewModels, currentSelected);
-    } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: AgoraSpacings.base),
-            Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
-            SizedBox(height: AgoraSpacings.x1_5),
-            AgoraRoundedButton(
-              label: QagStrings.askQuestion,
-              onPressed: () {
-                TrackerHelper.trackClick(
-                  clickName: AnalyticsEventNames.askQuestionInEmptyList,
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                );
-                Navigator.pushNamed(context, QagAskQuestionPage.routeName, arguments: widget.askQuestionErrorCase);
-              },
-            ),
-            SizedBox(height: AgoraSpacings.x3 * 2),
-          ],
-        ),
-      );
-    }
-  }
-
-  Widget _buildQagWidgets(BuildContext context, List<QagViewModel> qagViewModels, QagTab qagTab) {
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: qagViewModels.length + 1,
-      itemBuilder: (context, index) {
-        if (index == qagViewModels.length) {
-          return Center(
-            child: AgoraRoundedButton(
-              label: QagStrings.displayMore,
-              style: AgoraRoundedButtonStyle.primaryButtonStyle,
-              onPressed: () {},
-            ),
-          );
-        } else {
-          final item = qagViewModels[index];
-          return BlocProvider.value(
-            value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-            child: BlocBuilder<QagSupportBloc, QagSupportState>(
-              builder: (context, state) {
-                return AgoraQagCard(
-                  id: item.id,
-                  thematique: item.thematique,
-                  title: item.title,
-                  username: item.username,
-                  date: item.date,
-                  supportCount: _buildCount(item, state),
-                  isSupported: _buildIsSupported(item.isSupported, state),
-                  isAuthor: item.isAuthor,
-                  onSupportClick: (bool support) {
-                    if (support) {
-                      TrackerHelper.trackClick(
-                        clickName: AnalyticsEventNames.likeQag,
-                        widgetName: AnalyticsScreenNames.qagsPage,
-                      );
-                      context.read<QagSupportBloc>().add(SupportQagEvent(qagId: item.id));
-                    } else {
-                      TrackerHelper.trackClick(
-                        clickName: AnalyticsEventNames.unlikeQag,
-                        widgetName: AnalyticsScreenNames.qagsPage,
-                      );
-                      context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: item.id));
-                    }
-                  },
-                  onCardClick: () {
-                    Navigator.pushNamed(
-                      context,
-                      QagDetailsPage.routeName,
-                      arguments: QagDetailsArguments(qagId: item.id, reload: QagReload.qagsPaginatedPage),
-                    );
-                  },
-                );
-              },
-            ),
-          );
-        }
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: AgoraSpacings.base);
-      },
-    );
-  }*/
 
   Widget _buildTabBar() {
     final TextEditingController textController = TextEditingController(text: previousSearchKeywords);
@@ -412,31 +318,6 @@ class _QagsSectionState extends State<QagsSection> {
     }
     return null;
   }
-
-/*  int _buildCount(QagViewModel qagViewModel, QagSupportState supportState) {
-    final supportCount = qagViewModel.supportCount;
-    if (supportState is QagSupportSuccessState) {
-      return supportCount + 1;
-    } else if (supportState is QagDeleteSupportSuccessState) {
-      return supportCount - 1;
-    }
-    return supportCount;
-  }
-
-  bool _buildIsSupported(bool isSupported, QagSupportState supportState) {
-    if (supportState is QagSupportInitialState) {
-      return isSupported;
-    } else if (supportState is QagSupportLoadingState) {
-      return !isSupported;
-    } else {
-      if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return true;
-      } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
-        return false;
-      }
-    }
-    return false;
-  }*/
 
   void _loadQags(BuildContext context, String keywords) {
     context.read<QagSearchBloc>().add(FetchQagsSearchEvent(keywords: keywords));
