@@ -12,11 +12,11 @@ class AgoraConsultationResultBar extends StatefulWidget {
   final double? minusPadding;
 
   AgoraConsultationResultBar({
-    Key? key,
+    super.key,
     required this.ratio,
     required this.response,
     this.minusPadding,
-  }) : super(key: key);
+  });
 
   @override
   State<AgoraConsultationResultBar> createState() => _AgoraConsultationResultBarState();

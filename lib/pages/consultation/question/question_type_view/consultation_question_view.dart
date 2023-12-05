@@ -19,7 +19,7 @@ class ConsultationQuestionView extends StatelessWidget {
   final Widget child;
 
   ConsultationQuestionView({
-    Key? key,
+    super.key,
     required this.order,
     required this.totalQuestions,
     required this.questionProgress,
@@ -27,7 +27,7 @@ class ConsultationQuestionView extends StatelessWidget {
     required this.title,
     required this.popupDescription,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

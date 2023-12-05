@@ -27,9 +27,9 @@ class AgoraScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     if (shouldPop) {
       if (popAction != null) {
-        return WillPopScope(
-          onWillPop: () async {
-            return popAction!();
+        return PopScope(
+          onPopInvoked: (_) async {
+            popAction!();
           },
           child: _build(),
         );
@@ -37,7 +37,7 @@ class AgoraScaffold extends StatelessWidget {
         return _build();
       }
     } else {
-      return WillPopScope(onWillPop: () async => false, child: _build());
+      return PopScope(child: _build());
     }
   }
 

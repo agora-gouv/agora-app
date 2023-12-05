@@ -15,11 +15,11 @@ class AgoraBottomNavigationBar extends StatefulWidget {
   final List<AgoraBottomNavigationBarItem> items;
 
   AgoraBottomNavigationBar({
-    Key? key,
+    super.key,
     this.currentIndex = 0,
     required this.onTap,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   State createState() => _AgoraBottomNavigationBarState();
