@@ -5,6 +5,7 @@ class AnalyticsEventNames {
   static const String answeredConsultation = "Consultation depuis mes consultations";
   static const String shareConsultation = "Partager la consultation";
   static const String qagsSearch = "Recherche QaGs";
+  static const String gotoQagsFromConsultations = "Redirection Consultations => QaG";
 
   static const String answeredQag = "Réponse de la QaG";
   static const String incomingAnsweredQag = "Réponse à venir de la QaG";
