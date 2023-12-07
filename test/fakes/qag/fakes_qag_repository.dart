@@ -112,7 +112,7 @@ class FakeQagSuccessRepository extends QagRepository {
         );
       default:
         return GetQagsPaginatedSucceedResponse(
-          maxPage: 3,
+          maxPage: 2,
           paginatedQags: [
             QagPaginated(
               id: "id3",
@@ -126,6 +126,60 @@ class FakeQagSuccessRepository extends QagRepository {
             ),
           ],
         );
+    }
+  }
+
+  @override
+  Future<GetQagsListRepositoryResponse> fetchQagList({
+    required int pageNumber,
+    required String? thematiqueId,
+    required QagListFilter filter,
+  }) async {
+    switch (pageNumber) {
+      case 1:
+        return GetQagListSucceedResponse(
+          maxPage: 2,
+          qags: [
+            Qag(
+              id: "id1",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: DateTime(2024, 2, 23),
+              supportCount: 8,
+              isSupported: false,
+              isAuthor: false,
+            ),
+          ],
+        );
+      case 2:
+        return GetQagListSucceedResponse(
+          maxPage: 2,
+          qags: [
+            Qag(
+              id: "id1",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: DateTime(2024, 2, 23),
+              supportCount: 9,
+              isSupported: true,
+              isAuthor: false,
+            ),
+            Qag(
+              id: "id2",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: DateTime(2024, 2, 23),
+              supportCount: 8,
+              isSupported: true,
+              isAuthor: false,
+            ),
+          ],
+        );
+      default:
+        return GetQagListFailedResponse();
     }
   }
 
@@ -291,12 +345,6 @@ class FakeQagSuccessRepository extends QagRepository {
         ),
       ],
     );
-  }
-
-  @override
-  Future<GetQagsListRepositoryResponse> fetchQagList({required int pageNumber, required String? thematiqueId, required QagListFilter filter}) {
-    // TODO: implement fetchQagList
-    throw UnimplementedError();
   }
 }
 
@@ -696,6 +744,15 @@ class FakeQagFailureRepository extends QagRepository {
   }
 
   @override
+  Future<GetQagsListRepositoryResponse> fetchQagList({
+    required int pageNumber,
+    required String? thematiqueId,
+    required QagListFilter filter,
+  }) async {
+    return GetQagListFailedResponse();
+  }
+
+  @override
   Future<GetQagsResponseRepositoryResponse> fetchQagsResponse() async {
     return GetQagsResponseFailedResponse();
   }
@@ -767,12 +824,6 @@ class FakeQagFailureRepository extends QagRepository {
   @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
     return GetSearchQagsFailedResponse();
-  }
-
-  @override
-  Future<GetQagsListRepositoryResponse> fetchQagList({required int pageNumber, required String? thematiqueId, required QagListFilter filter}) {
-    // TODO: implement fetchQagList
-    throw UnimplementedError();
   }
 }
 

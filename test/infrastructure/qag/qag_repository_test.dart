@@ -11,6 +11,7 @@ import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
+import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:dio/dio.dart';
@@ -460,6 +461,104 @@ void main() {
 
       // Then
       expect(response, GetQagsPaginatedFailedResponse());
+    });
+  });
+
+  group("Fetch qags list", () {
+    test("when success should return qags list", () async {
+      // Given
+      dioAdapter.onGet(
+        "/v2/qags",
+        queryParameters: {
+          "pageNumber": 1,
+          "thematiqueId": thematiqueId,
+          "filterType": "top",
+        },
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "maxPageNumber": 5,
+            "qags": [
+              {
+                "qagId": "id1",
+                "thematique": {"label": "Transports", "picto": "🚊"},
+                "title": "title1",
+                "username": "username1",
+                "date": "2023-01-01",
+                "support": {
+                  "count": 116,
+                  "isSupported": true,
+                },
+                "isAuthor": true,
+              },
+            ],
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+      );
+      final response = await repository.fetchQagList(
+        pageNumber: 1,
+        thematiqueId: thematiqueId,
+        filter: QagListFilter.top,
+      );
+
+      // Then
+      expect(
+        response,
+        GetQagListSucceedResponse(
+          maxPage: 5,
+          qags: [
+            Qag(
+              id: "id1",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: DateTime(2023, 1, 1),
+              supportCount: 116,
+              isSupported: true,
+              isAuthor: true,
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/v2/qags",
+        queryParameters: {
+          "pageNumber": 1,
+          "thematiqueId": thematiqueId,
+          "filterType": "top",
+        },
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+      );
+      final response = await repository.fetchQagList(
+        pageNumber: 1,
+        thematiqueId: thematiqueId,
+        filter: QagListFilter.top,
+      );
+
+      // Then
+      expect(response, GetQagListFailedResponse());
     });
   });
 

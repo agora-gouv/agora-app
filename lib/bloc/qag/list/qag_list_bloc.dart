@@ -1,6 +1,7 @@
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
 import 'package:agora/domain/qag/qag.dart';
+import 'package:agora/domain/qag/qag_list_extension.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
   }) : super(QagListInitialState()) {
     on<FetchQagsListEvent>(_handleFetchQags);
     on<UpdateQagsListEvent>(_handleUpdateQags);
+    on<UpdateQagListSupportEvent>(_handleUpdateQagSupport);
   }
 
   Future<void> _handleFetchQags(
@@ -25,7 +27,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
 
     final response = await qagRepository.fetchQagList(
       pageNumber: state.currentPage,
-      thematiqueId: null,
+      thematiqueId: event.thematiqueId,
       filter: qagFilter,
     );
 
@@ -61,7 +63,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
 
       final response = await qagRepository.fetchQagList(
         pageNumber: state.currentPage + 1,
-        thematiqueId: null,
+        thematiqueId: event.thematiqueId,
         filter: qagFilter,
       );
 
@@ -81,20 +83,36 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
     }
   }
 
-  List<Qag> addQagsToList(List<Qag> newList, List<Qag> oldList) {
-    final List<String> existingIds = [];
+  Future<void> _handleUpdateQagSupport(
+    UpdateQagListSupportEvent event,
+    Emitter<QagListState> emit,
+  ) async {
+    if (state is QagListLoadedState) {
+      final loadedState = state as QagListLoadedState;
+      final newQagList = loadedState.qags.updateQagSupportOrNull(event.qagSupport);
 
-    for (Qag qag in newList) {
-      existingIds.add(qag.id);
+      if (newQagList != null) {
+        emit(
+          QagListLoadedState(
+            qags: newQagList,
+            currentPage: state.currentPage,
+            maxPage: loadedState.maxPage,
+            isLoadingMore: loadedState.isLoadingMore,
+          ),
+        );
+      }
     }
+  }
 
-    for (Qag qag in oldList) {
-      if (!existingIds.contains(qag.id)) {
-        newList.add(qag);
-        existingIds.add(qag.id);
+  List<Qag> addQagsToList(List<Qag> oldList, List<Qag> newList) {
+    final List<Qag> mergedQags = [...oldList];
+
+    for (final qag in newList) {
+      if (!mergedQags.any((oldQag) => oldQag.id == qag.id)) {
+        mergedQags.add(qag);
       }
     }
 
-    return newList;
+    return mergedQags;
   }
 }

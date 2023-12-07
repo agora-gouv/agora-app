@@ -18,15 +18,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagListSection extends StatelessWidget {
+  final String? thematiqueId;
   final QagListFilter qagFilter;
 
-  const QagListSection({required this.qagFilter});
+  const QagListSection({required this.qagFilter, required this.thematiqueId});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: QagListBloc(qagRepository: RepositoryManager.getQagRepository(), qagFilter: qagFilter)
-        ..add(FetchQagsListEvent()),
+        ..add(FetchQagsListEvent(thematiqueId: thematiqueId)),
       child: BlocSelector<QagListBloc, QagListState, _ViewModel>(
         selector: _ViewModel.fromState,
         builder: (context, viewModel) {
@@ -71,6 +72,9 @@ class QagListSection extends StatelessWidget {
             child: AgoraQagSupportableCard(
               qagViewModel: item,
               widgetName: AnalyticsScreenNames.qagsPage,
+              onQagSupportChange: (qagSupport) {
+                context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
+              },
             ),
           );
         } else {
@@ -83,7 +87,7 @@ class QagListSection extends StatelessWidget {
                 label: QagStrings.displayMore,
                 style: AgoraRoundedButtonStyle.primaryButtonStyle,
                 onPressed: () {
-                  context.read<QagListBloc>().add(UpdateQagsListEvent());
+                  context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
                 },
               ),
             );

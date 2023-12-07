@@ -64,7 +64,7 @@ class QagSearch extends StatelessWidget {
                 qagViewModel: item,
                 widgetName: AnalyticsScreenNames.qagsPage,
                 onQagSupportChange: (qagSupport) {
-                  context.read<QagSearchBloc>().add(UpdateQagSupportEvent(qagSupport));
+                  context.read<QagSearchBloc>().add(UpdateQagSearchSupportEvent(qagSupport));
                 },
               ),
               SizedBox(height: AgoraSpacings.base),

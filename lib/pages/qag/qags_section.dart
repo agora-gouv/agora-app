@@ -125,11 +125,11 @@ class _QagsSectionState extends State<QagsSection> {
       case QagTab.search:
         return QagSearch();
       case QagTab.popular:
-        return QagListSection(qagFilter: QagListFilter.top);
+        return QagListSection(qagFilter: QagListFilter.top, thematiqueId: currentThematiqueId);
       case QagTab.latest:
-        return QagListSection(qagFilter: QagListFilter.latest);
+        return QagListSection(qagFilter: QagListFilter.latest, thematiqueId: currentThematiqueId);
       case QagTab.supporting:
-        return QagListSection(qagFilter: QagListFilter.supporting);
+        return QagListSection(qagFilter: QagListFilter.supporting, thematiqueId: currentThematiqueId);
     }
   }
 
