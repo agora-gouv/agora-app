@@ -31,7 +31,8 @@ class QagDetailsSupportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey());
+    final likeViewKey = GlobalKey();
+    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey);
 
     return Stack(
       children: [
@@ -67,7 +68,7 @@ class QagDetailsSupportView extends StatelessWidget {
                           isSupported: viewModel.isSupported(),
                           supportCount: viewModel.supportCount(),
                           shouldHaveVerticalPadding: true,
-                          onDisplayRectAvailable: likeAnimationView.notifyDisplayRectAvailable,
+                          likeViewKey: likeViewKey,
                         ),
                       ),
                     ),

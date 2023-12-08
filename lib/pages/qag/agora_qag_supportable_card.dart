@@ -27,7 +27,8 @@ class AgoraQagSupportableCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey());
+    final likeViewKey = GlobalKey();
+    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey);
 
     return Stack(
       children: [
@@ -75,7 +76,7 @@ class AgoraQagSupportableCard extends StatelessWidget {
                   }
                 });
               },
-              onDisplayRectAvailable: likeAnimationView.notifyDisplayRectAvailable,
+              likeViewKey: likeViewKey,
             );
           },
         ),

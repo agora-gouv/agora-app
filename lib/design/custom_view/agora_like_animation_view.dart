@@ -4,18 +4,12 @@ import 'package:lottie/lottie.dart';
 
 class AgoraLikeAnimationView extends StatelessWidget {
   final GlobalKey<AgoraAnimatedLikeViewState> animationControllerKey;
+  final GlobalKey likeViewKey;
 
-  const AgoraLikeAnimationView({required this.animationControllerKey});
-
-  void notifyDisplayRectAvailable(Rect displayRect) async {
-    if (animationControllerKey.currentState != null) {
-      animationControllerKey.currentState?.setDisplayRect(displayRect);
-    } else {
-      Future.delayed(Duration(milliseconds: 100), () {
-        notifyDisplayRectAvailable(displayRect);
-      });
-    }
-  }
+  const AgoraLikeAnimationView({
+    required this.animationControllerKey,
+    required this.likeViewKey,
+  });
 
   void animate() {
     animationControllerKey.currentState?.startAnimation();
@@ -41,15 +35,17 @@ class AgoraLikeAnimationView extends StatelessWidget {
     final ByteData animationData = await rootBundle.load("assets/animations/like.json");
     final likeAnimation = await LottieComposition.fromByteData(animationData);
 
-    return _AgoraAnimatedLikeView(key: animationControllerKey, animation: likeAnimation);
+    return _AgoraAnimatedLikeView(key: animationControllerKey, likeViewKey: likeViewKey, animation: likeAnimation);
   }
 }
 
 class _AgoraAnimatedLikeView extends StatefulWidget {
+  final GlobalKey likeViewKey;
   final LottieDrawable _drawable;
 
   _AgoraAnimatedLikeView({
     super.key,
+    required this.likeViewKey,
     required LottieComposition animation,
   }) : _drawable = LottieDrawable(animation);
 
@@ -64,8 +60,6 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
     duration: const Duration(milliseconds: 750),
     vsync: this,
   );
-  Rect _currentDisplayRect = Rect.fromLTRB(0, 0, 0, 0);
-  Rect _likeDisplayRect = Rect.fromLTRB(0, 0, 0, 0);
 
   @override
   void initState() {
@@ -73,18 +67,6 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
     _controller.addListener(() {
       setState(() {});
     });
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        final RenderBox renderBox = context.findRenderObject() as RenderBox;
-        final position = renderBox.localToGlobal(Offset.zero);
-        _currentDisplayRect = Rect.fromLTWH(
-          position.dx,
-          position.dy,
-          renderBox.size.width,
-          renderBox.size.height,
-        );
-      },
-    );
   }
 
   @override
@@ -93,26 +75,16 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
     super.dispose();
   }
 
-  void setDisplayRect(Rect displayRect) {
-    _likeDisplayRect = displayRect;
-  }
-
   void startAnimation() {
     _controller.forward(from: 0.0);
   }
 
   @override
   Widget build(BuildContext context) {
-    final targetRect = _buildTargetRect();
     return CustomPaint(
       painter: _AgoraLikePainter(
         drawable: widget._drawable,
-        displayRect: Rect.fromLTRB(
-          targetRect.left - _currentDisplayRect.left,
-          targetRect.top - _currentDisplayRect.top,
-          targetRect.right - _currentDisplayRect.left,
-          targetRect.bottom - _currentDisplayRect.top,
-        ),
+        displayRect: _buildTargetRect(),
         isAnimating: _controller.isAnimating,
         progress: _controller.value,
       ),
@@ -121,18 +93,36 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
   }
 
   Rect _buildTargetRect() {
-    final width = _likeDisplayRect.right - _likeDisplayRect.left;
-    final height = _likeDisplayRect.bottom - _likeDisplayRect.top;
+    final currentDisplayRect = _buildRect(context);
+    final likeDisplayRect = _buildRect(widget.likeViewKey.currentContext);
 
-    final targetWidth = width * 3.8;
-    final targetHeight = height * 3.8;
+    final likeWidth = likeDisplayRect.right - likeDisplayRect.left;
+    final likeHeight = likeDisplayRect.bottom - likeDisplayRect.top;
+
+    final targetAnimationWidth = likeWidth * 3.8;
+    final targetAnimationHeight = likeHeight * 3.8;
 
     return Rect.fromLTWH(
-      _likeDisplayRect.left - (targetWidth - width) / 2,
-      _likeDisplayRect.top - (targetHeight - height) / 2,
-      targetWidth,
-      targetHeight,
+      likeDisplayRect.left - (targetAnimationWidth - likeWidth) / 2 - currentDisplayRect.left,
+      likeDisplayRect.top - (targetAnimationHeight - likeHeight) / 2 - currentDisplayRect.top,
+      targetAnimationWidth,
+      targetAnimationHeight,
     );
+  }
+
+  Rect _buildRect(BuildContext? context) {
+    if (context != null && context.findRenderObject() != null) {
+      final RenderBox renderBox = context.findRenderObject() as RenderBox;
+      final position = renderBox.localToGlobal(Offset.zero);
+      return Rect.fromLTWH(
+        position.dx,
+        position.dy,
+        renderBox.size.width,
+        renderBox.size.height,
+      );
+    } else {
+      return Rect.fromLTRB(0, 0, 0, 0);
+    }
   }
 }
 
