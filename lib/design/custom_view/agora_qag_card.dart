@@ -21,7 +21,7 @@ class AgoraQagCard extends StatelessWidget {
   final bool isAuthor;
   final Function(bool support) onSupportClick;
   final VoidCallback onCardClick;
-  final Function(Rect displayRect)? onDisplayRectAvailable;
+  final GlobalKey? likeViewKey;
 
   AgoraQagCard({
     required this.id,
@@ -34,7 +34,7 @@ class AgoraQagCard extends StatelessWidget {
     required this.isAuthor,
     required this.onSupportClick,
     required this.onCardClick,
-    this.onDisplayRectAvailable,
+    this.likeViewKey,
   });
 
   @override
@@ -104,7 +104,7 @@ class AgoraQagCard extends StatelessWidget {
             supportCount: supportCount,
             shouldHaveVerticalPadding: true,
             onSupportClick: (support) => onSupportClick(support),
-            onDisplayRectAvailable: onDisplayRectAvailable,
+            likeViewKey: likeViewKey,
           ),
         ],
       );
@@ -118,7 +118,7 @@ class AgoraQagCard extends StatelessWidget {
             supportCount: supportCount,
             shouldHaveVerticalPadding: true,
             onSupportClick: (support) => onSupportClick(support),
-            onDisplayRectAvailable: onDisplayRectAvailable,
+            likeViewKey: likeViewKey,
           ),
         ],
       );

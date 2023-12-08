@@ -13,14 +13,14 @@ enum AgoraLikeStyle {
   police14,
 }
 
-class AgoraLikeView extends StatefulWidget {
+class AgoraLikeView extends StatelessWidget {
   final bool isSupported;
   final int supportCount;
   final bool shouldHaveHorizontalPadding;
   final bool shouldHaveVerticalPadding;
   final AgoraLikeStyle style;
   final Function(bool support)? onSupportClick;
-  final Function(Rect displayRect)? onDisplayRectAvailable;
+  final GlobalKey? likeViewKey;
 
   const AgoraLikeView({
     super.key,
@@ -30,44 +30,16 @@ class AgoraLikeView extends StatefulWidget {
     this.shouldHaveVerticalPadding = false,
     this.style = AgoraLikeStyle.police14,
     this.onSupportClick,
-    this.onDisplayRectAvailable,
+    this.likeViewKey,
   });
-
-  @override
-  State<AgoraLikeView> createState() => _AgoraLikeViewState();
-}
-
-class _AgoraLikeViewState extends State<AgoraLikeView> {
-  final GlobalKey _key = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        if (widget.onDisplayRectAvailable != null) {
-          final RenderBox renderBox = _key.currentContext?.findRenderObject() as RenderBox;
-          final position = renderBox.localToGlobal(Offset.zero);
-          widget.onDisplayRectAvailable!(
-            Rect.fromLTWH(
-              position.dx,
-              position.dy,
-              renderBox.size.width,
-              renderBox.size.height,
-            ),
-          );
-        }
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      button: widget.onSupportClick != null,
+      button: onSupportClick != null,
       child: InkWell(
         borderRadius: BorderRadius.all(AgoraCorners.rounded42),
-        onTap: widget.onSupportClick != null ? () => widget.onSupportClick!(!widget.isSupported) : null,
+        onTap: onSupportClick != null ? () => onSupportClick!(!isSupported) : null,
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(AgoraCorners.rounded42),
@@ -76,21 +48,21 @@ class _AgoraLikeViewState extends State<AgoraLikeView> {
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: widget.shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
-              vertical: widget.shouldHaveVerticalPadding ? 2 : 0,
+              horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
+              vertical: shouldHaveVerticalPadding ? 2 : 0,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SvgPicture.asset(key: _key, _getIcon(), width: _buildIconSize(), excludeFromSemantics: true),
+                SvgPicture.asset(key: likeViewKey, _getIcon(), width: _buildIconSize(), excludeFromSemantics: true),
                 SizedBox(width: AgoraSpacings.x0_25),
                 Padding(
                   padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
                   child: Text(
-                    widget.supportCount.toString(),
+                    supportCount.toString(),
                     style: _buildTextStyle(),
                     semanticsLabel:
-                        "${widget.isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(widget.supportCount.toString())}",
+                        "${isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
                   ),
                 ),
               ],
@@ -102,7 +74,7 @@ class _AgoraLikeViewState extends State<AgoraLikeView> {
   }
 
   double _buildIconSize() {
-    switch (widget.style) {
+    switch (style) {
       case AgoraLikeStyle.police12:
         return 14;
       case AgoraLikeStyle.police14:
@@ -111,7 +83,7 @@ class _AgoraLikeViewState extends State<AgoraLikeView> {
   }
 
   TextStyle _buildTextStyle() {
-    switch (widget.style) {
+    switch (style) {
       case AgoraLikeStyle.police12:
         return AgoraTextStyles.medium12;
       case AgoraLikeStyle.police14:
@@ -120,7 +92,7 @@ class _AgoraLikeViewState extends State<AgoraLikeView> {
   }
 
   String _getIcon() {
-    if (widget.isSupported) {
+    if (isSupported) {
       return "assets/ic_heart_full.svg";
     } else {
       return "assets/ic_heart.svg";
