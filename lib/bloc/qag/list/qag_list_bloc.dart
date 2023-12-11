@@ -36,8 +36,9 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
       emit(
         QagListLoadedState(
           qags: response.qags,
-          maxPage: response.maxPage,
+          header: response.header,
           currentPage: state.currentPage,
+          maxPage: response.maxPage,
           footerType: QagListFooterType.loaded,
         ),
       );
@@ -53,14 +54,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
     if (state is QagListLoadedState) {
       final loadedState = state as QagListLoadedState;
 
-      emit(
-        QagListLoadedState(
-          currentPage: state.currentPage,
-          qags: loadedState.qags,
-          maxPage: loadedState.maxPage,
-          footerType: QagListFooterType.loading,
-        ),
-      );
+      emit(QagListLoadedState.copyWith(state: loadedState, footerType: QagListFooterType.loading));
 
       final response = await qagRepository.fetchQagList(
         pageNumber: state.currentPage + 1,
@@ -69,24 +63,17 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
       );
 
       if (response is GetQagListSucceedResponse) {
-        final List<Qag> newList = addQagsToList(loadedState.qags, response.qags);
         emit(
-          QagListLoadedState(
-            qags: newList,
-            maxPage: response.maxPage,
+          QagListLoadedState.copyWith(
+            state: loadedState,
+            qags: addQagsToList(loadedState.qags, response.qags),
             currentPage: state.currentPage + 1,
+            maxPage: response.maxPage,
             footerType: QagListFooterType.loaded,
           ),
         );
       } else {
-        emit(
-          QagListLoadedState(
-            qags: loadedState.qags,
-            maxPage: loadedState.maxPage,
-            currentPage: state.currentPage,
-            footerType: QagListFooterType.error,
-          ),
-        );
+        emit(QagListLoadedState.copyWith(state: loadedState, footerType: QagListFooterType.error));
       }
     }
   }
@@ -100,14 +87,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
       final newQagList = loadedState.qags.updateQagSupportOrNull(event.qagSupport);
 
       if (newQagList != null) {
-        emit(
-          QagListLoadedState(
-            qags: newQagList,
-            currentPage: state.currentPage,
-            maxPage: loadedState.maxPage,
-            footerType: QagListFooterType.loaded,
-          ),
-        );
+        emit(QagListLoadedState.copyWith(state: loadedState, qags: newQagList));
       }
     }
   }

@@ -2,6 +2,7 @@ import 'package:agora/bloc/qag/list/qag_list_bloc.dart';
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
 import 'package:agora/bloc/qag/qag_list_footer_type.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_support.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
@@ -17,6 +18,29 @@ void main() {
   Intl.defaultLocale = "fr_FR";
   initializeDateFormatting('fr_FR', null);
 
+  final defaultLoadedState = QagListLoadedState(
+    qags: [
+      Qag(
+        id: "id1",
+        thematique: Thematique(picto: "🚊", label: "Transports"),
+        title: "title1",
+        username: "username1",
+        date: DateTime(2024, 2, 23),
+        supportCount: 8,
+        isSupported: false,
+        isAuthor: false,
+      ),
+    ],
+    header: HeaderQag(
+      id: "headerId",
+      title: "headerTitle",
+      description: "headerDescription",
+    ),
+    currentPage: 1,
+    maxPage: 2,
+    footerType: QagListFooterType.loaded,
+  );
+
   group("FetchQagsListEvent", () {
     blocTest<QagListBloc, QagListState>(
       "when fetch qags list with success - should emit loaded state",
@@ -29,23 +53,7 @@ void main() {
       ),
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
+        defaultLoadedState,
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -80,41 +88,10 @@ void main() {
       },
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loading,
-        ),
-        QagListLoadedState(
+        defaultLoadedState,
+        QagListLoadedState.copyWith(state: defaultLoadedState, footerType: QagListFooterType.loading),
+        QagListLoadedState.copyWith(
+          state: defaultLoadedState,
           qags: [
             Qag(
               id: "id1",
@@ -200,23 +177,7 @@ void main() {
       },
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
+        defaultLoadedState,
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -233,24 +194,9 @@ void main() {
       },
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
-        QagListLoadedState(
+        defaultLoadedState,
+        QagListLoadedState.copyWith(
+          state: defaultLoadedState,
           qags: [
             Qag(
               id: "id1",
@@ -263,9 +209,6 @@ void main() {
               isAuthor: false,
             ),
           ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
         ),
       ],
       wait: const Duration(milliseconds: 5),
