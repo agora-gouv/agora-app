@@ -6,7 +6,7 @@ import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
-import 'package:agora/domain/qag/popup_qag.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
@@ -129,10 +129,11 @@ class QagDioRepository extends QagRepository {
         qagLatest: _transformToQagList(qags["latest"] as List),
         qagSupporting: _transformToQagList(qags["supporting"] as List),
         errorCase: response.data["askQagErrorText"] as String?,
-        popupQag: popupQag != null
-            ? PopupQag(
+        headerQag: popupQag != null
+            ? HeaderQag(
+                id: "id",
                 title: popupQag["title"] as String,
-                description: popupQag["description"] as String,
+                description: popupQag["scription"] as String,
               )
             : null,
       );
@@ -180,9 +181,18 @@ class QagDioRepository extends QagRepository {
           "filterType": filter.toFilterString(),
         },
       );
+      final headerQag = response.data["header"];
+
       return GetQagListSucceedResponse(
         qags: _transformToQagList(response.data["qags"] as List),
         maxPage: response.data["maxPageNumber"] as int,
+        header: headerQag != null
+            ? HeaderQag(
+                id: headerQag["id"] as String,
+                title: headerQag['title'] as String,
+                description: headerQag['description'] as String,
+              )
+            : null,
       );
     } catch (e) {
       return GetQagListFailedResponse();
@@ -524,14 +534,14 @@ class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
   final List<Qag> qagLatest;
   final List<Qag> qagSupporting;
   final String? errorCase;
-  final PopupQag? popupQag;
+  final HeaderQag? headerQag;
 
   GetQagsSucceedResponse({
     required this.qagPopular,
     required this.qagLatest,
     required this.qagSupporting,
     required this.errorCase,
-    required this.popupQag,
+    required this.headerQag,
   });
 
   @override
@@ -569,17 +579,18 @@ class GetSearchQagsFailedResponse extends GetSearchQagsRepositoryResponse {}
 
 abstract class GetQagsListRepositoryResponse extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class GetQagListSucceedResponse extends GetQagsListRepositoryResponse {
   final List<Qag> qags;
   final int maxPage;
+  final HeaderQag? header;
 
-  GetQagListSucceedResponse({required this.qags, required this.maxPage});
+  GetQagListSucceedResponse({required this.qags, required this.maxPage, required this.header});
 
   @override
-  List<Object> get props => [qags, maxPage];
+  List<Object?> get props => [qags, maxPage, header];
 }
 
 class GetQagListFailedResponse extends GetQagsListRepositoryResponse {}

@@ -1,6 +1,6 @@
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
-import 'package:agora/domain/qag/popup_qag.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
@@ -64,7 +64,7 @@ class FakeQagSuccessRepository extends QagRepository {
         ),
       ],
       errorCase: null,
-      popupQag: null,
+      headerQag: null,
     );
   }
 
@@ -90,6 +90,11 @@ class FakeQagSuccessRepository extends QagRepository {
               isAuthor: false,
             ),
           ],
+          header: HeaderQag(
+            id: "headerId",
+            title: "headerTitle",
+            description: "headerDescription",
+          ),
         );
       case 2:
         return GetQagListSucceedResponse(
@@ -116,6 +121,11 @@ class FakeQagSuccessRepository extends QagRepository {
               isAuthor: false,
             ),
           ],
+          header: HeaderQag(
+            id: "headerId2",
+            title: "headerTitle2",
+            description: "headerDescription2",
+          ),
         );
       default:
         return GetQagListFailedResponse();
@@ -631,7 +641,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
         ),
       ],
       errorCase: "Une erreur est survenue",
-      popupQag: PopupQag(title: "Titre de popup", description: "Description de popup"),
+      headerQag: HeaderQag(id: "id", title: "Titre de popup", description: "Description de popup"),
     );
   }
 

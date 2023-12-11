@@ -40,10 +40,10 @@ class QagBloc extends Bloc<QagsEvent, QagState> {
           latestViewModels: qagLatestViewModels,
           supportingViewModels: qagSupportingViewModels,
           errorCase: response.errorCase,
-          popupViewModel: response.popupQag != null
+          popupViewModel: response.headerQag != null
               ? PopupQagViewModel(
-                  title: response.popupQag!.title,
-                  description: response.popupQag!.description,
+                  title: response.headerQag!.title,
+                  description: response.headerQag!.description,
                 )
               : null,
         ),

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
-import 'package:agora/domain/qag/popup_qag.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
@@ -235,7 +235,7 @@ void main() {
             ),
           ],
           errorCase: null,
-          popupQag: null,
+          headerQag: null,
         ),
       );
     });
@@ -282,7 +282,8 @@ void main() {
           qagLatest: [],
           qagSupporting: [],
           errorCase: "Une erreur est survenue",
-          popupQag: PopupQag(
+          headerQag: HeaderQag(
+            id: "id",
             title: "Titre de popup",
             description: "Description de popup",
           ),
@@ -390,6 +391,11 @@ void main() {
                 "isAuthor": true,
               },
             ],
+            "header": {
+              "id": "headerId",
+              "title": "headerTitle",
+              "description": "headerDescription",
+            },
           },
         ),
         headers: {
@@ -425,6 +431,11 @@ void main() {
               isAuthor: true,
             ),
           ],
+          header: HeaderQag(
+            id: "headerId",
+            title: "headerTitle",
+            description: "headerDescription",
+          ),
         ),
       );
     });
