@@ -2,8 +2,6 @@ import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
-import 'package:agora/domain/qag/qag_paginated.dart';
-import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
@@ -68,65 +66,6 @@ class FakeQagSuccessRepository extends QagRepository {
       errorCase: null,
       popupQag: null,
     );
-  }
-
-  @override
-  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
-    required int pageNumber,
-    required String? thematiqueId,
-    required QagPaginatedFilter filter,
-    required String? keywords,
-  }) async {
-    switch (pageNumber) {
-      case 1:
-        return GetQagsPaginatedSucceedResponse(
-          maxPage: 3,
-          paginatedQags: [
-            QagPaginated(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: true,
-            ),
-          ],
-        );
-      case 2:
-        return GetQagsPaginatedSucceedResponse(
-          maxPage: 3,
-          paginatedQags: [
-            QagPaginated(
-              id: "id2",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title2",
-              username: "username2",
-              date: DateTime(2024, 3, 23),
-              supportCount: 9,
-              isSupported: true,
-              isAuthor: false,
-            ),
-          ],
-        );
-      default:
-        return GetQagsPaginatedSucceedResponse(
-          maxPage: 2,
-          paginatedQags: [
-            QagPaginated(
-              id: "id3",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title3",
-              username: "username3",
-              date: DateTime(2024, 4, 23),
-              supportCount: 9,
-              isSupported: true,
-              isAuthor: false,
-            ),
-          ],
-        );
-    }
   }
 
   @override
@@ -731,16 +670,6 @@ class FakeQagFailureRepository extends QagRepository {
     required String? thematiqueId,
   }) async {
     return GetQagsFailedResponse();
-  }
-
-  @override
-  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
-    required int pageNumber,
-    required String? thematiqueId,
-    required QagPaginatedFilter filter,
-    required String? keywords,
-  }) async {
-    return GetQagsPaginatedFailedResponse();
   }
 
   @override
