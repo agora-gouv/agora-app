@@ -23,7 +23,6 @@ import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
-import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.dart';
 import 'package:agora/pages/qag/similar/qag_similar_page.dart';
@@ -162,9 +161,6 @@ class AgoraAppRouter {
           widgetName: AnalyticsScreenNames.qagDetailsDeletePage,
           child: QagDetailsDeleteConfirmationPage(arguments: arguments),
         );
-        break;
-      case QagsPaginatedPage.routeName:
-        currentRoute = QagsPaginatedPage(arguments: settings.arguments as QagsPaginatedArguments);
         break;
       case DemographicConfirmationPage.routeName:
         final arguments = settings.arguments as DemographicConfirmationArguments;

@@ -1,3 +1,4 @@
+import 'package:agora/bloc/qag/qag_list_footer_type.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:equatable/equatable.dart';
 
@@ -17,17 +18,17 @@ class QagListInitialState extends QagListState {
 class QagListLoadedState extends QagListState {
   final List<Qag> qags;
   final int maxPage;
-  final bool isLoadingMore;
+  final QagListFooterType footerType;
 
   QagListLoadedState({
     required super.currentPage,
     required this.qags,
     required this.maxPage,
-    required this.isLoadingMore,
+    required this.footerType,
   });
 
   @override
-  List<Object?> get props => [currentPage, qags, maxPage, isLoadingMore];
+  List<Object?> get props => [currentPage, qags, maxPage, footerType];
 }
 
 class QagListErrorState extends QagListState {

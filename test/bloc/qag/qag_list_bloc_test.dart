@@ -1,6 +1,7 @@
 import 'package:agora/bloc/qag/list/qag_list_bloc.dart';
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
+import 'package:agora/bloc/qag/qag_list_footer_type.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_support.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
@@ -17,12 +18,11 @@ void main() {
   initializeDateFormatting('fr_FR', null);
 
   group("FetchQagsListEvent", () {
-    const fakeFilter = QagListFilter.top;
     blocTest<QagListBloc, QagListState>(
       "when fetch qags list with success - should emit loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
-        qagFilter: fakeFilter,
+        qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
         FetchQagsListEvent(thematiqueId: null),
@@ -44,7 +44,7 @@ void main() {
           ],
           currentPage: 1,
           maxPage: 2,
-          isLoadingMore: false,
+          footerType: QagListFooterType.loaded,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -54,7 +54,7 @@ void main() {
       "when fetch qags list with failure - should emit failure state",
       build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
-        qagFilter: fakeFilter,
+        qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
         FetchQagsListEvent(thematiqueId: null),
@@ -68,12 +68,11 @@ void main() {
   });
 
   group("UpdateQagsListEvent", () {
-    const fakeFilter = QagListFilter.top;
     blocTest<QagListBloc, QagListState>(
       "when update qags list with success - should emit loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
-        qagFilter: fakeFilter,
+        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
         bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
@@ -96,7 +95,7 @@ void main() {
           ],
           currentPage: 1,
           maxPage: 2,
-          isLoadingMore: false,
+          footerType: QagListFooterType.loaded,
         ),
         QagListLoadedState(
           qags: [
@@ -113,7 +112,7 @@ void main() {
           ],
           currentPage: 1,
           maxPage: 2,
-          isLoadingMore: true,
+          footerType: QagListFooterType.loading,
         ),
         QagListLoadedState(
           qags: [
@@ -140,7 +139,7 @@ void main() {
           ],
           currentPage: 2,
           maxPage: 2,
-          isLoadingMore: false,
+          footerType: QagListFooterType.loaded,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -150,7 +149,7 @@ void main() {
       "when update qags list with failure - should emit failure state",
       build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
-        qagFilter: fakeFilter,
+        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
         bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
@@ -165,13 +164,12 @@ void main() {
   });
 
   group("UpdateQagListSupportEvent", () {
-    const fakeFilter = QagListFilter.top;
-    final fakeQagSupport = QagSupport(
+    final qagSupportId1 = QagSupport(
       qagId: "id1",
       supportCount: 9,
       isSupported: true,
     );
-    final fakeUnknownQag = QagSupport(
+    final unknownQag = QagSupport(
       qagId: "idUnknown",
       supportCount: 8,
       isSupported: false,
@@ -181,10 +179,10 @@ void main() {
       "when qag support is in non loaded state - should emit nothing",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
-        qagFilter: fakeFilter,
+        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
-        bloc.add(UpdateQagListSupportEvent(qagSupport: fakeQagSupport));
+        bloc.add(UpdateQagListSupportEvent(qagSupport: qagSupportId1));
       },
       expect: () => [],
       wait: const Duration(milliseconds: 5),
@@ -194,11 +192,11 @@ void main() {
       "when qag support is in loaded state but could not find qag to update - should emit nothing more than first loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
-        qagFilter: fakeFilter,
+        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
         bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
-        bloc.add(UpdateQagListSupportEvent(qagSupport: fakeUnknownQag));
+        bloc.add(UpdateQagListSupportEvent(qagSupport: unknownQag));
       },
       expect: () => [
         QagListInitialState(),
@@ -217,7 +215,7 @@ void main() {
           ],
           currentPage: 1,
           maxPage: 2,
-          isLoadingMore: false,
+          footerType: QagListFooterType.loaded,
         ),
       ],
       wait: const Duration(milliseconds: 5),
@@ -227,11 +225,11 @@ void main() {
       "when qag support is in loaded state and find qag to update - should emit nothing updated loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
-        qagFilter: fakeFilter,
+        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
         bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
-        bloc.add(UpdateQagListSupportEvent(qagSupport: fakeQagSupport));
+        bloc.add(UpdateQagListSupportEvent(qagSupport: qagSupportId1));
       },
       expect: () => [
         QagListInitialState(),
@@ -250,7 +248,7 @@ void main() {
           ],
           currentPage: 1,
           maxPage: 2,
-          isLoadingMore: false,
+          footerType: QagListFooterType.loaded,
         ),
         QagListLoadedState(
           qags: [
@@ -267,7 +265,7 @@ void main() {
           ],
           currentPage: 1,
           maxPage: 2,
-          isLoadingMore: false,
+          footerType: QagListFooterType.loaded,
         ),
       ],
       wait: const Duration(milliseconds: 5),

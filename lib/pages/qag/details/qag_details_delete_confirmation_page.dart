@@ -14,10 +14,8 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
-import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,25 +62,11 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
                     label: GenericStrings.close,
                     style: AgoraButtonStyle.primaryButtonStyle,
                     onPressed: () {
-                      switch (arguments.reload) {
-                        case QagReload.qagsPage:
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            QagsPage.routeName,
-                            ModalRoute.withName(LoadingPage.routeName),
-                          );
-                          break;
-                        case QagReload.qagsPaginatedPage:
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            QagsPaginatedPage.routeName,
-                            arguments: QagsPaginatedArguments(initialTab: QagPaginatedTab.popular, thematiqueId: null),
-                            (route) =>
-                                route.settings.name == QagsPage.routeName ||
-                                route.settings.name == ConsultationsPage.routeName,
-                          );
-                          break;
-                      }
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        QagsPage.routeName,
+                        ModalRoute.withName(LoadingPage.routeName),
+                      );
                     },
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
+import 'package:agora/bloc/qag/qag_list_footer_type.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_list_extension.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
@@ -37,7 +38,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
           qags: response.qags,
           maxPage: response.maxPage,
           currentPage: state.currentPage,
-          isLoadingMore: false,
+          footerType: QagListFooterType.loaded,
         ),
       );
     } else {
@@ -57,7 +58,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
           currentPage: state.currentPage,
           qags: loadedState.qags,
           maxPage: loadedState.maxPage,
-          isLoadingMore: true,
+          footerType: QagListFooterType.loading,
         ),
       );
 
@@ -74,11 +75,18 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
             qags: newList,
             maxPage: response.maxPage,
             currentPage: state.currentPage + 1,
-            isLoadingMore: false,
+            footerType: QagListFooterType.loaded,
           ),
         );
       } else {
-        emit(QagListErrorState(currentPage: state.currentPage));
+        emit(
+          QagListLoadedState(
+            qags: loadedState.qags,
+            maxPage: loadedState.maxPage,
+            currentPage: state.currentPage,
+            footerType: QagListFooterType.error,
+          ),
+        );
       }
     }
   }
@@ -97,7 +105,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
             qags: newQagList,
             currentPage: state.currentPage,
             maxPage: loadedState.maxPage,
-            isLoadingMore: loadedState.isLoadingMore,
+            footerType: QagListFooterType.loaded,
           ),
         );
       }
