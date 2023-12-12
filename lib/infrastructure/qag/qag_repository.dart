@@ -5,8 +5,8 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
-import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/header_qag.dart';
+import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
@@ -25,13 +25,11 @@ abstract class QagRepository {
     required String thematiqueId,
   });
 
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  });
-
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
     required String? keywords,
   });
+
+  Future<AskQagStatusRepositoryResponse> fetchAskQagStatus();
 
   Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
@@ -114,40 +112,6 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  }) async {
-    try {
-      final response = await httpClient.get(
-        "/qags",
-        queryParameters: {"thematiqueId": thematiqueId},
-      );
-      final qags = response.data["qags"] as Map;
-      final popupQag = response.data["popup"] as Map?;
-      return GetQagsSucceedResponse(
-        qagPopular: _transformToQagList(qags["popular"] as List),
-        qagLatest: _transformToQagList(qags["latest"] as List),
-        qagSupporting: _transformToQagList(qags["supporting"] as List),
-        errorCase: response.data["askQagErrorText"] as String?,
-        headerQag: popupQag != null
-            ? HeaderQag(
-                id: "id",
-                title: popupQag["title"] as String,
-                description: popupQag["scription"] as String,
-              )
-            : null,
-      );
-    } catch (e) {
-      if (e is DioException) {
-        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
-          return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
-        }
-      }
-      return GetQagsFailedResponse();
-    }
-  }
-
-  @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
     required String? keywords,
   }) async {
@@ -163,6 +127,25 @@ class QagDioRepository extends QagRepository {
       );
     } catch (e) {
       return GetSearchQagsFailedResponse();
+    }
+  }
+
+  @override
+  Future<AskQagStatusRepositoryResponse> fetchAskQagStatus() async {
+    try {
+      final response = await httpClient.get(
+        "/qags/ask_status",
+      );
+      return AskQagStatusSucceedResponse(
+        askQagError: response.data["askQagError"] as String?,
+      );
+    } catch (e) {
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+          return AskQagStatusFailedResponse(errorType: QagsErrorType.timeout);
+        }
+      }
+      return AskQagStatusFailedResponse(errorType: QagsErrorType.generic);
     }
   }
 
@@ -576,6 +559,29 @@ class GetSearchQagsSucceedResponse extends GetSearchQagsRepositoryResponse {
 }
 
 class GetSearchQagsFailedResponse extends GetSearchQagsRepositoryResponse {}
+
+abstract class AskQagStatusRepositoryResponse extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class AskQagStatusSucceedResponse extends AskQagStatusRepositoryResponse {
+  final String? askQagError;
+
+  AskQagStatusSucceedResponse({required this.askQagError});
+
+  @override
+  List<Object?> get props => [askQagError];
+}
+
+class AskQagStatusFailedResponse extends AskQagStatusRepositoryResponse {
+  final QagsErrorType errorType;
+
+  AskQagStatusFailedResponse({this.errorType = QagsErrorType.generic});
+
+  @override
+  List<Object> get props => [errorType];
+}
 
 abstract class GetQagsListRepositoryResponse extends Equatable {
   @override

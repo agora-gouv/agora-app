@@ -1,7 +1,3 @@
-import 'package:agora/bloc/qag/popup_view_model.dart';
-import 'package:agora/bloc/qag/qag_bloc.dart';
-import 'package:agora/bloc/qag/qag_event.dart';
-import 'package:agora/bloc/qag/qag_view_model.dart';
 import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
@@ -13,11 +9,9 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/agora_search_bar.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
-import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/list/qag_list_section.dart';
 import 'package:agora/pages/qag/qags_search.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
@@ -27,26 +21,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 enum QagTab { search, popular, latest, supporting }
 
 class QagsSection extends StatefulWidget {
-  final bool isLoading;
   final QagTab defaultSelected;
-  final List<QagViewModel> popularViewModels;
-  final List<QagViewModel> latestViewModels;
-  final List<QagViewModel> supportingViewModels;
   final String? selectedThematiqueId;
-  final String? askQuestionErrorCase;
-  final PopupQagViewModel? popupViewModel;
   final Function(bool) onSearchBarOpen;
 
   const QagsSection({
     super.key,
-    required this.isLoading,
     required this.defaultSelected,
-    required this.popularViewModels,
-    required this.latestViewModels,
-    required this.supportingViewModels,
     required this.selectedThematiqueId,
-    required this.askQuestionErrorCase,
-    required this.popupViewModel,
     required this.onSearchBarOpen,
   });
 
@@ -90,32 +72,17 @@ class _QagsSectionState extends State<QagsSection> {
                     clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
                     widgetName: AnalyticsScreenNames.qagsPage,
                   );
-                  context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
                 });
               }
             },
           ),
         ),
-        widget.isLoading
-            ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                child: Column(
-                  children: [
-                    SizedBox(height: AgoraSpacings.x2),
-                    CircularProgressIndicator(),
-                    SizedBox(height: AgoraSpacings.x3 * 2),
-                  ],
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-                child: Column(
-                  children: [
-                    if (!isActiveSearchBar) _getPopupWidget(context) ?? SizedBox(),
-                    Column(children: [_buildQags(context)]),
-                  ],
-                ),
-              ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+          child: Column(
+            children: [_buildQags(context)],
+          ),
+        ),
       ],
     );
   }
@@ -275,48 +242,6 @@ class _QagsSectionState extends State<QagsSection> {
         ],
       ),
     );
-  }
-
-  Widget? _getPopupWidget(BuildContext context) {
-    if (widget.popupViewModel != null) {
-      return Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
-            child: InkWell(
-              onTap: () => {Navigator.pushNamed(context, ParticipationCharterPage.routeName)},
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(AgoraCorners.rounded),
-                  color: AgoraColors.blue525opacity06,
-                ),
-                padding: const EdgeInsets.all(AgoraSpacings.base),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.popupViewModel!.title,
-                      textAlign: TextAlign.start,
-                      style: AgoraTextStyles.medium14,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: AgoraSpacings.base),
-                      child: Text(
-                        widget.popupViewModel!.description,
-                        style: AgoraTextStyles.regular14,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: AgoraSpacings.base),
-        ],
-      );
-    }
-    return null;
   }
 
   void _loadQags(BuildContext context, String keywords) {
