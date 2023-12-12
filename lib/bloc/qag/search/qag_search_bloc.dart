@@ -13,7 +13,7 @@ class QagSearchBloc extends Bloc<QagSearchEvent, QagSearchState> {
     on<FetchQagsInitialEvent>(_handleInitialQagsSearch);
     on<FetchQagsLoadingEvent>(_handleLoadingQagsSearch);
     on<FetchQagsSearchEvent>(_handleFetchQagsSearch);
-    on<UpdateQagSupportEvent>(_handleUpdateQagSupport);
+    on<UpdateQagSearchSupportEvent>(_handleUpdateQagSupport);
   }
 
   Future<void> _handleInitialQagsSearch(
@@ -49,7 +49,7 @@ class QagSearchBloc extends Bloc<QagSearchEvent, QagSearchState> {
   }
 
   Future<void> _handleUpdateQagSupport(
-    UpdateQagSupportEvent event,
+    UpdateQagSearchSupportEvent event,
     Emitter<QagSearchState> emit,
   ) async {
     if (state is QagSearchLoadedState) {

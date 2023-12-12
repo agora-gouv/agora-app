@@ -22,17 +22,17 @@ class FetchQagsSearchEvent extends QagSearchEvent {
   List<Object?> get props => [keywords];
 }
 
-class UpdateQagSupportEvent extends QagSearchEvent {
+class UpdateQagSearchSupportEvent extends QagSearchEvent {
   final QagSupport qagSupport;
 
-  UpdateQagSupportEvent(this.qagSupport);
+  UpdateQagSearchSupportEvent(this.qagSupport);
 
-  factory UpdateQagSupportEvent.create({
+  factory UpdateQagSearchSupportEvent.create({
     required final String qagId,
     required final bool isSupported,
     required final int supportCount,
   }) {
-    return UpdateQagSupportEvent(QagSupport(qagId: qagId, isSupported: isSupported, supportCount: supportCount));
+    return UpdateQagSearchSupportEvent(QagSupport(qagId: qagId, isSupported: isSupported, supportCount: supportCount));
   }
 
   @override

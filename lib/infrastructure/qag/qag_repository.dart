@@ -2,19 +2,18 @@ import 'dart:io';
 
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
-import 'package:agora/common/extension/qag_paginated_filter_extension.dart';
+import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
-import 'package:agora/domain/qag/qag_paginated.dart';
-import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
+import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -34,11 +33,10 @@ abstract class QagRepository {
     required String? keywords,
   });
 
-  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
+  Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
     required String? thematiqueId,
-    required QagPaginatedFilter filter,
-    required String? keywords,
+    required QagListFilter filter,
   });
 
   Future<GetQagsResponseRepositoryResponse> fetchQagsResponse();
@@ -168,27 +166,26 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
-  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
+  Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
     required String? thematiqueId,
-    required QagPaginatedFilter filter,
-    required String? keywords,
+    required QagListFilter filter,
   }) async {
     try {
       final response = await httpClient.get(
-        "/qags/page/$pageNumber",
+        "/v2/qags",
         queryParameters: {
+          "pageNumber": pageNumber,
           "thematiqueId": thematiqueId,
           "filterType": filter.toFilterString(),
-          "keywords": keywords,
         },
       );
-      return GetQagsPaginatedSucceedResponse(
+      return GetQagListSucceedResponse(
+        qags: _transformToQagList(response.data["qags"] as List),
         maxPage: response.data["maxPageNumber"] as int,
-        paginatedQags: _transformToQagPaginatedList(response.data["qags"] as List),
       );
     } catch (e) {
-      return GetQagsPaginatedFailedResponse();
+      return GetQagListFailedResponse();
     }
   }
 
@@ -485,22 +482,6 @@ class QagDioRepository extends QagRepository {
     }).toList();
   }
 
-  List<QagPaginated> _transformToQagPaginatedList(List<dynamic> paginatedQags) {
-    return paginatedQags.map((qag) {
-      final support = qag["support"] as Map;
-      return QagPaginated(
-        id: qag["qagId"] as String,
-        thematique: (qag["thematique"] as Map).toThematique(),
-        title: qag["title"] as String,
-        username: qag["username"] as String,
-        date: (qag["date"] as String).parseToDateTime(),
-        supportCount: support["count"] as int,
-        isSupported: support["isSupported"] as bool,
-        isAuthor: qag["isAuthor"] as bool,
-      );
-    }).toList();
-  }
-
   List<QagResponsePaginated> _transformToQagResponsePaginatedList(List<dynamic> paginatedQagsResponse) {
     return paginatedQagsResponse.map((qagResponse) {
       return QagResponsePaginated(
@@ -586,22 +567,22 @@ class GetSearchQagsSucceedResponse extends GetSearchQagsRepositoryResponse {
 
 class GetSearchQagsFailedResponse extends GetSearchQagsRepositoryResponse {}
 
-abstract class GetQagsPaginatedRepositoryResponse extends Equatable {
+abstract class GetQagsListRepositoryResponse extends Equatable {
   @override
   List<Object> get props => [];
 }
 
-class GetQagsPaginatedSucceedResponse extends GetQagsPaginatedRepositoryResponse {
+class GetQagListSucceedResponse extends GetQagsListRepositoryResponse {
+  final List<Qag> qags;
   final int maxPage;
-  final List<QagPaginated> paginatedQags;
 
-  GetQagsPaginatedSucceedResponse({required this.maxPage, required this.paginatedQags});
+  GetQagListSucceedResponse({required this.qags, required this.maxPage});
 
   @override
-  List<Object> get props => [maxPage, paginatedQags];
+  List<Object> get props => [qags, maxPage];
 }
 
-class GetQagsPaginatedFailedResponse extends GetQagsPaginatedRepositoryResponse {}
+class GetQagListFailedResponse extends GetQagsListRepositoryResponse {}
 
 abstract class GetQagsResponseRepositoryResponse extends Equatable {
   @override

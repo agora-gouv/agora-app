@@ -63,7 +63,7 @@ void main() {
       build: () => QagSearchBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
-      act: (bloc) => bloc.add(UpdateQagSupportEvent.create(qagId: "id0", isSupported: false, supportCount: 7)),
+      act: (bloc) => bloc.add(UpdateQagSearchSupportEvent.create(qagId: "id0", isSupported: false, supportCount: 7)),
       expect: () => [],
       wait: const Duration(milliseconds: 5),
     );
@@ -75,7 +75,7 @@ void main() {
       ),
       act: (bloc) => bloc
         ..add(FetchQagsSearchEvent(keywords: 'test'))
-        ..add(UpdateQagSupportEvent.create(qagId: "idUnknown", isSupported: false, supportCount: 66)),
+        ..add(UpdateQagSearchSupportEvent.create(qagId: "idUnknown", isSupported: false, supportCount: 66)),
       expect: () => [
         QagSearchLoadedState(
           qags: [
@@ -102,7 +102,7 @@ void main() {
       ),
       act: (bloc) => bloc
         ..add(FetchQagsSearchEvent(keywords: 'test'))
-        ..add(UpdateQagSupportEvent.create(qagId: "id0", isSupported: false, supportCount: 7)),
+        ..add(UpdateQagSearchSupportEvent.create(qagId: "id0", isSupported: false, supportCount: 7)),
       expect: () => [
         QagSearchLoadedState(
           qags: [

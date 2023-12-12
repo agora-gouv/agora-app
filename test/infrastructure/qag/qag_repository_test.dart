@@ -4,13 +4,12 @@ import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
-import 'package:agora/domain/qag/qag_paginated.dart';
-import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
+import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:dio/dio.dart';
@@ -363,15 +362,15 @@ void main() {
     });
   });
 
-  group("Fetch qags paginated", () {
-    test("when success should return qags paginated", () async {
+  group("Fetch qags list", () {
+    test("when success should return qags list", () async {
       // Given
       dioAdapter.onGet(
-        "/qags/page/1",
+        "/v2/qags",
         queryParameters: {
+          "pageNumber": 1,
           "thematiqueId": thematiqueId,
-          "filterType": "popular",
-          "keywords": "mot clé",
+          "filterType": "top",
         },
         (server) => server.reply(
           HttpStatus.ok,
@@ -403,20 +402,19 @@ void main() {
       final repository = QagDioRepository(
         httpClient: httpClient,
       );
-      final response = await repository.fetchQagsPaginated(
+      final response = await repository.fetchQagList(
         pageNumber: 1,
         thematiqueId: thematiqueId,
-        filter: QagPaginatedFilter.popular,
-        keywords: "mot clé",
+        filter: QagListFilter.top,
       );
 
       // Then
       expect(
         response,
-        GetQagsPaginatedSucceedResponse(
+        GetQagListSucceedResponse(
           maxPage: 5,
-          paginatedQags: [
-            QagPaginated(
+          qags: [
+            Qag(
               id: "id1",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
@@ -434,11 +432,11 @@ void main() {
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
-        "/qags/page/1",
+        "/v2/qags",
         queryParameters: {
+          "pageNumber": 1,
           "thematiqueId": thematiqueId,
-          "filterType": "popular",
-          "keywords": null,
+          "filterType": "top",
         },
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
@@ -451,15 +449,14 @@ void main() {
       final repository = QagDioRepository(
         httpClient: httpClient,
       );
-      final response = await repository.fetchQagsPaginated(
+      final response = await repository.fetchQagList(
         pageNumber: 1,
         thematiqueId: thematiqueId,
-        filter: QagPaginatedFilter.popular,
-        keywords: null,
+        filter: QagListFilter.top,
       );
 
       // Then
-      expect(response, GetQagsPaginatedFailedResponse());
+      expect(response, GetQagListFailedResponse());
     });
   });
 
