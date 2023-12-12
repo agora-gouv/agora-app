@@ -273,7 +273,7 @@ void main() {
           header: HeaderQag(
             id: "headerId",
             title: "headerTitle",
-            description: "headerMessage",
+            message: "headerMessage",
           ),
         ),
       );

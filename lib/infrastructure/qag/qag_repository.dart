@@ -173,7 +173,7 @@ class QagDioRepository extends QagRepository {
             ? HeaderQag(
                 id: headerQag["headerId"] as String,
                 title: headerQag['title'] as String,
-                description: headerQag['message'] as String,
+                message: headerQag['message'] as String,
               )
             : null,
       );

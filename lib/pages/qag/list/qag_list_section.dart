@@ -10,6 +10,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_qag_header.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -42,42 +43,19 @@ class QagListSection extends StatelessWidget {
           } else if (viewModel is _QagListWithResultViewModel) {
             section = _buildQagSearchListView(context, viewModel);
           } else if (viewModel is _QagListNoResultViewModel) {
-            section = Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: AgoraSpacings.base),
-                  Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
-                  SizedBox(height: AgoraSpacings.x1_5),
-                  AgoraRoundedButton(
-                    label: QagStrings.askQuestion,
-                    onPressed: () {
-                      TrackerHelper.trackClick(
-                        clickName: AnalyticsEventNames.askQuestionInEmptyList,
-                        widgetName: AnalyticsScreenNames.qagsPage,
-                      );
-                      Navigator.pushNamed(context, QagAskQuestionPage.routeName);
-                    },
-                  ),
-                  SizedBox(height: AgoraSpacings.x3 * 2),
-                ],
-              ),
-            );
+            section = _buildNoResultsWidget(context, viewModel);
           } else {
-            section = Center(
-              child: Column(
-                children: [
-                  AgoraErrorView(),
-                  SizedBox(height: AgoraSpacings.base),
-                  AgoraRoundedButton(
-                    label: QagStrings.retry,
-                    style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                    onPressed: () => context.read<QagListBloc>().add(FetchQagsListEvent(thematiqueId: thematiqueId)),
-                  ),
-                ],
-              ),
+            section = Column(
+              children: [
+                SizedBox(height: AgoraSpacings.base),
+                AgoraErrorView(),
+                SizedBox(height: AgoraSpacings.base),
+                AgoraRoundedButton(
+                  label: QagStrings.retry,
+                  style: AgoraRoundedButtonStyle.primaryButtonStyle,
+                  onPressed: () => context.read<QagListBloc>().add(FetchQagsListEvent(thematiqueId: thematiqueId)),
+                ),
+              ],
             );
           }
           return ConstrainedBox(
@@ -91,59 +69,110 @@ class QagListSection extends StatelessWidget {
     );
   }
 
-  ListView _buildQagSearchListView(BuildContext context, _QagListWithResultViewModel viewModel) {
-    return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: viewModel.hasFooter ? viewModel.qags.length + 1 : viewModel.qags.length,
-      itemBuilder: (context, index) {
-        if (index < viewModel.qags.length) {
-          final item = viewModel.qags[index];
-          return BlocProvider.value(
-            value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-            child: AgoraQagSupportableCard(
-              qagViewModel: item,
-              widgetName: AnalyticsScreenNames.qagsPage,
-              onQagSupportChange: (qagSupport) {
-                context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
-              },
-            ),
-          );
-        } else if (viewModel.hasFooter) {
-          switch (viewModel.footerType) {
-            case QagListFooterType.loading:
-              return Center(child: CircularProgressIndicator());
-            case QagListFooterType.loaded:
-              return Center(
-                child: AgoraRoundedButton(
-                  label: QagStrings.displayMore,
-                  style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                  onPressed: () {
-                    context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
-                  },
-                ),
-              );
-            case QagListFooterType.error:
-              return Column(
-                children: [
-                  AgoraErrorView(),
-                  SizedBox(height: AgoraSpacings.base),
-                  AgoraRoundedButton(
-                    label: QagStrings.retry,
+  Widget _buildQagSearchListView(BuildContext context, _QagListWithResultViewModel viewModel) {
+    return Column(children: [
+      ..._buildHeaderQagWidget(viewModel.header),
+      ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: viewModel.hasFooter ? viewModel.qags.length + 1 : viewModel.qags.length,
+        itemBuilder: (context, index) {
+          if (index < viewModel.qags.length) {
+            final item = viewModel.qags[index];
+            return BlocProvider.value(
+              value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+              child: AgoraQagSupportableCard(
+                qagViewModel: item,
+                widgetName: AnalyticsScreenNames.qagsPage,
+                onQagSupportChange: (qagSupport) {
+                  context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
+                },
+              ),
+            );
+          } else if (viewModel.hasFooter) {
+            switch (viewModel.footerType) {
+              case QagListFooterType.loading:
+                return Center(child: CircularProgressIndicator());
+              case QagListFooterType.loaded:
+                return Center(
+                  child: AgoraRoundedButton(
+                    label: QagStrings.displayMore,
                     style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                    onPressed: () => context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId)),
+                    onPressed: () {
+                      context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
+                    },
                   ),
-                ],
-              );
+                );
+              case QagListFooterType.error:
+                return Column(
+                  children: [
+                    AgoraErrorView(),
+                    SizedBox(height: AgoraSpacings.base),
+                    AgoraRoundedButton(
+                      label: QagStrings.retry,
+                      style: AgoraRoundedButtonStyle.primaryButtonStyle,
+                      onPressed: () => context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId)),
+                    ),
+                  ],
+                );
+            }
           }
-        }
-        return null;
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return SizedBox(height: AgoraSpacings.base);
-      },
+          return null;
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(height: AgoraSpacings.base);
+        },
+      ),
+    ]);
+  }
+
+  Widget _buildNoResultsWidget(BuildContext context, _QagListNoResultViewModel viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ..._buildHeaderQagWidget(viewModel.header),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
+              SizedBox(height: AgoraSpacings.x1_5),
+              AgoraRoundedButton(
+                label: QagStrings.askQuestion,
+                onPressed: () {
+                  TrackerHelper.trackClick(
+                    clickName: AnalyticsEventNames.askQuestionInEmptyList,
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
+                  Navigator.pushNamed(context, QagAskQuestionPage.routeName);
+                },
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: AgoraSpacings.x3 * 2),
+      ],
     );
+  }
+
+  List<Widget> _buildHeaderQagWidget(_QagListHeaderViewModel? viewModel) {
+    if (viewModel != null) {
+      return [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+          child: AgoraQagHeader(
+            id: viewModel.id,
+            title: viewModel.title,
+            message: viewModel.message,
+            onCloseHeader: (headerId) {
+              // TODO
+            },
+          ),
+        ),
+      ];
+    }
+    return [SizedBox(height: AgoraSpacings.base)];
   }
 }
 
@@ -152,14 +181,23 @@ abstract class _ViewModel extends Equatable {
     if (state is QagListInitialState) {
       return _QagListLoadingViewModel();
     } else if (state is QagListLoadedState) {
+      final header = state.header != null
+          ? _QagListHeaderViewModel(
+              id: state.header!.id,
+              title: state.header!.title,
+              message: state.header!.message,
+            )
+          : null;
+
       if (state.qags.isNotEmpty) {
         return _QagListWithResultViewModel(
           qags: QagPresenter.presentQag(state.qags),
+          header: header,
           hasFooter: state.currentPage < state.maxPage,
           footerType: state.footerType,
         );
       } else {
-        return _QagListNoResultViewModel();
+        return _QagListNoResultViewModel(header: header);
       }
     } else {
       return _QagListErrorViewModel();
@@ -174,11 +212,13 @@ class _QagListLoadingViewModel extends _ViewModel {
 
 class _QagListWithResultViewModel extends _ViewModel {
   final List<QagViewModel> qags;
+  final _QagListHeaderViewModel? header;
   final bool hasFooter;
   final QagListFooterType footerType;
 
   _QagListWithResultViewModel({
     required this.qags,
+    required this.header,
     required this.hasFooter,
     required this.footerType,
   });
@@ -188,11 +228,30 @@ class _QagListWithResultViewModel extends _ViewModel {
 }
 
 class _QagListNoResultViewModel extends _ViewModel {
+  final _QagListHeaderViewModel? header;
+
+  _QagListNoResultViewModel({required this.header});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [header];
 }
 
 class _QagListErrorViewModel extends _ViewModel {
   @override
   List<Object?> get props => [];
+}
+
+class _QagListHeaderViewModel extends Equatable {
+  final String id;
+  final String title;
+  final String message;
+
+  _QagListHeaderViewModel({
+    required this.id,
+    required this.title,
+    required this.message,
+  });
+
+  @override
+  List<Object?> get props => [id, title, message];
 }

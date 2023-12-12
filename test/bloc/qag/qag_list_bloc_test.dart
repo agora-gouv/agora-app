@@ -34,7 +34,7 @@ void main() {
     header: HeaderQag(
       id: "headerId",
       title: "headerTitle",
-      description: "headerMessage",
+      message: "headerMessage",
     ),
     currentPage: 1,
     maxPage: 2,

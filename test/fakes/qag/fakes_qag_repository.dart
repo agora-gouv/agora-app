@@ -51,7 +51,7 @@ class FakeQagSuccessRepository extends QagRepository {
           header: HeaderQag(
             id: "headerId",
             title: "headerTitle",
-            description: "headerMessage",
+            message: "headerMessage",
           ),
         );
       case 2:
@@ -82,7 +82,7 @@ class FakeQagSuccessRepository extends QagRepository {
           header: HeaderQag(
             id: "headerId2",
             title: "headerTitle2",
-            description: "headerMessage2",
+            message: "headerMessage2",
           ),
         );
       default:
