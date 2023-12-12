@@ -231,9 +231,9 @@ void main() {
               },
             ],
             "header": {
-              "id": "headerId",
+              "headerId": "headerId",
               "title": "headerTitle",
-              "description": "headerDescription",
+              "message": "headerMessage",
             },
           },
         ),
@@ -273,7 +273,7 @@ void main() {
           header: HeaderQag(
             id: "headerId",
             title: "headerTitle",
-            description: "headerDescription",
+            description: "headerMessage",
           ),
         ),
       );

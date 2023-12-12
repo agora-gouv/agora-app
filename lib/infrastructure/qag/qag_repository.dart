@@ -171,9 +171,9 @@ class QagDioRepository extends QagRepository {
         maxPage: response.data["maxPageNumber"] as int,
         header: headerQag != null
             ? HeaderQag(
-                id: headerQag["id"] as String,
+                id: headerQag["headerId"] as String,
                 title: headerQag['title'] as String,
-                description: headerQag['description'] as String,
+                description: headerQag['message'] as String,
               )
             : null,
       );
