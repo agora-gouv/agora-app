@@ -222,7 +222,7 @@ void main() {
     );
 
     blocTest<QagListBloc, QagListState>(
-      "when qag support is in loaded state and find qag to update - should emit nothing updated loaded state",
+      "when qag support is in loaded state and find qag to update - should emit updated loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         qagFilter: QagListFilter.top,

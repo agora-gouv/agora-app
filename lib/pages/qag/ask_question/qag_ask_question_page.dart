@@ -188,7 +188,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       shouldCheckQuestionLength = true;
                     }
                     timerHelper.startTimer(() {
-                      _searchSimilarQags(context);
                       _checkError(shouldCheckQuestionLength: shouldCheckQuestionLength);
                     });
                   });
@@ -382,13 +381,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           Center(
             child: AgoraRoundedButton(
               label: QagStrings.goToAllQuestion,
-              onPressed: () {
-                // Navigator.pushReplacementNamed(
-                //   context,
-                //   QagsPaginatedPage.routeName,
-                //   arguments: QagsPaginatedArguments(thematiqueId: null, initialTab: QagPaginatedTab.popular),
-                // );
-              },
+              onPressed: () {},
             ),
           ),
         ],
@@ -402,12 +395,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         thematique != null &&
         firstname.isNotBlank() &&
         isCheck;
-  }
-
-  void _searchSimilarQags(BuildContext context) {
-    // if (question.isNotBlank()) {
-    //   context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: question));
-    // }
   }
 
   void _checkError({required bool shouldCheckQuestionLength}) {
