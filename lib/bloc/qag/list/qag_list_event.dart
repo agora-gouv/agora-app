@@ -33,3 +33,14 @@ class UpdateQagsListEvent extends QagListEvent {
   @override
   List<Object?> get props => [thematiqueId];
 }
+
+class CloseHeaderQagListEvent extends QagListEvent {
+  final String headerId;
+
+  CloseHeaderQagListEvent({
+    required this.headerId,
+  });
+
+  @override
+  List<Object?> get props => [headerId];
+}

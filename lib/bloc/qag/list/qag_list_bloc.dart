@@ -1,23 +1,28 @@
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
 import 'package:agora/bloc/qag/qag_list_footer_type.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_list_extension.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
+import 'package:agora/infrastructure/header_qag/header_qag_repository.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagListBloc extends Bloc<QagListEvent, QagListState> {
   final QagRepository qagRepository;
+  final HeaderQagStorageClient headerQagStorageClient;
   final QagListFilter qagFilter;
 
   QagListBloc({
     required this.qagRepository,
+    required this.headerQagStorageClient,
     required this.qagFilter,
   }) : super(QagListInitialState()) {
     on<FetchQagsListEvent>(_handleFetchQags);
     on<UpdateQagsListEvent>(_handleUpdateQags);
     on<UpdateQagListSupportEvent>(_handleUpdateQagSupport);
+    on<CloseHeaderQagListEvent>(_handleCloseHeaderQag);
   }
 
   Future<void> _handleFetchQags(
@@ -36,7 +41,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
       emit(
         QagListLoadedState(
           qags: response.qags,
-          header: response.header,
+          header: await _getHeaderOrNullIfClosed(response.header),
           currentPage: state.currentPage,
           maxPage: response.maxPage,
           footerType: QagListFooterType.loaded,
@@ -90,6 +95,24 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
         emit(QagListLoadedState.copyWith(state: loadedState, qags: newQagList));
       }
     }
+  }
+
+  Future<void> _handleCloseHeaderQag(
+    CloseHeaderQagListEvent event,
+    Emitter<QagListState> emit,
+  ) async {
+    if (state is QagListLoadedState) {
+      final loadedState = state as QagListLoadedState;
+      headerQagStorageClient.closeHeader(headerId: event.headerId);
+      emit(QagListLoadedState.copyWith(state: loadedState, header: null));
+    }
+  }
+
+  Future<HeaderQag?> _getHeaderOrNullIfClosed(HeaderQag? header) async {
+    if (header != null && !(await headerQagStorageClient.isHeaderClosed(headerId: header.id))) {
+      return header;
+    }
+    return null;
   }
 
   List<Qag> addQagsToList(List<Qag> oldList, List<Qag> newList) {

@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:agora/domain/qag/details/qag_details.dart';
-import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/header_qag.dart';
+import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
@@ -185,7 +185,7 @@ void main() {
           "accept": "application/json",
           "Authorization": "Bearer jwtToken",
         },
-            (server) => server.reply(
+        (server) => server.reply(
           HttpStatus.badRequest,
           {},
         ),

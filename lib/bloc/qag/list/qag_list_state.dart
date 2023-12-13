@@ -39,11 +39,11 @@ class QagListLoadedState extends QagListState {
     QagListFooterType? footerType,
   }) {
     return QagListLoadedState(
-      currentPage: currentPage ?? state.currentPage,
-      qags: qags ?? state.qags,
-      header: header ?? state.header,
-      maxPage: maxPage ?? state.maxPage,
-      footerType: footerType ?? state.footerType,
+      currentPage: currentPage != state.currentPage && currentPage != null ? currentPage : state.currentPage,
+      qags: qags != state.qags && qags != null ? qags : state.qags,
+      header: header != state.header ? header : state.header,
+      maxPage: maxPage != state.maxPage && maxPage != null ? maxPage : state.maxPage,
+      footerType: footerType != state.footerType && footerType != null ? footerType : state.footerType,
     );
   }
 
