@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/client/agora_http_client_adapter.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
 import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/manager/helper_manager.dart';
@@ -23,6 +26,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class RepositoryManager {
   static const String _baseUrl = "baseUrl";
+  static const String _rootCertificate = "rootCertificate";
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
   static const String _noAuthenticationDio = "noAuthenticationDio";
@@ -30,8 +34,9 @@ class RepositoryManager {
 
   static final userAgentBuilder = UserAgentBuilderImpl(appVersionHelper: HelperManager.getAppVersionHelper());
 
-  static void initRepositoryManager({required String baseUrl}) {
+  static void initRepositoryManager({required String baseUrl, required Uint8List rootCertificate}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
+    GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
   }
 
   static Dio _getDio() {
@@ -51,6 +56,10 @@ class RepositoryManager {
         appVersionHelper: HelperManager.getAppVersionHelper(),
         platformHelper: HelperManager.getPlatformHelper(),
       ),
+    );
+    dio.httpClientAdapter = AgoraHttpClientAdapter(
+      baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
+      rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),
     );
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
     return dio;
