@@ -21,7 +21,7 @@ class AgoraHttpClientAdapter extends Http2Adapter {
         config.validateCertificate = (certificate, host, _) {
           if (host == baseUrlHost && certificate != null) {
             final serverX509 = X509Utils.x509CertificateFromPem(X509Utils.crlDerToPem(certificate.der));
-            return rootCertificateX509.signature == serverX509.signature;
+            return X509Utils.checkChain([serverX509, rootCertificateX509]).isValid();
           }
           return true;
         };
