@@ -1,4 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/common/client/agora_http_client_adapter.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
 import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/manager/helper_manager.dart';
@@ -52,6 +53,7 @@ class RepositoryManager {
         platformHelper: HelperManager.getPlatformHelper(),
       ),
     );
+    dio.httpClientAdapter = AgoraHttpClientAdapter(baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl));
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
     return dio;
   }
