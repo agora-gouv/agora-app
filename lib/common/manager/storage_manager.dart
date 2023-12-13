@@ -1,4 +1,5 @@
 import 'package:agora/common/storage/secure_storage_client.dart';
+import 'package:agora/infrastructure/header_qag/header_qag_repository.dart';
 import 'package:agora/infrastructure/login/login_storage_client.dart';
 import 'package:agora/infrastructure/notification/permission/notification_first_request_permission_storage_client.dart';
 import 'package:agora/infrastructure/onboarding/onboarding_storage_client.dart';
@@ -72,6 +73,15 @@ class StorageManager {
       return GetIt.instance.get<ConsultationQuestionHiveStorageClient>();
     }
     final helper = ConsultationQuestionHiveStorageClient();
+    GetIt.instance.registerSingleton(helper);
+    return helper;
+  }
+
+  static HeaderQagStorageClient getHeaderQagStorageClient() {
+    if (GetIt.instance.isRegistered<HeaderQagSharedPreferencesClient>()) {
+      return GetIt.instance.get<HeaderQagSharedPreferencesClient>();
+    }
+    final helper = HeaderQagSharedPreferencesClient();
     GetIt.instance.registerSingleton(helper);
     return helper;
   }

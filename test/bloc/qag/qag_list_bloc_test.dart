@@ -2,6 +2,7 @@ import 'package:agora/bloc/qag/list/qag_list_bloc.dart';
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
 import 'package:agora/bloc/qag/qag_list_footer_type.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_support.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
@@ -12,16 +13,41 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../../fakes/qag/fakes_qag_repository.dart';
+import '../../fakes/qag/header_qag_storage_client_stub.dart';
 
 void main() {
   Intl.defaultLocale = "fr_FR";
   initializeDateFormatting('fr_FR', null);
+
+  final defaultLoadedState = QagListLoadedState(
+    qags: [
+      Qag(
+        id: "id1",
+        thematique: Thematique(picto: "🚊", label: "Transports"),
+        title: "title1",
+        username: "username1",
+        date: DateTime(2024, 2, 23),
+        supportCount: 8,
+        isSupported: false,
+        isAuthor: false,
+      ),
+    ],
+    header: HeaderQag(
+      id: "headerId",
+      title: "headerTitle",
+      message: "headerMessage",
+    ),
+    currentPage: 1,
+    maxPage: 2,
+    footerType: QagListFooterType.loaded,
+  );
 
   group("FetchQagsListEvent", () {
     blocTest<QagListBloc, QagListState>(
       "when fetch qags list with success - should emit loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
@@ -29,23 +55,24 @@ void main() {
       ),
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
+        defaultLoadedState,
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagListBloc, QagListState>(
+      "when fetch qags list with success and closed header closed - should emit loaded state without header",
+      build: () => QagListBloc(
+        qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientAllClosedStub(),
+        qagFilter: QagListFilter.top,
+      ),
+      act: (bloc) => bloc.add(
+        FetchQagsListEvent(thematiqueId: null),
+      ),
+      expect: () => [
+        QagListInitialState(),
+        QagListLoadedState.copyWith(state: defaultLoadedState, header: null),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -54,6 +81,7 @@ void main() {
       "when fetch qags list with failure - should emit failure state",
       build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
@@ -72,49 +100,20 @@ void main() {
       "when update qags list with success - should emit loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
       ),
-      act: (bloc) {
+      act: (bloc) async {
         bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        await Future.delayed(Duration(milliseconds: 5));
         bloc.add(UpdateQagsListEvent(thematiqueId: 'Transports'));
       },
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loading,
-        ),
-        QagListLoadedState(
+        defaultLoadedState,
+        QagListLoadedState.copyWith(state: defaultLoadedState, footerType: QagListFooterType.loading),
+        QagListLoadedState.copyWith(
+          state: defaultLoadedState,
           qags: [
             Qag(
               id: "id1",
@@ -149,6 +148,7 @@ void main() {
       "when update qags list with failure - should emit failure state",
       build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
@@ -179,6 +179,7 @@ void main() {
       "when qag support is in non loaded state - should emit nothing",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
@@ -192,6 +193,7 @@ void main() {
       "when qag support is in loaded state but could not find qag to update - should emit nothing more than first loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
@@ -200,23 +202,7 @@ void main() {
       },
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
+        defaultLoadedState,
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -225,32 +211,19 @@ void main() {
       "when qag support is in loaded state and find qag to update - should emit updated loaded state",
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
       ),
-      act: (bloc) {
+      act: (bloc) async {
         bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        await Future.delayed(Duration(milliseconds: 5));
         bloc.add(UpdateQagListSupportEvent(qagSupport: qagSupportId1));
       },
       expect: () => [
         QagListInitialState(),
-        QagListLoadedState(
-          qags: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2024, 2, 23),
-              supportCount: 8,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
-        ),
-        QagListLoadedState(
+        defaultLoadedState,
+        QagListLoadedState.copyWith(
+          state: defaultLoadedState,
           qags: [
             Qag(
               id: "id1",
@@ -263,9 +236,45 @@ void main() {
               isAuthor: false,
             ),
           ],
-          currentPage: 1,
-          maxPage: 2,
-          footerType: QagListFooterType.loaded,
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+  });
+
+  group("CloseHeaderQagListEvent", () {
+    blocTest<QagListBloc, QagListState>(
+      "when is in non loaded state - should emit nothing",
+      build: () => QagListBloc(
+        qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
+        qagFilter: QagListFilter.top,
+      ),
+      act: (bloc) {
+        bloc.add(CloseHeaderQagListEvent(headerId: "headerId"));
+      },
+      expect: () => [],
+      wait: const Duration(milliseconds: 5),
+    );
+
+    blocTest<QagListBloc, QagListState>(
+      "when is in loaded state - should emit loaded state without header",
+      build: () => QagListBloc(
+        qagRepository: FakeQagSuccessRepository(),
+        headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
+        qagFilter: QagListFilter.top,
+      ),
+      act: (bloc) async {
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        await Future.delayed(Duration(milliseconds: 5));
+        bloc.add(CloseHeaderQagListEvent(headerId: "headerId"));
+      },
+      expect: () => [
+        QagListInitialState(),
+        defaultLoadedState,
+        QagListLoadedState.copyWith(
+          state: defaultLoadedState,
+          header: null,
         ),
       ],
       wait: const Duration(milliseconds: 5),

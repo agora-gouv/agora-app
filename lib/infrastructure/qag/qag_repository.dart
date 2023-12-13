@@ -5,8 +5,8 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
-import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
@@ -25,13 +25,11 @@ abstract class QagRepository {
     required String thematiqueId,
   });
 
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  });
-
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
     required String? keywords,
   });
+
+  Future<AskQagStatusRepositoryResponse> fetchAskQagStatus();
 
   Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
@@ -114,39 +112,6 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  }) async {
-    try {
-      final response = await httpClient.get(
-        "/qags",
-        queryParameters: {"thematiqueId": thematiqueId},
-      );
-      final qags = response.data["qags"] as Map;
-      final popupQag = response.data["popup"] as Map?;
-      return GetQagsSucceedResponse(
-        qagPopular: _transformToQagList(qags["popular"] as List),
-        qagLatest: _transformToQagList(qags["latest"] as List),
-        qagSupporting: _transformToQagList(qags["supporting"] as List),
-        errorCase: response.data["askQagErrorText"] as String?,
-        popupQag: popupQag != null
-            ? PopupQag(
-                title: popupQag["title"] as String,
-                description: popupQag["description"] as String,
-              )
-            : null,
-      );
-    } catch (e) {
-      if (e is DioException) {
-        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
-          return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
-        }
-      }
-      return GetQagsFailedResponse();
-    }
-  }
-
-  @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
     required String? keywords,
   }) async {
@@ -166,6 +131,25 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
+  Future<AskQagStatusRepositoryResponse> fetchAskQagStatus() async {
+    try {
+      final response = await httpClient.get(
+        "/qags/ask_status",
+      );
+      return AskQagStatusSucceedResponse(
+        askQagError: response.data["askQagError"] as String?,
+      );
+    } catch (e) {
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+          return AskQagStatusFailedResponse(errorType: QagsErrorType.timeout);
+        }
+      }
+      return AskQagStatusFailedResponse(errorType: QagsErrorType.generic);
+    }
+  }
+
+  @override
   Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
     required String? thematiqueId,
@@ -180,9 +164,18 @@ class QagDioRepository extends QagRepository {
           "filterType": filter.toFilterString(),
         },
       );
+      final headerQag = response.data["header"];
+
       return GetQagListSucceedResponse(
         qags: _transformToQagList(response.data["qags"] as List),
         maxPage: response.data["maxPageNumber"] as int,
+        header: headerQag != null
+            ? HeaderQag(
+                id: headerQag["headerId"] as String,
+                title: headerQag['title'] as String,
+                message: headerQag['message'] as String,
+              )
+            : null,
       );
     } catch (e) {
       return GetQagListFailedResponse();
@@ -524,14 +517,14 @@ class GetQagsSucceedResponse extends GetQagsRepositoryResponse {
   final List<Qag> qagLatest;
   final List<Qag> qagSupporting;
   final String? errorCase;
-  final PopupQag? popupQag;
+  final HeaderQag? headerQag;
 
   GetQagsSucceedResponse({
     required this.qagPopular,
     required this.qagLatest,
     required this.qagSupporting,
     required this.errorCase,
-    required this.popupQag,
+    required this.headerQag,
   });
 
   @override
@@ -567,19 +560,43 @@ class GetSearchQagsSucceedResponse extends GetSearchQagsRepositoryResponse {
 
 class GetSearchQagsFailedResponse extends GetSearchQagsRepositoryResponse {}
 
+abstract class AskQagStatusRepositoryResponse extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class AskQagStatusSucceedResponse extends AskQagStatusRepositoryResponse {
+  final String? askQagError;
+
+  AskQagStatusSucceedResponse({required this.askQagError});
+
+  @override
+  List<Object?> get props => [askQagError];
+}
+
+class AskQagStatusFailedResponse extends AskQagStatusRepositoryResponse {
+  final QagsErrorType errorType;
+
+  AskQagStatusFailedResponse({this.errorType = QagsErrorType.generic});
+
+  @override
+  List<Object> get props => [errorType];
+}
+
 abstract class GetQagsListRepositoryResponse extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class GetQagListSucceedResponse extends GetQagsListRepositoryResponse {
   final List<Qag> qags;
   final int maxPage;
+  final HeaderQag? header;
 
-  GetQagListSucceedResponse({required this.qags, required this.maxPage});
+  GetQagListSucceedResponse({required this.qags, required this.maxPage, required this.header});
 
   @override
-  List<Object> get props => [qags, maxPage];
+  List<Object?> get props => [qags, maxPage, header];
 }
 
 class GetQagListFailedResponse extends GetQagsListRepositoryResponse {}
