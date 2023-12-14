@@ -1,1 +1,1 @@
-enum QagListFilter { top, latest, supporting }
+enum QagListFilter { trending, top, latest, supporting }
