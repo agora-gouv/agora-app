@@ -34,6 +34,7 @@ class AnalyticsEventNames {
   static const String askQuestionInEmptyList = "Poser une QaG dans la liste vide";
   static const String sendAskQuestion = "Envoyer une QaG";
   static const String thematique = "Thematique";
+  static const String qagTrending = "QaG tendances";
   static const String qagPopular = "QaG populaires";
   static const String qagLatest = "QaG récentes";
   static const String qagSupporting = "QaG suivies";

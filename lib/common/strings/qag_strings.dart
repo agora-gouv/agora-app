@@ -6,11 +6,12 @@ class QagStrings {
   static const String mostPopularQuestion = "La question la plus populaire";
   static const String incomingResponse = "Réponse à venir";
   static const String qagResponseInfoBubble =
-      "Chaque semaine, le Gouvernement répond directement sur l'appli à la question citoyenne la plus populaire, c'est-à-dire celle qui a obtenu le plus de soutiens le mardi à 14h.";
+      "Chaque semaine, le Gouvernement répond directement sur l’appli à la question citoyenne la plus populaire, c’est-à-dire celle qui a obtenu le plus de soutiens le mardi à 14h et est en tête de l’onglet “Le top”.";
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
   static const String search = "🔍";
-  static const String popular = "Populaires";
+  static const String trending = "Tendances";
+  static const String popular = "Le top";
   static const String latest = "Récentes";
   static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";
@@ -25,7 +26,7 @@ class QagStrings {
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
   static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine. \n";
   static const String askQuestionDescription3 =
-      "<b>Tous les mardis à 14h :</b> \n<ul><li> La question la plus populaire est sélectionnée automatiquement pour obtenir une réponse du Gouvernement.</li> <li>Les autres questions sont archivées et les compteurs sont remis à zéro.</li></ul>";
+      "<b>Tous les mardis à 14h :</b> \n<ul><li> La question la plus populaire est sélectionnée automatiquement pour obtenir une réponse du gouvernement.</li> <li>Toutes les autres questions sont archivées. Les compteurs repartent !</li></ul>";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";

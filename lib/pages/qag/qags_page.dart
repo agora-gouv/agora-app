@@ -143,7 +143,7 @@ class _QagsPageState extends State<QagsPage> {
           errorCase: state.askQagError,
         ),
         QagsSection(
-          defaultSelected: QagTab.popular,
+          defaultSelected: QagTab.trending,
           selectedThematiqueId: currentThematiqueId,
           onSearchBarOpen: (bool isSearchOpen) {
             if (isSearchOpen) {
