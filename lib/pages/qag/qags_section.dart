@@ -58,7 +58,7 @@ class _QagsSectionState extends State<QagsSection> {
       children: [
         _buildTabBar(),
         Visibility(
-          visible: isActiveSearchBar || currentSelected == QagTab.trending ? false : true,
+          visible: !isActiveSearchBar && currentSelected != QagTab.trending,
           child: QagsThematiqueSection(
             currentThematiqueId: currentThematiqueId,
             onThematiqueIdSelected: (String? thematiqueId) {
@@ -149,7 +149,7 @@ class _QagsSectionState extends State<QagsSection> {
                     setState(() {
                       textController.clear();
                       isActiveSearchBar = false;
-                      currentSelected = QagTab.popular;
+                      currentSelected = QagTab.trending;
                     });
                     widget.onSearchBarOpen(isActiveSearchBar);
                     context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
@@ -162,7 +162,7 @@ class _QagsSectionState extends State<QagsSection> {
                   searchBarOpen: (bool isSearchOpen) => {
                     setState(() {
                       isActiveSearchBar = isSearchOpen;
-                      currentSelected = isSearchOpen ? QagTab.search : QagTab.popular;
+                      currentSelected = isSearchOpen ? QagTab.search : QagTab.trending;
                     }),
                     widget.onSearchBarOpen(isActiveSearchBar),
                   },
