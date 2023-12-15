@@ -136,7 +136,7 @@ class _QagsSectionState extends State<QagsSection> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              padding: isActiveSearchBar ? EdgeInsets.zero : const EdgeInsets.symmetric(vertical: 20.0),
               children: [
                 AnimSearchBar(
                   height: 40,

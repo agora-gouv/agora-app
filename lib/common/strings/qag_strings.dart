@@ -26,7 +26,7 @@ class QagStrings {
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
   static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine. \n";
   static const String askQuestionDescription3 =
-      "<b>Tous les mardis à 14h :</b> \n<ul><li> La question la plus populaire est sélectionnée automatiquement pour obtenir une réponse du gouvernement.</li> <li>Toutes les autres questions sont archivées. Les compteurs repartent !</li></ul>";
+      "<b>Tous les mardis à 14h :</b> \n<ul><li> La question la plus populaire est sélectionnée automatiquement pour obtenir une réponse du gouvernement. Il s’agit de celle en tête de l’onglet “Le top”.</li> <li>Toutes les autres questions sont archivées. Les compteurs repartent !</li></ul>";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
