@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/client/agora_http_client_adapter.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
@@ -21,6 +19,7 @@ import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -57,10 +56,12 @@ class RepositoryManager {
         platformHelper: HelperManager.getPlatformHelper(),
       ),
     );
-    dio.httpClientAdapter = AgoraHttpClientAdapter(
-      baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
-      rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),
-    );
+    if (!kIsWeb) {
+      dio.httpClientAdapter = AgoraHttpClientAdapter(
+        baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
+        rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),
+      );
+    }
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
     return dio;
   }
