@@ -180,7 +180,7 @@ class QagListSection extends StatelessWidget {
         SizedBox(height: AgoraSpacings.base),
       ];
     }
-    return [SizedBox(height: AgoraSpacings.base)];
+    return [];
   }
 }
 

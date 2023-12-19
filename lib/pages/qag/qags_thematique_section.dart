@@ -21,7 +21,6 @@ class QagsThematiqueSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: AgoraSpacings.x0_5),
         Container(
           color: AgoraColors.doctor,
           child: Padding(
