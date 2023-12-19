@@ -1,14 +1,12 @@
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
-import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
-import 'package:agora/domain/qag/qag_paginated.dart';
-import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
-import 'package:agora/domain/qag/qags_error_type.dart';
+import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 
@@ -24,64 +22,22 @@ class FakeQagSuccessRepository extends QagRepository {
   }
 
   @override
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  }) async {
-    return GetQagsSucceedResponse(
-      qagPopular: [
-        Qag(
-          id: "id1",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title1",
-          username: "username1",
-          date: DateTime(2024, 1, 23),
-          supportCount: 7,
-          isSupported: true,
-          isAuthor: true,
-        ),
-      ],
-      qagLatest: [
-        Qag(
-          id: "id2",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title2",
-          username: "username2",
-          date: DateTime(2024, 2, 23),
-          supportCount: 8,
-          isSupported: false,
-          isAuthor: false,
-        ),
-      ],
-      qagSupporting: [
-        Qag(
-          id: "id3",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title3",
-          username: "username3",
-          date: DateTime(2024, 3, 23),
-          supportCount: 9,
-          isSupported: true,
-          isAuthor: false,
-        ),
-      ],
-      errorCase: null,
-      popupQag: null,
-    );
+  Future<AskQagStatusRepositoryResponse> fetchAskQagStatus() async {
+    return AskQagStatusSucceedResponse(askQagError: "askQagError");
   }
 
   @override
-  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
+  Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
     required String? thematiqueId,
-    required QagPaginatedFilter filter,
-    required String? keywords,
+    required QagListFilter filter,
   }) async {
     switch (pageNumber) {
       case 1:
-        return GetQagsPaginatedSucceedResponse(
-          maxPage: 3,
-          paginatedQags: [
-            QagPaginated(
+        return GetQagListSucceedResponse(
+          maxPage: 2,
+          qags: [
+            Qag(
               id: "id1",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
@@ -89,42 +45,48 @@ class FakeQagSuccessRepository extends QagRepository {
               date: DateTime(2024, 2, 23),
               supportCount: 8,
               isSupported: false,
-              isAuthor: true,
+              isAuthor: false,
             ),
           ],
+          header: HeaderQag(
+            id: "headerId",
+            title: "headerTitle",
+            message: "headerMessage",
+          ),
         );
       case 2:
-        return GetQagsPaginatedSucceedResponse(
-          maxPage: 3,
-          paginatedQags: [
-            QagPaginated(
+        return GetQagListSucceedResponse(
+          maxPage: 2,
+          qags: [
+            Qag(
+              id: "id1",
+              thematique: Thematique(picto: "🚊", label: "Transports"),
+              title: "title1",
+              username: "username1",
+              date: DateTime(2024, 2, 23),
+              supportCount: 9,
+              isSupported: true,
+              isAuthor: false,
+            ),
+            Qag(
               id: "id2",
               thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title2",
-              username: "username2",
-              date: DateTime(2024, 3, 23),
-              supportCount: 9,
+              title: "title1",
+              username: "username1",
+              date: DateTime(2024, 2, 23),
+              supportCount: 8,
               isSupported: true,
               isAuthor: false,
             ),
           ],
+          header: HeaderQag(
+            id: "headerId2",
+            title: "headerTitle2",
+            message: "headerMessage2",
+          ),
         );
       default:
-        return GetQagsPaginatedSucceedResponse(
-          maxPage: 3,
-          paginatedQags: [
-            QagPaginated(
-              id: "id3",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title3",
-              username: "username3",
-              date: DateTime(2024, 4, 23),
-              supportCount: 9,
-              isSupported: true,
-              isAuthor: false,
-            ),
-          ],
-        );
+        return GetQagListFailedResponse();
     }
   }
 
@@ -596,52 +558,6 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
 
 class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccessRepository {
   @override
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  }) async {
-    return GetQagsSucceedResponse(
-      qagPopular: [
-        Qag(
-          id: "id1",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title1",
-          username: "username1",
-          date: DateTime(2024, 1, 23),
-          supportCount: 7,
-          isSupported: true,
-          isAuthor: true,
-        ),
-      ],
-      qagLatest: [
-        Qag(
-          id: "id2",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title2",
-          username: "username2",
-          date: DateTime(2024, 2, 23),
-          supportCount: 8,
-          isSupported: false,
-          isAuthor: false,
-        ),
-      ],
-      qagSupporting: [
-        Qag(
-          id: "id3",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title3",
-          username: "username3",
-          date: DateTime(2024, 3, 23),
-          supportCount: 9,
-          isSupported: true,
-          isAuthor: false,
-        ),
-      ],
-      errorCase: "Une erreur est survenue",
-      popupQag: PopupQag(title: "Titre de popup", description: "Description de popup"),
-    );
-  }
-
-  @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
     return GetSearchQagsSucceedResponse(
       searchQags: [
@@ -672,20 +588,17 @@ class FakeQagFailureRepository extends QagRepository {
   }
 
   @override
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  }) async {
-    return GetQagsFailedResponse();
+  Future<AskQagStatusRepositoryResponse> fetchAskQagStatus() async {
+    return AskQagStatusFailedResponse();
   }
 
   @override
-  Future<GetQagsPaginatedRepositoryResponse> fetchQagsPaginated({
+  Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
     required String? thematiqueId,
-    required QagPaginatedFilter filter,
-    required String? keywords,
+    required QagListFilter filter,
   }) async {
-    return GetQagsPaginatedFailedResponse();
+    return GetQagListFailedResponse();
   }
 
   @override
@@ -759,20 +672,7 @@ class FakeQagFailureRepository extends QagRepository {
 
   @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
-    return GetSearchQagsSucceedResponse(
-      searchQags: [
-        Qag(
-          id: "id",
-          thematique: Thematique(picto: "🚊", label: "Transports"),
-          title: "title",
-          username: "username",
-          date: DateTime(2024, 4, 23),
-          supportCount: 9,
-          isSupported: true,
-          isAuthor: false,
-        ),
-      ],
-    );
+    return GetSearchQagsFailedResponse();
   }
 }
 
@@ -794,13 +694,6 @@ class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {
 }
 
 class FakeQagTimeoutFailureRepository extends FakeQagFailureRepository {
-  @override
-  Future<GetQagsRepositoryResponse> fetchQags({
-    required String? thematiqueId,
-  }) async {
-    return GetQagsFailedResponse(errorType: QagsErrorType.timeout);
-  }
-
   @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
     return GetSearchQagsFailedResponse();

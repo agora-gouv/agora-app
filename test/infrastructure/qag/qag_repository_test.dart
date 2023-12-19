@@ -1,16 +1,15 @@
 import 'dart:io';
 
 import 'package:agora/domain/qag/details/qag_details.dart';
+import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
-import 'package:agora/domain/qag/popup_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
-import 'package:agora/domain/qag/qag_paginated.dart';
-import 'package:agora/domain/qag/qag_paginated_filter.dart';
 import 'package:agora/domain/qag/qag_response.dart';
 import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
+import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:dio/dio.dart';
@@ -126,252 +125,92 @@ void main() {
     });
   });
 
-  group("Fetch qags", () {
-    test("when success and error message null should return qags", () async {
+  group("Fetch ask QaG status", () {
+    test("when success - should return success with askQagError", () async {
       // Given
       dioAdapter.onGet(
-        "/qags",
-        queryParameters: {"thematiqueId": thematiqueId},
-        (server) => server.reply(
-          HttpStatus.ok,
-          {
-            "qags": {
-              "popular": [
-                {
-                  "qagId": "id1",
-                  "thematique": {"label": "Transports", "picto": "🚊"},
-                  "title": "title1",
-                  "username": "username1",
-                  "date": "2023-01-01",
-                  "support": {
-                    "count": 116,
-                    "isSupported": true,
-                  },
-                  "isAuthor": true,
-                },
-              ],
-              "latest": [
-                {
-                  "qagId": "id2",
-                  "thematique": {"label": "Transports", "picto": "🚊"},
-                  "title": "title2",
-                  "username": "username2",
-                  "date": "2023-02-01",
-                  "support": {
-                    "count": 11,
-                    "isSupported": false,
-                  },
-                  "isAuthor": false,
-                },
-              ],
-              "supporting": [
-                {
-                  "qagId": "id3",
-                  "thematique": {"label": "Transports", "picto": "🚊"},
-                  "title": "title3",
-                  "username": "username3",
-                  "date": "2023-03-01",
-                  "support": {
-                    "count": 2,
-                    "isSupported": true,
-                  },
-                  "isAuthor": true,
-                }
-              ],
-              "askQagErrorText": null,
-              "popup": null,
-            },
-          },
-        ),
+        "/qags/ask_status",
         headers: {
           "accept": "application/json",
           "Authorization": "Bearer jwtToken",
         },
+        (server) => server.reply(
+          HttpStatus.ok,
+          {"askQagError": "QaG weekly limit !"},
+        ),
       );
 
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
       );
-      final response = await repository.fetchQags(thematiqueId: thematiqueId);
+      final response = await repository.fetchAskQagStatus();
 
       // Then
-      expect(
-        response,
-        GetQagsSucceedResponse(
-          qagPopular: [
-            Qag(
-              id: "id1",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title1",
-              username: "username1",
-              date: DateTime(2023, 1, 1),
-              supportCount: 116,
-              isSupported: true,
-              isAuthor: true,
-            ),
-          ],
-          qagLatest: [
-            Qag(
-              id: "id2",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title2",
-              username: "username2",
-              date: DateTime(2023, 2, 1),
-              supportCount: 11,
-              isSupported: false,
-              isAuthor: false,
-            ),
-          ],
-          qagSupporting: [
-            Qag(
-              id: "id3",
-              thematique: Thematique(picto: "🚊", label: "Transports"),
-              title: "title3",
-              username: "username3",
-              date: DateTime(2023, 3, 1),
-              supportCount: 2,
-              isSupported: true,
-              isAuthor: true,
-            ),
-          ],
-          errorCase: null,
-          popupQag: null,
-        ),
-      );
+      expect(response, AskQagStatusSucceedResponse(askQagError: "QaG weekly limit !"));
     });
 
-    test("when success and error message not null should return qags", () async {
+    test("when failure timeout - should return failed with type timeout", () async {
       // Given
       dioAdapter.onGet(
-        "/qags",
-        queryParameters: {"thematiqueId": thematiqueId},
-        (server) => server.reply(
-          HttpStatus.ok,
-          {
-            "incomingResponses": [],
-            "responses": [],
-            "qags": {
-              "popular": [],
-              "latest": [],
-              "supporting": [],
-              "askQagErrorText": "Une erreur est survenue",
-              "popup": {
-                "title": "Titre de popup",
-                "description": "Description de popup",
-              },
-            },
-          },
-        ),
+        "/qags/ask_status",
         headers: {
           "accept": "application/json",
           "Authorization": "Bearer jwtToken",
         },
-      );
-
-      // When
-      final repository = QagDioRepository(
-        httpClient: httpClient,
-      );
-      final response = await repository.fetchQags(thematiqueId: thematiqueId);
-
-      // Then
-      expect(
-        response,
-        GetQagsSucceedResponse(
-          qagPopular: [],
-          qagLatest: [],
-          qagSupporting: [],
-          errorCase: "Une erreur est survenue",
-          popupQag: PopupQag(
-            title: "Titre de popup",
-            description: "Description de popup",
+        (server) => server.throws(
+          408,
+          DioException.connectionTimeout(
+            timeout: Duration(seconds: 60),
+            requestOptions: RequestOptions(),
           ),
         ),
       );
-    });
-
-    test("when failure with connection timeout should return failed", () async {
-      // Given
-      dioAdapter.onGet(
-        "/qags",
-        (server) {
-          server.throws(
-            404,
-            DioException.connectionTimeout(
-              timeout: Duration(seconds: 60),
-              requestOptions: RequestOptions(),
-            ),
-          );
-        },
-      );
 
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
       );
-      final response = await repository.fetchQags(thematiqueId: thematiqueId);
+      final response = await repository.fetchAskQagStatus();
 
       // Then
-      expect(response, GetQagsFailedResponse(errorType: QagsErrorType.timeout));
+      expect(response, AskQagStatusFailedResponse(errorType: QagsErrorType.timeout));
     });
 
-    test("when failure with receive timeout should return failed", () async {
+    test("when failure - should return failed with type generic", () async {
       // Given
       dioAdapter.onGet(
-        "/qags",
-        (server) {
-          server.throws(
-            404,
-            DioException.receiveTimeout(
-              timeout: Duration(seconds: 60),
-              requestOptions: RequestOptions(),
-            ),
-          );
-        },
-      );
-
-      // When
-      final repository = QagDioRepository(
-        httpClient: httpClient,
-      );
-      final response = await repository.fetchQags(thematiqueId: thematiqueId);
-
-      // Then
-      expect(response, GetQagsFailedResponse(errorType: QagsErrorType.timeout));
-    });
-
-    test("when failure should return failed", () async {
-      // Given
-      dioAdapter.onGet(
-        "/qags",
-        (server) => server.reply(HttpStatus.notFound, {}),
+        "/qags/ask_status",
         headers: {
           "accept": "application/json",
           "Authorization": "Bearer jwtToken",
         },
+        (server) => server.reply(
+          HttpStatus.badRequest,
+          {},
+        ),
       );
 
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
       );
-      final response = await repository.fetchQags(thematiqueId: thematiqueId);
+      final response = await repository.fetchAskQagStatus();
 
       // Then
-      expect(response, GetQagsFailedResponse());
+      expect(response, AskQagStatusFailedResponse());
     });
   });
 
-  group("Fetch qags paginated", () {
-    test("when success should return qags paginated", () async {
+  group("Fetch qags list", () {
+    test("when success should return qags list", () async {
       // Given
       dioAdapter.onGet(
-        "/qags/page/1",
+        "/v2/qags",
         queryParameters: {
+          "pageNumber": 1,
           "thematiqueId": thematiqueId,
-          "filterType": "popular",
-          "keywords": "mot clé",
+          "filterType": "top",
         },
         (server) => server.reply(
           HttpStatus.ok,
@@ -391,6 +230,11 @@ void main() {
                 "isAuthor": true,
               },
             ],
+            "header": {
+              "headerId": "headerId",
+              "title": "headerTitle",
+              "message": "headerMessage",
+            },
           },
         ),
         headers: {
@@ -403,20 +247,19 @@ void main() {
       final repository = QagDioRepository(
         httpClient: httpClient,
       );
-      final response = await repository.fetchQagsPaginated(
+      final response = await repository.fetchQagList(
         pageNumber: 1,
         thematiqueId: thematiqueId,
-        filter: QagPaginatedFilter.popular,
-        keywords: "mot clé",
+        filter: QagListFilter.top,
       );
 
       // Then
       expect(
         response,
-        GetQagsPaginatedSucceedResponse(
+        GetQagListSucceedResponse(
           maxPage: 5,
-          paginatedQags: [
-            QagPaginated(
+          qags: [
+            Qag(
               id: "id1",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
@@ -427,6 +270,11 @@ void main() {
               isAuthor: true,
             ),
           ],
+          header: HeaderQag(
+            id: "headerId",
+            title: "headerTitle",
+            message: "headerMessage",
+          ),
         ),
       );
     });
@@ -434,11 +282,11 @@ void main() {
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
-        "/qags/page/1",
+        "/v2/qags",
         queryParameters: {
+          "pageNumber": 1,
           "thematiqueId": thematiqueId,
-          "filterType": "popular",
-          "keywords": null,
+          "filterType": "top",
         },
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
@@ -451,15 +299,14 @@ void main() {
       final repository = QagDioRepository(
         httpClient: httpClient,
       );
-      final response = await repository.fetchQagsPaginated(
+      final response = await repository.fetchQagList(
         pageNumber: 1,
         thematiqueId: thematiqueId,
-        filter: QagPaginatedFilter.popular,
-        keywords: null,
+        filter: QagListFilter.top,
       );
 
       // Then
-      expect(response, GetQagsPaginatedFailedResponse());
+      expect(response, GetQagListFailedResponse());
     });
   });
 

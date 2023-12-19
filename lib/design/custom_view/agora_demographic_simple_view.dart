@@ -25,7 +25,7 @@ class AgoraDemographicResponseCard extends StatelessWidget {
   final DemographicResponseCardSemantic semantic;
 
   const AgoraDemographicResponseCard({
-    Key? key,
+    super.key,
     required this.responseLabel,
     this.textAlign = TextAlign.start,
     this.iconPlace = DemographicSelectedIconPlace.right,
@@ -33,7 +33,7 @@ class AgoraDemographicResponseCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(AgoraSpacings.base),
     required this.semantic,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

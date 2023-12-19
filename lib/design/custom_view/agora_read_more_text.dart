@@ -25,7 +25,7 @@ class AgoraReadMoreText extends StatefulWidget {
 
   const AgoraReadMoreText(
     this.data, {
-    Key? key,
+    super.key,
     this.trimExpandedText = QagStrings.readMore,
     this.trimCollapsedText = QagStrings.readLess,
     this.colorClickableText = AgoraColors.primaryBlue,
@@ -36,10 +36,9 @@ class AgoraReadMoreText extends StatefulWidget {
     this.trimTextStyle = AgoraTextStyles.light14Underline,
     this.textAlign = TextAlign.start,
     this.textDirection = TextDirection.ltr,
-  })  : assert(
+  }) : assert(
           (trimMode == AgoraTrimMode.line && trimLines > 0) || (trimMode == AgoraTrimMode.length && trimLength > 0),
-        ),
-        super(key: key);
+        );
 
   @override
   AgoraReadMoreTextState createState() => AgoraReadMoreTextState();
@@ -138,7 +137,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
       label: data,
       child: ExcludeSemantics(
         child: RichText(
-          textScaleFactor: MediaQuery.of(context).textScaleFactor,
+          textScaler: MediaQuery.of(context).textScaler,
           textAlign: textAlign,
           textDirection: textDirection,
           text: textSpan,

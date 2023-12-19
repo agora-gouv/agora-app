@@ -11,11 +11,11 @@ class AgoraConsultationResultView extends StatelessWidget {
   final bool isMultipleChoice;
 
   AgoraConsultationResultView({
-    Key? key,
+    super.key,
     required this.questionTitle,
     required this.responses,
     required this.isMultipleChoice,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

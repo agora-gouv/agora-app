@@ -26,7 +26,7 @@ class AgoraQuestionResponseChoiceView extends StatefulWidget {
   final Function(String responseId, String otherResponse) onOtherResponseChanged;
 
   const AgoraQuestionResponseChoiceView({
-    Key? key,
+    super.key,
     required this.responseId,
     required this.responseLabel,
     required this.hasOpenTextField,
@@ -35,7 +35,7 @@ class AgoraQuestionResponseChoiceView extends StatefulWidget {
     required this.semantic,
     required this.onTap,
     required this.onOtherResponseChanged,
-  }) : super(key: key);
+  });
 
   @override
   State<AgoraQuestionResponseChoiceView> createState() => _AgoraQuestionResponseChoiceViewState();

@@ -22,11 +22,11 @@ class AgoraHtml extends StatelessWidget {
       );
     } else {
       return MediaQuery(
-        data: MediaQueryData(textScaleFactor: 1),
+        data: MediaQueryData(textScaler: MediaQuery.of(context).textScaler),
         child: Html(
           data: data,
           style: AgoraHtmlStyles.htmlStyle(context),
-          onLinkTap: (url, _, __, ___) async {
+          onLinkTap: (url, _, __) async {
             if (url != null && isQagUrl(url)) {
               Navigator.pushNamed(
                 context,

@@ -1,6 +1,6 @@
-import 'package:agora/bloc/qag/qag_bloc.dart';
-import 'package:agora/bloc/qag/qag_event.dart';
-import 'package:agora/bloc/qag/qag_state.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_bloc.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_event.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_state.dart';
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
@@ -56,9 +56,9 @@ class _QagsPageState extends State<QagsPage> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (BuildContext context) => QagBloc(
+            create: (BuildContext context) => AskQagBloc(
               qagRepository: RepositoryManager.getQagRepository(),
-            )..add(FetchQagsEvent(thematiqueId: currentThematiqueId)),
+            )..add(FetchAskQagStatusEvent()),
           ),
           BlocProvider(
             create: (BuildContext context) => QagResponseBloc(
@@ -93,21 +93,14 @@ class _QagsPageState extends State<QagsPage> {
                       ],
                     ),
                     onProfileClick: () {
-                      Navigator.pushNamed(context, ProfilePage.routeName).then(
-                        (value) {
-                          final shouldReloadPage = value as bool;
-                          if (shouldReloadPage) {
-                            context.read<QagBloc>().add(FetchQagsEvent(thematiqueId: currentThematiqueId));
-                          }
-                        },
-                      );
+                      Navigator.pushNamed(context, ProfilePage.routeName);
                     },
                   ),
-                  BlocBuilder<QagBloc, QagState>(
+                  BlocBuilder<AskQagBloc, AskQagState>(
                     builder: (context, qagState) {
-                      if (qagResponseState is QagResponseInitialLoadingState && qagState is QagInitialLoadingState) {
+                      if (qagResponseState is QagResponseInitialLoadingState && qagState is AskQagInitialLoadingState) {
                         return QagsLoadingSkeleton();
-                      } else if (qagResponseState is QagResponseErrorState && qagState is QagErrorState) {
+                      } else if (qagResponseState is QagResponseErrorState && qagState is AskQagErrorState) {
                         return _buildGlobalPadding(context, child: AgoraErrorView());
                       }
                       return Column(
@@ -142,22 +135,16 @@ class _QagsPageState extends State<QagsPage> {
     }
   }
 
-  List<Widget> _handleQagState(BuildContext context, QagState state) {
-    if (state is QagWithItemState) {
+  List<Widget> _handleQagState(BuildContext context, AskQagState state) {
+    if (state is QagAskFetchedState) {
       return [
         QagsAskQuestionSectionPage(
           key: searchBarKey,
-          errorCase: state.errorCase,
+          errorCase: state.askQagError,
         ),
         QagsSection(
-          isLoading: state is QagLoadingState,
-          defaultSelected: QagTab.popular,
-          popularViewModels: state.popularViewModels,
-          latestViewModels: state.latestViewModels,
-          supportingViewModels: state.supportingViewModels,
+          defaultSelected: QagTab.trending,
           selectedThematiqueId: currentThematiqueId,
-          askQuestionErrorCase: state.errorCase,
-          popupViewModel: state.popupViewModel,
           onSearchBarOpen: (bool isSearchOpen) {
             if (isSearchOpen) {
               TrackerHelper.trackEvent(
@@ -173,14 +160,14 @@ class _QagsPageState extends State<QagsPage> {
           },
         ),
       ];
-    } else if (state is QagInitialLoadingState) {
+    } else if (state is AskQagInitialLoadingState) {
       return [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x2),
           child: CircularProgressIndicator(),
         ),
       ];
-    } else if (state is QagErrorState) {
+    } else if (state is AskQagErrorState) {
       switch (state.errorType) {
         case QagsErrorType.generic:
           return [_buildLocalPadding(child: AgoraErrorView())];

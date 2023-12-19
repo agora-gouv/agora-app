@@ -14,55 +14,55 @@ class AgoraHtmlStyles {
   static const thin = FontWeight.w300;
 
   static Map<String, Style> htmlStyle(BuildContext context) {
-    final scaleFactor = MediaQuery.of(context).textScaleFactor;
+    final textScaler = MediaQuery.of(context).textScaler;
     return {
-      "body": AgoraHtmlStyles.bodyStyle(scaleFactor),
-      "ul": AgoraHtmlStyles.bodyStyle(scaleFactor),
-      "ol": AgoraHtmlStyles.bodyStyle(scaleFactor),
-      "li": AgoraHtmlStyles.bodyStyle(scaleFactor),
-      "b": AgoraHtmlStyles.boldStyle(scaleFactor),
-      "h1": AgoraHtmlStyles.h1Style(scaleFactor),
-      "span": AgoraHtmlStyles.spanStyle(scaleFactor),
+      "body": AgoraHtmlStyles.bodyStyle(textScaler),
+      "ul": AgoraHtmlStyles.bodyStyle(textScaler),
+      "ol": AgoraHtmlStyles.bodyStyle(textScaler),
+      "li": AgoraHtmlStyles.bodyStyle(textScaler),
+      "b": AgoraHtmlStyles.boldStyle(textScaler),
+      "h1": AgoraHtmlStyles.h1Style(textScaler),
+      "span": AgoraHtmlStyles.spanStyle(textScaler),
     };
   }
 
-  static Style bodyStyle(double scaleFactor) => Style(
+  static Style bodyStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: light,
-        fontSize: FontSize(14.0 * scaleFactor),
+        fontSize: FontSize(textScaler.scale(14.0)),
         color: AgoraColors.primaryGrey,
         lineHeight: LineHeight(height),
-        padding: EdgeInsets.zero,
+        padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 
-  static Style boldStyle(double scaleFactor) => Style(
+  static Style boldStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: medium,
-        fontSize: FontSize(14.0 * scaleFactor),
+        fontSize: FontSize(textScaler.scale(14.0)),
         color: AgoraColors.primaryGrey,
         lineHeight: LineHeight(height),
-        padding: EdgeInsets.zero,
+        padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 
-  static Style h1Style(double scaleFactor) => Style(
+  static Style h1Style(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: bold,
-        fontSize: FontSize(16.0 * scaleFactor),
+        fontSize: FontSize(textScaler.scale(16.0)),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
-        padding: EdgeInsets.zero,
+        padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 
-  static Style spanStyle(double scaleFactor) => Style(
+  static Style spanStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: bold,
-        fontSize: FontSize(14.0 * scaleFactor),
+        fontSize: FontSize(textScaler.scale(14.0)),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
-        padding: EdgeInsets.zero,
+        padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 }

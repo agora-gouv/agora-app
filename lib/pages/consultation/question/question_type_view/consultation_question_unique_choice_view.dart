@@ -16,13 +16,13 @@ class ConsultationQuestionUniqueChoiceView extends StatefulWidget {
   final VoidCallback onBackTap;
 
   ConsultationQuestionUniqueChoiceView({
-    Key? key,
+    super.key,
     required this.uniqueChoiceQuestion,
     required this.previousSelectedResponses,
     required this.totalQuestions,
     required this.onUniqueResponseTap,
     required this.onBackTap,
-  }) : super(key: key);
+  });
 
   @override
   State<ConsultationQuestionUniqueChoiceView> createState() => _ConsultationQuestionUniqueChoiceViewState();

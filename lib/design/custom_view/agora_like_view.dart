@@ -1,8 +1,10 @@
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,6 +20,7 @@ class AgoraLikeView extends StatelessWidget {
   final bool shouldHaveVerticalPadding;
   final AgoraLikeStyle style;
   final Function(bool support)? onSupportClick;
+  final GlobalKey? likeViewKey;
 
   const AgoraLikeView({
     super.key,
@@ -27,48 +30,47 @@ class AgoraLikeView extends StatelessWidget {
     this.shouldHaveVerticalPadding = false,
     this.style = AgoraLikeStyle.police14,
     this.onSupportClick,
+    this.likeViewKey,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget currentChild = Container(
-      color: AgoraColors.transparent,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
-          vertical: shouldHaveVerticalPadding ? 2 : 0,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(_getIcon(), width: _buildIconSize(), excludeFromSemantics: true),
-            SizedBox(width: AgoraSpacings.x0_25),
-            Padding(
-              padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
-              child: Text(
-                supportCount.toString(),
-                style: _buildTextStyle(),
-                semanticsLabel:
-                    "${isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
-              ),
+    return Semantics(
+      button: onSupportClick != null,
+      child: InkWell(
+        borderRadius: BorderRadius.all(AgoraCorners.rounded42),
+        onTap: onSupportClick != null ? () => onSupportClick!(!isSupported) : null,
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(AgoraCorners.rounded42),
+            border: Border.all(color: AgoraColors.lightRedOpacity19),
+            color: AgoraColors.lightRedOpacity4,
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
+              vertical: shouldHaveVerticalPadding ? 2 : 0,
             ),
-          ],
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(key: likeViewKey, _getIcon(), width: _buildIconSize(), excludeFromSemantics: true),
+                SizedBox(width: AgoraSpacings.x0_25),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
+                  child: Text(
+                    supportCount.toString(),
+                    style: _buildTextStyle(),
+                    semanticsLabel:
+                        "${isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
-
-    if (onSupportClick != null) {
-      currentChild = Semantics(
-        button: true,
-        child: GestureDetector(
-          onTap: () => onSupportClick!(!isSupported),
-          child: currentChild,
-        ),
-      );
-    } else {
-      currentChild = Semantics(button: false, child: currentChild);
-    }
-    return currentChild;
   }
 
   double _buildIconSize() {
@@ -96,4 +98,14 @@ class AgoraLikeView extends StatelessWidget {
       return "assets/ic_heart.svg";
     }
   }
+}
+
+class AgoraLikeViewModel extends Equatable {
+  final bool isSupported;
+  final int supportCount;
+
+  AgoraLikeViewModel({required this.isSupported, required this.supportCount});
+
+  @override
+  List<Object?> get props => [isSupported, supportCount];
 }

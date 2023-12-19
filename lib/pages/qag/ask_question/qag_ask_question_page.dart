@@ -36,7 +36,6 @@ import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/qag/ask_question/qag_thematiques_drop_down.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
-import 'package:agora/pages/qag/paginated/qags_paginated_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:flutter/gestures.dart';
@@ -189,7 +188,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       shouldCheckQuestionLength = true;
                     }
                     timerHelper.startTimer(() {
-                      _searchSimilarQags(context);
                       _checkError(shouldCheckQuestionLength: shouldCheckQuestionLength);
                     });
                   });
@@ -260,7 +258,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         context: context,
                         columnChildren: [
                           RichText(
-                            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                            textScaler: MediaQuery.of(context).textScaler,
                             text: TextSpan(
                               style: AgoraTextStyles.light16,
                               children: [
@@ -383,13 +381,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           Center(
             child: AgoraRoundedButton(
               label: QagStrings.goToAllQuestion,
-              onPressed: () {
-                Navigator.pushReplacementNamed(
-                  context,
-                  QagsPaginatedPage.routeName,
-                  arguments: QagsPaginatedArguments(thematiqueId: null, initialTab: QagPaginatedTab.popular),
-                );
-              },
+              onPressed: () {},
             ),
           ),
         ],
@@ -403,12 +395,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         thematique != null &&
         firstname.isNotBlank() &&
         isCheck;
-  }
-
-  void _searchSimilarQags(BuildContext context) {
-    // if (question.isNotBlank()) {
-    //   context.read<QagHasSimilarBloc>().add(QagHasSimilarEvent(title: question));
-    // }
   }
 
   void _checkError({required bool shouldCheckQuestionLength}) {

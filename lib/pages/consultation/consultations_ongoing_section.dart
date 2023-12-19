@@ -1,11 +1,16 @@
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsOngoingSection extends StatelessWidget {
@@ -64,6 +69,18 @@ class ConsultationsOngoingSection extends StatelessWidget {
                   semanticsLabel: SemanticsStrings.ongoingConsultationEmpty,
                   style: AgoraTextStyles.medium14,
                   textAlign: TextAlign.center,
+                ),
+                SizedBox(height: AgoraSpacings.base),
+                AgoraRoundedButton(
+                  label: ConsultationStrings.gotoQags,
+                  style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+                  onPressed: () {
+                    TrackerHelper.trackClick(
+                      clickName: AnalyticsEventNames.gotoQagsFromConsultations,
+                      widgetName: AnalyticsScreenNames.consultationsPage,
+                    );
+                    Navigator.pushNamed(context, QagsPage.routeName);
+                  },
                 ),
               ],
             ),

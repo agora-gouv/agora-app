@@ -96,6 +96,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
         unselectedLabelStyle: AgoraTextStyles.light14,
         labelColor: AgoraColors.primaryGrey,
         unselectedLabelColor: AgoraColors.primaryGrey,
+        indicatorSize: TabBarIndicatorSize.tab,
         tabs: widget.tabChild.map((tab) {
           final index = widget.tabChild.indexOf(tab);
           if (index == 0) {

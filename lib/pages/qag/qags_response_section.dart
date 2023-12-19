@@ -66,30 +66,36 @@ class QagsResponseSection extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: AgoraRichText(
-              items: [
-                AgoraRichTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
-                AgoraRichTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
+            child: Row(
+              children: [
+                AgoraRichText(
+                  items: [
+                    AgoraRichTextItem(text: "${QagStrings.qagResponsePart1}\n", style: AgoraRichTextItemStyle.bold),
+                    AgoraRichTextItem(text: QagStrings.qagResponsePart2, style: AgoraRichTextItemStyle.regular),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: AgoraMoreInformation(
+                    semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
+                    onClick: () {
+                      showAgoraDialog(
+                        context: context,
+                        columnChildren: [
+                          Text(QagStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
+                          SizedBox(height: AgoraSpacings.x0_75),
+                          AgoraButton(
+                            label: GenericStrings.close,
+                            style: AgoraButtonStyle.primaryButtonStyle,
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
-          ),
-          SizedBox(width: AgoraSpacings.x0_75),
-          AgoraMoreInformation(
-            semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
-            onClick: () {
-              showAgoraDialog(
-                context: context,
-                columnChildren: [
-                  Text(QagStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
-                  SizedBox(height: AgoraSpacings.x0_75),
-                  AgoraButton(
-                    label: GenericStrings.close,
-                    style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              );
-            },
           ),
           SizedBox(width: AgoraSpacings.x0_75),
           AgoraRoundedButton(

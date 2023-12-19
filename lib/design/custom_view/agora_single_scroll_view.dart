@@ -6,11 +6,11 @@ class AgoraSingleScrollView extends StatelessWidget {
   final Widget child;
 
   const AgoraSingleScrollView({
-    Key? key,
+    super.key,
     this.scrollController,
     this.physics,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

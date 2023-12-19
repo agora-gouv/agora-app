@@ -17,13 +17,13 @@ class ConsultationQuestionOpenedView extends StatefulWidget {
   final VoidCallback onBackTap;
 
   ConsultationQuestionOpenedView({
-    Key? key,
+    super.key,
     required this.openedQuestion,
     required this.previousResponses,
     required this.totalQuestions,
     required this.onOpenedResponseInput,
     required this.onBackTap,
-  }) : super(key: key);
+  });
 
   @override
   State<ConsultationQuestionOpenedView> createState() => _ConsultationQuestionOpenedViewState();

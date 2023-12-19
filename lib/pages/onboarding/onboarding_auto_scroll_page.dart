@@ -5,7 +5,7 @@ class OnboardingAutoScrollPage extends StatefulWidget {
   const OnboardingAutoScrollPage({
     required this.child,
     required this.scrollDirection,
-    Key? key,
+    super.key,
     this.delay = const Duration(seconds: 1),
     this.duration = const Duration(minutes: 2),
     this.gap = 25,
@@ -13,7 +13,7 @@ class OnboardingAutoScrollPage extends StatefulWidget {
     this.duplicateChild = 25,
     this.enableScrollInput = true,
     this.delayAfterScrollInput = const Duration(seconds: 1),
-  }) : super(key: key);
+  });
 
   /// Widget to display in loop
   final Widget child;
