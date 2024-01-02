@@ -53,7 +53,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
       child: AgoraScaffold(
         popAction: () {
           if (currentStep == 1) {
-            Navigator.pop(context);
+            //Navigator.pop(context);
             return true;
           } else {
             setState(() => currentStep--);
