@@ -44,6 +44,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
+      label: 'Participer à la consultation',
       child: Stack(
         children: [
           _buildCard(context),
@@ -142,7 +143,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                 SizedBox(width: AgoraSpacings.base),
                 AgoraIconButton(
                   icon: "ic_share.svg",
-                  semanticLabel: "${SemanticsStrings.share} $title",
+                  semanticLabel: "${SemanticsStrings.shareConsultation} $title",
                   onClick: () {
                     TrackerHelper.trackClick(
                       clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",

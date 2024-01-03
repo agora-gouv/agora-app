@@ -2,7 +2,7 @@ class SemanticsStrings {
   static const String step = "Étape %s sur 3";
   static const String stepV2 = "Étape %1s sur %2s";
   static const String profileStep = "Votre profil %1s sur %2s";
-  static const String share = "Partager";
+  static const String shareConsultation = "Partager la consultation";
   static const String moreInformation = "En savoir plus";
   static const String moreInformationAboutGovernmentResponse =
       "En savoir plus sur le fonctionnement des réponses du Gouvernement aux questions citoyennes";
