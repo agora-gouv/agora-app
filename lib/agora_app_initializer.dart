@@ -36,7 +36,7 @@ class AgoraInitializer {
     final sharedPref = await SharedPreferences.getInstance();
     final isFirstConnection = await StorageManager.getOnboardingStorageClient().isFirstTime();
     await SentryFlutter.init(
-          (options) => options
+      (options) => options
         ..dsn = appConfig.sentryDsn
         ..environment = appConfig.environmentName,
       appRunner: () => runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection)),
