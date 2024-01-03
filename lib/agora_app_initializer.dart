@@ -14,6 +14,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:matomo_tracker/matomo_tracker.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AgoraInitializer {
@@ -34,7 +35,12 @@ class AgoraInitializer {
 
     final sharedPref = await SharedPreferences.getInstance();
     final isFirstConnection = await StorageManager.getOnboardingStorageClient().isFirstTime();
-    runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection));
+    await SentryFlutter.init(
+          (options) => options
+        ..dsn = appConfig.sentryDsn
+        ..environment = appConfig.environmentName,
+      appRunner: () => runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection)),
+    );
   }
 
   static Future<Uint8List> _readCertificate() async {
@@ -62,9 +68,15 @@ class AgoraInitializer {
 
 class AgoraAppConfig extends Equatable {
   final String baseUrl;
+  final String environmentName;
+  final String sentryDsn;
 
-  AgoraAppConfig({required this.baseUrl});
+  AgoraAppConfig({
+    required this.baseUrl,
+    required this.environmentName,
+    required this.sentryDsn,
+  });
 
   @override
-  List<Object?> get props => [baseUrl];
+  List<Object?> get props => [baseUrl, environmentName, sentryDsn];
 }

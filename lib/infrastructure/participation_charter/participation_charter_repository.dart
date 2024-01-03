@@ -1,4 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ParticipationCharterRepository {
@@ -7,8 +8,9 @@ abstract class ParticipationCharterRepository {
 
 class ParticipationCharterDioRepository extends ParticipationCharterRepository {
   final AgoraDioHttpClient httpClient;
+  final SentryWrapper? sentryWrapper;
 
-  ParticipationCharterDioRepository({required this.httpClient});
+  ParticipationCharterDioRepository({required this.httpClient, this.sentryWrapper});
 
   @override
   Future<GetParticipationCharterRepositoryResponse> getParticipationCharterResponse() async {
@@ -17,7 +19,8 @@ class ParticipationCharterDioRepository extends ParticipationCharterRepository {
       return GetParticipationCharterSucceedResponse(
         extraText: response.data["extraText"] as String,
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return SendDemographicResponsesFailureResponse();
     }
   }

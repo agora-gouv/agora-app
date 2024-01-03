@@ -12,6 +12,7 @@ import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuit
 import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -42,8 +43,9 @@ abstract class ConsultationRepository {
 
 class ConsultationDioRepository extends ConsultationRepository {
   final AgoraDioHttpClient httpClient;
+  final SentryWrapper? sentryWrapper;
 
-  ConsultationDioRepository({required this.httpClient});
+  ConsultationDioRepository({required this.httpClient, this.sentryWrapper});
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
@@ -84,12 +86,13 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioException) {
         if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
         }
       }
+      sentryWrapper?.captureException(e, s);
       return GetConsultationsFailedResponse();
     }
   }
@@ -112,7 +115,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetConsultationsFinishedPaginatedFailedResponse();
     }
   }
@@ -141,7 +145,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           hasAnswered: response.data["hasAnswered"] as bool,
         ),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetConsultationDetailsFailedResponse();
     }
   }
@@ -163,7 +168,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           chapters: response.data["chapters"] as List,
         ),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetConsultationQuestionsFailedResponse();
     }
   }
@@ -192,7 +198,8 @@ class ConsultationDioRepository extends ConsultationRepository {
       return SendConsultationResponsesSucceedResponse(
         shouldDisplayDemographicInformation: response.data["askDemographicInfo"] as bool,
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return SendConsultationResponsesFailureResponse();
     }
   }
@@ -255,7 +262,8 @@ class ConsultationDioRepository extends ConsultationRepository {
         ),
       );
       return GetConsultationSummarySucceedResponse(consultationSummary: summary);
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetConsultationSummaryFailedResponse();
     }
   }

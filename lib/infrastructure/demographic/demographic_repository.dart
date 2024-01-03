@@ -3,6 +3,7 @@ import 'package:agora/common/extension/demographic_question_type_extension.dart'
 import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/demographic_response.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DemographicRepository {
@@ -15,8 +16,9 @@ abstract class DemographicRepository {
 
 class DemographicDioRepository extends DemographicRepository {
   final AgoraDioHttpClient httpClient;
+  final SentryWrapper? sentryWrapper;
 
-  DemographicDioRepository({required this.httpClient});
+  DemographicDioRepository({required this.httpClient, this.sentryWrapper});
 
   @override
   Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
@@ -30,7 +32,8 @@ class DemographicDioRepository extends DemographicRepository {
           );
         }).toList(),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetDemographicInformationFailureResponse();
     }
   }
@@ -46,7 +49,8 @@ class DemographicDioRepository extends DemographicRepository {
       }
       await httpClient.post("/profile", data: data);
       return SendDemographicResponsesSucceedResponse();
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return SendDemographicResponsesFailureResponse();
     }
   }

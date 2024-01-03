@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/domain/login/login_error_type.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -24,8 +25,9 @@ abstract class LoginRepository {
 
 class LoginDioRepository extends LoginRepository {
   final AgoraDioHttpClient httpClient;
+  final SentryWrapper? sentryWrapper;
 
-  LoginDioRepository({required this.httpClient});
+  LoginDioRepository({required this.httpClient, this.sentryWrapper});
 
   @override
   Future<SignupRepositoryResponse> signup({
@@ -51,7 +53,7 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
         jwtExpirationEpochMilli: response.data["jwtExpirationEpochMilli"] as int,
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioException) {
         final response = e.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
@@ -60,6 +62,7 @@ class LoginDioRepository extends LoginRepository {
           return SignupFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
+      sentryWrapper?.captureException(e, s);
       return SignupFailedResponse();
     }
   }
@@ -90,7 +93,7 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
         jwtExpirationEpochMilli: response.data["jwtExpirationEpochMilli"] as int,
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioException) {
         final response = e.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
@@ -99,6 +102,7 @@ class LoginDioRepository extends LoginRepository {
           return LoginFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
+      sentryWrapper?.captureException(e, s);
       return LoginFailedResponse();
     }
   }
