@@ -17,7 +17,10 @@ class AgoraQuestionsProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: _buildProgressBar());
+    return Semantics(
+      label: 'Étape $currentQuestionOrder sur $totalQuestions',
+      child: Row(children: _buildProgressBar()),
+    );
   }
 
   List<Widget> _buildProgressBar() {

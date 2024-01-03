@@ -59,6 +59,7 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
         child: BlocBuilder<QagSimilarBloc, QagSimilarState>(
           builder: (context, state) {
             return AgoraSecondaryStyleView(
+              pageLabel: QagStrings.similarQagTitle1 + QagStrings.similarQagTitle2,
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [

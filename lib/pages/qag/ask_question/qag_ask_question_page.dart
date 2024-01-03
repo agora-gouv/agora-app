@@ -85,6 +85,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
             return AgoraSecondaryStyleView(
+              pageLabel: QagStrings.askQuestionTitle1 + QagStrings.askQuestionTitle2,
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [

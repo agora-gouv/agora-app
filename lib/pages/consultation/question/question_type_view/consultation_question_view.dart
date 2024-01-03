@@ -33,7 +33,7 @@ class ConsultationQuestionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AgoraToolbar(style: AgoraToolbarStyle.close),
+        AgoraToolbar(style: AgoraToolbarStyle.close, pageLabel: 'Questionnaire de la consultation'),
         Expanded(
           child: AgoraSingleScrollView(
             physics: BouncingScrollPhysics(),

@@ -49,6 +49,7 @@ class _ModerationPageState extends State<ModerationPage> {
           return true;
         },
         child: AgoraSecondaryStyleView(
+          pageLabel: ProfileStrings.moderationCapitalize,
           onBackClick: () => _onBackClick(context),
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,

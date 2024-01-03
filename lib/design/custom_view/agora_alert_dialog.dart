@@ -12,19 +12,22 @@ Future<T?> showAgoraDialog<T>({
     context: context,
     barrierDismissible: dismissible,
     builder: (context) {
-      return AlertDialog(
-        scrollable: true,
+      return Dialog(
         backgroundColor: AgoraColors.background,
         surfaceTintColor: Colors.transparent,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AgoraSpacings.x1_75,
-          vertical: AgoraSpacings.x1_25,
-        ),
         insetPadding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: columnChildren,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AgoraSpacings.x1_75,
+            vertical: AgoraSpacings.x1_25,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: columnChildren,
+            ),
+          ),
         ),
       );
     },

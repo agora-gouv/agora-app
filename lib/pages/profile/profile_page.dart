@@ -43,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
       },
       child: AgoraSecondaryStyleView(
         onBackClick: () => _onBackClick(context),
+        pageLabel: ProfileStrings.my + ProfileStrings.profile,
         title: AgoraRichText(
           policeStyle: AgoraRichTextPoliceStyle.toolbar,
           items: [

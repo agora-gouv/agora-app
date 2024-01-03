@@ -34,6 +34,7 @@ class QagResponsePaginatedPage extends StatelessWidget {
       ],
       child: AgoraScaffold(
         child: AgoraSecondaryStyleView(
+          pageLabel: QagStrings.qagResponsePart1 + QagStrings.qagResponsePart2,
           scrollType: AgoraSecondaryScrollType.custom,
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,

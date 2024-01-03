@@ -99,7 +99,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
     return AgoraScaffold(
       child: Column(
         children: [
-          AgoraToolbar(),
+          AgoraToolbar(pageLabel: 'Détail consultation'),
           Expanded(
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
@@ -115,7 +115,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
     return AgoraScaffold(
       child: Column(
         children: [
-          AgoraToolbar(),
+          AgoraToolbar(pageLabel: 'Détail consultation'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
           Center(child: widget),
         ],

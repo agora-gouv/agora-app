@@ -26,6 +26,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
   final VoidCallback? onBackClick;
   final Widget child;
   final AgoraSecondaryScrollType scrollType;
+  final String pageLabel;
 
   const AgoraSecondaryStyleView({
     super.key,
@@ -34,6 +35,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
     this.onBackClick,
     this.scrollType = AgoraSecondaryScrollType.generic,
     required this.child,
+    required this.pageLabel,
   });
 
   @override
@@ -50,7 +52,12 @@ class AgoraSecondaryStyleView extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Expanded(child: title),
+                  Expanded(
+                    child: Semantics(
+                      excludeSemantics: true,
+                      child: title,
+                    ),
+                  ),
                   if (button != null) ...[
                     SizedBox(width: AgoraSpacings.x0_75),
                     AgoraRoundedButton(
@@ -81,7 +88,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
 
     return Column(
       children: [
-        AgoraToolbar(onBackClick: onBackClick),
+        AgoraToolbar(onBackClick: onBackClick, pageLabel: pageLabel),
         Expanded(child: currentChild),
       ],
     );
