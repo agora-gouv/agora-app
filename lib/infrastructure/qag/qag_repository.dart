@@ -14,6 +14,7 @@ import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -82,8 +83,12 @@ abstract class QagRepository {
 
 class QagDioRepository extends QagRepository {
   final AgoraDioHttpClient httpClient;
+  final SentryWrapper? sentryWrapper;
 
-  QagDioRepository({required this.httpClient});
+  QagDioRepository({
+    required this.httpClient,
+    this.sentryWrapper,
+  });
 
   @override
   Future<CreateQagRepositoryResponse> createQag({
@@ -103,10 +108,11 @@ class QagDioRepository extends QagRepository {
         },
       );
       return CreateQagSucceedResponse(qagId: response.data["qagId"] as String);
-    } catch (e) {
+    } catch (e, s) {
       if ((e as DioException).response?.statusCode == 403) {
         return CreateQagFailedUnauthorizedResponse();
       }
+      sentryWrapper?.captureException(e, s);
       return CreateQagFailedResponse();
     }
   }
@@ -125,7 +131,8 @@ class QagDioRepository extends QagRepository {
       return GetSearchQagsSucceedResponse(
         searchQags: _transformToQagList(response.data["results"] as List),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetSearchQagsFailedResponse();
     }
   }
@@ -139,12 +146,13 @@ class QagDioRepository extends QagRepository {
       return AskQagStatusSucceedResponse(
         askQagError: response.data["askQagError"] as String?,
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioException) {
         if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
           return AskQagStatusFailedResponse(errorType: QagsErrorType.timeout);
         }
       }
+      sentryWrapper?.captureException(e, s);
       return AskQagStatusFailedResponse(errorType: QagsErrorType.generic);
     }
   }
@@ -177,7 +185,8 @@ class QagDioRepository extends QagRepository {
               )
             : null,
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetQagListFailedResponse();
     }
   }
@@ -209,7 +218,8 @@ class QagDioRepository extends QagRepository {
           );
         }).toList(),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetQagsResponseFailedResponse();
     }
   }
@@ -224,7 +234,8 @@ class QagDioRepository extends QagRepository {
         maxPage: response.data["maxPageNumber"] as int,
         paginatedQagsResponse: _transformToQagResponsePaginatedList(response.data["responses"] as List),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetQagsResponsePaginatedFailedResponse();
     }
   }
@@ -300,13 +311,14 @@ class QagDioRepository extends QagRepository {
               : null,
         ),
       );
-    } catch (e) {
+    } catch (e, s) {
       if (e is DioException) {
         final response = e.response;
         if (response != null && response.statusCode == HttpStatus.locked) {
           return GetQagDetailsModerateFailedResponse();
         }
       }
+      sentryWrapper?.captureException(e, s);
       return GetQagDetailsFailedResponse();
     }
   }
@@ -316,7 +328,8 @@ class QagDioRepository extends QagRepository {
     try {
       await httpClient.delete("/qags/$qagId");
       return DeleteQagSucceedResponse();
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return DeleteQagFailedResponse();
     }
   }
@@ -328,7 +341,8 @@ class QagDioRepository extends QagRepository {
     try {
       await httpClient.post("/qags/$qagId/support");
       return SupportQagSucceedResponse();
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return SupportQagFailedResponse();
     }
   }
@@ -338,7 +352,8 @@ class QagDioRepository extends QagRepository {
     try {
       await httpClient.delete("/qags/$qagId/support");
       return DeleteSupportQagSucceedResponse();
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return DeleteSupportQagFailedResponse();
     }
   }
@@ -367,7 +382,8 @@ class QagDioRepository extends QagRepository {
       } else {
         return QagFeedbackSuccessBodyResponse();
       }
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return QagFeedbackFailedResponse();
     }
   }
@@ -395,7 +411,8 @@ class QagDioRepository extends QagRepository {
               .toList(),
         ),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return QagModerationListFailedResponse();
     }
   }
@@ -411,7 +428,8 @@ class QagDioRepository extends QagRepository {
         data: {"isAccepted": isAccepted},
       );
       return ModerateQagSuccessResponse();
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return ModerateQagFailedResponse();
     }
   }
@@ -426,7 +444,8 @@ class QagDioRepository extends QagRepository {
         data: {"title": title},
       );
       return QagHasSimilarSuccessResponse(hasSimilar: response.data["hasSimilar"] as bool);
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return QagHasSimilarFailedResponse();
     }
   }
@@ -454,7 +473,8 @@ class QagDioRepository extends QagRepository {
             )
             .toList(),
       );
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return QagSimilarFailedResponse();
     }
   }
