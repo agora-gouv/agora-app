@@ -27,4 +27,3 @@ analyzer:
     dead_code: error
     unused_element: error
     always_use_package_imports: error
-    deprecated_member_use: ignore #TODO: remove this once WillPopScope has been fixed !!

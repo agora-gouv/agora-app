@@ -5,7 +5,6 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 enum MainBottomNavigationPages { consultation, qag }
 
@@ -33,13 +32,7 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        SystemNavigator.pop();
-        return false;
-      },
-      child: AgoraResponsiveView(child: _buildScaffold()),
-    );
+    return AgoraResponsiveView(child: _buildScaffold());
   }
 
   Scaffold _buildScaffold() {
