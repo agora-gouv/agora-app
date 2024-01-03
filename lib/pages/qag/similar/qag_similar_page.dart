@@ -54,7 +54,7 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
       child: AgoraScaffold(
         popAction: () {
           _backAction(context);
-          return true;
+          return false;
         },
         child: BlocBuilder<QagSimilarBloc, QagSimilarState>(
           builder: (context, state) {
