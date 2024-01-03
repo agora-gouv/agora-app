@@ -68,7 +68,12 @@ class AgoraScaffold extends StatelessWidget {
         backgroundColor: appBarColor,
         toolbarHeight: 0,
         elevation: 0,
-        title: pageLabel != null ? Text(pageLabel!, style: TextStyle(color: Colors.transparent, fontSize: 1), ) : null,
+        title: pageLabel != null
+            ? Text(
+                pageLabel!,
+                style: TextStyle(color: Colors.transparent, fontSize: 1),
+              )
+            : null,
       ),
       body: child,
       floatingActionButton: floatingActionButton,
