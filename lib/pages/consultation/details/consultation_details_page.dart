@@ -84,7 +84,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
         },
         builder: (context, state) {
           if (state is ConsultationDetailsFetchedState) {
-            return _handleFetchState(context, state);
+            return _handleFetchedState(context, state);
           } else if (state is ConsultationDetailsInitialLoadingState) {
             return _buildCommonContent(context, CircularProgressIndicator());
           } else {
@@ -95,7 +95,7 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
     );
   }
 
-  Widget _handleFetchState(BuildContext context, ConsultationDetailsFetchedState state) {
+  Widget _handleFetchedState(BuildContext context, ConsultationDetailsFetchedState state) {
     return AgoraScaffold(
       child: Column(
         children: [
@@ -153,23 +153,26 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
                 child: AgoraHtml(data: viewModel.tipsDescription),
               ),
               SizedBox(height: AgoraSpacings.base),
-              AgoraButton(
-                label: ConsultationStrings.beginButton,
-                style: AgoraButtonStyle.primaryButtonStyle,
-                onPressed: () {
-                  TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.startConsultation} ${widget.arguments.consultationId}",
-                    widgetName: AnalyticsScreenNames.consultationDetailsPage,
-                  );
-                  Navigator.pushNamed(
-                    context,
-                    ConsultationQuestionPage.routeName,
-                    arguments: ConsultationQuestionArguments(
-                      consultationId: viewModel.id,
-                      consultationTitle: viewModel.title,
-                    ),
-                  );
-                },
+              Align(
+                alignment: Alignment.bottomRight,
+                child: AgoraButton(
+                  label: ConsultationStrings.beginButton,
+                  style: AgoraButtonStyle.primaryButtonStyle,
+                  onPressed: () {
+                    TrackerHelper.trackClick(
+                      clickName: "${AnalyticsEventNames.startConsultation} ${widget.arguments.consultationId}",
+                      widgetName: AnalyticsScreenNames.consultationDetailsPage,
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      ConsultationQuestionPage.routeName,
+                      arguments: ConsultationQuestionArguments(
+                        consultationId: viewModel.id,
+                        consultationTitle: viewModel.title,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -185,18 +188,25 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
       children: [
         ThematiqueHelper.buildCard(context, viewModel.thematique),
         SizedBox(height: AgoraSpacings.x0_5),
-        Text(viewModel.title, style: AgoraTextStyles.medium19),
+        Semantics(header: true, child: Text(viewModel.title, style: AgoraTextStyles.medium19)),
         SizedBox(height: AgoraSpacings.x1_5),
         _buildInformationItem(
           image: "ic_calendar.svg",
           text: viewModel.endDate,
           textStyle: AgoraTextStyles.regularItalic14,
+          semanticsPrefix: 'Date de fin :',
         ),
         SizedBox(height: AgoraSpacings.x1_5),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(child: _buildInformationItem(image: "ic_timer.svg", text: viewModel.estimatedTime)),
+            Flexible(
+              child: _buildInformationItem(
+                image: "ic_timer.svg",
+                text: viewModel.estimatedTime,
+                semanticsPrefix: 'Temps de réponse estimé :',
+              ),
+            ),
             SizedBox(width: AgoraSpacings.x0_75),
             Flexible(child: _buildInformationItem(image: "ic_query.svg", text: viewModel.questionCount)),
           ],
@@ -240,15 +250,19 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
   Widget _buildInformationItem({
     required String image,
     required String text,
+    String? semanticsPrefix,
     TextStyle textStyle = AgoraTextStyles.light14,
   }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SvgPicture.asset("assets/$image", excludeFromSemantics: true),
-        SizedBox(width: AgoraSpacings.x0_5),
-        Expanded(child: Text(text, style: textStyle)),
-      ],
+    return Semantics(
+      label: semanticsPrefix,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.asset("assets/$image", excludeFromSemantics: true),
+          SizedBox(width: AgoraSpacings.x0_5),
+          Expanded(child: Text(text, style: textStyle)),
+        ],
+      ),
     );
   }
 }
