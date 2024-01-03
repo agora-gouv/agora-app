@@ -80,7 +80,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       child: AgoraScaffold(
         popAction: () {
           _backAction(context);
-          return true;
+          return false;
         },
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {

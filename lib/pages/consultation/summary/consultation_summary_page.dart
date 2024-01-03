@@ -107,7 +107,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
       child: AgoraScaffold(
         popAction: () {
           _onBackClick(context, consultationId, shouldReloadConsultationsWhenPop);
-          return true;
+          return false;
         },
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(
           builder: (context, state) {

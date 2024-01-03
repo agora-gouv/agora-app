@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return AgoraScaffold(
       popAction: () {
         _onBackClick(context);
-        return true;
+        return false;
       },
       child: AgoraSecondaryStyleView(
         onBackClick: () => _onBackClick(context),
