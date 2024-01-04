@@ -54,9 +54,12 @@ class ThematiqueHelper {
       final List<Widget> spacingSizedBox = [SizedBox(width: AgoraSpacings.base)];
       thematiqueWidgets = spacingSizedBox + thematiqueWidgets + spacingSizedBox;
     }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: thematiqueWidgets,
+    return Semantics(
+      label: 'Liste des thématiques',
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: thematiqueWidgets,
+      ),
     );
   }
 }

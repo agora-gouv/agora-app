@@ -107,7 +107,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
     } else if (state is SendConsultationQuestionsResponsesInitialLoadingState || _shouldDisplayDemographicQuiz(state)) {
       return Column(
         children: [
-          _buildToolbar(context),
+          _buildToolbar(context, 'Envoi en cours'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: CircularProgressIndicator()),
         ],
@@ -115,7 +115,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
     } else {
       return Column(
         children: [
-          _buildToolbar(context),
+          _buildToolbar(context, 'Erreur dans l\'envoi du questionnaire'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: AgoraErrorView()),
         ],
@@ -123,8 +123,9 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
     }
   }
 
-  Widget _buildToolbar(BuildContext context) {
+  Widget _buildToolbar(BuildContext context, String label) {
     return AgoraToolbar(
+      pageLabel: label,
       onBackClick: () => Navigator.popUntil(context, ModalRoute.withName(ConsultationDetailsPage.routeName)),
     );
   }

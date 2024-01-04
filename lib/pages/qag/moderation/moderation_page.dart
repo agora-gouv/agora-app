@@ -46,9 +46,10 @@ class _ModerationPageState extends State<ModerationPage> {
       child: AgoraScaffold(
         popAction: () {
           _onBackClick(context);
-          return true;
+          return false;
         },
         child: AgoraSecondaryStyleView(
+          pageLabel: ProfileStrings.moderationCapitalize,
           onBackClick: () => _onBackClick(context),
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,

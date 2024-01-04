@@ -11,6 +11,7 @@ class AgoraScaffold extends StatelessWidget {
   final bool shouldPop;
   final bool Function()? popAction;
   final Widget? floatingActionButton;
+  final String? pageLabel;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   bool _willPop = false;
 
@@ -23,6 +24,7 @@ class AgoraScaffold extends StatelessWidget {
     this.popAction,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
+    this.pageLabel,
   });
 
   @override
@@ -66,6 +68,12 @@ class AgoraScaffold extends StatelessWidget {
         backgroundColor: appBarColor,
         toolbarHeight: 0,
         elevation: 0,
+        title: pageLabel != null
+            ? Text(
+                pageLabel!,
+                style: TextStyle(color: Colors.transparent, fontSize: 1),
+              )
+            : null,
       ),
       body: child,
       floatingActionButton: floatingActionButton,

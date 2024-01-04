@@ -105,7 +105,10 @@ class ConsultationQuestionPage extends StatelessWidget {
     return AgoraScaffold(
       child: Column(
         children: [
-          AgoraToolbar(style: AgoraToolbarStyle.close),
+          AgoraToolbar(
+            style: AgoraToolbarStyle.close,
+            pageLabel: 'Questionnaire consultation',
+          ),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: child),
         ],

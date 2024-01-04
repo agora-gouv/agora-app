@@ -17,30 +17,36 @@ class AgoraToolbar extends StatelessWidget {
   final VoidCallback? onBackClick;
   final AgoraToolbarStyle style;
   final AgoraToolbarSemantic semantic;
+  final String pageLabel;
 
   const AgoraToolbar({
     super.key,
     this.onBackClick,
     this.style = AgoraToolbarStyle.back,
     this.semantic = const AgoraToolbarSemantic(),
+    required this.pageLabel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x0_5),
-      child: Semantics(
-        button: true,
-        focused: semantic.focused,
-        child: GestureDetector(
-          onTap: () {
-            if (onBackClick != null) {
-              onBackClick!();
-            } else {
-              Navigator.pop(context);
-            }
-          },
-          child: style == AgoraToolbarStyle.back ? _buildBack() : _buildClose(),
+    return Semantics(
+      label: pageLabel,
+      focused: semantic.focused,
+      explicitChildNodes: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x0_5),
+        child: Semantics(
+          button: true,
+          child: GestureDetector(
+            onTap: () {
+              if (onBackClick != null) {
+                onBackClick!();
+              } else {
+                Navigator.pop(context);
+              }
+            },
+            child: style == AgoraToolbarStyle.back ? _buildBack() : _buildClose(),
+          ),
         ),
       ),
     );

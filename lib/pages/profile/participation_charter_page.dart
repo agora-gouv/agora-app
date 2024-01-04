@@ -34,6 +34,7 @@ class ParticipationCharterPage extends StatelessWidget {
       ],
       child: AgoraScaffold(
         child: AgoraSecondaryStyleView(
+          pageLabel: ProfileStrings.charter + ProfileStrings.participation,
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [

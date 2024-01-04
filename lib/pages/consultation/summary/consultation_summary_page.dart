@@ -107,7 +107,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
       child: AgoraScaffold(
         popAction: () {
           _onBackClick(context, consultationId, shouldReloadConsultationsWhenPop);
-          return true;
+          return false;
         },
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(
           builder: (context, state) {
@@ -122,6 +122,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                       needTopDiagonal: false,
                       needToolbar: true,
                       initialToolBarHeight: 200,
+                      pageLabel: 'Résultats de la consultation',
                       onToolbarBackClick: () => _onBackClick(
                         context,
                         consultationId,
@@ -196,6 +197,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
               return Column(
                 children: [
                   AgoraToolbar(
+                    pageLabel: 'Résultats de la consultation',
                     onBackClick: () => _onBackClick(
                       context,
                       consultationId,
@@ -210,6 +212,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
               return Column(
                 children: [
                   AgoraToolbar(
+                    pageLabel: 'Résultats de la consultation',
                     onBackClick: () => _onBackClick(
                       context,
                       consultationId,

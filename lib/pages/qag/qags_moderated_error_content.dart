@@ -18,7 +18,7 @@ class QagsModeratedErrorContent extends StatelessWidget {
     return Expanded(
       child: Column(
         children: <Widget>[
-          AgoraToolbar(),
+          AgoraToolbar(pageLabel: 'Erreur'),
           Spacer(flex: 1),
           Padding(
             padding: const EdgeInsets.symmetric(

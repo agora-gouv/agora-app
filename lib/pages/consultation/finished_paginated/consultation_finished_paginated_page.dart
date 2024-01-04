@@ -37,6 +37,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
       ],
       child: AgoraScaffold(
         child: AgoraSecondaryStyleView(
+          pageLabel: "${ConsultationStrings.finishConsultationPart1} ${ConsultationStrings.finishConsultationPart2}",
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [

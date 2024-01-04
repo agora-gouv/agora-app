@@ -101,7 +101,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
       child: AgoraScaffold(
         popAction: () {
           _popWithBackResult(context);
-          return true;
+          return false;
         },
         appBarColor: AgoraColors.primaryBlue,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
@@ -124,7 +124,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     } else if (detailsState is QagDetailsInitialLoadingState) {
       return Column(
         children: [
-          AgoraToolbar(),
+          AgoraToolbar(pageLabel: 'Détail question citoyenne'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
           Center(child: CircularProgressIndicator()),
         ],
@@ -134,7 +134,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     } else {
       return Column(
         children: [
-          AgoraToolbar(),
+          AgoraToolbar(pageLabel: 'Détail question citoyenne'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: AgoraErrorView()),
         ],
@@ -297,7 +297,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
   }
 
   AgoraToolbar _buildAgoraToolbarWithPopAction(BuildContext context) =>
-      AgoraToolbar(onBackClick: () => _popWithBackResult(context));
+      AgoraToolbar(onBackClick: () => _popWithBackResult(context), pageLabel: 'Détail question citoyenne');
 
   void _popWithBackResult(BuildContext context) {
     Navigator.pop(context, backResult);

@@ -80,38 +80,43 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                 padding: widget.rightIcon == TextFieldIcon.search
                     ? EdgeInsets.only(right: AgoraSpacings.x2)
                     : EdgeInsets.zero,
-                child: TextField(
-                  minLines: 1,
-                  maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
-                  scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),
-                  maxLength: widget.maxLength,
-                  controller: widget.controller,
-                  inputFormatters: _buildTextInputFormatter(),
-                  keyboardType: _buildTextInputType(),
-                  style: AgoraTextStyles.light14,
-                  textInputAction: widget.textInputAction,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(AgoraSpacings.base),
-                    border: UnderlineInputBorder(borderSide: BorderSide.none),
-                    hintText: widget.hintText,
-                    hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.orochimaru),
-                    counterText: "",
-                  ),
-                  onChanged: (String input) {
-                    setState(() => textCount = input.length);
-                    widget.onChanged?.call(input);
+                child: Semantics(
+                  textField: true,
+                  maxValueLength: widget.maxLength,
+                  child: TextField(
+                    minLines: 1,
+                    maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
+                    scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),
+                    maxLength: widget.maxLength,
+                    controller: widget.controller,
+                    inputFormatters: _buildTextInputFormatter(),
+                    keyboardType: _buildTextInputType(),
+                    style: AgoraTextStyles.light14,
+                    textInputAction: widget.textInputAction,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(AgoraSpacings.base),
+                      border: UnderlineInputBorder(borderSide: BorderSide.none),
+                      hintText: widget.hintText,
+                      semanticCounterText: '${widget.maxLength} charactères maximum',
+                      hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.orochimaru),
+                      counterText: "",
+                    ),
+                    onChanged: (String input) {
+                      setState(() => textCount = input.length);
+                      widget.onChanged?.call(input);
 
-                    final announceCharNumber = 0.9 * widget.maxLength;
-                    if (textCount == announceCharNumber) {
-                      final remainingCharNumber = widget.maxLength - announceCharNumber;
-                      SemanticsService.announce(
-                        SemanticsStrings.remainingChar.format(remainingCharNumber.toInt().toString()),
-                        TextDirection.ltr,
-                      );
-                    } else if (textCount == widget.maxLength) {
-                      SemanticsService.announce(SemanticsStrings.maxCharAttempt, TextDirection.ltr);
-                    }
-                  },
+                      final announceCharNumber = 0.9 * widget.maxLength;
+                      if (textCount == announceCharNumber) {
+                        final remainingCharNumber = widget.maxLength - announceCharNumber;
+                        SemanticsService.announce(
+                          SemanticsStrings.remainingChar.format(remainingCharNumber.toInt().toString()),
+                          TextDirection.ltr,
+                        );
+                      } else if (textCount == widget.maxLength) {
+                        SemanticsService.announce(SemanticsStrings.maxCharAttempt, TextDirection.ltr);
+                      }
+                    },
+                  ),
                 ),
               ),
               if (widget.rightIcon == TextFieldIcon.search) ...[

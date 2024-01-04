@@ -33,22 +33,14 @@ class AgoraStepCircle extends StatelessWidget {
     final List<Widget> widgets = [];
     if (style == AgoraStepCircleStyle.single) {
       for (int step = 1; step <= totalStep; step++) {
-        if (step == currentStep) {
-          widgets.add(_buildCircle(AgoraColors.blue525));
-        } else {
-          widgets.add(_buildCircle(AgoraColors.gravelFint));
-        }
+        widgets.add(_buildCircle(step == currentStep));
         if (step != totalStep) {
           widgets.add(SizedBox(width: AgoraSpacings.x0_25));
         }
       }
     } else {
       for (int step = 1; step <= totalStep; step++) {
-        if (step <= currentStep) {
-          widgets.add(_buildCircle(AgoraColors.blue525));
-        } else {
-          widgets.add(_buildCircle(AgoraColors.gravelFint));
-        }
+        widgets.add(_buildCircle(step <= currentStep));
         if (step != totalStep) {
           widgets.add(SizedBox(width: AgoraSpacings.x0_25));
         }
@@ -57,11 +49,14 @@ class AgoraStepCircle extends StatelessWidget {
     return widgets;
   }
 
-  Widget _buildCircle(Color color) {
+  Widget _buildCircle(bool isCurrent) {
     return Container(
-      width: 8.0,
-      height: 8.0,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      width: isCurrent ? 12 : 6,
+      height: isCurrent ? 12 : 6,
+      decoration: BoxDecoration(
+        color: isCurrent ? AgoraColors.blue525 : AgoraColors.gravelFint,
+        shape: BoxShape.circle,
+      ),
     );
   }
 }

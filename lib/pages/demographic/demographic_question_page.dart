@@ -63,7 +63,10 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           builder: (context, responsesStockState) {
             return Column(
               children: [
-                AgoraToolbar(style: AgoraToolbarStyle.close),
+                AgoraToolbar(
+                  style: AgoraToolbarStyle.close,
+                  pageLabel: 'Modifier mes informations',
+                ),
                 Expanded(
                   child: AgoraSingleScrollView(
                     physics: BouncingScrollPhysics(),

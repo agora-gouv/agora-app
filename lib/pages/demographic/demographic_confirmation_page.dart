@@ -79,7 +79,7 @@ class DemographicConfirmationPage extends StatelessWidget {
             } else if (state is SendDemographicResponsesInitialLoadingState || _isProfileJourney(state)) {
               return Column(
                 children: [
-                  AgoraToolbar(),
+                  AgoraToolbar(pageLabel: 'Envoi en cours'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: CircularProgressIndicator()),
                 ],
@@ -87,7 +87,7 @@ class DemographicConfirmationPage extends StatelessWidget {
             } else {
               return Column(
                 children: [
-                  AgoraToolbar(),
+                  AgoraToolbar(pageLabel: 'Echec de l\'envoi des informations démographiques'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: AgoraErrorView()),
                 ],
