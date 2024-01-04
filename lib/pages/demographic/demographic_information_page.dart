@@ -172,7 +172,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   Navigator.pushNamed(
                                     context,
                                     DemographicQuestionPage.routeName,
-                                    arguments: DemographicQuestionArguments(
+                                    arguments: DemographicQuestionArgumentsFromQuestion(
                                       consultationId: arguments.consultationId,
                                       consultationTitle: arguments.consultationTitle,
                                     ),

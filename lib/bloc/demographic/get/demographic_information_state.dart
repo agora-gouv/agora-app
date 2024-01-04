@@ -1,4 +1,4 @@
-import 'package:agora/bloc/demographic/get/demographic_information_view_model.dart';
+import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DemographicInformationState extends Equatable {
@@ -9,12 +9,12 @@ abstract class DemographicInformationState extends Equatable {
 class GetDemographicInformationInitialLoadingState extends DemographicInformationState {}
 
 class GetDemographicInformationSuccessState extends DemographicInformationState {
-  final List<DemographicInformationViewModel> demographicInformationViewModels;
+  final List<DemographicInformation> demographicInformationResponse;
 
-  GetDemographicInformationSuccessState({required this.demographicInformationViewModels});
+  GetDemographicInformationSuccessState({required this.demographicInformationResponse});
 
   @override
-  List<Object> get props => [demographicInformationViewModels];
+  List<Object> get props => [demographicInformationResponse];
 }
 
 class GetDemographicInformationFailureState extends DemographicInformationState {}

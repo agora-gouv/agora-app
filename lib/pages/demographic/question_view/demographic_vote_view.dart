@@ -8,6 +8,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/demographic/demographic_question_type.dart';
+import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:agora/pages/demographic/demographic_helper.dart';
 import 'package:agora/pages/demographic/demographic_response_helper.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class DemographicVoteView extends StatefulWidget {
   ) onContinuePressed;
   final VoidCallback onIgnorePressed;
   final VoidCallback onBackPressed;
+  final List<DemographicResponse> oldResponses;
 
   const DemographicVoteView({
     super.key,
@@ -32,6 +34,7 @@ class DemographicVoteView extends StatefulWidget {
     required this.onContinuePressed,
     required this.onIgnorePressed,
     required this.onBackPressed,
+    required this.oldResponses,
   });
 
   @override
@@ -42,6 +45,23 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
   String? voteFrequencyCode;
   String? publicMeetingFrequencyCode;
   String? consultationFrequencyCode;
+
+  @override
+  void initState() {
+    super.initState();
+    voteFrequencyCode = widget.oldResponses
+        .where((element) => element.demographicType == DemographicType.voteFrequency)
+        .firstOrNull
+        ?.response;
+    publicMeetingFrequencyCode = widget.oldResponses
+        .where((element) => element.demographicType == DemographicType.publicMeetingFrequency)
+        .firstOrNull
+        ?.response;
+    consultationFrequencyCode = widget.oldResponses
+        .where((element) => element.demographicType == DemographicType.consultationFrequency)
+        .firstOrNull
+        ?.response;
+  }
 
   @override
   Widget build(BuildContext context) {

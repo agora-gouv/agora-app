@@ -14,6 +14,7 @@ import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
@@ -26,11 +27,19 @@ import 'package:agora/pages/demographic/question_view/demographic_vote_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DemographicQuestionArguments {
+abstract class DemographicQuestionArguments {}
+
+class DemographicQuestionArgumentsFromQuestion extends DemographicQuestionArguments {
   final String consultationId;
   final String consultationTitle;
 
-  DemographicQuestionArguments({required this.consultationId, required this.consultationTitle});
+  DemographicQuestionArgumentsFromQuestion({required this.consultationId, required this.consultationTitle});
+}
+
+class DemographicQuestionArgumentsFromModify extends DemographicQuestionArguments {
+  final List<DemographicInformation> demographicInformations;
+
+  DemographicQuestionArgumentsFromModify(this.demographicInformations);
 }
 
 class DemographicQuestionPage extends StatefulWidget {
@@ -49,7 +58,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
   Widget build(BuildContext context) {
     arguments = ModalRoute.of(context)!.settings.arguments as DemographicQuestionArguments?;
     return BlocProvider<DemographicResponsesStockBloc>(
-      create: (BuildContext context) => DemographicResponsesStockBloc(),
+      create: (BuildContext context) => DemographicResponsesStockBloc(arguments as DemographicQuestionArgumentsFromModify?),
       child: AgoraScaffold(
         popAction: () {
           if (currentStep == 1) {
@@ -170,6 +179,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         return DemographicDepartmentView(
           step: currentStep,
           totalStep: totalStep,
+          oldResponse: _getOldResponse(DemographicType.department, oldResponses),
           onContinuePressed: (departmentCode) => setState(() {
             _trackContinueClick(step);
             _stockResponse(context, DemographicType.department, departmentCode);
@@ -225,6 +235,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           step: currentStep,
           totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question6ResponseChoice(),
+          oldResponses: oldResponses,
           onContinuePressed: (voteFrequencyCode, publicMeetingFrequencyCode, consultationFrequencyCode) => setState(() {
             _trackContinueClick(step);
             if (voteFrequencyCode != null) {
@@ -288,8 +299,8 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         context,
         DemographicConfirmationPage.routeName,
         arguments: DemographicConfirmationArguments(
-          consultationId: arguments?.consultationId,
-          consultationTitle: arguments?.consultationTitle,
+          consultationId: arguments is DemographicQuestionArgumentsFromQuestion ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId : null,
+          consultationTitle: arguments is DemographicQuestionArgumentsFromQuestion ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle : null,
           demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
         ),
       );
