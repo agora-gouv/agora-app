@@ -58,7 +58,8 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
   Widget build(BuildContext context) {
     arguments = ModalRoute.of(context)!.settings.arguments as DemographicQuestionArguments?;
     return BlocProvider<DemographicResponsesStockBloc>(
-      create: (BuildContext context) => DemographicResponsesStockBloc(arguments as DemographicQuestionArgumentsFromModify?),
+      create: (BuildContext context) =>
+          DemographicResponsesStockBloc(arguments as DemographicQuestionArgumentsFromModify?),
       child: AgoraScaffold(
         popAction: () {
           if (currentStep == 1) {
@@ -299,8 +300,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         context,
         DemographicConfirmationPage.routeName,
         arguments: DemographicConfirmationArguments(
-          consultationId: arguments is DemographicQuestionArgumentsFromQuestion ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId : null,
-          consultationTitle: arguments is DemographicQuestionArgumentsFromQuestion ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle : null,
+          consultationId: arguments is DemographicQuestionArgumentsFromQuestion
+              ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId
+              : null,
+          consultationTitle: arguments is DemographicQuestionArgumentsFromQuestion
+              ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle
+              : null,
           demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
         ),
       );

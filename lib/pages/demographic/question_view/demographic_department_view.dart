@@ -39,7 +39,8 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
     super.initState();
     final oldCode = widget.oldResponse?.response;
     if (oldCode != null) {
-      final oldDepartment = DepartmentHelper.getDepartment().where((department) => department.code == oldCode).firstOrNull;
+      final oldDepartment =
+          DepartmentHelper.getDepartment().where((department) => department.code == oldCode).firstOrNull;
       if (oldDepartment != null) {
         selectedDepartment = oldDepartment;
         findDepartments = [oldDepartment];
