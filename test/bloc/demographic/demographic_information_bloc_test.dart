@@ -1,7 +1,8 @@
 import 'package:agora/bloc/demographic/get/demographic_information_bloc.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_event.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_state.dart';
-import 'package:agora/bloc/demographic/get/demographic_information_view_model.dart';
+import 'package:agora/domain/demographic/demographic_information.dart';
+import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -17,18 +18,18 @@ void main() {
       act: (bloc) => bloc.add(GetDemographicInformationEvent()),
       expect: () => [
         GetDemographicInformationSuccessState(
-          demographicInformationViewModels: [
-            DemographicInformationViewModel(demographicType: "Genre", data: "Homme"),
-            DemographicInformationViewModel(demographicType: "Année de naissance", data: "1999"),
-            DemographicInformationViewModel(
-              demographicType: "Département ou collectivité d'outre mer",
-              data: "Paris (75)",
+          demographicInformationResponse: [
+            DemographicInformation(demographicType: DemographicType.gender, data: "M"),
+            DemographicInformation(demographicType: DemographicType.yearOfBirth, data: "1999"),
+            DemographicInformation(
+              demographicType: DemographicType.department,
+              data: "75",
             ),
-            DemographicInformationViewModel(demographicType: "J'habite", data: "En milieu rural"),
-            DemographicInformationViewModel(demographicType: "Catégorie socio-professionnelle", data: "Non renseigné"),
-            DemographicInformationViewModel(demographicType: "Fréquence de vote", data: "Jamais"),
-            DemographicInformationViewModel(demographicType: "Engagement sur le terrain", data: "Souvent"),
-            DemographicInformationViewModel(demographicType: "Engagement en ligne", data: "Parfois"),
+            DemographicInformation(demographicType: DemographicType.cityType, data: "R"),
+            DemographicInformation(demographicType: DemographicType.jobCategory, data: null),
+            DemographicInformation(demographicType: DemographicType.voteFrequency, data: "J"),
+            DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: "S"),
+            DemographicInformation(demographicType: DemographicType.consultationFrequency, data: "P"),
           ],
         ),
       ],
@@ -55,35 +56,35 @@ void main() {
         demographicRepository: FakeDemographicFailureRepository(),
       ),
       seed: () => GetDemographicInformationSuccessState(
-        demographicInformationViewModels: [
-          DemographicInformationViewModel(demographicType: "Genre", data: "Homme"),
-          DemographicInformationViewModel(demographicType: "Année de naissance", data: "1999"),
-          DemographicInformationViewModel(
-            demographicType: "Département ou collectivité d'outre mer",
+        demographicInformationResponse: [
+          DemographicInformation(demographicType: DemographicType.gender, data: "M"),
+          DemographicInformation(demographicType: DemographicType.yearOfBirth, data: "1999"),
+          DemographicInformation(
+            demographicType: DemographicType.department,
             data: "Paris (75)",
           ),
-          DemographicInformationViewModel(demographicType: "J'habite", data: "En milieu rural"),
-          DemographicInformationViewModel(demographicType: "Catégorie socio-professionnelle", data: "Cadres"),
-          DemographicInformationViewModel(demographicType: "Vote", data: "Jamais"),
-          DemographicInformationViewModel(demographicType: "Engagement sur le terrain", data: "Souvent"),
-          DemographicInformationViewModel(demographicType: "Engagement en ligne", data: "Parfois"),
+          DemographicInformation(demographicType: DemographicType.cityType, data: "R"),
+          DemographicInformation(demographicType: DemographicType.jobCategory, data: "C"),
+          DemographicInformation(demographicType: DemographicType.voteFrequency, data: "J"),
+          DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: "S"),
+          DemographicInformation(demographicType: DemographicType.consultationFrequency, data: "P"),
         ],
       ),
       act: (bloc) => bloc.add(RemoveDemographicInformationEvent()),
       expect: () => [
         GetDemographicInformationSuccessState(
-          demographicInformationViewModels: [
-            DemographicInformationViewModel(demographicType: "Genre", data: "Non renseigné"),
-            DemographicInformationViewModel(demographicType: "Année de naissance", data: "Non renseigné"),
-            DemographicInformationViewModel(
-              demographicType: "Département ou collectivité d'outre mer",
-              data: "Non renseigné",
+          demographicInformationResponse: [
+            DemographicInformation(demographicType: DemographicType.gender, data: null),
+            DemographicInformation(demographicType: DemographicType.yearOfBirth, data: null),
+            DemographicInformation(
+              demographicType: DemographicType.department,
+              data: null,
             ),
-            DemographicInformationViewModel(demographicType: "J'habite", data: "Non renseigné"),
-            DemographicInformationViewModel(demographicType: "Catégorie socio-professionnelle", data: "Non renseigné"),
-            DemographicInformationViewModel(demographicType: "Vote", data: "Non renseigné"),
-            DemographicInformationViewModel(demographicType: "Engagement sur le terrain", data: "Non renseigné"),
-            DemographicInformationViewModel(demographicType: "Engagement en ligne", data: "Non renseigné"),
+            DemographicInformation(demographicType: DemographicType.cityType, data: null),
+            DemographicInformation(demographicType: DemographicType.jobCategory, data: null),
+            DemographicInformation(demographicType: DemographicType.voteFrequency, data: null),
+            DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: null),
+            DemographicInformation(demographicType: DemographicType.consultationFrequency, data: null),
           ],
         ),
       ],
