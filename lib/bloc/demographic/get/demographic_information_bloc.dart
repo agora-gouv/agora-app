@@ -31,12 +31,15 @@ class DemographicInformationBloc extends Bloc<DemographicInformationEvent, Demog
   ) async {
     final currentState = state;
     if (currentState is GetDemographicInformationSuccessState) {
-      final emptyList = currentState.demographicInformationResponse
+      final demographicInformationsWithEmptyData = currentState.demographicInformationResponse
           .map(
-            (e) => DemographicInformation(demographicType: e.demographicType, data: null),
+            (demographicInformation) => DemographicInformation(
+              demographicType: demographicInformation.demographicType,
+              data: null,
+            ),
           )
           .toList();
-      emit(GetDemographicInformationSuccessState(demographicInformationResponse: emptyList));
+      emit(GetDemographicInformationSuccessState(demographicInformationResponse: demographicInformationsWithEmptyData));
     }
   }
 }
