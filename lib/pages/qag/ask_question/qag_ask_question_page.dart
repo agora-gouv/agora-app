@@ -58,6 +58,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   bool shouldReloadQags = false;
 
   static const questionMinLength = 10;
+  static const questionMaxLength = 200;
   bool isQuestionLengthError = false;
 
   final timerHelper = TimerHelper(countdownDurationInSecond: 5);
@@ -174,7 +175,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
-                maxLength: 200,
+                maxLength: questionMaxLength,
                 hintText: QagStrings.questionHint,
                 showCounterText: true,
                 error: isQuestionLengthError,
@@ -392,6 +393,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
 
   bool _couldSend() {
     return question.isNotBlank() &&
+        question.length <= questionMaxLength &&
         question.length >= questionMinLength &&
         thematique != null &&
         firstname.isNotBlank() &&
