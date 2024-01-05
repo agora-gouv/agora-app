@@ -168,13 +168,15 @@ class QagListSection extends StatelessWidget {
       return [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-          child: AgoraQagHeader(
-            id: viewModel.id,
-            title: viewModel.title,
-            message: viewModel.message,
-            onCloseHeader: (headerId) {
-              context.read<QagListBloc>().add(CloseHeaderQagListEvent(headerId: headerId));
-            },
+          child: Center(
+            child: AgoraQagHeader(
+              id: viewModel.id,
+              title: viewModel.title,
+              message: viewModel.message,
+              onCloseHeader: (headerId) {
+                context.read<QagListBloc>().add(CloseHeaderQagListEvent(headerId: headerId));
+              },
+            ),
           ),
         ),
         SizedBox(height: AgoraSpacings.base),
