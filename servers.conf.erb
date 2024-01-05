@@ -1,12 +1,17 @@
+geo $authentication {
+    default "Protected Site User: <%= ENV['NGINX_USER'] %>";
+    <%= ENV['NGINX_WEBAPP_ACCESS_RULES'] %>
+}
+
 server {
     server_name localhost;
     listen <%= ENV['PORT'] %>;
 
     <% if ENV['NGINX_PASSWORD'] %>
-    auth_basic           "Protected Site User: <%= ENV['NGINX_USER'] %>";
+    auth_basic $authentication;
     auth_basic_user_file "/app/config/htpasswd";
     <% end %>
-                              
+
     charset utf-8;
     autoindex off;
     root /app/public_html;
