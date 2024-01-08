@@ -113,44 +113,50 @@ class QagsResponseSection extends StatelessWidget {
     for (final qagResponse in qagResponses) {
       if (qagResponse is QagResponseViewModel) {
         qagWidget.add(
-          AgoraQagResponseCard(
-            title: qagResponse.title,
-            thematique: qagResponse.thematique,
-            authorImageUrl: qagResponse.authorPortraitUrl,
-            author: qagResponse.author,
-            date: qagResponse.responseDate,
-            style: AgoraQagResponseStyle.small,
-            onClick: () {
-              TrackerHelper.trackClick(
-                clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
-                widgetName: AnalyticsScreenNames.qagsPage,
-              );
-              Navigator.pushNamed(
-                context,
-                QagDetailsPage.routeName,
-                arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null),
-              );
-            },
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: AgoraQagResponseCard(
+              title: qagResponse.title,
+              thematique: qagResponse.thematique,
+              authorImageUrl: qagResponse.authorPortraitUrl,
+              author: qagResponse.author,
+              date: qagResponse.responseDate,
+              style: AgoraQagResponseStyle.small,
+              onClick: () {
+                TrackerHelper.trackClick(
+                  clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                );
+                Navigator.pushNamed(
+                  context,
+                  QagDetailsPage.routeName,
+                  arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null),
+                );
+              },
+            ),
           ),
         );
       } else if (qagResponse is QagResponseIncomingViewModel) {
         qagWidget.add(
-          AgoraQagIncomingResponseCard(
-            title: qagResponse.title,
-            thematique: qagResponse.thematique,
-            supportCount: qagResponse.supportCount,
-            isSupported: qagResponse.isSupported,
-            onClick: () {
-              TrackerHelper.trackClick(
-                clickName: "${AnalyticsEventNames.incomingAnsweredQag} ${qagResponse.qagId}",
-                widgetName: AnalyticsScreenNames.qagsPage,
-              );
-              Navigator.pushNamed(
-                context,
-                QagDetailsPage.routeName,
-                arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null),
-              );
-            },
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: AgoraQagIncomingResponseCard(
+              title: qagResponse.title,
+              thematique: qagResponse.thematique,
+              supportCount: qagResponse.supportCount,
+              isSupported: qagResponse.isSupported,
+              onClick: () {
+                TrackerHelper.trackClick(
+                  clickName: "${AnalyticsEventNames.incomingAnsweredQag} ${qagResponse.qagId}",
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                );
+                Navigator.pushNamed(
+                  context,
+                  QagDetailsPage.routeName,
+                  arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null),
+                );
+              },
+            ),
           ),
         );
       }
