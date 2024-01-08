@@ -10,7 +10,7 @@ class AgoraQagHeader extends StatelessWidget {
   final String id;
   final String title;
   final String message;
-  final Function(String) onCloseHeader;
+  final void Function(String) onCloseHeader;
 
   const AgoraQagHeader({
     super.key,

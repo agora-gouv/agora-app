@@ -99,6 +99,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
         hintText: ConsultationStrings.hintText,
         controller: textEditingController,
         showCounterText: true,
+        blockToMaxLength: true,
         onChanged: (openedResponseInput) {
           setState(() => openedResponse = openedResponseInput);
         },

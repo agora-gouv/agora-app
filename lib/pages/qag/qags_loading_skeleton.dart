@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
@@ -14,37 +15,79 @@ class QagsLoadingSkeleton extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildQagHeader(context),
           SizedBox(height: AgoraSpacings.x0_75),
-          Row(
-            children: [
-              SkeletonBox(
-                width: 180.0,
-                height: 184.0,
-              ),
-            ],
+          SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SkeletonBox(
+                  width: 180.0,
+                  height: 184.0,
+                ),
+                if (ResponsiveHelper.isLargerThanMobile(context)) ...[
+                  const SizedBox(width: 20),
+                  SkeletonBox(
+                    width: 180.0,
+                    height: 184.0,
+                  ),
+                  const SizedBox(width: 20),
+                  SkeletonBox(
+                    width: 180.0,
+                    height: 184.0,
+                  ),
+                  const SizedBox(width: 20),
+                  SkeletonBox(
+                    width: 180.0,
+                    height: 184.0,
+                  ),
+                ],
+              ],
+            ),
           ),
           SizedBox(height: AgoraSpacings.x0_75),
           _buildQagHeader(context),
           SizedBox(height: AgoraSpacings.x0_75),
-          Row(
-            children: [
-              SkeletonBox(
-                width: 76.0,
-                height: 76.0,
-              ),
-              SizedBox(width: AgoraSpacings.x0_75),
-              SkeletonBox(
-                width: 76.0,
-                height: 76.0,
-              ),
-              SizedBox(width: AgoraSpacings.x0_75),
-              SkeletonBox(
-                width: 76.0,
-                height: 76.0,
-              ),
-            ],
+          SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: Row(
+              children: [
+                SkeletonBox(
+                  width: 76.0,
+                  height: 76.0,
+                ),
+                SizedBox(width: AgoraSpacings.x0_75),
+                SkeletonBox(
+                  width: 76.0,
+                  height: 76.0,
+                ),
+                SizedBox(width: AgoraSpacings.x0_75),
+                SkeletonBox(
+                  width: 76.0,
+                  height: 76.0,
+                ),
+                if (ResponsiveHelper.isLargerThanMobile(context)) ...[
+                  const SizedBox(width: AgoraSpacings.x0_75),
+                  SkeletonBox(
+                    width: 76.0,
+                    height: 76.0,
+                  ),
+                  const SizedBox(width: AgoraSpacings.x0_75),
+                  SkeletonBox(
+                    width: 76.0,
+                    height: 76.0,
+                  ),
+                  const SizedBox(width: AgoraSpacings.x0_75),
+                  SkeletonBox(
+                    width: 76.0,
+                    height: 76.0,
+                  ),
+                ],
+              ],
+            ),
           ),
           SizedBox(height: AgoraSpacings.x0_75),
           Row(

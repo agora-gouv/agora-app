@@ -57,7 +57,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   bool isCheck = false;
   bool shouldReloadQags = false;
 
-  static const questionMinLength = 10;
+  static const _questionMinLength = 10;
+  static const _questionMaxLength = 200;
+  static const _detailMaxLength = 400;
+  static const _nameMaxLength = 50;
   bool isQuestionLengthError = false;
 
   final timerHelper = TimerHelper(countdownDurationInSecond: 5);
@@ -174,7 +177,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
-                maxLength: 200,
+                maxLength: _questionMaxLength,
                 hintText: QagStrings.questionHint,
                 showCounterText: true,
                 error: isQuestionLengthError,
@@ -183,7 +186,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                     question = input;
 
                     var shouldCheckQuestionLength = false;
-                    if (question.length >= questionMinLength) {
+                    if (question.length >= _questionMinLength) {
                       isQuestionLengthError = false;
                     } else {
                       shouldCheckQuestionLength = true;
@@ -233,7 +236,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               Text(QagStrings.detailsDescription, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
-                maxLength: 400,
+                maxLength: _detailMaxLength,
                 hintText: QagStrings.detailsHint,
                 showCounterText: true,
                 onChanged: (input) => setState(() => details = input),
@@ -288,7 +291,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
-                maxLength: 50,
+                maxLength: _nameMaxLength,
                 hintText: QagStrings.yourNameHint,
                 showCounterText: true,
                 onChanged: (input) => setState(() => firstname = input),
@@ -392,7 +395,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
 
   bool _couldSend() {
     return question.isNotBlank() &&
-        question.length >= questionMinLength &&
+        question.length <= _questionMaxLength &&
+        details.length <= _detailMaxLength &&
+        firstname.length <= _nameMaxLength &&
+        question.length >= _questionMinLength &&
         thematique != null &&
         firstname.isNotBlank() &&
         isCheck;
@@ -402,7 +408,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
     setState(() {
       if (shouldCheckQuestionLength) {
         isQuestionLengthError = (question.isNullOrBlank() && question.isNotEmpty) ||
-            (question.isNotBlank() && question.length < questionMinLength);
+            (question.isNotBlank() && question.length < _questionMinLength);
       }
     });
   }
