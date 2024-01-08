@@ -90,7 +90,9 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                     minLines: 1,
                     maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
                     scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),
-                    maxLength: widget.blockToMaxLength || widget.textInputType == TextFieldInputType.number ? widget.maxLength : widget.maxLength * 2,
+                    maxLength: widget.blockToMaxLength || widget.textInputType == TextFieldInputType.number
+                        ? widget.maxLength
+                        : widget.maxLength * 2,
                     controller: widget.controller,
                     inputFormatters: _buildTextInputFormatter(),
                     keyboardType: _buildTextInputType(),
@@ -138,7 +140,8 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
           SizedBox(height: AgoraSpacings.x0_25),
           Text(
             "${_tooMuchInput ? 'Limite de caractères dépassée ' : ''}$textCount/${widget.maxLength}",
-            style: AgoraTextStyles.light12.copyWith(color: _tooMuchInput ? AgoraColors.fluorescentRed : AgoraColors.primaryGreyOpacity70),
+            style: AgoraTextStyles.light12
+                .copyWith(color: _tooMuchInput ? AgoraColors.fluorescentRed : AgoraColors.primaryGreyOpacity70),
             semanticsLabel: SemanticsHelper.step(textCount, widget.maxLength),
           ),
         ],
