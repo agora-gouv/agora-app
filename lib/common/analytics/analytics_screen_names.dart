@@ -10,6 +10,7 @@ class AnalyticsScreenNames {
   static const String consultationsFinishedPaginatedPage = "Liste infinie des consultations finis";
 
   static const String qagsPage = "Liste des QaGs";
+  static const String qagsSearchFromAskPage = "Recherche depuis formulaire";
   static const String qagDetailsPage = "Détails d'une QaG";
   static const String qagDetailsDeletePage = "Supprimer sa QaG";
   static const String qagAskQuestionPage = "Poser une QaG";

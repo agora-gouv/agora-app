@@ -3,18 +3,26 @@ import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/bloc/qag/search/qag_search_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
 import 'package:agora/pages/qag/agora_qag_supportable_card.dart';
+import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagSearch extends StatelessWidget {
+  final bool fromHome;
+
+  QagSearch([this.fromHome = true]);
+
   @override
   Widget build(BuildContext context) {
     return BlocSelector<QagSearchBloc, QagSearchState, _ViewModel>(
@@ -27,14 +35,47 @@ class QagSearch extends StatelessWidget {
         } else if (viewModel is _QagSearchLoadingViewModel) {
           section = Center(child: CircularProgressIndicator());
         } else if (viewModel is _QagSearchNoResultViewModel) {
-          section = Center(
-            child: Text(
-              QagStrings.searchQagEmptyList,
-              style: AgoraTextStyles.regular14,
+          section = Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(top: AgoraSpacings.base),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    QagStrings.searchQagEmptyList,
+                    style: AgoraTextStyles.regular14,
+                  ),
+                  const SizedBox(height: AgoraSpacings.base),
+                  AgoraRoundedButton(
+                    label: QagStrings.askQuestion,
+                    onPressed: () {
+                      TrackerHelper.trackClick(
+                        clickName: AnalyticsEventNames.askQuestion,
+                        widgetName: AnalyticsScreenNames.qagsPage,
+                      );
+                      if (fromHome) {
+                        Navigator.pushNamed(context, QagAskQuestionPage.routeName);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         } else if (viewModel is _QagSearchEmptyViewModel) {
-          section = Center();
+          section = Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(top: AgoraSpacings.base),
+              child: Text(
+                QagStrings.searchQagEnterSomeCharacteres,
+                style: AgoraTextStyles.regular14,
+              ),
+            ),
+          );
         } else {
           section = Center(child: AgoraErrorView());
         }

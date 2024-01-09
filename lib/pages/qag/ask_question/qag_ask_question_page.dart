@@ -30,10 +30,12 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
+import 'package:agora/pages/qag/ask_question/ask_question_qag_search.dart';
 import 'package:agora/pages/qag/ask_question/qag_thematiques_drop_down.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
@@ -201,6 +203,8 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 SizedBox(height: AgoraSpacings.x0_75),
                 AgoraErrorView(errorMessage: QagStrings.questionRequiredCondition),
               ],
+              const SizedBox(height: AgoraSpacings.x0_75),
+              _AstuceElement(),
               SizedBox(height: AgoraSpacings.base),
               BlocBuilder<QagHasSimilarBloc, QagHasSimilarState>(
                 builder: (context, state) {
@@ -411,5 +415,54 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
             (question.isNotBlank() && question.length < _questionMinLength);
       }
     });
+  }
+}
+
+class _AstuceElement extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(AgoraCorners.rounded),
+      child: Material(
+        color: AgoraColors.blue525opacity06,
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              SearchPageFromAskQuestionPage.routeName,
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(AgoraSpacings.base),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  QagStrings.astuceQuestionTitre,
+                  textAlign: TextAlign.start,
+                  style: AgoraTextStyles.medium14,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: AgoraSpacings.base),
+                  child: RichText(
+                    textScaler: MediaQuery.of(context).textScaler,
+                    text: TextSpan(
+                      style: AgoraTextStyles.regular14,
+                      children: [
+                        TextSpan(text: QagStrings.astuceQuestionDescription),
+                        TextSpan(
+                          text: QagStrings.astuceQuestionDescriptionLink,
+                          style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
