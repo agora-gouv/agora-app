@@ -100,8 +100,8 @@ class QagStrings {
   static const String yourQuestion = "Votre question";
   static const String suppressSucceed = "La suppression a été prise en compte.";
   static const String searchQuestion = "Rechercher un mot-clef";
-  static const String astuceQuestionTitre = "🔎 Astuce :";
+  static const String astuceQuestionTitre = "🔎 Astuce";
   static const String astuceQuestionDescription =
-      "si votre question a déjà été posée par un autre utilisateur, il vaut mieux la soutenir qu’en poser une nouvelle ! ";
+      "Si votre question a déjà été posée par un autre utilisateur, il vaut mieux la soutenir qu’en poser une nouvelle\u{00A0}! ";
   static const String astuceQuestionDescriptionLink = "Recherchez ici si c’est le cas.";
 }
