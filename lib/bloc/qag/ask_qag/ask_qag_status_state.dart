@@ -1,23 +1,23 @@
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:equatable/equatable.dart';
 
-sealed class AskQagState extends Equatable {
+sealed class AskQagStatusState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class AskQagInitialLoadingState extends AskQagState {}
+class AskQagInitialLoadingState extends AskQagStatusState {}
 
-class QagAskFetchedState extends AskQagState {
+class AskQagStatusFetchedState extends AskQagStatusState {
   final String? askQagError;
 
-  QagAskFetchedState({required this.askQagError});
+  AskQagStatusFetchedState({required this.askQagError});
 
   @override
   List<Object?> get props => [askQagError];
 }
 
-class AskQagErrorState extends AskQagState {
+class AskQagErrorState extends AskQagStatusState {
   final QagsErrorType errorType;
 
   AskQagErrorState({this.errorType = QagsErrorType.generic});

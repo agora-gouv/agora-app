@@ -1,5 +1,5 @@
-import 'package:agora/bloc/qag/ask_qag/ask_qag_bloc.dart';
-import 'package:agora/bloc/qag/ask_qag/ask_qag_event.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_status_bloc.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_status_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
@@ -50,7 +50,7 @@ class _QagsPageState extends State<QagsPage> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (BuildContext context) => AskQagBloc(
+            create: (BuildContext context) => AskQagStatusBloc(
               qagRepository: RepositoryManager.getQagRepository(),
             )..add(FetchAskQagStatusEvent()),
           ),
