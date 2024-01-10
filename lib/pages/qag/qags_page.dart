@@ -32,12 +32,12 @@ class QagsPage extends StatefulWidget {
 class _QagsPageState extends State<QagsPage> {
   final GlobalKey toolbarTitleKey = GlobalKey();
   String? currentThematiqueId;
-  late final GlobalKey searchBarKey;
+  late final GlobalKey onSearchAnchorKey;
 
   @override
   void initState() {
     super.initState();
-    searchBarKey = GlobalKey();
+    onSearchAnchorKey = GlobalKey();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
     });
@@ -90,7 +90,7 @@ class _QagsPageState extends State<QagsPage> {
               ),
               SizedBox(height: AgoraSpacings.base),
               QagsResponseSection(),
-              QagsAskQuestionSectionPage(),
+              QagsAskQuestionSectionPage(key: onSearchAnchorKey),
               QagsSection(
                 defaultSelected: QagTab.trending,
                 selectedThematiqueId: currentThematiqueId,
@@ -101,7 +101,7 @@ class _QagsPageState extends State<QagsPage> {
                       eventName: AnalyticsEventNames.qagsSearch,
                     );
                     Scrollable.ensureVisible(
-                      searchBarKey.currentContext!,
+                      onSearchAnchorKey.currentContext!,
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,
                     );
