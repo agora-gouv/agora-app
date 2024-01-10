@@ -16,7 +16,8 @@ class QagStrings {
   static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";
   static const String searchQagEmptyList = "Pas de résultat.";
-  static const String searchQagEnterSomeCharacteres = "Explorez les questions existantes qui pourraient correspondre en entrant au moins 3 caractères.";
+  static const String searchQagEnterSomeCharacteres =
+      "Explorez les questions existantes qui pourraient correspondre en entrant au moins 3 caractères.";
   static const String searchQagHint = "Rechercher un mot-clef";
   static const String by = "Par";
   static const String at = "le";
