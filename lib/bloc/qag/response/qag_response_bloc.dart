@@ -1,6 +1,5 @@
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
-import 'package:agora/infrastructure/qag/presenter/qag_response_presenter.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

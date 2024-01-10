@@ -144,7 +144,7 @@ class QagDioRepository extends QagRepository {
         "/qags/ask_status",
       );
       return AskQagStatusSucceedResponse(
-        askQagError: response.data["askQagError"] as String?,
+        askQagError: response.data["askQagErrorText"] as String?,
       );
     } catch (e, s) {
       if (e is DioException) {
