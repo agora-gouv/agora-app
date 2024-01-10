@@ -126,7 +126,7 @@ void main() {
   });
 
   group("Fetch ask QaG status", () {
-    test("when success - should return success with askQagError", () async {
+    test("when success - should return success with askQagErrorText", () async {
       // Given
       dioAdapter.onGet(
         "/qags/ask_status",
@@ -136,7 +136,7 @@ void main() {
         },
         (server) => server.reply(
           HttpStatus.ok,
-          {"askQagError": "QaG weekly limit !"},
+          {"askQagErrorText": "QaG weekly limit !"},
         ),
       );
 

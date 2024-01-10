@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-abstract class AskQagEvent extends Equatable {
+abstract class AskQagStatusEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class FetchAskQagStatusEvent extends AskQagEvent {
+class FetchAskQagStatusEvent extends AskQagStatusEvent {
   FetchAskQagStatusEvent();
 
   @override

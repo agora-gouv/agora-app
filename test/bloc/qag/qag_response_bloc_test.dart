@@ -1,8 +1,9 @@
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
-import 'package:agora/bloc/qag/response/qag_response_view_model.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/domain/qag/qag_response.dart';
+import 'package:agora/domain/qag/qag_response_incoming.dart';
+import 'package:agora/domain/thematique/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -23,21 +24,23 @@ void main() {
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
         QagResponseFetchedState(
-          qagResponseViewModels: [
-            QagResponseIncomingViewModel(
+          incomingQagResponses: [
+            QagResponseIncoming(
               qagId: "qagId2",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "Pour la ...",
               supportCount: 200,
               isSupported: true,
             ),
-            QagResponseViewModel(
+          ],
+          qagResponses: [
+            QagResponse(
               qagId: "qagId",
-              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "Pour la retraite : comment est-ce qu'on aboutit au chiffre de 65 ans ?",
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
-              responseDate: "a répondu le 23 janvier",
+              responseDate: DateTime(2024, 1, 23),
             ),
           ],
         ),

@@ -389,7 +389,9 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           Center(
             child: AgoraRoundedButton(
               label: QagStrings.goToAllQuestion,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
         ],
