@@ -70,7 +70,7 @@ class _ContentState extends State<_Content> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5),
           child: Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(AgoraSpacings.x0_75),
             decoration: BoxDecoration(
               color: AgoraColors.doctor,
               boxShadow: [
