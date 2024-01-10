@@ -210,5 +210,5 @@ class _ViewModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [viewModel];
+  List<Object?> get props => [viewModel, isLoading, hasError];
 }
