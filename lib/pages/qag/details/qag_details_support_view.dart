@@ -40,6 +40,8 @@ class QagDetailsSupportView extends StatelessWidget {
           selector: (supportState) => _toViewModel(supportState),
           builder: (context, viewModel) {
             onSupportChange(viewModel.supportCount(), viewModel.isSupported());
+            final isLoading2 = viewModel.isLoading;
+            print('isLoading dans la vue : $isLoading2');
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -51,7 +53,7 @@ class QagDetailsSupportView extends StatelessWidget {
                         child: AgoraRoundedButton(
                           icon: _buildButtonIcon(viewModel.isSupported()),
                           label: _buildButtonLabel(viewModel.isSupported()),
-                          isLoading: viewModel.isLoading,
+                          isLoading: isLoading2,
                           style: _buildButtonStyle(viewModel.isSupported()),
                           onPressed: () =>
                               _buildOnPressed(context, qagId, viewModel.isSupported(), viewModel.isLoading),
@@ -97,8 +99,10 @@ class QagDetailsSupportView extends StatelessWidget {
   }
 
   _ViewModel _toViewModel(QagSupportState supportState) {
+    final isLoading2 = supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState;
+    print('isLoading : $isLoading2');
     return _ViewModel(
-      isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
+      isLoading: isLoading2,
       hasError: supportState is QagSupportErrorState || supportState is QagDeleteSupportErrorState,
       viewModel: _toLikeViewModel(supportState),
     );
@@ -210,5 +214,5 @@ class _ViewModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [viewModel];
+  List<Object?> get props => [viewModel, isLoading, hasError];
 }
