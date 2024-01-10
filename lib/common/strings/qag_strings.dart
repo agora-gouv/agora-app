@@ -16,6 +16,7 @@ class QagStrings {
   static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";
   static const String searchQagEmptyList = "Pas de résultat.";
+  static const String searchQagEnterSomeCharacteres = "Veuillez entrer au moins 3 caractères";
   static const String searchQagHint = "Rechercher un mot-clef";
   static const String by = "Par";
   static const String at = "le";
@@ -99,4 +100,8 @@ class QagStrings {
   static const String yourQuestion = "Votre question";
   static const String suppressSucceed = "La suppression a été prise en compte.";
   static const String searchQuestion = "Rechercher un mot-clef";
+  static const String astuceQuestionTitre = "🔎 Astuce :";
+  static const String astuceQuestionDescription =
+      "si votre question a déjà été posée par un autre utilisateur, il vaut mieux la soutenir qu’en poser une nouvelle ! ";
+  static const String astuceQuestionDescriptionLink = "Recherchez ici si c’est le cas.";
 }

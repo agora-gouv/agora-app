@@ -2,16 +2,15 @@ import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
-import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/agora_search_bar.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
+import 'package:agora/pages/qag/ask_question/qag_search_input_utils.dart';
 import 'package:agora/pages/qag/list/qag_list_section.dart';
 import 'package:agora/pages/qag/qags_search.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
@@ -109,21 +108,12 @@ class _QagsSectionState extends State<QagsSection> {
 
     textController.addListener(() {
       previousSearchKeywords = textController.text;
-      final sanitizedInput = StringUtils.replaceDiacriticsAndRemoveSpecialChars(textController.text);
-      bool reloadQags = false;
-      if (sanitizedInput.isNullOrBlank() || sanitizedInput.length < 3) {
-        context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
-        previousSearchKeywordsSanitized = '';
-      } else {
-        if (previousSearchKeywordsSanitized.length != sanitizedInput.length) {
-          reloadQags = true;
-        }
-        previousSearchKeywordsSanitized = sanitizedInput;
-      }
-      if (reloadQags) {
-        context.read<QagSearchBloc>().add(FetchQagsLoadingEvent());
-        timerHelper.startTimer(() => _loadQags(context, sanitizedInput));
-      }
+      previousSearchKeywordsSanitized = processNewInput(
+        context,
+        textController,
+        timerHelper,
+        previousSearchKeywordsSanitized,
+      );
     });
 
     return Padding(
@@ -271,17 +261,5 @@ class _QagsSectionState extends State<QagsSection> {
         ],
       ),
     );
-  }
-
-  void _loadQags(BuildContext context, String keywords) {
-    context.read<QagSearchBloc>().add(FetchQagsSearchEvent(keywords: keywords));
-
-    if (keywords.isNotEmpty == true) {
-      TrackerHelper.trackSearch(
-        widgetName: AnalyticsScreenNames.qagsPage,
-        searchName: AnalyticsEventNames.qagsSearch,
-        searchedKeywords: keywords,
-      );
-    }
   }
 }
