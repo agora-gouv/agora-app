@@ -90,34 +90,28 @@ class _QagsPageState extends State<QagsPage> {
               ),
               SizedBox(height: AgoraSpacings.base),
               QagsResponseSection(),
-              ..._handleQagState(context),
+              QagsAskQuestionSectionPage(),
+              QagsSection(
+                defaultSelected: QagTab.trending,
+                selectedThematiqueId: currentThematiqueId,
+                onSearchBarOpen: (bool isSearchOpen) {
+                  if (isSearchOpen) {
+                    TrackerHelper.trackEvent(
+                      widgetName: AnalyticsScreenNames.qagsPage,
+                      eventName: AnalyticsEventNames.qagsSearch,
+                    );
+                    Scrollable.ensureVisible(
+                      searchBarKey.currentContext!,
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  List<Widget> _handleQagState(BuildContext context) {
-    return [
-      QagsAskQuestionSectionPage(),
-      QagsSection(
-        defaultSelected: QagTab.trending,
-        selectedThematiqueId: currentThematiqueId,
-        onSearchBarOpen: (bool isSearchOpen) {
-          if (isSearchOpen) {
-            TrackerHelper.trackEvent(
-              widgetName: AnalyticsScreenNames.qagsPage,
-              eventName: AnalyticsEventNames.qagsSearch,
-            );
-            Scrollable.ensureVisible(
-              searchBarKey.currentContext!,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            );
-          }
-        },
-      ),
-    ];
   }
 }
