@@ -69,10 +69,15 @@ class QagSearch extends StatelessWidget {
           section = Align(
             alignment: Alignment.topCenter,
             child: Padding(
-              padding: const EdgeInsets.only(top: AgoraSpacings.base),
+              padding: const EdgeInsets.only(
+                top: AgoraSpacings.base,
+                left: AgoraSpacings.base,
+                right: AgoraSpacings.base,
+              ),
               child: Text(
                 QagStrings.searchQagEnterSomeCharacteres,
                 style: AgoraTextStyles.regular14,
+                textAlign: TextAlign.center,
               ),
             ),
           );
