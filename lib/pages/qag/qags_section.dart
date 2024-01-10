@@ -10,7 +10,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
-import 'package:agora/pages/qag/ask_question/ask_question_qag_search.dart';
+import 'package:agora/pages/qag/ask_question/qag_search_input_utils.dart';
 import 'package:agora/pages/qag/list/qag_list_section.dart';
 import 'package:agora/pages/qag/qags_search.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
