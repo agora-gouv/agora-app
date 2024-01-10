@@ -17,11 +17,12 @@ class QagResponseBloc extends Bloc<FetchQagsResponseEvent, QagResponseState> {
   ) async {
     final response = await qagRepository.fetchQagsResponse();
     if (response is GetQagsResponseSucceedResponse) {
-      final qagResponseViewModels = QagResponsePresenter.presentQagResponse(
-        incomingQagResponses: response.qagResponsesIncoming,
-        qagResponses: response.qagResponses,
+      emit(
+        QagResponseFetchedState(
+          incomingQagResponses: response.qagResponsesIncoming,
+          qagResponses: response.qagResponses,
+        ),
       );
-      emit(QagResponseFetchedState(qagResponseViewModels: qagResponseViewModels));
     } else if (response is GetQagsResponseFailedResponse) {
       emit(QagResponseErrorState());
     }

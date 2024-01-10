@@ -49,6 +49,7 @@ dependencies:
   shimmer: ^3.0.0
   diacritic: ^0.1.4
   lottie: ^2.7.0
+  intersperse: ^2.0.0
 
 dev_dependencies:
   flutter_test:
