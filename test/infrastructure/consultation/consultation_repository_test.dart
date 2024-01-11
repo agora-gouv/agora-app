@@ -776,7 +776,7 @@ void main() {
                   "title": "toogle text title",
                   "intro": "<body>image introduction</body>",
                   "image": {
-                    "url" : "<imageURL>",
+                    "url": "<imageURL>",
                     "description": "<imageDescription>",
                   },
                   "description": "<body>image description</body>",
