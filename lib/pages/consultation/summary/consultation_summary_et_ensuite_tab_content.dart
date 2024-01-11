@@ -15,6 +15,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intersperse/intersperse.dart';
 
 class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
   final String consultationTitle;
@@ -220,19 +221,14 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
 
   List<Widget> _getCollapseContent(ConsultationSummaryEtEnsuiteExplanationViewModel explanation) {
     return [
-      if (explanation.intro.isNotEmpty) ...[
-        AgoraHtml(data: explanation.intro),
-        SizedBox(height: AgoraSpacings.base),
-      ],
-      if (explanation.imageUrl != null) ...[
+      if (explanation.intro.isNotEmpty) AgoraHtml(data: explanation.intro),
+      if (explanation.imageUrl != null)
         Image.network(
           explanation.imageUrl!,
-          excludeFromSemantics: explanation.imageDescription != null,
+          excludeFromSemantics: explanation.imageDescription == null,
           semanticLabel: explanation.imageDescription,
         ),
-        SizedBox(height: AgoraSpacings.base),
-      ],
       if (explanation.description.isNotEmpty) AgoraHtml(data: explanation.description),
-    ];
+    ].intersperse(const SizedBox(height: AgoraSpacings.base)).toList();
   }
 }
