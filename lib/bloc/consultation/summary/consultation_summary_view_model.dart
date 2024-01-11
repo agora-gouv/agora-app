@@ -118,7 +118,8 @@ class ConsultationSummaryEtEnsuiteExplanationViewModel extends Equatable {
   final bool isTogglable;
   final String title;
   final String intro;
-  final String imageUrl;
+  final String? imageUrl;
+  final String? imageDescription;
   final String description;
 
   ConsultationSummaryEtEnsuiteExplanationViewModel({
@@ -126,6 +127,7 @@ class ConsultationSummaryEtEnsuiteExplanationViewModel extends Equatable {
     required this.title,
     required this.intro,
     required this.imageUrl,
+    required this.imageDescription,
     required this.description,
   });
 
@@ -136,6 +138,7 @@ class ConsultationSummaryEtEnsuiteExplanationViewModel extends Equatable {
         intro,
         imageUrl,
         description,
+        imageDescription,
       ];
 }
 

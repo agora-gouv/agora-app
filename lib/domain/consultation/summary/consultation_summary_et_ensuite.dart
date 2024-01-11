@@ -32,8 +32,9 @@ class ConsultationSummaryEtEnsuiteExplanation extends Equatable {
   final bool isTogglable;
   final String title;
   final String intro;
-  final String imageUrl;
+  final String? imageUrl;
   final String description;
+  final String? imageDescription;
 
   ConsultationSummaryEtEnsuiteExplanation({
     required this.isTogglable,
@@ -41,14 +42,16 @@ class ConsultationSummaryEtEnsuiteExplanation extends Equatable {
     required this.intro,
     required this.imageUrl,
     required this.description,
+    required this.imageDescription,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         isTogglable,
         title,
         intro,
         imageUrl,
+        imageDescription,
         description,
       ];
 }
