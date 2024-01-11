@@ -220,11 +220,19 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
 
   List<Widget> _getCollapseContent(ConsultationSummaryEtEnsuiteExplanationViewModel explanation) {
     return [
-      AgoraHtml(data: explanation.intro),
-      SizedBox(height: AgoraSpacings.base),
-      Image.network(explanation.imageUrl, excludeFromSemantics: true),
-      SizedBox(height: AgoraSpacings.base),
-      AgoraHtml(data: explanation.description),
+      if (explanation.intro.isNotEmpty) ...[
+        AgoraHtml(data: explanation.intro),
+        SizedBox(height: AgoraSpacings.base),
+      ],
+      if (explanation.imageUrl != null) ...[
+        Image.network(
+          explanation.imageUrl!,
+          excludeFromSemantics: explanation.imageDescription != null,
+          semanticLabel: explanation.imageDescription,
+        ),
+        SizedBox(height: AgoraSpacings.base),
+      ],
+      if (explanation.description.isNotEmpty) AgoraHtml(data: explanation.description),
     ];
   }
 }

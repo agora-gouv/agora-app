@@ -775,7 +775,10 @@ void main() {
                   "isTogglable": false,
                   "title": "toogle text title",
                   "intro": "<body>image introduction</body>",
-                  "imageUrl": "<imageURL>",
+                  "image": {
+                    "url" : "<imageURL>",
+                    "description": "<imageDescription>",
+                  },
                   "description": "<body>image description</body>",
                 }
               ],
@@ -848,6 +851,7 @@ void main() {
                   title: "toogle text title",
                   intro: "<body>image introduction</body>",
                   imageUrl: "<imageURL>",
+                  imageDescription: "<imageDescription>",
                   description: "<body>image description</body>",
                 ),
               ],
@@ -897,6 +901,10 @@ void main() {
                   "title": "toogle text title",
                   "intro": "<body>image introduction</body>",
                   "imageUrl": "<imageURL>",
+                  "image": {
+                    "url": "<imageURL>",
+                    "description": null,
+                  },
                   "description": "<body>image description</body>",
                 }
               ],
@@ -942,6 +950,7 @@ void main() {
                   title: "toogle text title",
                   intro: "<body>image introduction</body>",
                   imageUrl: "<imageURL>",
+                  imageDescription: null,
                   description: "<body>image description</body>",
                 ),
               ],

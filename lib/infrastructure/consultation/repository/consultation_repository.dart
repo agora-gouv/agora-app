@@ -233,7 +233,8 @@ class ConsultationDioRepository extends ConsultationRepository {
               isTogglable: explanation["isTogglable"] as bool,
               title: explanation["title"] as String,
               intro: explanation["intro"] as String,
-              imageUrl: explanation["imageUrl"] as String,
+              imageUrl: (explanation['image'] as Map?)?['url'] as String?,
+              imageDescription: (explanation['image'] as Map?)?['description'] as String?,
               description: explanation["description"] as String,
             );
           }).toList(),
