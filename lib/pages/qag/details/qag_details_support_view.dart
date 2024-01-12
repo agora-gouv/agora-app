@@ -31,7 +31,8 @@ class QagDetailsSupportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: _animationControllerKey2, likeViewKey: _likeViewKey);
+    final likeAnimationView =
+        AgoraLikeAnimationView(animationControllerKey: _animationControllerKey2, likeViewKey: _likeViewKey);
 
     return Stack(
       children: [
