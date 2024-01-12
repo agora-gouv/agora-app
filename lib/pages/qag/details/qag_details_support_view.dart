@@ -31,8 +31,8 @@ class QagDetailsSupportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeViewKey = GlobalKey();
-    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey);
+    final likeAnimationView =
+        AgoraLikeAnimationView(animationControllerKey: _animationControllerKey, likeViewKey: _likeViewKey);
 
     return Stack(
       children: [
@@ -68,7 +68,7 @@ class QagDetailsSupportView extends StatelessWidget {
                           isSupported: viewModel.isSupported(),
                           supportCount: viewModel.supportCount(),
                           shouldHaveVerticalPadding: true,
-                          likeViewKey: likeViewKey,
+                          likeViewKey: _likeViewKey,
                         ),
                       ),
                     ),
@@ -212,3 +212,6 @@ class _ViewModel extends Equatable {
   @override
   List<Object?> get props => [viewModel, isLoading, hasError];
 }
+
+final _animationControllerKey = GlobalKey<AgoraAnimatedLikeViewState>();
+final _likeViewKey = GlobalKey();
