@@ -72,7 +72,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: _items.map((item) {
                 final onTapIndex = _items.indexOf(item);
-                return GestureDetector(
+                return InkWell(
                   onTap: () {
                     setState(() {
                       _currentSelectedIndex = onTapIndex;
@@ -113,21 +113,25 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   }
 
   Widget _buildItemWidget(int selectedIndex, AgoraBottomNavigationBarItem item) {
-    return Container(
-      color: selectedIndex == _currentSelectedIndex ? _activeBgColor : _inactiveBgColor,
-      height: kIsWeb
-          ? _webBottomBarHeight
-          : PlatformStaticHelper.isIOS()
-              ? _iosBottomBarHeight
-              : _androidBottomBarHeight,
-      width: _width / _items.length,
-      child: Column(
-        mainAxisAlignment: PlatformStaticHelper.isIOS() ? MainAxisAlignment.start : MainAxisAlignment.center,
-        children: <Widget>[
-          if (PlatformStaticHelper.isIOS()) SizedBox(height: AgoraSpacings.x0_75),
-          _setIcon(selectedIndex, item),
-          _setLabel(selectedIndex, item),
-        ],
+    return Semantics(
+      selected: selectedIndex == _currentSelectedIndex,
+      button: true,
+      child: Container(
+        color: selectedIndex == _currentSelectedIndex ? _activeBgColor : _inactiveBgColor,
+        height: kIsWeb
+            ? _webBottomBarHeight
+            : PlatformStaticHelper.isIOS()
+                ? _iosBottomBarHeight
+                : _androidBottomBarHeight,
+        width: _width / _items.length,
+        child: Column(
+          mainAxisAlignment: PlatformStaticHelper.isIOS() ? MainAxisAlignment.start : MainAxisAlignment.center,
+          children: <Widget>[
+            if (PlatformStaticHelper.isIOS()) SizedBox(height: AgoraSpacings.x0_75),
+            _setIcon(selectedIndex, item),
+            _setLabel(selectedIndex, item),
+          ],
+        ),
       ),
     );
   }
