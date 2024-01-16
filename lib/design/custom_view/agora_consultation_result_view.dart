@@ -24,7 +24,10 @@ class AgoraConsultationResultView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(questionTitle, style: AgoraTextStyles.medium17),
+          Semantics(
+            header: true,
+            child: Text(questionTitle, style: AgoraTextStyles.medium17),
+          ),
           SizedBox(height: AgoraSpacings.x1_5),
           ..._buildResponses(),
         ],
@@ -40,10 +43,15 @@ class AgoraConsultationResultView extends StatelessWidget {
     }
     for (var response in responses) {
       responseWidgets.add(
-        AgoraConsultationResultBar(
-          ratio: response.ratio,
-          response: response.label,
-          minusPadding: AgoraSpacings.horizontalPadding * 2,
+        MergeSemantics(
+          child: Semantics(
+            label: 'Choix ${responses.indexOf(response) + 1} sur ${responses.length}',
+            child: AgoraConsultationResultBar(
+              ratio: response.ratio,
+              response: response.label,
+              minusPadding: AgoraSpacings.horizontalPadding * 2,
+            ),
+          ),
         ),
       );
       responseWidgets.add(SizedBox(height: AgoraSpacings.x0_75));
