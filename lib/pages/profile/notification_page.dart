@@ -39,6 +39,7 @@ class _NotificationPageState extends State<NotificationPage> {
         builder: (context, state) {
           return AgoraScaffold(
             child: AgoraSecondaryStyleView(
+              pageLabel: ProfileStrings.notification,
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [

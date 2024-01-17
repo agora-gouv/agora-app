@@ -81,7 +81,9 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
                         hintText: ConsultationStrings.otherChoiceHint,
                         controller: textEditingController,
                         showCounterText: true,
+                        blockToMaxLength: true,
                         maxLength: 200,
+                        textInputAction: TextInputAction.done,
                         onChanged: (otherResponseText) {
                           otherResponse = otherResponseText;
                           widget.onOtherResponseChanged(widget.responseId, otherResponse);

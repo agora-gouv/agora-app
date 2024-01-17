@@ -48,7 +48,7 @@ class AgoraLikeView extends StatelessWidget {
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : 0,
+              horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : AgoraSpacings.x0_375,
               vertical: shouldHaveVerticalPadding ? 2 : 0,
             ),
             child: Row(

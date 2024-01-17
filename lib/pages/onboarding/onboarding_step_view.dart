@@ -35,6 +35,7 @@ class OnboardingStepView extends StatelessWidget {
               children: [
                 Semantics(
                   focused: true,
+                  label: 'Tutoriel, ${_getLabelNumberPage(step)} partie',
                   child: AgoraRichText(
                     policeStyle: AgoraRichTextPoliceStyle.police28,
                     items: _buildTitle(),
@@ -146,5 +147,16 @@ class OnboardingStepView extends StatelessWidget {
       case OnboardingStep.invent:
         return 3;
     }
+  }
+}
+
+String _getLabelNumberPage(OnboardingStep step) {
+  switch (step) {
+    case OnboardingStep.participate:
+      return 'première';
+    case OnboardingStep.askYourQuestion:
+      return 'deuxième';
+    case OnboardingStep.invent:
+      return 'troisième';
   }
 }

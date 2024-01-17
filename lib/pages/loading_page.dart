@@ -230,14 +230,14 @@ class _LoadingPageState extends State<LoadingPage> {
 
   void _pushPageWithCondition(BuildContext context) {
     if (widget.redirection.shouldShowQagDetails) {
-      Navigator.pushNamed(context, QagsPage.routeName);
+      Navigator.pushReplacementNamed(context, QagsPage.routeName);
       Navigator.pushNamed(
         context,
         QagDetailsPage.routeName,
         arguments: QagDetailsArguments(qagId: widget.redirection.qagId!, reload: QagReload.qagsPage),
       );
     } else {
-      Navigator.pushNamed(context, ConsultationsPage.routeName);
+      Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
       if (widget.redirection.shouldShowConsultationDetails) {
         Navigator.pushNamed(
           context,

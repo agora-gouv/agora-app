@@ -1,6 +1,6 @@
 import 'package:agora/bloc/demographic/get/demographic_information_event.dart';
 import 'package:agora/bloc/demographic/get/demographic_information_state.dart';
-import 'package:agora/infrastructure/demographic/demographic_information_presenter.dart';
+import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +19,7 @@ class DemographicInformationBloc extends Bloc<DemographicInformationEvent, Demog
   ) async {
     final response = await demographicRepository.getDemographicResponses();
     if (response is GetDemographicInformationSucceedResponse) {
-      final viewModels = DemographicInformationPresenter.present(response.demographicInformations);
-      emit(GetDemographicInformationSuccessState(demographicInformationViewModels: viewModels));
+      emit(GetDemographicInformationSuccessState(demographicInformationResponse: response.demographicInformations));
     } else {
       emit(GetDemographicInformationFailureState());
     }
@@ -32,10 +31,15 @@ class DemographicInformationBloc extends Bloc<DemographicInformationEvent, Demog
   ) async {
     final currentState = state;
     if (currentState is GetDemographicInformationSuccessState) {
-      final viewModels = DemographicInformationPresenter.presentEmptyData(
-        currentState.demographicInformationViewModels,
-      );
-      emit(GetDemographicInformationSuccessState(demographicInformationViewModels: viewModels));
+      final demographicInformationsWithEmptyData = currentState.demographicInformationResponse
+          .map(
+            (demographicInformation) => DemographicInformation(
+              demographicType: demographicInformation.demographicType,
+              data: null,
+            ),
+          )
+          .toList();
+      emit(GetDemographicInformationSuccessState(demographicInformationResponse: demographicInformationsWithEmptyData));
     }
   }
 }

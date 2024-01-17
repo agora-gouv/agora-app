@@ -3,6 +3,7 @@ import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:agora/domain/demographic/department.dart';
 import 'package:agora/pages/demographic/demographic_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class DemographicDepartmentView extends StatefulWidget {
   final Function(String responseCode) onContinuePressed;
   final VoidCallback onIgnorePressed;
   final VoidCallback onBackPressed;
+  final DemographicResponse? oldResponse;
 
   const DemographicDepartmentView({
     super.key,
@@ -21,6 +23,7 @@ class DemographicDepartmentView extends StatefulWidget {
     required this.onContinuePressed,
     required this.onIgnorePressed,
     required this.onBackPressed,
+    required this.oldResponse,
   });
 
   @override
@@ -30,6 +33,20 @@ class DemographicDepartmentView extends StatefulWidget {
 class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
   List<Department> findDepartments = [];
   Department? selectedDepartment;
+
+  @override
+  void initState() {
+    super.initState();
+    final oldCode = widget.oldResponse?.response;
+    if (oldCode != null) {
+      final oldDepartment =
+          DepartmentHelper.getDepartment().where((department) => department.code == oldCode).firstOrNull;
+      if (oldDepartment != null) {
+        selectedDepartment = oldDepartment;
+        findDepartments = [oldDepartment];
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

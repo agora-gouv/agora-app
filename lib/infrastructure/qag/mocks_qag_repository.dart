@@ -3,7 +3,7 @@ import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 
 class MockQagRepository extends QagDioRepository {
-  MockQagRepository({required super.httpClient});
+  MockQagRepository({required super.httpClient, super.sentryWrapper});
 
   @override
   Future<QagHasSimilarRepositoryResponse> hasSimilarQag({

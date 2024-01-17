@@ -13,6 +13,7 @@ class AgoraAppBarWithTabs extends StatefulWidget {
   final bool needToolbar;
   final double initialToolBarHeight;
   final VoidCallback? onToolbarBackClick;
+  final String pageLabel;
 
   AgoraAppBarWithTabs({
     required this.topChild,
@@ -22,6 +23,7 @@ class AgoraAppBarWithTabs extends StatefulWidget {
     this.needToolbar = false,
     this.onToolbarBackClick,
     this.initialToolBarHeight = 112,
+    required this.pageLabel,
   }) : assert(onToolbarBackClick == null || needToolbar);
 
   @override
@@ -56,6 +58,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
             if (widget.needTopDiagonal) AgoraTopDiagonal(),
             if (widget.needToolbar)
               AgoraToolbar(
+                pageLabel: widget.pageLabel,
                 key: _backBarChildKey,
                 onBackClick: widget.onToolbarBackClick,
                 // semantic focus is in line 101 => first tab get the semantic focus

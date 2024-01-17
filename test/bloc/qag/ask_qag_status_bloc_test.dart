@@ -1,6 +1,6 @@
-import 'package:agora/bloc/qag/ask_qag/ask_qag_bloc.dart';
-import 'package:agora/bloc/qag/ask_qag/ask_qag_event.dart';
-import 'package:agora/bloc/qag/ask_qag/ask_qag_state.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_status_bloc.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_status_event.dart';
+import 'package:agora/bloc/qag/ask_qag/ask_qag_status_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -15,18 +15,18 @@ void main() {
   group("FetchAskQagStatusEvent", () {
     blocTest(
       "when repository succeed - should emit success state",
-      build: () => AskQagBloc(
+      build: () => AskQagStatusBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
       act: (bloc) => bloc.add(FetchAskQagStatusEvent()),
       expect: () => [
-        QagAskFetchedState(askQagError: "askQagError"),
+        AskQagStatusFetchedState(askQagError: "askQagError"),
       ],
     );
 
     blocTest(
       "when repository fails - should emit error state",
-      build: () => AskQagBloc(
+      build: () => AskQagStatusBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
       act: (bloc) => bloc.add(FetchAskQagStatusEvent()),

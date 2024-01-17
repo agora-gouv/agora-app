@@ -49,6 +49,7 @@ class ConsultationSummaryPresenter {
             title: explanation.title,
             intro: explanation.intro,
             imageUrl: explanation.imageUrl,
+            imageDescription: explanation.imageDescription,
             description: explanation.description,
           );
         }).toList(),

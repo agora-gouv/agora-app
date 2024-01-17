@@ -16,27 +16,39 @@ class AgoraHtmlStyles {
   static Map<String, Style> htmlStyle(BuildContext context) {
     final textScaler = MediaQuery.of(context).textScaler;
     return {
-      "body": AgoraHtmlStyles.bodyStyle(textScaler),
-      "ul": AgoraHtmlStyles.bodyStyle(textScaler),
-      "ol": AgoraHtmlStyles.bodyStyle(textScaler),
-      "li": AgoraHtmlStyles.bodyStyle(textScaler),
-      "b": AgoraHtmlStyles.boldStyle(textScaler),
-      "h1": AgoraHtmlStyles.h1Style(textScaler),
-      "span": AgoraHtmlStyles.spanStyle(textScaler),
+      "body": AgoraHtmlStyles._bodyStyle(textScaler),
+      "ul": AgoraHtmlStyles._bodyStyle(textScaler),
+      "ol": AgoraHtmlStyles._bodyStyle(textScaler),
+      "li": AgoraHtmlStyles._bodyStyle(textScaler),
+      "b": AgoraHtmlStyles._boldStyle(textScaler),
+      "h1": AgoraHtmlStyles._h1Style(textScaler),
+      "span": AgoraHtmlStyles._spanStyle(textScaler),
+      "a": AgoraHtmlStyles._linkStyle(textScaler),
     };
   }
 
-  static Style bodyStyle(TextScaler textScaler) => Style(
+  static Style _bodyStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: light,
         fontSize: FontSize(textScaler.scale(14.0)),
         color: AgoraColors.primaryGrey,
+        textDecorationColor: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 
-  static Style boldStyle(TextScaler textScaler) => Style(
+  static Style _linkStyle(TextScaler textScaler) => Style(
+        fontFamily: marianne,
+        fontWeight: light,
+        fontSize: FontSize(textScaler.scale(14.0)),
+        color: AgoraColors.primaryBlue,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings.zero,
+        margin: Margins.zero,
+      );
+
+  static Style _boldStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: medium,
         fontSize: FontSize(textScaler.scale(14.0)),
@@ -46,7 +58,7 @@ class AgoraHtmlStyles {
         margin: Margins.zero,
       );
 
-  static Style h1Style(TextScaler textScaler) => Style(
+  static Style _h1Style(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: bold,
         fontSize: FontSize(textScaler.scale(16.0)),
@@ -56,7 +68,7 @@ class AgoraHtmlStyles {
         margin: Margins.zero,
       );
 
-  static Style spanStyle(TextScaler textScaler) => Style(
+  static Style _spanStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: bold,
         fontSize: FontSize(textScaler.scale(14.0)),

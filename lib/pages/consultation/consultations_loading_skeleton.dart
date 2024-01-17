@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
@@ -17,15 +18,9 @@ class ConsultationsLoadingSkeleton extends StatelessWidget {
         children: [
           _buildQagHeader(context),
           SizedBox(height: AgoraSpacings.base),
-          SkeletonBox(
-            width: 400.0,
-            height: 400.0,
-          ),
+          _OnGoingConsultationLoadingItem(),
           SizedBox(height: AgoraSpacings.base),
-          SkeletonBox(
-            width: 400.0,
-            height: 400.0,
-          ),
+          _OnGoingConsultationLoadingItem(),
         ],
       ),
     );
@@ -53,5 +48,34 @@ class ConsultationsLoadingSkeleton extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _OnGoingConsultationLoadingItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    if (ResponsiveHelper.isLargerThanMobile(context)) {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            child: SkeletonBox(
+              height: 400.0,
+            ),
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            child: SkeletonBox(
+              height: 400.0,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return SkeletonBox(
+        width: 400.0,
+        height: 400.0,
+      );
+    }
   }
 }

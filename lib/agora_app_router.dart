@@ -19,6 +19,7 @@ import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/profile/profile_demographic_information_page.dart';
 import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/qag/ask_question/ask_question_qag_search.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
@@ -160,6 +161,12 @@ class AgoraAppRouter {
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagDetailsDeletePage,
           child: QagDetailsDeleteConfirmationPage(arguments: arguments),
+        );
+        break;
+      case SearchPageFromAskQuestionPage.routeName:
+        currentRoute = AgoraTracker(
+          widgetName: AnalyticsScreenNames.qagsSearchFromAskPage,
+          child: SearchPageFromAskQuestionPage(),
         );
         break;
       case DemographicConfirmationPage.routeName:

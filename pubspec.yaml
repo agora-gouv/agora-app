@@ -3,7 +3,7 @@ description: Agora project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.3.0+31
+version: 1.3.1+32
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -23,9 +23,9 @@ dependencies:
   basic_utils: ^5.7.0
   intl: ^0.18.1
   get_it: ^7.6.4
-  flutter_html: ^3.0.0-alpha.6 # not support for web
+  flutter_html: ^3.0.0-beta.2 # not support for web
   url_launcher: ^6.1.14
-  logger: ^2.0.2 # not support for web
+  logger: ^2.0.2+1
   device_info_plus: ^9.1.1
   permission_handler: ^11.1.0 # not support for web
   video_player: ^2.7.1
@@ -45,9 +45,11 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
+  sentry_flutter: ^7.14.0
   shimmer: ^3.0.0
   diacritic: ^0.1.4
   lottie: ^2.7.0
+  intersperse: ^2.0.0
 
 dev_dependencies:
   flutter_test:

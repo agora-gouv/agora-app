@@ -1,5 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/domain/thematique/thematique_with_id.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ThematiqueRepository {
@@ -8,8 +9,9 @@ abstract class ThematiqueRepository {
 
 class ThematiqueDioRepository extends ThematiqueRepository {
   final AgoraDioHttpClient httpClient;
+  final SentryWrapper? sentryWrapper;
 
-  ThematiqueDioRepository({required this.httpClient});
+  ThematiqueDioRepository({required this.httpClient, this.sentryWrapper});
 
   @override
   Future<ThematiqueRepositoryResponse> fetchThematiques() async {
@@ -25,7 +27,8 @@ class ThematiqueDioRepository extends ThematiqueRepository {
           )
           .toList();
       return GetThematiqueSucceedResponse(thematiques: thematiques);
-    } catch (e) {
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
       return GetThematiqueFailedResponse();
     }
   }

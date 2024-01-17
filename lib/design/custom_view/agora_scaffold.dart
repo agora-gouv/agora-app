@@ -3,6 +3,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AgoraScaffold extends StatelessWidget {
   final Widget child;
   final Color appBarColor;
@@ -10,9 +11,11 @@ class AgoraScaffold extends StatelessWidget {
   final bool shouldPop;
   final bool Function()? popAction;
   final Widget? floatingActionButton;
+  final String? pageLabel;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+  bool _willPop = false;
 
-  const AgoraScaffold({
+  AgoraScaffold({
     super.key,
     this.appBarColor = AgoraColors.white,
     this.backgroundColor = AgoraColors.white,
@@ -21,15 +24,24 @@ class AgoraScaffold extends StatelessWidget {
     this.popAction,
     this.floatingActionButton,
     this.floatingActionButtonLocation,
+    this.pageLabel,
   });
 
   @override
   Widget build(BuildContext context) {
     if (shouldPop) {
       if (popAction != null) {
-        return WillPopScope(
-          onWillPop: () async {
-            return popAction!();
+        final navigator = Navigator.of(context);
+        return PopScope(
+          canPop: _willPop,
+          onPopInvoked: (didPop) {
+            if (didPop) {
+              return;
+            }
+            if (popAction!()) {
+              _willPop = true;
+              navigator.pop();
+            }
           },
           child: _build(),
         );
@@ -37,7 +49,7 @@ class AgoraScaffold extends StatelessWidget {
         return _build();
       }
     } else {
-      return WillPopScope(onWillPop: () async => false, child: _build());
+      return PopScope(canPop: false, child: _build());
     }
   }
 
@@ -56,6 +68,12 @@ class AgoraScaffold extends StatelessWidget {
         backgroundColor: appBarColor,
         toolbarHeight: 0,
         elevation: 0,
+        title: pageLabel != null
+            ? Text(
+                pageLabel!,
+                style: TextStyle(color: Colors.transparent, fontSize: 1),
+              )
+            : null,
       ),
       body: child,
       floatingActionButton: floatingActionButton,

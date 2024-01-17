@@ -19,6 +19,7 @@ import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
 import 'package:agora/pages/qag/agora_qag_supportable_card.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
+import 'package:agora/pages/qag/qags_list_loading.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +44,7 @@ class QagListSection extends StatelessWidget {
           final Widget section;
 
           if (viewModel is _QagListLoadingViewModel) {
-            section = Center(child: CircularProgressIndicator());
+            section = QagsListLoading();
           } else if (viewModel is _QagListWithResultViewModel) {
             section = _buildQagSearchListView(context, viewModel);
           } else if (viewModel is _QagListNoResultViewModel) {
@@ -168,13 +169,15 @@ class QagListSection extends StatelessWidget {
       return [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-          child: AgoraQagHeader(
-            id: viewModel.id,
-            title: viewModel.title,
-            message: viewModel.message,
-            onCloseHeader: (headerId) {
-              context.read<QagListBloc>().add(CloseHeaderQagListEvent(headerId: headerId));
-            },
+          child: Center(
+            child: AgoraQagHeader(
+              id: viewModel.id,
+              title: viewModel.title,
+              message: viewModel.message,
+              onCloseHeader: (headerId) {
+                context.read<QagListBloc>().add(CloseHeaderQagListEvent(headerId: headerId));
+              },
+            ),
           ),
         ),
         SizedBox(height: AgoraSpacings.base),

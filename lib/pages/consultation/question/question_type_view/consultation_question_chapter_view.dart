@@ -27,7 +27,10 @@ class ConsultationQuestionChapterView extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       child: Column(
         children: [
-          AgoraToolbar(style: AgoraToolbarStyle.close),
+          AgoraToolbar(
+            style: AgoraToolbarStyle.close,
+            pageLabel: 'Questionnaire consultation',
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
             child: Column(

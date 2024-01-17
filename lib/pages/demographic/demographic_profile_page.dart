@@ -23,6 +23,8 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/domain/demographic/demographic_information.dart';
+import 'package:agora/infrastructure/demographic/demographic_information_presenter.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +69,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
         child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
           builder: (context, state) {
             return AgoraSecondaryStyleView(
+              pageLabel: DemographicStrings.my + DemographicStrings.information,
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
@@ -90,7 +93,8 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
 
   Widget _build(BuildContext context, DemographicInformationState state) {
     if (state is GetDemographicInformationSuccessState) {
-      return _buildContent(context, state.demographicInformationViewModels);
+      final viewModels = DemographicInformationPresenter.present(state.demographicInformationResponse);
+      return _buildContent(context, viewModels, state.demographicInformationResponse);
     } else if (state is GetDemographicInformationInitialLoadingState) {
       return Column(
         children: [
@@ -108,7 +112,11 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
     }
   }
 
-  Widget _buildContent(BuildContext context, List<DemographicInformationViewModel> demographicInformationViewModels) {
+  Widget _buildContent(
+    BuildContext context,
+    List<DemographicInformationViewModel> demographicInformationViewModels,
+    List<DemographicInformation> demographicInformationResponse,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AgoraSpacings.horizontalPadding,
@@ -139,7 +147,11 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                 label: GenericStrings.modify,
                 style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                 onPressed: () {
-                  Navigator.pushNamed(context, DemographicQuestionPage.routeName);
+                  Navigator.pushNamed(
+                    context,
+                    DemographicQuestionPage.routeName,
+                    arguments: DemographicQuestionArgumentsFromModify(demographicInformationResponse),
+                  );
                 },
               ),
             ],
