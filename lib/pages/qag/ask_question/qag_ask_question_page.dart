@@ -310,7 +310,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               SizedBox(height: AgoraSpacings.x1_5),
               AgoraCheckbox(
-                defaultValue: false,
+                value: isCheck,
                 label: QagStrings.askQuestionCheckboxLabel,
                 onChanged: (value) => setState(() => isCheck = value),
               ),
