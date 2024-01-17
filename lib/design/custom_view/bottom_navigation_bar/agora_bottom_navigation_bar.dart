@@ -1,6 +1,5 @@
 import 'dart:ui' show lerpDouble;
 
-import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -27,8 +26,6 @@ class AgoraBottomNavigationBar extends StatefulWidget {
 
 class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   final double _webBottomBarHeight = 60;
-  final double _iosBottomBarHeight = 85;
-  final double _androidBottomBarHeight = 70;
   final double _indicatorHeight = 3;
 
   final Color _activeLabelColor = AgoraColors.primaryBlue;
@@ -54,38 +51,16 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
     return Container(
-      height: kIsWeb
-          ? _webBottomBarHeight
-          : PlatformStaticHelper.isIOS()
-              ? _iosBottomBarHeight //+ MediaQuery.of(context).viewPadding.bottom,// utils for ios
-              : _androidBottomBarHeight,
+      height: kIsWeb ? _webBottomBarHeight : null,
       width: _width,
       decoration: BoxDecoration(
         color: _inactiveIndicatorColor,
         boxShadow: [BoxShadow(color: AgoraColors.blur, blurRadius: 25, spreadRadius: 25)],
       ),
-      child: Stack(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Positioned(
-            top: _indicatorHeight,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: _items.map((item) {
-                final onTapIndex = _items.indexOf(item);
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      _currentSelectedIndex = onTapIndex;
-                      widget.onTap(_currentSelectedIndex);
-                    });
-                  },
-                  child: _buildItemWidget(onTapIndex, item),
-                );
-              }).toList(),
-            ),
-          ),
-          Positioned(
-            top: 0,
+          SizedBox(
             width: _width,
             child: AnimatedAlign(
               alignment: Alignment(_getIndicatorPosition(_currentSelectedIndex)!, 0),
@@ -95,6 +70,27 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
                 color: _activeIndicatorColor,
                 width: _width / _items.length,
                 height: _indicatorHeight,
+              ),
+            ),
+          ),
+          Material(
+            color: AgoraColors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: _items.map((item) {
+                  final onTapIndex = _items.indexOf(item);
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        _currentSelectedIndex = onTapIndex;
+                        widget.onTap(_currentSelectedIndex);
+                      });
+                    },
+                    child: _buildItemWidget(onTapIndex, item),
+                  );
+                }).toList(),
               ),
             ),
           ),
@@ -118,16 +114,11 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
       button: true,
       child: Container(
         color: selectedIndex == _currentSelectedIndex ? _activeBgColor : _inactiveBgColor,
-        height: kIsWeb
-            ? _webBottomBarHeight
-            : PlatformStaticHelper.isIOS()
-                ? _iosBottomBarHeight
-                : _androidBottomBarHeight,
+        height: kIsWeb ? _webBottomBarHeight : null,
         width: _width / _items.length,
         child: Column(
-          mainAxisAlignment: PlatformStaticHelper.isIOS() ? MainAxisAlignment.start : MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (PlatformStaticHelper.isIOS()) SizedBox(height: AgoraSpacings.x0_75),
             _setIcon(selectedIndex, item),
             _setLabel(selectedIndex, item),
           ],
