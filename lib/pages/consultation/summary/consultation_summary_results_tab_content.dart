@@ -5,14 +5,17 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationSummaryResultsTabContent extends StatelessWidget {
   final String participantCount;
   final List<ConsultationSummaryResultsViewModel> results;
   final ScrollController nestedScrollController;
+  final FocusNode _focusNode = FocusNode();
+  final ScrollController _sousController = ScrollController();
 
-  const ConsultationSummaryResultsTabContent({
+  ConsultationSummaryResultsTabContent({
     super.key,
     required this.participantCount,
     required this.results,
@@ -28,31 +31,36 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
         curve: Curves.fastOutSlowIn,
       );
     });
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-        child: Container(
-          color: AgoraColors.background,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AgoraSpacings.horizontalPadding,
-              vertical: AgoraSpacings.x1_5,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
-                    SizedBox(width: AgoraSpacings.x0_5),
-                    Text(participantCount, style: AgoraTextStyles.light14),
-                  ],
-                ),
-                SizedBox(height: AgoraSpacings.base),
-                ...buildResults(),
-                Text(ConsultationStrings.summaryInformation, style: AgoraTextStyles.light14),
-              ],
+    return RawKeyboardListener(
+      onKey: _sousController.accessibilityListener,
+      focusNode: _focusNode,
+      child: SingleChildScrollView(
+        controller: _sousController,
+        physics: BouncingScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+          child: Container(
+            color: AgoraColors.background,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AgoraSpacings.horizontalPadding,
+                vertical: AgoraSpacings.x1_5,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
+                      SizedBox(width: AgoraSpacings.x0_5),
+                      Text(participantCount, style: AgoraTextStyles.light14),
+                    ],
+                  ),
+                  SizedBox(height: AgoraSpacings.base),
+                  ...buildResults(),
+                  Text(ConsultationStrings.summaryInformation, style: AgoraTextStyles.light14),
+                ],
+              ),
             ),
           ),
         ),
@@ -80,5 +88,16 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
         }
       },
     ).toList();
+  }
+}
+
+extension ScrollA11Y on ScrollController {
+  void accessibilityListener(RawKeyEvent event) {
+    final offset = this.offset;
+    if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+      animateTo(offset - 100, duration: Duration(milliseconds: 30), curve: Curves.ease);
+    } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+      animateTo(offset + 100, duration: Duration(milliseconds: 30), curve: Curves.ease);
+    }
   }
 }
