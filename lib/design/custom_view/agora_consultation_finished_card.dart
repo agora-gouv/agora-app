@@ -21,6 +21,8 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   final int step;
   final AgoraConsultationFinishedStyle style;
   final VoidCallback onClick;
+  final int? index;
+  final int? maxIndex;
 
   AgoraConsultationFinishedCard({
     required this.id,
@@ -30,6 +32,8 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     required this.step,
     required this.style,
     required this.onClick,
+    this.index,
+    this.maxIndex
   });
 
   @override
@@ -110,6 +114,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   ) {
     final image = _buildImage(context, carrouselWidth);
     return Semantics(
+      tooltip: index != null && maxIndex != null ? "Élément $index sur $maxIndex" : null,
       button: isButton,
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
