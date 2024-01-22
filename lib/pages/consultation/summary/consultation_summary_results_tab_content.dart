@@ -12,7 +12,6 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
   final String participantCount;
   final List<ConsultationSummaryResultsViewModel> results;
   final ScrollController nestedScrollController;
-  final FocusNode _focusNode = FocusNode();
   final ScrollController _sousController = ScrollController();
 
   ConsultationSummaryResultsTabContent({
@@ -31,36 +30,43 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
         curve: Curves.fastOutSlowIn,
       );
     });
-    return RawKeyboardListener(
-      onKey: _sousController.accessibilityListener,
-      focusNode: _focusNode,
-      child: SingleChildScrollView(
-        controller: _sousController,
-        physics: BouncingScrollPhysics(),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
-          child: Container(
-            color: AgoraColors.background,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AgoraSpacings.horizontalPadding,
-                vertical: AgoraSpacings.x1_5,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
-                      SizedBox(width: AgoraSpacings.x0_5),
-                      Text(participantCount, style: AgoraTextStyles.light14),
-                    ],
-                  ),
-                  SizedBox(height: AgoraSpacings.base),
-                  ...buildResults(),
-                  Text(ConsultationStrings.summaryInformation, style: AgoraTextStyles.light14),
-                ],
-              ),
+    nestedScrollController.position.isScrollingNotifier.addListener(() {
+      if(!nestedScrollController.position.isScrollingNotifier.value) {
+        if (nestedScrollController.offset >= nestedScrollController.position.maxScrollExtent) {
+          _sousController.animateTo(_sousController.offset + 100, duration: Duration(milliseconds: 300), curve: Curves.fastEaseInToSlowEaseOut);
+        }
+      } else {
+        if (nestedScrollController.offset <= 0 && _sousController.offset > 0) {
+          _sousController.animateTo(_sousController.offset - 100, duration: Duration(milliseconds: 300), curve: Curves.fastEaseInToSlowEaseOut);
+        }
+      }
+    });
+    return SingleChildScrollView(
+      controller: _sousController,
+      physics: BouncingScrollPhysics(),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+        child: Container(
+          color: AgoraColors.background,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AgoraSpacings.horizontalPadding,
+              vertical: AgoraSpacings.x1_5,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
+                    SizedBox(width: AgoraSpacings.x0_5),
+                    Text(participantCount, style: AgoraTextStyles.light14),
+                  ],
+                ),
+                SizedBox(height: AgoraSpacings.base),
+                ...buildResults(),
+                Text(ConsultationStrings.summaryInformation, style: AgoraTextStyles.light14),
+              ],
             ),
           ),
         ),
