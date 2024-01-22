@@ -5,7 +5,6 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ConsultationSummaryResultsTabContent extends StatelessWidget {
@@ -94,16 +93,5 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
         }
       },
     ).toList();
-  }
-}
-
-extension ScrollA11Y on ScrollController {
-  void accessibilityListener(RawKeyEvent event) {
-    final offset = this.offset;
-    if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
-      animateTo(offset - 100, duration: Duration(milliseconds: 30), curve: Curves.ease);
-    } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
-      animateTo(offset + 100, duration: Duration(milliseconds: 30), curve: Curves.ease);
-    }
   }
 }
