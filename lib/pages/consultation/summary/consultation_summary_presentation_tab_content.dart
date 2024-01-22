@@ -31,13 +31,15 @@ class ConsultationSummaryPresentationTabContent extends StatelessWidget {
       );
     });
     nestedScrollController.position.isScrollingNotifier.addListener(() {
-      if(!nestedScrollController.position.isScrollingNotifier.value) {
+      if (!nestedScrollController.position.isScrollingNotifier.value) {
         if (nestedScrollController.offset >= nestedScrollController.position.maxScrollExtent) {
-          _sousController.animateTo(_sousController.offset + 100, duration: Duration(milliseconds: 300), curve: Curves.fastEaseInToSlowEaseOut);
+          _sousController.animateTo(_sousController.offset + 100,
+              duration: Duration(milliseconds: 300), curve: Curves.fastEaseInToSlowEaseOut);
         }
       } else {
         if (nestedScrollController.offset <= 0 && _sousController.offset > 0) {
-          _sousController.animateTo(_sousController.offset - 100, duration: Duration(milliseconds: 300), curve: Curves.fastEaseInToSlowEaseOut);
+          _sousController.animateTo(_sousController.offset - 100,
+              duration: Duration(milliseconds: 300), curve: Curves.fastEaseInToSlowEaseOut);
         }
       }
     });
