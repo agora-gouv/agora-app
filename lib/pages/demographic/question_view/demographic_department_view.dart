@@ -1,5 +1,6 @@
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 class DemographicDepartmentView extends StatefulWidget {
   final int step;
   final int totalStep;
-  final Function(String responseCode) onContinuePressed;
+  final void Function(String responseCode) onContinuePressed;
   final VoidCallback onIgnorePressed;
   final VoidCallback onBackPressed;
   final DemographicResponse? oldResponse;
@@ -73,12 +74,8 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
                         .contains(input.toLowerCase().removeDiacritics().removePunctuationMark()),
                   )
                   .toList();
-              if (!findDepartments.contains(selectedDepartment)) {
-                selectedDepartment = null;
-              }
             } else {
               findDepartments = [];
-              selectedDepartment = null;
             }
           });
         },
@@ -111,6 +108,41 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
       widgets.add(SizedBox(height: AgoraSpacings.x0_25));
     }
 
+    if (selectedDepartment != null && !findDepartments.contains(selectedDepartment)) {
+      widgets.add(
+        AgoraDemographicResponseCard(
+          responseLabel: selectedDepartment!.displayedName,
+          isSelected: true,
+          onTap: () {
+            setState(() {
+              selectedDepartment = null;
+            });
+          },
+          semantic: DemographicResponseCardSemantic(
+            currentIndex: 1,
+            totalIndex: totalLength,
+          ),
+        ),
+      );
+    }
+
+    widgets.add(
+      _EtrangerCheckbox(
+        isCheck: selectedDepartment?.code == '99',
+        onCheckChanged: (checked) {
+          if (checked) {
+            setState(() {
+              selectedDepartment = DepartmentHelper.getHorsDeFranceDepartment();
+            });
+          } else {
+            setState(() {
+              selectedDepartment = null;
+            });
+          }
+        },
+      ),
+    );
+
     widgets.addAll(
       [
         SizedBox(height: AgoraSpacings.x1_25),
@@ -130,5 +162,30 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
       ],
     );
     return widgets;
+  }
+}
+
+class _EtrangerCheckbox extends StatelessWidget {
+  final bool isCheck;
+  final void Function(bool) onCheckChanged;
+
+  const _EtrangerCheckbox({
+    required this.isCheck,
+    required this.onCheckChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AgoraSpacings.base,
+        horizontal: AgoraSpacings.x0_375,
+      ),
+      child: AgoraCheckbox(
+        value: isCheck,
+        label: "J'habite à l'étranger",
+        onChanged: onCheckChanged,
+      ),
+    );
   }
 }

@@ -11,6 +11,7 @@ class AgoraSpacings {
   static const double x2_5 = base * 2.5;
   static const double x3 = base * 3;
   static const double x6 = base * 6;
+  static const double textAlignment = 6;
 
   static const horizontalPadding = x1_25;
 

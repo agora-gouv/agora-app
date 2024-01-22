@@ -123,7 +123,9 @@ class _LoadingPageState extends State<LoadingPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset("assets/ic_oops.svg", excludeFromSemantics: true),
+                            loginState.errorType == LoginErrorType.updateVersion
+                                ? Image.asset('assets/force_update.png')
+                                : SvgPicture.asset("assets/ic_oops.svg", excludeFromSemantics: true),
                             SizedBox(height: AgoraSpacings.x1_25),
                             Semantics(
                               focused: true,
