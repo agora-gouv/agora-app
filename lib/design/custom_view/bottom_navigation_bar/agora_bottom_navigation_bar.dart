@@ -111,6 +111,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget _buildItemWidget(int selectedIndex, AgoraBottomNavigationBarItem item) {
     return Semantics(
       selected: selectedIndex == _currentSelectedIndex,
+      label: 'Onglet ${selectedIndex + 1} sur 2',
       button: true,
       child: Container(
         color: selectedIndex == _currentSelectedIndex ? _activeBgColor : _inactiveBgColor,
