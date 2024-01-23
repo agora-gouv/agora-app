@@ -38,12 +38,14 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
   String otherResponseText = "";
   bool shouldResetPreviousResponses = true;
   late ConsultationQuestionMultipleViewModel multipleChoicesQuestion;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     multipleChoicesQuestion = widget.multipleChoicesQuestion;
     _resetPreviousResponses();
     return ConsultationQuestionView(
+      scrollController: _scrollController,
       order: multipleChoicesQuestion.order,
       totalQuestions: widget.totalQuestions,
       questionProgress: multipleChoicesQuestion.questionProgress,
@@ -98,6 +100,9 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       shouldResetPreviousResponses = true;
     }
     if (shouldResetPreviousResponses) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
       currentResponseIds.clear();
       otherResponseText = "";
       final previousSelectedResponses = widget.previousSelectedResponses;
