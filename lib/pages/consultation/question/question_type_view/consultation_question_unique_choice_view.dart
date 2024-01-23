@@ -97,9 +97,6 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
               setState(() => currentResponseId = "");
             } else {
               setState(() => currentResponseId = responseId);
-              if (!response.hasOpenTextField) {
-                widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, responseId, "");
-              }
             }
           },
           onOtherResponseChanged: (responseId, otherResponse) {
