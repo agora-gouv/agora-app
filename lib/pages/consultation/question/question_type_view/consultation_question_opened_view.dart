@@ -63,12 +63,12 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
               const SizedBox(width: 20),
               openedResponse.isNotBlank()
                   ? Flexible(
-                    child: ConsultationQuestionHelper.buildNextQuestion(
+                      child: ConsultationQuestionHelper.buildNextQuestion(
                         order: openedQuestion.order,
                         totalQuestions: widget.totalQuestions,
                         onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
                       ),
-                  )
+                    )
                   : ConsultationQuestionHelper.buildIgnoreButton(
                       onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
                     ),

@@ -40,7 +40,7 @@ class AgoraToolbar extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-            onTap: () {
+              onTap: () {
                 if (onBackClick != null) {
                   onBackClick!();
                 } else {

@@ -174,7 +174,7 @@ class _QagsSectionState extends State<QagsSection> {
                       );
                       if (currentSelected != QagTab.trending) {
                         Future.delayed(Duration(seconds: 1)).then(
-                              (value) => SemanticsService.announce(
+                          (value) => SemanticsService.announce(
                             'La liste des questions au gourvernement a changé',
                             TextDirection.ltr,
                           ),
@@ -201,7 +201,7 @@ class _QagsSectionState extends State<QagsSection> {
                       );
                       if (currentSelected != QagTab.popular) {
                         Future.delayed(Duration(seconds: 1)).then(
-                              (value) => SemanticsService.announce(
+                          (value) => SemanticsService.announce(
                             'La liste des questions au gourvernement a changé',
                             TextDirection.ltr,
                           ),
@@ -228,7 +228,7 @@ class _QagsSectionState extends State<QagsSection> {
                       );
                       if (currentSelected != QagTab.latest) {
                         Future.delayed(Duration(seconds: 1)).then(
-                              (value) => SemanticsService.announce(
+                          (value) => SemanticsService.announce(
                             'La liste des questions au gourvernement a changé',
                             TextDirection.ltr,
                           ),
