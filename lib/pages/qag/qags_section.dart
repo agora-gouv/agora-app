@@ -15,6 +15,7 @@ import 'package:agora/pages/qag/list/qag_list_section.dart';
 import 'package:agora/pages/qag/qags_search.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum QagTab { search, trending, popular, latest, supporting }
@@ -63,6 +64,7 @@ class _QagsSectionState extends State<QagsSection> {
             currentThematiqueId: currentThematiqueId,
             onThematiqueIdSelected: (String? thematiqueId) {
               if (currentThematiqueId != null || thematiqueId != null) {
+                SemanticsService.announce('La liste des questions au gourvernement a changé', TextDirection.ltr);
                 setState(() {
                   if (thematiqueId == currentThematiqueId) {
                     currentThematiqueId = null;
@@ -170,7 +172,15 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagTrending,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.trending);
+                      if (currentSelected != QagTab.trending) {
+                        Future.delayed(Duration(seconds: 1)).then(
+                              (value) => SemanticsService.announce(
+                            'La liste des questions au gourvernement a changé',
+                            TextDirection.ltr,
+                          ),
+                        );
+                        setState(() => currentSelected = QagTab.trending);
+                      }
                     },
                   ),
                 ),
@@ -189,7 +199,15 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagPopular,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.popular);
+                      if (currentSelected != QagTab.popular) {
+                        Future.delayed(Duration(seconds: 1)).then(
+                              (value) => SemanticsService.announce(
+                            'La liste des questions au gourvernement a changé',
+                            TextDirection.ltr,
+                          ),
+                        );
+                        setState(() => currentSelected = QagTab.popular);
+                      }
                     },
                   ),
                 ),
@@ -208,7 +226,15 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagLatest,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.latest);
+                      if (currentSelected != QagTab.latest) {
+                        Future.delayed(Duration(seconds: 1)).then(
+                              (value) => SemanticsService.announce(
+                            'La liste des questions au gourvernement a changé',
+                            TextDirection.ltr,
+                          ),
+                        );
+                        setState(() => currentSelected = QagTab.latest);
+                      }
                     },
                   ),
                 ),
@@ -227,7 +253,15 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagSupporting,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.supporting);
+                      if (currentSelected != QagTab.supporting) {
+                        Future.delayed(Duration(seconds: 1)).then(
+                          (value) => SemanticsService.announce(
+                            'La liste des questions au gourvernement a changé',
+                            TextDirection.ltr,
+                          ),
+                        );
+                        setState(() => currentSelected = QagTab.supporting);
+                      }
                     },
                   ),
                 ),

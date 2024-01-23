@@ -33,7 +33,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     required this.style,
     required this.onClick,
     this.index,
-    this.maxIndex
+    this.maxIndex,
   });
 
   @override

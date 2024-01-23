@@ -16,6 +16,7 @@ import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
 import 'package:agora/pages/qag/agora_qag_supportable_card.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagSearch extends StatelessWidget {
@@ -95,6 +96,7 @@ class QagSearch extends StatelessWidget {
   }
 
   ListView _buildQagSearchListView(BuildContext context, List<QagViewModel> viewModel) {
+    SemanticsService.announce('La liste des questions au gourvernement a changé', TextDirection.ltr);
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,

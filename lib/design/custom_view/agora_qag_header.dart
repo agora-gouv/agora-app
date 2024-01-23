@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/emoji_helper.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
@@ -36,6 +37,7 @@ class AgoraQagHeader extends StatelessWidget {
             children: [
               Text(
                 title,
+                semanticsLabel: EmojiHelper.clean(title),
                 textAlign: TextAlign.start,
                 style: AgoraTextStyles.medium14,
               ),
