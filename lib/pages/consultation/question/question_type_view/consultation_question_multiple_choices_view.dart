@@ -57,23 +57,27 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
           SizedBox(height: AgoraSpacings.base),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               ConsultationQuestionHelper.buildBackButton(
                 order: multipleChoicesQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
+              SizedBox(width: 20),
               currentResponseIds.isNotEmpty
-                  ? ConsultationQuestionHelper.buildNextQuestion(
-                      order: multipleChoicesQuestion.order,
-                      totalQuestions: widget.totalQuestions,
-                      onPressed: () {
-                        widget.onMultipleResponseTap(
-                          multipleChoicesQuestion.id,
-                          [...currentResponseIds],
-                          otherResponseText,
-                        );
-                      },
-                    )
+                  ? Flexible(
+                    child: ConsultationQuestionHelper.buildNextQuestion(
+                        order: multipleChoicesQuestion.order,
+                        totalQuestions: widget.totalQuestions,
+                        onPressed: () {
+                          widget.onMultipleResponseTap(
+                            multipleChoicesQuestion.id,
+                            [...currentResponseIds],
+                            otherResponseText,
+                          );
+                        },
+                      ),
+                  )
                   : ConsultationQuestionHelper.buildIgnoreButton(
                       onPressed: () => widget.onMultipleResponseTap(
                         multipleChoicesQuestion.id,

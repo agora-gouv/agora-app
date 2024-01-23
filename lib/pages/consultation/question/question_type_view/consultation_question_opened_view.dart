@@ -54,17 +54,21 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
           SizedBox(height: AgoraSpacings.base),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               ConsultationQuestionHelper.buildBackButton(
                 order: openedQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
+              const SizedBox(width: 20),
               openedResponse.isNotBlank()
-                  ? ConsultationQuestionHelper.buildNextQuestion(
-                      order: openedQuestion.order,
-                      totalQuestions: widget.totalQuestions,
-                      onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
-                    )
+                  ? Flexible(
+                    child: ConsultationQuestionHelper.buildNextQuestion(
+                        order: openedQuestion.order,
+                        totalQuestions: widget.totalQuestions,
+                        onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
+                      ),
+                  )
                   : ConsultationQuestionHelper.buildIgnoreButton(
                       onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
                     ),
