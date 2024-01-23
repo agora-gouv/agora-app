@@ -37,15 +37,18 @@ class AgoraToolbar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x0_5),
         child: Semantics(
           button: true,
-          child: GestureDetector(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
             onTap: () {
-              if (onBackClick != null) {
-                onBackClick!();
-              } else {
-                Navigator.pop(context);
-              }
-            },
-            child: style == AgoraToolbarStyle.back ? _buildBack() : _buildClose(),
+                if (onBackClick != null) {
+                  onBackClick!();
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+              child: style == AgoraToolbarStyle.back ? _buildBack() : _buildClose(),
+            ),
           ),
         ),
       ),
@@ -84,16 +87,13 @@ class AgoraToolbar extends StatelessWidget {
       children: [
         Text(GenericStrings.close, style: AgoraTextStyles.medium16),
         SizedBox(width: AgoraSpacings.x0_75),
-        Material(
-          color: AgoraColors.transparent,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: AgoraSpacings.x0_5,
-              bottom: AgoraSpacings.x0_5,
-              right: AgoraSpacings.x0_75,
-            ),
-            child: SvgPicture.asset("assets/ic_close.svg", excludeFromSemantics: true),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: AgoraSpacings.x0_5,
+            bottom: AgoraSpacings.x0_5,
+            right: AgoraSpacings.x0_75,
           ),
+          child: SvgPicture.asset("assets/ic_close.svg", excludeFromSemantics: true),
         ),
       ],
     );

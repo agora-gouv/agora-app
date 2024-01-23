@@ -66,6 +66,7 @@ class AgoraScaffold extends StatelessWidget {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: appBarColor,
+        automaticallyImplyLeading: false,
         toolbarHeight: 0,
         elevation: 0,
         title: pageLabel != null

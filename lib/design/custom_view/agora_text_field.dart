@@ -27,6 +27,7 @@ class AgoraTextField extends StatefulWidget {
   final bool check;
   final bool error;
   final bool blockToMaxLength;
+  final String? contentDescription;
 
   AgoraTextField({
     this.hintText,
@@ -41,6 +42,7 @@ class AgoraTextField extends StatefulWidget {
     this.error = false,
     this.blockToMaxLength = false,
     this.textInputType = TextFieldInputType.multiline,
+    this.contentDescription,
   });
 
   @override
@@ -85,6 +87,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                     : EdgeInsets.zero,
                 child: Semantics(
                   textField: true,
+                  label: widget.contentDescription,
                   maxValueLength: widget.maxLength,
                   child: TextField(
                     minLines: 1,
