@@ -143,8 +143,10 @@ class QagsResponseSection extends StatelessWidget {
     return viewModels
         .map(
           (viewModel) => switch (viewModel) {
-            final QagResponseViewModel viewModel => _buildQagResponseCard(viewModel, context),
-            final QagResponseIncomingViewModel viewModel => _buildQagIncomingResponseCard(viewModel, context),
+            final QagResponseViewModel viewModel =>
+              _buildQagResponseCard(viewModel, context, viewModels.length, viewModels.indexOf(viewModel) + 1),
+            final QagResponseIncomingViewModel viewModel =>
+              _buildQagIncomingResponseCard(viewModel, context, viewModels.length, viewModels.indexOf(viewModel) + 1),
           },
         )
         .intersperseOuter(SizedBox(width: AgoraSpacings.x0_5))
@@ -152,7 +154,12 @@ class QagsResponseSection extends StatelessWidget {
         .toList();
   }
 
-  Widget _buildQagResponseCard(QagResponseViewModel qagResponse, BuildContext context) {
+  Widget _buildQagResponseCard(
+    QagResponseViewModel qagResponse,
+    BuildContext context,
+    int maxIndex,
+    int index,
+  ) {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 400),
       child: AgoraQagResponseCard(
@@ -162,6 +169,8 @@ class QagsResponseSection extends StatelessWidget {
         author: qagResponse.author,
         date: qagResponse.responseDate,
         style: AgoraQagResponseStyle.small,
+        index: index,
+        maxIndex: maxIndex,
         onClick: () {
           TrackerHelper.trackClick(
             clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",
@@ -177,7 +186,12 @@ class QagsResponseSection extends StatelessWidget {
     );
   }
 
-  Widget _buildQagIncomingResponseCard(QagResponseIncomingViewModel qagResponse, BuildContext context) {
+  Widget _buildQagIncomingResponseCard(
+    QagResponseIncomingViewModel qagResponse,
+    BuildContext context,
+    int maxIndex,
+    int index,
+  ) {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 400),
       child: AgoraQagIncomingResponseCard(
@@ -185,6 +199,8 @@ class QagsResponseSection extends StatelessWidget {
         thematique: qagResponse.thematique,
         supportCount: qagResponse.supportCount,
         isSupported: qagResponse.isSupported,
+        index: index,
+        maxIndex: maxIndex,
         onClick: () {
           TrackerHelper.trackClick(
             clickName: "${AnalyticsEventNames.incomingAnsweredQag} ${qagResponse.qagId}",

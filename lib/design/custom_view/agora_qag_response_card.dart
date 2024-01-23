@@ -19,6 +19,8 @@ class AgoraQagResponseCard extends StatelessWidget {
   final String date;
   final AgoraQagResponseStyle style;
   final VoidCallback onClick;
+  final int? index;
+  final int? maxIndex;
 
   AgoraQagResponseCard({
     required this.thematique,
@@ -28,11 +30,14 @@ class AgoraQagResponseCard extends StatelessWidget {
     required this.date,
     required this.style,
     required this.onClick,
+    this.index,
+    this.maxIndex,
   });
 
   @override
   Widget build(BuildContext context) {
     Widget currentChild = Semantics(
+      tooltip: index != null && maxIndex != null ? "Élément $index sur $maxIndex" : null,
       button: true,
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
