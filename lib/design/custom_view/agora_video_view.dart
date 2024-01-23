@@ -11,6 +11,7 @@ class AgoraVideoView extends StatefulWidget {
   final int videoWidth;
   final int videoHeight;
   final VoidCallback onVideoStartMoreThan5Sec;
+  final bool isTalkbackActivated;
 
   const AgoraVideoView({
     super.key,
@@ -18,6 +19,7 @@ class AgoraVideoView extends StatefulWidget {
     required this.videoWidth,
     required this.videoHeight,
     required this.onVideoStartMoreThan5Sec,
+    required this.isTalkbackActivated,
   });
 
   @override
@@ -43,6 +45,9 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       allowedScreenSleep: false,
       allowFullScreen: true,
       aspectRatio: videoAspectRatio,
+      customControls:
+          widget.isTalkbackActivated ? CupertinoControls(backgroundColor: Colors.black, iconColor: Colors.white) : null,
+      hideControlsTimer: widget.isTalkbackActivated ? Duration(days: 1) : Duration(seconds: 3),
       showControls: true,
     );
     videoPlayerController.addListener(_listener);
@@ -83,7 +88,9 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
         height: height,
         child: AspectRatio(
           aspectRatio: videoAspectRatio,
-          child: Chewie(controller: chewieController),
+          child: Chewie(
+            controller: chewieController,
+          ),
         ),
       ),
     );
