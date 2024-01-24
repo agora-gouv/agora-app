@@ -9,7 +9,6 @@ import 'package:agora/infrastructure/consultation/repository/consultation_reposi
 import 'package:agora/infrastructure/consultation/repository/mocks_consultation_repository.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
 import 'package:agora/infrastructure/demographic/mocks_demographic_repository.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:agora/infrastructure/login/login_repository.dart';
 import 'package:agora/infrastructure/login/mocks_login_repository.dart';
 import 'package:agora/infrastructure/notification/mocks_notification_repository.dart';
@@ -37,7 +36,6 @@ class RepositoryManager {
   static void initRepositoryManager({required String baseUrl, required Uint8List rootCertificate}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
     GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
-    GetIt.instance.registerSingleton(SentryWrapper());
   }
 
   static Dio _getDio() {
@@ -136,10 +134,9 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<ThematiqueDioRepository>()) {
       return GetIt.instance.get<ThematiqueDioRepository>();
     }
-    final sentryWrapper = GetIt.instance.get<SentryWrapper>();
     final repository = ThematiqueDioRepository(
       httpClient: _getAgoraDioHttpClient(),
-      sentryWrapper: sentryWrapper,
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -149,10 +146,9 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockConsultationRepository>()) {
       return GetIt.instance.get<MockConsultationRepository>();
     }
-    final sentryWrapper = GetIt.instance.get<SentryWrapper>();
     final repository = MockConsultationRepository(
       httpClient: _getAgoraDioHttpClient(),
-      sentryWrapper: sentryWrapper,
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -164,7 +160,7 @@ class RepositoryManager {
     }
     final repository = MockQagRepository(
       httpClient: _getAgoraDioHttpClient(),
-      sentryWrapper: SentryWrapper(),
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -174,10 +170,9 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockLoginRepository>()) {
       return GetIt.instance.get<MockLoginRepository>();
     }
-    final sentryWrapper = GetIt.instance.get<SentryWrapper>();
     final repository = MockLoginRepository(
       httpClient: getAgoraDioHttpClientWithoutAuthentication(),
-      sentryWrapper: sentryWrapper,
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -187,10 +182,9 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockParticipationCharterRepository>()) {
       return GetIt.instance.get<MockParticipationCharterRepository>();
     }
-    final sentryWrapper = GetIt.instance.get<SentryWrapper>();
     final repository = MockParticipationCharterRepository(
       httpClient: _getAgoraDioHttpClient(),
-      sentryWrapper: sentryWrapper,
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -200,10 +194,9 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockDemographicRepository>()) {
       return GetIt.instance.get<MockDemographicRepository>();
     }
-    final sentryWrapper = GetIt.instance.get<SentryWrapper>();
     final repository = MockDemographicRepository(
       httpClient: _getAgoraDioHttpClient(),
-      sentryWrapper: sentryWrapper,
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -213,10 +206,9 @@ class RepositoryManager {
     if (GetIt.instance.isRegistered<MockNotificationRepository>()) {
       return GetIt.instance.get<MockNotificationRepository>();
     }
-    final sentryWrapper = GetIt.instance.get<SentryWrapper>();
     final repository = MockNotificationRepository(
       httpClient: _getAgoraDioHttpClient(),
-      sentryWrapper: sentryWrapper,
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;

@@ -4,6 +4,7 @@ import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
@@ -69,5 +70,14 @@ class HelperManager {
     final helper = AppVersionHelperImpl();
     GetIt.instance.registerSingleton(helper);
     return helper;
+  }
+
+  static SentryWrapper getSentryWrapper() {
+    if (GetIt.instance.isRegistered<SentryWrapper>()) {
+      return GetIt.instance.get<SentryWrapper>();
+    }
+    final sentryWrapper = SentryWrapper();
+    GetIt.instance.registerSingleton(sentryWrapper);
+    return sentryWrapper;
   }
 }

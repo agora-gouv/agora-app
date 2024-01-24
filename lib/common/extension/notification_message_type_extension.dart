@@ -1,7 +1,7 @@
 import 'package:agora/push_notification/notification_message_type.dart';
 
-extension NotificationMessageExtension on String {
-  NotificationMessageType toNotificationMessageType() {
+extension NotificationMessageExtension on String? {
+  NotificationMessageType? toNotificationMessageType() {
     switch (this) {
       case "qagDetails":
         return NotificationMessageType.qagDetails;
@@ -12,7 +12,7 @@ extension NotificationMessageExtension on String {
       case "qagHome":
         return NotificationMessageType.homeQags;
       default:
-        throw Exception("Notification message type doesn't exist: $this}");
+        return null;
     }
   }
 }
