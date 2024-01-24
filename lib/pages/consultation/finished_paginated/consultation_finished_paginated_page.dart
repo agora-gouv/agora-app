@@ -89,6 +89,8 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                     step: finishedViewModel1.step,
                     style: AgoraConsultationFinishedStyle.grid,
                     onClick: () => _onCardClick(context, finishedViewModel1.id),
+                    index: consultationFinishedViewModels.indexOf(finishedViewModel1),
+                    maxIndex: consultationFinishedViewModels.length,
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.horizontalPadding),
@@ -102,6 +104,8 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                           step: finishedViewModel2.step,
                           style: AgoraConsultationFinishedStyle.grid,
                           onClick: () => _onCardClick(context, finishedViewModel2!.id),
+                          index: consultationFinishedViewModels.indexOf(finishedViewModel2),
+                          maxIndex: consultationFinishedViewModels.length,
                         ),
                       )
                     : Expanded(child: Container()),
@@ -122,6 +126,8 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
             step: finishedViewModel.step,
             style: AgoraConsultationFinishedStyle.column,
             onClick: () => _onCardClick(context, finishedViewModel.id),
+            index: consultationFinishedViewModels.indexOf(finishedViewModel),
+            maxIndex: consultationFinishedViewModels.length,
           ),
         );
         widgets.add(SizedBox(height: AgoraSpacings.base));

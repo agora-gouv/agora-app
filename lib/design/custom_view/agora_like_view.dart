@@ -21,6 +21,7 @@ class AgoraLikeView extends StatelessWidget {
   final AgoraLikeStyle style;
   final Function(bool support)? onSupportClick;
   final GlobalKey? likeViewKey;
+  final bool shouldVocaliseSupport;
 
   const AgoraLikeView({
     super.key,
@@ -31,6 +32,7 @@ class AgoraLikeView extends StatelessWidget {
     this.style = AgoraLikeStyle.police14,
     this.onSupportClick,
     this.likeViewKey,
+    this.shouldVocaliseSupport = true,
   });
 
   @override
@@ -62,7 +64,7 @@ class AgoraLikeView extends StatelessWidget {
                     supportCount.toString(),
                     style: _buildTextStyle(),
                     semanticsLabel:
-                        "${isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
+                        "${shouldVocaliseSupport ? isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport : ''}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
                   ),
                 ),
               ],

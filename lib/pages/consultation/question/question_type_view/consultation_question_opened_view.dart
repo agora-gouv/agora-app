@@ -50,20 +50,24 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ..._buildOpenedChoiceResponse(),
+          ..._buildOpenedChoiceResponse(openedQuestion.title),
           SizedBox(height: AgoraSpacings.base),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               ConsultationQuestionHelper.buildBackButton(
                 order: openedQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
+              const SizedBox(width: AgoraSpacings.base),
               openedResponse.isNotBlank()
-                  ? ConsultationQuestionHelper.buildNextQuestion(
-                      order: openedQuestion.order,
-                      totalQuestions: widget.totalQuestions,
-                      onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
+                  ? Flexible(
+                      child: ConsultationQuestionHelper.buildNextQuestion(
+                        order: openedQuestion.order,
+                        totalQuestions: widget.totalQuestions,
+                        onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
+                      ),
                     )
                   : ConsultationQuestionHelper.buildIgnoreButton(
                       onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
@@ -91,13 +95,14 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
     }
   }
 
-  List<Widget> _buildOpenedChoiceResponse() {
+  List<Widget> _buildOpenedChoiceResponse(String title) {
     return [
       Text(ConsultationStrings.openedQuestionNotice, style: AgoraTextStyles.medium14),
       SizedBox(height: AgoraSpacings.base),
       AgoraTextField(
         hintText: ConsultationStrings.hintText,
         controller: textEditingController,
+        contentDescription: title,
         showCounterText: true,
         blockToMaxLength: true,
         onChanged: (openedResponseInput) {

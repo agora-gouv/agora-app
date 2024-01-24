@@ -121,6 +121,8 @@ class ConsultationsFinishedSection extends StatelessWidget {
               ),
             );
           },
+          index: finishedViewModels.indexOf(finishedViewModel) + 1,
+          maxIndex: finishedViewModels.length,
         ),
       );
       finishedConsultationsWidget.add(SizedBox(width: AgoraSpacings.x0_5));

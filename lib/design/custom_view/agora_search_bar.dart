@@ -267,44 +267,47 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                   padding: const EdgeInsets.only(left: 10),
                   alignment: Alignment.topCenter,
                   width: widget.width / 1.7,
-                  child: TextField(
-                    ///Text Controller. you can manipulate the text inside this textField by calling this controller.
-                    controller: widget.textController,
-                    inputFormatters: widget.inputFormatters,
-                    focusNode: focusNode,
-                    textInputAction: widget.textInputAction,
-                    cursorRadius: Radius.circular(10.0),
-                    cursorWidth: 2.0,
-                    onChanged: (value) {
-                      setState(() {
-                        textFieldValue = value;
-                      });
-                    },
-                    onSubmitted: (value) => {
-                      widget.onSubmitted(value),
-                      setState(() {
-                        textFieldValue = value;
-                      }),
-                      unFocusKeyboard(),
-                    },
-                    onEditingComplete: () {
-                      /// on editing complete the keyboard will be closed and the search bar will be closed
-                      unFocusKeyboard();
-                    },
+                  child: Semantics(
+                    label: 'Recherche',
+                    child: TextField(
+                      ///Text Controller. you can manipulate the text inside this textField by calling this controller.
+                      controller: widget.textController,
+                      inputFormatters: widget.inputFormatters,
+                      focusNode: focusNode,
+                      textInputAction: widget.textInputAction,
+                      cursorRadius: Radius.circular(10.0),
+                      cursorWidth: 2.0,
+                      onChanged: (value) {
+                        setState(() {
+                          textFieldValue = value;
+                        });
+                      },
+                      onSubmitted: (value) => {
+                        widget.onSubmitted(value),
+                        setState(() {
+                          textFieldValue = value;
+                        }),
+                        unFocusKeyboard(),
+                      },
+                      onEditingComplete: () {
+                        /// on editing complete the keyboard will be closed and the search bar will be closed
+                        unFocusKeyboard();
+                      },
 
-                    ///style is of type TextStyle, the default is just a color black
-                    style: widget.style ?? TextStyle(color: Colors.black),
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.only(bottom: 5),
-                      isDense: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      hintText: widget.helpText,
-                      labelStyle: AgoraTextStyles.light14,
-                      alignLabelWithHint: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide.none,
+                      ///style is of type TextStyle, the default is just a color black
+                      style: widget.style ?? TextStyle(color: Colors.black),
+                      cursorColor: Colors.black,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(bottom: 5),
+                        isDense: true,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        hintText: widget.helpText,
+                        labelStyle: AgoraTextStyles.light14,
+                        alignLabelWithHint: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),

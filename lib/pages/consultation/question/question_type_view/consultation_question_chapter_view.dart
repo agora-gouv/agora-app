@@ -47,12 +47,16 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.x1_5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     ConsultationQuestionHelper.buildBackButton(order: chapter.order, onBackTap: onBackTap),
-                    ConsultationQuestionHelper.buildNextQuestion(
-                      order: chapter.order,
-                      totalQuestions: totalQuestions,
-                      onPressed: () => onNextTap(),
+                    const SizedBox(width: 20),
+                    Flexible(
+                      child: ConsultationQuestionHelper.buildNextQuestion(
+                        order: chapter.order,
+                        totalQuestions: totalQuestions,
+                        onPressed: () => onNextTap(),
+                      ),
                     ),
                   ],
                 ),

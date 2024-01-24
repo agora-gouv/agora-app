@@ -199,7 +199,11 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                       if ((response != null || textResponse != null) && support.count != 0) ...[
                         Padding(
                           padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
-                          child: AgoraLikeView(isSupported: support.isSupported, supportCount: support.count),
+                          child: AgoraLikeView(
+                            isSupported: support.isSupported,
+                            supportCount: support.count,
+                            shouldVocaliseSupport: false,
+                          ),
                         ),
                       ],
                     ],

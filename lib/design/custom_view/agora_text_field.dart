@@ -27,6 +27,7 @@ class AgoraTextField extends StatefulWidget {
   final bool check;
   final bool error;
   final bool blockToMaxLength;
+  final String? contentDescription;
 
   AgoraTextField({
     this.hintText,
@@ -41,6 +42,7 @@ class AgoraTextField extends StatefulWidget {
     this.error = false,
     this.blockToMaxLength = false,
     this.textInputType = TextFieldInputType.multiline,
+    this.contentDescription,
   });
 
   @override
@@ -74,7 +76,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                 ? BorderSide(color: AgoraColors.fluorescentRed, width: 2)
                 : widget.check
                     ? BorderSide(color: AgoraColors.primaryBlue, width: 1)
-                    : BorderSide(color: AgoraColors.border, width: 1),
+                    : BorderSide(color: AgoraColors.borderHintColor, width: 1),
           ),
           child: Stack(
             alignment: AlignmentDirectional.centerEnd,
@@ -85,6 +87,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                     : EdgeInsets.zero,
                 child: Semantics(
                   textField: true,
+                  label: widget.contentDescription,
                   maxValueLength: widget.maxLength,
                   child: TextField(
                     minLines: 1,
@@ -103,7 +106,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                       border: UnderlineInputBorder(borderSide: BorderSide.none),
                       hintText: widget.hintText,
                       semanticCounterText: '${widget.maxLength} charactères maximum',
-                      hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.orochimaru),
+                      hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.hintColor),
                       counterText: "",
                     ),
                     onChanged: (String input) {

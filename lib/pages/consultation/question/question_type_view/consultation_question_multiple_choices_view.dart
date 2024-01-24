@@ -38,12 +38,14 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
   String otherResponseText = "";
   bool shouldResetPreviousResponses = true;
   late ConsultationQuestionMultipleViewModel multipleChoicesQuestion;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     multipleChoicesQuestion = widget.multipleChoicesQuestion;
     _resetPreviousResponses();
     return ConsultationQuestionView(
+      scrollController: _scrollController,
       order: multipleChoicesQuestion.order,
       totalQuestions: widget.totalQuestions,
       questionProgress: multipleChoicesQuestion.questionProgress,
@@ -57,22 +59,26 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
           SizedBox(height: AgoraSpacings.base),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               ConsultationQuestionHelper.buildBackButton(
                 order: multipleChoicesQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
+              const SizedBox(width: AgoraSpacings.base),
               currentResponseIds.isNotEmpty
-                  ? ConsultationQuestionHelper.buildNextQuestion(
-                      order: multipleChoicesQuestion.order,
-                      totalQuestions: widget.totalQuestions,
-                      onPressed: () {
-                        widget.onMultipleResponseTap(
-                          multipleChoicesQuestion.id,
-                          [...currentResponseIds],
-                          otherResponseText,
-                        );
-                      },
+                  ? Flexible(
+                      child: ConsultationQuestionHelper.buildNextQuestion(
+                        order: multipleChoicesQuestion.order,
+                        totalQuestions: widget.totalQuestions,
+                        onPressed: () {
+                          widget.onMultipleResponseTap(
+                            multipleChoicesQuestion.id,
+                            [...currentResponseIds],
+                            otherResponseText,
+                          );
+                        },
+                      ),
                     )
                   : ConsultationQuestionHelper.buildIgnoreButton(
                       onPressed: () => widget.onMultipleResponseTap(
@@ -94,6 +100,9 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       shouldResetPreviousResponses = true;
     }
     if (shouldResetPreviousResponses) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
       currentResponseIds.clear();
       otherResponseText = "";
       final previousSelectedResponses = widget.previousSelectedResponses;

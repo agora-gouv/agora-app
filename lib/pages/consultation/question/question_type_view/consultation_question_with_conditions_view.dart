@@ -59,20 +59,24 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
           SizedBox(height: AgoraSpacings.base),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               ConsultationQuestionHelper.buildBackButton(
                 order: widget.questionWithConditions.order,
                 onBackTap: widget.onBackTap,
               ),
+              const SizedBox(width: AgoraSpacings.base),
               if (currentResponseId.isNotBlank())
-                ConsultationQuestionHelper.buildNextQuestion(
-                  order: widget.questionWithConditions.order,
-                  totalQuestions: widget.totalQuestions,
-                  onPressed: () => widget.onWithConditionResponseTap(
-                    widget.questionWithConditions.id,
-                    currentResponseId,
-                    otherResponseText,
-                    currentNextQuestionId,
+                Flexible(
+                  child: ConsultationQuestionHelper.buildNextQuestion(
+                    order: widget.questionWithConditions.order,
+                    totalQuestions: widget.totalQuestions,
+                    onPressed: () => widget.onWithConditionResponseTap(
+                      widget.questionWithConditions.id,
+                      currentResponseId,
+                      otherResponseText,
+                      currentNextQuestionId,
+                    ),
                   ),
                 ),
             ],

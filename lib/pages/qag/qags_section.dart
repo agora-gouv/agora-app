@@ -2,6 +2,7 @@ import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -63,6 +64,7 @@ class _QagsSectionState extends State<QagsSection> {
             currentThematiqueId: currentThematiqueId,
             onThematiqueIdSelected: (String? thematiqueId) {
               if (currentThematiqueId != null || thematiqueId != null) {
+                SemanticsHelper.announceNewQagsInList();
                 setState(() {
                   if (thematiqueId == currentThematiqueId) {
                     currentThematiqueId = null;
@@ -170,7 +172,10 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagTrending,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.trending);
+                      if (currentSelected != QagTab.trending) {
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                        setState(() => currentSelected = QagTab.trending);
+                      }
                     },
                   ),
                 ),
@@ -189,7 +194,10 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagPopular,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.popular);
+                      if (currentSelected != QagTab.popular) {
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                        setState(() => currentSelected = QagTab.popular);
+                      }
                     },
                   ),
                 ),
@@ -208,7 +216,10 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagLatest,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.latest);
+                      if (currentSelected != QagTab.latest) {
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                        setState(() => currentSelected = QagTab.latest);
+                      }
                     },
                   ),
                 ),
@@ -227,7 +238,10 @@ class _QagsSectionState extends State<QagsSection> {
                         clickName: AnalyticsEventNames.qagSupporting,
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
-                      setState(() => currentSelected = QagTab.supporting);
+                      if (currentSelected != QagTab.supporting) {
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                        setState(() => currentSelected = QagTab.supporting);
+                      }
                     },
                   ),
                 ),
