@@ -1,3 +1,4 @@
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/storage/secure_storage_client.dart';
 import 'package:agora/infrastructure/header_qag/header_qag_repository.dart';
 import 'package:agora/infrastructure/login/login_storage_client.dart';
@@ -18,6 +19,7 @@ class StorageManager {
     final client = FlutterSecureStorageClient(
       secureStorage: FlutterSecureStorage(),
       sharedPref: sharedPref,
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(client);
     return client;
