@@ -65,7 +65,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
                 order: multipleChoicesQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: AgoraSpacings.base),
               currentResponseIds.isNotEmpty
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(

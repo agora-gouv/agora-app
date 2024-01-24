@@ -2,6 +2,7 @@ import 'package:agora/bloc/qag/search/qag_search_bloc.dart';
 import 'package:agora/bloc/qag/search/qag_search_event.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -15,7 +16,6 @@ import 'package:agora/pages/qag/list/qag_list_section.dart';
 import 'package:agora/pages/qag/qags_search.dart';
 import 'package:agora/pages/qag/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum QagTab { search, trending, popular, latest, supporting }
@@ -64,7 +64,7 @@ class _QagsSectionState extends State<QagsSection> {
             currentThematiqueId: currentThematiqueId,
             onThematiqueIdSelected: (String? thematiqueId) {
               if (currentThematiqueId != null || thematiqueId != null) {
-                SemanticsService.announce('La liste des questions au gourvernement a changé', TextDirection.ltr);
+                SemanticsHelper.announceNewQagsInList();
                 setState(() {
                   if (thematiqueId == currentThematiqueId) {
                     currentThematiqueId = null;
@@ -173,12 +173,7 @@ class _QagsSectionState extends State<QagsSection> {
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
                       if (currentSelected != QagTab.trending) {
-                        Future.delayed(Duration(seconds: 1)).then(
-                          (value) => SemanticsService.announce(
-                            'La liste des questions au gourvernement a changé',
-                            TextDirection.ltr,
-                          ),
-                        );
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
                         setState(() => currentSelected = QagTab.trending);
                       }
                     },
@@ -200,12 +195,7 @@ class _QagsSectionState extends State<QagsSection> {
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
                       if (currentSelected != QagTab.popular) {
-                        Future.delayed(Duration(seconds: 1)).then(
-                          (value) => SemanticsService.announce(
-                            'La liste des questions au gourvernement a changé',
-                            TextDirection.ltr,
-                          ),
-                        );
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
                         setState(() => currentSelected = QagTab.popular);
                       }
                     },
@@ -227,12 +217,7 @@ class _QagsSectionState extends State<QagsSection> {
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
                       if (currentSelected != QagTab.latest) {
-                        Future.delayed(Duration(seconds: 1)).then(
-                          (value) => SemanticsService.announce(
-                            'La liste des questions au gourvernement a changé',
-                            TextDirection.ltr,
-                          ),
-                        );
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
                         setState(() => currentSelected = QagTab.latest);
                       }
                     },
@@ -254,12 +239,7 @@ class _QagsSectionState extends State<QagsSection> {
                         widgetName: AnalyticsScreenNames.qagsPage,
                       );
                       if (currentSelected != QagTab.supporting) {
-                        Future.delayed(Duration(seconds: 1)).then(
-                          (value) => SemanticsService.announce(
-                            'La liste des questions au gourvernement a changé',
-                            TextDirection.ltr,
-                          ),
-                        );
+                        Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
                         setState(() => currentSelected = QagTab.supporting);
                       }
                     },

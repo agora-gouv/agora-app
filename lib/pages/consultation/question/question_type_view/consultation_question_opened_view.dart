@@ -60,7 +60,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
                 order: openedQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: AgoraSpacings.base),
               openedResponse.isNotBlank()
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(

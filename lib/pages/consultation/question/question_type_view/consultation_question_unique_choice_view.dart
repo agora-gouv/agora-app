@@ -57,7 +57,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
                 order: widget.uniqueChoiceQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
-              SizedBox(width: 20),
+              const SizedBox(width: AgoraSpacings.base),
               currentResponseId.isNotBlank()
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(

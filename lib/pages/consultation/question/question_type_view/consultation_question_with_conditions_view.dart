@@ -65,7 +65,7 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
                 order: widget.questionWithConditions.order,
                 onBackTap: widget.onBackTap,
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: AgoraSpacings.base),
               if (currentResponseId.isNotBlank())
                 Flexible(
                   child: ConsultationQuestionHelper.buildNextQuestion(

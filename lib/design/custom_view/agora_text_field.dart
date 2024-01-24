@@ -76,7 +76,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                 ? BorderSide(color: AgoraColors.fluorescentRed, width: 2)
                 : widget.check
                     ? BorderSide(color: AgoraColors.primaryBlue, width: 1)
-                    : BorderSide(color: AgoraColors.border, width: 1),
+                    : BorderSide(color: AgoraColors.primaryGreyOpacity70, width: 1),
           ),
           child: Stack(
             alignment: AlignmentDirectional.centerEnd,
@@ -106,7 +106,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                       border: UnderlineInputBorder(borderSide: BorderSide.none),
                       hintText: widget.hintText,
                       semanticCounterText: '${widget.maxLength} charactères maximum',
-                      hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.orochimaru),
+                      hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.primaryGreyOpacity70),
                       counterText: "",
                     ),
                     onChanged: (String input) {
