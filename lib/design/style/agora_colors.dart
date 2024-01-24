@@ -48,4 +48,6 @@ class AgoraColors {
   static const Color fairIvory = Color(0xFFFCE7CF);
   static const Color mousseAuxPruneaux = Color(0xFFE8CFFC);
   static const Color crystalFalls = Color(0xFFE1E7F3);
+  static const Color hintColor = Color(0xFF767676);
+  static const Color borderHintColor = Color(0xFF8D8D8D);
 }
