@@ -69,6 +69,7 @@ class QagDetailsSupportView extends StatelessWidget {
                           supportCount: viewModel.supportCount(),
                           shouldHaveVerticalPadding: true,
                           likeViewKey: _likeViewKey,
+                          shouldVocaliseSupport: canSupport,
                         ),
                       ),
                     ),
