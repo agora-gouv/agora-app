@@ -111,14 +111,6 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
                 currentResponseId = responseId;
                 currentNextQuestionId = response.nextQuestionId;
               });
-              if (!response.hasOpenTextField) {
-                widget.onWithConditionResponseTap(
-                  widget.questionWithConditions.id,
-                  responseId,
-                  otherResponseText,
-                  currentNextQuestionId,
-                );
-              }
             }
           },
           onOtherResponseChanged: (responseId, otherResponse) {
