@@ -65,7 +65,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   static const _nameMaxLength = 50;
   bool isQuestionLengthError = false;
 
-  final timerHelper = TimerHelper(countdownDurationInSecond: 5);
+  final timerHelper = TimerHelper(countdownDurationInSecond: 3);
 
   @override
   Widget build(BuildContext context) {

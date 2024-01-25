@@ -10,10 +10,10 @@ class LaunchUrlHelper {
   static void webview(BuildContext context, String? url) {
     if (url != null) {
       if (PlatformStaticHelper.isIOS() || kIsWeb) {
-        _launch(url: url);
+        launchUrlFromAgora(url: url);
       } else if (PlatformStaticHelper.isAndroid()) {
         if (url.endsWith(".pdf")) {
-          _launch(
+          launchUrlFromAgora(
             url: "https://docs.google.com/gview?embedded=true&url=$url",
             launchMode: LaunchMode.externalApplication,
           );
@@ -30,11 +30,11 @@ class LaunchUrlHelper {
     if (isAndroid || isIos) {
       final appId = isAndroid ? "fr.gouv.agora" : "6449599025";
       final url = isAndroid ? "market://details?id=$appId" : "https://apps.apple.com/app/id$appId";
-      _launch(url: url, launchMode: LaunchMode.externalApplication);
+      launchUrlFromAgora(url: url, launchMode: LaunchMode.externalApplication);
     }
   }
 
-  static void _launch({required String url, LaunchMode launchMode = LaunchMode.inAppWebView}) async {
+  static void launchUrlFromAgora({required String url, LaunchMode launchMode = LaunchMode.inAppWebView}) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: launchMode);
