@@ -18,6 +18,8 @@ class AgoraQagIncomingResponseCard extends StatelessWidget {
   final int supportCount;
   final bool isSupported;
   final VoidCallback onClick;
+  final int index;
+  final int maxIndex;
 
   AgoraQagIncomingResponseCard({
     required this.thematique,
@@ -25,6 +27,8 @@ class AgoraQagIncomingResponseCard extends StatelessWidget {
     required this.supportCount,
     required this.isSupported,
     required this.onClick,
+    required this.index,
+    required this.maxIndex,
   });
 
   @override
@@ -32,6 +36,7 @@ class AgoraQagIncomingResponseCard extends StatelessWidget {
     return SizedBox(
       width: max(MediaQuery.of(context).size.width * 0.65, AgoraSpacings.carrouselMinWidth),
       child: Semantics(
+        tooltip: "Élément $index sur $maxIndex",
         button: true,
         child: AgoraRoundedCard(
           borderColor: AgoraColors.primaryBlue,

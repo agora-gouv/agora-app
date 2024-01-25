@@ -78,58 +78,61 @@ class QagListSection extends StatelessWidget {
     return Column(
       children: [
         ..._buildHeaderQagWidget(context, viewModel.header),
-        ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: viewModel.hasFooter ? viewModel.qags.length + 1 : viewModel.qags.length,
-          itemBuilder: (context, index) {
-            if (index < viewModel.qags.length) {
-              final item = viewModel.qags[index];
-              return BlocProvider.value(
-                value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-                child: AgoraQagSupportableCard(
-                  qagViewModel: item,
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                  onQagSupportChange: (qagSupport) {
-                    context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
-                  },
-                ),
-              );
-            } else if (viewModel.hasFooter) {
-              switch (viewModel.footerType) {
-                case QagListFooterType.loading:
-                  return Center(child: CircularProgressIndicator());
-                case QagListFooterType.loaded:
-                  return Center(
-                    child: AgoraRoundedButton(
-                      label: QagStrings.displayMore,
-                      style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                      onPressed: () {
-                        context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
-                      },
-                    ),
-                  );
-                case QagListFooterType.error:
-                  return Column(
-                    children: [
-                      AgoraErrorView(),
-                      SizedBox(height: AgoraSpacings.base),
-                      AgoraRoundedButton(
-                        label: QagStrings.retry,
+        Semantics(
+          label: 'Liste des questions au gouvernement',
+          child: ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: viewModel.hasFooter ? viewModel.qags.length + 1 : viewModel.qags.length,
+            itemBuilder: (context, index) {
+              if (index < viewModel.qags.length) {
+                final item = viewModel.qags[index];
+                return BlocProvider.value(
+                  value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+                  child: AgoraQagSupportableCard(
+                    qagViewModel: item,
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                    onQagSupportChange: (qagSupport) {
+                      context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
+                    },
+                  ),
+                );
+              } else if (viewModel.hasFooter) {
+                switch (viewModel.footerType) {
+                  case QagListFooterType.loading:
+                    return Center(child: CircularProgressIndicator());
+                  case QagListFooterType.loaded:
+                    return Center(
+                      child: AgoraRoundedButton(
+                        label: QagStrings.displayMore,
                         style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                        onPressed: () =>
-                            context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId)),
+                        onPressed: () {
+                          context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
+                        },
                       ),
-                    ],
-                  );
+                    );
+                  case QagListFooterType.error:
+                    return Column(
+                      children: [
+                        AgoraErrorView(),
+                        SizedBox(height: AgoraSpacings.base),
+                        AgoraRoundedButton(
+                          label: QagStrings.retry,
+                          style: AgoraRoundedButtonStyle.primaryButtonStyle,
+                          onPressed: () =>
+                              context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId)),
+                        ),
+                      ],
+                    );
+                }
               }
-            }
-            return null;
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(height: AgoraSpacings.base);
-          },
+              return null;
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return SizedBox(height: AgoraSpacings.base);
+            },
+          ),
         ),
       ],
     );

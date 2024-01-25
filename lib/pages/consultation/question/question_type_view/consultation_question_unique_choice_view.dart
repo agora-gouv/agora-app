@@ -51,19 +51,23 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
           SizedBox(height: AgoraSpacings.base),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
             children: [
               ConsultationQuestionHelper.buildBackButton(
                 order: widget.uniqueChoiceQuestion.order,
                 onBackTap: widget.onBackTap,
               ),
+              const SizedBox(width: AgoraSpacings.base),
               currentResponseId.isNotBlank()
-                  ? ConsultationQuestionHelper.buildNextQuestion(
-                      order: widget.uniqueChoiceQuestion.order,
-                      totalQuestions: widget.totalQuestions,
-                      onPressed: () => widget.onUniqueResponseTap(
-                        widget.uniqueChoiceQuestion.id,
-                        currentResponseId,
-                        otherResponseText,
+                  ? Flexible(
+                      child: ConsultationQuestionHelper.buildNextQuestion(
+                        order: widget.uniqueChoiceQuestion.order,
+                        totalQuestions: widget.totalQuestions,
+                        onPressed: () => widget.onUniqueResponseTap(
+                          widget.uniqueChoiceQuestion.id,
+                          currentResponseId,
+                          otherResponseText,
+                        ),
                       ),
                     )
                   : ConsultationQuestionHelper.buildIgnoreButton(
@@ -97,9 +101,6 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
               setState(() => currentResponseId = "");
             } else {
               setState(() => currentResponseId = responseId);
-              if (!response.hasOpenTextField) {
-                widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, responseId, "");
-              }
             }
           },
           onOtherResponseChanged: (responseId, otherResponse) {

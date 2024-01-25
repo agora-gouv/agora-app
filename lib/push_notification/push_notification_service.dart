@@ -154,7 +154,7 @@ class FirebasePushNotificationService extends PushNotificationService {
   }
 
   void _redirectionFromNotificationMessage(RemoteMessage message, bool shouldDisplayMessage) {
-    final messageType = (message.data["type"] as String).toNotificationMessageType();
+    final messageType = (message.data["type"] as String?).toNotificationMessageType();
     switch (messageType) {
       case NotificationMessageType.qagDetails:
         navigatorKey.currentState?.pushNamed(
@@ -193,6 +193,9 @@ class FirebasePushNotificationService extends PushNotificationService {
         break;
       case NotificationMessageType.homeQags:
         navigatorKey.currentState?.pushNamed(QagsPage.routeName);
+        break;
+      default:
+        // Do nothing
         break;
     }
   }

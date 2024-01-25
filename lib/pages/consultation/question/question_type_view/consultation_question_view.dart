@@ -17,6 +17,7 @@ class ConsultationQuestionView extends StatelessWidget {
   final String title;
   final String? popupDescription;
   final Widget child;
+  final ScrollController? scrollController;
 
   ConsultationQuestionView({
     super.key,
@@ -27,6 +28,7 @@ class ConsultationQuestionView extends StatelessWidget {
     required this.title,
     required this.popupDescription,
     required this.child,
+    this.scrollController,
   });
 
   @override
@@ -36,6 +38,7 @@ class ConsultationQuestionView extends StatelessWidget {
         AgoraToolbar(style: AgoraToolbarStyle.close, pageLabel: 'Questionnaire de la consultation'),
         Expanded(
           child: AgoraSingleScrollView(
+            scrollController: scrollController,
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [

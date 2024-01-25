@@ -129,4 +129,8 @@ class DepartmentHelper {
       Department(code: "99", name: "Hors de France", displayedName: "99 - Hors de France"),
     ];
   }
+
+  static Department getHorsDeFranceDepartment() {
+    return getDepartment().firstWhere((department) => department.code == '99');
+  }
 }

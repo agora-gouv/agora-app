@@ -41,6 +41,8 @@ class ThematiqueHelper {
                       thematique.label,
                       style: AgoraTextStyles.medium11,
                       textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

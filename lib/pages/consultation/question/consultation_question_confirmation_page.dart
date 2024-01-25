@@ -24,7 +24,7 @@ import 'package:agora/pages/consultation/summary/consultation_summary_page.dart'
 import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 class ConsultationQuestionConfirmationArguments {
   final String consultationId;
@@ -105,12 +105,22 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
     if (state is SendConsultationQuestionsResponsesSuccessState && !state.shouldDisplayDemographicInformation) {
       return _buildContent(context);
     } else if (state is SendConsultationQuestionsResponsesInitialLoadingState || _shouldDisplayDemographicQuiz(state)) {
-      return Column(
-        children: [
-          _buildToolbar(context, 'Envoi en cours'),
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: CircularProgressIndicator()),
-        ],
+      return ConstrainedBox(
+        constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height - 60),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _buildToolbar(context, 'Envoi en cours'),
+            Flexible(flex: 1, child: SizedBox()),
+            Lottie.asset(
+              'assets/animations/loading_consultation.json',
+              width: MediaQuery.sizeOf(context).width,
+            ),
+            Center(child: Text('Envoi en cours', style: AgoraTextStyles.light16)),
+            Flexible(flex: 2, child: SizedBox()),
+          ],
+        ),
       );
     } else {
       return Column(
@@ -136,12 +146,12 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
       crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         SizedBox(height: AgoraSpacings.base),
-        SvgPicture.asset(
-          "assets/ic_question_confirmation.svg",
-          width: largerThanMobile
-              ? MediaQuery.of(context).size.width * 0.7
-              : MediaQuery.of(context).size.width - AgoraSpacings.base,
-          excludeFromSemantics: true,
+        Lottie.asset(
+          'assets/animations/consultation_success.json',
+          width: MediaQuery.sizeOf(context).width,
+          height: 200,
+          repeat: false,
+          fit: BoxFit.fitHeight,
         ),
         Padding(
           padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),

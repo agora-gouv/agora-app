@@ -5,6 +5,7 @@ import 'package:agora/bloc/qag/search/qag_search_state.dart';
 import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -95,6 +96,7 @@ class QagSearch extends StatelessWidget {
   }
 
   ListView _buildQagSearchListView(BuildContext context, List<QagViewModel> viewModel) {
+    SemanticsHelper.announceNewQagsInList();
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,

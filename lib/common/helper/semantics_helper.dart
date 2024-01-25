@@ -1,4 +1,5 @@
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:flutter/semantics.dart';
 
 class SemanticsHelper {
   static String cardResponse({
@@ -15,5 +16,9 @@ class SemanticsHelper {
 
   static String step(int currentStep, int totalStep) {
     return "$currentStep sur $totalStep";
+  }
+
+  static void announceNewQagsInList() {
+    SemanticsService.announce('La liste des questions au gourvernement a changé', TextDirection.ltr);
   }
 }

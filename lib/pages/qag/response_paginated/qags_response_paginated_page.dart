@@ -73,6 +73,8 @@ class QagResponsePaginatedPage extends StatelessWidget {
           author: qagResponse.author,
           date: qagResponse.responseDate,
           style: AgoraQagResponseStyle.large,
+          maxIndex: state.qagResponseViewModels.length,
+          index: state.qagResponseViewModels.indexOf(qagResponse),
           onClick: () {
             TrackerHelper.trackClick(
               clickName: "${AnalyticsEventNames.answeredQag} ${qagResponse.qagId}",

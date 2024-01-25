@@ -37,7 +37,7 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
   @override
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
-      borderColor: AgoraColors.border,
+      borderColor: AgoraColors.borderHintColor,
       padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
       child: DropdownButton<T>(
         value: dropdownValue,
@@ -46,7 +46,7 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
         isExpanded: true,
         borderRadius: BorderRadius.all(AgoraCorners.rounded),
         underline: Container(),
-        hint: Text(widget.hintText, style: AgoraTextStyles.light14.copyWith(color: AgoraColors.orochimaru)),
+        hint: Text(widget.hintText, style: AgoraTextStyles.light14.copyWith(color: AgoraColors.hintColor)),
         onChanged: (T? value) {
           setState(() {
             dropdownValue = value as T;
