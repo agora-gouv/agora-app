@@ -27,7 +27,7 @@ import 'package:agora/pages/demographic/question_view/demographic_vote_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class DemographicQuestionArguments {}
+sealed class DemographicQuestionArguments {}
 
 class DemographicQuestionArgumentsFromQuestion extends DemographicQuestionArguments {
   final String consultationId;
@@ -58,8 +58,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
   Widget build(BuildContext context) {
     arguments = ModalRoute.of(context)!.settings.arguments as DemographicQuestionArguments?;
     return BlocProvider<DemographicResponsesStockBloc>(
-      create: (BuildContext context) =>
-          DemographicResponsesStockBloc(arguments as DemographicQuestionArgumentsFromModify?),
+      create: (BuildContext context) => DemographicResponsesStockBloc(arguments),
       child: AgoraScaffold(
         popAction: () {
           if (currentStep == 1) {
