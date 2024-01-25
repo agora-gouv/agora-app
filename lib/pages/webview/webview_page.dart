@@ -36,7 +36,9 @@ class WebviewPage extends StatelessWidget {
                         onNavigationRequest: (request) {
                           if (request.url.contains("mailto:") || request.url.contains("tel:")) {
                             LaunchUrlHelper.launchUrlFromAgora(
-                                url: request.url, launchMode: LaunchMode.externalApplication);
+                              url: request.url,
+                              launchMode: LaunchMode.externalApplication,
+                            );
                             return NavigationDecision.prevent;
                           }
                           return NavigationDecision.navigate;
