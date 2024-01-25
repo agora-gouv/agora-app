@@ -68,6 +68,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultations();
@@ -135,6 +136,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultations();
@@ -176,6 +178,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultations();
@@ -201,6 +204,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultations();
@@ -222,6 +226,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultations();
@@ -258,6 +263,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
@@ -293,6 +299,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
@@ -332,6 +339,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationDetails(consultationId: consultationId);
@@ -371,6 +379,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationDetails(consultationId: consultationId);
@@ -501,6 +510,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
@@ -611,6 +621,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
@@ -659,6 +670,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.sendConsultationResponses(
@@ -707,6 +719,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.sendConsultationResponses(
@@ -811,6 +824,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);
@@ -927,6 +941,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);
@@ -981,6 +996,7 @@ void main() {
 
       // When
       final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
       );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);

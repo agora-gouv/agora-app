@@ -44,8 +44,13 @@ abstract class ConsultationRepository {
 class ConsultationDioRepository extends ConsultationRepository {
   final AgoraDioHttpClient httpClient;
   final SentryWrapper? sentryWrapper;
+  final Duration minimalSendingTime;
 
-  ConsultationDioRepository({required this.httpClient, this.sentryWrapper});
+  ConsultationDioRepository({
+    required this.httpClient,
+    this.sentryWrapper,
+    this.minimalSendingTime = const Duration(seconds: 2),
+  });
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
@@ -180,6 +185,7 @@ class ConsultationDioRepository extends ConsultationRepository {
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
     try {
+      final timer = Future.delayed(minimalSendingTime);
       final response = await httpClient.post(
         "/consultations/$consultationId/responses",
         data: {
@@ -195,6 +201,7 @@ class ConsultationDioRepository extends ConsultationRepository {
               .toList(),
         },
       );
+      await timer;
       return SendConsultationResponsesSucceedResponse(
         shouldDisplayDemographicInformation: response.data["askDemographicInfo"] as bool,
       );
