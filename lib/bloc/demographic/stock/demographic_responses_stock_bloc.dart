@@ -5,7 +5,7 @@ import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DemographicResponsesStockBloc extends Bloc<DemographicResponseStockEvent, DemographicResponsesStockState> {
-  DemographicResponsesStockBloc([DemographicQuestionArgumentsFromModify? arguments])
+  DemographicResponsesStockBloc([DemographicQuestionArguments? arguments])
       : super(DemographicResponsesStockState(responses: _mapArguments(arguments))) {
     on<AddDemographicResponseStockEvent>(_handleAddDemographicStockResponse);
     on<DeleteDemographicResponseStockEvent>(_handleDeleteDemographicStockResponse);
@@ -31,12 +31,16 @@ class DemographicResponsesStockBloc extends Bloc<DemographicResponseStockEvent, 
   }
 }
 
-List<DemographicResponse> _mapArguments(DemographicQuestionArgumentsFromModify? arguments) {
-  if (arguments == null) return [];
-  return arguments.demographicInformations.map((information) {
-    return DemographicResponse(
-      demographicType: information.demographicType,
-      response: information.data ?? '',
-    );
-  }).toList();
+List<DemographicResponse> _mapArguments(DemographicQuestionArguments? arguments) {
+  return switch (arguments) {
+    final DemographicQuestionArgumentsFromModify modifyArguments =>
+      modifyArguments.demographicInformations.map((information) {
+        return DemographicResponse(
+          demographicType: information.demographicType,
+          response: information.data ?? '',
+        );
+      }).toList(),
+    DemographicQuestionArgumentsFromQuestion _ => [],
+    null => [],
+  };
 }
