@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui' show lerpDouble;
 
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
@@ -122,6 +123,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
           children: <Widget>[
             _setIcon(selectedIndex, item),
             _setLabel(selectedIndex, item),
+            if (Platform.isIOS) const SizedBox(height: AgoraSpacings.base),
           ],
         ),
       ),
