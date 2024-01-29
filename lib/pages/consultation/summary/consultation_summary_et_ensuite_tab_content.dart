@@ -23,7 +23,6 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
   final ConsultationSummaryEtEnsuiteViewModel etEnsuiteViewModel;
   final VoidCallback onBackToConsultationClick;
   final ScrollController nestedScrollController;
-  final ScrollController _sousController = ScrollController();
 
   ConsultationSummaryEtEnsuiteTabContent({
     super.key,
@@ -43,29 +42,9 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
         curve: Curves.fastOutSlowIn,
       );
     });
-    nestedScrollController.position.isScrollingNotifier.addListener(() {
-      if (!nestedScrollController.position.isScrollingNotifier.value) {
-        if (nestedScrollController.offset >= nestedScrollController.position.maxScrollExtent) {
-          _sousController.animateTo(
-            _sousController.offset + 100,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.fastEaseInToSlowEaseOut,
-          );
-        }
-      } else {
-        if (nestedScrollController.offset <= 0 && _sousController.offset > 0) {
-          _sousController.animateTo(
-            _sousController.offset - 100,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.fastEaseInToSlowEaseOut,
-          );
-        }
-      }
-    });
     final video = etEnsuiteViewModel.video;
     final conclusion = etEnsuiteViewModel.conclusion;
     return SingleChildScrollView(
-      controller: _sousController,
       physics: BouncingScrollPhysics(),
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
