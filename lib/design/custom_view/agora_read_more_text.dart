@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -66,19 +68,24 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
     final TextPainter textPainter = TextPainter(
       text: text,
       textAlign: textAlign,
+      textScaler: MediaQuery.textScalerOf(context),
       textDirection: textDirection,
-      maxLines: widget.trimLines,
       locale: Localizations.localeOf(context),
+      maxLines: widget.trimLength,
     );
     textPainter.layout(maxWidth: maxWidth, minWidth: minWidth);
+    final lines = textPainter.computeLineMetrics().length;
 
     final readMoreButton = Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: _onReadMoreLink,
-        child: Text(
-          _readMore ? widget.trimExpandedText : widget.trimCollapsedText,
-          style: widget.trimTextStyle.copyWith(color: colorClickableText),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
+          child: Text(
+            _readMore ? widget.trimExpandedText : widget.trimCollapsedText,
+            style: widget.trimTextStyle.copyWith(color: colorClickableText),
+          ),
         ),
       ),
     );
@@ -96,7 +103,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
                 textAlign: textAlign,
                 textDirection: textDirection,
                 text: TextSpan(
-                  text: _readMore ? data.substring(0, widget.trimLength) : data,
+                  text: _readMore ? data.substring(0, min(data.length, widget.trimLength)) : data,
                   style: textStyle,
                 ),
               ),
@@ -108,7 +115,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
         }
         break;
       case AgoraTrimMode.line:
-        if (textPainter.didExceedMaxLines) {
+        if (lines > widget.trimLines) {
           textSpan = Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
@@ -117,8 +124,9 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
                 textScaler: MediaQuery.of(context).textScaler,
                 textAlign: textAlign,
                 textDirection: textDirection,
+                maxLines: _readMore ? widget.trimLines : null,
                 text: TextSpan(
-                  text: _readMore ? data.substring(0, widget.trimLength) : data,
+                  text: data,
                   style: textStyle,
                 ),
               ),
