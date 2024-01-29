@@ -35,13 +35,6 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      nestedScrollController.animateTo(
-        nestedScrollController.position.minScrollExtent,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.fastOutSlowIn,
-      );
-    });
     final video = etEnsuiteViewModel.video;
     final conclusion = etEnsuiteViewModel.conclusion;
     return SingleChildScrollView(

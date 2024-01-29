@@ -22,13 +22,6 @@ class ConsultationSummaryPresentationTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      nestedScrollController.animateTo(
-        nestedScrollController.position.minScrollExtent,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.fastOutSlowIn,
-      );
-    });
     return SingleChildScrollView(
       //controller: _sousController,
       physics: BouncingScrollPhysics(),

@@ -94,6 +94,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
   void dispose() {
     super.dispose();
     _tabController.dispose();
+    scrollController.dispose();
   }
 
   @override
@@ -128,11 +129,16 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
                     }
                   } else {
                     if (scrollController.offset <= 0 && innerController!.offset > 0) {
-                      innerController.jumpTo(
-                        innerController.offset - 100,
-                      );
+                      innerController.jumpTo(innerController.offset - 100);
                     }
                   }
+                });
+                _tabController.addListener(() {
+                  scrollController.animateTo(
+                    scrollController.position.minScrollExtent,
+                    duration: const Duration(milliseconds: 600),
+                    curve: Curves.fastOutSlowIn,
+                  );
                 });
               });
               final viewModel = state.viewModel;
