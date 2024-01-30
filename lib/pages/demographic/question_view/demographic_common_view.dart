@@ -18,7 +18,8 @@ class DemographicCommonView extends StatefulWidget {
   final int step;
   final int totalStep;
   final List<DemographicResponseChoice> responseChoices;
-  final Function(String responseCode) onContinuePressed;
+  final void Function(String responseCode) onResponseChosed;
+  final void Function() onContinuePressed;
   final VoidCallback onIgnorePressed;
   final VoidCallback onBackPressed;
   final DemographicResponse? oldResponse;
@@ -31,6 +32,7 @@ class DemographicCommonView extends StatefulWidget {
     required this.totalStep,
     required this.responseChoices,
     required this.onContinuePressed,
+    required this.onResponseChosed,
     required this.onIgnorePressed,
     required this.onBackPressed,
     required this.oldResponse,
@@ -97,7 +99,8 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
             if (responseChoice.responseCode == currentResponse) {
               setState(() => currentResponse = "");
             } else {
-              widget.onContinuePressed(responseChoice.responseCode);
+              setState(() => currentResponse = responseChoice.responseCode);
+              widget.onResponseChosed(responseChoice.responseCode);
             }
           },
           semantic: DemographicResponseCardSemantic(
@@ -121,7 +124,7 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
                 ? DemographicHelper.buildNextButton(
                     step: widget.step,
                     totalStep: widget.totalStep,
-                    onPressed: () => widget.onContinuePressed(widget.oldResponse!.response),
+                    onPressed: () => widget.onContinuePressed(),
                   )
                 : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
           ),
