@@ -147,19 +147,20 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
             DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
             const SizedBox(width: AgoraSpacings.base),
             Flexible(
-              child: voteFrequencyCode != null || publicMeetingFrequencyCode != null || consultationFrequencyCode != null
-                  ? DemographicHelper.buildNextButton(
-                      step: widget.step,
-                      totalStep: widget.totalStep,
-                      onPressed: () => setState(
-                        () => widget.onContinuePressed(
-                          voteFrequencyCode,
-                          publicMeetingFrequencyCode,
-                          consultationFrequencyCode,
-                        ),
-                      ),
-                    )
-                  : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+              child:
+                  voteFrequencyCode != null || publicMeetingFrequencyCode != null || consultationFrequencyCode != null
+                      ? DemographicHelper.buildNextButton(
+                          step: widget.step,
+                          totalStep: widget.totalStep,
+                          onPressed: () => setState(
+                            () => widget.onContinuePressed(
+                              voteFrequencyCode,
+                              publicMeetingFrequencyCode,
+                              consultationFrequencyCode,
+                            ),
+                          ),
+                        )
+                      : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
             ),
           ],
         ),

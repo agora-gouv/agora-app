@@ -62,11 +62,11 @@ class ConsultationQuestionView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Flexible(
-                            child:
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-                                  child: Text(title, style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue)),
-                                ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
+                              child:
+                                  Text(title, style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue)),
+                            ),
                           ),
                           if (popupDescription != null) ...[
                             SizedBox(width: AgoraSpacings.x0_25),

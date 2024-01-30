@@ -179,7 +179,8 @@ class _QagsSectionState extends State<QagsSection> {
                               widgetName: AnalyticsScreenNames.qagsPage,
                             );
                             if (currentSelected != QagTab.trending) {
-                              Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                              Future.delayed(Duration(seconds: 1))
+                                  .then((value) => SemanticsHelper.announceNewQagsInList());
                               setState(() => currentSelected = QagTab.trending);
                             }
                           },
@@ -189,7 +190,8 @@ class _QagsSectionState extends State<QagsSection> {
                         header: true,
                         button: true,
                         selected: currentSelected == QagTab.popular,
-                        tooltip: 'élément 2 sur 4',  child: _buildTabButton(
+                        tooltip: 'élément 2 sur 4',
+                        child: _buildTabButton(
                           label: QagStrings.popular,
                           isSelected: currentSelected == QagTab.popular,
                           onTap: () {
@@ -198,7 +200,8 @@ class _QagsSectionState extends State<QagsSection> {
                               widgetName: AnalyticsScreenNames.qagsPage,
                             );
                             if (currentSelected != QagTab.popular) {
-                              Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                              Future.delayed(Duration(seconds: 1))
+                                  .then((value) => SemanticsHelper.announceNewQagsInList());
                               setState(() => currentSelected = QagTab.popular);
                             }
                           },
@@ -218,7 +221,8 @@ class _QagsSectionState extends State<QagsSection> {
                               widgetName: AnalyticsScreenNames.qagsPage,
                             );
                             if (currentSelected != QagTab.latest) {
-                              Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                              Future.delayed(Duration(seconds: 1))
+                                  .then((value) => SemanticsHelper.announceNewQagsInList());
                               setState(() => currentSelected = QagTab.latest);
                             }
                           },
@@ -238,7 +242,8 @@ class _QagsSectionState extends State<QagsSection> {
                               widgetName: AnalyticsScreenNames.qagsPage,
                             );
                             if (currentSelected != QagTab.supporting) {
-                              Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+                              Future.delayed(Duration(seconds: 1))
+                                  .then((value) => SemanticsHelper.announceNewQagsInList());
                               setState(() => currentSelected = QagTab.supporting);
                             }
                           },

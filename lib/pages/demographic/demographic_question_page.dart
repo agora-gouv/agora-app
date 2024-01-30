@@ -102,9 +102,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                                 ),
                               ),
                               SizedBox(height: AgoraSpacings.base),
-                              Text(
-                                DemographicHelper.getQuestionTitle(currentStep),
-                                style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                              Semantics(
+                                header: true,
+                                child: Text(
+                                  DemographicHelper.getQuestionTitle(currentStep),
+                                  style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                                ),
                               ),
                               SizedBox(height: AgoraSpacings.x0_75),
                             ],

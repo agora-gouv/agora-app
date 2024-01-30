@@ -31,8 +31,6 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
 
   final Color _activeLabelColor = AgoraColors.primaryBlue;
   final Color _inactiveLabelColor = AgoraColors.primaryGreyOpacity80;
-  final Color _activeBgColor = AgoraColors.white;
-  final Color _inactiveBgColor = AgoraColors.white;
   final Color _activeIndicatorColor = AgoraColors.primaryBlue;
   final Color _inactiveIndicatorColor = AgoraColors.superSilver;
 
