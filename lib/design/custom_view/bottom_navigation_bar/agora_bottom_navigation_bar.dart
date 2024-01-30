@@ -76,23 +76,23 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
           ),
           Material(
             color: AgoraColors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: _items.map((item) {
-                  final onTapIndex = _items.indexOf(item);
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        _currentSelectedIndex = onTapIndex;
-                        widget.onTap(_currentSelectedIndex);
-                      });
-                    },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: _items.map((item) {
+                final onTapIndex = _items.indexOf(item);
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      _currentSelectedIndex = onTapIndex;
+                      widget.onTap(_currentSelectedIndex);
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
                     child: _buildItemWidget(onTapIndex, item),
-                  );
-                }).toList(),
-              ),
+                  ),
+                );
+              }).toList(),
             ),
           ),
         ],
@@ -114,8 +114,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
       selected: selectedIndex == _currentSelectedIndex,
       label: 'Onglet ${selectedIndex + 1} sur 2',
       button: true,
-      child: Container(
-        color: selectedIndex == _currentSelectedIndex ? _activeBgColor : _inactiveBgColor,
+      child: SizedBox(
         height: kIsWeb ? _webBottomBarHeight : null,
         width: _width / _items.length,
         child: Column(
