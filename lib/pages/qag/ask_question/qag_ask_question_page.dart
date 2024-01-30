@@ -256,10 +256,12 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               SizedBox(height: AgoraSpacings.x1_5),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
-                  SizedBox(width: AgoraSpacings.x0_5),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
+                    child: Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
+                  ),
                   AgoraMoreInformation(
                     onClick: () {
                       showAgoraDialog(
@@ -293,7 +295,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                   ),
                 ],
               ),
-              SizedBox(height: AgoraSpacings.x0_75),
+              SizedBox(height: AgoraSpacings.x0_375),
               AgoraTextField(
                 maxLength: _nameMaxLength,
                 hintText: QagStrings.yourNameHint,

@@ -70,7 +70,7 @@ class QagsResponseSection extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
                   child: AgoraMoreInformation(
                     semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
                     onClick: () {
