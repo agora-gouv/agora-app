@@ -51,7 +51,7 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
   Widget build(BuildContext context) {
     _resetPreviousResponses();
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: _handleResponse(context),
     );
   }
@@ -112,15 +112,19 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
       SizedBox(height: AgoraSpacings.x1_25),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
         children: [
           DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
-          currentResponse.isNotBlank()
-              ? DemographicHelper.buildNextButton(
-                  step: widget.step,
-                  totalStep: widget.totalStep,
-                  onPressed: () => widget.onContinuePressed(widget.oldResponse!.response),
-                )
-              : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+          const SizedBox(width: AgoraSpacings.base),
+          Flexible(
+            child: currentResponse.isNotBlank()
+                ? DemographicHelper.buildNextButton(
+                    step: widget.step,
+                    totalStep: widget.totalStep,
+                    onPressed: () => widget.onContinuePressed(widget.oldResponse!.response),
+                  )
+                : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+          ),
         ],
       ),
     ]);

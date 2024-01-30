@@ -275,16 +275,18 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
     final List<Widget> widgets = [];
     for (final viewModel in demographicInformationViewModels) {
       widgets.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              viewModel.demographicType,
-              style: AgoraTextStyles.regular16.copyWith(color: AgoraColors.blue525),
-            ),
-            SizedBox(height: AgoraSpacings.x0_25),
-            Text(viewModel.data, style: AgoraTextStyles.medium18),
-          ],
+        MergeSemantics(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                viewModel.demographicType,
+                style: AgoraTextStyles.regular16.copyWith(color: AgoraColors.blue525),
+              ),
+              SizedBox(height: AgoraSpacings.x0_25),
+              Text(viewModel.data, style: AgoraTextStyles.medium18),
+            ],
+          ),
         ),
       );
       widgets.add(SizedBox(height: AgoraSpacings.base));
