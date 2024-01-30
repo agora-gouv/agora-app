@@ -36,6 +36,7 @@ class QagSearch extends StatelessWidget {
         } else if (viewModel is _QagSearchLoadingViewModel) {
           section = Center(child: CircularProgressIndicator());
         } else if (viewModel is _QagSearchNoResultViewModel) {
+          SemanticsHelper.announceEmptyResult();
           section = Align(
             alignment: Alignment.topCenter,
             child: Padding(
@@ -83,6 +84,7 @@ class QagSearch extends StatelessWidget {
             ),
           );
         } else {
+          SemanticsHelper.announceGenericError();
           section = Center(child: AgoraErrorView());
         }
         return ConstrainedBox(

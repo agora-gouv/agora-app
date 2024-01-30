@@ -21,4 +21,12 @@ class SemanticsHelper {
   static void announceNewQagsInList() {
     SemanticsService.announce('La liste des questions au gourvernement a changé', TextDirection.ltr);
   }
+
+  static void announceEmptyResult() {
+    SemanticsService.announce('Pas de résultats', TextDirection.ltr);
+  }
+
+  static void announceGenericError() {
+    SemanticsService.announce('Une erreur est survenue', TextDirection.ltr);
+  }
 }
