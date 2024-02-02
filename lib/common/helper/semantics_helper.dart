@@ -1,3 +1,4 @@
+import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:flutter/semantics.dart';
 
@@ -24,6 +25,10 @@ class SemanticsHelper {
 
   static void announceEmptyResult() {
     SemanticsService.announce('Pas de résultats', TextDirection.ltr);
+  }
+
+  static void announceErrorInQuestion() {
+    SemanticsService.announce(QagStrings.questionRequiredCondition, TextDirection.ltr);
   }
 
   static void announceGenericError() {
