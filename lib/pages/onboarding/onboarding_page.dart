@@ -197,10 +197,10 @@ class _LargeFloatingBackActionButton extends StatelessWidget {
               height: 56,
               width: kIsWeb
                   ? min(MediaQuery.of(context).size.width, ResponsiveHelper.maxScreenSize) -
-                  AgoraSpacings.horizontalPadding * 2
+                      AgoraSpacings.horizontalPadding * 2
                   : MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2,
               child:
-              Center(child: Text('Précédent', style: AgoraTextStyles.primaryBlueTextButton.copyWith(fontSize: 14))),
+                  Center(child: Text('Précédent', style: AgoraTextStyles.primaryBlueTextButton.copyWith(fontSize: 14))),
             ),
           ),
         ),
