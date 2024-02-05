@@ -27,6 +27,14 @@ class SemanticsHelper {
     SemanticsService.announce('Pas de résultats', TextDirection.ltr);
   }
 
+  static void announceCollapsing(bool isCollapsed) {
+    if (isCollapsed) {
+      SemanticsService.announce('Catégorie depliée', TextDirection.ltr);
+    } else {
+      SemanticsService.announce('Catégorie repliée', TextDirection.ltr);
+    }
+  }
+
   static void announceErrorInQuestion() {
     SemanticsService.announce(QagStrings.questionRequiredCondition, TextDirection.ltr);
   }

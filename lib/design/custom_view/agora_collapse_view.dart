@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -44,14 +45,20 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
                       : BorderRadius.all(AgoraCorners.rounded),
               child: Material(
                 color: AgoraColors.transparent,
-                child: InkWell(
-                  onTap: () => setState(() => isCollapse = !isCollapse),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AgoraSpacings.horizontalPadding,
-                      vertical: AgoraSpacings.x0_5,
+                child: Semantics(
+                  tooltip: isCollapse ? ' Étendu' : 'Replié',
+                  child: InkWell(
+                    onTap: () {
+                      SemanticsHelper.announceCollapsing(!isCollapse);
+                      setState(() => isCollapse = !isCollapse);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AgoraSpacings.horizontalPadding,
+                        vertical: AgoraSpacings.x0_5,
+                      ),
+                      child: _buildTitle(),
                     ),
-                    child: _buildTitle(),
                   ),
                 ),
               ),
