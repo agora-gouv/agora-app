@@ -26,7 +26,6 @@ class AgoraBottomNavigationBar extends StatefulWidget {
 }
 
 class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
-  final double _webBottomBarHeight = 60;
   final double _indicatorHeight = 3;
 
   final Color _activeLabelColor = AgoraColors.primaryBlue;
@@ -50,7 +49,6 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
     return Container(
-      height: kIsWeb ? _webBottomBarHeight : null,
       width: _width,
       decoration: BoxDecoration(
         color: _inactiveIndicatorColor,
@@ -113,14 +111,13 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
       label: 'Onglet ${selectedIndex + 1} sur 2',
       button: true,
       child: SizedBox(
-        height: kIsWeb ? _webBottomBarHeight : null,
         width: _width / _items.length,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             _setIcon(selectedIndex, item),
             _setLabel(selectedIndex, item),
-            if (!kIsWeb && Platform.isIOS) const SizedBox(height: AgoraSpacings.x0_75),
+            if (!kIsWeb && Platform.isIOS) const SizedBox(height: AgoraSpacings.base),
           ],
         ),
       ),
