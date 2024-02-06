@@ -120,7 +120,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
           children: <Widget>[
             _setIcon(selectedIndex, item),
             _setLabel(selectedIndex, item),
-            if (Platform.isIOS) const SizedBox(height: AgoraSpacings.x0_75),
+            if (!kIsWeb && Platform.isIOS) const SizedBox(height: AgoraSpacings.x0_75),
           ],
         ),
       ),
