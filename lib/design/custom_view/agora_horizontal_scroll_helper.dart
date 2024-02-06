@@ -6,11 +6,11 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalScrollHelper extends StatelessWidget {
-  final int nombreElements;
+  final int elementsNumber;
   final ScrollController scrollController;
 
   HorizontalScrollHelper({
-    required this.nombreElements,
+    required this.elementsNumber,
     required this.scrollController,
   });
 
@@ -29,7 +29,7 @@ class HorizontalScrollHelper extends StatelessWidget {
           round: true,
           onClick: () {
             scrollController.animateTo(
-              scrollController.offset - (scrollController.position.maxScrollExtent / nombreElements),
+              scrollController.offset - (scrollController.position.maxScrollExtent / elementsNumber),
               duration: Duration(milliseconds: 300),
               curve: Curves.fastEaseInToSlowEaseOut,
             );
@@ -37,7 +37,7 @@ class HorizontalScrollHelper extends StatelessWidget {
         ),
         const SizedBox(width: AgoraSpacings.base),
         Expanded(
-          child: Center(child: _HorizontalHelper(nombreElements: nombreElements, scrollController: scrollController)),
+          child: Center(child: _HorizontalHelper(elementsNumber: elementsNumber, scrollController: scrollController)),
         ),
         const SizedBox(width: AgoraSpacings.base),
         AgoraIconButton(
@@ -50,7 +50,7 @@ class HorizontalScrollHelper extends StatelessWidget {
           round: true,
           onClick: () {
             scrollController.animateTo(
-              scrollController.offset + (scrollController.position.maxScrollExtent / nombreElements),
+              scrollController.offset + (scrollController.position.maxScrollExtent / elementsNumber),
               duration: Duration(milliseconds: 300),
               curve: Curves.fastEaseInToSlowEaseOut,
             );
@@ -63,11 +63,11 @@ class HorizontalScrollHelper extends StatelessWidget {
 }
 
 class _HorizontalHelper extends StatefulWidget {
-  final int nombreElements;
+  final int elementsNumber;
   final ScrollController scrollController;
 
   _HorizontalHelper({
-    required this.nombreElements,
+    required this.elementsNumber,
     required this.scrollController,
   });
 
@@ -92,8 +92,8 @@ class _HorizontalHelperState extends State<_HorizontalHelper> {
 
   void _onScrollUpdated() {
     final index =
-        widget.scrollController.offset * widget.nombreElements / widget.scrollController.position.maxScrollExtent;
-    final intIndex = min(widget.nombreElements, 1 + index.round());
+        widget.scrollController.offset * widget.elementsNumber / widget.scrollController.position.maxScrollExtent;
+    final intIndex = min(widget.elementsNumber, 1 + index.round());
     if (intIndex != currentIndex) {
       setState(() {
         currentIndex = intIndex;
@@ -104,9 +104,9 @@ class _HorizontalHelperState extends State<_HorizontalHelper> {
   @override
   Widget build(BuildContext context) {
     final dots =
-        List<int>.generate(widget.nombreElements, (i) => i + 1).map((i) => _Circle(i == currentIndex)).toList();
+        List<int>.generate(widget.elementsNumber, (i) => i + 1).map((i) => _Circle(i == currentIndex)).toList();
     return Semantics(
-      label: "Élément $currentIndex sur ${widget.nombreElements}",
+      label: "Élément $currentIndex sur ${widget.elementsNumber}",
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: dots,

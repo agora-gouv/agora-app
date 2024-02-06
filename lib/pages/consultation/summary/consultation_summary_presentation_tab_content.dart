@@ -23,7 +23,6 @@ class ConsultationSummaryPresentationTabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      //controller: _sousController,
       physics: BouncingScrollPhysics(),
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
@@ -70,5 +69,3 @@ class ConsultationSummaryPresentationTabContent extends StatelessWidget {
     );
   }
 }
-
-final GlobalKey<NestedScrollViewState> nestedConsultationSummaryKey = GlobalKey();

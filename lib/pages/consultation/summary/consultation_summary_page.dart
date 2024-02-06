@@ -327,3 +327,5 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
     }
   }
 }
+
+final GlobalKey<NestedScrollViewState> nestedConsultationSummaryKey = GlobalKey();

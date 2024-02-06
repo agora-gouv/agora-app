@@ -140,7 +140,7 @@ class QagsResponseSection extends StatelessWidget {
           },
         ),
         const SizedBox(height: AgoraSpacings.base),
-        HorizontalScrollHelper(nombreElements: viewModels.length, scrollController: scrollController),
+        HorizontalScrollHelper(elementsNumber: viewModels.length, scrollController: scrollController),
       ],
     );
   }
