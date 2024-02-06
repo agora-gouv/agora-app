@@ -5,6 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_finished_card.dart';
+import 'package:agora/design/custom_view/agora_horizontal_scroll_helper.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -75,15 +76,27 @@ class ConsultationsFinishedSection extends StatelessWidget {
                       )
                     : LayoutBuilder(
                         builder: (context, constraint) {
-                          return SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(minWidth: constraint.maxWidth),
-                              child: IntrinsicHeight(
-                                child: Row(children: _buildFinishedConsultations(context)),
+                          final scrollController = ScrollController();
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                controller: scrollController,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(minWidth: constraint.maxWidth),
+                                  child: IntrinsicHeight(
+                                    child: Row(children: _buildFinishedConsultations(context)),
+                                  ),
+                                ),
                               ),
-                            ),
+                              const SizedBox(height: AgoraSpacings.base),
+                              HorizontalScrollHelper(
+                                nombreElements: finishedViewModels.length,
+                                scrollController: scrollController,
+                              ),
+                            ],
                           );
                         },
                       ),
