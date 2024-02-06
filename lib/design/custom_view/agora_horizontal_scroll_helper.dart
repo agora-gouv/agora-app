@@ -91,8 +91,7 @@ class _HorizontalHelperState extends State<_HorizontalHelper> {
   }
 
   void _onScrollUpdated() {
-    final index =
-        widget.scrollController.offset * widget.itemsCount / widget.scrollController.position.maxScrollExtent;
+    final index = widget.scrollController.offset * widget.itemsCount / widget.scrollController.position.maxScrollExtent;
     final intIndex = min(widget.itemsCount, 1 + index.round());
     if (intIndex != currentIndex) {
       setState(() {
@@ -103,8 +102,7 @@ class _HorizontalHelperState extends State<_HorizontalHelper> {
 
   @override
   Widget build(BuildContext context) {
-    final dots =
-        List<int>.generate(widget.itemsCount, (i) => i + 1).map((i) => _Circle(i == currentIndex)).toList();
+    final dots = List<int>.generate(widget.itemsCount, (i) => i + 1).map((i) => _Circle(i == currentIndex)).toList();
     return Semantics(
       label: "Élément $currentIndex sur ${widget.itemsCount}",
       child: Row(
