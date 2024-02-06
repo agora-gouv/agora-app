@@ -93,7 +93,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                               ),
                               const SizedBox(height: AgoraSpacings.base),
                               HorizontalScrollHelper(
-                                elementsNumber: finishedViewModels.length,
+                                itemsCount: finishedViewModels.length,
                                 scrollController: scrollController,
                               ),
                             ],
