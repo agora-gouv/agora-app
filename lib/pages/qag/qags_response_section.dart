@@ -9,6 +9,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_horizontal_scroll_helper.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_qag_incoming_response_card.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
@@ -70,7 +71,7 @@ class QagsResponseSection extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
+                  padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
                   child: AgoraMoreInformation(
                     semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
                     onClick: () {
@@ -116,11 +117,14 @@ class QagsResponseSection extends StatelessWidget {
   }
 
   Widget _buildResponseListWidget(BuildContext context, List<QagResponseTypeViewModel> viewModels) {
+    final scrollController = ScrollController();
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         LayoutBuilder(
           builder: (context, constraint) {
             return SingleChildScrollView(
+              controller: scrollController,
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               child: ConstrainedBox(
@@ -135,6 +139,8 @@ class QagsResponseSection extends StatelessWidget {
             );
           },
         ),
+        const SizedBox(height: AgoraSpacings.base),
+        HorizontalScrollHelper(itemsCount: viewModels.length, scrollController: scrollController),
       ],
     );
   }

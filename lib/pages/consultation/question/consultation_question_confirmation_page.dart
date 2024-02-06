@@ -117,7 +117,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
               'assets/animations/loading_consultation.json',
               width: MediaQuery.sizeOf(context).width,
             ),
-            Center(child: Text('Envoi en cours', style: AgoraTextStyles.light16)),
+            Center(child: Text('Envoi de vos réponses', style: AgoraTextStyles.light16)),
             Flexible(flex: 2, child: SizedBox()),
           ],
         ),

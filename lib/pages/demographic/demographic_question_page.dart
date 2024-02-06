@@ -102,9 +102,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                                 ),
                               ),
                               SizedBox(height: AgoraSpacings.base),
-                              Text(
-                                DemographicHelper.getQuestionTitle(currentStep),
-                                style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                              Semantics(
+                                header: true,
+                                child: Text(
+                                  DemographicHelper.getQuestionTitle(currentStep),
+                                  style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                                ),
                               ),
                               SizedBox(height: AgoraSpacings.x0_75),
                             ],
@@ -144,10 +147,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           step: currentStep,
           totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question1ResponseChoice(),
-          onContinuePressed: (responseCode) => setState(() {
+          onContinuePressed: () => setState(() {
             _trackContinueClick(step);
-            _stockResponse(context, DemographicType.gender, responseCode);
             _nextStep(context);
+          }),
+          onResponseChosed: (responseCode) => setState(() {
+            _stockResponse(context, DemographicType.gender, responseCode);
           }),
           onIgnorePressed: () => setState(() {
             _trackIgnoreClick(step);
@@ -197,10 +202,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           step: currentStep,
           totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question4ResponseChoice(),
-          onContinuePressed: (responseCode) => setState(() {
+          onContinuePressed: () => setState(() {
             _trackContinueClick(step);
-            _stockResponse(context, DemographicType.cityType, responseCode);
             _nextStep(context);
+          }),
+          onResponseChosed: (responseCode) => setState(() {
+            _stockResponse(context, DemographicType.cityType, responseCode);
           }),
           onIgnorePressed: () => setState(() {
             _trackIgnoreClick(step);
@@ -215,10 +222,12 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           step: currentStep,
           totalStep: totalStep,
           responseChoices: DemographicResponseHelper.question5ResponseChoice(),
-          onContinuePressed: (responseCode) => setState(() {
+          onContinuePressed: () => setState(() {
             _trackContinueClick(step);
-            _stockResponse(context, DemographicType.jobCategory, responseCode);
             _nextStep(context);
+          }),
+          onResponseChosed: (responseCode) => setState(() {
+            _stockResponse(context, DemographicType.jobCategory, responseCode);
           }),
           onIgnorePressed: () => setState(() {
             _trackIgnoreClick(step);

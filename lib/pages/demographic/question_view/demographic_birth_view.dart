@@ -41,7 +41,7 @@ class _DemographicBirthViewState extends State<DemographicBirthView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width / 2,
@@ -69,20 +69,24 @@ class _DemographicBirthViewState extends State<DemographicBirthView> {
         SizedBox(height: AgoraSpacings.x1_25),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
           children: [
             DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
-            year != null && year!.length == 4
-                ? DemographicHelper.buildNextButton(
-                    step: widget.step,
-                    totalStep: widget.totalStep,
-                    onPressed: () => setState(() {
-                      isError = !_isBirthDateValid();
-                      if (!isError) {
-                        widget.onContinuePressed(year!);
-                      }
-                    }),
-                  )
-                : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+            const SizedBox(width: AgoraSpacings.base),
+            Flexible(
+              child: year != null && year!.length == 4
+                  ? DemographicHelper.buildNextButton(
+                      step: widget.step,
+                      totalStep: widget.totalStep,
+                      onPressed: () => setState(() {
+                        isError = !_isBirthDateValid();
+                        if (!isError) {
+                          widget.onContinuePressed(year!);
+                        }
+                      }),
+                    )
+                  : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+            ),
           ],
         ),
       ],

@@ -34,8 +34,9 @@ class QagStrings {
   static const String noticeDescription = "lorem ipsum";
   static const String agree = "C'est compris";
   static const String questionTitle = "Ma question";
-  static const String questionHint = "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}?";
-  static const String questionRequiredCondition = "La question doit comporter au moins 10 caractères.";
+  static const String questionHint =
+      "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}? 10 caractères minimum";
+  static const String questionRequiredCondition = "Erreur: la question doit comporter au moins 10 caractères.";
   static const String detailsTitle = "Détails supplémentaires";
   static const String detailsDescription =
       "Ajoutez davantage d'informations ou de contexte si vous le souhaitez (facultatif)";
@@ -105,4 +106,5 @@ class QagStrings {
   static const String astuceQuestionDescription =
       "Si votre question a déjà été posée par un autre utilisateur, il vaut mieux la soutenir qu’en poser une nouvelle\u{00A0}! ";
   static const String astuceQuestionDescriptionLink = "Recherchez ici si c’est le cas.";
+  static const String askQagObligatoireSaufContraire = "Sauf mention contraire, tous les champs sont obligatoires.";
 }
