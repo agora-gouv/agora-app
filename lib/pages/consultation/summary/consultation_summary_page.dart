@@ -22,6 +22,7 @@ import 'package:agora/pages/consultation/summary/consultation_summary_presentati
 import 'package:agora/pages/consultation/summary/consultation_summary_results_tab_content.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -93,6 +94,7 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
   void dispose() {
     super.dispose();
     _tabController.dispose();
+    scrollController.dispose();
   }
 
   @override
@@ -112,9 +114,37 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
         child: BlocBuilder<ConsultationSummaryBloc, ConsultationSummaryState>(
           builder: (context, state) {
             if (state is ConsultationSummaryFetchedState) {
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                scrollController.position.isScrollingNotifier.addListener(() {
+                  final position = scrollController.position;
+                  if (position.userScrollDirection != ScrollDirection.idle) {
+                    return;
+                  }
+                  final innerController = nestedConsultationSummaryKey.currentState?.innerController;
+                  if (!scrollController.position.isScrollingNotifier.value) {
+                    if (scrollController.offset >= scrollController.position.maxScrollExtent) {
+                      innerController!.jumpTo(
+                        innerController.offset + 100,
+                      );
+                    }
+                  } else {
+                    if (scrollController.offset <= 0 && innerController!.offset > 0) {
+                      innerController.jumpTo(innerController.offset - 100);
+                    }
+                  }
+                });
+                _tabController.addListener(() {
+                  scrollController.animateTo(
+                    scrollController.position.minScrollExtent,
+                    duration: const Duration(milliseconds: 600),
+                    curve: Curves.fastOutSlowIn,
+                  );
+                });
+              });
               final viewModel = state.viewModel;
               return NestedScrollView(
                 controller: scrollController,
+                key: nestedConsultationSummaryKey,
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return [
                     AgoraAppBarWithTabs(
@@ -297,3 +327,5 @@ class _ConsultationSummaryPageState extends State<ConsultationSummaryPage> with 
     }
   }
 }
+
+final GlobalKey<NestedScrollViewState> nestedConsultationSummaryKey = GlobalKey();

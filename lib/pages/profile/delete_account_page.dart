@@ -58,20 +58,18 @@ class DeleteAccountPage extends StatelessWidget {
                           ),
                           WidgetSpan(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 SizedBox(height: AgoraSpacings.base),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SizedBox(width: 40),
                                     SizedBox(width: AgoraSpacings.x0_75),
                                     Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          GenericStrings.mailSupport,
-                                          style: AgoraTextStyles.medium16,
-                                          textAlign: TextAlign.center,
-                                        ),
+                                      child: Text(
+                                        GenericStrings.mailSupport,
+                                        style: AgoraTextStyles.medium16,
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                     SizedBox(width: AgoraSpacings.x0_75),
@@ -91,19 +89,18 @@ class DeleteAccountPage extends StatelessWidget {
                           ),
                           WidgetSpan(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 SizedBox(height: AgoraSpacings.base),
                                 Row(
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    SizedBox(width: 40),
                                     SizedBox(width: AgoraSpacings.x0_75),
                                     Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          snapshot.data ?? "",
-                                          style: AgoraTextStyles.medium16,
-                                          textAlign: TextAlign.center,
-                                        ),
+                                      child: Text(
+                                        snapshot.data ?? "",
+                                        style: AgoraTextStyles.medium16,
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                     SizedBox(width: AgoraSpacings.x0_75),

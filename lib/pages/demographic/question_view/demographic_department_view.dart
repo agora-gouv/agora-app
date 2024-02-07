@@ -150,13 +150,16 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
-            selectedDepartment != null
-                ? DemographicHelper.buildNextButton(
-                    step: widget.step,
-                    totalStep: widget.totalStep,
-                    onPressed: () => setState(() => widget.onContinuePressed(selectedDepartment!.code)),
-                  )
-                : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+            const SizedBox(width: AgoraSpacings.base),
+            Flexible(
+              child: selectedDepartment != null
+                  ? DemographicHelper.buildNextButton(
+                      step: widget.step,
+                      totalStep: widget.totalStep,
+                      onPressed: () => setState(() => widget.onContinuePressed(selectedDepartment!.code)),
+                    )
+                  : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+            ),
           ],
         ),
       ],

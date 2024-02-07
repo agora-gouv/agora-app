@@ -26,6 +26,7 @@ class ThematiqueHelper {
           (thematique) => Semantics(
             toggled: thematique.id == selectedThematiqueId,
             label: thematique.label,
+            tooltip: 'élément ${thematiques.indexOf(thematique) + 1} sur ${thematiques.length}',
             child: ExcludeSemantics(
               child: Column(
                 children: [

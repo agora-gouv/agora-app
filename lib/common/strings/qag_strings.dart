@@ -6,7 +6,7 @@ class QagStrings {
   static const String mostPopularQuestion = "La question la plus populaire";
   static const String incomingResponse = "Réponse à venir";
   static const String qagResponseInfoBubble =
-      "Chaque semaine, le Gouvernement répond directement sur l’appli à la question citoyenne la plus populaire, c’est-à-dire celle qui a obtenu le plus de soutiens le mardi à 14h et est en tête de l’onglet “Le top”.";
+      "Chaque semaine, le Gouvernement répond directement sur l’appli à la question citoyenne la plus populaire, c’est-à-dire celle qui a obtenu le plus de soutiens le lundi à 14h et est en tête de l’onglet “Le top”.";
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
   static const String search = "🔍";
@@ -28,14 +28,15 @@ class QagStrings {
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
   static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine. \n";
   static const String askQuestionDescription3 =
-      "<b>Tous les mardis à 14h :</b> \n<ul><li> La question la plus populaire est sélectionnée automatiquement pour obtenir une réponse du gouvernement. Il s’agit de celle en tête de l’onglet “Le top”.</li> <li>Toutes les autres questions sont archivées. Les compteurs repartent !</li></ul>";
+      "<b>Tous les lundis à 14h :</b> \n<ul><li> La question la plus populaire est sélectionnée automatiquement pour obtenir une réponse du gouvernement. Il s’agit de celle en tête de l’onglet “Le top”.</li> <li>Toutes les autres questions sont archivées. Les compteurs repartent !</li></ul>";
   static const String readNotice = "Lire la charte";
   static const String noticeTitle = "Charte de participation";
   static const String noticeDescription = "lorem ipsum";
   static const String agree = "C'est compris";
   static const String questionTitle = "Ma question";
-  static const String questionHint = "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}?";
-  static const String questionRequiredCondition = "La question doit comporter au moins 10 caractères.";
+  static const String questionHint =
+      "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}? (10 caractères minimum)";
+  static const String questionRequiredCondition = "Erreur: la question doit comporter au moins 10 caractères.";
   static const String detailsTitle = "Détails supplémentaires";
   static const String detailsDescription =
       "Ajoutez davantage d'informations ou de contexte si vous le souhaitez (facultatif)";
@@ -44,7 +45,7 @@ class QagStrings {
   static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Mon prénom";
   static const String yourNameInfoBubble1 =
-      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profil que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée le mardi suivant sa publication, le Prénom sera définitivement supprimé (délai maximum de 7 jours).\n\nPour en savoir plus,";
+      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profil que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée le lundi suivant sa publication, le Prénom sera définitivement supprimé (délai maximum de 7 jours).\n\nPour en savoir plus,";
   static const String yourNameInfoBubble2 = "lire la politique de confidentialité.";
   static const String yourNameHint = "David";
   static const String askQuestionInformation =
@@ -105,4 +106,5 @@ class QagStrings {
   static const String astuceQuestionDescription =
       "Si votre question a déjà été posée par un autre utilisateur, il vaut mieux la soutenir qu’en poser une nouvelle\u{00A0}! ";
   static const String astuceQuestionDescriptionLink = "Recherchez ici si c’est le cas.";
+  static const String askQagObligatoireSaufContraire = "Sauf mention contraire, tous les champs sont obligatoires.";
 }

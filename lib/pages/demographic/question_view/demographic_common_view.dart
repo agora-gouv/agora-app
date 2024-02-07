@@ -18,7 +18,8 @@ class DemographicCommonView extends StatefulWidget {
   final int step;
   final int totalStep;
   final List<DemographicResponseChoice> responseChoices;
-  final Function(String responseCode) onContinuePressed;
+  final void Function(String responseCode) onResponseChosed;
+  final void Function() onContinuePressed;
   final VoidCallback onIgnorePressed;
   final VoidCallback onBackPressed;
   final DemographicResponse? oldResponse;
@@ -31,6 +32,7 @@ class DemographicCommonView extends StatefulWidget {
     required this.totalStep,
     required this.responseChoices,
     required this.onContinuePressed,
+    required this.onResponseChosed,
     required this.onIgnorePressed,
     required this.onBackPressed,
     required this.oldResponse,
@@ -51,7 +53,7 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
   Widget build(BuildContext context) {
     _resetPreviousResponses();
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: _handleResponse(context),
     );
   }
@@ -97,7 +99,8 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
             if (responseChoice.responseCode == currentResponse) {
               setState(() => currentResponse = "");
             } else {
-              widget.onContinuePressed(responseChoice.responseCode);
+              setState(() => currentResponse = responseChoice.responseCode);
+              widget.onResponseChosed(responseChoice.responseCode);
             }
           },
           semantic: DemographicResponseCardSemantic(
@@ -112,15 +115,19 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
       SizedBox(height: AgoraSpacings.x1_25),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
         children: [
           DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
-          currentResponse.isNotBlank()
-              ? DemographicHelper.buildNextButton(
-                  step: widget.step,
-                  totalStep: widget.totalStep,
-                  onPressed: () => widget.onContinuePressed(widget.oldResponse!.response),
-                )
-              : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+          const SizedBox(width: AgoraSpacings.base),
+          Flexible(
+            child: currentResponse.isNotBlank()
+                ? DemographicHelper.buildNextButton(
+                    step: widget.step,
+                    totalStep: widget.totalStep,
+                    onPressed: () => widget.onContinuePressed(),
+                  )
+                : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
+          ),
         ],
       ),
     ]);

@@ -10,7 +10,9 @@ import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/emoji_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -176,7 +178,9 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 data: QagStrings.askQuestionDescription3,
               ),
               SizedBox(height: AgoraSpacings.base),
-              Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
+              Text(QagStrings.askQagObligatoireSaufContraire, style: AgoraTextStyles.light14),
+              SizedBox(height: AgoraSpacings.base),
+              _MandatoryField(QagStrings.questionTitle),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
                 maxLength: _questionMaxLength,
@@ -246,7 +250,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 onChanged: (input) => setState(() => details = input),
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18),
+              _MandatoryField(QagStrings.thematiqueTitle),
               SizedBox(height: AgoraSpacings.x0_5),
               QagThematiquesDropDown(
                 firstValue: null,
@@ -256,10 +260,12 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               SizedBox(height: AgoraSpacings.x1_5),
               Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
-                  SizedBox(width: AgoraSpacings.x0_5),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
+                    child: _MandatoryField(QagStrings.yourNameTitle),
+                  ),
                   AgoraMoreInformation(
                     onClick: () {
                       showAgoraDialog(
@@ -293,7 +299,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                   ),
                 ],
               ),
-              SizedBox(height: AgoraSpacings.x0_75),
+              SizedBox(height: AgoraSpacings.x0_375),
               AgoraTextField(
                 maxLength: _nameMaxLength,
                 hintText: QagStrings.yourNameHint,
@@ -413,8 +419,12 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   void _checkError({required bool shouldCheckQuestionLength}) {
     setState(() {
       if (shouldCheckQuestionLength) {
-        isQuestionLengthError = (question.isNullOrBlank() && question.isNotEmpty) ||
+        final hasErrorNow = (question.isNullOrBlank() && question.isNotEmpty) ||
             (question.isNotBlank() && question.length < _questionMinLength);
+        if (hasErrorNow && hasErrorNow != isQuestionLengthError) {
+          SemanticsHelper.announceErrorInQuestion();
+        }
+        isQuestionLengthError = hasErrorNow;
       }
     });
   }
@@ -441,6 +451,7 @@ class _AstuceElement extends StatelessWidget {
               children: [
                 Text(
                   QagStrings.astuceQuestionTitre,
+                  semanticsLabel: EmojiHelper.clean(QagStrings.astuceQuestionTitre),
                   textAlign: TextAlign.start,
                   style: AgoraTextStyles.medium14,
                 ),
@@ -465,6 +476,23 @@ class _AstuceElement extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _MandatoryField extends StatelessWidget {
+  final String label;
+
+  _MandatoryField(this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(label, style: AgoraTextStyles.medium18),
+        const SizedBox(width: AgoraSpacings.x0_25),
+        Text('*', style: AgoraTextStyles.medium18.copyWith(color: AgoraColors.red)),
+      ],
     );
   }
 }
