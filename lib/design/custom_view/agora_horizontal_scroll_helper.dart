@@ -19,7 +19,6 @@ class HorizontalScrollHelper extends StatefulWidget {
 }
 
 class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
-
   bool hasReachedLeftEnd = true;
   bool hasReachedRightEnd = false;
 
@@ -89,7 +88,8 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
         ),
         const SizedBox(width: AgoraSpacings.base),
         Expanded(
-          child: Center(child: _HorizontalHelper(itemsCount: widget.itemsCount, scrollController: widget.scrollController)),
+          child: Center(
+              child: _HorizontalHelper(itemsCount: widget.itemsCount, scrollController: widget.scrollController)),
         ),
         const SizedBox(width: AgoraSpacings.base),
         Opacity(
