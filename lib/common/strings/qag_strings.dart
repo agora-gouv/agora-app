@@ -35,7 +35,7 @@ class QagStrings {
   static const String agree = "C'est compris";
   static const String questionTitle = "Ma question";
   static const String questionHint =
-      "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}? 10 caractères minimum";
+      "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}? (10 caractères minimum)";
   static const String questionRequiredCondition = "Erreur: la question doit comporter au moins 10 caractères.";
   static const String detailsTitle = "Détails supplémentaires";
   static const String detailsDescription =

@@ -14,6 +14,7 @@ class AgoraIconButton extends StatelessWidget {
   final Color? iconColor;
   final Color? borderColor;
   final Color? backgroundColor;
+  final double padding;
 
   AgoraIconButton({
     required this.icon,
@@ -24,6 +25,7 @@ class AgoraIconButton extends StatelessWidget {
     this.iconColor,
     this.borderColor,
     this.backgroundColor,
+    this.padding = AgoraSpacings.x0_75,
   });
 
   @override
@@ -32,18 +34,22 @@ class AgoraIconButton extends StatelessWidget {
       button: true,
       label: semanticLabel,
       child: AgoraRoundedCard(
-        padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75, horizontal: AgoraSpacings.x0_75),
+        padding: EdgeInsets.symmetric(vertical: padding, horizontal: padding),
         borderColor: borderColor ?? AgoraColors.steam,
         cardColor: backgroundColor ?? AgoraColors.transparent,
         borderWidth: 1,
         cornerRadius: round ? AgoraCorners.round : AgoraCorners.rounded,
         onTap: onClick,
-        child: SvgPicture.asset(
-          "assets/$icon",
-          excludeFromSemantics: true,
+        child: SizedBox(
           width: iconSize,
           height: iconSize,
-          colorFilter: iconColor == null ? null : ColorFilter.mode(iconColor!, BlendMode.srcIn),
+          child: SvgPicture.asset(
+            "assets/$icon",
+            excludeFromSemantics: true,
+            width: iconSize,
+            height: iconSize,
+            colorFilter: iconColor == null ? null : ColorFilter.mode(iconColor!, BlendMode.srcIn),
+          ),
         ),
       ),
     );
