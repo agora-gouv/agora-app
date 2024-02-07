@@ -44,15 +44,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget _floatingButton(BuildContext context) {
     if (step == 0) return _FloatingNextButton(step: step, onTap: () => _nextPage(context));
     if (step == 3) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _LargeFloatingBackActionButton(onTap: () => _previousPage(context)),
-          const SizedBox(height: AgoraSpacings.base),
-          _FloatingNextButton(step: step, onTap: () => _nextPage(context)),
-        ],
-      );
+      return _FloatingNextButton(step: step, onTap: () => _nextPage(context));
     }
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -81,32 +73,42 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Widget _handleStep(BuildContext context) {
     return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Stack(
         children: [
-          Expanded(
-            child: PageView(
-              controller: _controller,
-              onPageChanged: (index) {
-                setState(() {
-                  step = index;
-                });
-                _controller.jumpToPage(step);
-              },
-              children: [
-                OnboardingView(),
-                OnboardingStepView(step: OnboardingStep.participate),
-                OnboardingStepView(step: OnboardingStep.askYourQuestion),
-                OnboardingStepView(step: OnboardingStep.invent),
-              ],
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: PageView(
+                  controller: _controller,
+                  onPageChanged: (index) {
+                    setState(() {
+                      step = index;
+                    });
+                    _controller.jumpToPage(step);
+                  },
+                  children: [
+                    OnboardingView(),
+                    OnboardingStepView(step: OnboardingStep.participate),
+                    OnboardingStepView(step: OnboardingStep.askYourQuestion),
+                    OnboardingStepView(step: OnboardingStep.invent),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+                child: _floatingButton(context),
+              ),
+              const SizedBox(height: AgoraSpacings.base),
+            ],
+          ),
+          if (step == 3)
+            Positioned(
+              left: AgoraSpacings.base,
+              bottom: AgoraSpacings.base * 2 + 56,
+              child: _BackFloatingButton(onTap: () => _previousPage(context)),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
-            child: _floatingButton(context),
-          ),
-          const SizedBox(height: AgoraSpacings.base),
         ],
       ),
     );
@@ -173,42 +175,6 @@ class _NextFloatingActionButton extends StatelessWidget {
   }
 }
 
-class _LargeFloatingBackActionButton extends StatelessWidget {
-  final void Function() onTap;
-
-  _LargeFloatingBackActionButton({
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AgoraColors.primaryBlue),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onTap,
-            child: SizedBox(
-              height: 56,
-              width: kIsWeb
-                  ? min(MediaQuery.of(context).size.width, ResponsiveHelper.maxScreenSize) -
-                      AgoraSpacings.horizontalPadding * 2
-                  : MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2,
-              child:
-                  Center(child: Text('Précédent', style: AgoraTextStyles.primaryBlueTextButton.copyWith(fontSize: 14))),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _FloatingNextButton extends StatelessWidget {
   final int step;
   final void Function() onTap;
@@ -226,7 +192,10 @@ class _FloatingNextButton extends StatelessWidget {
           : MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2,
       child: FloatingActionButton.extended(
         backgroundColor: AgoraColors.primaryBlue,
-        label: Text(step == 0 ? ConsultationStrings.beginButton : GenericStrings.onboardingStep3LetsGo),
+        label: Text(
+          step == 0 ? ConsultationStrings.beginButton : GenericStrings.onboardingStep3LetsGo,
+          style: AgoraTextStyles.primaryFloatingButton,
+        ),
         onPressed: onTap,
       ),
     );

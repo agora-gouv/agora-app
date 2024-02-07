@@ -5,7 +5,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
-class HorizontalScrollHelper extends StatelessWidget {
+class HorizontalScrollHelper extends StatefulWidget {
   final int itemsCount;
   final ScrollController scrollController;
 
@@ -15,46 +15,103 @@ class HorizontalScrollHelper extends StatelessWidget {
   });
 
   @override
+  State<HorizontalScrollHelper> createState() => _HorizontalScrollHelperState();
+}
+
+class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
+
+  bool hasReachedLeftEnd = true;
+  bool hasReachedRightEnd = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(_onScrollUpdated);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.scrollController.removeListener(_onScrollUpdated);
+  }
+
+  void _onScrollUpdated() {
+    final offset = widget.scrollController.offset;
+    final maxScrollExtent = widget.scrollController.position.maxScrollExtent;
+    if (offset <= 0) {
+      if (!hasReachedLeftEnd) {
+        setState(() {
+          hasReachedLeftEnd = true;
+          hasReachedRightEnd = false;
+        });
+      }
+    } else if (offset >= maxScrollExtent) {
+      if (!hasReachedRightEnd) {
+        setState(() {
+          hasReachedRightEnd = true;
+          hasReachedLeftEnd = false;
+        });
+      }
+    } else if (hasReachedRightEnd || hasReachedLeftEnd) {
+      setState(() {
+        hasReachedRightEnd = false;
+        hasReachedLeftEnd = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
         const SizedBox(width: AgoraSpacings.base),
-        AgoraIconButton(
-          icon: 'ic_backward.svg',
-          semanticLabel: 'Scroll vers la gauche',
-          iconSize: 24,
-          iconColor: AgoraColors.primaryBlue,
-          borderColor: AgoraColors.orochimaru,
-          round: true,
-          onClick: () {
-            scrollController.animateTo(
-              scrollController.offset - (scrollController.position.maxScrollExtent / itemsCount),
-              duration: Duration(milliseconds: 300),
-              curve: Curves.fastEaseInToSlowEaseOut,
-            );
-          },
+        Opacity(
+          opacity: hasReachedLeftEnd ? 0.5 : 1,
+          child: AgoraIconButton(
+            icon: 'ic_backward_helper.svg',
+            semanticLabel: 'Scroll vers la gauche',
+            iconSize: 16,
+            iconColor: AgoraColors.primaryBlue,
+            borderColor: AgoraColors.orochimaru,
+            backgroundColor: hasReachedLeftEnd ? Colors.transparent : Colors.white,
+            round: true,
+            padding: AgoraSpacings.base,
+            onClick: () {
+              if (hasReachedLeftEnd) return;
+              widget.scrollController.animateTo(
+                widget.scrollController.offset - (widget.scrollController.position.maxScrollExtent / widget.itemsCount),
+                duration: Duration(milliseconds: 300),
+                curve: Curves.fastEaseInToSlowEaseOut,
+              );
+            },
+          ),
         ),
         const SizedBox(width: AgoraSpacings.base),
         Expanded(
-          child: Center(child: _HorizontalHelper(itemsCount: itemsCount, scrollController: scrollController)),
+          child: Center(child: _HorizontalHelper(itemsCount: widget.itemsCount, scrollController: widget.scrollController)),
         ),
         const SizedBox(width: AgoraSpacings.base),
-        AgoraIconButton(
-          icon: 'ic_forward.svg',
-          iconSize: 22,
-          iconColor: AgoraColors.primaryBlue,
-          semanticLabel: 'Scroll vers la droite',
-          borderColor: AgoraColors.orochimaru,
-          backgroundColor: Colors.white,
-          round: true,
-          onClick: () {
-            scrollController.animateTo(
-              scrollController.offset + (scrollController.position.maxScrollExtent / itemsCount),
-              duration: Duration(milliseconds: 300),
-              curve: Curves.fastEaseInToSlowEaseOut,
-            );
-          },
+        Opacity(
+          opacity: hasReachedRightEnd ? 0.5 : 1,
+          child: AgoraIconButton(
+            icon: 'ic_forward_helper.svg',
+            iconSize: 16,
+            iconColor: AgoraColors.primaryBlue,
+            semanticLabel: 'Scroll vers la droite',
+            borderColor: AgoraColors.orochimaru,
+            backgroundColor: hasReachedRightEnd ? Colors.transparent : Colors.white,
+            padding: AgoraSpacings.base,
+            round: true,
+            onClick: () {
+              if (hasReachedRightEnd) return;
+              widget.scrollController.animateTo(
+                widget.scrollController.offset + (widget.scrollController.position.maxScrollExtent / widget.itemsCount),
+                duration: Duration(milliseconds: 300),
+                curve: Curves.fastEaseInToSlowEaseOut,
+              );
+            },
+          ),
         ),
         const SizedBox(width: AgoraSpacings.base),
       ],
@@ -126,7 +183,7 @@ class _Circle extends StatelessWidget {
         width: isCurrent ? 12 : 6,
         height: isCurrent ? 12 : 6,
         decoration: BoxDecoration(
-          color: isCurrent ? AgoraColors.blue525 : AgoraColors.gravelFint,
+          color: isCurrent ? AgoraColors.primaryBlue : AgoraColors.gravelFint,
           shape: BoxShape.circle,
         ),
       ),
