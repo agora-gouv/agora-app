@@ -250,7 +250,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 onChanged: (input) => setState(() => details = input),
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18),
+              _MandatoryField(QagStrings.thematiqueTitle),
               SizedBox(height: AgoraSpacings.x0_5),
               QagThematiquesDropDown(
                 firstValue: null,
@@ -264,7 +264,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-                    child: Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
+                    child: _MandatoryField(QagStrings.yourNameTitle),
                   ),
                   AgoraMoreInformation(
                     onClick: () {
