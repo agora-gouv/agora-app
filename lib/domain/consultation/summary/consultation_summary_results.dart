@@ -42,12 +42,14 @@ class ConsultationSummaryMultipleChoicesResults extends ConsultationSummaryResul
 class ConsultationSummaryResponse extends Equatable {
   final String label;
   final int ratio;
+  final bool userResponse;
 
   ConsultationSummaryResponse({
     required this.label,
     required this.ratio,
+    this.userResponse = false,
   });
 
   @override
-  List<Object> get props => [label, ratio];
+  List<Object> get props => [label, ratio, userResponse];
 }

@@ -107,12 +107,14 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
         AgoraConsultationResultBar(
           ratio: results.positiveRatio,
           response: QagStrings.utils,
+          userResponse: false,
           minusPadding: AgoraSpacings.horizontalPadding * 2,
         ),
         SizedBox(height: AgoraSpacings.x0_75),
         AgoraConsultationResultBar(
           ratio: results.negativeRatio,
           response: QagStrings.notUtils,
+          userResponse: false,
           minusPadding: AgoraSpacings.horizontalPadding * 2,
         ),
         SizedBox(height: AgoraSpacings.x1_5),

@@ -337,12 +337,6 @@ void main() {
         ),
       ],
       wait: const Duration(milliseconds: 5),
-      tearDown: () async {
-        expect(fakeStorageClient.consultationId, null);
-        expect(fakeStorageClient.questionIdStack, []);
-        expect(fakeStorageClient.questionsResponses, []);
-        expect(fakeStorageClient.restoreQuestionId, null);
-      },
     );
   });
 

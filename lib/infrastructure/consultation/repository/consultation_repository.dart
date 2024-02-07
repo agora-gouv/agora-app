@@ -13,6 +13,7 @@ import 'package:agora/domain/consultation/summary/consultation_summary_presentat
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/pages/consultation/question/consultation_question_storage_client.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -45,11 +46,13 @@ class ConsultationDioRepository extends ConsultationRepository {
   final AgoraDioHttpClient httpClient;
   final SentryWrapper? sentryWrapper;
   final Duration minimalSendingTime;
+  final ConsultationQuestionStorageClient storageClient;
 
   ConsultationDioRepository({
     required this.httpClient,
     this.sentryWrapper,
     this.minimalSendingTime = const Duration(seconds: 2),
+    required this.storageClient,
   });
 
   @override
@@ -216,9 +219,11 @@ class ConsultationDioRepository extends ConsultationRepository {
     required String consultationId,
   }) async {
     try {
-      final response = await httpClient.get(
+      final asyncResponse = httpClient.get(
         "/consultations/$consultationId/responses",
       );
+      final (_, userResponses, _) = await storageClient.get(consultationId);
+      final response = await asyncResponse;
       final etEnsuite = response.data["etEnsuite"];
       final presentation = response.data["presentation"];
       final explanations = etEnsuite["explanations"] as List;
@@ -230,6 +235,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         results: ConsultationResponsesBuilder.buildResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
+          userResponses: userResponses,
         ),
         etEnsuite: ConsultationSummaryEtEnsuite(
           step: etEnsuite["step"] as int,

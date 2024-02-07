@@ -149,6 +149,7 @@ class RepositoryManager {
     final repository = MockConsultationRepository(
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
+      storageClient: StorageManager.getConsultationQuestionStorageClient(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;

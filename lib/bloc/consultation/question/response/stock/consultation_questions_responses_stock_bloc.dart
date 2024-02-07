@@ -121,7 +121,7 @@ class ConsultationQuestionsResponsesStockBloc
     DeleteSavingConsultationResponseEvent event,
     Emitter<ConsultationQuestionsResponsesStockState> emit,
   ) async {
-    storageClient.clear(event.consultationId);
+    //storageClient.clear(event.consultationId);
     emit(
       ConsultationQuestionsResponsesStockState(
         questionIdStack: [],

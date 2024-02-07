@@ -1,5 +1,5 @@
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 
 class AgoraTextStyles {
   static const marianne = "Marianne";
@@ -371,5 +371,12 @@ class AgoraTextStyles {
     fontWeight: medium,
     fontSize: 16.0,
     foreground: Paint()..color = AgoraColors.potBlack,
+  );
+
+  static TextStyle userResponseBox = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 10.0,
+    foreground: Paint()..color = Colors.white,
   );
 }
