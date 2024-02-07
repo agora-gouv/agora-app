@@ -28,7 +28,7 @@ class ConsultationResponsesBuilder {
               return ConsultationSummaryResponse(
                 label: response["label"] as String,
                 ratio: response["ratio"] as int,
-                userResponse: userResponses
+                isUserResponse: userResponses
                     .any((response) => response.questionId == questionId && response.responseIds.contains(choiceId)),
               );
             },
@@ -56,7 +56,7 @@ class ConsultationResponsesBuilder {
               return ConsultationSummaryResponse(
                 label: response["label"] as String,
                 ratio: response["ratio"] as int,
-                userResponse: userResponses
+                isUserResponse: userResponses
                     .any((response) => response.questionId == questionId && response.responseIds.contains(choiceId)),
               );
             },

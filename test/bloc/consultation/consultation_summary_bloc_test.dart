@@ -31,17 +31,25 @@ void main() {
                 questionTitle: "Pour quelle raison principale ?",
                 order: 1,
                 responses: [
-                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58, userResponse: false),
-                  ConsultationSummaryResponseViewModel(label: "Je veux être tranquille dans ma voiture", ratio: 42, userResponse: false),
+                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58, isUserResponse: false),
+                  ConsultationSummaryResponseViewModel(
+                    label: "Je veux être tranquille dans ma voiture",
+                    ratio: 42,
+                    isUserResponse: false,
+                  ),
                 ],
               ),
               ConsultationSummaryUniqueChoiceResultsViewModel(
                 questionTitle: "Les déplacements professionnels en covoiturage",
                 order: 2,
                 responses: [
-                  ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65, userResponse: false),
-                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18, userResponse: false),
-                  ConsultationSummaryResponseViewModel(label: "En transports en commun, vélo, à pied", ratio: 17, userResponse: false),
+                  ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65, isUserResponse: false),
+                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18, isUserResponse: false),
+                  ConsultationSummaryResponseViewModel(
+                    label: "En transports en commun, vélo, à pied",
+                    ratio: 17,
+                    isUserResponse: false,
+                  ),
                 ],
               ),
             ],
@@ -102,17 +110,25 @@ void main() {
                 questionTitle: "Pour quelle raison principale ?",
                 order: 1,
                 responses: [
-                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58, userResponse: false),
-                  ConsultationSummaryResponseViewModel(label: "Je veux être tranquille dans ma voiture", ratio: 42, userResponse: false),
+                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58, isUserResponse: false),
+                  ConsultationSummaryResponseViewModel(
+                    label: "Je veux être tranquille dans ma voiture",
+                    ratio: 42,
+                    isUserResponse: false,
+                  ),
                 ],
               ),
               ConsultationSummaryUniqueChoiceResultsViewModel(
                 questionTitle: "Les déplacements professionnels en covoiturage",
                 order: 2,
                 responses: [
-                  ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65, userResponse: false),
-                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18, userResponse: false),
-                  ConsultationSummaryResponseViewModel(label: "En transports en commun, vélo, à pied", ratio: 17, userResponse: false),
+                  ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65, isUserResponse: false),
+                  ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18, isUserResponse: false),
+                  ConsultationSummaryResponseViewModel(
+                    label: "En transports en commun, vélo, à pied",
+                    ratio: 17,
+                    isUserResponse: false,
+                  ),
                 ],
               ),
             ],

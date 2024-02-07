@@ -315,31 +315,6 @@ void main() {
     );
   });
 
-  group("DeleteSavingConsultationResponseEvent", () {
-    final fakeStorageClient = FakeConsultationQuestionStorageClient();
-    fakeStorageClient.save(
-      consultationId: consultationId,
-      questionIdStack: ["previousQuestionId"],
-      questionsResponses: [
-        ConsultationQuestionResponses(questionId: "previousQuestionId", responseIds: ["responseId"], responseText: ""),
-      ],
-      restoreQuestionId: "lastQuestionId",
-    );
-    blocTest<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
-      "Delete local response",
-      build: () => ConsultationQuestionsResponsesStockBloc(storageClient: fakeStorageClient),
-      act: (bloc) => bloc.add(DeleteSavingConsultationResponseEvent(consultationId: consultationId)),
-      expect: () => [
-        ConsultationQuestionsResponsesStockState(
-          questionIdStack: [],
-          questionsResponses: [],
-          currentQuestionId: null,
-        ),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
-  });
-
   group("ResetToLastQuestionEvent", () {
     final fakeStorageClient = FakeConsultationQuestionStorageClient();
     blocTest<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(

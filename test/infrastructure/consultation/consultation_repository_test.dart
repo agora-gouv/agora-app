@@ -868,7 +868,7 @@ void main() {
                 questionTitle: "Les déplacements professionnels en covoiturage",
                 order: 1,
                 responses: [
-                  ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, userResponse: true),
+                  ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
                   ConsultationSummaryResponse(label: "Autre", ratio: 35),
                 ],
               ),
@@ -1052,11 +1052,12 @@ class MockConsultationQuestionHiveStorageClient extends ConsultationQuestionStor
   }
 
   @override
-  Future<void> save(
-      {required String consultationId,
-      required List<String> questionIdStack,
-      required List<ConsultationQuestionResponses> questionsResponses,
-      required String? restoreQuestionId}) {
+  Future<void> save({
+    required String consultationId,
+    required List<String> questionIdStack,
+    required List<ConsultationQuestionResponses> questionsResponses,
+    required String? restoreQuestionId,
+  }) {
     throw UnimplementedError();
   }
 }

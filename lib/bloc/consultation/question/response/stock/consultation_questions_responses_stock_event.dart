@@ -47,15 +47,6 @@ class RestoreSavingConsultationResponseEvent extends ConsultationQuestionsRespon
   List<Object> get props => [consultationId];
 }
 
-class DeleteSavingConsultationResponseEvent extends ConsultationQuestionsResponsesStockEvent {
-  final String consultationId;
-
-  DeleteSavingConsultationResponseEvent({required this.consultationId});
-
-  @override
-  List<Object> get props => [consultationId];
-}
-
 class ResetToLastQuestionEvent extends ConsultationQuestionsResponsesStockEvent {
   final String consultationId;
 

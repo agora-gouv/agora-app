@@ -11,14 +11,14 @@ class AgoraConsultationResultBar extends StatefulWidget {
   final int ratio;
   final String response;
   final double? minusPadding;
-  final bool userResponse;
+  final bool isUserResponse;
 
   AgoraConsultationResultBar({
     super.key,
     required this.ratio,
     required this.response,
     this.minusPadding,
-    required this.userResponse,
+    required this.isUserResponse,
   });
 
   @override
@@ -54,8 +54,8 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
           children: [
             AgoraRoundedCard(
               cardColor: AgoraColors.white,
-              borderColor: widget.userResponse ? AgoraColors.primaryBlue : AgoraColors.border,
-              borderWidth: widget.userResponse ? 2 : 1,
+              borderColor: widget.isUserResponse ? AgoraColors.primaryBlue : AgoraColors.border,
+              borderWidth: widget.isUserResponse ? 2 : 1,
               padding: null,
               child: SizedBox(
                 height: barHeight,
@@ -83,7 +83,7 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
             ),
           ],
         ),
-        if (widget.userResponse)
+        if (widget.isUserResponse)
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
@@ -94,7 +94,11 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
                   borderRadius: BorderRadius.vertical(bottom: AgoraCorners.rounded),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: AgoraSpacings.x0_5, right: AgoraSpacings.x0_5, bottom: AgoraSpacings.x0_375),
+                  padding: const EdgeInsets.only(
+                    left: AgoraSpacings.x0_5,
+                    right: AgoraSpacings.x0_5,
+                    bottom: AgoraSpacings.x0_375,
+                  ),
                   child: Text(
                     'Votre réponse',
                     style: AgoraTextStyles.userResponseBox,
