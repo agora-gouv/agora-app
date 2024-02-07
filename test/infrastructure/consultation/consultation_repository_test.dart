@@ -13,6 +13,7 @@ import 'package:agora/domain/consultation/summary/consultation_summary_presentat
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
+import 'package:agora/pages/consultation/question/consultation_question_storage_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -70,6 +71,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultations();
 
@@ -138,6 +140,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultations();
 
@@ -180,6 +183,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultations();
 
@@ -206,6 +210,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultations();
 
@@ -228,6 +233,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultations();
 
@@ -265,6 +271,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
 
@@ -301,6 +308,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
 
@@ -341,6 +349,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationDetails(consultationId: consultationId);
 
@@ -381,6 +390,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationDetails(consultationId: consultationId);
 
@@ -512,6 +522,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
@@ -623,6 +634,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
@@ -672,6 +684,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
@@ -721,6 +734,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
@@ -749,13 +763,16 @@ void main() {
             "resultsUniqueChoice": [
               {
                 "questionTitle": "Les déplacements professionnels en covoiturage",
+                "questionId": "question repondue",
                 "order": 1,
                 "responses": [
                   {
+                    "choiceId": "choix utilisateur",
                     "label": "En voiture seul",
                     "ratio": 65,
                   },
                   {
+                    "choiceId": "pas le choix utilisateur",
                     "label": "Autre",
                     "ratio": 35,
                   },
@@ -765,13 +782,16 @@ void main() {
             "resultsMultipleChoice": [
               {
                 "questionTitle": "Question B",
+                "questionId": "question pas repondue",
                 "order": 2,
                 "responses": [
                   {
+                    "choiceId": "pas le choix utilisateur",
                     "label": "Réponse A",
                     "ratio": 30,
                   },
                   {
+                    "choiceId": "pas le choix utilisateur",
                     "label": "Réponse B",
                     "ratio": 80,
                   },
@@ -826,6 +846,13 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([
+          ConsultationQuestionResponses(
+            questionId: "question repondue",
+            responseIds: ["choix utilisateur"],
+            responseText: '',
+          ),
+        ]),
       );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);
 
@@ -841,7 +868,7 @@ void main() {
                 questionTitle: "Les déplacements professionnels en covoiturage",
                 order: 1,
                 responses: [
-                  ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
+                  ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
                   ConsultationSummaryResponse(label: "Autre", ratio: 35),
                 ],
               ),
@@ -943,6 +970,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);
 
@@ -998,6 +1026,7 @@ void main() {
       final repository = ConsultationDioRepository(
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
       );
       final response = await repository.fetchConsultationSummary(consultationId: consultationId);
 
@@ -1005,4 +1034,30 @@ void main() {
       expect(response, GetConsultationSummaryFailedResponse());
     });
   });
+}
+
+class MockConsultationQuestionHiveStorageClient extends ConsultationQuestionStorageClient {
+  final List<ConsultationQuestionResponses> response;
+
+  MockConsultationQuestionHiveStorageClient(this.response);
+
+  @override
+  Future<void> clear(String consultationId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<(List<String>, List<ConsultationQuestionResponses>, String?)> get(String consultationId) async {
+    return (<String>[], response, null);
+  }
+
+  @override
+  Future<void> save({
+    required String consultationId,
+    required List<String> questionIdStack,
+    required List<ConsultationQuestionResponses> questionsResponses,
+    required String? restoreQuestionId,
+  }) {
+    throw UnimplementedError();
+  }
 }

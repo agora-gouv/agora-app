@@ -49,6 +49,7 @@ class AgoraConsultationResultView extends StatelessWidget {
             child: AgoraConsultationResultBar(
               ratio: response.ratio,
               response: response.label,
+              isUserResponse: response.isUserResponse,
               minusPadding: AgoraSpacings.horizontalPadding * 2,
             ),
           ),

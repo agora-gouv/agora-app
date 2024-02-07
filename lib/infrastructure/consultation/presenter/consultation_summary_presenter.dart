@@ -87,6 +87,7 @@ class ConsultationSummaryPresenter {
           (response) => ConsultationSummaryResponseViewModel(
             label: response.label,
             ratio: response.ratio,
+            isUserResponse: response.isUserResponse,
           ),
         )
         .toList()

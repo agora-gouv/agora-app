@@ -19,7 +19,6 @@ class ConsultationQuestionsResponsesStockBloc
     on<AddConsultationChapterStockEvent>(_handleAddConsultationChapterStock);
     on<RemoveConsultationQuestionEvent>(_handleRemoveConsultationQuestion);
     on<RestoreSavingConsultationResponseEvent>(_handleRestoreSavingConsultationResponse);
-    on<DeleteSavingConsultationResponseEvent>(_handleDeleteSavingConsultationResponse);
     on<ResetToLastQuestionEvent>(_handleResetToLastQuestion);
   }
 
@@ -113,20 +112,6 @@ class ConsultationQuestionsResponsesStockBloc
         questionIdStack: localQuestionIdStack,
         questionsResponses: localQuestionsResponses,
         currentQuestionId: restoreQuestionId,
-      ),
-    );
-  }
-
-  Future<void> _handleDeleteSavingConsultationResponse(
-    DeleteSavingConsultationResponseEvent event,
-    Emitter<ConsultationQuestionsResponsesStockState> emit,
-  ) async {
-    storageClient.clear(event.consultationId);
-    emit(
-      ConsultationQuestionsResponsesStockState(
-        questionIdStack: [],
-        questionsResponses: [],
-        currentQuestionId: null,
       ),
     );
   }
