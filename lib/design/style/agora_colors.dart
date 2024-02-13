@@ -55,7 +55,7 @@ class AgoraColors {
 class AgoraVideoProgressColors {
   AgoraVideoProgressColors({
     Color playedColor = AgoraColors.primaryBlue,
-    Color bufferedColor = AgoraColors.blue525,
+    Color bufferedColor = AgoraColors.primaryBlueOpacity50,
     Color handleColor = const Color.fromRGBO(200, 200, 200, 1.0),
     Color backgroundColor = const Color.fromRGBO(200, 200, 200, 0.5),
   })  : playedPaint = Paint()..color = playedColor,
