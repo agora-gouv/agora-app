@@ -12,6 +12,7 @@ class HorizontalScrollHelper extends StatefulWidget {
   HorizontalScrollHelper({
     required this.itemsCount,
     required this.scrollController,
+    super.key,
   });
 
   @override
@@ -79,7 +80,7 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
             onClick: () {
               if (hasReachedLeftEnd) return;
               widget.scrollController.animateTo(
-                widget.scrollController.offset - (widget.scrollController.position.maxScrollExtent / widget.itemsCount),
+                widget.scrollController.offset - _itemSize(context),
                 duration: Duration(milliseconds: 300),
                 curve: Curves.fastEaseInToSlowEaseOut,
               );
@@ -107,7 +108,7 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
             onClick: () {
               if (hasReachedRightEnd) return;
               widget.scrollController.animateTo(
-                widget.scrollController.offset + (widget.scrollController.position.maxScrollExtent / widget.itemsCount),
+                widget.scrollController.offset + _itemSize(context),
                 duration: Duration(milliseconds: 300),
                 curve: Curves.fastEaseInToSlowEaseOut,
               );
@@ -117,6 +118,11 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
         const SizedBox(width: AgoraSpacings.base),
       ],
     );
+  }
+
+  double _itemSize(BuildContext context) {
+    return ((widget.scrollController.position.maxScrollExtent + MediaQuery.sizeOf(context).width) / widget.itemsCount) -
+        AgoraSpacings.base;
   }
 }
 
