@@ -1,7 +1,9 @@
 import 'package:agora/common/helper/responsive_helper.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/video/agora_video_controls.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -45,8 +47,9 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       allowedScreenSleep: false,
       allowFullScreen: true,
       aspectRatio: videoAspectRatio,
-      customControls:
-          widget.isTalkbackActivated ? CupertinoControls(backgroundColor: Colors.black, iconColor: Colors.white) : null,
+      customControls: widget.isTalkbackActivated
+          ? AgoraVideoControls(backgroundColor: Colors.black, iconColor: Colors.white)
+          : null,
       hideControlsTimer: widget.isTalkbackActivated ? Duration(days: 1) : Duration(seconds: 3),
       showControls: true,
     );
@@ -72,9 +75,10 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
   Widget build(BuildContext context) {
     final (width, height) = _getContainerSize();
     return Semantics(
-      label: SemanticsStrings.video,
+      label: chewieController.isPlaying ? SemanticsStrings.videoPause : SemanticsStrings.videoPlay,
       button: true,
       onTap: () {
+        SemanticsHelper.announcePlayPause(chewieController.isPlaying);
         if (chewieController.isPlaying) {
           chewieController.pause();
         } else {
