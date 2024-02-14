@@ -5,16 +5,20 @@ import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
 class HelperManager {
   static DeviceInfoHelper getDeviceInfoHelper() {
-    if (GetIt.instance.isRegistered<DeviceInfoPluginHelper>()) {
-      return GetIt.instance.get<DeviceInfoPluginHelper>();
+    if (GetIt.instance.isRegistered<DeviceInfoHelper>()) {
+      return GetIt.instance.get<DeviceInfoHelper>();
     }
-    final helper = DeviceInfoPluginHelper();
-    GetIt.instance.registerSingleton(helper);
+    final helper = DeviceInfoPluginHelper(
+      appVersionHelper: getAppVersionHelper(),
+      deviceInfo: DeviceInfoPlugin(),
+    );
+    GetIt.instance.registerSingleton<DeviceInfoHelper>(helper);
     return helper;
   }
 

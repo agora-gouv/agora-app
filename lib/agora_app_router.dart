@@ -14,6 +14,7 @@ import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
+import 'package:agora/pages/profile/app_feedback_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
@@ -130,6 +131,12 @@ class AgoraAppRouter {
         currentRoute = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} ${arguments.consultationId}",
           child: ConsultationQuestionPage(arguments: arguments),
+        );
+        break;
+      case AppFeedbackPage.routeName:
+        currentRoute = AgoraTracker(
+          widgetName: AnalyticsScreenNames.appFeedbackPage,
+          child: AppFeedbackPage(),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:

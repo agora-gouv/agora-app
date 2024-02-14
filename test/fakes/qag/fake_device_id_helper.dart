@@ -1,4 +1,5 @@
 import 'package:agora/common/helper/device_info_helper.dart';
+import 'package:agora/domain/feedback/device_informations.dart';
 
 class FakeDeviceInfoHelper extends DeviceInfoHelper {
   @override
@@ -9,6 +10,12 @@ class FakeDeviceInfoHelper extends DeviceInfoHelper {
   @override
   Future<bool> isIpad() async {
     return false;
+  }
+
+  @override
+  Future<DeviceInformations> getDeviceInformations() {
+    // TODO: implement getDeviceInformations
+    throw UnimplementedError();
   }
 }
 
