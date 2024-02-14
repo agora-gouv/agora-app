@@ -1,6 +1,7 @@
 import 'package:agora/bloc/app_feedback/app_feedback_bloc.dart';
 import 'package:agora/bloc/app_feedback/app_feedback_event.dart';
 import 'package:agora/bloc/app_feedback/app_feedback_state.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
@@ -22,6 +23,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'app_feedback_first_step.dart';
 
@@ -200,13 +202,6 @@ class _ContentState extends State<_Content> {
           ),
       },
     );
-  }
-}
-
-class _MailQuestionScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
   }
 }
 

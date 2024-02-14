@@ -16,3 +16,8 @@ class ReinitAppFeedbackEvent extends AppFeedbackEvent {
   @override
   List<Object?> get props => [];
 }
+
+class AppFeedbackMailSentEvent extends AppFeedbackEvent {
+  @override
+  List<Object?> get props => [];
+}

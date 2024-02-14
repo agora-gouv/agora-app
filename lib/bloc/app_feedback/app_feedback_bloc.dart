@@ -14,6 +14,7 @@ class AppFeedbackBloc extends Bloc<AppFeedbackEvent, AppFeedbackState> {
   }) : super(AppFeedbackState.initial) {
     on<SendAppFeedbackEvent>(_handleSendAppFeedbackEvent);
     on<ReinitAppFeedbackEvent>(_handleReinitAppFeedbackEvent);
+    on<AppFeedbackMailSentEvent>(_handleAppFeedbackMailSentEvent);
   }
 
   Future<void> _handleSendAppFeedbackEvent(
@@ -35,5 +36,12 @@ class AppFeedbackBloc extends Bloc<AppFeedbackEvent, AppFeedbackState> {
     Emitter<AppFeedbackState> emit,
   ) async {
     emit(AppFeedbackState.initial);
+  }
+
+  Future<void> _handleAppFeedbackMailSentEvent(
+      AppFeedbackMailSentEvent event,
+    Emitter<AppFeedbackState> emit,
+  ) async {
+    emit(AppFeedbackState.success);
   }
 }

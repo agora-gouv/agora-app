@@ -40,4 +40,9 @@ class LaunchUrlHelper {
       await launchUrl(uri, mode: launchMode);
     }
   }
+
+  static Future<void> mailtoAgora() async {
+    final uri = Uri.parse('mailto:contact@agora.gouv.fr');
+    launchUrl(uri);
+  }
 }
