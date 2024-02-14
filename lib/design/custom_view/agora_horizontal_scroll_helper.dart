@@ -122,7 +122,7 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
 
   double _itemSize(BuildContext context) {
     return ((widget.scrollController.position.maxScrollExtent + MediaQuery.sizeOf(context).width) / widget.itemsCount) -
-        AgoraSpacings.base;
+        AgoraSpacings.x0_5;
   }
 }
 
