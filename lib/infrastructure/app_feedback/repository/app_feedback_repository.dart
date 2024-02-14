@@ -45,7 +45,7 @@ class AppFeedbackDioRepository extends AppFeedbackRepository {
     } catch (e, s) {
       sentryWrapper?.captureException(e, s);
       await timer;
-      return true;
+      return false;
     }
   }
 }

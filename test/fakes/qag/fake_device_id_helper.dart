@@ -13,9 +13,8 @@ class FakeDeviceInfoHelper extends DeviceInfoHelper {
   }
 
   @override
-  Future<DeviceInformations> getDeviceInformations() {
-    // TODO: implement getDeviceInformations
-    throw UnimplementedError();
+  Future<DeviceInformations> getDeviceInformations() async {
+    return DeviceInformations(appVersion: 'appVersion', model: 'model', osVersion: 'osVersion');
   }
 }
 

@@ -44,14 +44,14 @@ class DeviceInfoPluginHelper extends DeviceInfoHelper {
     if (PlatformStaticHelper.isAndroid()) {
       final androidDeviceInfo = await deviceInfo.androidInfo;
       return DeviceInformations(
-        appVersion: await appVersionHelper.getAndroidVersion(),
+        appVersion: await appVersionHelper.getVersion(),
         model: androidDeviceInfo.device,
         osVersion: 'Android ${androidDeviceInfo.version.release}',
       );
     } else {
       final iosInfo = await deviceInfo.iosInfo;
       return DeviceInformations(
-        appVersion: await appVersionHelper.getIosVersion(),
+        appVersion: await appVersionHelper.getVersion(),
         model: iosInfo.model,
         osVersion: 'iOS ${iosInfo.systemVersion}',
       );
