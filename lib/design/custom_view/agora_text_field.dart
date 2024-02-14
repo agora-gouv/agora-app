@@ -22,6 +22,7 @@ class AgoraTextField extends StatefulWidget {
   final bool showCounterText;
   final int maxLength;
   final int maxLines;
+  final int? minLines;
   final Function(String input)? onChanged;
   final TextFieldIcon? rightIcon;
   final bool check;
@@ -38,6 +39,7 @@ class AgoraTextField extends StatefulWidget {
     this.maxLines = 50,
     this.onChanged,
     this.rightIcon,
+    this.minLines,
     this.check = false,
     this.error = false,
     this.blockToMaxLength = false,
@@ -90,7 +92,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                   label: widget.contentDescription,
                   maxValueLength: widget.maxLength,
                   child: TextField(
-                    minLines: 1,
+                    minLines: widget.minLines ?? 1,
                     maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
                     scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),
                     maxLength: widget.blockToMaxLength || widget.textInputType == TextFieldInputType.number

@@ -111,13 +111,16 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                           ),
                           SizedBox(height: AgoraSpacings.base),
                           if (choice != null)
-                            AgoraButton(
-                              label: ConsultationStrings.nextQuestion,
-                              semanticLabel: SemanticsStrings.nextQuestion,
-                              style: AgoraButtonStyle.primaryButtonStyle,
-                              onPressed: () {
-                                widget.onTypeChosed(choice!);
-                              },
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: AgoraButton(
+                                label: ConsultationStrings.nextQuestion,
+                                semanticLabel: SemanticsStrings.nextQuestion,
+                                style: AgoraButtonStyle.primaryButtonStyle,
+                                onPressed: () {
+                                  widget.onTypeChosed(choice!);
+                                },
+                              ),
                             ),
                         ],
                       ),

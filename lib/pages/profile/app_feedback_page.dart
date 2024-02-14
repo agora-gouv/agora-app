@@ -5,6 +5,8 @@ import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/feedback_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
@@ -23,7 +25,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 part 'app_feedback_first_step.dart';
 
@@ -101,20 +102,20 @@ class _Success extends StatelessWidget {
                 Semantics(
                   focused: true,
                   child: Text(
-                    'Merci de votre retour !',
+                    FeedbackStrings.thanks,
                     style: AgoraTextStyles.medium19,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.base),
                 Text(
-                  'Votre aide est précieuse pour rendre cette application la plus utile et la plus agréable possible.\n\n\nN’hésitez pas à revenir aussi souvent que vous le souhaitez pour nous faire part de vos commentaires et idées.',
+                  FeedbackStrings.confirmationLabel,
                   style: AgoraTextStyles.light16,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: AgoraSpacings.x1_5),
                 AgoraButton(
-                  label: 'Faire un autre retour',
+                  label: FeedbackStrings.otherReturnButtonLabel,
                   style: AgoraButtonStyle.primaryButtonStyle,
                   onPressed: () {
                     context.read<AppFeedbackBloc>().add(ReinitAppFeedbackEvent());
@@ -122,7 +123,7 @@ class _Success extends StatelessWidget {
                 ),
                 SizedBox(height: AgoraSpacings.base),
                 AgoraButton(
-                  label: 'Fermer',
+                  label: GenericStrings.close,
                   style: AgoraButtonStyle.blueBorderButtonStyle,
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -143,7 +144,7 @@ class _Error extends StatelessWidget {
     return AgoraScaffold(
       child: Column(
         children: [
-          AgoraToolbar(pageLabel: 'Erreur dans l\'envoi des réponses'),
+          AgoraToolbar(pageLabel: FeedbackStrings.errorLabel),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: AgoraErrorView()),
         ],
@@ -174,24 +175,23 @@ class _ContentState extends State<_Content> {
       child: switch (type) {
         _AppFeedbackChoice.bug => _Step2Screen(
             type: AppFeedbackType.bug,
-            title: 'Qu’avez-vous repéré ? Comment êtes-vous arrivé là ?',
-            contentDescription: 'Erreur repérée',
-            hint:
-                'Exemple : Après avoir ouvert l’application, j’ai été sur questions citoyennes et j’ai soutenu une question mais mon soutien n’a pas été pris en compte. Nous sommes le 6 février à 10h09 et je suis sur iPhone 12.',
-            subTitle: 'N’hésitez pas à préciser la date et l’heure où le problème a été constaté.',
+            title: FeedbackStrings.bugTitle,
+            contentDescription: FeedbackStrings.bugContentDescription,
+            hint: FeedbackStrings.bugHint,
+            subTitle: FeedbackStrings.bugSubTitle,
           ),
         _AppFeedbackChoice.comment => _Step2Screen(
             type: AppFeedbackType.comment,
-            title: 'Très bien ! Quelle est votre idée ? ',
-            hint: 'Saisissez votre idée',
-            contentDescription: 'Saisissez votre idée',
+            title: FeedbackStrings.commentTitle,
+            hint: FeedbackStrings.commentHint,
+            contentDescription: FeedbackStrings.commentHint,
             subTitle: ConsultationStrings.openedQuestionNotice,
           ),
         _AppFeedbackChoice.feature => _Step2Screen(
             type: AppFeedbackType.feature,
-            title: 'Nous vous écoutons. Que pensez-vous d’Agora ?',
-            hint: 'Saisissez votre retour',
-            contentDescription: 'Saisissez votre retour',
+            title: FeedbackStrings.featureTitle,
+            hint: FeedbackStrings.featureHint,
+            contentDescription: FeedbackStrings.featureHint,
             subTitle: ConsultationStrings.openedQuestionNotice,
           ),
         _AppFeedbackChoice.mail => _MailQuestionScreen(),

@@ -72,22 +72,26 @@ class _Step2Screen extends StatelessWidget {
                             showCounterText: true,
                             blockToMaxLength: false,
                             maxLength: 1000,
+                            minLines: 7,
                           ),
                           SizedBox(height: AgoraSpacings.base),
-                          AgoraButton(
-                            label: ConsultationStrings.validate,
-                            semanticLabel: ConsultationStrings.validate,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () {
-                              context.read<AppFeedbackBloc>().add(
-                                    SendAppFeedbackEvent(
-                                      AppFeedback(
-                                        type: type,
-                                        description: controller.text,
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: AgoraButton(
+                              label: ConsultationStrings.validate,
+                              semanticLabel: ConsultationStrings.validate,
+                              style: AgoraButtonStyle.primaryButtonStyle,
+                              onPressed: () {
+                                context.read<AppFeedbackBloc>().add(
+                                      SendAppFeedbackEvent(
+                                        AppFeedback(
+                                          type: type,
+                                          description: controller.text,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                            },
+                                    );
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -133,7 +137,7 @@ class _MailQuestionScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
                         child: Text(
-                          'Nous serions ravis de vous convier à un atelier utilisateur.',
+                          FeedbackStrings.mailTitle,
                           style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
                         ),
                       ),
@@ -150,11 +154,11 @@ class _MailQuestionScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text('Pour ce faire, pouvez-vous nous envoyer un e-mail à l\'adresse ci-dessous afin que nous puissions vous proposer des créneaux de participation ?', style: AgoraTextStyles.medium14),
+                          Text(FeedbackStrings.mailSubTitle, style: AgoraTextStyles.medium14),
                           SizedBox(height: AgoraSpacings.x3),
                           AgoraButton(
-                            label: 'Nous envoyer un mail',
-                            semanticLabel: 'Nous envoyer un mail',
+                            label: FeedbackStrings.mailHint,
+                            semanticLabel: FeedbackStrings.mailHint,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
                               LaunchUrlHelper.mailtoAgora();
@@ -162,8 +166,8 @@ class _MailQuestionScreen extends StatelessWidget {
                           ),
                           SizedBox(height: AgoraSpacings.base),
                           AgoraButton(
-                            label: 'J\'ai envoyé mon mail',
-                            semanticLabel: 'J\'ai envoyé mon mail',
+                            label: FeedbackStrings.mailButtonLabel,
+                            semanticLabel: FeedbackStrings.mailButtonLabel,
                             style: AgoraButtonStyle.blueBorderButtonStyle,
                             onPressed: () {
                               context.read<AppFeedbackBloc>().add(AppFeedbackMailSentEvent());
