@@ -1,12 +1,16 @@
+import 'dart:math';
+
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/extension/list_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_finished_card.dart';
 import 'package:agora/design/custom_view/agora_horizontal_scroll_helper.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -14,6 +18,8 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
 import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intersperse/intersperse.dart';
 
 class ConsultationsFinishedSection extends StatelessWidget {
   final List<ConsultationFinishedViewModel> finishedViewModels;
@@ -95,6 +101,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                               HorizontalScrollHelper(
                                 itemsCount: finishedViewModels.length,
                                 scrollController: scrollController,
+                                key: _consultationScrollHelperKey,
                               ),
                             ],
                           );
@@ -109,37 +116,83 @@ class ConsultationsFinishedSection extends StatelessWidget {
   }
 
   List<Widget> _buildFinishedConsultations(BuildContext context) {
-    final List<Widget> finishedConsultationsWidget = List.empty(growable: true);
-    for (final finishedViewModel in finishedViewModels) {
-      finishedConsultationsWidget.add(
-        AgoraConsultationFinishedCard(
-          id: finishedViewModel.id,
-          title: finishedViewModel.title,
-          thematique: finishedViewModel.thematique,
-          imageUrl: finishedViewModel.coverUrl,
-          step: finishedViewModel.step,
-          style: AgoraConsultationFinishedStyle.carrousel,
-          onClick: () {
-            TrackerHelper.trackClick(
-              clickName: "${AnalyticsEventNames.finishedConsultation} ${finishedViewModel.id}",
-              widgetName: AnalyticsScreenNames.consultationsPage,
-            );
-            Navigator.pushNamed(
-              context,
-              ConsultationSummaryPage.routeName,
-              arguments: ConsultationSummaryArguments(
-                consultationId: finishedViewModel.id,
-                shouldReloadConsultationsWhenPop: false,
-                initialTab: ConsultationSummaryInitialTab.etEnsuite,
-              ),
-            );
-          },
-          index: finishedViewModels.indexOf(finishedViewModel) + 1,
-          maxIndex: finishedViewModels.length,
-        ),
-      );
-      finishedConsultationsWidget.add(SizedBox(width: AgoraSpacings.x0_5));
-    }
-    return finishedConsultationsWidget;
+    return finishedViewModels
+        .map<Widget>((finishedViewModel) {
+          return AgoraConsultationFinishedCard(
+            id: finishedViewModel.id,
+            title: finishedViewModel.title,
+            thematique: finishedViewModel.thematique,
+            imageUrl: finishedViewModel.coverUrl,
+            step: finishedViewModel.step,
+            style: AgoraConsultationFinishedStyle.carrousel,
+            onClick: () {
+              TrackerHelper.trackClick(
+                clickName: "${AnalyticsEventNames.finishedConsultation} ${finishedViewModel.id}",
+                widgetName: AnalyticsScreenNames.consultationsPage,
+              );
+              Navigator.pushNamed(
+                context,
+                ConsultationSummaryPage.routeName,
+                arguments: ConsultationSummaryArguments(
+                  consultationId: finishedViewModel.id,
+                  shouldReloadConsultationsWhenPop: false,
+                  initialTab: ConsultationSummaryInitialTab.etEnsuite,
+                ),
+              );
+            },
+            index: finishedViewModels.indexOf(finishedViewModel) + 1,
+            maxIndex: finishedViewModels.length + 1,
+          );
+        })
+        .plus(_ViewAllCard(finishedViewModels.length + 1))
+        .intersperse(SizedBox(width: AgoraSpacings.x0_5))
+        .plus(SizedBox(width: AgoraSpacings.x0_5))
+        .toList();
   }
 }
+
+class _ViewAllCard extends StatelessWidget {
+  final int maxIndex;
+
+  _ViewAllCard(this.maxIndex);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth),
+      child: Semantics(
+        tooltip: "Élément $maxIndex sur $maxIndex",
+        button: true,
+        child: AgoraRoundedCard(
+          borderColor: AgoraColors.border,
+          cardColor: AgoraColors.white,
+          onTap: () {
+            Navigator.pushNamed(context, ConsultationFinishedPaginatedPage.routeName);
+          },
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Voir toutes les consultations',
+                  style: AgoraTextStyles.regular16,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: AgoraSpacings.base),
+                SvgPicture.asset(
+                  "assets/ic_forward.svg",
+                  height: 24,
+                  width: 24,
+                  colorFilter: ColorFilter.mode(AgoraColors.primaryGreyOpacity70, BlendMode.srcIn),
+                  excludeFromSemantics: true,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+final _consultationScrollHelperKey = GlobalKey();

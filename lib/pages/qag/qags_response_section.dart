@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/bloc/qag/response/qag_response_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/extension/list_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -14,9 +17,11 @@ import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_qag_incoming_response_card.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_response_presenter.dart';
@@ -26,6 +31,7 @@ import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intersperse/intersperse.dart';
 
 class QagsResponseSection extends StatelessWidget {
@@ -132,6 +138,7 @@ class QagsResponseSection extends StatelessWidget {
                 child: IntrinsicHeight(
                   // IntrinsicHeight : make all card same height
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: _buildQagResponseCards(viewModels, context),
                   ),
                 ),
@@ -140,7 +147,11 @@ class QagsResponseSection extends StatelessWidget {
           },
         ),
         const SizedBox(height: AgoraSpacings.base),
-        HorizontalScrollHelper(itemsCount: viewModels.length, scrollController: scrollController),
+        HorizontalScrollHelper(
+          itemsCount: viewModels.length + 1,
+          scrollController: scrollController,
+          key: _questionScrollHelperKey,
+        ),
       ],
     );
   }
@@ -150,11 +161,16 @@ class QagsResponseSection extends StatelessWidget {
         .map(
           (viewModel) => switch (viewModel) {
             final QagResponseViewModel viewModel =>
-              _buildQagResponseCard(viewModel, context, viewModels.length, viewModels.indexOf(viewModel) + 1),
-            final QagResponseIncomingViewModel viewModel =>
-              _buildQagIncomingResponseCard(viewModel, context, viewModels.length, viewModels.indexOf(viewModel) + 1),
+              _buildQagResponseCard(viewModel, context, viewModels.length + 1, viewModels.indexOf(viewModel) + 1),
+            final QagResponseIncomingViewModel viewModel => _buildQagIncomingResponseCard(
+                viewModel,
+                context,
+                viewModels.length + 1,
+                viewModels.indexOf(viewModel) + 1,
+              ),
           },
         )
+        .plus(_ViewAllCard(viewModels.length + 1))
         .intersperseOuter(SizedBox(width: AgoraSpacings.x0_5))
         .skip(1)
         .toList();
@@ -262,3 +278,49 @@ class _ResponseListViewModel extends _ViewModel {
   @override
   List<Object?> get props => [viewModels];
 }
+
+class _ViewAllCard extends StatelessWidget {
+  final int maxIndex;
+
+  _ViewAllCard(this.maxIndex);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: max(MediaQuery.of(context).size.width * 0.65, AgoraSpacings.carrouselMinWidth),
+      child: Semantics(
+        tooltip: "Élément $maxIndex sur $maxIndex",
+        button: true,
+        child: AgoraRoundedCard(
+          borderColor: AgoraColors.border,
+          cardColor: AgoraColors.white,
+          onTap: () {
+            Navigator.pushNamed(context, QagResponsePaginatedPage.routeName);
+          },
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Voir toutes les réponses',
+                  style: AgoraTextStyles.regular16,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: AgoraSpacings.base),
+                SvgPicture.asset(
+                  "assets/ic_forward.svg",
+                  height: 24,
+                  width: 24,
+                  colorFilter: ColorFilter.mode(AgoraColors.primaryGreyOpacity70, BlendMode.srcIn),
+                  excludeFromSemantics: true,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+final _questionScrollHelperKey = GlobalKey();

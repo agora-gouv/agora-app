@@ -1,4 +1,5 @@
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -17,7 +18,7 @@ class AgoraHtmlStyles {
     final textScaler = MediaQuery.of(context).textScaler;
     return {
       "body": AgoraHtmlStyles._bodyStyle(textScaler),
-      "ul": AgoraHtmlStyles._bodyStyle(textScaler),
+      "ul": AgoraHtmlStyles._listStyle(textScaler),
       "ol": AgoraHtmlStyles._bodyStyle(textScaler),
       "li": AgoraHtmlStyles._bodyStyle(textScaler),
       "b": AgoraHtmlStyles._boldStyle(textScaler),
@@ -35,6 +36,17 @@ class AgoraHtmlStyles {
         textDecorationColor: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
+        margin: Margins.zero,
+      );
+
+  static Style _listStyle(TextScaler textScaler) => Style(
+        fontFamily: marianne,
+        fontWeight: light,
+        fontSize: FontSize(textScaler.scale(14.0)),
+        color: AgoraColors.primaryGrey,
+        textDecorationColor: AgoraColors.primaryBlue,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings(left: HtmlPadding(AgoraSpacings.x0_75)),
         margin: Margins.zero,
       );
 
