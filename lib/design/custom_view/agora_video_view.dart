@@ -1,5 +1,6 @@
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/helper/semantics_helper.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -62,6 +63,18 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       videoPlayerController.removeListener(_listener);
       widget.onVideoStartMoreThan5Sec();
     }
+    if (chewieController.videoPlayerController.value.hasError) {
+      if (chewieController.isFullScreen) {
+        chewieController.exitFullScreen();
+      }
+      HelperManager.getSentryWrapper().captureException(
+        AgoraVideoPlayerErrorException(
+          videoUrl: widget.videoUrl,
+          videoPlayerMessage: chewieController.videoPlayerController.value.errorDescription,
+        ),
+        StackTrace.current,
+      );
+    }
   }
 
   @override
@@ -109,5 +122,20 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
     } else {
       return (screenWidth, (screenWidth * 1920) / 1080);
     }
+  }
+}
+
+class AgoraVideoPlayerErrorException implements Exception {
+  final String videoUrl;
+  final String? videoPlayerMessage;
+
+  const AgoraVideoPlayerErrorException({
+    required this.videoUrl,
+    required this.videoPlayerMessage,
+  }) : super();
+
+  @override
+  String toString() {
+    return "AgoraVideoPlayerErrorException:\nvideoUrl = $videoUrl\nvideoPlayerMessage = $videoPlayerMessage";
   }
 }
