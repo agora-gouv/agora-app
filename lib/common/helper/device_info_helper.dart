@@ -17,8 +17,10 @@ class DeviceInfoPluginHelper extends DeviceInfoHelper {
   final DeviceInfoPlugin deviceInfo;
   final AppVersionHelper appVersionHelper;
 
-
-  DeviceInfoPluginHelper({required this.deviceInfo, required this.appVersionHelper,});
+  DeviceInfoPluginHelper({
+    required this.deviceInfo,
+    required this.appVersionHelper,
+  });
 
   @override
   Future<int> getAndroidSdk() async {

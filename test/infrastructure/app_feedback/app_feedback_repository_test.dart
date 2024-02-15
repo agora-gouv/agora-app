@@ -65,7 +65,7 @@ void main() {
         },
         'type': 'bug',
       },
-          (server) {
+      (server) {
         return server.reply(
           HttpStatus.badRequest,
           {},

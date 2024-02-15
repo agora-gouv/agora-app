@@ -6,6 +6,7 @@ class _Step2Screen extends StatelessWidget {
   final String subTitle;
   final String hint;
   final String contentDescription;
+  final void Function() onPrevious;
 
   _Step2Screen({
     required this.type,
@@ -13,6 +14,7 @@ class _Step2Screen extends StatelessWidget {
     required this.subTitle,
     required this.hint,
     required this.contentDescription,
+    required this.onPrevious,
   });
 
   final TextEditingController controller = TextEditingController();
@@ -75,23 +77,33 @@ class _Step2Screen extends StatelessWidget {
                             minLines: 7,
                           ),
                           SizedBox(height: AgoraSpacings.base),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: AgoraButton(
-                              label: ConsultationStrings.validate,
-                              semanticLabel: ConsultationStrings.validate,
-                              style: AgoraButtonStyle.primaryButtonStyle,
-                              onPressed: () {
-                                context.read<AppFeedbackBloc>().add(
-                                      SendAppFeedbackEvent(
-                                        AppFeedback(
-                                          type: type,
-                                          description: controller.text,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              AgoraButton(
+                                label: ConsultationStrings.previousQuestion,
+                                semanticLabel: SemanticsStrings.previousQuestion,
+                                style: AgoraButtonStyle.blueBorderButtonStyle,
+                                onPressed: onPrevious,
+                              ),
+                              const SizedBox(width: AgoraSpacings.base),
+                              AgoraButton(
+                                label: ConsultationStrings.validate,
+                                semanticLabel: ConsultationStrings.validate,
+                                style: AgoraButtonStyle.primaryButtonStyle,
+                                onPressed: () {
+                                  context.read<AppFeedbackBloc>().add(
+                                        SendAppFeedbackEvent(
+                                          AppFeedback(
+                                            type: type,
+                                            description: controller.text,
+                                          ),
                                         ),
-                                      ),
-                                    );
-                              },
-                            ),
+                                      );
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),

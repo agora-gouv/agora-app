@@ -39,7 +39,7 @@ class AppFeedbackBloc extends Bloc<AppFeedbackEvent, AppFeedbackState> {
   }
 
   Future<void> _handleAppFeedbackMailSentEvent(
-      AppFeedbackMailSentEvent event,
+    AppFeedbackMailSentEvent event,
     Emitter<AppFeedbackState> emit,
   ) async {
     emit(AppFeedbackState.success);

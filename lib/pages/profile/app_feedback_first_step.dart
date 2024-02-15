@@ -60,7 +60,8 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                         children: [
                           AgoraQuestionResponseChoiceView(
                             responseId: 'id',
-                            responseLabel: 'J’ai remarqué un bug, quelque chose qui ne semble pas fonctionner correctement',
+                            responseLabel:
+                                'J’ai remarqué un bug, quelque chose qui ne semble pas fonctionner correctement',
                             hasOpenTextField: false,
                             isSelected: choice == _AppFeedbackChoice.bug,
                             previousOtherResponse: '',

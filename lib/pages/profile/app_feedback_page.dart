@@ -179,6 +179,7 @@ class _ContentState extends State<_Content> {
             contentDescription: FeedbackStrings.bugContentDescription,
             hint: FeedbackStrings.bugHint,
             subTitle: FeedbackStrings.bugSubTitle,
+            onPrevious: _onPrevious,
           ),
         _AppFeedbackChoice.comment => _Step2Screen(
             type: AppFeedbackType.comment,
@@ -186,6 +187,7 @@ class _ContentState extends State<_Content> {
             hint: FeedbackStrings.commentHint,
             contentDescription: FeedbackStrings.commentHint,
             subTitle: ConsultationStrings.openedQuestionNotice,
+            onPrevious: _onPrevious,
           ),
         _AppFeedbackChoice.feature => _Step2Screen(
             type: AppFeedbackType.feature,
@@ -193,6 +195,7 @@ class _ContentState extends State<_Content> {
             hint: FeedbackStrings.featureHint,
             contentDescription: FeedbackStrings.featureHint,
             subTitle: ConsultationStrings.openedQuestionNotice,
+            onPrevious: _onPrevious,
           ),
         _AppFeedbackChoice.mail => _MailQuestionScreen(),
         null => _FirstStepScreen(
@@ -202,6 +205,12 @@ class _ContentState extends State<_Content> {
           ),
       },
     );
+  }
+
+  void _onPrevious() {
+    setState(() {
+      type = null;
+    });
   }
 }
 

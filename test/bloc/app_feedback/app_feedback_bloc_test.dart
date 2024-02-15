@@ -121,7 +121,6 @@ void main() {
     expect: () => [
       AppFeedbackState.success,
     ],
-
     wait: const Duration(milliseconds: 5),
   );
 }
