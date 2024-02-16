@@ -22,14 +22,14 @@ void main() {
     type: AppFeedbackType.feature,
     description: 'description',
   );
-  final deviceInfo = DeviceInformations(appVersion: 'appVersion', model: 'model', osVersion: 'osVersion');
+  final deviceInfo = DeviceInformation(appVersion: 'appVersion', model: 'model', osVersion: 'osVersion');
 
   group('SendAppFeedbackEvent', () {
     blocTest(
       'when repository succeed - should emit success state - for bug',
       build: () => AppFeedbackBloc(
         repository: _FakeAppFeedbackRepository(true, bug, deviceInfo),
-        deviceInfoPluginHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) {
         return bloc.add(SendAppFeedbackEvent(bug));
@@ -45,7 +45,7 @@ void main() {
       'when repository succeed - should emit success state - for feature',
       build: () => AppFeedbackBloc(
         repository: _FakeAppFeedbackRepository(true, feature, deviceInfo),
-        deviceInfoPluginHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) {
         return bloc.add(SendAppFeedbackEvent(feature));
@@ -61,7 +61,7 @@ void main() {
       'when repository succeed - should emit success state - for comment',
       build: () => AppFeedbackBloc(
         repository: _FakeAppFeedbackRepository(true, comment, deviceInfo),
-        deviceInfoPluginHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) {
         return bloc.add(SendAppFeedbackEvent(comment));
@@ -74,10 +74,10 @@ void main() {
     );
 
     blocTest(
-      'when repository fails - should emit success state',
+      'when repository fails - should emit error state',
       build: () => AppFeedbackBloc(
         repository: _FakeAppFeedbackRepository(false, comment, deviceInfo),
-        deviceInfoPluginHelper: FakeDeviceInfoHelper(),
+        deviceInfoHelper: FakeDeviceInfoHelper(),
       ),
       act: (bloc) {
         return bloc.add(SendAppFeedbackEvent(comment));
@@ -94,7 +94,7 @@ void main() {
     'ReinitAppFeedbackEvent',
     build: () => AppFeedbackBloc(
       repository: _FakeAppFeedbackRepository(true, bug, deviceInfo),
-      deviceInfoPluginHelper: FakeDeviceInfoHelper(),
+      deviceInfoHelper: FakeDeviceInfoHelper(),
     ),
     act: (bloc) async {
       bloc.add(SendAppFeedbackEvent(bug));
@@ -113,7 +113,7 @@ void main() {
     'ReinitAppFeedbackEvent',
     build: () => AppFeedbackBloc(
       repository: _FakeAppFeedbackRepository(true, bug, deviceInfo),
-      deviceInfoPluginHelper: FakeDeviceInfoHelper(),
+      deviceInfoHelper: FakeDeviceInfoHelper(),
     ),
     act: (bloc) {
       bloc.add(AppFeedbackMailSentEvent());
@@ -128,12 +128,12 @@ void main() {
 class _FakeAppFeedbackRepository extends AppFeedbackRepository {
   final bool success;
   final AppFeedback expectedAppFeedback;
-  final DeviceInformations? expectedDeviceInfo;
+  final DeviceInformation? expectedDeviceInfo;
 
   _FakeAppFeedbackRepository(this.success, this.expectedAppFeedback, this.expectedDeviceInfo);
 
   @override
-  Future<bool> sendFeedback(AppFeedback feedback, DeviceInformations deviceInformations) async {
+  Future<bool> sendFeedback(AppFeedback feedback, DeviceInformation deviceInformations) async {
     return success && feedback == expectedAppFeedback && deviceInformations == expectedDeviceInfo;
   }
 }

@@ -21,7 +21,6 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/feedback/feedback.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -38,15 +37,17 @@ class AppFeedbackPage extends StatelessWidget {
     return BlocProvider(
       create: (_) => AppFeedbackBloc(
         repository: RepositoryManager.getAppFeedbackRepository(),
-        deviceInfoPluginHelper: HelperManager.getDeviceInfoHelper(),
+        deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
       ),
       child: BlocSelector<AppFeedbackBloc, AppFeedbackState, _ViewModel>(
         selector: _ViewModel.fromState,
         builder: (BuildContext context, _ViewModel viewModel) {
-          if (viewModel.isLoading) return _Loading();
-          if (viewModel.isFinished) return _Success();
-          if (viewModel.isError) return _Error();
-          return _Content();
+          return switch (viewModel) {
+            _ViewModel.error => _Error(),
+            _ViewModel.loading => _Loading(),
+            _ViewModel.success => _Success(),
+            _ViewModel.initial => _Content(),
+          };
         },
       ),
     );
@@ -214,27 +215,20 @@ class _ContentState extends State<_Content> {
   }
 }
 
-class _ViewModel extends Equatable {
-  final bool isLoading;
-  final bool isError;
-  final bool isFinished;
-
-  _ViewModel({
-    required this.isLoading,
-    required this.isError,
-    required this.isFinished,
-  });
+enum _ViewModel {
+  error,
+  loading,
+  initial,
+  success;
 
   factory _ViewModel.fromState(AppFeedbackState state) {
-    return _ViewModel(
-      isLoading: state == AppFeedbackState.loading,
-      isError: state == AppFeedbackState.error,
-      isFinished: state == AppFeedbackState.success,
-    );
+    return switch (state) {
+      AppFeedbackState.error => _ViewModel.error,
+      AppFeedbackState.loading => _ViewModel.loading,
+      AppFeedbackState.success => _ViewModel.success,
+      AppFeedbackState.initial => _ViewModel.initial,
+    };
   }
-
-  @override
-  List<Object?> get props => [isLoading, isError, isFinished];
 }
 
 enum _AppFeedbackChoice {

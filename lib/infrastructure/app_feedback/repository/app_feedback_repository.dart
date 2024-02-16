@@ -4,7 +4,7 @@ import 'package:agora/domain/feedback/feedback.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 
 abstract class AppFeedbackRepository {
-  Future<bool> sendFeedback(AppFeedback feedback, DeviceInformations deviceInformations);
+  Future<bool> sendFeedback(AppFeedback feedback, DeviceInformation deviceInformations);
 }
 
 class AppFeedbackDioRepository extends AppFeedbackRepository {
@@ -19,7 +19,7 @@ class AppFeedbackDioRepository extends AppFeedbackRepository {
   });
 
   @override
-  Future<bool> sendFeedback(AppFeedback feedback, DeviceInformations deviceInformations) async {
+  Future<bool> sendFeedback(AppFeedback feedback, DeviceInformation deviceInformations) async {
     final timer = Future.delayed(minimalSendingTime);
     try {
       final response = await httpClient.post(

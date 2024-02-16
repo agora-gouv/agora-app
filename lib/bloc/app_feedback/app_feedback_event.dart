@@ -9,7 +9,7 @@ class SendAppFeedbackEvent extends AppFeedbackEvent {
   SendAppFeedbackEvent(this.feedback);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [feedback];
 }
 
 class ReinitAppFeedbackEvent extends AppFeedbackEvent {

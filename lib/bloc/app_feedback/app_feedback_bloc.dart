@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppFeedbackBloc extends Bloc<AppFeedbackEvent, AppFeedbackState> {
   final AppFeedbackRepository repository;
-  final DeviceInfoHelper deviceInfoPluginHelper;
+  final DeviceInfoHelper deviceInfoHelper;
 
   AppFeedbackBloc({
     required this.repository,
-    required this.deviceInfoPluginHelper,
+    required this.deviceInfoHelper,
   }) : super(AppFeedbackState.initial) {
     on<SendAppFeedbackEvent>(_handleSendAppFeedbackEvent);
     on<ReinitAppFeedbackEvent>(_handleReinitAppFeedbackEvent);
@@ -21,7 +21,7 @@ class AppFeedbackBloc extends Bloc<AppFeedbackEvent, AppFeedbackState> {
     SendAppFeedbackEvent event,
     Emitter<AppFeedbackState> emit,
   ) async {
-    final deviceInformations = await deviceInfoPluginHelper.getDeviceInformations();
+    final deviceInformations = await deviceInfoHelper.getDeviceInformations();
     emit(AppFeedbackState.loading);
     final success = await repository.sendFeedback(event.feedback, deviceInformations);
     if (success) {

@@ -14,7 +14,11 @@ void main() {
     type: AppFeedbackType.bug,
     description: 'description',
   );
-  final deviceInfo = DeviceInformations(appVersion: 'appVersion', model: 'model', osVersion: 'osVersion');
+  final comment = AppFeedback(
+    type: AppFeedbackType.comment,
+    description: 'description',
+  );
+  final deviceInfo = DeviceInformation(appVersion: 'appVersion', model: 'model', osVersion: 'osVersion');
 
   test('when success, should return true', () async {
     // Given
@@ -47,6 +51,37 @@ void main() {
       minimalSendingTime: Duration(milliseconds: 5),
     );
     final response = await repository.sendFeedback(bug, deviceInfo);
+
+    // Then
+    expect(response, true);
+  });
+
+  test('when comment, should not send device info', () async {
+    // Given
+    dioAdapter.onPost(
+      '/feedback',
+      data: {
+        'description': 'description',
+        'type': 'comment',
+      },
+      (server) {
+        return server.reply(
+          HttpStatus.ok,
+          {},
+        );
+      },
+      headers: {
+        "accept": "application/json",
+        "Authorization": "Bearer jwtToken",
+      },
+    );
+
+    // When
+    final repository = AppFeedbackDioRepository(
+      httpClient: httpClient,
+      minimalSendingTime: Duration(milliseconds: 5),
+    );
+    final response = await repository.sendFeedback(comment, deviceInfo);
 
     // Then
     expect(response, true);

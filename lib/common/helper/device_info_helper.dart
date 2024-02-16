@@ -10,7 +10,7 @@ abstract class DeviceInfoHelper {
 
   Future<bool> isIpad();
 
-  Future<DeviceInformations> getDeviceInformations();
+  Future<DeviceInformation> getDeviceInformations();
 }
 
 class DeviceInfoPluginHelper extends DeviceInfoHelper {
@@ -42,17 +42,17 @@ class DeviceInfoPluginHelper extends DeviceInfoHelper {
   }
 
   @override
-  Future<DeviceInformations> getDeviceInformations() async {
+  Future<DeviceInformation> getDeviceInformations() async {
     if (PlatformStaticHelper.isAndroid()) {
       final androidDeviceInfo = await deviceInfo.androidInfo;
-      return DeviceInformations(
+      return DeviceInformation(
         appVersion: await appVersionHelper.getVersion(),
         model: androidDeviceInfo.device,
         osVersion: 'Android ${androidDeviceInfo.version.release}',
       );
     } else {
       final iosInfo = await deviceInfo.iosInfo;
-      return DeviceInformations(
+      return DeviceInformation(
         appVersion: await appVersionHelper.getVersion(),
         model: iosInfo.model,
         osVersion: 'iOS ${iosInfo.systemVersion}',

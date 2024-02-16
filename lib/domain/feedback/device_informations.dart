@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-class DeviceInformations extends Equatable {
+class DeviceInformation extends Equatable {
   final String appVersion;
   final String model;
   final String osVersion;
 
-  DeviceInformations({
+  DeviceInformation({
     required this.appVersion,
     required this.model,
     required this.osVersion,
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [appVersion, model, osVersion];
 }
