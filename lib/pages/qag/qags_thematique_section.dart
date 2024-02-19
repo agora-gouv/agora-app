@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsThematiqueSection extends StatelessWidget {
   final String? currentThematiqueId;
-  final Function(String?) onThematiqueIdSelected;
+  final Function(String?, String?) onThematiqueIdSelected;
 
   const QagsThematiqueSection({
     super.key,
@@ -29,13 +29,15 @@ class QagsThematiqueSection extends StatelessWidget {
             child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
               builder: (context, state) {
                 if (state is ThematiqueSuccessState) {
-                  return SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: ThematiqueHelper.buildThematiques(
-                      thematiques: state.thematiqueViewModels,
-                      selectedThematiqueId: currentThematiqueId,
-                      onThematiqueIdSelected: onThematiqueIdSelected,
+                  return Scrollbar(
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      child: ThematiqueHelper.buildThematiques(
+                        thematiques: state.thematiqueViewModels,
+                        selectedThematiqueId: currentThematiqueId,
+                        onThematiqueIdSelected: onThematiqueIdSelected,
+                      ),
                     ),
                   );
                 } else if (state is ThematiqueInitialLoadingState) {

@@ -26,9 +26,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagListSection extends StatelessWidget {
   final String? thematiqueId;
+  final String? thematiqueLabel;
   final QagListFilter qagFilter;
 
-  const QagListSection({required this.qagFilter, required this.thematiqueId});
+  const QagListSection({
+    required this.qagFilter,
+    required this.thematiqueId,
+    this.thematiqueLabel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,7 @@ class QagListSection extends StatelessWidget {
         qagRepository: RepositoryManager.getQagRepository(),
         headerQagStorageClient: StorageManager.getHeaderQagStorageClient(),
         qagFilter: qagFilter,
-      )..add(FetchQagsListEvent(thematiqueId: thematiqueId)),
+      )..add(FetchQagsListEvent(thematiqueId: thematiqueId, thematiqueLabel: thematiqueLabel)),
       child: BlocSelector<QagListBloc, QagListState, _ViewModel>(
         selector: _ViewModel.fromState,
         builder: (context, viewModel) {
@@ -58,7 +63,12 @@ class QagListSection extends StatelessWidget {
                 AgoraRoundedButton(
                   label: QagStrings.retry,
                   style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                  onPressed: () => context.read<QagListBloc>().add(FetchQagsListEvent(thematiqueId: thematiqueId)),
+                  onPressed: () => context.read<QagListBloc>().add(
+                        FetchQagsListEvent(
+                          thematiqueId: thematiqueId,
+                          thematiqueLabel: thematiqueLabel,
+                        ),
+                      ),
                 ),
               ],
             );
