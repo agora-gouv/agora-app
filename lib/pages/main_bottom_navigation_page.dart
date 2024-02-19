@@ -1,3 +1,4 @@
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/design/custom_view/agora_responsive_view.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
@@ -39,7 +40,7 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
     return Scaffold(
       backgroundColor: AgoraColors.white,
       appBar: AppBar(
-        backgroundColor: AgoraColors.primaryBlue,
+        backgroundColor: HelperManager.getMainColorHelper().getMainColor(),
         toolbarHeight: 0,
         elevation: 0,
       ),

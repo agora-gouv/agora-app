@@ -97,7 +97,7 @@ class _LoadingPageState extends State<LoadingPage> {
         ),
       ],
       child: AgoraScaffold(
-        appBarColor: AgoraColors.primaryBlue,
+        appBarType: AppBarColorType.primaryColor,
         child: BlocListener<NotificationPermissionBloc, NotificationPermissionState>(
           listener: (context, notificationState) async {
             if (!kIsWeb) {

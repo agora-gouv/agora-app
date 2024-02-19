@@ -30,7 +30,7 @@ class _ProfileDemographicInformationPageState extends State<ProfileDemographicIn
   Widget build(BuildContext context) {
     return AgoraScaffold(
       shouldPop: false,
-      appBarColor: AgoraColors.primaryBlue,
+      appBarType: AppBarColorType.primaryColor,
       child: AgoraSingleScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(

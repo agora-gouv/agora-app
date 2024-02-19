@@ -78,6 +78,11 @@ Make sure to change the target environment before attempting to compile project 
 - Configure `--dart-define=app.flavor=XX` and `Build flavor : XX` => XX must be identical.
 - `--dart-define=app.flavor=XX` is used in `flavor_helper.dart` file.
 
+The app's icon and status bar should change color depending on built environment:
+- Orange for Sandbox
+- Green for Dev
+- Blue for Prod
+
 #### ii. Using command line scripts
 
 Use either:
