@@ -1,10 +1,10 @@
 flutter_launcher_icons:
-  image_path: "assets/launcher_icons/ic_agora_dev_logo.png"
+  image_path: "assets/launcher_icons/ic_agora_sandbox_logo.png"
   ios: true
   android: true
   remove_alpha_ios: true
   web:
     generate: true
-    image_path: "assets/launcher_icons/ic_agora_dev_logo.png"
+    image_path: "assets/launcher_icons/ic_agora_sandbox_logo.png"
     background_color: "#FFFFFF"
     theme_color: "#FFFFFF"

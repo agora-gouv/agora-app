@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -544,7 +544,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E1FC3E750F1BD9D44D7C625C /* Pods-Runner.debug-sandbox.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -555,7 +555,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8PN3J7J93H;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FLUTTER_TARGET = lib/main_dev.dart;
+				FLUTTER_TARGET = lib/main_sandbox.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -630,7 +630,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7E72359137D16C12D728D1FF /* Pods-Runner.profile-sandbox.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -641,7 +641,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8PN3J7J93H;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FLUTTER_TARGET = lib/main_dev.dart;
+				FLUTTER_TARGET = lib/main_sandbox.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -717,7 +717,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A356CDD1EF02077E48023488 /* Pods-Runner.release-sandbox.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Octo Technology Mobile (8PN3J7J93H)";
@@ -727,7 +727,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 8PN3J7J93H;
 				ENABLE_BITCODE = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FLUTTER_TARGET = lib/main_dev.dart;
+				FLUTTER_TARGET = lib/main_sandbox.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
