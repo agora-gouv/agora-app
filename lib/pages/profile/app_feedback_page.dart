@@ -6,7 +6,6 @@ import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/feedback_strings.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
@@ -71,7 +70,7 @@ class _Loading extends StatelessWidget {
               'assets/animations/loading_consultation.json',
               width: MediaQuery.sizeOf(context).width,
             ),
-            Center(child: Text('Envoi de vos réponses', style: AgoraTextStyles.light16)),
+            Center(child: Text('Envoi de votre réponse', style: AgoraTextStyles.light16)),
             Flexible(flex: 2, child: SizedBox()),
           ],
         ),
@@ -124,7 +123,7 @@ class _Success extends StatelessWidget {
                 ),
                 SizedBox(height: AgoraSpacings.base),
                 AgoraButton(
-                  label: GenericStrings.close,
+                  label: ConsultationStrings.returnToHome,
                   style: AgoraButtonStyle.blueBorderButtonStyle,
                   onPressed: () {
                     Navigator.of(context).pop();

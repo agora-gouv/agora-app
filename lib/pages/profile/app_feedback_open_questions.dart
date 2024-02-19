@@ -173,7 +173,7 @@ class _MailQuestionScreen extends StatelessWidget {
                             semanticLabel: FeedbackStrings.mailHint,
                             style: AgoraButtonStyle.primaryButtonStyle,
                             onPressed: () {
-                              LaunchUrlHelper.mailtoAgora();
+                              LaunchUrlHelper.mailtoAgora('Je souhaite participer à un atelier utilisateur');
                             },
                           ),
                           SizedBox(height: AgoraSpacings.base),

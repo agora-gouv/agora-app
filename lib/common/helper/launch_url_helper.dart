@@ -42,8 +42,9 @@ class LaunchUrlHelper {
     }
   }
 
-  static Future<void> mailtoAgora() async {
-    final uri = Uri.parse('mailto:${GenericStrings.mailSupport}');
+  static Future<void> mailtoAgora(String? object) async {
+    final objectSuffix = object == '' ? null : '?subject=$object';
+    final uri = Uri.parse('mailto:${GenericStrings.mailSupport}$objectSuffix');
     launchUrl(uri);
   }
 }
