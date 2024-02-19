@@ -1,0 +1,1 @@
+flutter build apk --debug --flavor sandbox -t lib/main_sandbox.dart --dart-define=env=Debug --dart-define=app.flavor=Sandbox
