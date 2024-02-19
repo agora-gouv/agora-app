@@ -64,13 +64,14 @@ This command will format code, launch test, etc. when you `git commit` and `git 
 Current list of valid environments:
 - Dev, to target a testing environment
 - Prod, to target production environment
-  Please make sure to use `Dev` environment for testings purposes.
+  Please make sure to use `Sandbox` environment for testings purposes.
 
 ### a. Android
 
 #### i. Using Android Studio
 Make sure to change the target environment before attempting to compile project with Android Studio:
 ![edit configuration](docs/image/edit_configuration.png)
+![main_sandbox](docs/image/main_sandbox.png)
 ![main_dev](docs/image/main_dev.png)
 ![main_prod](docs/image/main_prod.png)
 
@@ -80,12 +81,14 @@ Make sure to change the target environment before attempting to compile project 
 #### ii. Using command line scripts
 
 Use either:
+- `agora/generateSandboxApk.sh` to have a build that targets Sandbox environment
 - `agora/generateDevApk.sh` to have a build that targets Dev environment
 - `agora/generateReleaseBundle.sh` to have a build that targets Prod environment
 
 ### b. iOS
 
 Launch a command line script first to choose the target environment (an error will appear but no worries...)
+- `agora/generateSandboxIpa.sh`, to have a build that targets Sandbox environment
 - `agora/generateDevIpa.sh`, to have a build that targets Dev environment
 - `agora/generateReleaseIpa.sh`, to have a build that targets Prod environment
 - On `Xcode`, choose the scheme (middle top of the screen) that matches chosen target
