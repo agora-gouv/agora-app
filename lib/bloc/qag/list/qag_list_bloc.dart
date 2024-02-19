@@ -1,6 +1,7 @@
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
 import 'package:agora/bloc/qag/qag_list_footer_type.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_list_extension.dart';
@@ -13,11 +14,13 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
   final QagRepository qagRepository;
   final HeaderQagStorageClient headerQagStorageClient;
   final QagListFilter qagFilter;
+  final SemanticsHelperWrapper semanticsHelperWrapper;
 
   QagListBloc({
     required this.qagRepository,
     required this.headerQagStorageClient,
     required this.qagFilter,
+    this.semanticsHelperWrapper = const SemanticsHelperWrapper(),
   }) : super(QagListInitialState()) {
     on<FetchQagsListEvent>(_handleFetchQags);
     on<UpdateQagsListEvent>(_handleUpdateQags);
@@ -47,6 +50,9 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
           footerType: QagListFooterType.loaded,
         ),
       );
+      if (event.thematiqueLabel != null) {
+        semanticsHelperWrapper.announceThematicChosen(event.thematiqueLabel, response.qags.length);
+      }
     } else {
       emit(QagListErrorState(currentPage: state.currentPage));
     }

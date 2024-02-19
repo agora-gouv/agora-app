@@ -2,6 +2,7 @@ import 'package:agora/bloc/qag/list/qag_list_bloc.dart';
 import 'package:agora/bloc/qag/list/qag_list_event.dart';
 import 'package:agora/bloc/qag/list/qag_list_state.dart';
 import 'package:agora/bloc/qag/qag_list_footer_type.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_support.dart';
@@ -51,7 +52,7 @@ void main() {
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
-        FetchQagsListEvent(thematiqueId: null),
+        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null),
       ),
       expect: () => [
         QagListInitialState(),
@@ -68,7 +69,7 @@ void main() {
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
-        FetchQagsListEvent(thematiqueId: null),
+        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null),
       ),
       expect: () => [
         QagListInitialState(),
@@ -85,7 +86,7 @@ void main() {
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
-        FetchQagsListEvent(thematiqueId: null),
+        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null),
       ),
       expect: () => [
         QagListInitialState(),
@@ -102,9 +103,10 @@ void main() {
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         qagFilter: QagListFilter.top,
+        semanticsHelperWrapper: _MockSemanticsHelperWrapper(),
       ),
       act: (bloc) async {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: 'Transports'));
         await Future.delayed(Duration(milliseconds: 5));
         bloc.add(UpdateQagsListEvent(thematiqueId: 'Transports'));
       },
@@ -152,7 +154,7 @@ void main() {
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
         bloc.add(UpdateQagsListEvent(thematiqueId: 'Transports'));
       },
       expect: () => [
@@ -197,7 +199,7 @@ void main() {
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
         bloc.add(UpdateQagListSupportEvent(qagSupport: unknownQag));
       },
       expect: () => [
@@ -215,7 +217,7 @@ void main() {
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) async {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
         await Future.delayed(Duration(milliseconds: 5));
         bloc.add(UpdateQagListSupportEvent(qagSupport: qagSupportId1));
       },
@@ -265,7 +267,7 @@ void main() {
         qagFilter: QagListFilter.top,
       ),
       act: (bloc) async {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports'));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
         await Future.delayed(Duration(milliseconds: 5));
         bloc.add(CloseHeaderQagListEvent(headerId: "headerId"));
       },
@@ -280,4 +282,11 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
   });
+}
+
+class _MockSemanticsHelperWrapper extends SemanticsHelperWrapper {
+  @override
+  void announceThematicChosen(String? thematic, int size) {
+    // Do nothing
+  }
 }

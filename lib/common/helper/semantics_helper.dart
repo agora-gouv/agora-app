@@ -27,6 +27,10 @@ class SemanticsHelper {
     SemanticsService.announce('Pas de résultats', TextDirection.ltr);
   }
 
+  static void announceThematicChosen(String? thematic, int size) {
+    SemanticsService.announce('Filtré par $thematic, $size résultats', TextDirection.ltr);
+  }
+
   static void announceCollapsing(bool isCollapsed) {
     if (isCollapsed) {
       SemanticsService.announce('Catégorie depliée', TextDirection.ltr);
@@ -65,5 +69,13 @@ class SemanticsHelper {
     } else {
       SemanticsService.announce('Sous-titres sactivés', TextDirection.ltr);
     }
+  }
+}
+
+class SemanticsHelperWrapper {
+  const SemanticsHelperWrapper();
+
+  void announceThematicChosen(String? thematic, int size) {
+    SemanticsHelper.announceThematicChosen(thematic, size);
   }
 }

@@ -145,6 +145,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
               SizedBox(width: AgoraSpacings.x0_5),
               AgoraRoundedButton(
                 label: GenericStrings.modify,
+                accessibilityLabel: "Modifier mes informations",
                 style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                 onPressed: () {
                   Navigator.pushNamed(
