@@ -1,6 +1,6 @@
 import 'package:agora/common/log/log.dart';
 
-enum AgoraFlavor { dev, prod }
+enum AgoraFlavor { dev, sandbox, prod }
 
 class FlavorHelper {
   static AgoraFlavor getFlavor() {
@@ -8,6 +8,9 @@ class FlavorHelper {
       case "Dev":
         Log.d("Flavor : Dev");
         return AgoraFlavor.dev;
+      case "Sandbox":
+        Log.d("Flavor : Sandbox");
+        return AgoraFlavor.sandbox;
       case "Prod":
         Log.d("Flavor : Prod");
         return AgoraFlavor.prod;

@@ -17,11 +17,10 @@ class AgoraHttpClientAdapter extends Http2Adapter {
     required String baseUrlHost,
     required X509CertificateData rootCertificateX509,
   }) {
-    switch (FlavorHelper.getFlavor()) {
-      case AgoraFlavor.dev:
-        return ConnectionManager();
-      case AgoraFlavor.prod:
-        return ConnectionManager(
+    return switch (FlavorHelper.getFlavor()) {
+      AgoraFlavor.dev => ConnectionManager(),
+      AgoraFlavor.sandbox => ConnectionManager(),
+      AgoraFlavor.prod => ConnectionManager(
           onClientCreate: (_, config) {
             config.validateCertificate = (certificate, host, _) {
               if (host == baseUrlHost && certificate != null) {
@@ -31,7 +30,7 @@ class AgoraHttpClientAdapter extends Http2Adapter {
               return true;
             };
           },
-        );
-    }
+        ),
+    };
   }
 }

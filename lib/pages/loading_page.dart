@@ -43,8 +43,14 @@ class LoadingPage extends StatefulWidget {
 
   final SharedPreferences sharedPref;
   final Redirection redirection;
+  final String agoraAppIcon;
 
-  const LoadingPage({super.key, required this.sharedPref, required this.redirection});
+  const LoadingPage({
+    super.key,
+    required this.sharedPref,
+    required this.redirection,
+    required this.agoraAppIcon,
+  });
 
   @override
   State<LoadingPage> createState() => _LoadingPageState();
@@ -56,7 +62,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-    agoraLogoImage = Image.asset("assets/launcher_icons/ic_agora_logo.png", semanticLabel: "Agora");
+    agoraLogoImage = Image.asset(widget.agoraAppIcon, semanticLabel: "Agora");
   }
 
   @override

@@ -39,7 +39,13 @@ class AgoraInitializer {
       (options) => options
         ..dsn = appConfig.sentryDsn
         ..environment = appConfig.environmentName,
-      appRunner: () => runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection)),
+      appRunner: () => runApp(
+        AgoraApp(
+          sharedPref: sharedPref,
+          shouldShowOnboarding: isFirstConnection,
+          agoraAppIcon: appConfig.appIcon,
+        ),
+      ),
     );
   }
 
@@ -70,11 +76,13 @@ class AgoraAppConfig extends Equatable {
   final String baseUrl;
   final String environmentName;
   final String sentryDsn;
+  final String appIcon;
 
   AgoraAppConfig({
     required this.baseUrl,
     required this.environmentName,
     required this.sentryDsn,
+    required this.appIcon,
   });
 
   @override
