@@ -46,6 +46,7 @@ class AgoraHtml extends StatelessWidget {
               LaunchUrlHelper.webview(context, url);
             }
           },
+          extensions: [_ExcludeSemanticsHtmlExtension()],
         ),
       );
     }
@@ -66,5 +67,15 @@ class AgoraHtml extends StatelessWidget {
   bool isDeeplinkUrl(String url) {
     return url.startsWith("https://agora.beta.gouv.fr/qags/") ||
         url.startsWith("https://agora.beta.gouv.fr/consultations/");
+  }
+}
+
+class _ExcludeSemanticsHtmlExtension extends HtmlExtension {
+  @override
+  Set<String> get supportedTags => {"noa11y"};
+
+  @override
+  InlineSpan build(ExtensionContext context) {
+    return TextSpan(text: context.innerHtml, semanticsLabel: "");
   }
 }
