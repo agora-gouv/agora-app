@@ -37,5 +37,5 @@ class SemanticsStrings {
   static const String ignoreQuestion = "Passer cette question";
 
   static const String animPause = "Mettre en pause l'animation";
-  static const String animPlay = "Lecture de l'animation";
+  static const String animPlay = "Lancer l'animation";
 }
