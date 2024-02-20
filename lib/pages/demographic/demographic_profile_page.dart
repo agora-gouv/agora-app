@@ -82,18 +82,20 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                   ),
                 ],
               ),
-              button: state is GetDemographicInformationSuccessState ? AgoraSecondaryStyleViewButton(
-                icon: null,
-                title: GenericStrings.modify,
-                accessibilityLabel: "Modifier mes informations",
-                onClick: () {
-                  Navigator.pushNamed(
-                    context,
-                    DemographicQuestionPage.routeName,
-                    arguments: DemographicQuestionArgumentsFromModify(state.demographicInformationResponse),
-                  );
-                },
-              ) : null,
+              button: state is GetDemographicInformationSuccessState
+                  ? AgoraSecondaryStyleViewButton(
+                      icon: null,
+                      title: GenericStrings.modify,
+                      accessibilityLabel: "Modifier mes informations",
+                      onClick: () {
+                        Navigator.pushNamed(
+                          context,
+                          DemographicQuestionPage.routeName,
+                          arguments: DemographicQuestionArgumentsFromModify(state.demographicInformationResponse),
+                        );
+                      },
+                    )
+                  : null,
               child: _build(context, state),
             );
           },
