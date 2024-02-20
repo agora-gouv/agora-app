@@ -16,8 +16,7 @@ class FeedbackStrings {
   static const String errorLabel = 'Erreur dans l\'envoi des réponses';
 
   static const String mailTitle = 'Nous serions ravis de vous convier à un atelier utilisateur.';
-  static const String mailSubTitle =
-      'Pour ce faire, pouvez-vous nous envoyer un e-mail en cliquant sur le bouton ci-dessous afin que nous puissions vous proposer des créneaux de participation\u{00A0}?';
+  static const String mailSubTitle = 'Envoyez-nous un e-mail pour prendre contact !';
   static const String mailHint = 'Nous envoyer un e-mail';
   static const String mailButtonLabel = 'J\'ai envoyé mon e-mail';
 }

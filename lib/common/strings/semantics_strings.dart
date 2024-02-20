@@ -35,4 +35,7 @@ class SemanticsStrings {
   static const String previousQuestion = "Question précédente";
   static const String nextQuestion = "Question suivante";
   static const String ignoreQuestion = "Passer cette question";
+
+  static const String animPause = "Mettre en pause l'animation";
+  static const String animPlay = "Lecture de l'animation";
 }

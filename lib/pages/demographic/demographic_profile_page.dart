@@ -18,7 +18,6 @@ import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -74,7 +73,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
                   AgoraRichTextItem(
-                    text: DemographicStrings.my,
+                    text: '${DemographicStrings.my}\n',
                     style: AgoraRichTextItemStyle.regular,
                   ),
                   AgoraRichTextItem(
@@ -83,6 +82,18 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
                   ),
                 ],
               ),
+              button: state is GetDemographicInformationSuccessState ? AgoraSecondaryStyleViewButton(
+                icon: null,
+                title: GenericStrings.modify,
+                accessibilityLabel: "Modifier mes informations",
+                onClick: () {
+                  Navigator.pushNamed(
+                    context,
+                    DemographicQuestionPage.routeName,
+                    arguments: DemographicQuestionArgumentsFromModify(state.demographicInformationResponse),
+                  );
+                },
+              ) : null,
               child: _build(context, state),
             );
           },
@@ -125,39 +136,6 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: AgoraRichText(
-                  policeStyle: AgoraRichTextPoliceStyle.section,
-                  items: [
-                    AgoraRichTextItem(
-                      text: DemographicStrings.informationCapitalize,
-                      style: AgoraRichTextItemStyle.regular,
-                    ),
-                    AgoraRichTextItem(
-                      text: DemographicStrings.demographic,
-                      style: AgoraRichTextItemStyle.bold,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: AgoraSpacings.x0_5),
-              AgoraRoundedButton(
-                label: GenericStrings.modify,
-                accessibilityLabel: "Modifier mes informations",
-                style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    DemographicQuestionPage.routeName,
-                    arguments: DemographicQuestionArgumentsFromModify(demographicInformationResponse),
-                  );
-                },
-              ),
-            ],
-          ),
-          SizedBox(height: AgoraSpacings.base),
           ..._buildDemographicInformation(demographicInformationViewModels),
           SizedBox(height: AgoraSpacings.base),
           AgoraLittleSeparator(),

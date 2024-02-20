@@ -20,6 +20,8 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/feedback/feedback.dart';
+import 'package:agora/pages/consultation/consultations_page.dart';
+import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -126,7 +128,12 @@ class _Success extends StatelessWidget {
                   label: ConsultationStrings.returnToHome,
                   style: AgoraButtonStyle.blueBorderButtonStyle,
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.popUntil(
+                      context,
+                      (route) =>
+                          route.settings.name == QagsPage.routeName ||
+                          route.settings.name == ConsultationsPage.routeName,
+                    );
                   },
                 ),
               ],
