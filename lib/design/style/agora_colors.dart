@@ -50,6 +50,8 @@ class AgoraColors {
   static const Color crystalFalls = Color(0xFFE1E7F3);
   static const Color hintColor = Color(0xFF767676);
   static const Color borderHintColor = Color(0xFF8D8D8D);
+  static const Color consultationResponseInfoBorder = Color(0xFFBDCCFC);
+  static const Color consultationResponseInfo = Color(0xFFF5F7FF);
 }
 
 class AgoraVideoProgressColors {

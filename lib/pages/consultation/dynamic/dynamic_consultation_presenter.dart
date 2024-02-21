@@ -11,6 +11,7 @@ class _Presenter {
 
   static _SuccessViewModel _presentSuccess(DynamicConsultation consultation) {
     final questionsInfos = consultation.questionsInfos;
+    final responsesInfos = consultation.responseInfos;
     return _SuccessViewModel(
       shareText: consultation.shareText,
       sections: [
@@ -28,6 +29,11 @@ class _Presenter {
             participantCount: questionsInfos.participantCount,
             participantCountGoal: questionsInfos.participantCountGoal,
             goalProgress: min(1, questionsInfos.participantCount / questionsInfos.participantCountGoal),
+          ),
+        if (responsesInfos != null)
+          _ResponseInfoSection(
+            picto: responsesInfos.picto,
+            description: responsesInfos.description,
           ),
         _ExpandableSection(
           collapsedSections: consultation.collapsedSections.map(_presentSection).toList(),

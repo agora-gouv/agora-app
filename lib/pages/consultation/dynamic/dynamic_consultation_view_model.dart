@@ -72,6 +72,19 @@ class _QuestionsInfoSection extends _ViewModelSection {
       ];
 }
 
+class _ResponseInfoSection extends _ViewModelSection {
+  final String picto;
+  final String description;
+
+  _ResponseInfoSection({
+    required this.picto,
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [picto, description];
+}
+
 class _ExpandableSection extends _ViewModelSection {
   final List<_ViewModelSection> collapsedSections;
   final List<_ViewModelSection> expandedSections;

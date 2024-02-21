@@ -288,6 +288,45 @@ class ConsultationDioRepository extends ConsultationRepository {
 
   @override
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    if (consultationId == '23325238-180d-4472-8d58-b88bd0d86ea3') {
+      final consultation = DynamicConsultation(
+        id: consultationId,
+        title: 'Quelles réformes pour le métier d’infirmier ?',
+        coverUrl: 'https://content.agora.beta.gouv.fr/consultation_covers/infirmiers.jpeg',
+        shareText: 'shareText',
+        thematicLogo: '🚊',
+        thematicLabel: 'Santé',
+        questionsInfos: null,
+        responseInfos: ConsultationResponseInfos(
+          picto: '🙌',
+          description: '<body><b>Merci pour votre participation</b><br> à cette consultation !</body>',
+        ),
+        infoHeader: null,
+        collapsedSections: [
+          DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
+          DynamicConsultationSectionRichText(
+            "<body>🗳 La consultation est terminée !<br/>Les résultats sont en cours d’analyse. Vous serez notifié",
+          ),
+        ],
+        expandedSections: [
+          DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
+          DynamicConsultationSectionRichText(
+            "<body>🗳 La consultation est terminée !<br/>Les résultats sont en cours d’analyse. Vous serez notifié(e) dès que la synthèse sera disponible.<br/><br/>—<br║             /><br/>👉 A partir des résultats de cette consultation, la ministre déléguée chargée de l’Organisation territoriale et des Professions de santé, <b>Agnès Firmin Le Bodo</b> enrichira les <b>travaux relatifs à la réforme à venir du métier d’infirmier</b>. ",
+          ),
+        ],
+        participationInfo: null,
+        downloadInfo: null,
+        feedbackQuestion: null,
+        feedbackResult: null,
+        history: null,
+        footer: ConsultationFooter(
+          title: 'Envie d\'aller plus loin ?',
+          description:
+              "<body>Rendez-vous sur :<br/><br/><ul><li><a href=\"https://sante.gouv.fr/\">Le site du ministère de la Santé etde la Prévention</a><br/></li><li><a href=\"https://sante.gouv.fr/metiers-et-concours/les-metiers-de-la-sante/le-repertoire-des-metiers-de-la-sante-et-de-l-autonomie-fonction-publique/soins/sousfamille/soins-infirmiers\">L’ensemble desactivités liées au métier d’infirmier</a><br/></li></ul><ul><li><a href=\"https://sante.gouv.fr/metiers-et-concours/les-metiers-de-la-sante/le-repertoire-des-metiers-de-la-sante-et-de-l-autonomie-fonction-publique/soins/sousfamille/soins-infirmiers/metier/infirmier-ere-en-soins-generaux-ide\">La description du métier d’Infirmier(ère) en soins généraux (IDE)</a></body>",
+        ),
+      );
+      return DynamicConsultationSuccessResponse(consultation);
+    }
     final consultation = DynamicConsultation(
       id: consultationId,
       title: 'Développer le covoiturage au quotidien',

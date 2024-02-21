@@ -10,7 +10,7 @@ import 'package:agora/design/custom_view/agora_step_circle.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -44,12 +44,8 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
           );
           Navigator.pushNamed(
             context,
-            ConsultationSummaryPage.routeName,
-            arguments: ConsultationSummaryArguments(
-              consultationId: id,
-              shouldReloadConsultationsWhenPop: false,
-              initialTab: ConsultationSummaryInitialTab.etEnsuite,
-            ),
+            DynamicConsultationPage.routeName,
+            arguments: id,
           );
         },
         child: Column(

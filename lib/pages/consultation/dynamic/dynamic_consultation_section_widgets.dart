@@ -11,6 +11,7 @@ class _DynamicSectionWidget extends StatelessWidget {
     return switch (sectionToDisplay) {
       _HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
       _QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
+      _ResponseInfoSection() => _ResponseInfoSectionWidget(sectionToDisplay),
       _ExpandableSection() => _ExpandableSectionWidget(sectionToDisplay),
       _TitleSection() => _TitleSectionWidget(sectionToDisplay),
       _RichTextSection() => _RichTextSectionWidget(sectionToDisplay),
@@ -56,7 +57,12 @@ class _HeaderSectionWidget extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Image.network(section.coverUrl, excludeFromSemantics: true),
+            Image.network(
+              section.coverUrl,
+              excludeFromSemantics: true,
+              fit: BoxFit.fitHeight,
+              height: 300,
+            ),
             Positioned(
               bottom: 0,
               child: Padding(
@@ -358,10 +364,61 @@ class _FooterSectionWidget extends StatelessWidget {
               section.title!,
               style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryBlue),
             ),
-          if (section.title != null)
-            const SizedBox(height: AgoraSpacings.base),
+          if (section.title != null) const SizedBox(height: AgoraSpacings.base),
           AgoraHtml(data: section.description),
         ],
+      ),
+    );
+  }
+}
+
+class _ResponseInfoSectionWidget extends StatelessWidget {
+  final _ResponseInfoSection section;
+
+  _ResponseInfoSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(AgoraCorners.rounded12),
+          border: Border.all(color: AgoraColors.consultationResponseInfoBorder),
+          color: AgoraColors.consultationResponseInfo,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AgoraSpacings.base),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(section.picto, style: AgoraTextStyles.light24),
+                  const SizedBox(width: AgoraSpacings.base),
+                  Expanded(child: AgoraHtml(data: section.description)),
+                ],
+              ),
+              const SizedBox(height: AgoraSpacings.base),
+              Center(
+                child: AgoraButton(
+                  label: 'Voir toutes les réponses',
+                  style: AgoraButtonStyle.blueBorderButtonStyle,
+                  onPressed: () {
+                    // TODO : rediriger vers les réponses
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
