@@ -5,6 +5,7 @@ import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
@@ -40,6 +41,8 @@ abstract class ConsultationRepository {
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
   });
+
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId);
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -281,6 +284,34 @@ class ConsultationDioRepository extends ConsultationRepository {
       return GetConsultationSummaryFailedResponse();
     }
   }
+
+  @override
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    final consultation = DynamicConsultation(
+      id: consultationId,
+      coverUrl: 'coverUrl',
+      shareText: 'shareText',
+      thematicLogo: '🚊',
+      thematicLabel: 'Transports',
+      questionsInfos: ConsultationQuestionsInfos(
+        participantCount: 15035,
+        participantCountGoal: 30000,
+        questionCount: '5 à 10 questions',
+        estimatedTime: '5 minutes',
+        endDate: DateTime(2024, 1, 21, 23, 59),
+      ),
+      responseInfos: null,
+      infoHeader: null,
+      collapsedSections: [],
+      expandedSections: [],
+      participationInfo: null,
+      downloadInfo: null,
+      feedbackQuestion: null,
+      feedbackResult: null,
+      history: null,
+    );
+    return DynamicConsultationSuccessResponse(consultation);
+  }
 }
 
 abstract class GetConsultationsRepositoryResponse extends Equatable {
@@ -399,3 +430,19 @@ class GetConsultationSummarySucceedResponse extends GetConsultationSummaryReposi
 }
 
 class GetConsultationSummaryFailedResponse extends GetConsultationSummaryRepositoryResponse {}
+
+sealed class DynamicConsultationResponse extends Equatable {}
+
+class DynamicConsultationSuccessResponse extends DynamicConsultationResponse {
+  final DynamicConsultation consultation;
+
+  DynamicConsultationSuccessResponse(this.consultation);
+
+  @override
+  List<Object?> get props => [consultation];
+}
+
+class DynamicConsultationErrorResponse extends DynamicConsultationResponse {
+  @override
+  List<Object?> get props => [];
+}
