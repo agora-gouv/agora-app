@@ -17,6 +17,8 @@ class _DynamicSectionWidget extends StatelessWidget {
       _RichTextSection() => _RichTextSectionWidget(sectionToDisplay),
       _StartButtonTextSection() => _StartButtonWidget(),
       _FooterSection() => _FooterSectionWidget(sectionToDisplay),
+      _FocusNumberSection() => _FocusNumberSectionWidget(sectionToDisplay),
+      _QuoteSection() => _QuoteSectionWidget(sectionToDisplay),
       _ImageSection() => Text('TODO'),
     };
   }
@@ -418,6 +420,86 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FocusNumberSectionWidget extends StatelessWidget {
+  final _FocusNumberSection section;
+
+  _FocusNumberSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(width: 2, height: 40, color: AgoraColors.blue525),
+            const SizedBox(width: AgoraSpacings.base),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(section.title, style: AgoraTextStyles.regular50),
+                  const SizedBox(width: AgoraSpacings.base),
+                  AgoraRichText(
+                    policeStyle: AgoraRichTextPoliceStyle.police14,
+                    items: [
+                      ...parseSimpleHtml(section.description)
+                          .map((data) => AgoraRichTextItem(text: data.text, style: data.style)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _QuoteSectionWidget extends StatelessWidget {
+  final _QuoteSection section;
+
+  _QuoteSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(width: 2, height: 40, color: AgoraColors.blue525),
+            const SizedBox(width: AgoraSpacings.base),
+            Expanded(
+              child: AgoraRichText(
+                policeStyle: AgoraRichTextPoliceStyle.police14,
+                items: [
+                  ...parseSimpleHtml(section.description)
+                      .map((data) => AgoraRichTextItem(text: data.text, style: data.style)),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

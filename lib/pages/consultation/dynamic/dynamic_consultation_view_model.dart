@@ -107,6 +107,30 @@ class _TitleSection extends _ViewModelSection {
   List<Object?> get props => [label];
 }
 
+class _FocusNumberSection extends _ViewModelSection {
+  final String title;
+  final String description;
+
+  _FocusNumberSection({
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [title, description];
+}
+
+class _QuoteSection extends _ViewModelSection {
+  final String description;
+
+  _QuoteSection({
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [description];
+}
+
 class _RichTextSection extends _ViewModelSection {
   final String description;
 

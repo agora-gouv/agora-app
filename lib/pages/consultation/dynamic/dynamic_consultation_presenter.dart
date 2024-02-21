@@ -55,9 +55,9 @@ class _Presenter {
       DynamicConsultationSectionRichText() => _RichTextSection(section.desctiption),
       DynamicConsultationSectionImage() => _TitleSection('TODO ${section.runtimeType}'),
       DynamicConsultationSectionVideo() => _TitleSection('TODO ${section.runtimeType}'),
-      DynamicConsultationSectionFocusNumber() => _TitleSection('TODO ${section.runtimeType}'),
+      DynamicConsultationSectionFocusNumber() => _FocusNumberSection(title: section.title, description: section.desctiption),
       DynamicConsultationSectionAccordion() => _TitleSection('TODO ${section.runtimeType}'),
-      DynamicConsultationSectionQuote() => _TitleSection('TODO ${section.runtimeType}'),
+      DynamicConsultationSectionQuote() => _QuoteSection(description: section.desctiption),
     };
   }
 }

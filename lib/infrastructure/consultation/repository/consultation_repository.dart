@@ -313,6 +313,17 @@ class ConsultationDioRepository extends ConsultationRepository {
           DynamicConsultationSectionRichText(
             "<body>🗳 La consultation est terminée !<br/>Les résultats sont en cours d’analyse. Vous serez notifié(e) dès que la synthèse sera disponible.<br/><br/>—<br║             /><br/>👉 A partir des résultats de cette consultation, la ministre déléguée chargée de l’Organisation territoriale et des Professions de santé, <b>Agnès Firmin Le Bodo</b> enrichira les <b>travaux relatifs à la réforme à venir du métier d’infirmier</b>. ",
           ),
+          DynamicConsultationSectionTitle('Les jeunes urbains en première ligne'),
+          DynamicConsultationSectionFocusNumber(
+            title: '30%',
+            desctiption:
+                "Des <b>conducteurs</b> sont prêts à proposer du co-voiturage s’ils sont accompagnés dans leur démarche",
+          ),
+          DynamicConsultationSectionRichText(
+              "<body>Avec plus de <b>30 000 participations</b> pour 6 semaines de consultation, vous avez été nombreux à partager votre avis, et nous vous en remercions !<br><br>Les jeunes <b>de 18 à 25 ans</b> ont été les plus nombreux avec plus de 45% des réponses apportées. 65% des réponses ont été enregistrées par des personnes vivant dans des <b>villes grandes ou moyennes.</b></body>"),
+          DynamicConsultationSectionQuote(
+            "<i>“ En plus de réduire mes dépenses, j’ai rencontré beaucoup de gens intéressants avec qui j’ai gardé contact ”</i> — <b>Alice</b>",
+          ),
         ],
         participationInfo: null,
         downloadInfo: null,

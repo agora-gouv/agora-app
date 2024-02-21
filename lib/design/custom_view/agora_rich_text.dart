@@ -9,7 +9,7 @@ enum AgoraRichTextPoliceStyle {
   police28,
 }
 
-enum AgoraRichTextItemStyle { bold, regular }
+enum AgoraRichTextItemStyle { bold, regular, italic }
 
 class AgoraRichTextItem {
   final String text;
@@ -59,6 +59,8 @@ class AgoraRichText extends StatelessWidget {
                   return TextSpan(text: item.text);
                 case AgoraRichTextItemStyle.bold:
                   return TextSpan(text: item.text, style: _buildBoldStyle());
+                case AgoraRichTextItemStyle.italic:
+                  return TextSpan(text: item.text, style: _buildRegularStyle().copyWith(fontStyle: FontStyle.italic));
               }
             }).toList(),
           ),
