@@ -18,6 +18,7 @@ class _Presenter {
           coverUrl: consultation.coverUrl,
           thematicLabel: consultation.thematicLabel,
           thematicLogo: consultation.thematicLogo,
+          title: consultation.title,
         ),
         if (questionsInfos != null)
           _QuestionsInfoSection(
@@ -26,20 +27,31 @@ class _Presenter {
             estimatedTime: questionsInfos.estimatedTime,
             participantCount: questionsInfos.participantCount,
             participantCountGoal: questionsInfos.participantCountGoal,
-            goalProgress:
-                (100 * min(100, questionsInfos.participantCount / questionsInfos.participantCountGoal)).round(),
+            goalProgress: min(1, questionsInfos.participantCount / questionsInfos.participantCountGoal),
           ),
         _ExpandableSection(
           collapsedSections: consultation.collapsedSections.map(_presentSection).toList(),
           expandedSections: consultation.expandedSections.map(_presentSection).toList(),
         ),
-        if (consultation.history == null)
-          _StartButtonTextSection(),
+        if (consultation.footer != null)
+          _FooterSection(
+            title: consultation.footer!.title,
+            description: consultation.footer!.description,
+          ),
+        if (consultation.history == null) _StartButtonTextSection(),
       ],
     );
   }
 
   static _ViewModelSection _presentSection(DynamicConsultationSection section) {
-    return _TitleSection('TODO ${section.runtimeType}');
+    return switch (section) {
+      DynamicConsultationSectionTitle() => _TitleSection(section.label),
+      DynamicConsultationSectionRichText() => _RichTextSection(section.desctiption),
+      DynamicConsultationSectionImage() => _TitleSection('TODO ${section.runtimeType}'),
+      DynamicConsultationSectionVideo() => _TitleSection('TODO ${section.runtimeType}'),
+      DynamicConsultationSectionFocusNumber() => _TitleSection('TODO ${section.runtimeType}'),
+      DynamicConsultationSectionAccordion() => _TitleSection('TODO ${section.runtimeType}'),
+      DynamicConsultationSectionQuote() => _TitleSection('TODO ${section.runtimeType}'),
+    };
   }
 }

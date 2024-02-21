@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 class DynamicConsultation extends Equatable {
   final String id;
   final String shareText;
+  final String title;
   final String coverUrl;
   final String thematicLogo;
   final String thematicLabel;
@@ -17,9 +18,11 @@ class DynamicConsultation extends Equatable {
   final ConsultationFeedbackQuestion? feedbackQuestion;
   final ConsultationFeedbackResults? feedbackResult;
   final List<ConsultationHistoryStep>? history;
+  final ConsultationFooter? footer;
 
   DynamicConsultation({
     required this.id,
+    required this.title,
     required this.coverUrl,
     required this.shareText,
     required this.thematicLogo,
@@ -34,6 +37,7 @@ class DynamicConsultation extends Equatable {
     required this.feedbackQuestion,
     required this.feedbackResult,
     required this.history,
+    required this.footer,
   });
 
   @override
@@ -53,6 +57,7 @@ class DynamicConsultation extends Equatable {
     feedbackQuestion,
     feedbackResult,
     history,
+    footer,
   ];
 }
 
@@ -191,7 +196,7 @@ class ConsultationFeedbackResults extends Equatable {
 }
 
 class ConsultationFooter extends Equatable {
-  final String title;
+  final String? title;
   final String description;
 
   ConsultationFooter({

@@ -16,7 +16,7 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:flutter/material.dart';
 
 enum AgoraConsultationOngoingCardStyle { column, gridLeft, gridRight }
@@ -185,8 +185,8 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   void _participate(BuildContext context) {
     Navigator.pushNamed(
       context,
-      ConsultationDetailsPage.routeName,
-      arguments: ConsultationDetailsArguments(consultationId: consultationId),
+      DynamicConsultationPage.routeName,
+      arguments: consultationId,
     );
   }
 }

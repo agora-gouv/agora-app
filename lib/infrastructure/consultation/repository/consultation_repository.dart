@@ -6,6 +6,7 @@ import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
@@ -289,7 +290,8 @@ class ConsultationDioRepository extends ConsultationRepository {
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
     final consultation = DynamicConsultation(
       id: consultationId,
-      coverUrl: 'coverUrl',
+      title: 'Développer le covoiturage au quotidien',
+      coverUrl: 'https://content.agora.beta.gouv.fr/consultation_covers/covoiturage.png',
       shareText: 'shareText',
       thematicLogo: '🚊',
       thematicLabel: 'Transports',
@@ -302,13 +304,28 @@ class ConsultationDioRepository extends ConsultationRepository {
       ),
       responseInfos: null,
       infoHeader: null,
-      collapsedSections: [],
-      expandedSections: [],
+      collapsedSections: [
+        DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
+        DynamicConsultationSectionRichText(
+          "<body><b>Tous les cinq jours, un enfant meurt sous les coups de ses parents. </b><br/>Toutes les trois minutes, un enfant est victime d’inceste, de viol ou d’agression sexuelle. </b><br/><br/><b>Les violences faites aux enfants</b></body>",
+        ),
+      ],
+      expandedSections: [
+        DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
+        DynamicConsultationSectionRichText(
+          "<body><b>Tous les cinq jours, un enfant meurt sous les coups de ses parents. </b><br/>Toutes les trois minutes, un enfant est victime d’inceste, de viol ou d’agression sexuelle. </b><br/><br/><b>Les violences faites aux enfants concernent l’ensemble de la société et nous obligent. </b><br/></b><br/><b>Qu’elles se déroulent en milieu familial ou au sein d’institutions, les violences subies durant l’enfance ou l’adolescence ont des effets négatifs très importants et durables, représentant des risques en termes de santé mentaleet physique, de développement, de vie affective, de scolarité, d’insertion sociale et professionnelle. Prévenir ces violences et protéger les enfants sont ainsi des enjeux de santé publique.</b><br/></b><br/>Au vu de la triste réalité des chiffres de notre pays, conformément à ses différents engagements internationaux et européens en matière de lutte contre les violences faites aux enfants,<b> la France poursuit l’ambition d’apporter une réponse globale pour lutter contre l’ensemble desviolences faites aux enfants</b>.<br/><br/>Les avis recueillis contribueront à nourrir la stratégie gouvernementale de lutte contre les violences commises sur lesenfants, dont les mesures seront dévoilées par la Première ministre à l’occasion du comité interministériel à l’enfance cet automne.<br/><br/>🤝 <b>Agora, l’appli qui vous donne la parole et vous rend des comptes</b><br/></b><br/><i>Une consultation sur Agora est bien plus qu’un sondage ! Les questions sont pensées pour nourrir les décisions gouvernementales et la Ministre s’engage à y donner suite.</i><br/><i><br/>En contribuant au débat, vous travaillez à définir les orientations et les actions du Gouvernement.</i></body>",
+        ),
+      ],
       participationInfo: null,
       downloadInfo: null,
       feedbackQuestion: null,
       feedbackResult: null,
       history: null,
+      footer: ConsultationFooter(
+        title: null,
+        description:
+            "<body>🗣 Consultation proposée par le <b>Ministère des Transports</b><br/><br/>🎯<b> Objectif</b> : évaluer et améliorer le plan national covoiturage <br/><br/>🚀<b>Axe gouvernemental</b> : Planifier et accélérer la transition écologique</body>",
+      ),
     );
     return DynamicConsultationSuccessResponse(consultation);
   }

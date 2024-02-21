@@ -29,17 +29,19 @@ sealed class _ViewModelSection extends Equatable {}
 
 class _HeaderSection extends _ViewModelSection {
   final String coverUrl;
+  final String title;
   final String thematicLogo;
   final String thematicLabel;
 
   _HeaderSection({
     required this.coverUrl,
+    required this.title,
     required this.thematicLogo,
     required this.thematicLabel,
   });
 
   @override
-  List<Object?> get props => [coverUrl, thematicLogo, thematicLabel];
+  List<Object?> get props => [coverUrl, title, thematicLogo, thematicLabel];
 }
 
 class _QuestionsInfoSection extends _ViewModelSection {
@@ -48,7 +50,7 @@ class _QuestionsInfoSection extends _ViewModelSection {
   final String estimatedTime;
   final int participantCount;
   final int participantCountGoal;
-  final int goalProgress;
+  final double goalProgress;
 
   _QuestionsInfoSection({
     required this.endDate,
@@ -101,8 +103,20 @@ class _RichTextSection extends _ViewModelSection {
   List<Object?> get props => [description];
 }
 
-class _StartButtonTextSection extends _ViewModelSection {
+class _FooterSection extends _ViewModelSection {
+  final String? title;
+  final String description;
 
+  _FooterSection({
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [title, description];
+}
+
+class _StartButtonTextSection extends _ViewModelSection {
   @override
   List<Object?> get props => [];
 }
