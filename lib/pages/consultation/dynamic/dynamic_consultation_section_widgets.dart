@@ -21,6 +21,10 @@ class _DynamicSectionWidget extends StatelessWidget {
       _QuoteSection() => _QuoteSectionWidget(sectionToDisplay),
       _ImageSection() => _ImageSectionWidget(sectionToDisplay),
       _VideoSection() => _VideoSectionWidget(sectionToDisplay),
+      _InfoHeaderSection() => _InfoHeaderSectionWidget(sectionToDisplay),
+      _DownloadSection() => _DownloadSectionWidget(sectionToDisplay),
+      _ConsultationFeedbackQuestionSection() => _ConsultationFeedbackQuestionSectionWidget(sectionToDisplay),
+      _ConsultationFeedbackResultsSection() => _ConsultationFeedbackResultsSectionWidget(sectionToDisplay),
     };
   }
 }
@@ -38,10 +42,13 @@ class _TitleSectionWidget extends StatelessWidget {
         right: AgoraSpacings.horizontalPadding,
         top: AgoraSpacings.x2,
       ),
-      child: Text(
-        section.label,
-        style: AgoraTextStyles.medium18.copyWith(
-          color: AgoraColors.primaryBlue,
+      child: Semantics(
+        header: true,
+        child: Text(
+          section.label,
+          style: AgoraTextStyles.medium18.copyWith(
+            color: AgoraColors.primaryBlue,
+          ),
         ),
       ),
     );
@@ -427,6 +434,42 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
   }
 }
 
+class _InfoHeaderSectionWidget extends StatelessWidget {
+  final _InfoHeaderSection section;
+
+  _InfoHeaderSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(AgoraCorners.rounded12),
+          border: Border.all(color: AgoraColors.consultationResponseInfoBorder),
+          color: AgoraColors.consultationResponseInfo,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AgoraSpacings.base),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(section.logo, style: AgoraTextStyles.light24),
+              const SizedBox(width: AgoraSpacings.base),
+              Expanded(child: AgoraHtml(data: section.description)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _FocusNumberSectionWidget extends StatelessWidget {
   final _FocusNumberSection section;
 
@@ -600,6 +643,152 @@ class _VideoSectionWidget extends StatelessWidget {
           Text(section.transcription, style: AgoraTextStyles.light14),
         ],
       ),
+    );
+  }
+}
+
+class _DownloadSectionWidget extends StatelessWidget {
+  final _DownloadSection section;
+
+  _DownloadSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text('📘', style: AgoraTextStyles.light26),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Semantics(
+                  header: true,
+                  child: Text(
+                    'Téléchargez la synthèse complète',
+                    style: AgoraTextStyles.medium16.copyWith(
+                      color: AgoraColors.primaryBlue,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AgoraSpacings.x0_25),
+                Text(
+                  'Retrouvez les réponses détaillées et toutes les analyses en PDF',
+                  style: AgoraTextStyles.light16,
+                ),
+                const SizedBox(height: AgoraSpacings.base),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: AgoraButton(
+                    label: 'Télécharger',
+                    semanticLabel: 'Télécharger la synthèse complète',
+                    style: AgoraButtonStyle.blueBorderButtonStyle,
+                    onPressed: () {
+                      LaunchUrlHelper.launchUrlFromAgora(
+                        url: section.url,
+                        launchMode: LaunchMode.externalApplication,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
+  final _ConsultationFeedbackQuestionSection section;
+
+  _ConsultationFeedbackQuestionSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(section.picto, style: AgoraTextStyles.light26),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Semantics(
+                  header: true,
+                  child: Text(
+                    section.title,
+                    style: AgoraTextStyles.medium16.copyWith(
+                      color: AgoraColors.primaryBlue,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AgoraSpacings.x0_25),
+                AgoraHtml(data: section.description),
+                const SizedBox(height: AgoraSpacings.base),
+                Row(
+                  children: [
+                    AgoraRoundedButton(
+                      icon: "ic_thumb_white.svg",
+                      label: QagStrings.utils,
+                      contentPadding: AgoraRoundedButtonPadding.short,
+                      onPressed: () {
+                        // TODO
+                      },
+                    ),
+                    SizedBox(width: AgoraSpacings.base),
+                    AgoraRoundedButton(
+                      icon: "ic_thumb_down_white.svg",
+                      label: QagStrings.notUtils,
+                      contentPadding: AgoraRoundedButtonPadding.short,
+                      onPressed: () {
+                        // TODO
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ConsultationFeedbackResultsSectionWidget extends StatelessWidget {
+  final _ConsultationFeedbackResultsSection section;
+
+  _ConsultationFeedbackResultsSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: Text(QagStrings.feedback),
     );
   }
 }

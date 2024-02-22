@@ -72,6 +72,19 @@ class _QuestionsInfoSection extends _ViewModelSection {
       ];
 }
 
+class _InfoHeaderSection extends _ViewModelSection {
+  final String logo;
+  final String description;
+
+  _InfoHeaderSection({
+    required this.logo,
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [logo, description];
+}
+
 class _ResponseInfoSection extends _ViewModelSection {
   final String picto;
   final String description;
@@ -84,6 +97,69 @@ class _ResponseInfoSection extends _ViewModelSection {
   @override
   List<Object?> get props => [picto, description];
 }
+
+class _DownloadSection extends _ViewModelSection {
+  final String url;
+
+  _DownloadSection({
+    required this.url,
+  });
+
+  @override
+  List<Object?> get props => [url];
+}
+
+class _ConsultationFeedbackQuestionSection extends _ViewModelSection {
+  final String title;
+  final String picto;
+  final String description;
+  final String id;
+
+  _ConsultationFeedbackQuestionSection({
+    required this.title,
+    required this.picto,
+    required this.description,
+    required this.id,
+  });
+
+  @override
+  List<Object?> get props => [title, picto, description, id];
+}
+
+class _ConsultationFeedbackResultsSection extends _ViewModelSection {
+  final String id;
+  final String title;
+  final String picto;
+  final String description;
+  final bool userResponseIsPositive;
+  final int positiveRatio;
+  final int negativeRation;
+  final int responseCount;
+
+  _ConsultationFeedbackResultsSection({
+    required this.id,
+    required this.title,
+    required this.picto,
+    required this.description,
+    required this.userResponseIsPositive,
+    required this.positiveRatio,
+    required this.negativeRation,
+    required this.responseCount,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    title,
+    picto,
+    description,
+    userResponseIsPositive,
+    positiveRatio,
+    negativeRation,
+    responseCount,
+  ];
+}
+
 
 class _ExpandableSection extends _ViewModelSection {
   final List<_ViewModelSection> collapsedSections;

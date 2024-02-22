@@ -42,23 +42,23 @@ class DynamicConsultation extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    coverUrl,
-    shareText,
-    thematicLogo,
-    thematicLabel,
-    questionsInfos,
-    responseInfos,
-    infoHeader,
-    collapsedSections,
-    expandedSections,
-    participationInfo,
-    downloadInfo,
-    feedbackQuestion,
-    feedbackResult,
-    history,
-    footer,
-  ];
+        id,
+        coverUrl,
+        shareText,
+        thematicLogo,
+        thematicLabel,
+        questionsInfos,
+        responseInfos,
+        infoHeader,
+        collapsedSections,
+        expandedSections,
+        participationInfo,
+        downloadInfo,
+        feedbackQuestion,
+        feedbackResult,
+        history,
+        footer,
+      ];
 }
 
 class ConsultationQuestionsInfos extends Equatable {
@@ -126,68 +126,62 @@ class ConsultationParticipationInfo extends Equatable {
 }
 
 class ConsultationDownloadInfo extends Equatable {
-  final String title;
-  final String logo;
-  final String description;
-  final String buttonLabel;
-  final String buttonAccessibilityLabel;
   final String url;
 
   ConsultationDownloadInfo({
-    required this.title,
-    required this.logo,
-    required this.description,
-    required this.buttonLabel,
-    required this.buttonAccessibilityLabel,
     required this.url,
   });
 
   @override
-  List<Object?> get props => [
-        title,
-        logo,
-        description,
-        buttonLabel,
-        buttonAccessibilityLabel,
-        url,
-      ];
+  List<Object?> get props => [url];
 }
 
 class ConsultationFeedbackQuestion extends Equatable {
   final String title;
   final String picto;
   final String description;
+  final String id;
 
   ConsultationFeedbackQuestion({
     required this.title,
     required this.picto,
     required this.description,
+    required this.id,
   });
 
   @override
-  List<Object?> get props => [title, picto, description];
+  List<Object?> get props => [title, picto, description, id];
 }
 
 class ConsultationFeedbackResults extends Equatable {
+  final String id;
   final String title;
+  final String picto;
+  final String description;
   final bool userResponseIsPositive;
-  final int positiveRation;
+  final int positiveRatio;
   final int negativeRation;
   final int responseCount;
 
   ConsultationFeedbackResults({
+    required this.id,
     required this.title,
+    required this.picto,
+    required this.description,
     required this.userResponseIsPositive,
-    required this.positiveRation,
+    required this.positiveRatio,
     required this.negativeRation,
     required this.responseCount,
   });
 
   @override
   List<Object?> get props => [
+        id,
         title,
+        picto,
+        description,
         userResponseIsPositive,
-        positiveRation,
+        positiveRatio,
         negativeRation,
         responseCount,
       ];

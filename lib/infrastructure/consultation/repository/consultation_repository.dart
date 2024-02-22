@@ -301,7 +301,11 @@ class ConsultationDioRepository extends ConsultationRepository {
           picto: '🙌',
           description: '<body><b>Merci pour votre participation</b><br> à cette consultation !</body>',
         ),
-        infoHeader: null,
+        infoHeader: ConsultationInfoHeader(
+          logo: '🎉',
+          description:
+              '<body>Les réponses à cette consultation ont abouti à un projet de loi. <b> Merci à tous !</b></body>',
+        ),
         collapsedSections: [
           DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
           DynamicConsultationSectionRichText(
@@ -320,20 +324,43 @@ class ConsultationDioRepository extends ConsultationRepository {
                 "Des <b>conducteurs</b> sont prêts à proposer du co-voiturage s’ils sont accompagnés dans leur démarche",
           ),
           DynamicConsultationSectionRichText(
-              "<body>Avec plus de <b>30 000 participations</b> pour 6 semaines de consultation, vous avez été nombreux à partager votre avis, et nous vous en remercions !<br><br>Les jeunes <b>de 18 à 25 ans</b> ont été les plus nombreux avec plus de 45% des réponses apportées. 65% des réponses ont été enregistrées par des personnes vivant dans des <b>villes grandes ou moyennes.</b></body>"),
+            "<body>Avec plus de <b>30 000 participations</b> pour 6 semaines de consultation, vous avez été nombreux à partager votre avis, et nous vous en remercions !<br><br>Les jeunes <b>de 18 à 25 ans</b> ont été les plus nombreux avec plus de 45% des réponses apportées. 65% des réponses ont été enregistrées par des personnes vivant dans des <b>villes grandes ou moyennes.</b></body>",
+          ),
           DynamicConsultationSectionQuote(
-              "<i>“ En plus de réduire mes dépenses, j’ai rencontré beaucoup de gens intéressants avec qui j’ai gardé contact ”</i> — <b>Alice</b>"),
+            "<i>“ En plus de réduire mes dépenses, j’ai rencontré beaucoup de gens intéressants avec qui j’ai gardé contact ”</i> — <b>Alice</b>",
+          ),
           DynamicConsultationSectionImage(
-              desctiption: "Ceci est la description de l'image",
-              url:
-                  "https://raw.githubusercontent.com/agora-gouv/agora-content/main/participation_citoyenne/step2-b01.png"),
+            desctiption: "Ceci est la description de l'image",
+            url:
+                "https://raw.githubusercontent.com/agora-gouv/agora-content/main/participation_citoyenne/step2-b01.png",
+          ),
           DynamicConsultationSectionRichText(
-              "<body>Avec plus de <b>30 000 participations</b> pour 6 semaines de consultation, vous avez été nombreux à partager votre avis, et nous vous en remercions !<br><br>Les jeunes <b>de 18 à 25 ans</b> ont été les plus nombreux avec plus de 45% des réponses apportées. 65% des réponses ont été enregistrées par des personnes vivant dans des <b>villes grandes ou moyennes.</b></body>"),
+            "<body>Avec plus de <b>30 000 participations</b> pour 6 semaines de consultation, vous avez été nombreux à partager votre avis, et nous vous en remercions !<br><br>Les jeunes <b>de 18 à 25 ans</b> ont été les plus nombreux avec plus de 45% des réponses apportées. 65% des réponses ont été enregistrées par des personnes vivant dans des <b>villes grandes ou moyennes.</b></body>",
+          ),
         ],
-        participationInfo: null,
-        downloadInfo: null,
-        feedbackQuestion: null,
-        feedbackResult: null,
+        participationInfo: ConsultationParticipationInfo(
+          participantCount: 15035,
+          participantCountGoal: 30000,
+        ),
+        downloadInfo: ConsultationDownloadInfo(
+          url: 'https://github.com/agora-gouv/agora-content/blob/main/participation_citoyenne/step2-rapportvdef.pdf',
+        ),
+        feedbackQuestion: ConsultationFeedbackQuestion(
+          title: 'Donnez votre avis',
+          picto: '💬',
+          description: '<body>Avez-vous aimé la réponse du gouvernement à cette consultation ?</body>',
+          id: 'yolo',
+        ),
+        feedbackResult: ConsultationFeedbackResults(
+          id: 'yolo',
+          picto: '💬',
+          title: 'Donnez votre avis',
+          description: '<body>Avez-vous aimé la réponse du gouvernement à cette consultation ?</body>',
+          positiveRatio: 68,
+          negativeRation: 32,
+          responseCount: 12034,
+          userResponseIsPositive: true,
+        ),
         history: null,
         footer: ConsultationFooter(
           title: 'Envie d\'aller plus loin ?',
@@ -377,7 +404,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           width: 480,
           height: 854,
           authorName: 'Thierry Lee',
-          authorDescription: "<body><b>Inventeur du produit Agora<br><br><i>   Issu d'OCTO Technology, Thierry Lee s'est toujours battu pour la justice sociale. Devenu professeur d'informatique, il a sensibilisé ses élèves à la démocratie directe, organisant des votes sur des sujets de la vie quotidienne.<br><br>Sa passion pour la participation citoyenne l'a poussé à créer un mouvement prônant la démocratie directe. Le mouvement a rapidement gagné en popularité, attirant des citoyens lassés du système politique traditionnel.<br><br>Thierry a décidé de se présenter à l'élection présidentielle, avec un programme audacieux : donner aux citoyens le pouvoir de voter directement sur les lois et les décisions importantes.<br><br>Sa campagne a été un véritable succès, galvanisant la population par sa sincérité et son engagement. Le jour du scrutin, Thierry a été élu président de la République française avec une majorité écrasante.<br><br>Dès son investiture, il a mis en place des réformes pour implémenter la démocratie directe. Des plateformes numériques ont été créées pour permettre aux citoyens de voter sur les lois et de proposer des initiatives.<br><br>Le mandat de Thierry a été marqué par une participation citoyenne sans précédent. Le peuple français a enfin eu voix au chapitre, et la France est devenue un modèle de démocratie directe pour le monde entier.</i></b>",
+          authorDescription:
+              "<body><b>Inventeur du produit Agora<br><br><i>   Issu d'OCTO Technology, Thierry Lee s'est toujours battu pour la justice sociale. Devenu professeur d'informatique, il a sensibilisé ses élèves à la démocratie directe, organisant des votes sur des sujets de la vie quotidienne.<br><br>Sa passion pour la participation citoyenne l'a poussé à créer un mouvement prônant la démocratie directe. Le mouvement a rapidement gagné en popularité, attirant des citoyens lassés du système politique traditionnel.<br><br>Thierry a décidé de se présenter à l'élection présidentielle, avec un programme audacieux : donner aux citoyens le pouvoir de voter directement sur les lois et les décisions importantes.<br><br>Sa campagne a été un véritable succès, galvanisant la population par sa sincérité et son engagement. Le jour du scrutin, Thierry a été élu président de la République française avec une majorité écrasante.<br><br>Dès son investiture, il a mis en place des réformes pour implémenter la démocratie directe. Des plateformes numériques ont été créées pour permettre aux citoyens de voter sur les lois et de proposer des initiatives.<br><br>Le mandat de Thierry a été marqué par une participation citoyenne sans précédent. Le peuple français a enfin eu voix au chapitre, et la France est devenue un modèle de démocratie directe pour le monde entier.</i></b>",
           date: DateTime(2024, 2, 19, 23),
         ),
       ],

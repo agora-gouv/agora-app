@@ -12,6 +12,10 @@ class _Presenter {
   static _SuccessViewModel _presentSuccess(DynamicConsultation consultation) {
     final questionsInfos = consultation.questionsInfos;
     final responsesInfos = consultation.responseInfos;
+    final consultationHeaderInfo = consultation.infoHeader;
+    final feedbackResult = consultation.feedbackResult;
+    final feedbackQuestion = consultation.feedbackQuestion;
+    final download = consultation.downloadInfo;
     return _SuccessViewModel(
       shareText: consultation.shareText,
       sections: [
@@ -30,6 +34,11 @@ class _Presenter {
             participantCountGoal: questionsInfos.participantCountGoal,
             goalProgress: min(1, questionsInfos.participantCount / questionsInfos.participantCountGoal),
           ),
+        if (consultationHeaderInfo != null)
+          _InfoHeaderSection(
+            description: consultationHeaderInfo.description,
+            logo: consultationHeaderInfo.logo,
+          ),
         if (responsesInfos != null)
           _ResponseInfoSection(
             picto: responsesInfos.picto,
@@ -39,6 +48,26 @@ class _Presenter {
           collapsedSections: consultation.collapsedSections.map(_presentSection).toList(),
           expandedSections: consultation.expandedSections.map(_presentSection).toList(),
         ),
+        if (feedbackResult != null)
+          _ConsultationFeedbackResultsSection(
+            id: feedbackResult.id,
+            title: feedbackResult.title,
+            picto: feedbackResult.picto,
+            description: feedbackResult.description,
+            userResponseIsPositive: feedbackResult.userResponseIsPositive,
+            positiveRatio: feedbackResult.positiveRatio,
+            negativeRation: feedbackResult.negativeRation,
+            responseCount: feedbackResult.responseCount,
+          ),
+        if (feedbackQuestion != null)
+          _ConsultationFeedbackQuestionSection(
+            title: feedbackQuestion.title,
+            picto: feedbackQuestion.picto,
+            description: feedbackQuestion.description,
+            id: feedbackQuestion.id,
+          ),
+        if (download != null)
+          _DownloadSection(url: download.url),
         if (consultation.footer != null)
           _FooterSection(
             title: consultation.footer!.title,
@@ -62,8 +91,9 @@ class _Presenter {
           authorName: section.authorName,
           authorDescription: section.authorDescription,
           date: section.date?.formatToDayMonth(),
-      ),
-      DynamicConsultationSectionFocusNumber() => _FocusNumberSection(title: section.title, description: section.desctiption),
+        ),
+      DynamicConsultationSectionFocusNumber() =>
+        _FocusNumberSection(title: section.title, description: section.desctiption),
       DynamicConsultationSectionAccordion() => _TitleSection('TODO ${section.runtimeType}'),
       DynamicConsultationSectionQuote() => _QuoteSection(description: section.desctiption),
     };
