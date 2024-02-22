@@ -164,17 +164,16 @@ class _ConsultationFeedbackResultsSection extends _ViewModelSection {
 
   @override
   List<Object?> get props => [
-    id,
-    title,
-    picto,
-    description,
-    userResponseIsPositive,
-    positiveRatio,
-    negativeRation,
-    responseCount,
-  ];
+        id,
+        title,
+        picto,
+        description,
+        userResponseIsPositive,
+        positiveRatio,
+        negativeRation,
+        responseCount,
+      ];
 }
-
 
 class _ExpandableSection extends _ViewModelSection {
   final List<_ViewModelSection> collapsedSections;
@@ -245,8 +244,16 @@ class _FooterSection extends _ViewModelSection {
 }
 
 class _StartButtonTextSection extends _ViewModelSection {
+  final String consultationId;
+  final String title;
+
+  _StartButtonTextSection({
+    required this.consultationId,
+    required this.title,
+  });
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [consultationId, title];
 }
 
 class _NotificationSection extends _ViewModelSection {
@@ -297,12 +304,12 @@ class _VideoSection extends _ViewModelSection {
 
   @override
   List<Object?> get props => [
-    transcription,
-    url,
-    width,
-    height,
-    authorName,
-    authorDescription,
-    date,
-  ];
+        transcription,
+        url,
+        width,
+        height,
+        authorName,
+        authorDescription,
+        date,
+      ];
 }

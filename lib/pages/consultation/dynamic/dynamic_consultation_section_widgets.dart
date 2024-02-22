@@ -15,7 +15,7 @@ class _DynamicSectionWidget extends StatelessWidget {
       _ExpandableSection() => _ExpandableSectionWidget(sectionToDisplay),
       _TitleSection() => _TitleSectionWidget(sectionToDisplay),
       _RichTextSection() => _RichTextSectionWidget(sectionToDisplay),
-      _StartButtonTextSection() => _StartButtonWidget(),
+      _StartButtonTextSection() => _StartButtonWidget(sectionToDisplay),
       _FooterSection() => _FooterSectionWidget(sectionToDisplay),
       _FocusNumberSection() => _FocusNumberSectionWidget(sectionToDisplay),
       _QuoteSection() => _QuoteSectionWidget(sectionToDisplay),
@@ -326,6 +326,10 @@ class _RichTextSectionWidget extends StatelessWidget {
 }
 
 class _StartButtonWidget extends StatelessWidget {
+  final _StartButtonTextSection section;
+
+  _StartButtonWidget(this.section);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -338,15 +342,15 @@ class _StartButtonWidget extends StatelessWidget {
         style: AgoraButtonStyle.primaryButtonStyle,
         onPressed: () {
           TrackerHelper.trackClick(
-            clickName: "${AnalyticsEventNames.startConsultation} ${'widget.arguments.consultationId'}",
+            clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
             widgetName: AnalyticsScreenNames.consultationDetailsPage,
           );
           Navigator.pushNamed(
             context,
             ConsultationQuestionPage.routeName,
             arguments: ConsultationQuestionArguments(
-              consultationId: 'viewModel.id',
-              consultationTitle: 'viewModel.title',
+              consultationId: section.consultationId,
+              consultationTitle: section.title,
             ),
           );
         },

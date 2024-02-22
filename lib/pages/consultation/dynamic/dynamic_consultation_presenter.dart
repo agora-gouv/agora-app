@@ -80,7 +80,7 @@ class _Presenter {
             title: consultation.footer!.title,
             description: consultation.footer!.description,
           ),
-        if (history == null) _StartButtonTextSection(),
+        if (history == null) _StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
         if (history != null) _HistorySection(history),
         if (history != null) _NotificationSection(),
       ],
