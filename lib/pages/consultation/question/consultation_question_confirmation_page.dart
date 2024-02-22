@@ -18,8 +18,7 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/details/consultation_details_page.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -132,7 +131,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
   Widget _buildToolbar(BuildContext context, String label) {
     return AgoraToolbar(
       pageLabel: label,
-      onBackClick: () => Navigator.popUntil(context, ModalRoute.withName(ConsultationDetailsPage.routeName)),
+      onBackClick: () => Navigator.popUntil(context, ModalRoute.withName(DynamicConsultationPage.routeName)),
     );
   }
 
@@ -183,10 +182,9 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                         );
                         Navigator.pushNamed(
                           context,
-                          ConsultationSummaryPage.routeName,
-                          arguments: ConsultationSummaryArguments(
+                          DynamicConsultationPage.routeName,
+                          arguments: DynamicConsultationPageArguments(
                             consultationId: consultationId,
-                            initialTab: ConsultationSummaryInitialTab.results,
                           ),
                         );
                       },

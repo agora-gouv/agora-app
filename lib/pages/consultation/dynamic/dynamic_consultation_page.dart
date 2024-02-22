@@ -8,6 +8,7 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/helper/notification_helper.dart';
 import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -42,14 +43,15 @@ import 'package:url_launcher/url_launcher_string.dart';
 part 'dynamic_consultation_view_model.dart';
 
 part 'dynamic_consultation_presenter.dart';
+
 part 'dynamic_consultation_section_widgets.dart';
 
 class DynamicConsultationPage extends StatelessWidget {
   static const routeName = '/consultation/dynamic';
 
-  final String consultationId;
+  final DynamicConsultationPageArguments arguments;
 
-  DynamicConsultationPage(this.consultationId);
+  DynamicConsultationPage(this.arguments);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class DynamicConsultationPage extends StatelessWidget {
       create: (BuildContext context) {
         return DynamicConsultationBloc(
           RepositoryManager.getConsultationRepository(),
-        )..add(FetchDynamicConsultationEvent(consultationId));
+        )..add(FetchDynamicConsultationEvent(arguments.consultationId));
       },
       child: BlocSelector<DynamicConsultationBloc, DynamicConsultationState, _ViewModel>(
         selector: _Presenter.getViewModelFromState,
@@ -65,12 +67,27 @@ class DynamicConsultationPage extends StatelessWidget {
           return switch (viewModel) {
             _LoadingViewModel() => _LoadingPage(),
             _ErrorViewModel() => _ErrorPage(),
-            _SuccessViewModel() => _SuccessPage(viewModel),
+            _SuccessViewModel() =>
+              _SuccessPage(viewModel, arguments.notificationTitle, arguments.notificationDescription),
           };
         },
       ),
     );
   }
+}
+
+class DynamicConsultationPageArguments {
+  final String consultationId;
+  final bool shouldReloadConsultationsWhenPop;
+  final String? notificationTitle;
+  final String? notificationDescription;
+
+  DynamicConsultationPageArguments({
+    required this.consultationId,
+    this.shouldReloadConsultationsWhenPop = true,
+    this.notificationTitle,
+    this.notificationDescription,
+  });
 }
 
 class _LoadingPage extends StatelessWidget {
@@ -107,11 +124,22 @@ class _ErrorPage extends StatelessWidget {
 
 class _SuccessPage extends StatelessWidget {
   final _SuccessViewModel viewModel;
+  final String? notificationTitle;
+  final String? notificationDescription;
 
-  _SuccessPage(this.viewModel);
+  _SuccessPage(
+    this.viewModel,
+    this.notificationTitle,
+    this.notificationDescription,
+  );
 
   @override
   Widget build(BuildContext context) {
+    NotificationHelper.displayNotificationWithDialog(
+      context: context,
+      notificationTitle: notificationTitle,
+      notificationDescription: notificationDescription,
+    );
     return AgoraScaffold(
       appBarColor: AgoraColors.primaryBlue,
       child: Column(

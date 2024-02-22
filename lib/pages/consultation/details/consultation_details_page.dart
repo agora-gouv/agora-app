@@ -20,8 +20,8 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,7 +39,7 @@ class ConsultationDetailsArguments {
 }
 
 class ConsultationDetailsPage extends StatefulWidget {
-  static const routeName = "/consultationDetailsPage";
+  //static const routeName = "/consultationDetailsPage";
 
   final ConsultationDetailsArguments arguments;
 
@@ -73,11 +73,10 @@ class _ConsultationDetailsPageState extends State<ConsultationDetailsPage> {
           if (currentState is ConsultationDetailsFetchedState && currentState.viewModel.hasAnswered) {
             Navigator.pushNamed(
               context,
-              ConsultationSummaryPage.routeName,
-              arguments: ConsultationSummaryArguments(
+              DynamicConsultationPage.routeName,
+              arguments: DynamicConsultationPageArguments(
                 consultationId: widget.arguments.consultationId,
                 shouldReloadConsultationsWhenPop: false,
-                initialTab: ConsultationSummaryInitialTab.results,
               ),
             ).then((value) => Navigator.pop(context));
           }

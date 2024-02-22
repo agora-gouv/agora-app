@@ -133,7 +133,10 @@ class ConsultationsFinishedSection extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 DynamicConsultationPage.routeName,
-                arguments: finishedViewModel.id,
+                arguments: DynamicConsultationPageArguments(
+                  consultationId: finishedViewModel.id,
+                  shouldReloadConsultationsWhenPop: false,
+                ),
               );
             },
             index: finishedViewModels.indexOf(finishedViewModel) + 1,

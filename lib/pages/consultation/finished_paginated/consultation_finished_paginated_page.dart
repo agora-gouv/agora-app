@@ -16,7 +16,7 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -180,11 +180,10 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     );
     Navigator.pushNamed(
       context,
-      ConsultationSummaryPage.routeName,
-      arguments: ConsultationSummaryArguments(
+      DynamicConsultationPage.routeName,
+      arguments: DynamicConsultationPageArguments(
         consultationId: consultationId,
         shouldReloadConsultationsWhenPop: false,
-        initialTab: ConsultationSummaryInitialTab.etEnsuite,
       ),
     );
   }

@@ -18,7 +18,7 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -148,10 +148,9 @@ class DemographicConfirmationPage extends StatelessWidget {
                           );
                           Navigator.pushNamed(
                             context,
-                            ConsultationSummaryPage.routeName,
-                            arguments: ConsultationSummaryArguments(
+                            DynamicConsultationPage.routeName,
+                            arguments: DynamicConsultationPageArguments(
                               consultationId: consultationId!,
-                              initialTab: ConsultationSummaryInitialTab.results,
                             ),
                           );
                         },
