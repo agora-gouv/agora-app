@@ -25,6 +25,8 @@ class _DynamicSectionWidget extends StatelessWidget {
       _DownloadSection() => _DownloadSectionWidget(sectionToDisplay),
       _ConsultationFeedbackQuestionSection() => _ConsultationFeedbackQuestionSectionWidget(sectionToDisplay),
       _ConsultationFeedbackResultsSection() => _ConsultationFeedbackResultsSectionWidget(sectionToDisplay),
+      _NotificationSection() => _NotificationSectionWidget(),
+      _HistorySection() => _HistorySectionWidget(sectionToDisplay),
     };
   }
 }
@@ -789,6 +791,168 @@ class _ConsultationFeedbackResultsSectionWidget extends StatelessWidget {
         top: AgoraSpacings.base,
       ),
       child: Text(QagStrings.feedback),
+    );
+  }
+}
+
+class _NotificationSectionWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.x2,
+        bottom: AgoraSpacings.x2,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.asset(
+            "assets/ic_bell.svg",
+            colorFilter: ColorFilter.mode(AgoraColors.primaryBlue, BlendMode.srcIn),
+            excludeFromSemantics: true,
+          ),
+          SizedBox(width: AgoraSpacings.x0_75),
+          Expanded(
+            child: Text(
+              ConsultationStrings.notificationInformation,
+              style: AgoraTextStyles.light14,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HistorySectionWidget extends StatelessWidget {
+  final _HistorySection section;
+
+  _HistorySectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        top: AgoraSpacings.base,
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(color: AgoraColors.consultationResponseInfo),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: AgoraSpacings.horizontalPadding,
+            right: AgoraSpacings.horizontalPadding,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: AgoraSpacings.base),
+              Semantics(
+                header: true,
+                child: Text(
+                  'Historique',
+                  style: AgoraTextStyles.medium16.copyWith(
+                    color: AgoraColors.primaryBlue,
+                  ),
+                ),
+              ),
+              const SizedBox(height: AgoraSpacings.x2),
+              ...section.steps.mapIndexed((i, e) => _HistoryElementWidget(e, i == section.steps.length - 1)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HistoryElementWidget extends StatelessWidget {
+  final ConsultationHistoryStep step;
+  final bool isLast;
+
+  _HistoryElementWidget(this.step, this.isLast);
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(
+            width: 30,
+            height: 30,
+            child: Stack(
+              children: [
+                if (!isLast)
+                  Transform.translate(
+                    offset: Offset(0, 2),
+                    child: Center(child: Container(width: 2, color: AgoraColors.consultationResponseInfoBorder)),
+                  ),
+                _HistoryIndicator(step.status),
+              ],
+            ),
+          ),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(step.title, style: AgoraTextStyles.medium18),
+                Text(
+                  step.date?.formatToDayMonthYear() ?? 'Prochainement',
+                  style: AgoraTextStyles.regular16.copyWith(fontStyle: FontStyle.italic),
+                ),
+                if (step.actionText != null) Text(step.actionText!, style: AgoraTextStyles.regular16UnderlineBlue),
+                const SizedBox(height: AgoraSpacings.x2),
+              ],
+            ),
+          ),
+          step.actionText != null
+              ? SvgPicture.asset("assets/ic_next.svg", excludeFromSemantics: true)
+              : SizedBox(height: 48, width: 48),
+          const SizedBox(width: AgoraSpacings.base),
+        ],
+      ),
+    );
+  }
+}
+
+class _HistoryIndicator extends StatelessWidget {
+  final ConsultationHistoryStepStatus status;
+
+  _HistoryIndicator(this.status);
+
+  @override
+  Widget build(BuildContext context) {
+    return DottedBorder(
+      strokeWidth: 2,
+      dashPattern: [2, 2],
+      borderType: BorderType.Circle,
+      color: status == ConsultationHistoryStepStatus.current ? AgoraColors.blue525 : Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.all(1),
+        child: Container(
+          width: 24,
+          height: 24,
+          decoration: BoxDecoration(
+            border: Border.all(color: AgoraColors.blue525, width: 2),
+            borderRadius: AgoraCorners.borderRound,
+            color: status == ConsultationHistoryStepStatus.done
+                ? AgoraColors.blue525
+                : AgoraColors.consultationResponseInfo,
+          ),
+          child: Icon(
+            status == ConsultationHistoryStepStatus.incoming ? Icons.more_horiz : Icons.check,
+            color: status == ConsultationHistoryStepStatus.done
+                ? AgoraColors.consultationResponseInfo
+                : AgoraColors.blue525,
+            size: 16,
+          ),
+        ),
+      ),
     );
   }
 }

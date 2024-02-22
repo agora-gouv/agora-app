@@ -16,6 +16,7 @@ class _Presenter {
     final feedbackResult = consultation.feedbackResult;
     final feedbackQuestion = consultation.feedbackQuestion;
     final download = consultation.downloadInfo;
+    final history = consultation.history;
     return _SuccessViewModel(
       shareText: consultation.shareText,
       sections: [
@@ -73,7 +74,9 @@ class _Presenter {
             title: consultation.footer!.title,
             description: consultation.footer!.description,
           ),
-        if (consultation.history == null) _StartButtonTextSection(),
+        if (history == null) _StartButtonTextSection(),
+        if (history != null) _HistorySection(history),
+        if (history != null) _NotificationSection(),
       ],
     );
   }

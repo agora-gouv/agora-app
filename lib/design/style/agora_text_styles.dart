@@ -303,6 +303,15 @@ class AgoraTextStyles {
     decoration: TextDecoration.underline,
   );
 
+  static const TextStyle regular16UnderlineBlue = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 16.0,
+    color: AgoraColors.primaryBlue,
+    height: height,
+    decoration: TextDecoration.underline,
+  );
+
   static const TextStyle light15 = TextStyle(
     fontFamily: marianne,
     fontWeight: light,

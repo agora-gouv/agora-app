@@ -234,6 +234,11 @@ class _StartButtonTextSection extends _ViewModelSection {
   List<Object?> get props => [];
 }
 
+class _NotificationSection extends _ViewModelSection {
+  @override
+  List<Object?> get props => [];
+}
+
 class _ImageSection extends _ViewModelSection {
   final String url;
   final String? desctiption;
@@ -245,6 +250,15 @@ class _ImageSection extends _ViewModelSection {
 
   @override
   List<Object?> get props => [desctiption, url];
+}
+
+class _HistorySection extends _ViewModelSection {
+  final List<ConsultationHistoryStep> steps;
+
+  _HistorySection(this.steps);
+
+  @override
+  List<Object?> get props => [steps];
 }
 
 class _VideoSection extends _ViewModelSection {
