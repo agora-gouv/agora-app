@@ -115,14 +115,16 @@ class ConsultationInfoHeader extends Equatable {
 class ConsultationParticipationInfo extends Equatable {
   final int participantCount;
   final int participantCountGoal;
+  final String shareText;
 
   ConsultationParticipationInfo({
     required this.participantCount,
     required this.participantCountGoal,
+    required this.shareText,
   });
 
   @override
-  List<Object?> get props => [participantCount, participantCountGoal];
+  List<Object?> get props => [participantCount, participantCountGoal, shareText];
 }
 
 class ConsultationDownloadInfo extends Equatable {

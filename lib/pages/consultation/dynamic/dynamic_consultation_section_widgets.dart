@@ -27,6 +27,7 @@ class _DynamicSectionWidget extends StatelessWidget {
       _ConsultationFeedbackResultsSection() => _ConsultationFeedbackResultsSectionWidget(sectionToDisplay),
       _NotificationSection() => _NotificationSectionWidget(),
       _HistorySection() => _HistorySectionWidget(sectionToDisplay),
+      _ParticipantInfoSection() => _ParticipantInfoSectionWidget(sectionToDisplay),
     };
   }
 }
@@ -790,7 +791,33 @@ class _ConsultationFeedbackResultsSectionWidget extends StatelessWidget {
         right: AgoraSpacings.horizontalPadding,
         top: AgoraSpacings.base,
       ),
-      child: Text(QagStrings.feedback),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(section.picto, style: AgoraTextStyles.light26),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Semantics(
+                  header: true,
+                  child: Text(
+                    section.title,
+                    style: AgoraTextStyles.medium16.copyWith(
+                      color: AgoraColors.primaryBlue,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AgoraSpacings.x0_25),
+                AgoraHtml(data: section.description),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -887,7 +914,7 @@ class _HistoryElementWidget extends StatelessWidget {
               children: [
                 if (!isLast)
                   Transform.translate(
-                    offset: Offset(0, 2),
+                    offset: Offset(0, 3),
                     child: Center(child: Container(width: 2, color: AgoraColors.consultationResponseInfoBorder)),
                   ),
                 _HistoryIndicator(step.status),
@@ -931,7 +958,7 @@ class _HistoryIndicator extends StatelessWidget {
       strokeWidth: 2,
       dashPattern: [2, 2],
       borderType: BorderType.Circle,
-      color: status == ConsultationHistoryStepStatus.current ? AgoraColors.blue525 : Colors.transparent,
+      color: status == ConsultationHistoryStepStatus.current ? AgoraColors.primaryBlue : Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.all(1),
         child: Container(
@@ -948,10 +975,86 @@ class _HistoryIndicator extends StatelessWidget {
             status == ConsultationHistoryStepStatus.incoming ? Icons.more_horiz : Icons.check,
             color: status == ConsultationHistoryStepStatus.done
                 ? AgoraColors.consultationResponseInfo
-                : AgoraColors.blue525,
+                : AgoraColors.primaryBlue,
             size: 16,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ParticipantInfoSectionWidget extends StatelessWidget {
+  final _ParticipantInfoSection section;
+
+  _ParticipantInfoSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text('💬', style: AgoraTextStyles.light26),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Semantics(
+                  header: true,
+                  child: Text(
+                    'Partagez cette consultation',
+                    style: AgoraTextStyles.medium16.copyWith(
+                      color: AgoraColors.primaryBlue,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AgoraSpacings.x0_25),
+                Text(
+                  'Plus vous lui donnez de la voix, plus elle aura d\'impact\u{00A0}!',
+                  style: AgoraTextStyles.light16,
+                ),
+                const SizedBox(height: AgoraSpacings.base),
+                Text('${section.participantCount} participants', style: AgoraTextStyles.regular14),
+                const SizedBox(height: AgoraSpacings.x0_5),
+                ExcludeSemantics(
+                  child: LinearProgressIndicator(
+                    minHeight: AgoraSpacings.x0_5,
+                    backgroundColor: AgoraColors.orochimaru,
+                    valueColor: AlwaysStoppedAnimation<Color>(AgoraColors.mountainLakeAzure),
+                    value: section.participantCount / section.participantCountGoal,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                const SizedBox(height: AgoraSpacings.x0_5),
+                Text(
+                  ConsultationStrings.participantCountGoal.format(section.participantCountGoal.toString()),
+                  style: AgoraTextStyles.regular14,
+                ),
+                const SizedBox(height: AgoraSpacings.base),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: AgoraButton(
+                    label: 'Partager',
+                    semanticLabel: 'Partager cette consultation',
+                    style: AgoraButtonStyle.blueBorderButtonStyle,
+                    onPressed: () {
+                      ShareHelper.sharePreformatted(context: context, data: section.shareText);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

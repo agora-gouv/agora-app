@@ -17,6 +17,7 @@ class _Presenter {
     final feedbackQuestion = consultation.feedbackQuestion;
     final download = consultation.downloadInfo;
     final history = consultation.history;
+    final participationInfo = consultation.participationInfo;
     return _SuccessViewModel(
       shareText: consultation.shareText,
       sections: [
@@ -67,8 +68,13 @@ class _Presenter {
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
           ),
-        if (download != null)
-          _DownloadSection(url: download.url),
+        if (download != null) _DownloadSection(url: download.url),
+        if (participationInfo != null)
+          _ParticipantInfoSection(
+            participantCountGoal: participationInfo.participantCountGoal,
+            participantCount: participationInfo.participantCount,
+            shareText: participationInfo.shareText,
+          ),
         if (consultation.footer != null)
           _FooterSection(
             title: consultation.footer!.title,

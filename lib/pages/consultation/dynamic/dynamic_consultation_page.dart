@@ -162,7 +162,7 @@ class _ShareButton extends StatelessWidget {
             clickName: AnalyticsEventNames.shareConsultation,
             widgetName: AnalyticsScreenNames.consultationDetailsPage,
           );
-          ShareHelper.shareConsultation(context: context, title: 'Partage d\'une consultation', id: 'yolo');
+          ShareHelper.sharePreformatted(context: context, data: shareText);
         },
       ),
     );

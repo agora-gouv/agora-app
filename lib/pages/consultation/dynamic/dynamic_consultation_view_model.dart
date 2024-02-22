@@ -109,6 +109,21 @@ class _DownloadSection extends _ViewModelSection {
   List<Object?> get props => [url];
 }
 
+class _ParticipantInfoSection extends _ViewModelSection {
+  final int participantCount;
+  final int participantCountGoal;
+  final String shareText;
+
+  _ParticipantInfoSection({
+    required this.participantCount,
+    required this.participantCountGoal,
+    required this.shareText,
+  });
+
+  @override
+  List<Object?> get props => [participantCount, participantCountGoal, shareText];
+}
+
 class _ConsultationFeedbackQuestionSection extends _ViewModelSection {
   final String title;
   final String picto;

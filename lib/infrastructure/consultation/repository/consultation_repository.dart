@@ -341,6 +341,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         participationInfo: ConsultationParticipationInfo(
           participantCount: 15035,
           participantCountGoal: 30000,
+          shareText: 'shareText',
         ),
         downloadInfo: ConsultationDownloadInfo(
           url: 'https://github.com/agora-gouv/agora-content/blob/main/participation_citoyenne/step2-rapportvdef.pdf',
@@ -355,7 +356,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           id: 'yolo',
           picto: '💬',
           title: 'Donnez votre avis',
-          description: '<body>Avez-vous aimé la réponse du gouvernement à cette consultation ?</body>',
+          description: '<body>Merci pour votre réponse !</body>',
           positiveRatio: 68,
           negativeRation: 32,
           responseCount: 12034,
