@@ -160,7 +160,7 @@ class _StartButtonTextSection extends _ViewModelSection {
 
 class _ImageSection extends _ViewModelSection {
   final String url;
-  final String desctiption;
+  final String? desctiption;
 
   _ImageSection({
     required this.desctiption,
@@ -169,4 +169,35 @@ class _ImageSection extends _ViewModelSection {
 
   @override
   List<Object?> get props => [desctiption, url];
+}
+
+class _VideoSection extends _ViewModelSection {
+  final String url;
+  final String transcription;
+  final int width;
+  final int height;
+  final String? authorName;
+  final String? authorDescription;
+  final String? date;
+
+  _VideoSection({
+    required this.url,
+    required this.transcription,
+    required this.width,
+    required this.height,
+    required this.authorName,
+    required this.authorDescription,
+    required this.date,
+  });
+
+  @override
+  List<Object?> get props => [
+    transcription,
+    url,
+    width,
+    height,
+    authorName,
+    authorDescription,
+    date,
+  ];
 }

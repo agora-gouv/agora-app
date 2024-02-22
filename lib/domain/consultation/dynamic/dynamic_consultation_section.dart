@@ -22,7 +22,7 @@ class DynamicConsultationSectionRichText extends DynamicConsultationSection {
 
 class DynamicConsultationSectionImage extends DynamicConsultationSection {
   final String url;
-  final String desctiption;
+  final String? desctiption;
 
   DynamicConsultationSectionImage({
     required this.desctiption,

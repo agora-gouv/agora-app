@@ -53,8 +53,16 @@ class _Presenter {
     return switch (section) {
       DynamicConsultationSectionTitle() => _TitleSection(section.label),
       DynamicConsultationSectionRichText() => _RichTextSection(section.desctiption),
-      DynamicConsultationSectionImage() => _TitleSection('TODO ${section.runtimeType}'),
-      DynamicConsultationSectionVideo() => _TitleSection('TODO ${section.runtimeType}'),
+      DynamicConsultationSectionImage() => _ImageSection(desctiption: section.desctiption, url: section.url),
+      DynamicConsultationSectionVideo() => _VideoSection(
+          url: section.url,
+          transcription: section.transcription,
+          width: section.width,
+          height: section.height,
+          authorName: section.authorName,
+          authorDescription: section.authorDescription,
+          date: section.date?.formatToDayMonth(),
+      ),
       DynamicConsultationSectionFocusNumber() => _FocusNumberSection(title: section.title, description: section.desctiption),
       DynamicConsultationSectionAccordion() => _TitleSection('TODO ${section.runtimeType}'),
       DynamicConsultationSectionQuote() => _QuoteSection(description: section.desctiption),

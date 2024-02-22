@@ -19,7 +19,8 @@ class _DynamicSectionWidget extends StatelessWidget {
       _FooterSection() => _FooterSectionWidget(sectionToDisplay),
       _FocusNumberSection() => _FocusNumberSectionWidget(sectionToDisplay),
       _QuoteSection() => _QuoteSectionWidget(sectionToDisplay),
-      _ImageSection() => Text('TODO'),
+      _ImageSection() => _ImageSectionWidget(sectionToDisplay),
+      _VideoSection() => _VideoSectionWidget(sectionToDisplay),
     };
   }
 }
@@ -501,6 +502,103 @@ class _QuoteSectionWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ImageSectionWidget extends StatelessWidget {
+  final _ImageSection section;
+
+  _ImageSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: Image.network(
+        section.url,
+        excludeFromSemantics: section.desctiption == null,
+        semanticLabel: section.desctiption,
+      ),
+    );
+  }
+}
+
+class _VideoSectionWidget extends StatelessWidget {
+  final _VideoSection section;
+
+  _VideoSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AgoraVideoView(
+            videoUrl: section.url,
+            videoWidth: section.width,
+            videoHeight: section.height,
+            onVideoStartMoreThan5Sec: () {
+              TrackerHelper.trackEvent(
+                eventName: "${AnalyticsEventNames.video} 'consultationId'",
+                widgetName: AnalyticsScreenNames.consultationSummaryEtEnsuitePage,
+              );
+            },
+            isTalkbackActivated: MediaQuery.accessibleNavigationOf(context),
+          ),
+          const SizedBox(height: AgoraSpacings.base),
+          Semantics(
+            header: true,
+            child: RichText(
+              textScaler: MediaQuery.of(context).textScaler,
+              text: TextSpan(
+                style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                children: [
+                  TextSpan(text: QagStrings.by),
+                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                  TextSpan(
+                    text: section.authorName,
+                    style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryGreyOpacity90),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (section.authorDescription != null) const SizedBox(height: AgoraSpacings.x0_5),
+          if (section.authorDescription != null) AgoraHtml(data: section.authorDescription!),
+          if (section.date != null) SizedBox(height: AgoraSpacings.x0_5),
+          if (section.date != null)
+            RichText(
+              textScaler: MediaQuery.of(context).textScaler,
+              text: TextSpan(
+                style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                children: [
+                  TextSpan(text: QagStrings.at),
+                  WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                  TextSpan(
+                    text: section.date,
+                    style: AgoraTextStyles.mediumItalic16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                  ),
+                ],
+              ),
+            ),
+          SizedBox(height: AgoraSpacings.base),
+          Semantics(header: true, child: Text(QagStrings.transcription, style: AgoraTextStyles.medium18)),
+          SizedBox(height: AgoraSpacings.x0_5),
+          Text(section.transcription, style: AgoraTextStyles.light14),
+        ],
       ),
     );
   }
