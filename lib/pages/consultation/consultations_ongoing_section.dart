@@ -15,8 +15,13 @@ import 'package:flutter/material.dart';
 
 class ConsultationsOngoingSection extends StatelessWidget {
   final List<ConsultationOngoingViewModel> ongoingViewModels;
+  final bool answeredSectionEmpty;
 
-  const ConsultationsOngoingSection({super.key, required this.ongoingViewModels});
+  const ConsultationsOngoingSection({
+    super.key,
+    required this.ongoingViewModels,
+    required this.answeredSectionEmpty,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +70,9 @@ class ConsultationsOngoingSection extends StatelessWidget {
                 ),
                 SizedBox(height: AgoraSpacings.x1_5),
                 Text(
-                  ConsultationStrings.ongoingConsultationEmpty,
+                  answeredSectionEmpty
+                      ? ConsultationStrings.noOngoingConsultation
+                      : ConsultationStrings.ongoingConsultationEmpty,
                   semanticsLabel: SemanticsStrings.ongoingConsultationEmpty,
                   style: AgoraTextStyles.medium14,
                   textAlign: TextAlign.center,

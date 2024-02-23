@@ -8,6 +8,8 @@ class ConsultationStrings {
   static const String answeredConsultationPart1 = "Mes ";
   static const String answeredConsultationPart2 = "consultations";
   static const String ongoingConsultationEmpty = "Vous avez répondu à toutes les consultations en cours\u{00A0}!";
+  static const String noOngoingConsultation =
+      "Il n’y a actuellement pas de consultation en cours. Vous serez prévenu(e) dès que la prochaine arrive\u{00A0}!";
   static const String gotoQags = "Découvrez les questions citoyennes";
   static const String consultationEmpty = "La liste est vide.";
   static const String answeredConsultationEmptyList = "Vous n'avez pas encore participé à une consultation.";

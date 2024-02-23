@@ -1,10 +1,8 @@
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/onboarding/onboarding_auto_scroll_page.dart';
@@ -13,22 +11,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class OnboardingView extends StatefulWidget {
-  @override
-  State<OnboardingView> createState() => _OnboardingViewState();
-}
+class OnboardingView extends StatelessWidget {
+  final AnimationController animationController;
 
-class _OnboardingViewState extends State<OnboardingView> with SingleTickerProviderStateMixin {
-  late final AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    animationController = AnimationController(
-      duration: const Duration(minutes: 2),
-      vsync: this,
-    );
-  }
+  OnboardingView(this.animationController);
 
   @override
   Widget build(BuildContext context) {
@@ -102,32 +88,12 @@ class _OnboardingViewState extends State<OnboardingView> with SingleTickerProvid
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
-                                    child: Stack(
-                                      children: [
-                                        OnboardingAutoScrollPage(
-                                          scrollDirection: Axis.horizontal,
-                                          reverseScroll: true,
-                                          animationController: animationController,
-                                          gap: 0,
-                                          child: _buildSecondThematiqueList(context),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: AgoraSpacings.x5, left: AgoraSpacings.base),
-                                            child: _PauseButton(
-                                              onTap: (isPlaying) {
-                                                if (isPlaying) {
-                                                  animationController.stop();
-                                                } else {
-                                                  animationController.forward();
-                                                }
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                    child: OnboardingAutoScrollPage(
+                                      scrollDirection: Axis.horizontal,
+                                      reverseScroll: true,
+                                      animationController: animationController,
+                                      gap: 0,
+                                      child: _buildSecondThematiqueList(context),
                                     ),
                                   ),
                                 ],
@@ -185,58 +151,6 @@ class _OnboardingViewState extends State<OnboardingView> with SingleTickerProvid
     return SizedBox(
       width: width,
       child: OnboardingThematiqueCard(picto: picto, label: label),
-    );
-  }
-}
-
-class _PauseButton extends StatefulWidget {
-  final void Function(bool) onTap;
-
-  _PauseButton({
-    required this.onTap,
-  });
-
-  @override
-  State<_PauseButton> createState() => _PauseButtonState();
-}
-
-class _PauseButtonState extends State<_PauseButton> {
-  bool isPlaying = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      width: 56,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AgoraColors.primaryBlue, width: 2),
-        color: AgoraColors.white,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            widget.onTap(isPlaying);
-            setState(() {
-              isPlaying = !isPlaying;
-            });
-          },
-          child: Semantics(
-            label: isPlaying ? SemanticsStrings.animPause : SemanticsStrings.animPlay,
-            child: Center(
-              child: SizedBox(
-                height: 24,
-                width: 24,
-                child: Icon(
-                  isPlaying ? Icons.pause : Icons.play_arrow_sharp,
-                  color: AgoraColors.primaryBlue,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
