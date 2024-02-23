@@ -467,32 +467,43 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       return DynamicConsultationSuccessResponse(consultation);
     }
-    final response = await httpClient.get(
-      "/v2/consultations/$consultationId",
-    );
-    final data = response.data;
-    final shareText = data["shareText"] as String;
-    final downloadUrl = data["downloadAnalysisUrl"] as String?;
-    final consultation = DynamicConsultation(
-      id: consultationId,
-      title: data["title"] as String,
-      coverUrl: data["coverUrl"] as String,
-      shareText: shareText,
-      thematicLogo: data["thematique"]["picto"] as String,
-      thematicLabel: data["thematique"]["label"] as String,
-      questionsInfos: _toQuestionsInfo(data["questionsInfo"]),
-      responseInfos: _toResponseInfo(data["responsesInfo"]),
-      infoHeader: _toInfoHeader(data["infoHeader"]),
-      collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
-      expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
-      participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
-      downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
-      feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
-      feedbackResult: _toFeedbackResults(data["feedbackResults"]),
-      history: _toHistory(data["history"]),
-      footer: _toFooter(data["footer"]),
-    );
-    return DynamicConsultationSuccessResponse(consultation);
+    try {
+      final response = await httpClient.get(
+        "/v2/consultations/$consultationId",
+      );
+      final data = response.data;
+      final shareText = data["shareText"] as String;
+      final downloadUrl = data["downloadAnalysisUrl"] as String?;
+      final consultation = DynamicConsultation(
+        id: consultationId,
+        title: data["title"] as String,
+        coverUrl: data["coverUrl"] as String,
+        shareText: shareText,
+        thematicLogo: data["thematique"]["picto"] as String,
+        thematicLabel: data["thematique"]["label"] as String,
+        questionsInfos: _toQuestionsInfo(data["questionsInfo"]),
+        responseInfos: _toResponseInfo(data["responsesInfo"]),
+        infoHeader: _toInfoHeader(data["infoHeader"]),
+        collapsedSections: (data["body"]["sectionsPreview"] as List)
+            .map((e) => _toSection(e))
+            .nonNulls
+            .toList(),
+        expandedSections: (data["body"]["sections"] as List)
+            .map((e) => _toSection(e))
+            .nonNulls
+            .toList(),
+        participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
+        downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
+        feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
+        feedbackResult: _toFeedbackResults(data["feedbackResults"]),
+        history: _toHistory(data["history"]),
+        footer: _toFooter(data["footer"]),
+      );
+      return DynamicConsultationSuccessResponse(consultation);
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return DynamicConsultationErrorResponse();
+    }
   }
 }
 
