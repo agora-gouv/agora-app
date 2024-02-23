@@ -19,6 +19,8 @@ import 'package:agora/pages/consultation/question/consultation_question_storage_
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
+part 'dynamic_consultation_mapper.dart';
+
 abstract class ConsultationRepository {
   Future<GetConsultationsRepositoryResponse> fetchConsultations();
 
@@ -412,55 +414,83 @@ class ConsultationDioRepository extends ConsultationRepository {
       );
       return DynamicConsultationSuccessResponse(consultation);
     }
+    if (consultationId == '23325238-180d-4472-8d58-b88bd0d86ea3') {
+      final consultation = DynamicConsultation(
+        id: consultationId,
+        title: 'Développer le covoiturage au quotidien',
+        coverUrl: 'https://content.agora.beta.gouv.fr/consultation_covers/covoiturage.png',
+        shareText: 'shareText',
+        thematicLogo: '🚊',
+        thematicLabel: 'Transports',
+        questionsInfos: ConsultationQuestionsInfos(
+          participantCount: 15035,
+          participantCountGoal: 30000,
+          questionCount: '5 à 10 questions',
+          estimatedTime: '5 minutes',
+          endDate: DateTime(2024, 1, 21, 23, 59),
+        ),
+        responseInfos: null,
+        infoHeader: null,
+        collapsedSections: [
+          DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
+          DynamicConsultationSectionRichText(
+            "<body><b>Tous les cinq jours, un enfant meurt sous les coups de ses parents. </b><br/>Toutes les trois minutes, un enfant est victime d’inceste, de viol ou d’agression sexuelle. </b><br/><br/><b>Les violences faites aux enfants</b></body>",
+          ),
+        ],
+        expandedSections: [
+          DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
+          DynamicConsultationSectionRichText(
+            "<body><b>Tous les cinq jours, un enfant meurt sous les coups de ses parents. </b><br/>Toutes les trois minutes, un enfant est victime d’inceste, de viol ou d’agression sexuelle. </b><br/><br/><b>Les violences faites aux enfants concernent l’ensemble de la société et nous obligent. </b><br/></b><br/><b>Qu’elles se déroulent en milieu familial ou au sein d’institutions, les violences subies durant l’enfance ou l’adolescence ont des effets négatifs très importants et durables, représentant des risques en termes de santé mentaleet physique, de développement, de vie affective, de scolarité, d’insertion sociale et professionnelle. Prévenir ces violences et protéger les enfants sont ainsi des enjeux de santé publique.</b><br/></b><br/>Au vu de la triste réalité des chiffres de notre pays, conformément à ses différents engagements internationaux et européens en matière de lutte contre les violences faites aux enfants,<b> la France poursuit l’ambition d’apporter une réponse globale pour lutter contre l’ensemble desviolences faites aux enfants</b>.<br/><br/>Les avis recueillis contribueront à nourrir la stratégie gouvernementale de lutte contre les violences commises sur lesenfants, dont les mesures seront dévoilées par la Première ministre à l’occasion du comité interministériel à l’enfance cet automne.<br/><br/>🤝 <b>Agora, l’appli qui vous donne la parole et vous rend des comptes</b><br/></b><br/><i>Une consultation sur Agora est bien plus qu’un sondage ! Les questions sont pensées pour nourrir les décisions gouvernementales et la Ministre s’engage à y donner suite.</i><br/><i><br/>En contribuant au débat, vous travaillez à définir les orientations et les actions du Gouvernement.</i></body>",
+          ),
+          DynamicConsultationSectionTitle('Réponse de notre chef à tous'),
+          DynamicConsultationSectionVideo(
+            url: 'https://github.com/agora-gouv/agora-content/raw/main/qag_responses/responseQag5.mp4',
+            transcription: 'Il est très difficile de retranscrire les paroles du grand Thierry',
+            width: 480,
+            height: 854,
+            authorName: 'Thierry Lee',
+            authorDescription:
+                "<body><b>Inventeur du produit Agora<br><br><i>   Issu d'OCTO Technology, Thierry Lee s'est toujours battu pour la justice sociale. Devenu professeur d'informatique, il a sensibilisé ses élèves à la démocratie directe, organisant des votes sur des sujets de la vie quotidienne.<br><br>Sa passion pour la participation citoyenne l'a poussé à créer un mouvement prônant la démocratie directe. Le mouvement a rapidement gagné en popularité, attirant des citoyens lassés du système politique traditionnel.<br><br>Thierry a décidé de se présenter à l'élection présidentielle, avec un programme audacieux : donner aux citoyens le pouvoir de voter directement sur les lois et les décisions importantes.<br><br>Sa campagne a été un véritable succès, galvanisant la population par sa sincérité et son engagement. Le jour du scrutin, Thierry a été élu président de la République française avec une majorité écrasante.<br><br>Dès son investiture, il a mis en place des réformes pour implémenter la démocratie directe. Des plateformes numériques ont été créées pour permettre aux citoyens de voter sur les lois et de proposer des initiatives.<br><br>Le mandat de Thierry a été marqué par une participation citoyenne sans précédent. Le peuple français a enfin eu voix au chapitre, et la France est devenue un modèle de démocratie directe pour le monde entier.</i></b>",
+            date: DateTime(2024, 2, 19, 23),
+          ),
+        ],
+        participationInfo: null,
+        downloadInfo: null,
+        feedbackQuestion: null,
+        feedbackResult: null,
+        history: null,
+        footer: ConsultationFooter(
+          title: null,
+          description:
+              "<body>🗣 Consultation proposée par le <b>Ministère des Transports</b><br/><br/>🎯<b> Objectif</b> : évaluer et améliorer le plan national covoiturage <br/><br/>🚀<b>Axe gouvernemental</b> : Planifier et accélérer la transition écologique</body>",
+        ),
+      );
+      return DynamicConsultationSuccessResponse(consultation);
+    }
+    final response = await httpClient.get(
+      "/v2/consultations/$consultationId",
+    );
+    final data = response.data;
+    final shareText = data["shareText"] as String;
+    final downloadUrl = data["downloadAnalysisUrl"] as String?;
     final consultation = DynamicConsultation(
       id: consultationId,
-      title: 'Développer le covoiturage au quotidien',
-      coverUrl: 'https://content.agora.beta.gouv.fr/consultation_covers/covoiturage.png',
-      shareText: 'shareText',
-      thematicLogo: '🚊',
-      thematicLabel: 'Transports',
-      questionsInfos: ConsultationQuestionsInfos(
-        participantCount: 15035,
-        participantCountGoal: 30000,
-        questionCount: '5 à 10 questions',
-        estimatedTime: '5 minutes',
-        endDate: DateTime(2024, 1, 21, 23, 59),
-      ),
-      responseInfos: null,
-      infoHeader: null,
-      collapsedSections: [
-        DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
-        DynamicConsultationSectionRichText(
-          "<body><b>Tous les cinq jours, un enfant meurt sous les coups de ses parents. </b><br/>Toutes les trois minutes, un enfant est victime d’inceste, de viol ou d’agression sexuelle. </b><br/><br/><b>Les violences faites aux enfants</b></body>",
-        ),
-      ],
-      expandedSections: [
-        DynamicConsultationSectionTitle('Pourquoi cette consultation ?'),
-        DynamicConsultationSectionRichText(
-          "<body><b>Tous les cinq jours, un enfant meurt sous les coups de ses parents. </b><br/>Toutes les trois minutes, un enfant est victime d’inceste, de viol ou d’agression sexuelle. </b><br/><br/><b>Les violences faites aux enfants concernent l’ensemble de la société et nous obligent. </b><br/></b><br/><b>Qu’elles se déroulent en milieu familial ou au sein d’institutions, les violences subies durant l’enfance ou l’adolescence ont des effets négatifs très importants et durables, représentant des risques en termes de santé mentaleet physique, de développement, de vie affective, de scolarité, d’insertion sociale et professionnelle. Prévenir ces violences et protéger les enfants sont ainsi des enjeux de santé publique.</b><br/></b><br/>Au vu de la triste réalité des chiffres de notre pays, conformément à ses différents engagements internationaux et européens en matière de lutte contre les violences faites aux enfants,<b> la France poursuit l’ambition d’apporter une réponse globale pour lutter contre l’ensemble desviolences faites aux enfants</b>.<br/><br/>Les avis recueillis contribueront à nourrir la stratégie gouvernementale de lutte contre les violences commises sur lesenfants, dont les mesures seront dévoilées par la Première ministre à l’occasion du comité interministériel à l’enfance cet automne.<br/><br/>🤝 <b>Agora, l’appli qui vous donne la parole et vous rend des comptes</b><br/></b><br/><i>Une consultation sur Agora est bien plus qu’un sondage ! Les questions sont pensées pour nourrir les décisions gouvernementales et la Ministre s’engage à y donner suite.</i><br/><i><br/>En contribuant au débat, vous travaillez à définir les orientations et les actions du Gouvernement.</i></body>",
-        ),
-        DynamicConsultationSectionTitle('Réponse de notre chef à tous'),
-        DynamicConsultationSectionVideo(
-          url: 'https://github.com/agora-gouv/agora-content/raw/main/qag_responses/responseQag5.mp4',
-          transcription: 'Il est très difficile de retranscrire les paroles du grand Thierry',
-          width: 480,
-          height: 854,
-          authorName: 'Thierry Lee',
-          authorDescription:
-              "<body><b>Inventeur du produit Agora<br><br><i>   Issu d'OCTO Technology, Thierry Lee s'est toujours battu pour la justice sociale. Devenu professeur d'informatique, il a sensibilisé ses élèves à la démocratie directe, organisant des votes sur des sujets de la vie quotidienne.<br><br>Sa passion pour la participation citoyenne l'a poussé à créer un mouvement prônant la démocratie directe. Le mouvement a rapidement gagné en popularité, attirant des citoyens lassés du système politique traditionnel.<br><br>Thierry a décidé de se présenter à l'élection présidentielle, avec un programme audacieux : donner aux citoyens le pouvoir de voter directement sur les lois et les décisions importantes.<br><br>Sa campagne a été un véritable succès, galvanisant la population par sa sincérité et son engagement. Le jour du scrutin, Thierry a été élu président de la République française avec une majorité écrasante.<br><br>Dès son investiture, il a mis en place des réformes pour implémenter la démocratie directe. Des plateformes numériques ont été créées pour permettre aux citoyens de voter sur les lois et de proposer des initiatives.<br><br>Le mandat de Thierry a été marqué par une participation citoyenne sans précédent. Le peuple français a enfin eu voix au chapitre, et la France est devenue un modèle de démocratie directe pour le monde entier.</i></b>",
-          date: DateTime(2024, 2, 19, 23),
-        ),
-      ],
-      participationInfo: null,
-      downloadInfo: null,
-      feedbackQuestion: null,
-      feedbackResult: null,
-      history: null,
-      footer: ConsultationFooter(
-        title: null,
-        description:
-            "<body>🗣 Consultation proposée par le <b>Ministère des Transports</b><br/><br/>🎯<b> Objectif</b> : évaluer et améliorer le plan national covoiturage <br/><br/>🚀<b>Axe gouvernemental</b> : Planifier et accélérer la transition écologique</body>",
-      ),
+      title: data["title"] as String,
+      coverUrl: data["coverUrl"] as String,
+      shareText: shareText,
+      thematicLogo: data["thematique"]["picto"] as String,
+      thematicLabel: data["thematique"]["label"] as String,
+      questionsInfos: _toQuestionsInfo(data["questionsInfo"]),
+      responseInfos: _toResponseInfo(data["responsesInfo"]),
+      infoHeader: _toInfoHeader(data["infoHeader"]),
+      collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+      expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+      participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
+      downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
+      feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
+      feedbackResult: _toFeedbackResults(data["feedbackResults"]),
+      history: _toHistory(data["history"]),
+      footer: _toFooter(data["footer"]),
     );
     return DynamicConsultationSuccessResponse(consultation);
   }
