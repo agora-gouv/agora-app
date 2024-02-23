@@ -21,10 +21,20 @@ class OnboardingPage extends StatefulWidget {
   State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class _OnboardingPageState extends State<OnboardingPage> {
+class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProviderStateMixin {
   static const totalStep = 4;
   final _controller = PageController(initialPage: 0);
   int step = 0;
+  late final AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      duration: const Duration(minutes: 2),
+      vsync: this,
+    );
+  }
 
   @override
   void dispose() {
@@ -89,7 +99,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     _controller.jumpToPage(step);
                   },
                   children: [
-                    OnboardingView(),
+                    OnboardingView(animationController),
                     OnboardingStepView(step: OnboardingStep.participate),
                     OnboardingStepView(step: OnboardingStep.askYourQuestion),
                     OnboardingStepView(step: OnboardingStep.invent),
@@ -108,6 +118,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
               left: AgoraSpacings.base,
               bottom: AgoraSpacings.base * 2 + 56,
               child: _BackFloatingButton(onTap: () => _previousPage(context)),
+            ),
+          if (step == 0)
+            Positioned(
+              left: AgoraSpacings.base,
+              bottom: AgoraSpacings.base * 2 + 56,
+              child: _PauseButton(
+                onTap: (isPlaying) {
+                  if (isPlaying) {
+                    animationController.stop();
+                  } else {
+                    animationController.forward();
+                  }
+                },
+              ),
             ),
         ],
       ),
@@ -197,6 +221,58 @@ class _FloatingNextButton extends StatelessWidget {
           style: AgoraTextStyles.primaryFloatingButton,
         ),
         onPressed: onTap,
+      ),
+    );
+  }
+}
+
+class _PauseButton extends StatefulWidget {
+  final void Function(bool) onTap;
+
+  _PauseButton({
+    required this.onTap,
+  });
+
+  @override
+  State<_PauseButton> createState() => _PauseButtonState();
+}
+
+class _PauseButtonState extends State<_PauseButton> {
+  bool isPlaying = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56,
+      width: 56,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AgoraColors.primaryBlue, width: 2),
+        color: AgoraColors.white,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            widget.onTap(isPlaying);
+            setState(() {
+              isPlaying = !isPlaying;
+            });
+          },
+          child: Semantics(
+            label: isPlaying ? SemanticsStrings.animPause : SemanticsStrings.animPlay,
+            child: Center(
+              child: SizedBox(
+                height: 24,
+                width: 24,
+                child: Icon(
+                  isPlaying ? Icons.pause : Icons.play_arrow_sharp,
+                  color: AgoraColors.primaryBlue,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
