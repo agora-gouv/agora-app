@@ -58,7 +58,7 @@ class _Presenter {
             description: feedbackResult.description,
             userResponseIsPositive: feedbackResult.userResponseIsPositive,
             positiveRatio: feedbackResult.positiveRatio,
-            negativeRation: feedbackResult.negativeRation,
+            negativeRation: feedbackResult.negativeRatio,
             responseCount: feedbackResult.responseCount,
           ),
         if (feedbackQuestion != null)

@@ -4,6 +4,8 @@ import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -1032,6 +1034,244 @@ void main() {
 
       // Then
       expect(response, GetConsultationSummaryFailedResponse());
+    });
+  });
+
+  group("Fetch dynamic consultation", () {
+    test("when success should return consultation", () async {
+      // Given
+      dioAdapter.onGet(
+        "/v2/consultations/consultationId",
+        (server) => server.reply(HttpStatus.ok, {
+          "title": "Développer le covoiturage au quotidien",
+          "coverUrl": "<coverUrl>",
+          "shareText": "A définir ¯\\_(ツ)_/¯",
+          "thematique": {"label": "Transports", "picto": "🚊"},
+          "questionsInfo": {
+            "endDate": "2023-12-30",
+            "questionCount": "5 à 10 questions",
+            "estimatedTime": "5 minutes",
+            "participantCount": 15035,
+            "participantCountGoal": 30000,
+          },
+          "consultationDates": {
+            "startDate": "2023-12-30",
+            "endDate": "2023-12-30",
+          },
+          "responsesInfo": {
+            "picto": "🙌",
+            "description": "<body>Texte riche</body>",
+          },
+          "infoHeader": {"picto": "📘", "description": "<body>Texte riche</body>"},
+          "body": {
+            "sectionsPreview": [
+              {"type": "title", "title": "Le titre de la section"},
+            ],
+            "sections": [
+              {"type": "title", "title": "Le titre de la section"},
+              {"type": "richText", "description": "<body>Texte riche</body>"},
+              {
+                "type": "image",
+                "url": "<imageUrl>",
+                "contentDescription": "Description textuelle de l'image",
+              },
+              {
+                "type": "video",
+                "url": "<videoUrl>",
+                "videoWidth": 1080,
+                "videoHeight": 1920,
+                "authorInfo": {
+                  "name": "Olivier Véran",
+                  "message": "Ministre de ...",
+                  "date": "2023-12-30",
+                },
+                "transcription": "Transcription video",
+              },
+              {
+                "type": "focusNumber",
+                "title": "30%",
+                "description": "<body>Texte riche</body>",
+              },
+              {
+                "type": "accordion",
+                "title": "Les économies financières",
+                "description": "<body>Texte riche</body>",
+              },
+              {
+                "type": "quote",
+                "description": "<body>Lorem ipsum... version riche</body>",
+              },
+            ],
+          },
+          "participationInfo": {
+            "participantCount": 15035,
+            "participantCountGoal": 30000,
+          },
+          "downloadAnalysisUrl": "<url>",
+          "feedbackQuestion": {
+            "updateId": "<updateId>",
+            "title": "Donner votre avis",
+            "picto": "💬",
+            "description": "<body>Texte riche</body>",
+          },
+          "feedbackResults": {
+            "updateId": "<updateId>",
+            "title": "Donner votre avis",
+            "picto": "💬",
+            "description": "<body>Texte riche</body>",
+            "userResponse": true,
+            "positiveRatio": 68,
+            "negativeRatio": 32,
+            "responseCount": 14034,
+          },
+          "footer": {
+            "title": "Envie d'aller plus loin ?",
+            "description": "<body>Texte riche</body>",
+          },
+          "history": [
+            {
+              "updateId": "<updateId>",
+              "type": "update",
+              "status": "done",
+              "title": "Lancement",
+              "date": "2023-12-30",
+              "actionText": "Voir les objectifs",
+            }
+          ],
+        }),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
+        httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
+      );
+      final response = await repository.getDynamicConsultation('consultationId');
+
+      // Then
+      expect(
+        response,
+        DynamicConsultationSuccessResponse(
+          DynamicConsultation(
+            id: 'consultationId',
+            title: 'Développer le covoiturage au quotidien',
+            coverUrl: '<coverUrl>',
+            shareText: 'A définir ¯\\_(ツ)_/¯',
+            thematicLogo: '🚊',
+            thematicLabel: 'Transports',
+            questionsInfos: ConsultationQuestionsInfos(
+              endDate: DateTime(2023, 12, 30),
+              questionCount: '5 à 10 questions',
+              estimatedTime: '5 minutes',
+              participantCount: 15035,
+              participantCountGoal: 30000,
+            ),
+            responseInfos: ConsultationResponseInfos(
+              picto: '🙌',
+              description: '<body>Texte riche</body>',
+            ),
+            infoHeader: ConsultationInfoHeader(
+              logo: "📘",
+              description: "<body>Texte riche</body>",
+            ),
+            collapsedSections: [
+              DynamicConsultationSectionTitle('Le titre de la section'),
+            ],
+            expandedSections: [
+              DynamicConsultationSectionTitle('Le titre de la section'),
+              DynamicConsultationSectionRichText("<body>Texte riche</body>"),
+              DynamicConsultationSectionImage(
+                desctiption: "Description textuelle de l'image",
+                url: "<imageUrl>",
+              ),
+              DynamicConsultationSectionVideo(
+                url: "<videoUrl>",
+                transcription: 'Transcription video',
+                width: 1080,
+                height: 1920,
+                authorName: 'Olivier Véran',
+                authorDescription: 'Ministre de ...',
+                date: DateTime(2023, 12, 30),
+              ),
+              DynamicConsultationSectionFocusNumber(
+                title: '30%',
+                desctiption: '<body>Texte riche</body>',
+              ),
+              DynamicConsultationSectionQuote('<body>Lorem ipsum... version riche</body>'),
+            ],
+            downloadInfo: ConsultationDownloadInfo(
+              url: '<url>',
+            ),
+            participationInfo: ConsultationParticipationInfo(
+              participantCountGoal: 30000,
+              participantCount: 15035,
+              shareText: 'A définir ¯\\_(ツ)_/¯',
+            ),
+            feedbackQuestion: ConsultationFeedbackQuestion(
+              id: '<updateId>',
+              title: 'Donner votre avis',
+              picto: '💬',
+              description: '<body>Texte riche</body>',
+            ),
+            feedbackResult: ConsultationFeedbackResults(
+              id: '<updateId>',
+              title: 'Donner votre avis',
+              picto: '💬',
+              description: '<body>Texte riche</body>',
+              userResponseIsPositive: true,
+              positiveRatio: 68,
+              negativeRatio: 32,
+              responseCount: 14034,
+            ),
+            history: [
+              ConsultationHistoryStep(
+                updateId: "<updateId>",
+                type: ConsultationHistoryStepType.update,
+                status: ConsultationHistoryStepStatus.done,
+                title: "Lancement",
+                date: DateTime(2023, 12, 30),
+                actionText: "Voir les objectifs",
+              ),
+            ],
+            footer: ConsultationFooter(
+              title: "Envie d'aller plus loin ?",
+              description: "<body>Texte riche</body>",
+            ),
+          ),
+        ),
+      );
+    });
+
+    test("when failure with connection timeout should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/v2/consultations/consultationId",
+        (server) {
+          server.throws(
+            404,
+            DioException.connectionTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
+        httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
+      );
+      final response = await repository.getDynamicConsultation('consultationId');
+
+      // Then
+      expect(response, DynamicConsultationErrorResponse());
     });
   });
 }

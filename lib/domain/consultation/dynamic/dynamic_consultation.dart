@@ -162,7 +162,7 @@ class ConsultationFeedbackResults extends Equatable {
   final String description;
   final bool userResponseIsPositive;
   final int positiveRatio;
-  final int negativeRation;
+  final int negativeRatio;
   final int responseCount;
 
   ConsultationFeedbackResults({
@@ -172,7 +172,7 @@ class ConsultationFeedbackResults extends Equatable {
     required this.description,
     required this.userResponseIsPositive,
     required this.positiveRatio,
-    required this.negativeRation,
+    required this.negativeRatio,
     required this.responseCount,
   });
 
@@ -184,7 +184,7 @@ class ConsultationFeedbackResults extends Equatable {
         description,
         userResponseIsPositive,
         positiveRatio,
-        negativeRation,
+        negativeRatio,
         responseCount,
       ];
 }

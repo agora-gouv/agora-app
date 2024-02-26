@@ -81,7 +81,7 @@ ConsultationFeedbackResults? _toFeedbackResults(dynamic data) {
       description: data["description"] as String,
       userResponseIsPositive: data["userResponse"] as bool,
       positiveRatio: data["positiveRatio"] as int,
-      negativeRation: data["negativeRation"] as int,
+      negativeRatio: data["negativeRatio"] as int,
       responseCount: data["responseCount"] as int,
     );
   } else {
@@ -151,14 +151,14 @@ DynamicConsultationSectionVideo _toVideo(Map<String, dynamic> data) {
 
 DynamicConsultationSectionImage _toImage(Map<String, dynamic> data) {
   return DynamicConsultationSectionImage(
-    desctiption: data["desctiption"] as String,
+    desctiption: data["contentDescription"] as String?,
     url: data["url"] as String,
   );
 }
 
 DynamicConsultationSectionFocusNumber _toFocusNumber(Map<String, dynamic> data) {
   return DynamicConsultationSectionFocusNumber(
-    desctiption: data["desctiption"] as String,
+    desctiption: data["description"] as String,
     title: data["title"] as String,
   );
 }

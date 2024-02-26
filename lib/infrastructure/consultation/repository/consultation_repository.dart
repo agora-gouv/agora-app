@@ -360,7 +360,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           title: 'Donnez votre avis',
           description: '<body>Merci pour votre réponse !</body>',
           positiveRatio: 68,
-          negativeRation: 32,
+          negativeRatio: 32,
           responseCount: 12034,
           userResponseIsPositive: true,
         ),

@@ -270,6 +270,12 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       ),
     );
   }
+
+  @override
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) {
+    // TODO: implement getDynamicConsultation
+    throw UnimplementedError();
+  }
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -332,6 +338,12 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
     required String consultationId,
   }) async {
     return GetConsultationSummaryFailedResponse();
+  }
+
+  @override
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) {
+    // TODO: implement getDynamicConsultation
+    throw UnimplementedError();
   }
 }
 
