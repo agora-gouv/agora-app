@@ -46,6 +46,7 @@ class ThematiqueHelper {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  const SizedBox(height: AgoraSpacings.x0_5),
                 ],
               ),
             ),
