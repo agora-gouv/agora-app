@@ -85,7 +85,10 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
   List<Widget> _handleConsultationsState(BuildContext context, ConsultationState state) {
     if (state is ConsultationsFetchedState) {
       return [
-        ConsultationsOngoingSection(ongoingViewModels: state.ongoingViewModels),
+        ConsultationsOngoingSection(
+          ongoingViewModels: state.ongoingViewModels,
+          answeredSectionEmpty: state.answeredViewModels.isEmpty,
+        ),
         ConsultationsFinishedSection(
           finishedViewModels: state.finishedViewModels,
           shouldDisplayAllButton: state.shouldDisplayFinishedAllButton,

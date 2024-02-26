@@ -5,6 +5,8 @@ import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/infrastructure/app_feedback/repository/app_feedback_repository.dart';
+import 'package:agora/infrastructure/app_feedback/repository/mocks_app_feedback_repository.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/repository/mocks_consultation_repository.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
@@ -149,8 +151,21 @@ class RepositoryManager {
     final repository = MockConsultationRepository(
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
+      storageClient: StorageManager.getConsultationQuestionStorageClient(),
     );
     GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static AppFeedbackRepository getAppFeedbackRepository() {
+    if (GetIt.instance.isRegistered<AppFeedbackRepository>()) {
+      return GetIt.instance.get<AppFeedbackRepository>();
+    }
+    final repository = MockAppFeedbackRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      sentryWrapper: HelperManager.getSentryWrapper(),
+    );
+    GetIt.instance.registerSingleton<AppFeedbackRepository>(repository);
     return repository;
   }
 

@@ -9,14 +9,16 @@ import 'package:flutter/material.dart';
 enum AgoraSecondaryScrollType { generic, custom }
 
 class AgoraSecondaryStyleViewButton {
-  final String icon;
+  final String? icon;
   final String title;
+  final String? accessibilityLabel;
   final VoidCallback onClick;
 
   AgoraSecondaryStyleViewButton({
     required this.icon,
     required this.title,
     required this.onClick,
+    this.accessibilityLabel,
   });
 }
 
@@ -63,6 +65,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                     AgoraRoundedButton(
                       icon: button!.icon,
                       label: button!.title,
+                      accessibilityLabel: button!.accessibilityLabel,
                       style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                       contentPadding: AgoraRoundedButtonPadding.short,
                       onPressed: () => button!.onClick(),

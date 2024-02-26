@@ -18,7 +18,7 @@ class ThematiqueHelper {
   static Widget buildThematiques({
     required List<ThematiqueWithIdViewModel> thematiques,
     required String? selectedThematiqueId,
-    required Function(String?) onThematiqueIdSelected,
+    required Function(String?, String?) onThematiqueIdSelected,
     bool needHorizontalSpacing = true,
   }) {
     List<Widget> thematiqueWidgets = thematiques
@@ -33,7 +33,7 @@ class ThematiqueHelper {
                   AgoraToggleButton(
                     isSelected: thematique.id == selectedThematiqueId,
                     text: thematique.picto,
-                    onClicked: () => onThematiqueIdSelected(thematique.id),
+                    onClicked: () => onThematiqueIdSelected(thematique.id, thematique.label),
                   ),
                   SizedBox(height: AgoraSpacings.x0_5),
                   SizedBox(
@@ -46,6 +46,7 @@ class ThematiqueHelper {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  const SizedBox(height: AgoraSpacings.x0_5),
                 ],
               ),
             ),
@@ -58,7 +59,7 @@ class ThematiqueHelper {
       thematiqueWidgets = spacingSizedBox + thematiqueWidgets + spacingSizedBox;
     }
     return Semantics(
-      label: 'Liste des thématiques',
+      label: 'Liste des filtres par thématiques',
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: thematiqueWidgets,

@@ -23,6 +23,7 @@ class AnalyticsScreenNames {
   static const String notificationInApp = "Notification in-app";
   static const String notificationSystem = "Notification système";
   static const String notificationSystemWidget = "Système";
+  static const String appFeedbackPage = "Questionnaire de feedback";
 
   static const String demographicInformationPage = "Page descriptive des données démographiques";
   static const String demographicQuestionPage = "Questionnaire sur les données démographiques";

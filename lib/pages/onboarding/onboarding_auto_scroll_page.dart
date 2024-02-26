@@ -13,7 +13,10 @@ class OnboardingAutoScrollPage extends StatefulWidget {
     this.duplicateChild = 25,
     this.enableScrollInput = true,
     this.delayAfterScrollInput = const Duration(seconds: 1),
+    required this.animationController,
   });
+
+  final AnimationController animationController;
 
   /// Widget to display in loop
   final Widget child;
@@ -71,10 +74,7 @@ class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> wit
       }
     });
 
-    animationController = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
+    animationController = widget.animationController;
 
     offset = Tween<Offset>(
       begin: Offset.zero,

@@ -5,8 +5,12 @@ abstract class QagListEvent extends Equatable {}
 
 class FetchQagsListEvent extends QagListEvent {
   final String? thematiqueId;
+  final String? thematiqueLabel;
 
-  FetchQagsListEvent({required this.thematiqueId});
+  FetchQagsListEvent({
+    required this.thematiqueId,
+    required this.thematiqueLabel,
+  });
 
   @override
   List<Object?> get props => [thematiqueId];

@@ -66,9 +66,6 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
         child: BlocConsumer<ConsultationQuestionsResponsesBloc, SendConsultationQuestionsResponsesState>(
           listener: (context, state) {
             if (state is SendConsultationQuestionsResponsesSuccessState) {
-              context
-                  .read<ConsultationQuestionsResponsesStockBloc>()
-                  .add(DeleteSavingConsultationResponseEvent(consultationId: consultationId));
               if (state.shouldDisplayDemographicInformation) {
                 Navigator.pushNamed(
                   context,

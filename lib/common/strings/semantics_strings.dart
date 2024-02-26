@@ -28,10 +28,14 @@ class SemanticsStrings {
   static const String remainingChar = "Il ne vous reste plus que %s caractères.";
   static const String maxCharAttempt = "Vous avez atteint le maximum de caractères possibles.";
 
-  static const String video = "Vidéo";
+  static const String videoPlay = "Vidéo, lancer la lecture";
+  static const String videoPause = "Vidéo, mettre en pause";
   static const String onVideoTap = "lancer ou mettre en pause la vidéo";
 
   static const String previousQuestion = "Question précédente";
   static const String nextQuestion = "Question suivante";
   static const String ignoreQuestion = "Passer cette question";
+
+  static const String animPause = "Mettre en pause l'animation";
+  static const String animPlay = "Lancer l'animation";
 }

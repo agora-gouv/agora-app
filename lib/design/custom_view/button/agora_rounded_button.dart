@@ -18,6 +18,7 @@ class AgoraRoundedButton extends StatelessWidget {
   final AgoraRoundedButtonPadding contentPadding;
   final EdgeInsetsGeometry? textPadding;
   final VoidCallback onPressed;
+  final String? accessibilityLabel;
 
   const AgoraRoundedButton({
     super.key,
@@ -28,6 +29,7 @@ class AgoraRoundedButton extends StatelessWidget {
     this.contentPadding = AgoraRoundedButtonPadding.normal,
     this.textPadding,
     required this.onPressed,
+    this.accessibilityLabel,
   });
 
   @override
@@ -53,7 +55,12 @@ class AgoraRoundedButton extends StatelessWidget {
               Flexible(
                 child: Padding(
                   padding: textPadding ?? EdgeInsets.all(0),
-                  child: Text(label, style: _buildTextStyle(), textAlign: TextAlign.center),
+                  child: Text(
+                    label,
+                    semanticsLabel: accessibilityLabel,
+                    style: _buildTextStyle(),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ],

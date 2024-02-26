@@ -12,6 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingView extends StatelessWidget {
+  final AnimationController animationController;
+
+  OnboardingView(this.animationController);
+
   @override
   Widget build(BuildContext context) {
     final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
@@ -74,17 +78,20 @@ class OnboardingView extends StatelessWidget {
                               child: OnboardingAutoScrollPage(
                                 scrollDirection: Axis.horizontal,
                                 gap: 0,
+                                animationController: animationController,
                                 child: _buildFirstThematiqueList(context),
                               ),
                             ),
                             SizedBox(height: AgoraSpacings.base),
                             ExcludeSemantics(
                               child: Row(
+                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
                                     child: OnboardingAutoScrollPage(
                                       scrollDirection: Axis.horizontal,
                                       reverseScroll: true,
+                                      animationController: animationController,
                                       gap: 0,
                                       child: _buildSecondThematiqueList(context),
                                     ),
@@ -95,7 +102,7 @@ class OnboardingView extends StatelessWidget {
                           ],
                         ),
                   Spacer(),
-                  SizedBox(height: AgoraSpacings.x6),
+                  SizedBox(height: AgoraSpacings.x3),
                 ],
               ),
             ),

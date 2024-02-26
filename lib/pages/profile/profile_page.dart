@@ -17,6 +17,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
+import 'package:agora/pages/profile/app_feedback_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
@@ -168,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: AgoraButtonStyle.primaryButtonStyle,
                       onPressed: () {
                         _track(AnalyticsEventNames.giveFeedback);
-                        LaunchUrlHelper.webview(context, ProfileStrings.feedbackLink);
+                        Navigator.of(context).pushNamed(AppFeedbackPage.routeName);
                       },
                     ),
                   ],

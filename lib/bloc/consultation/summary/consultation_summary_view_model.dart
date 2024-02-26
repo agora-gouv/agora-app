@@ -67,14 +67,16 @@ class ConsultationSummaryMultipleChoicesResultsViewModel extends ConsultationSum
 class ConsultationSummaryResponseViewModel extends Equatable {
   final String label;
   final int ratio;
+  final bool isUserResponse;
 
   ConsultationSummaryResponseViewModel({
     required this.label,
     required this.ratio,
+    required this.isUserResponse,
   });
 
   @override
-  List<Object> get props => [label, ratio];
+  List<Object> get props => [label, ratio, isUserResponse];
 }
 
 class ConsultationSummaryEtEnsuiteViewModel extends Equatable {

@@ -27,6 +27,10 @@ class SemanticsHelper {
     SemanticsService.announce('Pas de résultats', TextDirection.ltr);
   }
 
+  static void announceThematicChosen(String? thematic, int size) {
+    SemanticsService.announce('Filtré par $thematic, $size résultats', TextDirection.ltr);
+  }
+
   static void announceCollapsing(bool isCollapsed) {
     if (isCollapsed) {
       SemanticsService.announce('Catégorie depliée', TextDirection.ltr);
@@ -41,5 +45,37 @@ class SemanticsHelper {
 
   static void announceGenericError() {
     SemanticsService.announce('Une erreur est survenue', TextDirection.ltr);
+  }
+
+  static void announcePlayPause(bool isPlaying) {
+    if (isPlaying) {
+      SemanticsService.announce('Pause', TextDirection.ltr);
+    } else {
+      SemanticsService.announce('Lecture', TextDirection.ltr);
+    }
+  }
+
+  static void announceMuteUnmute(bool isMuted) {
+    if (isMuted) {
+      SemanticsService.announce('Son activé', TextDirection.ltr);
+    } else {
+      SemanticsService.announce('Son désactivé', TextDirection.ltr);
+    }
+  }
+
+  static void announceSubtitles(bool areSubtitleEnabled) {
+    if (areSubtitleEnabled) {
+      SemanticsService.announce('Sous-titres désactivés', TextDirection.ltr);
+    } else {
+      SemanticsService.announce('Sous-titres sactivés', TextDirection.ltr);
+    }
+  }
+}
+
+class SemanticsHelperWrapper {
+  const SemanticsHelperWrapper();
+
+  void announceThematicChosen(String? thematic, int size) {
+    SemanticsHelper.announceThematicChosen(thematic, size);
   }
 }
