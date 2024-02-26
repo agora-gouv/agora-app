@@ -146,7 +146,7 @@ class DemographicConfirmationPage extends StatelessWidget {
                             clickName: "${AnalyticsEventNames.goToResult} $consultationId",
                             widgetName: AnalyticsScreenNames.demographicConfirmationPage,
                           );
-                          Navigator.pushNamed(
+                          Navigator.pushReplacementNamed(
                             context,
                             DynamicConsultationPage.routeName,
                             arguments: DynamicConsultationPageArguments(

@@ -39,7 +39,7 @@ ConsultationInfoHeader? _toInfoHeader(dynamic data) {
 ConsultationFooter? _toFooter(dynamic data) {
   if (data is Map<String, dynamic>) {
     return ConsultationFooter(
-      title: data["title"] as String,
+      title: data["title"] as String?,
       description: data["description"] as String,
     );
   } else {
