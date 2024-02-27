@@ -1275,6 +1275,126 @@ void main() {
       expect(response, DynamicConsultationErrorResponse());
     });
   });
+
+  group("Fetch dynamic consultation response", () {
+    test("when success should return consultation results", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/$consultationId/responses",
+        (server) => server.reply(
+          HttpStatus.ok,
+          {
+            "participantCount": 15035,
+            "resultsUniqueChoice": [
+              {
+                "questionTitle": "Les déplacements professionnels en covoiturage",
+                "questionId": "question repondue",
+                "order": 1,
+                "responses": [
+                  {
+                    "choiceId": "choix utilisateur",
+                    "label": "En voiture seul",
+                    "ratio": 65,
+                  },
+                  {
+                    "choiceId": "pas le choix utilisateur",
+                    "label": "Autre",
+                    "ratio": 35,
+                  },
+                ],
+              }
+            ],
+            "resultsMultipleChoice": [
+              {
+                "questionTitle": "Question B",
+                "questionId": "question pas repondue",
+                "order": 2,
+                "responses": [
+                  {
+                    "choiceId": "pas le choix utilisateur",
+                    "label": "Réponse A",
+                    "ratio": 30,
+                  },
+                  {
+                    "choiceId": "pas le choix utilisateur",
+                    "label": "Réponse B",
+                    "ratio": 80,
+                  },
+                ],
+              }
+            ],
+          },
+        ),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
+        httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([
+          ConsultationQuestionResponses(
+            questionId: "question repondue",
+            responseIds: ["choix utilisateur"],
+            responseText: '',
+          ),
+        ]),
+      );
+      final response = await repository.fetchDynamicConsultationResults(consultationId: consultationId);
+
+      // Then
+      expect(
+        response,
+        DynamicConsultationsResultsSuccessResponse(
+          participantCount: 15035,
+          results: [
+            ConsultationSummaryUniqueChoiceResults(
+              questionTitle: "Les déplacements professionnels en covoiturage",
+              order: 1,
+              responses: [
+                ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
+                ConsultationSummaryResponse(label: "Autre", ratio: 35),
+              ],
+            ),
+            ConsultationSummaryMultipleChoicesResults(
+              questionTitle: "Question B",
+              order: 2,
+              responses: [
+                ConsultationSummaryResponse(label: "Réponse A", ratio: 30),
+                ConsultationSummaryResponse(label: "Réponse B", ratio: 80),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/consultations/$consultationId/responses",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
+        httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
+      );
+      final response = await repository.fetchDynamicConsultationResults(consultationId: consultationId);
+
+      // Then
+      expect(response, DynamicConsultationsResultsErrorResponse());
+    });
+  });
 }
 
 class MockConsultationQuestionHiveStorageClient extends ConsultationQuestionStorageClient {

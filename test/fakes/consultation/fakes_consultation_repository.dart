@@ -14,7 +14,6 @@ import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
-
   FakeConsultationSuccessRepository([this.dynamicConsultation]);
 
   final DynamicConsultation? dynamicConsultation;
@@ -284,6 +283,23 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     }
     return DynamicConsultationErrorResponse();
   }
+
+  @override
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
+    return DynamicConsultationsResultsSuccessResponse(
+      participantCount: 1200,
+      results: [
+        ConsultationSummaryUniqueChoiceResults(
+          questionTitle: "Les déplacements professionnels en covoiturage",
+          order: 1,
+          responses: [
+            ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
+            ConsultationSummaryResponse(label: "Autre", ratio: 35),
+          ],
+        ),
+      ],
+    );
+  }
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -351,6 +367,11 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
     return DynamicConsultationErrorResponse();
+  }
+
+  @override
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
+    return DynamicConsultationsResultsErrorResponse();
   }
 }
 
