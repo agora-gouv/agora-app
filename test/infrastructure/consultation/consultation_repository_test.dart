@@ -1172,6 +1172,7 @@ void main() {
               participantCountGoal: 30000,
             ),
             responseInfos: ConsultationResponseInfos(
+              id: 'consultationId',
               picto: '🙌',
               description: '<body>Texte riche</body>',
             ),

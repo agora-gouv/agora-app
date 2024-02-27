@@ -43,6 +43,7 @@ class _Presenter {
           ),
         if (responsesInfos != null)
           _ResponseInfoSection(
+            id: responsesInfos.id,
             picto: responsesInfos.picto,
             description: responsesInfos.description,
           ),

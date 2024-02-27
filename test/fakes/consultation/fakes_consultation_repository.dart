@@ -2,6 +2,7 @@ import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -13,6 +14,11 @@ import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
+
+  FakeConsultationSuccessRepository([this.dynamicConsultation]);
+
+  final DynamicConsultation? dynamicConsultation;
+
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsSucceedResponse(
@@ -272,9 +278,11 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   }
 
   @override
-  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) {
-    // TODO: implement getDynamicConsultation
-    throw UnimplementedError();
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    if (dynamicConsultation != null) {
+      return DynamicConsultationSuccessResponse(dynamicConsultation!);
+    }
+    return DynamicConsultationErrorResponse();
   }
 }
 
@@ -341,9 +349,8 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   }
 
   @override
-  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) {
-    // TODO: implement getDynamicConsultation
-    throw UnimplementedError();
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    return DynamicConsultationErrorResponse();
   }
 }
 

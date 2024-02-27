@@ -87,16 +87,18 @@ class ConsultationQuestionsInfos extends Equatable {
 }
 
 class ConsultationResponseInfos extends Equatable {
+  final String id;
   final String picto;
   final String description;
 
   ConsultationResponseInfos({
+    required this.id,
     required this.picto,
     required this.description,
   });
 
   @override
-  List<Object?> get props => [picto, description];
+  List<Object?> get props => [id, picto, description];
 }
 
 class ConsultationInfoHeader extends Equatable {

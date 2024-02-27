@@ -14,9 +14,10 @@ ConsultationQuestionsInfos? _toQuestionsInfo(dynamic data) {
   }
 }
 
-ConsultationResponseInfos? _toResponseInfo(dynamic data) {
+ConsultationResponseInfos? _toResponseInfo(dynamic data, String id) {
   if (data is Map<String, dynamic>) {
     return ConsultationResponseInfos(
+      id: id,
       picto: data["picto"] as String,
       description: data["description"] as String,
     );
@@ -89,24 +90,25 @@ ConsultationFeedbackResults? _toFeedbackResults(dynamic data) {
   }
 }
 
-List<ConsultationHistoryStep>? _toHistory(dynamic data) {
+List<ConsultationHistoryStep>? _toHistory(dynamic data, String id) {
   if (data == null) return null;
   if (data is List) {
-    return data.map((e) => _toHistoryStep(e)).nonNulls.toList();
+    return data.map((e) => _toHistoryStep(e, id)).nonNulls.toList();
   } else {
     return null;
   }
 }
 
-ConsultationHistoryStep? _toHistoryStep(dynamic data) {
+ConsultationHistoryStep? _toHistoryStep(dynamic data, String id) {
   if (data is Map<String, dynamic>) {
+    final type = switch (data["type"] as String) {
+      "results" => ConsultationHistoryStepType.results,
+      _ => ConsultationHistoryStepType.update,
+    };
     return ConsultationHistoryStep(
-      updateId: data["updateId"] as String,
+      updateId: type == ConsultationHistoryStepType.results ? id : data["updateId"] as String,
       title: data["title"] as String,
-      type: switch (data["type"] as String) {
-        "results" => ConsultationHistoryStepType.results,
-        _ => ConsultationHistoryStepType.update,
-      },
+      type: type,
       status: switch (data["status"] as String) {
         "done" => ConsultationHistoryStepStatus.done,
         "current" => ConsultationHistoryStepStatus.current,

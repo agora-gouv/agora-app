@@ -30,6 +30,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
+import 'package:agora/pages/consultation/dynamic/results/dynamic_consultation_results_page.dart';
 import 'package:agora/pages/consultation/dynamic/simple_html_parser.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:collection/collection.dart';

@@ -3,3 +3,9 @@ class FetchDynamicConsultationEvent {
 
   FetchDynamicConsultationEvent(this.id);
 }
+
+class FetchDynamicConsultationResultsEvent {
+  final String id;
+
+  FetchDynamicConsultationResultsEvent(this.id);
+}

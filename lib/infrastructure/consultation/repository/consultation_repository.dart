@@ -12,6 +12,7 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
@@ -46,6 +47,10 @@ abstract class ConsultationRepository {
   });
 
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId);
+
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({
+    required String consultationId,
+  });
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -221,6 +226,28 @@ class ConsultationDioRepository extends ConsultationRepository {
   }
 
   @override
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
+    try {
+      final asyncResponse = httpClient.get(
+        "/consultations/$consultationId/responses",
+      );
+      final (_, userResponses, _) = await storageClient.get(consultationId);
+      final response = await asyncResponse;
+      return DynamicConsultationsResultsSuccessResponse(
+        participantCount: response.data["participantCount"] as int,
+        results: ConsultationResponsesBuilder.buildResults(
+          uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
+          multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
+          userResponses: userResponses,
+        ),
+      );
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return DynamicConsultationsResultsErrorResponse();
+    }
+  }
+
+  @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
   }) async {
@@ -305,21 +332,15 @@ class ConsultationDioRepository extends ConsultationRepository {
         thematicLogo: data["thematique"]["picto"] as String,
         thematicLabel: data["thematique"]["label"] as String,
         questionsInfos: _toQuestionsInfo(data["questionsInfo"]),
-        responseInfos: _toResponseInfo(data["responsesInfo"]),
+        responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
         infoHeader: _toInfoHeader(data["infoHeader"]),
-        collapsedSections: (data["body"]["sectionsPreview"] as List)
-            .map((e) => _toSection(e))
-            .nonNulls
-            .toList(),
-        expandedSections: (data["body"]["sections"] as List)
-            .map((e) => _toSection(e))
-            .nonNulls
-            .toList(),
+        collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
         downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
         feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
         feedbackResult: _toFeedbackResults(data["feedbackResults"]),
-        history: _toHistory(data["history"]),
+        history: _toHistory(data["history"], consultationId),
         footer: _toFooter(data["footer"]),
       );
       return DynamicConsultationSuccessResponse(consultation);
@@ -461,4 +482,24 @@ class DynamicConsultationSuccessResponse extends DynamicConsultationResponse {
 class DynamicConsultationErrorResponse extends DynamicConsultationResponse {
   @override
   List<Object?> get props => [];
+}
+
+sealed class DynamicConsultationResultsResponse extends Equatable {}
+
+class DynamicConsultationsResultsErrorResponse extends DynamicConsultationResultsResponse {
+  @override
+  List<Object?> get props => [];
+}
+
+class DynamicConsultationsResultsSuccessResponse extends DynamicConsultationResultsResponse {
+  final int participantCount;
+  final List<ConsultationSummaryResults> results;
+
+  DynamicConsultationsResultsSuccessResponse({
+    required this.participantCount,
+    required this.results,
+  });
+
+  @override
+  List<Object?> get props => [participantCount, results];
 }

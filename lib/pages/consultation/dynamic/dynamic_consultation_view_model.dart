@@ -86,16 +86,18 @@ class _InfoHeaderSection extends _ViewModelSection {
 }
 
 class _ResponseInfoSection extends _ViewModelSection {
+  final String id;
   final String picto;
   final String description;
 
   _ResponseInfoSection({
+    required this.id,
     required this.picto,
     required this.description,
   });
 
   @override
-  List<Object?> get props => [picto, description];
+  List<Object?> get props => [id, picto, description];
 }
 
 class _DownloadSection extends _ViewModelSection {

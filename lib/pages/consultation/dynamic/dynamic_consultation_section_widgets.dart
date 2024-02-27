@@ -429,7 +429,11 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
                   label: 'Voir toutes les réponses',
                   style: AgoraButtonStyle.blueBorderButtonStyle,
                   onPressed: () {
-                    // TODO : rediriger vers les réponses
+                    Navigator.pushNamed(
+                      context,
+                      DynamicConsultationResultsPage.routeName,
+                      arguments: section.id,
+                    );
                   },
                 ),
               ),
@@ -907,45 +911,59 @@ class _HistoryElementWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            width: 30,
-            height: 30,
-            child: Stack(
-              children: [
-                if (!isLast)
-                  Transform.translate(
-                    offset: Offset(0, 3),
-                    child: Center(child: Container(width: 2, color: AgoraColors.consultationResponseInfoBorder)),
-                  ),
-                _HistoryIndicator(step.status),
-              ],
-            ),
-          ),
-          const SizedBox(width: AgoraSpacings.base),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(step.title, style: AgoraTextStyles.medium18),
-                Text(
-                  step.date?.formatToDayMonthYear() ?? 'Prochainement',
-                  style: AgoraTextStyles.regular16.copyWith(fontStyle: FontStyle.italic),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          if (step.type == ConsultationHistoryStepType.results) {
+            Navigator.pushNamed(
+              context,
+              DynamicConsultationResultsPage.routeName,
+              arguments: step.updateId,
+            );
+          }
+        },
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                width: 30,
+                height: 30,
+                child: Stack(
+                  children: [
+                    if (!isLast)
+                      Transform.translate(
+                        offset: Offset(0, 3),
+                        child: Center(child: Container(width: 2, color: AgoraColors.consultationResponseInfoBorder)),
+                      ),
+                    _HistoryIndicator(step.status),
+                  ],
                 ),
-                if (step.actionText != null) Text(step.actionText!, style: AgoraTextStyles.regular16UnderlineBlue),
-                const SizedBox(height: AgoraSpacings.x2),
-              ],
-            ),
+              ),
+              const SizedBox(width: AgoraSpacings.base),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(step.title, style: AgoraTextStyles.medium18),
+                    Text(
+                      step.date?.formatToDayMonthYear() ?? 'Prochainement',
+                      style: AgoraTextStyles.regular16.copyWith(fontStyle: FontStyle.italic),
+                    ),
+                    if (step.actionText != null) Text(step.actionText!, style: AgoraTextStyles.regular16UnderlineBlue),
+                    const SizedBox(height: AgoraSpacings.x2),
+                  ],
+                ),
+              ),
+              step.actionText != null
+                  ? SvgPicture.asset("assets/ic_next.svg", excludeFromSemantics: true)
+                  : SizedBox(height: 48, width: 48),
+              const SizedBox(width: AgoraSpacings.base),
+            ],
           ),
-          step.actionText != null
-              ? SvgPicture.asset("assets/ic_next.svg", excludeFromSemantics: true)
-              : SizedBox(height: 48, width: 48),
-          const SizedBox(width: AgoraSpacings.base),
-        ],
+        ),
       ),
     );
   }
