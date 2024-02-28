@@ -1,7 +1,7 @@
 part of 'dynamic_consultation_page.dart';
 
-class _Presenter {
-  static _ViewModel getViewModelFromState(DynamicConsultationState state) {
+class DynamicConsultationPresenter {
+  static DynamicConsultationViewModel getViewModelFromState(DynamicConsultationState state) {
     return switch (state) {
       DynamicConsultationLoadingState() => _LoadingViewModel(),
       DynamicConsultationErrorState() => _ErrorViewModel(),
@@ -19,16 +19,17 @@ class _Presenter {
     final history = consultation.history;
     final participationInfo = consultation.participationInfo;
     return _SuccessViewModel(
+      consultationId: consultation.id,
       shareText: consultation.shareText,
       sections: [
-        _HeaderSection(
+        HeaderSection(
           coverUrl: consultation.coverUrl,
           thematicLabel: consultation.thematicLabel,
           thematicLogo: consultation.thematicLogo,
           title: consultation.title,
         ),
         if (questionsInfos != null)
-          _QuestionsInfoSection(
+          QuestionsInfoSection(
             endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayMonth()),
             questionCount: questionsInfos.questionCount,
             estimatedTime: questionsInfos.estimatedTime,
@@ -37,22 +38,22 @@ class _Presenter {
             goalProgress: min(1, questionsInfos.participantCount / questionsInfos.participantCountGoal),
           ),
         if (consultationHeaderInfo != null)
-          _InfoHeaderSection(
+          InfoHeaderSection(
             description: consultationHeaderInfo.description,
             logo: consultationHeaderInfo.logo,
           ),
         if (responsesInfos != null)
-          _ResponseInfoSection(
+          ResponseInfoSection(
             id: responsesInfos.id,
             picto: responsesInfos.picto,
             description: responsesInfos.description,
           ),
-        _ExpandableSection(
-          collapsedSections: consultation.collapsedSections.map(_presentSection).toList(),
-          expandedSections: consultation.expandedSections.map(_presentSection).toList(),
+        ExpandableSection(
+          collapsedSections: consultation.collapsedSections.map(presentSection).toList(),
+          expandedSections: consultation.expandedSections.map(presentSection).toList(),
         ),
         if (feedbackResult != null)
-          _ConsultationFeedbackResultsSection(
+          ConsultationFeedbackResultsSection(
             id: feedbackResult.id,
             title: feedbackResult.title,
             picto: feedbackResult.picto,
@@ -63,32 +64,32 @@ class _Presenter {
             responseCount: feedbackResult.responseCount,
           ),
         if (feedbackQuestion != null)
-          _ConsultationFeedbackQuestionSection(
+          ConsultationFeedbackQuestionSection(
             title: feedbackQuestion.title,
             picto: feedbackQuestion.picto,
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
           ),
-        if (download != null) _DownloadSection(url: download.url),
+        if (download != null) DownloadSection(url: download.url),
         if (participationInfo != null)
-          _ParticipantInfoSection(
+          ParticipantInfoSection(
             participantCountGoal: participationInfo.participantCountGoal,
             participantCount: participationInfo.participantCount,
             shareText: participationInfo.shareText,
           ),
         if (consultation.footer != null)
-          _FooterSection(
+          FooterSection(
             title: consultation.footer!.title,
             description: consultation.footer!.description,
           ),
-        if (history == null) _StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
-        if (history != null) _HistorySection(history),
-        if (history != null) _NotificationSection(),
+        if (history == null) StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
+        if (history != null) HistorySection(consultation.id, history),
+        if (history != null) NotificationSection(),
       ],
     );
   }
 
-  static _ViewModelSection _presentSection(DynamicConsultationSection section) {
+  static DynamicViewModelSection presentSection(DynamicConsultationSection section) {
     return switch (section) {
       DynamicConsultationSectionTitle() => _TitleSection(section.label),
       DynamicConsultationSectionRichText() => _RichTextSection(section.desctiption),

@@ -242,3 +242,46 @@ enum ConsultationHistoryStepStatus {
   current,
   incoming;
 }
+
+class DynamicConsultationUpdate extends Equatable {
+  final String id;
+  final String shareText;
+  final ConsultationResponseInfos? responseInfos;
+  final ConsultationInfoHeader? infoHeader;
+  final List<DynamicConsultationSection> collapsedSections;
+  final List<DynamicConsultationSection> expandedSections;
+  final ConsultationParticipationInfo? participationInfo;
+  final ConsultationDownloadInfo? downloadInfo;
+  final ConsultationFeedbackQuestion? feedbackQuestion;
+  final ConsultationFeedbackResults? feedbackResult;
+  final ConsultationFooter? footer;
+
+  DynamicConsultationUpdate({
+    required this.id,
+    required this.shareText,
+    required this.responseInfos,
+    required this.infoHeader,
+    required this.collapsedSections,
+    required this.expandedSections,
+    required this.participationInfo,
+    required this.downloadInfo,
+    required this.feedbackQuestion,
+    required this.feedbackResult,
+    required this.footer,
+  });
+
+  @override
+  List<Object?> get props => [
+    id,
+    shareText,
+    responseInfos,
+    infoHeader,
+    collapsedSections,
+    expandedSections,
+    participationInfo,
+    downloadInfo,
+    feedbackQuestion,
+    feedbackResult,
+    footer,
+  ];
+}

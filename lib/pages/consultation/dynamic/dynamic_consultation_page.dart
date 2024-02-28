@@ -32,6 +32,7 @@ import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/pages/consultation/dynamic/results/dynamic_consultation_results_page.dart';
 import 'package:agora/pages/consultation/dynamic/simple_html_parser.dart';
+import 'package:agora/pages/consultation/dynamic/updates/dynamic_consultation_update_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:collection/collection.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -62,9 +63,9 @@ class DynamicConsultationPage extends StatelessWidget {
           RepositoryManager.getConsultationRepository(),
         )..add(FetchDynamicConsultationEvent(arguments.consultationId));
       },
-      child: BlocSelector<DynamicConsultationBloc, DynamicConsultationState, _ViewModel>(
-        selector: _Presenter.getViewModelFromState,
-        builder: (BuildContext context, _ViewModel viewModel) {
+      child: BlocSelector<DynamicConsultationBloc, DynamicConsultationState, DynamicConsultationViewModel>(
+        selector: DynamicConsultationPresenter.getViewModelFromState,
+        builder: (BuildContext context, DynamicConsultationViewModel viewModel) {
           return switch (viewModel) {
             _LoadingViewModel() => _LoadingPage(),
             _ErrorViewModel() => _ErrorPage(),
@@ -163,7 +164,7 @@ class _SuccessPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: viewModel.sections.length,
               itemBuilder: (BuildContext context, int index) {
-                return _DynamicSectionWidget(viewModel.sections[index]);
+                return DynamicSectionWidget(viewModel.sections[index]);
               },
             ),
           ),

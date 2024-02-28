@@ -106,7 +106,7 @@ ConsultationHistoryStep? _toHistoryStep(dynamic data, String id) {
       _ => ConsultationHistoryStepType.update,
     };
     return ConsultationHistoryStep(
-      updateId: type == ConsultationHistoryStepType.results ? id : data["updateId"] as String,
+      updateId: data["updateId"] as String,
       title: data["title"] as String,
       type: type,
       status: switch (data["status"] as String) {

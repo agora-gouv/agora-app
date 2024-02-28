@@ -1,33 +1,33 @@
 part of 'dynamic_consultation_page.dart';
 
-class _DynamicSectionWidget extends StatelessWidget {
-  final _ViewModelSection section;
+class DynamicSectionWidget extends StatelessWidget {
+  final DynamicViewModelSection section;
 
-  _DynamicSectionWidget(this.section);
+  DynamicSectionWidget(this.section);
 
   @override
   Widget build(BuildContext context) {
     final sectionToDisplay = section;
     return switch (sectionToDisplay) {
-      _HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
-      _QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
-      _ResponseInfoSection() => _ResponseInfoSectionWidget(sectionToDisplay),
-      _ExpandableSection() => _ExpandableSectionWidget(sectionToDisplay),
+      HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
+      QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
+      ResponseInfoSection() => _ResponseInfoSectionWidget(sectionToDisplay),
+      ExpandableSection() => _ExpandableSectionWidget(sectionToDisplay),
       _TitleSection() => _TitleSectionWidget(sectionToDisplay),
       _RichTextSection() => _RichTextSectionWidget(sectionToDisplay),
-      _StartButtonTextSection() => _StartButtonWidget(sectionToDisplay),
-      _FooterSection() => _FooterSectionWidget(sectionToDisplay),
+      StartButtonTextSection() => _StartButtonWidget(sectionToDisplay),
+      FooterSection() => _FooterSectionWidget(sectionToDisplay),
       _FocusNumberSection() => _FocusNumberSectionWidget(sectionToDisplay),
       _QuoteSection() => _QuoteSectionWidget(sectionToDisplay),
       _ImageSection() => _ImageSectionWidget(sectionToDisplay),
       _VideoSection() => _VideoSectionWidget(sectionToDisplay),
-      _InfoHeaderSection() => _InfoHeaderSectionWidget(sectionToDisplay),
-      _DownloadSection() => _DownloadSectionWidget(sectionToDisplay),
-      _ConsultationFeedbackQuestionSection() => _ConsultationFeedbackQuestionSectionWidget(sectionToDisplay),
-      _ConsultationFeedbackResultsSection() => _ConsultationFeedbackResultsSectionWidget(sectionToDisplay),
-      _NotificationSection() => _NotificationSectionWidget(),
-      _HistorySection() => _HistorySectionWidget(sectionToDisplay),
-      _ParticipantInfoSection() => _ParticipantInfoSectionWidget(sectionToDisplay),
+      InfoHeaderSection() => _InfoHeaderSectionWidget(sectionToDisplay),
+      DownloadSection() => _DownloadSectionWidget(sectionToDisplay),
+      ConsultationFeedbackQuestionSection() => _ConsultationFeedbackQuestionSectionWidget(sectionToDisplay),
+      ConsultationFeedbackResultsSection() => _ConsultationFeedbackResultsSectionWidget(sectionToDisplay),
+      NotificationSection() => _NotificationSectionWidget(),
+      HistorySection() => _HistorySectionWidget(sectionToDisplay),
+      ParticipantInfoSection() => _ParticipantInfoSectionWidget(sectionToDisplay),
     };
   }
 }
@@ -59,7 +59,7 @@ class _TitleSectionWidget extends StatelessWidget {
 }
 
 class _HeaderSectionWidget extends StatelessWidget {
-  final _HeaderSection section;
+  final HeaderSection section;
 
   _HeaderSectionWidget(this.section);
 
@@ -122,7 +122,7 @@ class _HeaderSectionWidget extends StatelessWidget {
 }
 
 class _QuestionsInfoWidget extends StatelessWidget {
-  final _QuestionsInfoSection section;
+  final QuestionsInfoSection section;
 
   _QuestionsInfoWidget(this.section);
 
@@ -231,7 +231,7 @@ class _InformationItem extends StatelessWidget {
 }
 
 class _ExpandableSectionWidget extends StatefulWidget {
-  final _ExpandableSection section;
+  final ExpandableSection section;
 
   _ExpandableSectionWidget(this.section);
 
@@ -254,7 +254,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.section.collapsedSections.map((section) => _DynamicSectionWidget(section)).toList(),
+                children: widget.section.collapsedSections.map((section) => DynamicSectionWidget(section)).toList(),
               ),
               Positioned(
                 bottom: 0,
@@ -272,7 +272,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
               ),
             ],
           ),
-        if (expanded) ...widget.section.expandedSections.map((section) => _DynamicSectionWidget(section)),
+        if (expanded) ...widget.section.expandedSections.map((section) => DynamicSectionWidget(section)),
         if (!expanded)
           _LireLaSuiteButton(
             onTap: () {
@@ -326,7 +326,7 @@ class _RichTextSectionWidget extends StatelessWidget {
 }
 
 class _StartButtonWidget extends StatelessWidget {
-  final _StartButtonTextSection section;
+  final StartButtonTextSection section;
 
   _StartButtonWidget(this.section);
 
@@ -360,7 +360,7 @@ class _StartButtonWidget extends StatelessWidget {
 }
 
 class _FooterSectionWidget extends StatelessWidget {
-  final _FooterSection section;
+  final FooterSection section;
 
   _FooterSectionWidget(this.section);
 
@@ -390,7 +390,7 @@ class _FooterSectionWidget extends StatelessWidget {
 }
 
 class _ResponseInfoSectionWidget extends StatelessWidget {
-  final _ResponseInfoSection section;
+  final ResponseInfoSection section;
 
   _ResponseInfoSectionWidget(this.section);
 
@@ -446,7 +446,7 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
 }
 
 class _InfoHeaderSectionWidget extends StatelessWidget {
-  final _InfoHeaderSection section;
+  final InfoHeaderSection section;
 
   _InfoHeaderSectionWidget(this.section);
 
@@ -659,7 +659,7 @@ class _VideoSectionWidget extends StatelessWidget {
 }
 
 class _DownloadSectionWidget extends StatelessWidget {
-  final _DownloadSection section;
+  final DownloadSection section;
 
   _DownloadSectionWidget(this.section);
 
@@ -721,7 +721,7 @@ class _DownloadSectionWidget extends StatelessWidget {
 }
 
 class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
-  final _ConsultationFeedbackQuestionSection section;
+  final ConsultationFeedbackQuestionSection section;
 
   _ConsultationFeedbackQuestionSectionWidget(this.section);
 
@@ -787,7 +787,7 @@ class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
 }
 
 class _ConsultationFeedbackResultsSectionWidget extends StatelessWidget {
-  final _ConsultationFeedbackResultsSection section;
+  final ConsultationFeedbackResultsSection section;
 
   _ConsultationFeedbackResultsSectionWidget(this.section);
 
@@ -862,7 +862,7 @@ class _NotificationSectionWidget extends StatelessWidget {
 }
 
 class _HistorySectionWidget extends StatelessWidget {
-  final _HistorySection section;
+  final HistorySection section;
 
   _HistorySectionWidget(this.section);
 
@@ -894,7 +894,9 @@ class _HistorySectionWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AgoraSpacings.x2),
-              ...section.steps.mapIndexed((i, e) => _HistoryElementWidget(e, i == section.steps.length - 1)),
+              ...section.steps.mapIndexed(
+                (i, e) => _HistoryElementWidget(e, i == section.steps.length - 1, section.consultationId),
+              ),
             ],
           ),
         ),
@@ -906,8 +908,9 @@ class _HistorySectionWidget extends StatelessWidget {
 class _HistoryElementWidget extends StatelessWidget {
   final ConsultationHistoryStep step;
   final bool isLast;
+  final String consultationId;
 
-  _HistoryElementWidget(this.step, this.isLast);
+  _HistoryElementWidget(this.step, this.isLast, this.consultationId);
 
   @override
   Widget build(BuildContext context) {
@@ -919,7 +922,16 @@ class _HistoryElementWidget extends StatelessWidget {
             Navigator.pushNamed(
               context,
               DynamicConsultationResultsPage.routeName,
-              arguments: step.updateId,
+              arguments: consultationId,
+            );
+          } else {
+            Navigator.pushNamed(
+              context,
+              DynamicConsultationUpdatePage.routeName,
+              arguments: DynamicConsultationUpdateArguments(
+                updateId: step.updateId!,
+                consultationId: consultationId,
+              ),
             );
           }
         },
@@ -1007,7 +1019,7 @@ class _HistoryIndicator extends StatelessWidget {
 }
 
 class _ParticipantInfoSectionWidget extends StatelessWidget {
-  final _ParticipantInfoSection section;
+  final ParticipantInfoSection section;
 
   _ParticipantInfoSectionWidget(this.section);
 

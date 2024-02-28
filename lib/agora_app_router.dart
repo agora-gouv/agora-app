@@ -4,6 +4,7 @@ import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/consultation/dynamic/results/dynamic_consultation_results_page.dart';
+import 'package:agora/pages/consultation/dynamic/updates/dynamic_consultation_update_page.dart';
 import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
@@ -136,6 +137,13 @@ class AgoraAppRouter {
         currentRoute = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationDetailsPage} $id",
           child: DynamicConsultationResultsPage(id),
+        );
+        break;
+      case DynamicConsultationUpdatePage.routeName:
+        final argument = settings.arguments as DynamicConsultationUpdateArguments;
+        currentRoute = AgoraTracker(
+          widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${argument.updateId}",
+          child: DynamicConsultationUpdatePage(argument),
         );
         break;
       case ConsultationQuestionPage.routeName:

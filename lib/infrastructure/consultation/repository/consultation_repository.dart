@@ -51,6 +51,11 @@ abstract class ConsultationRepository {
   Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({
     required String consultationId,
   });
+
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  });
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -349,6 +354,38 @@ class ConsultationDioRepository extends ConsultationRepository {
       return DynamicConsultationErrorResponse();
     }
   }
+
+  @override
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/v2/consultations/$consultationId/updates/$updateId",
+      );
+      final data = response.data;
+      final shareText = data["shareText"] as String;
+      final downloadUrl = data["downloadAnalysisUrl"] as String?;
+      final consultation = DynamicConsultationUpdate(
+        id: consultationId,
+        shareText: shareText,
+        responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
+        infoHeader: _toInfoHeader(data["infoHeader"]),
+        collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
+        downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
+        feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
+        feedbackResult: _toFeedbackResults(data["feedbackResults"]),
+        footer: _toFooter(data["footer"]),
+      );
+      return DynamicConsultationUpdateSuccessResponse(consultation);
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return DynamicConsultationUpdateErrorResponse();
+    }
+  }
 }
 
 abstract class GetConsultationsRepositoryResponse extends Equatable {
@@ -502,4 +539,20 @@ class DynamicConsultationsResultsSuccessResponse extends DynamicConsultationResu
 
   @override
   List<Object?> get props => [participantCount, results];
+}
+
+sealed class DynamicConsultationUpdateResponse extends Equatable {}
+
+class DynamicConsultationUpdateErrorResponse extends DynamicConsultationUpdateResponse {
+  @override
+  List<Object?> get props => [];
+}
+
+class DynamicConsultationUpdateSuccessResponse extends DynamicConsultationUpdateResponse {
+  final DynamicConsultationUpdate update;
+
+  DynamicConsultationUpdateSuccessResponse(this.update);
+
+  @override
+  List<Object?> get props => [update];
 }
