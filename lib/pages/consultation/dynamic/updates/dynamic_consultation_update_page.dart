@@ -1,6 +1,7 @@
 import 'package:agora/bloc/consultation/dynamic/dynamic_consultation_events.dart';
 import 'package:agora/bloc/consultation/dynamic/updates/dynamic_consultation__update_state.dart';
 import 'package:agora/bloc/consultation/dynamic/updates/dynamic_consultation_updates_bloc.dart';
+import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';

@@ -60,6 +60,17 @@ ConsultationParticipationInfo? _toParticipationInfo(dynamic data, String shareTe
   }
 }
 
+ConsultationDatesInfos? _toConsultationDateInfo(dynamic data) {
+  if (data is Map<String, dynamic>) {
+    return ConsultationDatesInfos(
+      endDate: (data["endDate"] as String).parseToDateTime(),
+      startDate: (data["startDate"] as String).parseToDateTime(),
+    );
+  } else {
+    return null;
+  }
+}
+
 ConsultationFeedbackQuestion? _toFeedbackQuestion(dynamic data) {
   if (data is Map<String, dynamic>) {
     return ConsultationFeedbackQuestion(
@@ -106,7 +117,7 @@ ConsultationHistoryStep? _toHistoryStep(dynamic data, String id) {
       _ => ConsultationHistoryStepType.update,
     };
     return ConsultationHistoryStep(
-      updateId: data["updateId"] as String,
+      updateId: data["updateId"] as String?,
       title: data["title"] as String,
       type: type,
       status: switch (data["status"] as String) {
@@ -114,8 +125,8 @@ ConsultationHistoryStep? _toHistoryStep(dynamic data, String id) {
         "current" => ConsultationHistoryStepStatus.current,
         _ => ConsultationHistoryStepStatus.incoming,
       },
-      date: (data["date"] as String).parseToDateTime(),
-      actionText: data["actionText"] as String,
+      date: (data["date"] as String?)?.parseToDateTime(),
+      actionText: data["actionText"] as String?,
     );
   } else {
     return null;
@@ -146,7 +157,7 @@ DynamicConsultationSectionVideo _toVideo(Map<String, dynamic> data) {
     height: data["videoHeight"] as int,
     authorName: data["authorInfo"]["name"] as String,
     authorDescription: data["authorInfo"]["message"] as String,
-    date: (data["authorInfo"]["date"] as String).parseToDateTime(),
+    date: (data["authorInfo"]["date"] as String?)?.parseToDateTime(),
     transcription: data["transcription"] as String,
   );
 }

@@ -86,6 +86,19 @@ class ConsultationQuestionsInfos extends Equatable {
       ];
 }
 
+class ConsultationDatesInfos extends Equatable {
+  final DateTime endDate;
+  final DateTime startDate;
+
+  ConsultationDatesInfos({
+    required this.endDate,
+    required this.startDate,
+  });
+
+  @override
+  List<Object?> get props => [endDate, startDate];
+}
+
 class ConsultationResponseInfos extends Equatable {
   final String id;
   final String picto;
@@ -246,6 +259,7 @@ enum ConsultationHistoryStepStatus {
 class DynamicConsultationUpdate extends Equatable {
   final String id;
   final String shareText;
+  final ConsultationDatesInfos? consultationDatesInfos;
   final ConsultationResponseInfos? responseInfos;
   final ConsultationInfoHeader? infoHeader;
   final List<DynamicConsultationSection> collapsedSections;
@@ -268,20 +282,22 @@ class DynamicConsultationUpdate extends Equatable {
     required this.feedbackQuestion,
     required this.feedbackResult,
     required this.footer,
+    required this.consultationDatesInfos,
   });
 
   @override
   List<Object?> get props => [
-    id,
-    shareText,
-    responseInfos,
-    infoHeader,
-    collapsedSections,
-    expandedSections,
-    participationInfo,
-    downloadInfo,
-    feedbackQuestion,
-    feedbackResult,
-    footer,
-  ];
+        id,
+        shareText,
+        responseInfos,
+        infoHeader,
+        collapsedSections,
+        expandedSections,
+        participationInfo,
+        downloadInfo,
+        feedbackQuestion,
+        feedbackResult,
+        consultationDatesInfos,
+        footer,
+      ];
 }

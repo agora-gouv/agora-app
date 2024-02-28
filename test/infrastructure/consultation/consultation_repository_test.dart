@@ -1395,6 +1395,224 @@ void main() {
       expect(response, DynamicConsultationsResultsErrorResponse());
     });
   });
+
+  group("Fetch dynamic consultation update", () {
+    test("when success should return consultation update", () async {
+      // Given
+      dioAdapter.onGet(
+        "/v2/consultations/consultationId/updates/updateId",
+        (server) => server.reply(HttpStatus.ok, {
+          "shareText": "A définir ¯\\_(ツ)_/¯",
+          "consultationDates": {
+            "startDate": "2023-12-28",
+            "endDate": "2023-12-30",
+          },
+          "responsesInfo": {
+            "picto": "🙌",
+            "description": "<body>Texte riche</body>",
+          },
+          "infoHeader": {"picto": "📘", "description": "<body>Texte riche</body>"},
+          "body": {
+            "sectionsPreview": [
+              {"type": "title", "title": "Le titre de la section"},
+            ],
+            "sections": [
+              {"type": "title", "title": "Le titre de la section"},
+              {"type": "richText", "description": "<body>Texte riche</body>"},
+              {
+                "type": "image",
+                "url": "<imageUrl>",
+                "contentDescription": "Description textuelle de l'image",
+              },
+              {
+                "type": "video",
+                "url": "<videoUrl>",
+                "videoWidth": 1080,
+                "videoHeight": 1920,
+                "authorInfo": {
+                  "name": "Olivier Véran",
+                  "message": "Ministre de ...",
+                  "date": "2023-12-30",
+                },
+                "transcription": "Transcription video",
+              },
+              {
+                "type": "focusNumber",
+                "title": "30%",
+                "description": "<body>Texte riche</body>",
+              },
+              {
+                "type": "accordion",
+                "title": "Les économies financières",
+                "description": "<body>Texte riche</body>",
+              },
+              {
+                "type": "quote",
+                "description": "<body>Lorem ipsum... version riche</body>",
+              },
+            ],
+          },
+          "participationInfo": {
+            "participantCount": 15035,
+            "participantCountGoal": 30000,
+          },
+          "downloadAnalysisUrl": "<url>",
+          "feedbackQuestion": {
+            "updateId": "<updateId>",
+            "title": "Donner votre avis",
+            "picto": "💬",
+            "description": "<body>Texte riche</body>",
+          },
+          "feedbackResults": {
+            "updateId": "<updateId>",
+            "title": "Donner votre avis",
+            "picto": "💬",
+            "description": "<body>Texte riche</body>",
+            "userResponse": true,
+            "positiveRatio": 68,
+            "negativeRatio": 32,
+            "responseCount": 14034,
+          },
+          "footer": {
+            "title": "Envie d'aller plus loin ?",
+            "description": "<body>Texte riche</body>",
+          },
+          "history": [
+            {
+              "updateId": "<updateId>",
+              "type": "update",
+              "status": "done",
+              "title": "Lancement",
+              "date": "2023-12-30",
+              "actionText": "Voir les objectifs",
+            }
+          ],
+        }),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
+        httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
+      );
+      final response = await repository.fetchDynamicConsultationUpdate(
+        consultationId: 'consultationId',
+        updateId: 'updateId',
+      );
+
+      // Then
+      expect(
+        response,
+        DynamicConsultationUpdateSuccessResponse(
+          DynamicConsultationUpdate(
+            id: 'consultationId',
+            shareText: 'A définir ¯\\_(ツ)_/¯',
+            consultationDatesInfos: ConsultationDatesInfos(
+              endDate: DateTime(2023, 12, 30),
+              startDate: DateTime(2023, 12, 28),
+            ),
+            responseInfos: ConsultationResponseInfos(
+              id: 'consultationId',
+              picto: '🙌',
+              description: '<body>Texte riche</body>',
+            ),
+            infoHeader: ConsultationInfoHeader(
+              logo: "📘",
+              description: "<body>Texte riche</body>",
+            ),
+            collapsedSections: [
+              DynamicConsultationSectionTitle('Le titre de la section'),
+            ],
+            expandedSections: [
+              DynamicConsultationSectionTitle('Le titre de la section'),
+              DynamicConsultationSectionRichText("<body>Texte riche</body>"),
+              DynamicConsultationSectionImage(
+                desctiption: "Description textuelle de l'image",
+                url: "<imageUrl>",
+              ),
+              DynamicConsultationSectionVideo(
+                url: "<videoUrl>",
+                transcription: 'Transcription video',
+                width: 1080,
+                height: 1920,
+                authorName: 'Olivier Véran',
+                authorDescription: 'Ministre de ...',
+                date: DateTime(2023, 12, 30),
+              ),
+              DynamicConsultationSectionFocusNumber(
+                title: '30%',
+                desctiption: '<body>Texte riche</body>',
+              ),
+              DynamicConsultationSectionQuote('<body>Lorem ipsum... version riche</body>'),
+            ],
+            downloadInfo: ConsultationDownloadInfo(
+              url: '<url>',
+            ),
+            participationInfo: ConsultationParticipationInfo(
+              participantCountGoal: 30000,
+              participantCount: 15035,
+              shareText: 'A définir ¯\\_(ツ)_/¯',
+            ),
+            feedbackQuestion: ConsultationFeedbackQuestion(
+              id: '<updateId>',
+              title: 'Donner votre avis',
+              picto: '💬',
+              description: '<body>Texte riche</body>',
+            ),
+            feedbackResult: ConsultationFeedbackResults(
+              id: '<updateId>',
+              title: 'Donner votre avis',
+              picto: '💬',
+              description: '<body>Texte riche</body>',
+              userResponseIsPositive: true,
+              positiveRatio: 68,
+              negativeRatio: 32,
+              responseCount: 14034,
+            ),
+            footer: ConsultationFooter(
+              title: "Envie d'aller plus loin ?",
+              description: "<body>Texte riche</body>",
+            ),
+          ),
+        ),
+      );
+    });
+
+    test("when failure with connection timeout should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/v2/consultations/consultationId/updates/updateId",
+        (server) {
+          server.throws(
+            404,
+            DioException.connectionTimeout(
+              timeout: Duration(seconds: 60),
+              requestOptions: RequestOptions(),
+            ),
+          );
+        },
+      );
+
+      // When
+      final repository = ConsultationDioRepository(
+        minimalSendingTime: Duration(milliseconds: 5),
+        httpClient: httpClient,
+        storageClient: MockConsultationQuestionHiveStorageClient([]),
+      );
+      final response = await repository.fetchDynamicConsultationUpdate(
+        consultationId: 'consultationId',
+        updateId: 'updateId',
+      );
+
+      // Then
+      expect(response, DynamicConsultationUpdateErrorResponse());
+    });
+  });
 }
 
 class MockConsultationQuestionHiveStorageClient extends ConsultationQuestionStorageClient {

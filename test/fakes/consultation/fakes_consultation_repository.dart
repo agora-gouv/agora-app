@@ -300,6 +300,28 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       ],
     );
   }
+
+  @override
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  }) async {
+    final update = DynamicConsultationUpdate(
+      id: 'id',
+      shareText: 'shareText',
+      responseInfos: null,
+      infoHeader: null,
+      collapsedSections: [],
+      expandedSections: [],
+      participationInfo: null,
+      downloadInfo: null,
+      feedbackQuestion: null,
+      feedbackResult: null,
+      footer: null,
+      consultationDatesInfos: null,
+    );
+    return DynamicConsultationUpdateSuccessResponse(update);
+  }
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -372,6 +394,14 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
     return DynamicConsultationsResultsErrorResponse();
+  }
+
+  @override
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  }) async {
+    return DynamicConsultationUpdateErrorResponse();
   }
 }
 

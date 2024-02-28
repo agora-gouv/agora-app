@@ -87,6 +87,17 @@ class InfoHeaderSection extends DynamicViewModelSection {
   List<Object?> get props => [logo, description];
 }
 
+class ConsultationDatesInfosSection extends DynamicViewModelSection {
+  final String label;
+
+  ConsultationDatesInfosSection({
+    required this.label,
+  });
+
+  @override
+  List<Object?> get props => [label];
+}
+
 class ResponseInfoSection extends DynamicViewModelSection {
   final String id;
   final String picto;

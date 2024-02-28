@@ -16,10 +16,16 @@ class _Presenter {
     final feedbackQuestion = consultation.feedbackQuestion;
     final download = consultation.downloadInfo;
     final participationInfo = consultation.participationInfo;
+    final consultationDatesInfos = consultation.consultationDatesInfos;
     return _SuccessViewModel(
       consultationId: consultation.id,
       shareText: consultation.shareText,
       sections: [
+        if (consultationDatesInfos != null)
+          ConsultationDatesInfosSection(
+            label:
+                'Du ${consultationDatesInfos.startDate.formatToDayMonth()} au ${consultationDatesInfos.endDate.formatToDayMonth()}',
+          ),
         if (consultationHeaderInfo != null)
           InfoHeaderSection(
             description: consultationHeaderInfo.description,

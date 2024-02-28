@@ -11,6 +11,7 @@ class DynamicSectionWidget extends StatelessWidget {
     return switch (sectionToDisplay) {
       HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
       QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
+      ConsultationDatesInfosSection() => _ConsultationDatesInfosSectionWidget(sectionToDisplay),
       ResponseInfoSection() => _ResponseInfoSectionWidget(sectionToDisplay),
       ExpandableSection() => _ExpandableSectionWidget(sectionToDisplay),
       _TitleSection() => _TitleSectionWidget(sectionToDisplay),
@@ -193,6 +194,29 @@ class _QuestionsInfoWidget extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ConsultationDatesInfosSectionWidget extends StatelessWidget {
+  final ConsultationDatesInfosSection section;
+
+  _ConsultationDatesInfosSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.x2,
+        bottom: AgoraSpacings.x0_75,
+      ),
+      child: _InformationItem(
+        image: "ic_calendar.svg",
+        text: section.label,
+        semanticsPrefix: 'Date limite : ',
       ),
     );
   }

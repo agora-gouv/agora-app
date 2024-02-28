@@ -370,6 +370,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       final consultation = DynamicConsultationUpdate(
         id: consultationId,
         shareText: shareText,
+        consultationDatesInfos: _toConsultationDateInfo(data["consultationDates"]),
         responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
         infoHeader: _toInfoHeader(data["infoHeader"]),
         collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
