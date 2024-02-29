@@ -45,10 +45,6 @@ class AgoraAppRouter {
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
-      ConsultationFinishedPaginatedPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
-            child: ConsultationFinishedPaginatedPage(),
-          ),
       // Question au gouvernement
       QagsPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
       QagAskQuestionPage.routeName: (context) => AgoraTracker(
@@ -157,6 +153,13 @@ class AgoraAppRouter {
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.appFeedbackPage,
           child: AppFeedbackPage(),
+        );
+        break;
+      case ConsultationPaginatedPage.routeName:
+        final arguments = settings.arguments as ConsultationPaginatedPageType;
+        currentRoute = AgoraTracker(
+          widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
+          child: ConsultationPaginatedPage(arguments),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:

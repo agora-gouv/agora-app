@@ -280,9 +280,9 @@ void main() {
       // Then
       expect(
         response,
-        GetConsultationsFinishedPaginatedSucceedResponse(
+        GetConsultationsPaginatedSucceedResponse(
           maxPage: 3,
-          finishedConsultationsPaginated: [
+          consultationsPaginated: [
             ConsultationFinishedPaginated(
               id: "consultationId",
               title: "Quelles solutions pour les déserts médicaux ?",

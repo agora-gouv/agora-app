@@ -66,7 +66,11 @@ class ConsultationsFinishedSection extends StatelessWidget {
                       AgoraRoundedButton(
                         label: GenericStrings.all,
                         style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                        onPressed: () => Navigator.pushNamed(context, ConsultationFinishedPaginatedPage.routeName),
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          ConsultationPaginatedPage.routeName,
+                          arguments: ConsultationPaginatedPageType.finished,
+                        ),
                       ),
                     ],
                   ],
@@ -166,7 +170,11 @@ class _ViewAllCard extends StatelessWidget {
           borderColor: AgoraColors.border,
           cardColor: AgoraColors.white,
           onTap: () {
-            Navigator.pushNamed(context, ConsultationFinishedPaginatedPage.routeName);
+            Navigator.pushNamed(
+              context,
+              ConsultationPaginatedPage.routeName,
+              arguments: ConsultationPaginatedPageType.finished,
+            );
           },
           child: Center(
             child: Column(

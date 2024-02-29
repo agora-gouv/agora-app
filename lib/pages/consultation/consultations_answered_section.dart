@@ -1,9 +1,12 @@
 import 'package:agora/bloc/consultation/consultation_view_model.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_answered_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsAnsweredSection extends StatelessWidget {
@@ -20,7 +23,7 @@ class ConsultationsAnsweredSection extends StatelessWidget {
         top: AgoraSpacings.x1_5,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: _buildAnsweredConsultations(context),
       ),
     );
@@ -29,16 +32,35 @@ class ConsultationsAnsweredSection extends StatelessWidget {
   List<Widget> _buildAnsweredConsultations(BuildContext context) {
     final List<Widget> answeredConsultationsWidgets = List.empty(growable: true);
     answeredConsultationsWidgets.add(
-      AgoraRichText(
-        items: [
-          AgoraRichTextItem(
-            text: ConsultationStrings.answeredConsultationPart1,
-            style: AgoraRichTextItemStyle.regular,
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            child: AgoraRichText(
+              items: [
+                AgoraRichTextItem(
+                  text: ConsultationStrings.answeredConsultationPart1,
+                  style: AgoraRichTextItemStyle.regular,
+                ),
+                AgoraRichTextItem(
+                  text: ConsultationStrings.answeredConsultationPart2,
+                  style: AgoraRichTextItemStyle.bold,
+                ),
+              ],
+            ),
           ),
-          AgoraRichTextItem(
-            text: ConsultationStrings.answeredConsultationPart2,
-            style: AgoraRichTextItemStyle.bold,
-          ),
+          if (answeredViewModels.isNotEmpty) ...[
+            SizedBox(width: AgoraSpacings.x0_75),
+            AgoraRoundedButton(
+              label: GenericStrings.all,
+              style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+              onPressed: () => Navigator.pushNamed(
+                context,
+                ConsultationPaginatedPage.routeName,
+                arguments: ConsultationPaginatedPageType.answered,
+              ),
+            ),
+          ],
         ],
       ),
     );

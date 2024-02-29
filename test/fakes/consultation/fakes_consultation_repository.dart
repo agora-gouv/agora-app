@@ -56,9 +56,9 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
   }) async {
-    return GetConsultationsFinishedPaginatedSucceedResponse(
+    return GetConsultationsPaginatedSucceedResponse(
       maxPage: 3,
-      finishedConsultationsPaginated: [
+      consultationsPaginated: [
         ConsultationFinishedPaginated(
           id: "consultationId",
           title: "Quelles solutions pour les déserts médicaux ?",

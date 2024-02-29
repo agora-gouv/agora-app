@@ -29,6 +29,10 @@ abstract class ConsultationRepository {
     required int pageNumber,
   });
 
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  });
+
   Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
     required String consultationId,
   });
@@ -122,14 +126,42 @@ class ConsultationDioRepository extends ConsultationRepository {
   }
 
   @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/consultations",
+      );
+
+      //final response = await httpClient.get("/consultations/answered/$pageNumber"); TODO URL final
+      return GetConsultationsPaginatedSucceedResponse(
+        maxPage: 1,//response.data["maxPageNumber"] as int,
+        consultationsPaginated: (response.data["answered"] as List).map((consultation) {
+          return ConsultationFinishedPaginated(
+            id: consultation["id"] as String,
+            title: consultation["title"] as String,
+            coverUrl: consultation["coverUrl"] as String,
+            thematique: (consultation["thematique"] as Map).toThematique(),
+            step: 2,//consultation["step"] as int,
+          );
+        }).toList(),
+      );
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return GetConsultationsFinishedPaginatedFailedResponse();
+    }
+  }
+
+  @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
   }) async {
     try {
       final response = await httpClient.get("/consultations/finished/$pageNumber");
-      return GetConsultationsFinishedPaginatedSucceedResponse(
+      return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
-        finishedConsultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
+        consultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
           return ConsultationFinishedPaginated(
             id: finishedConsultation["id"] as String,
             title: finishedConsultation["title"] as String,
@@ -427,17 +459,17 @@ abstract class GetConsultationsFinishedPaginatedRepositoryResponse extends Equat
   List<Object> get props => [];
 }
 
-class GetConsultationsFinishedPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
+class GetConsultationsPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
   final int maxPage;
-  final List<ConsultationFinishedPaginated> finishedConsultationsPaginated;
+  final List<ConsultationFinishedPaginated> consultationsPaginated;
 
-  GetConsultationsFinishedPaginatedSucceedResponse({
+  GetConsultationsPaginatedSucceedResponse({
     required this.maxPage,
-    required this.finishedConsultationsPaginated,
+    required this.consultationsPaginated,
   });
 
   @override
-  List<Object> get props => [maxPage, finishedConsultationsPaginated];
+  List<Object> get props => [maxPage, consultationsPaginated];
 }
 
 class GetConsultationsFinishedPaginatedFailedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {}
