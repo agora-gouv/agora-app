@@ -41,6 +41,36 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
 
+    blocTest(
+      "when repository succeed and type is answered - should emit success state",
+      build: () => ConsultationPaginatedBloc(
+        consultationRepository: FakeConsultationSuccessRepository(),
+      ),
+      act: (bloc) =>
+          bloc.add(FetchConsultationPaginatedEvent(pageNumber: 1, type: ConsultationPaginatedPageType.answered)),
+      expect: () => [
+        ConsultationFinishedPaginatedLoadingState(
+          maxPage: -1,
+          currentPageNumber: 1,
+          consultationPaginatedViewModels: [],
+        ),
+        ConsultationPaginatedFetchedState(
+          maxPage: 3,
+          currentPageNumber: 1,
+          consultationPaginatedViewModels: [
+            ConsultationFinishedPaginatedViewModel(
+              id: "consultationId",
+              title: "Quelles solutions pour les déserts médicaux ?",
+              coverUrl: "coverUrl",
+              thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
+              label: 'label',
+            ),
+          ],
+        ),
+      ],
+      wait: const Duration(milliseconds: 5),
+    );
+
     blocTest<ConsultationPaginatedBloc, ConsultationPaginatedState>(
       "when repository succeed and page number to load is other than 1 - should emit success state",
       build: () => ConsultationPaginatedBloc(

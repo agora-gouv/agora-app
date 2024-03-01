@@ -326,9 +326,19 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
     required int pageNumber,
-  }) {
-    // TODO: implement fetchConsultationsAnsweredPaginated
-    throw UnimplementedError();
+  }) async {
+    return GetConsultationsPaginatedSucceedResponse(
+      maxPage: 3,
+      consultationsPaginated: [
+        ConsultationFinishedPaginated(
+          id: "consultationId",
+          title: "Quelles solutions pour les déserts médicaux ?",
+          coverUrl: "coverUrl",
+          thematique: Thematique(picto: "🩺", label: "Santé"),
+          label: 'label',
+        ),
+      ],
+    );
   }
 }
 
