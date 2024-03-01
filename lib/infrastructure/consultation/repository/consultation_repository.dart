@@ -136,7 +136,7 @@ class ConsultationDioRepository extends ConsultationRepository {
 
       //final response = await httpClient.get("/consultations/answered/$pageNumber"); TODO URL final
       return GetConsultationsPaginatedSucceedResponse(
-        maxPage: 1,//response.data["maxPageNumber"] as int,
+        maxPage: 1, //response.data["maxPageNumber"] as int,
         consultationsPaginated: (response.data["answered"] as List).map((consultation) {
           return ConsultationFinishedPaginated(
             id: consultation["id"] as String,

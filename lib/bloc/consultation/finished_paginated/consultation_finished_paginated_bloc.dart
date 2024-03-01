@@ -5,8 +5,7 @@ import 'package:agora/infrastructure/consultation/repository/consultation_reposi
 import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ConsultationPaginatedBloc
-    extends Bloc<FetchConsultationPaginatedEvent, ConsultationPaginatedState> {
+class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, ConsultationPaginatedState> {
   final ConsultationRepository consultationRepository;
 
   ConsultationPaginatedBloc({
@@ -27,8 +26,10 @@ class ConsultationPaginatedBloc
       ),
     );
     final response = await switch (event.type) {
-      ConsultationPaginatedPageType.finished => consultationRepository.fetchConsultationsFinishedPaginated(pageNumber: event.pageNumber),
-      ConsultationPaginatedPageType.answered => consultationRepository.fetchConsultationsAnsweredPaginated(pageNumber: event.pageNumber),
+      ConsultationPaginatedPageType.finished =>
+        consultationRepository.fetchConsultationsFinishedPaginated(pageNumber: event.pageNumber),
+      ConsultationPaginatedPageType.answered =>
+        consultationRepository.fetchConsultationsAnsweredPaginated(pageNumber: event.pageNumber),
     };
     if (response is GetConsultationsPaginatedSucceedResponse) {
       final viewModels = ConsultationFinishedPaginatedPresenter.presentPaginatedConsultations(

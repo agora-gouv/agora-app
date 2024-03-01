@@ -72,18 +72,18 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
             ),
             SizedBox(height: AgoraSpacings.x0_25),
             if (label != null)
-            AgoraRoundedCard(
-              cardColor: AgoraColors.consultationLabelRed,
-              padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-              roundedCorner: AgoraRoundedCorner.bottomRounded,
-              child: Row(
-                children: [
-                  SvgPicture.asset('assets/ic_fire.svg', excludeFromSemantics: true),
-                  SizedBox(width: AgoraSpacings.x0_5),
-                  Expanded(child: Text(label!, style: AgoraTextStyles.regular12)),
-                ],
+              AgoraRoundedCard(
+                cardColor: AgoraColors.consultationLabelRed,
+                padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+                roundedCorner: AgoraRoundedCorner.bottomRounded,
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/ic_fire.svg', excludeFromSemantics: true),
+                    SizedBox(width: AgoraSpacings.x0_5),
+                    Expanded(child: Text(label!, style: AgoraTextStyles.regular12)),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),
