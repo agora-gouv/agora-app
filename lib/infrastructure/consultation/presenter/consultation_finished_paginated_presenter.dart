@@ -12,7 +12,7 @@ class ConsultationFinishedPaginatedPresenter {
         title: consultation.title,
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),
-        step: consultation.step,
+        label: consultation.label,
       );
     }).toList();
   }

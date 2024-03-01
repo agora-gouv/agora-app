@@ -31,6 +31,7 @@ class AgoraColors {
   static const Color grey425Opacity40 = Color(0x66666666);
   static const Color transparent = Color(0x00000000);
   static const Color divider = Color(0x1A000000);
+  static const Color consultationLabelRed = Color(0xFFFFF7F0);
   static const Color fluorescentRed = Color(0xFFFF5655);
   static const Color red = Color(0xFFCE0500);
   static const Color lightRedOpacity19 = Color(0x30CB2C31);

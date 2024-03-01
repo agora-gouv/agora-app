@@ -87,7 +87,7 @@ class ConsultationsAnsweredSection extends StatelessWidget {
           title: answeredViewModel.title,
           thematique: answeredViewModel.thematique,
           imageUrl: answeredViewModel.coverUrl,
-          step: answeredViewModel.step,
+          label: answeredViewModel.label,
         ),
       );
       answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));

@@ -37,7 +37,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl2",
           thematique: Thematique(picto: "🩺", label: "Santé"),
-          step: 2,
+          label: 'label',
         ),
       ],
       answeredConsultations: [
@@ -46,7 +46,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Quand commencer ?",
           coverUrl: "coverUrl3",
           thematique: Thematique(picto: "🩺", label: "Santé"),
-          step: 3,
+          label: 'label',
         ),
       ],
     );
@@ -64,7 +64,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
-          step: 2,
+          label: 'label',
         ),
       ],
     );
@@ -322,6 +322,14 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     );
     return DynamicConsultationUpdateSuccessResponse(update);
   }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) {
+    // TODO: implement fetchConsultationsAnsweredPaginated
+    throw UnimplementedError();
+  }
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -403,12 +411,28 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   }) async {
     return DynamicConsultationUpdateErrorResponse();
   }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) {
+    // TODO: implement fetchConsultationsAnsweredPaginated
+    throw UnimplementedError();
+  }
 }
 
 class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRepository {
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
+  }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) {
+    // TODO: implement fetchConsultationsAnsweredPaginated
+    throw UnimplementedError();
   }
 }
 

@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
-import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
-import 'package:agora/design/custom_view/agora_step_circle.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -18,7 +16,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   final String title;
   final String imageUrl;
   final ThematiqueViewModel thematique;
-  final int step;
+  final String? label;
   final AgoraConsultationFinishedStyle style;
   final VoidCallback onClick;
   final int index;
@@ -29,7 +27,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     required this.title,
     required this.imageUrl,
     required this.thematique,
-    required this.step,
+    required this.label,
     required this.style,
     required this.onClick,
     required this.index,
@@ -51,56 +49,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         break;
     }
 
-    Widget currentChild = step != 1
-        ? _buildFinishedConsultationCard(context, carrouselWidth, true)
-        : Semantics(
-            button: false,
-            child: Stack(
-              children: [
-                _buildFinishedConsultationCard(context, carrouselWidth, false),
-                Positioned.fill(
-                  child: AgoraRoundedCard(
-                    cardColor: AgoraColors.whiteOpacity90,
-                    child: Container(),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal:
-                        style == AgoraConsultationFinishedStyle.carrousel ? AgoraSpacings.x0_75 : AgoraSpacings.base,
-                    vertical:
-                        style == AgoraConsultationFinishedStyle.carrousel ? AgoraSpacings.x0_5 : AgoraSpacings.base,
-                  ),
-                  child: AgoraRoundedCard(
-                    cardColor: AgoraColors.lightBrun,
-                    padding: const EdgeInsets.only(
-                      top: AgoraSpacings.x0_25,
-                      left: AgoraSpacings.x0_5,
-                      right: AgoraSpacings.x0_5,
-                      bottom: AgoraSpacings.x0_25 - 2.5,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset("assets/ic_timer_brun.svg", excludeFromSemantics: true),
-                        SizedBox(width: AgoraSpacings.x0_25),
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 2.5),
-                            child: Text(
-                              ConsultationStrings.shortly,
-                              style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.brun),
-                              semanticsLabel: ConsultationStrings.shortly.toLowerCase(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
+    Widget currentChild = _buildFinishedConsultationCard(context, carrouselWidth, true);
     if (style == AgoraConsultationFinishedStyle.carrousel) {
       currentChild = SizedBox(width: carrouselWidth, child: currentChild);
     }
@@ -120,7 +69,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         borderColor: AgoraColors.border,
         cardColor: AgoraColors.white,
         padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-        onTap: step != 1 ? () => onClick() : null,
+        onTap: () => onClick(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -132,20 +81,20 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                 ? _buildPadding(child: Text(title, style: AgoraTextStyles.medium18))
                 : Expanded(child: _buildPadding(child: Text(title, style: AgoraTextStyles.medium18))),
             SizedBox(height: AgoraSpacings.x0_5),
-            AgoraRoundedCard(
-              cardColor: AgoraColors.doctor,
-              padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-              roundedCorner: AgoraRoundedCorner.bottomRounded,
-              child: Row(
-                children: [
-                  SvgPicture.asset(_getIcon(), excludeFromSemantics: true),
-                  SizedBox(width: AgoraSpacings.x0_25),
-                  Expanded(child: Text(_getStepString(), style: AgoraTextStyles.regular12)),
-                  SizedBox(width: AgoraSpacings.x0_25),
-                  AgoraStepCircle(currentStep: step, style: AgoraStepCircleStyle.single),
-                ],
+            if (label != null)
+              AgoraRoundedCard(
+                cardColor: AgoraColors.consultationLabelRed,
+                padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+                roundedCorner: AgoraRoundedCorner.bottomRounded,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SvgPicture.asset('assets/ic_fire.svg', excludeFromSemantics: true),
+                    SizedBox(width: AgoraSpacings.x0_5),
+                    Expanded(child: Text(label!, style: AgoraTextStyles.regular12)),
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),
@@ -191,31 +140,5 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         );
       },
     );
-  }
-
-  String _getIcon() {
-    switch (step) {
-      case 1:
-        return "assets/ic_consultation_step2_finished.svg";
-      case 2:
-        return "assets/ic_consultation_step2_finished.svg";
-      case 3:
-        return "assets/ic_consultation_step3_answered.svg";
-      default:
-        return "";
-    }
-  }
-
-  String _getStepString() {
-    switch (step) {
-      case 1:
-        return ConsultationStrings.coming;
-      case 2:
-        return ConsultationStrings.engagement;
-      case 3:
-        return ConsultationStrings.implementation;
-      default:
-        return "";
-    }
   }
 }

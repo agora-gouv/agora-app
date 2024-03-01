@@ -101,7 +101,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
-            step: finishedConsultation["step"] as int,
+            label: finishedConsultation["updateLabel"] as String?,
           );
         }).toList(),
         answeredConsultations: answeredConsultations.map((answeredConsultation) {
@@ -110,7 +110,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             title: answeredConsultation["title"] as String,
             coverUrl: answeredConsultation["coverUrl"] as String,
             thematique: (answeredConsultation["thematique"] as Map).toThematique(),
-            step: answeredConsultation["step"] as int,
+            label: answeredConsultation["updateLabel"] as String?,
           );
         }).toList(),
       );
@@ -143,7 +143,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             title: consultation["title"] as String,
             coverUrl: consultation["coverUrl"] as String,
             thematique: (consultation["thematique"] as Map).toThematique(),
-            step: 2,//consultation["step"] as int,
+            label: consultation["label"] as String?,
           );
         }).toList(),
       );
@@ -167,7 +167,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
-            step: finishedConsultation["step"] as int,
+            label: finishedConsultation["updateLabel"] as String?,
           );
         }).toList(),
       );

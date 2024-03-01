@@ -127,7 +127,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
             title: finishedViewModel.title,
             thematique: finishedViewModel.thematique,
             imageUrl: finishedViewModel.coverUrl,
-            step: finishedViewModel.step,
+            label: finishedViewModel.label,
             style: AgoraConsultationFinishedStyle.carrousel,
             onClick: () {
               TrackerHelper.trackClick(
