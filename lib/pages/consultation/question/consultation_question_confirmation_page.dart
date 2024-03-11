@@ -16,7 +16,6 @@ import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/details/consultation_details_page.dart';
@@ -62,7 +61,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
       },
       child: AgoraScaffold(
         shouldPop: false,
-        appBarColor: AgoraColors.primaryBlue,
+        appBarType: AppBarColorType.primaryColor,
         child: BlocConsumer<ConsultationQuestionsResponsesBloc, SendConsultationQuestionsResponsesState>(
           listener: (context, state) {
             if (state is SendConsultationQuestionsResponsesSuccessState) {

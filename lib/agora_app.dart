@@ -18,11 +18,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AgoraApp extends StatefulWidget {
   final SharedPreferences sharedPref;
   final bool shouldShowOnboarding;
+  final String agoraAppIcon;
 
   static final matomoRouteObserver = MatomoRouteObserver();
   static final navigationObserver = NavigationObserver();
 
-  const AgoraApp({super.key, required this.sharedPref, required this.shouldShowOnboarding});
+  const AgoraApp({
+    super.key,
+    required this.sharedPref,
+    required this.shouldShowOnboarding,
+    required this.agoraAppIcon,
+  });
 
   @override
   State<AgoraApp> createState() => _AgoraAppState();
@@ -125,6 +131,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         settings: settings,
         sharedPref: widget.sharedPref,
         redirection: redirection,
+        agoraAppIcon: widget.agoraAppIcon,
       ),
       theme: ThemeData(
         colorScheme: ColorScheme.light(

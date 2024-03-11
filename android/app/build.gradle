@@ -75,6 +75,10 @@ android {
             dimension "environment"
             applicationId "fr.social.gouv.agora.debug"
         }
+        sandbox {
+            dimension "environment"
+            applicationId "fr.social.gouv.agora.debug"
+        }
         prod {
             dimension "environment"
             applicationId "fr.gouv.agora"

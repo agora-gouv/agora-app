@@ -41,7 +41,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
     final arguments = ModalRoute.of(context)!.settings.arguments as DemographicInformationArguments;
     return AgoraScaffold(
       shouldPop: false,
-      appBarColor: AgoraColors.primaryBlue,
+      appBarType: AppBarColorType.primaryColor,
       child: AgoraSingleScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(

@@ -1,0 +1,1 @@
+flutter build ipa --target=lib/main_sandbox.dart --flavor=sandbox --dart-define=app.flavor=Sandbox --export-options-plist=ios/Params/ExportOptionsAdHoc.plist --build-name="1.3.2" --build-number=36

@@ -1,7 +1,10 @@
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/design/custom_view/agora_responsive_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+enum AppBarColorType { primaryColor, background }
 
 // ignore: must_be_immutable
 class AgoraScaffold extends StatelessWidget {
@@ -17,7 +20,7 @@ class AgoraScaffold extends StatelessWidget {
 
   AgoraScaffold({
     super.key,
-    this.appBarColor = AgoraColors.white,
+    AppBarColorType appBarType = AppBarColorType.background,
     this.backgroundColor = AgoraColors.white,
     required this.child,
     this.shouldPop = true,
@@ -25,7 +28,10 @@ class AgoraScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.floatingActionButtonLocation,
     this.pageLabel,
-  });
+  }) : appBarColor = switch (appBarType) {
+          AppBarColorType.primaryColor => HelperManager.getMainColorHelper().getMainColor(),
+          AppBarColorType.background => AgoraColors.white,
+        };
 
   @override
   Widget build(BuildContext context) {

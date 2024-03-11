@@ -1,4 +1,4 @@
-import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:flutter/material.dart';
 
 class AgoraTopDiagonal extends StatelessWidget {
@@ -9,7 +9,7 @@ class AgoraTopDiagonal extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.02,
-        color: AgoraColors.primaryBlue,
+        color: HelperManager.getMainColorHelper().getMainColor(),
       ),
     );
   }

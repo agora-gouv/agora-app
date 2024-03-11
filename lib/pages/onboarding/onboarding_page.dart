@@ -46,7 +46,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
   Widget build(BuildContext context) {
     return AgoraScaffold(
       shouldPop: false,
-      appBarColor: AgoraColors.primaryBlue,
+      appBarType: AppBarColorType.primaryColor,
       child: _handleStep(context),
     );
   }

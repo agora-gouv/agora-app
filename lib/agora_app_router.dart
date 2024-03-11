@@ -112,11 +112,16 @@ class AgoraAppRouter {
     required RouteSettings settings,
     required SharedPreferences sharedPref,
     required Redirection redirection,
+    required String agoraAppIcon,
   }) {
     Widget currentRoute;
     switch (settings.name) {
       case LoadingPage.routeName:
-        currentRoute = LoadingPage(sharedPref: sharedPref, redirection: redirection);
+        currentRoute = LoadingPage(
+          sharedPref: sharedPref,
+          redirection: redirection,
+          agoraAppIcon: agoraAppIcon,
+        );
         break;
       // Consultation
       case ConsultationDetailsPage.routeName:
