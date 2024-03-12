@@ -143,7 +143,7 @@ class _SuccessPage extends StatelessWidget {
       notificationDescription: notificationDescription,
     );
     return AgoraScaffold(
-      appBarColor: AgoraColors.primaryBlue,
+      appBarType: AppBarColorType.primaryColor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
