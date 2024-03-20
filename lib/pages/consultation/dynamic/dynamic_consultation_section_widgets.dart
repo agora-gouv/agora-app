@@ -655,7 +655,13 @@ class _VideoSectionWidget extends StatelessWidget {
             ),
           ),
           if (section.authorDescription != null) const SizedBox(height: AgoraSpacings.x0_5),
-          if (section.authorDescription != null) AgoraHtml(data: section.authorDescription!),
+          if (section.authorDescription != null) Padding(
+            padding: const EdgeInsets.only(left: AgoraSpacings.horizontalPadding),
+            child: Text(
+              section.authorDescription!,
+              style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
+            ),
+          ),
           if (section.date != null) SizedBox(height: AgoraSpacings.x0_5),
           if (section.date != null)
             RichText(

@@ -41,6 +41,18 @@ class _Presenter {
           collapsedSections: consultation.collapsedSections.map(DynamicConsultationPresenter.presentSection).toList(),
           expandedSections: consultation.expandedSections.map(DynamicConsultationPresenter.presentSection).toList(),
         ),
+        if (download != null) DownloadSection(url: download.url),
+        if (participationInfo != null)
+          ParticipantInfoSection(
+            participantCountGoal: participationInfo.participantCountGoal,
+            participantCount: participationInfo.participantCount,
+            shareText: participationInfo.shareText,
+          ),
+        if (consultation.footer != null)
+          FooterSection(
+            title: consultation.footer!.title,
+            description: consultation.footer!.description,
+          ),
         if (feedbackResult != null)
           ConsultationFeedbackResultsSection(
             id: feedbackResult.id,
@@ -58,18 +70,6 @@ class _Presenter {
             picto: feedbackQuestion.picto,
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
-          ),
-        if (download != null) DownloadSection(url: download.url),
-        if (participationInfo != null)
-          ParticipantInfoSection(
-            participantCountGoal: participationInfo.participantCountGoal,
-            participantCount: participationInfo.participantCount,
-            shareText: participationInfo.shareText,
-          ),
-        if (consultation.footer != null)
-          FooterSection(
-            title: consultation.footer!.title,
-            description: consultation.footer!.description,
           ),
         NotificationSection(),
       ],

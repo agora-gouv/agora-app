@@ -52,6 +52,18 @@ class DynamicConsultationPresenter {
           collapsedSections: consultation.collapsedSections.map(presentSection).toList(),
           expandedSections: consultation.expandedSections.map(presentSection).toList(),
         ),
+        if (download != null) DownloadSection(url: download.url),
+        if (participationInfo != null)
+          ParticipantInfoSection(
+            participantCountGoal: participationInfo.participantCountGoal,
+            participantCount: participationInfo.participantCount,
+            shareText: participationInfo.shareText,
+          ),
+        if (consultation.footer != null)
+          FooterSection(
+            title: consultation.footer!.title,
+            description: consultation.footer!.description,
+          ),
         if (feedbackResult != null)
           ConsultationFeedbackResultsSection(
             id: feedbackResult.id,
@@ -69,18 +81,6 @@ class DynamicConsultationPresenter {
             picto: feedbackQuestion.picto,
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
-          ),
-        if (download != null) DownloadSection(url: download.url),
-        if (participationInfo != null)
-          ParticipantInfoSection(
-            participantCountGoal: participationInfo.participantCountGoal,
-            participantCount: participationInfo.participantCount,
-            shareText: participationInfo.shareText,
-          ),
-        if (consultation.footer != null)
-          FooterSection(
-            title: consultation.footer!.title,
-            description: consultation.footer!.description,
           ),
         if (history == null) StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
         if (history != null) HistorySection(consultation.id, history),
@@ -101,7 +101,7 @@ class DynamicConsultationPresenter {
           height: section.height,
           authorName: section.authorName,
           authorDescription: section.authorDescription,
-          date: section.date?.formatToDayMonth(),
+          date: section.date?.formatToDayMonthYear(),
         ),
       DynamicConsultationSectionFocusNumber() =>
         _FocusNumberSection(title: section.title, description: section.desctiption),
