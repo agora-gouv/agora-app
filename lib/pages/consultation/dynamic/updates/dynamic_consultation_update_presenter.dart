@@ -21,11 +21,6 @@ class _Presenter {
       consultationId: consultation.id,
       shareText: consultation.shareText,
       sections: [
-        if (consultationDatesInfos != null)
-          ConsultationDatesInfosSection(
-            label:
-                'Du ${consultationDatesInfos.startDate.formatToDayMonth()} au ${consultationDatesInfos.endDate.formatToDayMonth()}',
-          ),
         if (consultationHeaderInfo != null)
           InfoHeaderSection(
             description: consultationHeaderInfo.description,
@@ -53,6 +48,11 @@ class _Presenter {
             title: consultation.footer!.title,
             description: consultation.footer!.description,
           ),
+        if (consultationDatesInfos != null)
+          ConsultationDatesInfosSection(
+            label:
+            'Du ${consultationDatesInfos.startDate.formatToDayMonth()} au ${consultationDatesInfos.endDate.formatToDayMonth()}',
+          ),
         if (feedbackResult != null)
           ConsultationFeedbackResultsSection(
             id: feedbackResult.id,
@@ -71,7 +71,6 @@ class _Presenter {
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
           ),
-        NotificationSection(),
       ],
     );
   }
