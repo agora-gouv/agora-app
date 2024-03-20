@@ -1,4 +1,6 @@
-class FetchDynamicConsultationEvent {
+abstract class DynamicConsultationEvent {}
+
+class FetchDynamicConsultationEvent extends DynamicConsultationEvent {
   final String id;
 
   FetchDynamicConsultationEvent(this.id);
@@ -10,9 +12,21 @@ class FetchDynamicConsultationResultsEvent {
   FetchDynamicConsultationResultsEvent(this.id);
 }
 
-class FetchDynamicConsultationUpdateEvent {
+class FetchDynamicConsultationUpdateEvent extends DynamicConsultationEvent {
   final String id;
   final String consultationId;
 
   FetchDynamicConsultationUpdateEvent(this.id, this.consultationId);
+}
+
+class SendConsultationUpdateFeedbackEvent extends DynamicConsultationEvent {
+  final String updateId;
+  final String consultationId;
+  final bool isPositive;
+
+  SendConsultationUpdateFeedbackEvent({
+    required this.updateId,
+    required this.consultationId,
+    required this.isPositive,
+  });
 }

@@ -70,6 +70,7 @@ class _Presenter {
             picto: feedbackQuestion.picto,
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
+            consultationId: consultation.id,
           ),
       ],
     );

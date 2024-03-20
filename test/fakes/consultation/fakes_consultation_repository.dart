@@ -340,6 +340,12 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       ],
     );
   }
+
+  @override
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) {
+    // TODO: implement sendConsultationUpdateFeedback
+    throw UnimplementedError();
+  }
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -427,6 +433,12 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
     required int pageNumber,
   }) {
     // TODO: implement fetchConsultationsAnsweredPaginated
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) {
+    // TODO: implement sendConsultationUpdateFeedback
     throw UnimplementedError();
   }
 }

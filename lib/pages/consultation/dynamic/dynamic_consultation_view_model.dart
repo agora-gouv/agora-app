@@ -144,12 +144,14 @@ class ConsultationFeedbackQuestionSection extends DynamicViewModelSection {
   final String picto;
   final String description;
   final String id;
+  final String consultationId;
 
   ConsultationFeedbackQuestionSection({
     required this.title,
     required this.picto,
     required this.description,
     required this.id,
+    required this.consultationId,
   });
 
   @override

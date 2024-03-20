@@ -60,6 +60,8 @@ abstract class ConsultationRepository {
     required String updateId,
     required String consultationId,
   });
+
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive);
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -413,6 +415,20 @@ class ConsultationDioRepository extends ConsultationRepository {
     } catch (e, s) {
       sentryWrapper?.captureException(e, s);
       return DynamicConsultationUpdateErrorResponse();
+    }
+  }
+
+  @override
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) async {
+    try {
+      await httpClient.post(
+        "/consultations/$consultationId/updates/$updateId/feedback",
+        data: {
+          "isPositive": isPositive,
+        },
+      );
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
     }
   }
 }

@@ -656,13 +656,14 @@ class _VideoSectionWidget extends StatelessWidget {
             ),
           ),
           if (section.authorDescription != null) const SizedBox(height: AgoraSpacings.x0_5),
-          if (section.authorDescription != null) Padding(
-            padding: const EdgeInsets.only(left: AgoraSpacings.horizontalPadding),
-            child: Text(
-              section.authorDescription!,
-              style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
+          if (section.authorDescription != null)
+            Padding(
+              padding: const EdgeInsets.only(left: AgoraSpacings.horizontalPadding),
+              child: Text(
+                section.authorDescription!,
+                style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
+              ),
             ),
-          ),
           if (section.date != null) SizedBox(height: AgoraSpacings.x0_5),
           if (section.date != null)
             RichText(
@@ -751,10 +752,17 @@ class _DownloadSectionWidget extends StatelessWidget {
   }
 }
 
-class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
+class _ConsultationFeedbackQuestionSectionWidget extends StatefulWidget {
   final ConsultationFeedbackQuestionSection section;
 
   _ConsultationFeedbackQuestionSectionWidget(this.section);
+
+  @override
+  State<_ConsultationFeedbackQuestionSectionWidget> createState() => _ConsultationFeedbackQuestionSectionWidgetState();
+}
+
+class _ConsultationFeedbackQuestionSectionWidgetState extends State<_ConsultationFeedbackQuestionSectionWidget> {
+  bool? answer;
 
   @override
   Widget build(BuildContext context) {
@@ -768,7 +776,7 @@ class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(section.picto, style: AgoraTextStyles.light26),
+          Text(widget.section.picto, style: AgoraTextStyles.light26),
           const SizedBox(width: AgoraSpacings.base),
           Expanded(
             child: Column(
@@ -778,36 +786,75 @@ class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
                 Semantics(
                   header: true,
                   child: Text(
-                    section.title,
+                    widget.section.title,
                     style: AgoraTextStyles.medium16.copyWith(
                       color: AgoraColors.primaryBlue,
                     ),
                   ),
                 ),
                 const SizedBox(height: AgoraSpacings.x0_25),
-                AgoraHtml(data: section.description),
+                if (answer == null)
+                  AgoraHtml(data: widget.section.description)
+                else
+                  Text(
+                    'Merci pour votre avis\u{00A0}!',
+                    style: AgoraTextStyles.light16,
+                  ),
                 const SizedBox(height: AgoraSpacings.base),
-                Row(
-                  children: [
-                    AgoraRoundedButton(
-                      icon: "ic_thumb_white.svg",
-                      label: QagStrings.utils,
-                      contentPadding: AgoraRoundedButtonPadding.short,
-                      onPressed: () {
-                        // TODO
-                      },
-                    ),
-                    SizedBox(width: AgoraSpacings.base),
-                    AgoraRoundedButton(
-                      icon: "ic_thumb_down_white.svg",
-                      label: QagStrings.notUtils,
-                      contentPadding: AgoraRoundedButtonPadding.short,
-                      onPressed: () {
-                        // TODO
-                      },
-                    ),
-                  ],
-                ),
+                if (answer == null)
+                  Row(
+                    children: [
+                      AgoraRoundedButton(
+                        icon: "ic_thumb_white.svg",
+                        label: QagStrings.yes,
+                        contentPadding: AgoraRoundedButtonPadding.short,
+                        onPressed: () {
+                          context.read<DynamicConsultationBloc>().add(
+                            SendConsultationUpdateFeedbackEvent(
+                              consultationId: widget.section.consultationId,
+                              updateId: widget.section.id,
+                              isPositive: true,
+                            ),
+                          );
+                          setState(() {
+                            answer = true;
+                          });
+                        },
+                      ),
+                      SizedBox(width: AgoraSpacings.base),
+                      AgoraRoundedButton(
+                        icon: "ic_thumb_down_white.svg",
+                        label: QagStrings.no,
+                        contentPadding: AgoraRoundedButtonPadding.short,
+                        onPressed: () {
+                          context.read<DynamicConsultationBloc>().add(
+                                SendConsultationUpdateFeedbackEvent(
+                                  consultationId: widget.section.consultationId,
+                                  updateId: widget.section.id,
+                                  isPositive: false,
+                                ),
+                              );
+                          setState(() {
+                            answer = false;
+                          });
+                        },
+                      ),
+                    ],
+                  )
+                else ...[
+                  AgoraButton(
+                    label: 'Modifier votre réponse',
+                    style: AgoraButtonStyle.primaryButtonStyle,
+                    onPressed: () {
+                      //TODO
+                    },
+                  ),
+                  const SizedBox(height: AgoraSpacings.x0_5),
+                  Text(
+                    'Pour rappel vous avez répondu "${answer == true ? 'Oui' : 'Non'}"',
+                    style: AgoraTextStyles.light14,
+                  ),
+                ],
               ],
             ),
           ),
