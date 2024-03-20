@@ -61,7 +61,7 @@ class ConsultationQuestionPage extends StatelessWidget {
           if (responsesStockState.shouldPop) {
             Navigator.pop(context);
           } else if (_isLastQuestion(responsesStockState.currentQuestionId, responsesStockState.questionIdStack)) {
-            Navigator.pushNamed(
+            Navigator.pushReplacementNamed(
               context,
               ConsultationQuestionConfirmationPage.routeName,
               arguments: ConsultationQuestionConfirmationArguments(

@@ -369,7 +369,7 @@ class _StartButtonWidget extends StatelessWidget {
             clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
             widgetName: AnalyticsScreenNames.consultationDetailsPage,
           );
-          Navigator.pushNamed(
+          Navigator.pushReplacementNamed(
             context,
             ConsultationQuestionPage.routeName,
             arguments: ConsultationQuestionArguments(

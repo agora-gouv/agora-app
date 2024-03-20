@@ -169,7 +169,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                     clickName: AnalyticsEventNames.beginDemographic,
                                     widgetName: AnalyticsScreenNames.demographicInformationPage,
                                   );
-                                  Navigator.pushNamed(
+                                  Navigator.pushReplacementNamed(
                                     context,
                                     DemographicQuestionPage.routeName,
                                     arguments: DemographicQuestionArgumentsFromQuestion(
@@ -189,7 +189,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                       clickName: AnalyticsEventNames.ignoreDemographic,
                                       widgetName: AnalyticsScreenNames.demographicInformationPage,
                                     );
-                                    Navigator.pushNamed(
+                                    Navigator.pushReplacementNamed(
                                       context,
                                       DynamicConsultationPage.routeName,
                                       arguments: DynamicConsultationPageArguments(
