@@ -130,14 +130,10 @@ class ConsultationDioRepository extends ConsultationRepository {
     required int pageNumber,
   }) async {
     try {
-      final response = await httpClient.get(
-        "/consultations",
-      );
-
-      //final response = await httpClient.get("/consultations/answered/$pageNumber"); TODO URL final
+      final response = await httpClient.get("/consultations/answered/$pageNumber");
       return GetConsultationsPaginatedSucceedResponse(
-        maxPage: 1, //response.data["maxPageNumber"] as int,
-        consultationsPaginated: (response.data["answered"] as List).map((consultation) {
+        maxPage: response.data["maxPageNumber"] as int,
+        consultationsPaginated: (response.data["consultations"] as List).map((consultation) {
           return ConsultationFinishedPaginated(
             id: consultation["id"] as String,
             title: consultation["title"] as String,
@@ -266,7 +262,7 @@ class ConsultationDioRepository extends ConsultationRepository {
   Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
     try {
       final asyncResponse = httpClient.get(
-        "/consultations/$consultationId/responses",
+        "/v2/consultations/$consultationId/responses",
       );
       final (_, userResponses, _) = await storageClient.get(consultationId);
       final response = await asyncResponse;
