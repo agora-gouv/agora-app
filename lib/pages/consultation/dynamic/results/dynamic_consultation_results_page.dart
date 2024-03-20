@@ -8,9 +8,11 @@ import 'package:agora/design/custom_view/agora_consultation_result_view.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,6 +104,15 @@ class _SuccessPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Semantics(
+                      header: true,
+                      child: Text(
+                        'Résultats',
+                        style: AgoraTextStyles.medium18.copyWith(
+                          color: AgoraColors.primaryBlue,
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: AgoraSpacings.base),
                     Row(
                       children: [
