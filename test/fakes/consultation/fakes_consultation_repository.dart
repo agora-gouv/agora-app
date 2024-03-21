@@ -346,6 +346,12 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     // TODO: implement sendConsultationUpdateFeedback
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) {
+    // TODO: implement deleteConsultationUpdateFeedback
+    throw UnimplementedError();
+  }
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -439,6 +445,12 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) {
     // TODO: implement sendConsultationUpdateFeedback
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) {
+    // TODO: implement deleteConsultationUpdateFeedback
     throw UnimplementedError();
   }
 }

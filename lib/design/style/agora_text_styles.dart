@@ -310,6 +310,7 @@ class AgoraTextStyles {
     color: AgoraColors.primaryBlue,
     height: height,
     decoration: TextDecoration.underline,
+    decorationColor: AgoraColors.primaryBlue,
   );
 
   static const TextStyle light15 = TextStyle(

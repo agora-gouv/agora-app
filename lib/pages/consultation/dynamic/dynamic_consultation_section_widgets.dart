@@ -362,9 +362,14 @@ class _StartButtonWidget extends StatelessWidget {
         horizontal: AgoraSpacings.horizontalPadding,
         vertical: AgoraSpacings.x2,
       ),
-      child: AgoraButton(
-        label: ConsultationStrings.beginButton,
-        style: AgoraButtonStyle.primaryButtonStyle,
+      child:
+      FloatingActionButton.extended(
+        backgroundColor: AgoraColors.primaryBlue,
+        label: Text(
+          ConsultationStrings.beginButton,
+          semanticsLabel: ConsultationStrings.beginButtonDescription,
+          style: AgoraTextStyles.primaryFloatingButton,
+        ),
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
@@ -725,7 +730,7 @@ class _DownloadSectionWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: AgoraSpacings.x0_25),
                 Text(
-                  'Retrouvez les réponses détaillées et toutes les analyses en PDF',
+                  'Pour aller plus loin, retrouvez l’analyse détaillée de l’ensemble des réponses à cette consultation.',
                   style: AgoraTextStyles.light16,
                 ),
                 const SizedBox(height: AgoraSpacings.base),
@@ -997,7 +1002,7 @@ class _HistorySectionWidget extends StatelessWidget {
               Semantics(
                 header: true,
                 child: Text(
-                  'Historique',
+                  'Suivi de la consultation',
                   style: AgoraTextStyles.medium16.copyWith(
                     color: AgoraColors.primaryBlue,
                   ),
@@ -1163,7 +1168,7 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: AgoraSpacings.x0_25),
                 Text(
-                  'Plus vous lui donnez de la voix, plus elle aura d\'impact\u{00A0}!',
+                  'Plus les citoyens seront nombreux à répondre, plus cette consultation aura de l’impact. Invitez vos proches à participer\u{00A0}!',
                   style: AgoraTextStyles.light16,
                 ),
                 const SizedBox(height: AgoraSpacings.base),

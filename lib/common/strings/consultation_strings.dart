@@ -15,6 +15,7 @@ class ConsultationStrings {
   static const String answeredConsultationEmptyList = "Vous n'avez pas encore participé à une consultation.";
   static const String participate = "Participer";
   static const String beginButton = "Commencer";
+  static const String beginButtonDescription = "Commencer la consultation";
   static const String endDate = "Jusqu'au %s";
   static const String rangeDate = "Du %1s au %2s";
   static const String participantCount = "%s participants";

@@ -148,7 +148,6 @@ class _SuccessPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AgoraTopDiagonal(),
           Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -158,6 +157,7 @@ class _SuccessPage extends StatelessWidget {
                 ),
               ),
               _ShareButton(viewModel.shareText),
+              const SizedBox(width: AgoraSpacings.base),
             ],
           ),
           Expanded(

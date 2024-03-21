@@ -69,6 +69,7 @@ void main() {
       title: 'Donner votre avis',
       picto: '💬',
       description: '<body>Texte riche</body>',
+      userResponse: false,
     ),
     feedbackResult: ConsultationFeedbackResults(
       id: '<updateId>',
