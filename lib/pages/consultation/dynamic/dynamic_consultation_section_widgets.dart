@@ -29,6 +29,7 @@ class DynamicSectionWidget extends StatelessWidget {
       NotificationSection() => _NotificationSectionWidget(),
       HistorySection() => _HistorySectionWidget(sectionToDisplay),
       ParticipantInfoSection() => _ParticipantInfoSectionWidget(sectionToDisplay),
+      _AccordionSection() => _AccordionSectionWidget(sectionToDisplay),
     };
   }
 }
@@ -255,6 +256,27 @@ class _InformationItem extends StatelessWidget {
   }
 }
 
+class _AccordionSectionWidget extends StatelessWidget {
+  final _AccordionSection section;
+
+  _AccordionSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
+      child: AgoraCollapseView(
+        title: section.title,
+        collapseContent: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: section.sections.map((subSection) => DynamicSectionWidget(subSection)).toList(),
+        ),
+      ),
+    );
+  }
+}
+
 class _ExpandableSectionWidget extends StatefulWidget {
   final ExpandableSection section;
 
@@ -362,8 +384,7 @@ class _StartButtonWidget extends StatelessWidget {
         horizontal: AgoraSpacings.horizontalPadding,
         vertical: AgoraSpacings.x2,
       ),
-      child:
-      FloatingActionButton.extended(
+      child: FloatingActionButton.extended(
         backgroundColor: AgoraColors.primaryBlue,
         label: Text(
           ConsultationStrings.beginButton,
@@ -766,7 +787,7 @@ class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return  DynamicConsultationFeedbackBloc(
+        return DynamicConsultationFeedbackBloc(
           RepositoryManager.getConsultationRepository(),
         );
       },
@@ -781,7 +802,8 @@ class _ConsultationFeedbackQuestionSectionContentWidget extends StatefulWidget {
   _ConsultationFeedbackQuestionSectionContentWidget(this.section);
 
   @override
-  State<_ConsultationFeedbackQuestionSectionContentWidget> createState() => _ConsultationFeedbackQuestionSectionWidgetState();
+  State<_ConsultationFeedbackQuestionSectionContentWidget> createState() =>
+      _ConsultationFeedbackQuestionSectionWidgetState();
 }
 
 class _ConsultationFeedbackQuestionSectionWidgetState extends State<_ConsultationFeedbackQuestionSectionContentWidget> {
@@ -876,11 +898,11 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                     style: AgoraButtonStyle.primaryButtonStyle,
                     onPressed: () {
                       context.read<DynamicConsultationFeedbackBloc>().add(
-                        DeleteConsultationUpdateFeedbackEvent(
-                          consultationId: widget.section.consultationId,
-                          updateId: widget.section.id,
-                        ),
-                      );
+                            DeleteConsultationUpdateFeedbackEvent(
+                              consultationId: widget.section.consultationId,
+                              updateId: widget.section.id,
+                            ),
+                          );
                       setState(() {
                         answer = null;
                       });

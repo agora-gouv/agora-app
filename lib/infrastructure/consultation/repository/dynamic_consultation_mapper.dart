@@ -144,11 +144,19 @@ DynamicConsultationSection? _toSection(dynamic data) {
       "video" => _toVideo(data),
       "focusNumber" => _toFocusNumber(data),
       "quote" => _toQuoteSection(data),
+      "accordion" => _toAccordionSection(data),
       _ => null,
     };
   } else {
     return null;
   }
+}
+
+DynamicConsultationAccordionSection _toAccordionSection(Map<String, dynamic> data) {
+  return DynamicConsultationAccordionSection(
+    data["title"] as String,
+    (data["sections"] as List<dynamic>).map((section) => _toSection(section)).nonNulls.toList(),
+  );
 }
 
 DynamicConsultationSectionVideo _toVideo(Map<String, dynamic> data) {

@@ -20,6 +20,16 @@ class DynamicConsultationSectionRichText extends DynamicConsultationSection {
   List<Object?> get props => [desctiption];
 }
 
+class DynamicConsultationAccordionSection extends DynamicConsultationSection {
+  final String title;
+  final List<DynamicConsultationSection> expandedSections;
+
+  DynamicConsultationAccordionSection(this.title, this.expandedSections);
+
+  @override
+  List<Object?> get props => [title, expandedSections];
+}
+
 class DynamicConsultationSectionImage extends DynamicConsultationSection {
   final String url;
   final String? desctiption;

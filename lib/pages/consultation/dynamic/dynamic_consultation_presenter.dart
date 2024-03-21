@@ -109,6 +109,10 @@ class DynamicConsultationPresenter {
         _FocusNumberSection(title: section.title, description: section.desctiption),
       DynamicConsultationSectionAccordion() => _TitleSection('TODO ${section.runtimeType}'),
       DynamicConsultationSectionQuote() => _QuoteSection(description: section.desctiption),
+      DynamicConsultationAccordionSection() => _AccordionSection(
+          title: section.title,
+          sections: section.expandedSections.map((subSection) => presentSection(subSection)).toList(),
+        ),
     };
   }
 }

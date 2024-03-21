@@ -240,6 +240,19 @@ class _QuoteSection extends DynamicViewModelSection {
   List<Object?> get props => [description];
 }
 
+class _AccordionSection extends DynamicViewModelSection {
+  final String title;
+  final List<DynamicViewModelSection> sections;
+
+  _AccordionSection({
+    required this.title,
+    required this.sections,
+  });
+
+  @override
+  List<Object?> get props => [title, sections];
+}
+
 class _RichTextSection extends DynamicViewModelSection {
   final String description;
 
