@@ -78,6 +78,7 @@ ConsultationFeedbackQuestion? _toFeedbackQuestion(dynamic data) {
       title: data["title"] as String,
       picto: data["picto"] as String,
       description: data["description"] as String,
+      userResponse: (data["results"] as Map<String, dynamic>?)?["userResponse"] as bool?,
     );
   } else {
     return null;

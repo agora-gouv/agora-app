@@ -62,6 +62,8 @@ abstract class ConsultationRepository {
   });
 
   Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive);
+
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId);
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -427,6 +429,15 @@ class ConsultationDioRepository extends ConsultationRepository {
           "isPositive": isPositive,
         },
       );
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+    }
+  }
+
+  @override
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {
+    try {
+      await httpClient.delete("/consultations/$consultationId/updates/$updateId/feedback");
     } catch (e, s) {
       sentryWrapper?.captureException(e, s);
     }

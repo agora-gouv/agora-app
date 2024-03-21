@@ -82,6 +82,7 @@ class DynamicConsultationPresenter {
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
             consultationId: consultation.id,
+            userResponse: feedbackQuestion.userResponse,
           ),
         if (history == null) StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
         if (history != null) HistorySection(consultation.id, history),

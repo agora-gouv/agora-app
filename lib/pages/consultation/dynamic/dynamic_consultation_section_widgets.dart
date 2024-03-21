@@ -752,17 +752,41 @@ class _DownloadSectionWidget extends StatelessWidget {
   }
 }
 
-class _ConsultationFeedbackQuestionSectionWidget extends StatefulWidget {
+class _ConsultationFeedbackQuestionSectionWidget extends StatelessWidget {
   final ConsultationFeedbackQuestionSection section;
 
   _ConsultationFeedbackQuestionSectionWidget(this.section);
 
   @override
-  State<_ConsultationFeedbackQuestionSectionWidget> createState() => _ConsultationFeedbackQuestionSectionWidgetState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) {
+        return  DynamicConsultationFeedbackBloc(
+          RepositoryManager.getConsultationRepository(),
+        );
+      },
+      child: _ConsultationFeedbackQuestionSectionContentWidget(section),
+    );
+  }
 }
 
-class _ConsultationFeedbackQuestionSectionWidgetState extends State<_ConsultationFeedbackQuestionSectionWidget> {
+class _ConsultationFeedbackQuestionSectionContentWidget extends StatefulWidget {
+  final ConsultationFeedbackQuestionSection section;
+
+  _ConsultationFeedbackQuestionSectionContentWidget(this.section);
+
+  @override
+  State<_ConsultationFeedbackQuestionSectionContentWidget> createState() => _ConsultationFeedbackQuestionSectionWidgetState();
+}
+
+class _ConsultationFeedbackQuestionSectionWidgetState extends State<_ConsultationFeedbackQuestionSectionContentWidget> {
   bool? answer;
+
+  @override
+  void initState() {
+    super.initState();
+    answer = widget.section.userResponse;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -809,13 +833,13 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                         label: QagStrings.yes,
                         contentPadding: AgoraRoundedButtonPadding.short,
                         onPressed: () {
-                          context.read<DynamicConsultationBloc>().add(
-                            SendConsultationUpdateFeedbackEvent(
-                              consultationId: widget.section.consultationId,
-                              updateId: widget.section.id,
-                              isPositive: true,
-                            ),
-                          );
+                          context.read<DynamicConsultationFeedbackBloc>().add(
+                                SendConsultationUpdateFeedbackEvent(
+                                  consultationId: widget.section.consultationId,
+                                  updateId: widget.section.id,
+                                  isPositive: true,
+                                ),
+                              );
                           setState(() {
                             answer = true;
                           });
@@ -827,7 +851,7 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                         label: QagStrings.no,
                         contentPadding: AgoraRoundedButtonPadding.short,
                         onPressed: () {
-                          context.read<DynamicConsultationBloc>().add(
+                          context.read<DynamicConsultationFeedbackBloc>().add(
                                 SendConsultationUpdateFeedbackEvent(
                                   consultationId: widget.section.consultationId,
                                   updateId: widget.section.id,
@@ -846,7 +870,15 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                     label: 'Modifier votre réponse',
                     style: AgoraButtonStyle.primaryButtonStyle,
                     onPressed: () {
-                      //TODO
+                      context.read<DynamicConsultationFeedbackBloc>().add(
+                        DeleteConsultationUpdateFeedbackEvent(
+                          consultationId: widget.section.consultationId,
+                          updateId: widget.section.id,
+                        ),
+                      );
+                      setState(() {
+                        answer = null;
+                      });
                     },
                   ),
                   const SizedBox(height: AgoraSpacings.x0_5),

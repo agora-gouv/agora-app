@@ -71,6 +71,7 @@ class _Presenter {
             description: feedbackQuestion.description,
             id: feedbackQuestion.id,
             consultationId: consultation.id,
+            userResponse: feedbackQuestion.userResponse,
           ),
       ],
     );

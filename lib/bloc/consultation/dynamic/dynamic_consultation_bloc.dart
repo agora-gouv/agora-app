@@ -8,7 +8,6 @@ class DynamicConsultationBloc extends Bloc<DynamicConsultationEvent, DynamicCons
 
   DynamicConsultationBloc(this.consultationRepository) : super(DynamicConsultationLoadingState()) {
     on<FetchDynamicConsultationEvent>(_handleFetchDynamicConsultationEvent);
-    on<SendConsultationUpdateFeedbackEvent>(_handleSendConsultationUpdateFeedbackEvent);
   }
 
   Future<void> _handleFetchDynamicConsultationEvent(
@@ -22,11 +21,27 @@ class DynamicConsultationBloc extends Bloc<DynamicConsultationEvent, DynamicCons
       emit(DynamicConsultationErrorState());
     }
   }
+}
+
+class DynamicConsultationFeedbackBloc extends Bloc<DynamicConsultationEvent, void> {
+  final ConsultationRepository consultationRepository;
+
+  DynamicConsultationFeedbackBloc(this.consultationRepository) : super(DynamicConsultationLoadingState()) {
+    on<SendConsultationUpdateFeedbackEvent>(_handleSendConsultationUpdateFeedbackEvent);
+    on<DeleteConsultationUpdateFeedbackEvent>(_handleDeleteConsultationUpdateFeedbackEvent);
+  }
 
   Future<void> _handleSendConsultationUpdateFeedbackEvent(
     SendConsultationUpdateFeedbackEvent event,
-    Emitter<DynamicConsultationState> emit,
+    Emitter<void> emit,
   ) async {
     consultationRepository.sendConsultationUpdateFeedback(event.updateId, event.consultationId, event.isPositive);
+  }
+
+  Future<void> _handleDeleteConsultationUpdateFeedbackEvent(
+    DeleteConsultationUpdateFeedbackEvent event,
+    Emitter<void> emit,
+  ) async {
+    consultationRepository.deleteConsultationUpdateFeedback(event.updateId, event.consultationId);
   }
 }

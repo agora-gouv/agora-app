@@ -30,3 +30,13 @@ class SendConsultationUpdateFeedbackEvent extends DynamicConsultationEvent {
     required this.isPositive,
   });
 }
+
+class DeleteConsultationUpdateFeedbackEvent extends DynamicConsultationEvent {
+  final String updateId;
+  final String consultationId;
+
+  DeleteConsultationUpdateFeedbackEvent({
+    required this.updateId,
+    required this.consultationId,
+  });
+}

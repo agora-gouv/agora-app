@@ -158,16 +158,18 @@ class ConsultationFeedbackQuestion extends Equatable {
   final String picto;
   final String description;
   final String id;
+  final bool? userResponse;
 
   ConsultationFeedbackQuestion({
     required this.title,
     required this.picto,
     required this.description,
     required this.id,
+    required this.userResponse,
   });
 
   @override
-  List<Object?> get props => [title, picto, description, id];
+  List<Object?> get props => [title, picto, description, id, userResponse];
 }
 
 class ConsultationFeedbackResults extends Equatable {
