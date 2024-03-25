@@ -396,14 +396,14 @@ class _StartButtonWidget extends StatelessWidget {
             clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
             widgetName: AnalyticsScreenNames.consultationDetailsPage,
           );
-          Navigator.pushReplacementNamed(
+          Navigator.pushNamed(
             context,
             ConsultationQuestionPage.routeName,
             arguments: ConsultationQuestionArguments(
               consultationId: section.consultationId,
               consultationTitle: section.title,
             ),
-          );
+          ).then((value) => Navigator.of(context).pop());
         },
       ),
     );
@@ -451,7 +451,7 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: AgoraSpacings.horizontalPadding,
         right: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
+        top: AgoraSpacings.x2_5,
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(
@@ -471,22 +471,31 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
                 children: [
                   Text(section.picto, style: AgoraTextStyles.light24),
                   const SizedBox(width: AgoraSpacings.base),
-                  Expanded(child: AgoraHtml(data: section.description)),
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        AgoraHtml(data: section.description),
+                        const SizedBox(height: AgoraSpacings.base),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: AgoraButton(
+                            label: 'Voir toutes les réponses',
+                            style: AgoraButtonStyle.blueBorderButtonStyle,
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                DynamicConsultationResultsPage.routeName,
+                                arguments: section.id,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
-              ),
-              const SizedBox(height: AgoraSpacings.base),
-              Center(
-                child: AgoraButton(
-                  label: 'Voir toutes les réponses',
-                  style: AgoraButtonStyle.blueBorderButtonStyle,
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      DynamicConsultationResultsPage.routeName,
-                      arguments: section.id,
-                    );
-                  },
-                ),
               ),
             ],
           ),
@@ -645,7 +654,7 @@ class _VideoSectionWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: AgoraSpacings.horizontalPadding,
         right: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
+        top: AgoraSpacings.x2_5,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -727,7 +736,7 @@ class _DownloadSectionWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: AgoraSpacings.horizontalPadding,
         right: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
+        top: AgoraSpacings.x2_5,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -821,7 +830,7 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
       padding: const EdgeInsets.only(
         left: AgoraSpacings.horizontalPadding,
         right: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
+        top: AgoraSpacings.x2_5,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -893,24 +902,27 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                     ],
                   )
                 else ...[
-                  AgoraButton(
-                    label: 'Modifier votre réponse',
-                    style: AgoraButtonStyle.primaryButtonStyle,
-                    onPressed: () {
-                      context.read<DynamicConsultationFeedbackBloc>().add(
-                            DeleteConsultationUpdateFeedbackEvent(
-                              consultationId: widget.section.consultationId,
-                              updateId: widget.section.id,
-                            ),
-                          );
-                      setState(() {
-                        answer = null;
-                      });
-                    },
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: AgoraButton(
+                      label: 'Modifier votre réponse',
+                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      onPressed: () {
+                        context.read<DynamicConsultationFeedbackBloc>().add(
+                              DeleteConsultationUpdateFeedbackEvent(
+                                consultationId: widget.section.consultationId,
+                                updateId: widget.section.id,
+                              ),
+                            );
+                        setState(() {
+                          answer = null;
+                        });
+                      },
+                    ),
                   ),
                   const SizedBox(height: AgoraSpacings.x0_5),
                   Text(
-                    'Pour rappel vous avez répondu "${answer == true ? 'Oui' : 'Non'}"',
+                    'Pour rappel, vous avez répondu "${answer == true ? 'Oui' : 'Non'}".',
                     style: AgoraTextStyles.light14,
                   ),
                 ],
@@ -934,7 +946,7 @@ class _ConsultationFeedbackResultsSectionWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: AgoraSpacings.horizontalPadding,
         right: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
+        top: AgoraSpacings.x2_5,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1007,7 +1019,7 @@ class _HistorySectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: AgoraSpacings.base,
+        top: AgoraSpacings.x2_5,
       ),
       child: DecoratedBox(
         decoration: BoxDecoration(color: AgoraColors.consultationResponseInfo),
@@ -1025,7 +1037,7 @@ class _HistorySectionWidget extends StatelessWidget {
                 header: true,
                 child: Text(
                   'Suivi de la consultation',
-                  style: AgoraTextStyles.medium16.copyWith(
+                  style: AgoraTextStyles.medium18.copyWith(
                     color: AgoraColors.primaryBlue,
                   ),
                 ),

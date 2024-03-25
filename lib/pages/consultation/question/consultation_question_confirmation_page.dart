@@ -56,22 +56,22 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
           listener: (context, state) {
             if (state is SendConsultationQuestionsResponsesSuccessState) {
               if (state.shouldDisplayDemographicInformation) {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
                   DemographicInformationPage.routeName,
                   arguments: DemographicInformationArguments(
                     consultationId: consultationId,
                     consultationTitle: consultationTitle,
                   ),
-                );
+                ).then((value) => Navigator.of(context).pop());
               } else {
-                Navigator.pushReplacementNamed(
+                Navigator.pushNamed(
                   context,
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
                     consultationId: consultationId,
                   ),
-                );
+                ).then((value) => Navigator.of(context).pop());
               }
             } else if (state is SendConsultationQuestionsResponsesFailureState) {
               context

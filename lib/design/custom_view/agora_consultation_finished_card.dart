@@ -7,7 +7,6 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 enum AgoraConsultationFinishedStyle { carrousel, column, grid }
 
@@ -84,13 +83,13 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
             if (label != null)
               AgoraRoundedCard(
                 cardColor: AgoraColors.consultationLabelRed,
-                padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+                padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_5),
                 roundedCorner: AgoraRoundedCorner.bottomRounded,
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    SvgPicture.asset('assets/ic_fire.svg', excludeFromSemantics: true),
-                    SizedBox(width: AgoraSpacings.x0_5),
+                    Text('🔥', style: AgoraTextStyles.regular16),
+                    SizedBox(width: AgoraSpacings.x0_25),
                     Expanded(child: Text(label!, style: AgoraTextStyles.regular12)),
                   ],
                 ),

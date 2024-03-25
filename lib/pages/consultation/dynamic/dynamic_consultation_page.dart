@@ -156,7 +156,10 @@ class _SuccessPage extends StatelessWidget {
                   pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}',
                 ),
               ),
-              _ShareButton(viewModel.shareText),
+              Padding(
+                padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
+                child: _ShareButton(viewModel.shareText),
+              ),
               const SizedBox(width: AgoraSpacings.base),
             ],
           ),

@@ -61,7 +61,7 @@ class ConsultationQuestionPage extends StatelessWidget {
           if (responsesStockState.shouldPop) {
             Navigator.pop(context);
           } else if (_isLastQuestion(responsesStockState.currentQuestionId, responsesStockState.questionIdStack)) {
-            Navigator.pushReplacementNamed(
+            Navigator.pushNamed(
               context,
               ConsultationQuestionConfirmationPage.routeName,
               arguments: ConsultationQuestionConfirmationArguments(
@@ -69,7 +69,7 @@ class ConsultationQuestionPage extends StatelessWidget {
                 consultationTitle: arguments.consultationTitle,
                 consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
               ),
-            );
+            ).then((value) => Navigator.of(context).pop());
           }
         },
         buildWhen: (_, responsesStockState) {

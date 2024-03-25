@@ -169,14 +169,14 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                     clickName: AnalyticsEventNames.beginDemographic,
                                     widgetName: AnalyticsScreenNames.demographicInformationPage,
                                   );
-                                  Navigator.pushReplacementNamed(
+                                  Navigator.pushNamed(
                                     context,
                                     DemographicQuestionPage.routeName,
                                     arguments: DemographicQuestionArgumentsFromQuestion(
                                       consultationId: arguments.consultationId,
                                       consultationTitle: arguments.consultationTitle,
                                     ),
-                                  );
+                                  ).then((value) => Navigator.of(context).pop());
                                 },
                               ),
                               SizedBox(width: AgoraSpacings.base),
@@ -189,13 +189,13 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                       clickName: AnalyticsEventNames.ignoreDemographic,
                                       widgetName: AnalyticsScreenNames.demographicInformationPage,
                                     );
-                                    Navigator.pushReplacementNamed(
+                                    Navigator.pushNamed(
                                       context,
                                       DynamicConsultationPage.routeName,
                                       arguments: DynamicConsultationPageArguments(
                                         consultationId: arguments.consultationId,
                                       ),
-                                    );
+                                    ).then((value) => Navigator.of(context).pop());
                                   },
                                 ),
                               ),

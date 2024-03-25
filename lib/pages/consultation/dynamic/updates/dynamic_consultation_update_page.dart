@@ -7,6 +7,7 @@ import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:equatable/equatable.dart';
@@ -107,8 +108,9 @@ class _SuccessPage extends StatelessWidget {
           AgoraToolbar(pageLabel: ConsultationStrings.summaryTabResult),
           Expanded(
             child: ListView.builder(
-              itemCount: viewModel.sections.length,
+              itemCount: viewModel.sections.length + 1,
               itemBuilder: (BuildContext context, int index) {
+                if (index == viewModel.sections.length) return SizedBox(height: AgoraSpacings.x2);
                 return DynamicSectionWidget(viewModel.sections[index]);
               },
             ),
