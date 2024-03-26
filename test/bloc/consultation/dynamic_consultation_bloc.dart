@@ -26,6 +26,7 @@ void main() {
       id: 'consultationId',
       picto: '🙌',
       description: '<body>Texte riche</body>',
+      buttonLabel: 'Label du bouton',
     ),
     infoHeader: ConsultationInfoHeader(
       logo: "📘",
@@ -95,6 +96,18 @@ void main() {
       title: "Envie d'aller plus loin ?",
       description: "<body>Texte riche</body>",
     ),
+    headerSections: [
+      DynamicConsultationSectionFocusNumber(
+        title: '30%',
+        desctiption: '<body>Texte riche</body>',
+      ),
+    ],
+    goals: [
+      ConsultationGoal(
+        picto: 'picto',
+        description: 'description',
+      ),
+    ],
   );
 
   blocTest(

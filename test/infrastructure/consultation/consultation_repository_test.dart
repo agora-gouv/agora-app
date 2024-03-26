@@ -1048,8 +1048,8 @@ void main() {
         (server) => server.reply(HttpStatus.ok, {
           "title": "Développer le covoiturage au quotidien",
           "coverUrl": "<coverUrl>",
-          "shareText": "A définir ¯\\_(ツ)_/¯",
           "thematique": {"label": "Transports", "picto": "🚊"},
+          "shareText": "A définir ¯\\_(ツ)_/¯",
           "questionsInfo": {
             "endDate": "2023-12-30",
             "questionCount": "5 à 10 questions",
@@ -1064,11 +1064,19 @@ void main() {
           "responsesInfo": {
             "picto": "🙌",
             "description": "<body>Texte riche</body>",
+            "actionText": 'Label du bouton',
           },
           "infoHeader": {"picto": "📘", "description": "<body>Texte riche</body>"},
           "body": {
             "sectionsPreview": [
               {"type": "title", "title": "Le titre de la section"},
+            ],
+            "headerSections": [
+              {
+                "type": "focusNumber",
+                "title": "30%",
+                "description": "<body>Texte riche</body>",
+              },
             ],
             "sections": [
               {"type": "title", "title": "Le titre de la section"},
@@ -1098,7 +1106,13 @@ void main() {
               {
                 "type": "accordion",
                 "title": "Les économies financières",
-                "description": "<body>Texte riche</body>",
+                "sections": [
+                  {
+                    "type": "focusNumber",
+                    "title": "30%",
+                    "description": "<body>Texte riche</body>",
+                  },
+                ],
               },
               {
                 "type": "quote",
@@ -1141,6 +1155,12 @@ void main() {
               "actionText": "Voir les objectifs",
             }
           ],
+          "goals": [
+            {
+              "picto": "picto",
+              "description": "description",
+            }
+          ],
         }),
         headers: {
           "accept": "application/json",
@@ -1178,6 +1198,7 @@ void main() {
               id: 'consultationId',
               picto: '🙌',
               description: '<body>Texte riche</body>',
+              buttonLabel: 'Label du bouton',
             ),
             infoHeader: ConsultationInfoHeader(
               logo: "📘",
@@ -1206,6 +1227,12 @@ void main() {
                 title: '30%',
                 desctiption: '<body>Texte riche</body>',
               ),
+              DynamicConsultationAccordionSection('Les économies financières', [
+                DynamicConsultationSectionFocusNumber(
+                  title: '30%',
+                  desctiption: '<body>Texte riche</body>',
+                ),
+              ]),
               DynamicConsultationSectionQuote('<body>Lorem ipsum... version riche</body>'),
             ],
             downloadInfo: ConsultationDownloadInfo(
@@ -1221,7 +1248,7 @@ void main() {
               title: 'Donner votre avis',
               picto: '💬',
               description: '<body>Texte riche</body>',
-              userResponse: false,
+              userResponse: null,
             ),
             feedbackResult: ConsultationFeedbackResults(
               id: '<updateId>',
@@ -1247,6 +1274,13 @@ void main() {
               title: "Envie d'aller plus loin ?",
               description: "<body>Texte riche</body>",
             ),
+            headerSections: [
+              DynamicConsultationSectionFocusNumber(
+                title: '30%',
+                desctiption: '<body>Texte riche</body>',
+              ),
+            ],
+            goals: [ConsultationGoal(picto: 'picto', description: 'description')],
           ),
         ),
       );
@@ -1284,7 +1318,7 @@ void main() {
     test("when success should return consultation results", () async {
       // Given
       dioAdapter.onGet(
-        "/consultations/$consultationId/responses",
+        "/v2/consultations/$consultationId/responses",
         (server) => server.reply(
           HttpStatus.ok,
           {
@@ -1379,7 +1413,7 @@ void main() {
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
-        "/consultations/$consultationId/responses",
+        "/v2/consultations/$consultationId/responses",
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
@@ -1406,6 +1440,9 @@ void main() {
       dioAdapter.onGet(
         "/v2/consultations/consultationId/updates/updateId",
         (server) => server.reply(HttpStatus.ok, {
+          "title": 'title',
+          "coverUrl": 'cover',
+          "thematique": {"label": "label", "picto": "logo"},
           "shareText": "A définir ¯\\_(ツ)_/¯",
           "consultationDates": {
             "startDate": "2023-12-28",
@@ -1414,6 +1451,7 @@ void main() {
           "responsesInfo": {
             "picto": "🙌",
             "description": "<body>Texte riche</body>",
+            "actionText": 'label',
           },
           "infoHeader": {"picto": "📘", "description": "<body>Texte riche</body>"},
           "body": {
@@ -1443,11 +1481,6 @@ void main() {
               {
                 "type": "focusNumber",
                 "title": "30%",
-                "description": "<body>Texte riche</body>",
-              },
-              {
-                "type": "accordion",
-                "title": "Les économies financières",
                 "description": "<body>Texte riche</body>",
               },
               {
@@ -1524,6 +1557,7 @@ void main() {
               id: 'consultationId',
               picto: '🙌',
               description: '<body>Texte riche</body>',
+              buttonLabel: 'label',
             ),
             infoHeader: ConsultationInfoHeader(
               logo: "📘",
@@ -1567,7 +1601,7 @@ void main() {
               title: 'Donner votre avis',
               picto: '💬',
               description: '<body>Texte riche</body>',
-              userResponse: false,
+              userResponse: null,
             ),
             feedbackResult: ConsultationFeedbackResults(
               id: '<updateId>',
@@ -1583,6 +1617,12 @@ void main() {
               title: "Envie d'aller plus loin ?",
               description: "<body>Texte riche</body>",
             ),
+            title: 'title',
+            coverUrl: 'cover',
+            thematicLogo: 'logo',
+            thematicLabel: 'label',
+            headerSections: [],
+            goals: null,
           ),
         ),
       );

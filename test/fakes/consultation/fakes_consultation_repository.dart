@@ -319,6 +319,12 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       feedbackResult: null,
       footer: null,
       consultationDatesInfos: null,
+      title: 'title',
+      coverUrl: 'coverUrl',
+      thematicLogo: 'logo',
+      thematicLabel: 'label',
+      headerSections: [],
+      goals: [],
     );
     return DynamicConsultationUpdateSuccessResponse(update);
   }
