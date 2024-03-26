@@ -11,6 +11,7 @@ class DynamicConsultation extends Equatable {
   final ConsultationQuestionsInfos? questionsInfos;
   final ConsultationResponseInfos? responseInfos;
   final ConsultationInfoHeader? infoHeader;
+  final List<DynamicConsultationSection> headerSections;
   final List<DynamicConsultationSection> collapsedSections;
   final List<DynamicConsultationSection> expandedSections;
   final ConsultationParticipationInfo? participationInfo;
@@ -19,6 +20,7 @@ class DynamicConsultation extends Equatable {
   final ConsultationFeedbackResults? feedbackResult;
   final List<ConsultationHistoryStep>? history;
   final ConsultationFooter? footer;
+  final List<ConsultationGoal>? goals;
 
   DynamicConsultation({
     required this.id,
@@ -30,6 +32,7 @@ class DynamicConsultation extends Equatable {
     required this.questionsInfos,
     required this.responseInfos,
     required this.infoHeader,
+    required this.headerSections,
     required this.collapsedSections,
     required this.expandedSections,
     required this.participationInfo,
@@ -38,6 +41,7 @@ class DynamicConsultation extends Equatable {
     required this.feedbackResult,
     required this.history,
     required this.footer,
+    required this.goals,
   });
 
   @override
@@ -58,6 +62,8 @@ class DynamicConsultation extends Equatable {
         feedbackResult,
         history,
         footer,
+        headerSections,
+        goals,
       ];
 }
 
@@ -103,15 +109,17 @@ class ConsultationResponseInfos extends Equatable {
   final String id;
   final String picto;
   final String description;
+  final String buttonLabel;
 
   ConsultationResponseInfos({
     required this.id,
     required this.picto,
     required this.description,
+    required this.buttonLabel,
   });
 
   @override
-  List<Object?> get props => [id, picto, description];
+  List<Object?> get props => [id, picto, description, buttonLabel];
 }
 
 class ConsultationInfoHeader extends Equatable {
@@ -219,6 +227,19 @@ class ConsultationFooter extends Equatable {
   List<Object?> get props => [title, description];
 }
 
+class ConsultationGoal extends Equatable {
+  final String picto;
+  final String description;
+
+  ConsultationGoal({
+    required this.picto,
+    required this.description,
+  });
+
+  @override
+  List<Object?> get props => [picto, description];
+}
+
 class ConsultationHistoryStep extends Equatable {
   final String? updateId;
   final ConsultationHistoryStepType type;
@@ -260,10 +281,15 @@ enum ConsultationHistoryStepStatus {
 
 class DynamicConsultationUpdate extends Equatable {
   final String id;
+  final String title;
+  final String coverUrl;
   final String shareText;
+  final String thematicLogo;
+  final String thematicLabel;
   final ConsultationDatesInfos? consultationDatesInfos;
   final ConsultationResponseInfos? responseInfos;
   final ConsultationInfoHeader? infoHeader;
+  final List<DynamicConsultationSection> headerSections;
   final List<DynamicConsultationSection> collapsedSections;
   final List<DynamicConsultationSection> expandedSections;
   final ConsultationParticipationInfo? participationInfo;
@@ -271,12 +297,18 @@ class DynamicConsultationUpdate extends Equatable {
   final ConsultationFeedbackQuestion? feedbackQuestion;
   final ConsultationFeedbackResults? feedbackResult;
   final ConsultationFooter? footer;
+  final List<ConsultationGoal>? goals;
 
   DynamicConsultationUpdate({
     required this.id,
+    required this.title,
+    required this.coverUrl,
+    required this.thematicLogo,
+    required this.thematicLabel,
     required this.shareText,
     required this.responseInfos,
     required this.infoHeader,
+    required this.headerSections,
     required this.collapsedSections,
     required this.expandedSections,
     required this.participationInfo,
@@ -285,6 +317,7 @@ class DynamicConsultationUpdate extends Equatable {
     required this.feedbackResult,
     required this.footer,
     required this.consultationDatesInfos,
+    required this.goals,
   });
 
   @override
@@ -293,6 +326,8 @@ class DynamicConsultationUpdate extends Equatable {
         shareText,
         responseInfos,
         infoHeader,
+        thematicLabel,
+        thematicLogo,
         collapsedSections,
         expandedSections,
         participationInfo,
@@ -301,5 +336,7 @@ class DynamicConsultationUpdate extends Equatable {
         feedbackResult,
         consultationDatesInfos,
         footer,
+        headerSections,
+        goals,
       ];
 }

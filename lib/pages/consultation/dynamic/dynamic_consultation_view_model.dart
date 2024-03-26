@@ -46,6 +46,19 @@ class HeaderSection extends DynamicViewModelSection {
   List<Object?> get props => [coverUrl, title, thematicLogo, thematicLabel];
 }
 
+class HeaderSectionUpdate extends DynamicViewModelSection {
+  final String coverUrl;
+  final String title;
+
+  HeaderSectionUpdate({
+    required this.coverUrl,
+    required this.title,
+  });
+
+  @override
+  List<Object?> get props => [coverUrl, title];
+}
+
 class QuestionsInfoSection extends DynamicViewModelSection {
   final String endDate;
   final String questionCount;
@@ -102,15 +115,17 @@ class ResponseInfoSection extends DynamicViewModelSection {
   final String id;
   final String picto;
   final String description;
+  final String buttonLabel;
 
   ResponseInfoSection({
     required this.id,
     required this.picto,
     required this.description,
+    required this.buttonLabel,
   });
 
   @override
-  List<Object?> get props => [id, picto, description];
+  List<Object?> get props => [id, picto, description, buttonLabel];
 }
 
 class DownloadSection extends DynamicViewModelSection {
@@ -195,16 +210,18 @@ class ConsultationFeedbackResultsSection extends DynamicViewModelSection {
 }
 
 class ExpandableSection extends DynamicViewModelSection {
+  final List<DynamicViewModelSection> headerSections;
   final List<DynamicViewModelSection> collapsedSections;
   final List<DynamicViewModelSection> expandedSections;
 
   ExpandableSection({
+    required this.headerSections,
     required this.collapsedSections,
     required this.expandedSections,
   });
 
   @override
-  List<Object?> get props => [collapsedSections, expandedSections];
+  List<Object?> get props => [collapsedSections, expandedSections, headerSections];
 }
 
 class _TitleSection extends DynamicViewModelSection {
@@ -273,6 +290,15 @@ class FooterSection extends DynamicViewModelSection {
 
   @override
   List<Object?> get props => [title, description];
+}
+
+class GoalSection extends DynamicViewModelSection {
+  final List<ConsultationGoal> goals;
+
+  GoalSection(this.goals);
+
+  @override
+  List<Object?> get props => [goals];
 }
 
 class StartButtonTextSection extends DynamicViewModelSection {

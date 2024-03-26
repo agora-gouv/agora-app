@@ -371,6 +371,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         questionsInfos: _toQuestionsInfo(data["questionsInfo"]),
         responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
         infoHeader: _toInfoHeader(data["infoHeader"]),
+        headerSections: ((data["body"]["headerSections"] ?? []) as List).map((e) => _toSection(e)).nonNulls.toList(),
         collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
@@ -379,6 +380,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         feedbackResult: _toFeedbackResults(data["feedbackResults"]),
         history: _toHistory(data["history"], consultationId),
         footer: _toFooter(data["footer"]),
+        goals: _toGoals(data["goals"]),
       );
       return DynamicConsultationSuccessResponse(consultation);
     } catch (e, s) {
@@ -401,10 +403,15 @@ class ConsultationDioRepository extends ConsultationRepository {
       final downloadUrl = data["downloadAnalysisUrl"] as String?;
       final consultation = DynamicConsultationUpdate(
         id: consultationId,
+        title: data["title"] as String,
+        coverUrl: data["coverUrl"] as String,
+        thematicLogo: data["thematique"]["picto"] as String,
+        thematicLabel: data["thematique"]["label"] as String,
         shareText: shareText,
         consultationDatesInfos: _toConsultationDateInfo(data["consultationDates"]),
         responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
         infoHeader: _toInfoHeader(data["infoHeader"]),
+        headerSections: ((data["body"]["headerSections"] ?? []) as List).map((e) => _toSection(e)).nonNulls.toList(),
         collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
@@ -412,6 +419,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
         feedbackResult: _toFeedbackResults(data["feedbackResults"]),
         footer: _toFooter(data["footer"]),
+        goals: _toGoals(data["goals"]),
       );
       return DynamicConsultationUpdateSuccessResponse(consultation);
     } catch (e, s) {

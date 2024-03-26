@@ -30,6 +30,8 @@ class DynamicSectionWidget extends StatelessWidget {
       HistorySection() => _HistorySectionWidget(sectionToDisplay),
       ParticipantInfoSection() => _ParticipantInfoSectionWidget(sectionToDisplay),
       _AccordionSection() => _AccordionSectionWidget(sectionToDisplay),
+      GoalSection() => _GoalsSectionWidget(sectionToDisplay),
+      HeaderSectionUpdate() => _HeaderSectionUpdateWidget(sectionToDisplay),
     };
   }
 }
@@ -60,6 +62,45 @@ class _TitleSectionWidget extends StatelessWidget {
   }
 }
 
+class _HeaderSectionUpdateWidget extends StatelessWidget {
+  final HeaderSectionUpdate section;
+
+  _HeaderSectionUpdateWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.base,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: Image.network(
+              section.coverUrl,
+              excludeFromSemantics: true,
+              fit: BoxFit.fitHeight,
+              height: 50,
+              width: 50,
+            ),
+          ),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(
+            child: Text(
+              section.title,
+              style: AgoraTextStyles.medium16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _HeaderSectionWidget extends StatelessWidget {
   final HeaderSection section;
 
@@ -73,14 +114,17 @@ class _HeaderSectionWidget extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Image.network(
-              section.coverUrl,
-              excludeFromSemantics: true,
-              fit: BoxFit.fitHeight,
-              height: 300,
+            AspectRatio(
+              aspectRatio: 375 / 162,
+              child: Image.network(
+                section.coverUrl,
+                excludeFromSemantics: true,
+                fit: BoxFit.fitWidth,
+                width: MediaQuery.sizeOf(context).width,
+              ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: -1,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5),
                 child: Container(
@@ -256,6 +300,50 @@ class _InformationItem extends StatelessWidget {
   }
 }
 
+class _GoalsSectionWidget extends StatelessWidget {
+  final GoalSection section;
+
+  _GoalsSectionWidget(this.section);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: AgoraSpacings.horizontalPadding,
+        right: AgoraSpacings.horizontalPadding,
+        top: AgoraSpacings.x3,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: section.goals.map((goal) => _GoalRow(goal)).toList(),
+      ),
+    );
+  }
+}
+
+class _GoalRow extends StatelessWidget {
+  final ConsultationGoal goal;
+
+  _GoalRow(this.goal);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AgoraSpacings.base),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(goal.picto, style: AgoraTextStyles.regular26),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(child: AgoraHtml(data: goal.description)),
+        ],
+      ),
+    );
+  }
+}
+
 class _AccordionSectionWidget extends StatelessWidget {
   final _AccordionSection section;
 
@@ -295,6 +383,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        ...widget.section.headerSections.map((section) => DynamicSectionWidget(section)),
         if (!expanded)
           Stack(
             children: [
@@ -481,7 +570,7 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: AgoraButton(
-                            label: 'Voir toutes les réponses',
+                            label: section.buttonLabel,
                             style: AgoraButtonStyle.blueBorderButtonStyle,
                             onPressed: () {
                               Navigator.pushNamed(

@@ -47,8 +47,10 @@ class DynamicConsultationPresenter {
             id: responsesInfos.id,
             picto: responsesInfos.picto,
             description: responsesInfos.description,
+            buttonLabel: responsesInfos.buttonLabel,
           ),
         ExpandableSection(
+          headerSections: consultation.headerSections.map(presentSection).toList(),
           collapsedSections: consultation.collapsedSections.map(presentSection).toList(),
           expandedSections: consultation.expandedSections.map(presentSection).toList(),
         ),
@@ -64,6 +66,8 @@ class DynamicConsultationPresenter {
             title: consultation.footer!.title,
             description: consultation.footer!.description,
           ),
+        if (consultation.goals != null)
+          GoalSection(consultation.goals!),
         if (feedbackResult != null)
           ConsultationFeedbackResultsSection(
             id: feedbackResult.id,

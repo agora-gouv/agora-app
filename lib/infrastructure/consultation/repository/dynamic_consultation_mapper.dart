@@ -20,6 +20,7 @@ ConsultationResponseInfos? _toResponseInfo(dynamic data, String id) {
       id: id,
       picto: data["picto"] as String,
       description: data["description"] as String,
+      buttonLabel: data["actionText"] as String,
     );
   } else {
     return null;
@@ -43,6 +44,21 @@ ConsultationFooter? _toFooter(dynamic data) {
       title: data["title"] as String?,
       description: data["description"] as String,
     );
+  } else {
+    return null;
+  }
+}
+
+List<ConsultationGoal>? _toGoals(dynamic data) {
+  if (data is List) {
+    return data
+        .map(
+          (goal) => ConsultationGoal(
+            picto: goal["picto"] as String,
+            description: goal["description"] as String,
+          ),
+        )
+        .toList();
   } else {
     return null;
   }
