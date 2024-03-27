@@ -30,6 +30,11 @@ class _Presenter {
             description: consultationHeaderInfo.description,
             logo: consultationHeaderInfo.logo,
           ),
+        if (consultationDatesInfos != null)
+          ConsultationDatesInfosSection(
+            label:
+            'Du ${consultationDatesInfos.startDate.formatToDayMonthYear()} au ${consultationDatesInfos.endDate.formatToDayMonthYear()}',
+          ),
         if (responsesInfos != null)
           ResponseInfoSection(
             id: responsesInfos.id,
@@ -55,11 +60,6 @@ class _Presenter {
             description: consultation.footer!.description,
           ),
         if (consultation.goals != null) GoalSection(consultation.goals!),
-        if (consultationDatesInfos != null)
-          ConsultationDatesInfosSection(
-            label:
-                'Du ${consultationDatesInfos.startDate.formatToDayMonth()} au ${consultationDatesInfos.endDate.formatToDayMonth()}',
-          ),
         if (feedbackResult != null)
           ConsultationFeedbackResultsSection(
             id: feedbackResult.id,

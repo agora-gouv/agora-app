@@ -259,10 +259,26 @@ class _ConsultationDatesInfosSectionWidget extends StatelessWidget {
         top: AgoraSpacings.x2,
         bottom: AgoraSpacings.x0_75,
       ),
-      child: _InformationItem(
-        image: "ic_calendar.svg",
-        text: section.label,
-        semanticsPrefix: 'Date limite : ',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Semantics(
+            header: true,
+            child: Text(
+              'Lancement de la consultation',
+              style: AgoraTextStyles.medium22.copyWith(
+                color: AgoraColors.primaryBlue,
+              ),
+            ),
+          ),
+          _InformationItem(
+            image: "ic_calendar.svg",
+            text: section.label,
+            semanticsPrefix: 'Dates de la consultation : ',
+            style: AgoraTextStyles.lightItalic16,
+          ),
+        ],
       ),
     );
   }
@@ -272,11 +288,13 @@ class _InformationItem extends StatelessWidget {
   final String semanticsPrefix;
   final String image;
   final String text;
+  final TextStyle style;
 
   _InformationItem({
     required this.semanticsPrefix,
     required this.image,
     required this.text,
+    this.style = AgoraTextStyles.light14,
   });
 
   @override
@@ -291,7 +309,7 @@ class _InformationItem extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-              child: Text(text, style: AgoraTextStyles.light14),
+              child: Text(text, style: style),
             ),
           ),
         ],

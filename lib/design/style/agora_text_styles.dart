@@ -140,6 +140,15 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle lightItalic16 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontStyle: FontStyle.italic,
+    fontSize: 16.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle medium16 = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
