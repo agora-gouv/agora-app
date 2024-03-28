@@ -33,7 +33,7 @@ class _Presenter {
         if (consultationDatesInfos != null)
           ConsultationDatesInfosSection(
             label:
-            'Du ${consultationDatesInfos.startDate.formatToDayMonthYear()} au ${consultationDatesInfos.endDate.formatToDayMonthYear()}',
+                'Du ${consultationDatesInfos.startDate.formatToDayMonthYear()} au ${consultationDatesInfos.endDate.formatToDayMonthYear()}',
           ),
         if (responsesInfos != null)
           ResponseInfoSection(

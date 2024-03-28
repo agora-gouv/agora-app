@@ -121,9 +121,7 @@ class _HeaderSectionWidget extends StatelessWidget {
                 section.coverUrl,
                 excludeFromSemantics: true,
                 fit: BoxFit.fitWidth,
-                width: MediaQuery
-                    .sizeOf(context)
-                    .width,
+                width: MediaQuery.sizeOf(context).width,
               ),
             ),
             Positioned(
@@ -131,9 +129,7 @@ class _HeaderSectionWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5),
                 child: Container(
-                  width: MediaQuery
-                      .sizeOf(context)
-                      .width - (AgoraSpacings.base),
+                  width: MediaQuery.sizeOf(context).width - (AgoraSpacings.base),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.vertical(top: Radius.circular(AgoraCorners.defaultRadius)),
                     gradient: LinearGradient(
@@ -418,9 +414,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
               Positioned(
                 bottom: 0,
                 child: Container(
-                  width: MediaQuery
-                      .sizeOf(context)
-                      .width,
+                  width: MediaQuery.sizeOf(context).width,
                   height: AgoraSpacings.x2,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -790,9 +784,7 @@ class _VideoSectionWidget extends StatelessWidget {
           Semantics(
             header: true,
             child: RichText(
-              textScaler: MediaQuery
-                  .of(context)
-                  .textScaler,
+              textScaler: MediaQuery.of(context).textScaler,
               text: TextSpan(
                 style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                 children: [
@@ -818,9 +810,7 @@ class _VideoSectionWidget extends StatelessWidget {
           if (section.date != null) SizedBox(height: AgoraSpacings.x0_5),
           if (section.date != null)
             RichText(
-              textScaler: MediaQuery
-                  .of(context)
-                  .textScaler,
+              textScaler: MediaQuery.of(context).textScaler,
               text: TextSpan(
                 style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                 children: [
@@ -988,12 +978,12 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                         contentPadding: AgoraRoundedButtonPadding.short,
                         onPressed: () {
                           context.read<DynamicConsultationFeedbackBloc>().add(
-                            SendConsultationUpdateFeedbackEvent(
-                              consultationId: widget.section.consultationId,
-                              updateId: widget.section.id,
-                              isPositive: true,
-                            ),
-                          );
+                                SendConsultationUpdateFeedbackEvent(
+                                  consultationId: widget.section.consultationId,
+                                  updateId: widget.section.id,
+                                  isPositive: true,
+                                ),
+                              );
                           setState(() {
                             answer = true;
                           });
@@ -1006,12 +996,12 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                         contentPadding: AgoraRoundedButtonPadding.short,
                         onPressed: () {
                           context.read<DynamicConsultationFeedbackBloc>().add(
-                            SendConsultationUpdateFeedbackEvent(
-                              consultationId: widget.section.consultationId,
-                              updateId: widget.section.id,
-                              isPositive: false,
-                            ),
-                          );
+                                SendConsultationUpdateFeedbackEvent(
+                                  consultationId: widget.section.consultationId,
+                                  updateId: widget.section.id,
+                                  isPositive: false,
+                                ),
+                              );
                           setState(() {
                             answer = false;
                           });
@@ -1019,32 +1009,31 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                       ),
                     ],
                   )
-                else
-                  ...[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: AgoraButton(
-                        label: 'Modifier votre réponse',
-                        style: AgoraButtonStyle.blueBorderButtonStyle,
-                        onPressed: () {
-                          context.read<DynamicConsultationFeedbackBloc>().add(
-                            DeleteConsultationUpdateFeedbackEvent(
-                              consultationId: widget.section.consultationId,
-                              updateId: widget.section.id,
-                            ),
-                          );
-                          setState(() {
-                            answer = null;
-                          });
-                        },
-                      ),
+                else ...[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: AgoraButton(
+                      label: 'Modifier votre réponse',
+                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      onPressed: () {
+                        context.read<DynamicConsultationFeedbackBloc>().add(
+                              DeleteConsultationUpdateFeedbackEvent(
+                                consultationId: widget.section.consultationId,
+                                updateId: widget.section.id,
+                              ),
+                            );
+                        setState(() {
+                          answer = null;
+                        });
+                      },
                     ),
-                    const SizedBox(height: AgoraSpacings.x0_5),
-                    Text(
-                      'Pour rappel, vous avez répondu "${answer == true ? 'Oui' : 'Non'}".',
-                      style: AgoraTextStyles.light14,
-                    ),
-                  ],
+                  ),
+                  const SizedBox(height: AgoraSpacings.x0_5),
+                  Text(
+                    'Pour rappel, vous avez répondu "${answer == true ? 'Oui' : 'Non'}".',
+                    style: AgoraTextStyles.light14,
+                  ),
+                ],
               ],
             ),
           ),
@@ -1163,7 +1152,7 @@ class _HistorySectionWidget extends StatelessWidget {
               ),
               const SizedBox(height: AgoraSpacings.x2),
               ...section.steps.mapIndexed(
-                    (i, e) => _HistoryElementWidget(e, i == section.steps.length - 1, section.consultationId),
+                (i, e) => _HistoryElementWidget(e, i == section.steps.length - 1, section.consultationId),
               ),
             ],
           ),
