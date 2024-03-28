@@ -2,6 +2,7 @@ import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -13,6 +14,10 @@ import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
+  FakeConsultationSuccessRepository([this.dynamicConsultation]);
+
+  final DynamicConsultation? dynamicConsultation;
+
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsSucceedResponse(
@@ -32,7 +37,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl2",
           thematique: Thematique(picto: "🩺", label: "Santé"),
-          step: 2,
+          label: 'label',
         ),
       ],
       answeredConsultations: [
@@ -41,7 +46,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           title: "Quand commencer ?",
           coverUrl: "coverUrl3",
           thematique: Thematique(picto: "🩺", label: "Santé"),
-          step: 3,
+          label: 'label',
         ),
       ],
     );
@@ -51,15 +56,15 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
   }) async {
-    return GetConsultationsFinishedPaginatedSucceedResponse(
+    return GetConsultationsPaginatedSucceedResponse(
       maxPage: 3,
-      finishedConsultationsPaginated: [
+      consultationsPaginated: [
         ConsultationFinishedPaginated(
           id: "consultationId",
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
-          step: 2,
+          label: 'label',
         ),
       ],
     );
@@ -270,6 +275,89 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       ),
     );
   }
+
+  @override
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    if (dynamicConsultation != null) {
+      return DynamicConsultationSuccessResponse(dynamicConsultation!);
+    }
+    return DynamicConsultationErrorResponse();
+  }
+
+  @override
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
+    return DynamicConsultationsResultsSuccessResponse(
+      participantCount: 1200,
+      results: [
+        ConsultationSummaryUniqueChoiceResults(
+          questionTitle: "Les déplacements professionnels en covoiturage",
+          order: 1,
+          responses: [
+            ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
+            ConsultationSummaryResponse(label: "Autre", ratio: 35),
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  }) async {
+    final update = DynamicConsultationUpdate(
+      id: 'id',
+      shareText: 'shareText',
+      responseInfos: null,
+      infoHeader: null,
+      collapsedSections: [],
+      expandedSections: [],
+      participationInfo: null,
+      downloadInfo: null,
+      feedbackQuestion: null,
+      feedbackResult: null,
+      footer: null,
+      consultationDatesInfos: null,
+      title: 'title',
+      coverUrl: 'coverUrl',
+      thematicLogo: 'logo',
+      thematicLabel: 'label',
+      headerSections: [],
+      goals: [],
+    );
+    return DynamicConsultationUpdateSuccessResponse(update);
+  }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) async {
+    return GetConsultationsPaginatedSucceedResponse(
+      maxPage: 3,
+      consultationsPaginated: [
+        ConsultationFinishedPaginated(
+          id: "consultationId",
+          title: "Quelles solutions pour les déserts médicaux ?",
+          coverUrl: "coverUrl",
+          thematique: Thematique(picto: "🩺", label: "Santé"),
+          label: 'label',
+        ),
+      ],
+    );
+  }
+
+  @override
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) {
+    // TODO: implement sendConsultationUpdateFeedback
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) {
+    // TODO: implement deleteConsultationUpdateFeedback
+    throw UnimplementedError();
+  }
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -333,12 +421,58 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   }) async {
     return GetConsultationSummaryFailedResponse();
   }
+
+  @override
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    return DynamicConsultationErrorResponse();
+  }
+
+  @override
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
+    return DynamicConsultationsResultsErrorResponse();
+  }
+
+  @override
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  }) async {
+    return DynamicConsultationUpdateErrorResponse();
+  }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) {
+    // TODO: implement fetchConsultationsAnsweredPaginated
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) {
+    // TODO: implement sendConsultationUpdateFeedback
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) {
+    // TODO: implement deleteConsultationUpdateFeedback
+    throw UnimplementedError();
+  }
 }
 
 class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRepository {
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
+  }
+
+  @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) {
+    // TODO: implement fetchConsultationsAnsweredPaginated
+    throw UnimplementedError();
   }
 }
 

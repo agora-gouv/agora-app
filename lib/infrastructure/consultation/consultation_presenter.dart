@@ -30,7 +30,7 @@ class ConsultationPresenter {
           title: consultation.title,
           coverUrl: consultation.coverUrl,
           thematique: consultation.thematique.toThematiqueViewModel(),
-          step: consultation.step,
+          label: consultation.label,
         );
       }).toList();
     } else {
@@ -40,7 +40,7 @@ class ConsultationPresenter {
           title: consultation.title,
           coverUrl: consultation.coverUrl,
           thematique: consultation.thematique.toThematiqueViewModel(),
-          step: 1,
+          label: null,
         );
       }).toList();
     }
@@ -55,7 +55,7 @@ class ConsultationPresenter {
         title: consultation.title,
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),
-        step: consultation.step,
+        label: consultation.label,
       );
     }).toList();
   }

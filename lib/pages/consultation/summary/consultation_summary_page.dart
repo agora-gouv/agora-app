@@ -49,7 +49,7 @@ enum ConsultationSummaryInitialTab {
 }
 
 class ConsultationSummaryPage extends StatefulWidget {
-  static const routeName = "/consultationSummaryPage";
+  //static const routeName = "/consultationSummaryPage";
 
   final ConsultationSummaryArguments arguments;
 

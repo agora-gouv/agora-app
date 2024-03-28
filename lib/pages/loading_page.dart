@@ -25,7 +25,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/login/login_error_type.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
-import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
@@ -249,8 +249,8 @@ class _LoadingPageState extends State<LoadingPage> {
       if (widget.redirection.shouldShowConsultationDetails) {
         Navigator.pushNamed(
           context,
-          ConsultationDetailsPage.routeName,
-          arguments: ConsultationDetailsArguments(consultationId: widget.redirection.consultationId!),
+          DynamicConsultationPage.routeName,
+          arguments: DynamicConsultationPageArguments(consultationId: widget.redirection.consultationId!),
         );
       }
       if (widget.redirection.shouldShowOnboarding) {

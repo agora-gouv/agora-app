@@ -5,11 +5,12 @@ enum AgoraRichTextPoliceStyle {
   toolbar,
   section,
   police14,
+  police14Interligne140,
   police22,
   police28,
 }
 
-enum AgoraRichTextItemStyle { bold, regular }
+enum AgoraRichTextItemStyle { bold, regular, italic }
 
 class AgoraRichTextItem {
   final String text;
@@ -59,6 +60,8 @@ class AgoraRichText extends StatelessWidget {
                   return TextSpan(text: item.text);
                 case AgoraRichTextItemStyle.bold:
                   return TextSpan(text: item.text, style: _buildBoldStyle());
+                case AgoraRichTextItemStyle.italic:
+                  return TextSpan(text: item.text, style: _buildRegularStyle().copyWith(fontStyle: FontStyle.italic));
               }
             }).toList(),
           ),
@@ -76,6 +79,8 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.light18.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police14:
         return AgoraTextStyles.light14.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14Interligne140:
+        return AgoraTextStyles.light14.copyWith(height: 1.4);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.light22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:
@@ -91,6 +96,8 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.bold18.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police14:
         return AgoraTextStyles.bold14.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14Interligne140:
+        return AgoraTextStyles.bold14.copyWith(height: 1.4);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.bold22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:

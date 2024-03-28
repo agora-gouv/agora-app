@@ -1,45 +1,45 @@
 import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_view_model.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class ConsultationFinishedPaginatedState extends Equatable {
-  final List<ConsultationFinishedPaginatedViewModel> consultationFinishedViewModels;
+abstract class ConsultationPaginatedState extends Equatable {
+  final List<ConsultationFinishedPaginatedViewModel> consultationPaginatedViewModels;
   final int currentPageNumber;
   final int maxPage;
 
-  ConsultationFinishedPaginatedState({
-    required this.consultationFinishedViewModels,
+  ConsultationPaginatedState({
+    required this.consultationPaginatedViewModels,
     required this.currentPageNumber,
     required this.maxPage,
   });
 
   @override
-  List<Object> get props => [consultationFinishedViewModels, currentPageNumber, maxPage];
+  List<Object> get props => [consultationPaginatedViewModels, currentPageNumber, maxPage];
 }
 
-class ConsultationFinishedPaginatedInitialState extends ConsultationFinishedPaginatedState {
+class ConsultationFinishedPaginatedInitialState extends ConsultationPaginatedState {
   ConsultationFinishedPaginatedInitialState()
-      : super(consultationFinishedViewModels: [], currentPageNumber: -1, maxPage: -1);
+      : super(consultationPaginatedViewModels: [], currentPageNumber: -1, maxPage: -1);
 }
 
-class ConsultationFinishedPaginatedLoadingState extends ConsultationFinishedPaginatedState {
+class ConsultationFinishedPaginatedLoadingState extends ConsultationPaginatedState {
   ConsultationFinishedPaginatedLoadingState({
-    required super.consultationFinishedViewModels,
+    required super.consultationPaginatedViewModels,
     required super.currentPageNumber,
     required super.maxPage,
   });
 }
 
-class ConsultationFinishedPaginatedFetchedState extends ConsultationFinishedPaginatedState {
-  ConsultationFinishedPaginatedFetchedState({
-    required super.consultationFinishedViewModels,
+class ConsultationPaginatedFetchedState extends ConsultationPaginatedState {
+  ConsultationPaginatedFetchedState({
+    required super.consultationPaginatedViewModels,
     required super.currentPageNumber,
     required super.maxPage,
   });
 }
 
-class ConsultationFinishedPaginatedErrorState extends ConsultationFinishedPaginatedState {
-  ConsultationFinishedPaginatedErrorState({
-    required super.consultationFinishedViewModels,
+class ConsultationPaginatedErrorState extends ConsultationPaginatedState {
+  ConsultationPaginatedErrorState({
+    required super.consultationPaginatedViewModels,
     required super.currentPageNumber,
     required super.maxPage,
   });

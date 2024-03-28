@@ -21,6 +21,13 @@ class ShareHelper {
     _share(context, shareText: QagStrings.shareQaGAnsweredDeeplink.format2(title, id));
   }
 
+  static void sharePreformatted({
+    required BuildContext context,
+    required String data,
+  }) {
+    _share(context, shareText: data);
+  }
+
   static void _share(BuildContext context, {required String shareText}) async {
     if (kIsWeb) {
       ClipboardHelper.copy(context, shareText);

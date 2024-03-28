@@ -61,6 +61,8 @@ class QagStrings {
   static const String transcription = "Transcription";
   static const String utils = "Oui\u{00A0}!";
   static const String notUtils = "Non\u{00A0}!";
+  static const String yes = "Oui";
+  static const String no = "Non";
   static const String readMore = "Lire la suite";
   static const String readLess = "Lire moins";
   static const String feedback = "Merci pour votre réponse.";

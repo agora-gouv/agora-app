@@ -10,8 +10,7 @@ import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
-import 'package:agora/pages/consultation/details/consultation_details_page.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/push_notification/notification_message_type.dart';
@@ -169,8 +168,8 @@ class FirebasePushNotificationService extends PushNotificationService {
         break;
       case NotificationMessageType.consultationDetails:
         navigatorKey.currentState?.pushNamed(
-          ConsultationDetailsPage.routeName,
-          arguments: ConsultationDetailsArguments(
+          DynamicConsultationPage.routeName,
+          arguments: DynamicConsultationPageArguments(
             consultationId: message.data["consultationId"] as String,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
             notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
@@ -179,15 +178,12 @@ class FirebasePushNotificationService extends PushNotificationService {
         break;
       case NotificationMessageType.consultationResults:
         navigatorKey.currentState?.pushNamed(
-          ConsultationSummaryPage.routeName,
-          arguments: ConsultationSummaryArguments(
+          DynamicConsultationPage.routeName,
+          arguments: DynamicConsultationPageArguments(
             consultationId: message.data["consultationId"] as String,
             shouldReloadConsultationsWhenPop: false,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
             notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
-            initialTab: (message.data["step"] as int) == 1
-                ? ConsultationSummaryInitialTab.results
-                : ConsultationSummaryInitialTab.etEnsuite,
           ),
         );
         break;

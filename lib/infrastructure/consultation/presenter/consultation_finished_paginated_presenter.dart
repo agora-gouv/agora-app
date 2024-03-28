@@ -3,7 +3,7 @@ import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 
 class ConsultationFinishedPaginatedPresenter {
-  static List<ConsultationFinishedPaginatedViewModel> presentFinishedConsultations(
+  static List<ConsultationFinishedPaginatedViewModel> presentPaginatedConsultations(
     List<ConsultationFinishedPaginated> finishedConsultations,
   ) {
     return finishedConsultations.map((consultation) {
@@ -12,7 +12,7 @@ class ConsultationFinishedPaginatedPresenter {
         title: consultation.title,
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),
-        step: consultation.step,
+        label: consultation.label,
       );
     }).toList();
   }

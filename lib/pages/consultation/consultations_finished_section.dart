@@ -15,8 +15,8 @@ import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intersperse/intersperse.dart';
@@ -66,7 +66,11 @@ class ConsultationsFinishedSection extends StatelessWidget {
                       AgoraRoundedButton(
                         label: GenericStrings.all,
                         style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                        onPressed: () => Navigator.pushNamed(context, ConsultationFinishedPaginatedPage.routeName),
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          ConsultationPaginatedPage.routeName,
+                          arguments: ConsultationPaginatedPageType.finished,
+                        ),
                       ),
                     ],
                   ],
@@ -123,7 +127,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
             title: finishedViewModel.title,
             thematique: finishedViewModel.thematique,
             imageUrl: finishedViewModel.coverUrl,
-            step: finishedViewModel.step,
+            label: finishedViewModel.label,
             style: AgoraConsultationFinishedStyle.carrousel,
             onClick: () {
               TrackerHelper.trackClick(
@@ -132,11 +136,10 @@ class ConsultationsFinishedSection extends StatelessWidget {
               );
               Navigator.pushNamed(
                 context,
-                ConsultationSummaryPage.routeName,
-                arguments: ConsultationSummaryArguments(
+                DynamicConsultationPage.routeName,
+                arguments: DynamicConsultationPageArguments(
                   consultationId: finishedViewModel.id,
                   shouldReloadConsultationsWhenPop: false,
-                  initialTab: ConsultationSummaryInitialTab.etEnsuite,
                 ),
               );
             },
@@ -167,7 +170,11 @@ class _ViewAllCard extends StatelessWidget {
           borderColor: AgoraColors.border,
           cardColor: AgoraColors.white,
           onTap: () {
-            Navigator.pushNamed(context, ConsultationFinishedPaginatedPage.routeName);
+            Navigator.pushNamed(
+              context,
+              ConsultationPaginatedPage.routeName,
+              arguments: ConsultationPaginatedPageType.finished,
+            );
           },
           child: Center(
             child: Column(

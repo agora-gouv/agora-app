@@ -16,12 +16,16 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ConsultationFinishedPaginatedPage extends StatelessWidget {
+class ConsultationPaginatedPage extends StatelessWidget {
   static const routeName = "/consultationFinishedPaginatedPage";
+
+  final ConsultationPaginatedPageType type;
+
+  const ConsultationPaginatedPage(this.type);
 
   final initialPage = 1;
 
@@ -30,9 +34,9 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) => ConsultationFinishedPaginatedBloc(
+          create: (BuildContext context) => ConsultationPaginatedBloc(
             consultationRepository: RepositoryManager.getConsultationRepository(),
-          )..add(FetchConsultationFinishedPaginatedEvent(pageNumber: initialPage)),
+          )..add(FetchConsultationPaginatedEvent(pageNumber: initialPage, type: type)),
         ),
       ],
       child: AgoraScaffold(
@@ -42,16 +46,20 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
               AgoraRichTextItem(
-                text: "${ConsultationStrings.finishConsultationPart1} ",
+                text: type == ConsultationPaginatedPageType.answered
+                    ? ConsultationStrings.answeredConsultationPart1
+                    : "${ConsultationStrings.finishConsultationPart1} ",
                 style: AgoraRichTextItemStyle.regular,
               ),
               AgoraRichTextItem(
-                text: ConsultationStrings.finishConsultationPart2,
+                text: type == ConsultationPaginatedPageType.answered
+                    ? ConsultationStrings.answeredConsultationPart2
+                    : ConsultationStrings.finishConsultationPart2,
                 style: AgoraRichTextItemStyle.bold,
               ),
             ],
           ),
-          child: BlocBuilder<ConsultationFinishedPaginatedBloc, ConsultationFinishedPaginatedState>(
+          child: BlocBuilder<ConsultationPaginatedBloc, ConsultationPaginatedState>(
             builder: (context, state) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -64,9 +72,9 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildContent(BuildContext context, ConsultationFinishedPaginatedState state) {
+  List<Widget> _buildContent(BuildContext context, ConsultationPaginatedState state) {
     final List<Widget> widgets = [];
-    final consultationFinishedViewModels = state.consultationFinishedViewModels;
+    final consultationFinishedViewModels = state.consultationPaginatedViewModels;
     final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
     if (largerThanMobile) {
       for (var index = 0; index < consultationFinishedViewModels.length; index = index + 2) {
@@ -86,7 +94,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                     title: finishedViewModel1.title,
                     thematique: finishedViewModel1.thematique,
                     imageUrl: finishedViewModel1.coverUrl,
-                    step: finishedViewModel1.step,
+                    label: finishedViewModel1.label,
                     style: AgoraConsultationFinishedStyle.grid,
                     onClick: () => _onCardClick(context, finishedViewModel1.id),
                     index: consultationFinishedViewModels.indexOf(finishedViewModel1),
@@ -101,7 +109,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                           title: finishedViewModel2.title,
                           thematique: finishedViewModel2.thematique,
                           imageUrl: finishedViewModel2.coverUrl,
-                          step: finishedViewModel2.step,
+                          label: finishedViewModel2.label,
                           style: AgoraConsultationFinishedStyle.grid,
                           onClick: () => _onCardClick(context, finishedViewModel2!.id),
                           index: consultationFinishedViewModels.indexOf(finishedViewModel2),
@@ -123,7 +131,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
             title: finishedViewModel.title,
             thematique: finishedViewModel.thematique,
             imageUrl: finishedViewModel.coverUrl,
-            step: finishedViewModel.step,
+            label: finishedViewModel.label,
             style: AgoraConsultationFinishedStyle.column,
             onClick: () => _onCardClick(context, finishedViewModel.id),
             index: consultationFinishedViewModels.indexOf(finishedViewModel),
@@ -137,7 +145,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     if (state is ConsultationFinishedPaginatedInitialState || state is ConsultationFinishedPaginatedLoadingState) {
       widgets.add(Center(child: CircularProgressIndicator()));
       widgets.add(SizedBox(height: AgoraSpacings.base));
-    } else if (state is ConsultationFinishedPaginatedErrorState) {
+    } else if (state is ConsultationPaginatedErrorState) {
       widgets.add(AgoraErrorView());
       widgets.add(SizedBox(height: AgoraSpacings.base));
       widgets.add(
@@ -147,9 +155,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
             AgoraRoundedButton(
               label: QagStrings.retry,
               style: AgoraRoundedButtonStyle.primaryButtonStyle,
-              onPressed: () => context
-                  .read<ConsultationFinishedPaginatedBloc>()
-                  .add(FetchConsultationFinishedPaginatedEvent(pageNumber: state.currentPageNumber)),
+              onPressed: () => context.read<ConsultationPaginatedBloc>().add(
+                    FetchConsultationPaginatedEvent(
+                      pageNumber: state.currentPageNumber,
+                      type: type,
+                    ),
+                  ),
             ),
           ],
         ),
@@ -161,9 +172,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
           AgoraRoundedButton(
             label: QagStrings.displayMore,
             style: AgoraRoundedButtonStyle.primaryButtonStyle,
-            onPressed: () => context
-                .read<ConsultationFinishedPaginatedBloc>()
-                .add(FetchConsultationFinishedPaginatedEvent(pageNumber: state.currentPageNumber + 1)),
+            onPressed: () => context.read<ConsultationPaginatedBloc>().add(
+                  FetchConsultationPaginatedEvent(
+                    pageNumber: state.currentPageNumber + 1,
+                    type: type,
+                  ),
+                ),
           ),
         );
         widgets.add(SizedBox(height: AgoraSpacings.base));
@@ -180,12 +194,16 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     );
     Navigator.pushNamed(
       context,
-      ConsultationSummaryPage.routeName,
-      arguments: ConsultationSummaryArguments(
+      DynamicConsultationPage.routeName,
+      arguments: DynamicConsultationPageArguments(
         consultationId: consultationId,
         shouldReloadConsultationsWhenPop: false,
-        initialTab: ConsultationSummaryInitialTab.etEnsuite,
       ),
     );
   }
+}
+
+enum ConsultationPaginatedPageType {
+  finished,
+  answered;
 }
