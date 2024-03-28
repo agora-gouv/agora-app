@@ -272,6 +272,8 @@ class ConsultationDioRepository extends ConsultationRepository {
       final response = await asyncResponse;
       return DynamicConsultationsResultsSuccessResponse(
         participantCount: response.data["participantCount"] as int,
+        title: response.data["title"] as String,
+        coverUrl: response.data["coverUrl"] as String,
         results: ConsultationResponsesBuilder.buildResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
@@ -594,15 +596,19 @@ class DynamicConsultationsResultsErrorResponse extends DynamicConsultationResult
 
 class DynamicConsultationsResultsSuccessResponse extends DynamicConsultationResultsResponse {
   final int participantCount;
+  final String title;
+  final String coverUrl;
   final List<ConsultationSummaryResults> results;
 
   DynamicConsultationsResultsSuccessResponse({
     required this.participantCount,
     required this.results,
+    required this.title,
+    required this.coverUrl,
   });
 
   @override
-  List<Object?> get props => [participantCount, results];
+  List<Object?> get props => [participantCount, results, title, coverUrl];
 }
 
 sealed class DynamicConsultationUpdateResponse extends Equatable {}

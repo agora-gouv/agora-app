@@ -14,13 +14,17 @@ class _ErrorViewModel extends _ViewModel {
 
 class _SuccessViewModel extends _ViewModel {
   final int participantCount;
+  final String title;
+  final String coverUrl;
   final List<ConsultationSummaryResultsViewModel> results;
 
   _SuccessViewModel({
     required this.participantCount,
     required this.results,
+    required this.title,
+    required this.coverUrl,
   });
 
   @override
-  List<Object?> get props => [participantCount, results];
+  List<Object?> get props => [participantCount, results, title, coverUrl];
 }

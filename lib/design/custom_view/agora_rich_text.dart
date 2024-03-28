@@ -5,6 +5,7 @@ enum AgoraRichTextPoliceStyle {
   toolbar,
   section,
   police14,
+  police14Interligne140,
   police22,
   police28,
 }
@@ -78,6 +79,8 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.light18.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police14:
         return AgoraTextStyles.light14.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14Interligne140:
+        return AgoraTextStyles.light14.copyWith(height: 1.4);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.light22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:
@@ -93,6 +96,8 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.bold18.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police14:
         return AgoraTextStyles.bold14.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14Interligne140:
+        return AgoraTextStyles.bold14.copyWith(height: 1.4);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.bold22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:

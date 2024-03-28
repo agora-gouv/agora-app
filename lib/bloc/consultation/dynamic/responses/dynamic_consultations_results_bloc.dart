@@ -22,6 +22,8 @@ class DynamicConsultationResultsBloc
         DynamicConsultationResultsSuccessState(
           participantCount: response.participantCount,
           results: response.results,
+          title: response.title,
+          coverUrl: response.coverUrl,
         ),
       );
     } else {

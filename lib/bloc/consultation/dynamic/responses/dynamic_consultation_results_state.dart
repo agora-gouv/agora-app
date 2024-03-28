@@ -5,15 +5,19 @@ sealed class DynamicConsultationResultsState extends Equatable {}
 
 class DynamicConsultationResultsSuccessState extends DynamicConsultationResultsState {
   final int participantCount;
+  final String title;
+  final String coverUrl;
   final List<ConsultationSummaryResults> results;
 
   DynamicConsultationResultsSuccessState({
     required this.participantCount,
     required this.results,
+    required this.title,
+    required this.coverUrl,
   });
 
   @override
-  List<Object?> get props => [participantCount, results];
+  List<Object?> get props => [participantCount, results, coverUrl, title];
 }
 
 class DynamicConsultationResultsErrorState extends DynamicConsultationResultsState {

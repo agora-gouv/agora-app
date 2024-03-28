@@ -12,6 +12,8 @@ class _Presenter {
   static _SuccessViewModel _presentSuccess(DynamicConsultationResultsSuccessState state) {
     return _SuccessViewModel(
       participantCount: state.participantCount,
+      title: state.title,
+      coverUrl: state.coverUrl,
       results: state.results
           .map((consultationResult) {
             if (consultationResult is ConsultationSummaryUniqueChoiceResults) {
