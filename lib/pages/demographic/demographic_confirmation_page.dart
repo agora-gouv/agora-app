@@ -70,6 +70,14 @@ class DemographicConfirmationPage extends StatelessWidget {
                   modificationSuccess: state is SendDemographicResponsesSuccessState,
                 ),
               );
+            } else if (_areResponsesSent(state)){
+              Navigator.pushNamed(
+                context,
+                DynamicConsultationPage.routeName,
+                arguments: DynamicConsultationPageArguments(
+                  consultationId: consultationId!,
+                ),
+              ).then((value) => Navigator.of(context).pop());
             }
           },
           builder: (context, state) {
@@ -180,7 +188,8 @@ class DemographicConfirmationPage extends StatelessWidget {
   }
 
   bool _isProfileJourney(SendDemographicResponsesState state) =>
-      (state is SendDemographicResponsesSuccessState || state is SendDemographicResponsesFailureState) &&
-      consultationId == null &&
-      consultationTitle == null;
+      _areResponsesSent(state) && consultationId == null && consultationTitle == null;
+
+  bool _areResponsesSent(SendDemographicResponsesState state) =>
+      state is SendDemographicResponsesSuccessState || state is SendDemographicResponsesFailureState;
 }

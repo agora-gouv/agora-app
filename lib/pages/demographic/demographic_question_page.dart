@@ -17,7 +17,6 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/demographic_response.dart';
-import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
 import 'package:agora/pages/demographic/demographic_helper.dart';
 import 'package:agora/pages/demographic/demographic_response_helper.dart';
@@ -305,25 +304,24 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         clickName: AnalyticsEventNames.sendDemographic,
         widgetName: AnalyticsScreenNames.demographicQuestionPage,
       );
-      if (arguments is DemographicQuestionArgumentsFromQuestion) {
-        Navigator.pushNamed(
-          context,
-          DynamicConsultationPage.routeName,
-          arguments: DynamicConsultationPageArguments(
-            consultationId: (arguments as DemographicQuestionArgumentsFromQuestion).consultationId,
-          ),
-        ).then((value) => Navigator.of(context).pop());
-      } else {
-        Navigator.pushNamed(
-          context,
-          DemographicConfirmationPage.routeName,
-          arguments: DemographicConfirmationArguments(
-            demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
-            consultationId: null,
-            consultationTitle: null,
-          ),
-        );
-      }
+      final consultationId = arguments is DemographicQuestionArgumentsFromQuestion
+          ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId
+          : null;
+      Navigator.pushNamed(
+        context,
+        DemographicConfirmationPage.routeName,
+        arguments: DemographicConfirmationArguments(
+          consultationId: consultationId,
+          consultationTitle: arguments is DemographicQuestionArgumentsFromQuestion
+              ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle
+              : null,
+          demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
+        ),
+      ).then((value) {
+        if (consultationId != null) {
+          Navigator.pop(context);
+        }
+      });
     } else {
       currentStep++;
     }
