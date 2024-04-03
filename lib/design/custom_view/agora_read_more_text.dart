@@ -4,6 +4,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:flutter/material.dart';
 
 enum AgoraTrimMode {
@@ -145,5 +146,71 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
     }
 
     return textSpan;
+  }
+}
+
+class AgoraReadMoreV2Text extends StatefulWidget {
+  final String data;
+  final int trimLines;
+  final TextStyle style;
+  final TextAlign textAlign;
+
+  const AgoraReadMoreV2Text(
+    this.data, {
+    super.key,
+    this.trimLines = 5,
+    this.style = AgoraTextStyles.light14,
+    this.textAlign = TextAlign.start,
+  });
+
+  @override
+  AgoraReadMoreV2TextState createState() => AgoraReadMoreV2TextState();
+}
+
+class AgoraReadMoreV2TextState extends State<AgoraReadMoreV2Text> {
+  bool _readMore = true;
+
+  void _onReadMoreLink() {
+    setState(() => _readMore = !_readMore);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          children: [
+            Text(
+              widget.data,
+              style: widget.style,
+              maxLines: _readMore ? widget.trimLines : null,
+            ),
+            if (_readMore)
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  height: AgoraSpacings.x2,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.white.withOpacity(0), Colors.white],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: AgoraSpacings.x0_5),
+        LireLaSuiteButton(
+          onTap: _onReadMoreLink,
+          label: _readMore ? 'Lire la suite' : 'Lire moins',
+          horizontalPadding: 0,
+        ),
+      ],
+    );
   }
 }
