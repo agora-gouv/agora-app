@@ -154,6 +154,7 @@ class AgoraReadMoreV2Text extends StatefulWidget {
   final int trimLines;
   final TextStyle style;
   final TextAlign textAlign;
+  final bool isTalkbackEnabled;
 
   const AgoraReadMoreV2Text(
     this.data, {
@@ -161,6 +162,7 @@ class AgoraReadMoreV2Text extends StatefulWidget {
     this.trimLines = 5,
     this.style = AgoraTextStyles.light14,
     this.textAlign = TextAlign.start,
+    required this.isTalkbackEnabled,
   });
 
   @override
@@ -168,10 +170,16 @@ class AgoraReadMoreV2Text extends StatefulWidget {
 }
 
 class AgoraReadMoreV2TextState extends State<AgoraReadMoreV2Text> {
-  bool _readMore = true;
+  bool _isExpanded = false;
+
+  @override
+  void initState() {
+    _isExpanded = false || widget.isTalkbackEnabled;
+    super.initState();
+  }
 
   void _onReadMoreLink() {
-    setState(() => _readMore = !_readMore);
+    setState(() => _isExpanded = !_isExpanded);
   }
 
   @override
@@ -185,9 +193,9 @@ class AgoraReadMoreV2TextState extends State<AgoraReadMoreV2Text> {
             Text(
               widget.data,
               style: widget.style,
-              maxLines: _readMore ? widget.trimLines : null,
+              maxLines: _isExpanded ? null : widget.trimLines,
             ),
-            if (_readMore)
+            if (!_isExpanded)
               Positioned(
                 bottom: 0,
                 child: Container(
@@ -205,9 +213,9 @@ class AgoraReadMoreV2TextState extends State<AgoraReadMoreV2Text> {
           ],
         ),
         const SizedBox(height: AgoraSpacings.x0_5),
-        LireLaSuiteButton(
+        ShowMoreButton(
           onTap: _onReadMoreLink,
-          label: _readMore ? 'Lire la suite' : 'Lire moins',
+          label: _isExpanded ? 'Lire moins' : 'Lire la suite',
           horizontalPadding: 0,
         ),
       ],

@@ -14,7 +14,7 @@ class AgoraVideoView extends StatefulWidget {
   final int videoWidth;
   final int videoHeight;
   final VoidCallback onVideoStartMoreThan5Sec;
-  final bool isTalkbackActivated;
+  final bool isTalkbackEnabled;
 
   const AgoraVideoView({
     super.key,
@@ -22,7 +22,7 @@ class AgoraVideoView extends StatefulWidget {
     required this.videoWidth,
     required this.videoHeight,
     required this.onVideoStartMoreThan5Sec,
-    required this.isTalkbackActivated,
+    required this.isTalkbackEnabled,
   });
 
   @override
@@ -48,10 +48,10 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       allowedScreenSleep: false,
       allowFullScreen: true,
       aspectRatio: videoAspectRatio,
-      customControls: widget.isTalkbackActivated
+      customControls: widget.isTalkbackEnabled
           ? AgoraVideoControls(backgroundColor: Colors.black, iconColor: Colors.white)
           : null,
-      hideControlsTimer: widget.isTalkbackActivated ? Duration(days: 1) : Duration(seconds: 3),
+      hideControlsTimer: widget.isTalkbackEnabled ? Duration(days: 1) : Duration(seconds: 3),
       showControls: true,
     );
     videoPlayerController.addListener(_listener);
@@ -90,6 +90,7 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
     return Semantics(
       label: chewieController.isPlaying ? SemanticsStrings.videoPause : SemanticsStrings.videoPlay,
       button: true,
+      container: true,
       onTap: () {
         SemanticsHelper.announcePlayPause(chewieController.isPlaying);
         if (chewieController.isPlaying) {

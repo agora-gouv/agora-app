@@ -88,7 +88,7 @@ class ConsultationSummaryEtEnsuiteTabContent extends StatelessWidget {
                             widgetName: AnalyticsScreenNames.consultationSummaryEtEnsuitePage,
                           );
                         },
-                        isTalkbackActivated: MediaQuery.of(context).accessibleNavigation,
+                        isTalkbackEnabled: MediaQuery.of(context).accessibleNavigation,
                       ),
                       SizedBox(height: AgoraSpacings.x1_5),
                       AgoraReadMoreText(video.transcription),
