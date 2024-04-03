@@ -131,8 +131,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                   child: ExcludeSemantics(
                     child: AgoraButton(
                       label: ConsultationStrings.participate,
-                      icon: "ic_bubble.svg",
-                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      style: AgoraButtonStyle.primaryButtonStyle,
                       onPressed: () {
                         TrackerHelper.trackClick(
                           clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",

@@ -429,7 +429,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
           ),
         if (expanded) ...widget.section.expandedSections.map((section) => DynamicSectionWidget(section)),
         if (!expanded)
-          _LireLaSuiteButton(
+          LireLaSuiteButton(
             onTap: () {
               setState(() {
                 expanded = true;
@@ -441,19 +441,25 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
   }
 }
 
-class _LireLaSuiteButton extends StatelessWidget {
+class LireLaSuiteButton extends StatelessWidget {
   final void Function() onTap;
+  final String label;
+  final double horizontalPadding;
 
-  _LireLaSuiteButton({required this.onTap});
+  LireLaSuiteButton({
+    required this.onTap,
+    this.label = 'Lire la suite',
+    this.horizontalPadding = AgoraSpacings.horizontalPadding,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomLeft,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.horizontalPadding),
+        padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: horizontalPadding),
         child: AgoraButton(
-          label: 'Lire la suite',
+          label: label,
           style: AgoraButtonStyle.blueBorderButtonStyle,
           onPressed: onTap,
         ),
@@ -826,7 +832,7 @@ class _VideoSectionWidget extends StatelessWidget {
           SizedBox(height: AgoraSpacings.base),
           Semantics(header: true, child: Text(QagStrings.transcription, style: AgoraTextStyles.medium18)),
           SizedBox(height: AgoraSpacings.x0_5),
-          Text(section.transcription, style: AgoraTextStyles.light14),
+          AgoraReadMoreV2Text(section.transcription, style: AgoraTextStyles.light14),
         ],
       ),
     );

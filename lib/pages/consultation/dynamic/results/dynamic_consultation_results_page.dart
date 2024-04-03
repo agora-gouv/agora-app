@@ -115,7 +115,7 @@ class _SuccessPage extends StatelessWidget {
                     Semantics(
                       header: true,
                       child: Text(
-                        'Résultats',
+                        'Réponses des participants',
                         style: AgoraTextStyles.medium18.copyWith(
                           color: AgoraColors.primaryBlue,
                         ),
