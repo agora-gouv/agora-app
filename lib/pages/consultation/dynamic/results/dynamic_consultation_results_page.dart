@@ -95,7 +95,7 @@ class _SuccessPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
         children: [
-          AgoraToolbar(pageLabel: ConsultationStrings.summaryTabResult),
+          AgoraToolbar(pageLabel: ConsultationStrings.consultationResultsPageTitle),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),

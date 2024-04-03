@@ -21,11 +21,8 @@ class ConsultationStrings {
   static const String participantCount = "%s participants";
   static const String participantCountGoal = "Prochain objectif\u{00A0}: %s\u{00A0}!";
   static const String ignoreQuestion = "Passer cette question →";
-  static const String confirmationTitle = "Merci pour votre participation\u{00A0}!";
-  static const String confirmationDescription =
-      "Vous pouvez maintenant découvrir les résultats de cette consultation et suivre l'avancée des propositions.";
-  static const String goToResult = "Voir les résultats";
   static const String summaryTabResult = "Résultats";
+  static const String consultationResultsPageTitle = "Réponses des participants";
   static const String summaryTabEtEnsuite = "Et ensuite ?";
   static const String summaryTabPresentation = "Présentation";
   static const String percentage = "%s\u{00A0}%";
