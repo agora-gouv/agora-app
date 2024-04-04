@@ -1322,6 +1322,8 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
+            "title": "Développer le covoiturage au quotidien",
+            "coverUrl": "coverUrl",
             "participantCount": 15035,
             "resultsUniqueChoice": [
               {
@@ -1387,6 +1389,8 @@ void main() {
       expect(
         response,
         DynamicConsultationsResultsSuccessResponse(
+          title: "Développer le covoiturage au quotidien",
+          coverUrl: "coverUrl",
           participantCount: 15035,
           results: [
             ConsultationSummaryUniqueChoiceResults(

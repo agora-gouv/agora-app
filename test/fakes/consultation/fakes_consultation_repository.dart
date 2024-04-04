@@ -287,6 +287,8 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
     return DynamicConsultationsResultsSuccessResponse(
+      title: "Développer le covoiturage au quotidien",
+      coverUrl: "coverUrl",
       participantCount: 1200,
       results: [
         ConsultationSummaryUniqueChoiceResults(

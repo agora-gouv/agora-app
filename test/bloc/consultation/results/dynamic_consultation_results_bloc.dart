@@ -18,6 +18,8 @@ void main() {
     expect: () => [
       DynamicConsultationResultsLoadingState(),
       DynamicConsultationResultsSuccessState(
+        title: "Développer le covoiturage au quotidien",
+        coverUrl: "coverUrl",
         participantCount: 1200,
         results: [
           ConsultationSummaryUniqueChoiceResults(
