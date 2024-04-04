@@ -49,8 +49,6 @@ enum ConsultationSummaryInitialTab {
 }
 
 class ConsultationSummaryPage extends StatefulWidget {
-  //static const routeName = "/consultationSummaryPage";
-
   final ConsultationSummaryArguments arguments;
 
   const ConsultationSummaryPage({super.key, required this.arguments});

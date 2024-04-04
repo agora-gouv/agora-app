@@ -830,8 +830,8 @@ class _VideoSectionWidget extends StatelessWidget {
             videoHeight: section.height,
             onVideoStartMoreThan5Sec: () {
               TrackerHelper.trackEvent(
-                eventName: "${AnalyticsEventNames.video} 'consultationId'",
-                widgetName: AnalyticsScreenNames.consultationSummaryEtEnsuitePage,
+                eventName: "${AnalyticsEventNames.video} ${section.consultationId}",
+                widgetName: AnalyticsScreenNames.consultationUpdatePage,
               );
             },
             isTalkbackEnabled: isTalkbackEnabled,
@@ -842,25 +842,26 @@ class _VideoSectionWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Semantics(
-                  header: true,
-                  child: RichText(
-                    textScaler: MediaQuery.of(context).textScaler,
-                    text: TextSpan(
-                      style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
-                      children: [
-                        TextSpan(text: QagStrings.by),
-                        WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                        TextSpan(
-                          text: section.authorName,
-                          style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryGreyOpacity90),
-                        ),
-                      ],
+                if (section.authorName != null)
+                  Semantics(
+                    header: true,
+                    child: RichText(
+                      textScaler: MediaQuery.of(context).textScaler,
+                      text: TextSpan(
+                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
+                        children: [
+                          TextSpan(text: QagStrings.by),
+                          WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                          TextSpan(
+                            text: section.authorName,
+                            style: AgoraTextStyles.medium16.copyWith(color: AgoraColors.primaryGreyOpacity90),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                if (section.authorDescription != null) const SizedBox(height: AgoraSpacings.x0_5),
-                if (section.authorDescription != null)
+                if (section.authorDescription != null) ...[
+                  const SizedBox(height: AgoraSpacings.x0_5),
                   Padding(
                     padding: const EdgeInsets.only(left: AgoraSpacings.horizontalPadding),
                     child: Text(
@@ -868,8 +869,9 @@ class _VideoSectionWidget extends StatelessWidget {
                       style: AgoraTextStyles.mediumItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
                     ),
                   ),
-                if (section.date != null) SizedBox(height: AgoraSpacings.x0_5),
-                if (section.date != null)
+                ],
+                if (section.date != null) ...[
+                  SizedBox(height: AgoraSpacings.x0_5),
                   RichText(
                     textScaler: MediaQuery.of(context).textScaler,
                     text: TextSpan(
@@ -884,6 +886,7 @@ class _VideoSectionWidget extends StatelessWidget {
                       ],
                     ),
                   ),
+                ],
               ],
             ),
           ),

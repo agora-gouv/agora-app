@@ -50,9 +50,12 @@ class DynamicConsultationPresenter {
             buttonLabel: responsesInfos.buttonLabel,
           ),
         ExpandableSection(
-          headerSections: consultation.headerSections.map(presentSection).toList(),
-          collapsedSections: consultation.collapsedSections.map(presentSection).toList(),
-          expandedSections: consultation.expandedSections.map(presentSection).toList(),
+          headerSections:
+              consultation.headerSections.map((section) => presentSection(consultation.id, section)).toList(),
+          collapsedSections:
+              consultation.collapsedSections.map((section) => presentSection(consultation.id, section)).toList(),
+          expandedSections:
+              consultation.expandedSections.map((section) => presentSection(consultation.id, section)).toList(),
         ),
         if (download != null) DownloadSection(url: download.url),
         if (participationInfo != null)
@@ -94,12 +97,13 @@ class DynamicConsultationPresenter {
     );
   }
 
-  static DynamicViewModelSection presentSection(DynamicConsultationSection section) {
+  static DynamicViewModelSection presentSection(String consultationId, DynamicConsultationSection section) {
     return switch (section) {
       DynamicConsultationSectionTitle() => _TitleSection(section.label),
       DynamicConsultationSectionRichText() => _RichTextSection(section.desctiption),
       DynamicConsultationSectionImage() => _ImageSection(desctiption: section.desctiption, url: section.url),
       DynamicConsultationSectionVideo() => _VideoSection(
+          consultationId: consultationId,
           url: section.url,
           transcription: section.transcription,
           width: section.width,
@@ -114,7 +118,7 @@ class DynamicConsultationPresenter {
       DynamicConsultationSectionQuote() => _QuoteSection(description: section.desctiption),
       DynamicConsultationAccordionSection() => _AccordionSection(
           title: section.title,
-          sections: section.expandedSections.map((subSection) => presentSection(subSection)).toList(),
+          sections: section.expandedSections.map((subSection) => presentSection(consultationId, subSection)).toList(),
         ),
     };
   }

@@ -8,6 +8,7 @@ class AnalyticsScreenNames {
   static const String consultationSummaryResultPage = "Résultats d'une consultation";
   static const String consultationSummaryEtEnsuitePage = "Et ensuite d'une consultation";
   static const String consultationsFinishedPaginatedPage = "Liste infinie des consultations finis";
+  static const String consultationUpdatePage = "Page de contenu d'une consultation";
 
   static const String qagsPage = "Liste des QaGs";
   static const String qagsSearchFromAskPage = "Recherche depuis formulaire";

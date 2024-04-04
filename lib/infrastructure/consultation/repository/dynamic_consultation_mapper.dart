@@ -176,13 +176,14 @@ DynamicConsultationAccordionSection _toAccordionSection(Map<String, dynamic> dat
 }
 
 DynamicConsultationSectionVideo _toVideo(Map<String, dynamic> data) {
+  final authorInfo = data["authorInfo"];
   return DynamicConsultationSectionVideo(
     url: data["url"] as String,
     width: data["videoWidth"] as int,
     height: data["videoHeight"] as int,
-    authorName: data["authorInfo"]["name"] as String,
-    authorDescription: data["authorInfo"]["message"] as String,
-    date: (data["authorInfo"]["date"] as String?)?.parseToDateTime(),
+    authorName: authorInfo?["name"] as String?,
+    authorDescription: authorInfo["message"] as String?,
+    date: (authorInfo["date"] as String?)?.parseToDateTime(),
     transcription: data["transcription"] as String,
   );
 }

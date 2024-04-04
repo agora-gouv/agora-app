@@ -348,16 +348,10 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   }
 
   @override
-  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) {
-    // TODO: implement sendConsultationUpdateFeedback
-    throw UnimplementedError();
-  }
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) async {}
 
   @override
-  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) {
-    // TODO: implement deleteConsultationUpdateFeedback
-    throw UnimplementedError();
-  }
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {}
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -443,22 +437,15 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
     required int pageNumber,
-  }) {
-    // TODO: implement fetchConsultationsAnsweredPaginated
-    throw UnimplementedError();
+  }) async {
+    return GetConsultationsFinishedPaginatedFailedResponse();
   }
 
   @override
-  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) {
-    // TODO: implement sendConsultationUpdateFeedback
-    throw UnimplementedError();
-  }
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) async {}
 
   @override
-  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) {
-    // TODO: implement deleteConsultationUpdateFeedback
-    throw UnimplementedError();
-  }
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {}
 }
 
 class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRepository {
@@ -470,9 +457,8 @@ class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRe
   @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
     required int pageNumber,
-  }) {
-    // TODO: implement fetchConsultationsAnsweredPaginated
-    throw UnimplementedError();
+  }) async {
+    return GetConsultationsFinishedPaginatedFailedResponse();
   }
 }
 

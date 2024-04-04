@@ -343,6 +343,7 @@ class HistorySection extends DynamicViewModelSection {
 }
 
 class _VideoSection extends DynamicViewModelSection {
+  final String consultationId;
   final String url;
   final String transcription;
   final int width;
@@ -352,6 +353,7 @@ class _VideoSection extends DynamicViewModelSection {
   final String? date;
 
   _VideoSection({
+    required this.consultationId,
     required this.url,
     required this.transcription,
     required this.width,
@@ -363,8 +365,9 @@ class _VideoSection extends DynamicViewModelSection {
 
   @override
   List<Object?> get props => [
-        transcription,
+        consultationId,
         url,
+        transcription,
         width,
         height,
         authorName,

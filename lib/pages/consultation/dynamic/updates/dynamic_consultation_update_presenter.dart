@@ -43,9 +43,15 @@ class _Presenter {
             buttonLabel: responsesInfos.buttonLabel,
           ),
         ExpandableSection(
-          headerSections: consultation.headerSections.map(DynamicConsultationPresenter.presentSection).toList(),
-          collapsedSections: consultation.collapsedSections.map(DynamicConsultationPresenter.presentSection).toList(),
-          expandedSections: consultation.expandedSections.map(DynamicConsultationPresenter.presentSection).toList(),
+          headerSections: consultation.headerSections
+              .map((section) => DynamicConsultationPresenter.presentSection(consultation.id, section))
+              .toList(),
+          collapsedSections: consultation.collapsedSections
+              .map((section) => DynamicConsultationPresenter.presentSection(consultation.id, section))
+              .toList(),
+          expandedSections: consultation.expandedSections
+              .map((section) => DynamicConsultationPresenter.presentSection(consultation.id, section))
+              .toList(),
         ),
         if (download != null) DownloadSection(url: download.url),
         if (participationInfo != null)
