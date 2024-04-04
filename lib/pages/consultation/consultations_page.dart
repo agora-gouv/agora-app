@@ -10,6 +10,7 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/pages/consultation/consultations_answered_section.dart';
 import 'package:agora/pages/consultation/consultations_finished_section.dart';
@@ -94,6 +95,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
           shouldDisplayAllButton: state.shouldDisplayFinishedAllButton,
         ),
         ConsultationsAnsweredSection(answeredViewModels: state.answeredViewModels),
+        _SuccessFooter(),
       ];
     } else if (state is ConsultationInitialLoadingState) {
       return [ConsultationsLoadingSkeleton()];
@@ -121,5 +123,37 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
         ),
       ),
     ];
+  }
+}
+
+class _SuccessFooter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('🤝', style: AgoraTextStyles.regular26),
+          const SizedBox(width: AgoraSpacings.base),
+          Expanded(
+            child: AgoraRichText(
+              policeStyle: AgoraRichTextPoliceStyle.police16Interligne140,
+              items: [
+                AgoraRichTextItem(
+                  text: "Agora",
+                  style: AgoraRichTextItemStyle.primaryBold,
+                ),
+                AgoraRichTextItem(
+                  text: ', l’application qui vous donne la parole et vous rend des comptes !',
+                  style: AgoraRichTextItemStyle.regular,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

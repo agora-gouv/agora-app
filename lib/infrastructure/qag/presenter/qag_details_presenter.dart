@@ -34,7 +34,7 @@ class QagDetailsPresenter {
         ? QagDetailsResponseViewModel(
             author: response.author,
             authorDescription: response.authorDescription,
-            responseDate: response.responseDate.formatToDayMonth(),
+            responseDate: response.responseDate.formatToDayMonthYear(),
             videoUrl: response.videoUrl,
             videoWidth: response.videoWidth,
             videoHeight: response.videoHeight,

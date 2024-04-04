@@ -1,10 +1,12 @@
+import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
 import 'package:equatable/equatable.dart';
 
-class FetchConsultationFinishedPaginatedEvent extends Equatable {
+class FetchConsultationPaginatedEvent extends Equatable {
   final int pageNumber;
+  final ConsultationPaginatedPageType type;
 
-  FetchConsultationFinishedPaginatedEvent({required this.pageNumber});
+  FetchConsultationPaginatedEvent({required this.pageNumber, required this.type});
 
   @override
-  List<Object> get props => [pageNumber];
+  List<Object> get props => [pageNumber, type];
 }

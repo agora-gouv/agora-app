@@ -40,7 +40,7 @@ class QagDetailsResponseView extends StatelessWidget {
                   widgetName: AnalyticsScreenNames.qagDetailsPage,
                 );
               },
-              isTalkbackActivated: MediaQuery.of(context).accessibleNavigation,
+              isTalkbackEnabled: MediaQuery.of(context).accessibleNavigation,
             ),
             SizedBox(height: AgoraSpacings.base),
             Semantics(

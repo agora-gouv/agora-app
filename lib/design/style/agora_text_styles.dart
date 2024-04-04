@@ -12,6 +12,22 @@ class AgoraTextStyles {
   static const light = FontWeight.w400;
   static const thin = FontWeight.w300;
 
+  static const TextStyle regular50 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 50,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle regular26 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 26,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle bold28 = TextStyle(
     fontFamily: marianne,
     fontWeight: bold,
@@ -48,6 +64,14 @@ class AgoraTextStyles {
     fontFamily: marianne,
     fontWeight: bold,
     fontSize: 14.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle bold16 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: bold,
+    fontSize: 16.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );
@@ -118,6 +142,15 @@ class AgoraTextStyles {
   static const TextStyle mediumItalic16 = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
+    fontStyle: FontStyle.italic,
+    fontSize: 16.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle lightItalic16 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
     fontStyle: FontStyle.italic,
     fontSize: 16.0,
     color: AgoraColors.primaryGrey,
@@ -238,6 +271,14 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle light26 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 26.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle light24 = TextStyle(
     fontFamily: marianne,
     fontWeight: light,
@@ -285,6 +326,16 @@ class AgoraTextStyles {
     color: AgoraColors.primaryGrey,
     height: height,
     decoration: TextDecoration.underline,
+  );
+
+  static const TextStyle regular16UnderlineBlue = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 16.0,
+    color: AgoraColors.primaryBlue,
+    height: height,
+    decoration: TextDecoration.underline,
+    decorationColor: AgoraColors.primaryBlue,
   );
 
   static const TextStyle light15 = TextStyle(

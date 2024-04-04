@@ -5,11 +5,14 @@ import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
+import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
+import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
@@ -17,10 +20,16 @@ import 'package:agora/pages/consultation/question/consultation_question_storage_
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
+part 'dynamic_consultation_mapper.dart';
+
 abstract class ConsultationRepository {
   Future<GetConsultationsRepositoryResponse> fetchConsultations();
 
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
+    required int pageNumber,
+  });
+
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
     required int pageNumber,
   });
 
@@ -40,6 +49,21 @@ abstract class ConsultationRepository {
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
   });
+
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId);
+
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({
+    required String consultationId,
+  });
+
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  });
+
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive);
+
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId);
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -81,7 +105,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
-            step: finishedConsultation["step"] as int,
+            label: finishedConsultation["updateLabel"] as String?,
           );
         }).toList(),
         answeredConsultations: answeredConsultations.map((answeredConsultation) {
@@ -90,7 +114,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             title: answeredConsultation["title"] as String,
             coverUrl: answeredConsultation["coverUrl"] as String,
             thematique: (answeredConsultation["thematique"] as Map).toThematique(),
-            step: answeredConsultation["step"] as int,
+            label: answeredConsultation["updateLabel"] as String?,
           );
         }).toList(),
       );
@@ -106,20 +130,44 @@ class ConsultationDioRepository extends ConsultationRepository {
   }
 
   @override
+  Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
+    required int pageNumber,
+  }) async {
+    try {
+      final response = await httpClient.get("/consultations/answered/$pageNumber");
+      return GetConsultationsPaginatedSucceedResponse(
+        maxPage: response.data["maxPageNumber"] as int,
+        consultationsPaginated: (response.data["consultations"] as List).map((consultation) {
+          return ConsultationFinishedPaginated(
+            id: consultation["id"] as String,
+            title: consultation["title"] as String,
+            coverUrl: consultation["coverUrl"] as String,
+            thematique: (consultation["thematique"] as Map).toThematique(),
+            label: consultation["label"] as String?,
+          );
+        }).toList(),
+      );
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return GetConsultationsFinishedPaginatedFailedResponse();
+    }
+  }
+
+  @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
   }) async {
     try {
       final response = await httpClient.get("/consultations/finished/$pageNumber");
-      return GetConsultationsFinishedPaginatedSucceedResponse(
+      return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
-        finishedConsultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
+        consultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
           return ConsultationFinishedPaginated(
             id: finishedConsultation["id"] as String,
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
-            step: finishedConsultation["step"] as int,
+            label: finishedConsultation["updateLabel"] as String?,
           );
         }).toList(),
       );
@@ -215,6 +263,30 @@ class ConsultationDioRepository extends ConsultationRepository {
   }
 
   @override
+  Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
+    try {
+      final asyncResponse = httpClient.get(
+        "/v2/consultations/$consultationId/responses",
+      );
+      final (_, userResponses, _) = await storageClient.get(consultationId);
+      final response = await asyncResponse;
+      return DynamicConsultationsResultsSuccessResponse(
+        participantCount: response.data["participantCount"] as int,
+        title: response.data["title"] as String,
+        coverUrl: response.data["coverUrl"] as String,
+        results: ConsultationResponsesBuilder.buildResults(
+          uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
+          multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
+          userResponses: userResponses,
+        ),
+      );
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return DynamicConsultationsResultsErrorResponse();
+    }
+  }
+
+  @override
   Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
     required String consultationId,
   }) async {
@@ -281,6 +353,105 @@ class ConsultationDioRepository extends ConsultationRepository {
       return GetConsultationSummaryFailedResponse();
     }
   }
+
+  @override
+  Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    try {
+      final response = await httpClient.get(
+        "/v2/consultations/$consultationId",
+      );
+      final data = response.data;
+      final shareText = data["shareText"] as String;
+      final downloadUrl = data["downloadAnalysisUrl"] as String?;
+      final consultation = DynamicConsultation(
+        id: consultationId,
+        title: data["title"] as String,
+        coverUrl: data["coverUrl"] as String,
+        shareText: shareText,
+        thematicLogo: data["thematique"]["picto"] as String,
+        thematicLabel: data["thematique"]["label"] as String,
+        questionsInfos: _toQuestionsInfo(data["questionsInfo"]),
+        responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
+        infoHeader: _toInfoHeader(data["infoHeader"]),
+        headerSections: ((data["body"]["headerSections"] ?? []) as List).map((e) => _toSection(e)).nonNulls.toList(),
+        collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
+        downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
+        feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
+        feedbackResult: _toFeedbackResults(data["feedbackResults"]),
+        history: _toHistory(data["history"], consultationId),
+        footer: _toFooter(data["footer"]),
+        goals: _toGoals(data["goals"]),
+      );
+      return DynamicConsultationSuccessResponse(consultation);
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return DynamicConsultationErrorResponse();
+    }
+  }
+
+  @override
+  Future<DynamicConsultationUpdateResponse> fetchDynamicConsultationUpdate({
+    required String updateId,
+    required String consultationId,
+  }) async {
+    try {
+      final response = await httpClient.get(
+        "/v2/consultations/$consultationId/updates/$updateId",
+      );
+      final data = response.data;
+      final shareText = data["shareText"] as String;
+      final downloadUrl = data["downloadAnalysisUrl"] as String?;
+      final consultation = DynamicConsultationUpdate(
+        id: consultationId,
+        title: data["title"] as String,
+        coverUrl: data["coverUrl"] as String,
+        thematicLogo: data["thematique"]["picto"] as String,
+        thematicLabel: data["thematique"]["label"] as String,
+        shareText: shareText,
+        consultationDatesInfos: _toConsultationDateInfo(data["consultationDates"]),
+        responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
+        infoHeader: _toInfoHeader(data["infoHeader"]),
+        headerSections: ((data["body"]["headerSections"] ?? []) as List).map((e) => _toSection(e)).nonNulls.toList(),
+        collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
+        downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
+        feedbackQuestion: _toFeedbackQuestion(data["feedbackQuestion"]),
+        feedbackResult: _toFeedbackResults(data["feedbackResults"]),
+        footer: _toFooter(data["footer"]),
+        goals: _toGoals(data["goals"]),
+      );
+      return DynamicConsultationUpdateSuccessResponse(consultation);
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+      return DynamicConsultationUpdateErrorResponse();
+    }
+  }
+
+  @override
+  Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) async {
+    try {
+      await httpClient.post(
+        "/consultations/$consultationId/updates/$updateId/feedback",
+        data: {
+          "isPositive": isPositive,
+        },
+      );
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+    }
+  }
+
+  @override
+  Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {
+    try {
+      await httpClient.delete("/consultations/$consultationId/updates/$updateId/feedback");
+    } catch (e, s) {
+      sentryWrapper?.captureException(e, s);
+    }
+  }
 }
 
 abstract class GetConsultationsRepositoryResponse extends Equatable {
@@ -321,17 +492,17 @@ abstract class GetConsultationsFinishedPaginatedRepositoryResponse extends Equat
   List<Object> get props => [];
 }
 
-class GetConsultationsFinishedPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
+class GetConsultationsPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
   final int maxPage;
-  final List<ConsultationFinishedPaginated> finishedConsultationsPaginated;
+  final List<ConsultationFinishedPaginated> consultationsPaginated;
 
-  GetConsultationsFinishedPaginatedSucceedResponse({
+  GetConsultationsPaginatedSucceedResponse({
     required this.maxPage,
-    required this.finishedConsultationsPaginated,
+    required this.consultationsPaginated,
   });
 
   @override
-  List<Object> get props => [maxPage, finishedConsultationsPaginated];
+  List<Object> get props => [maxPage, consultationsPaginated];
 }
 
 class GetConsultationsFinishedPaginatedFailedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {}
@@ -399,3 +570,59 @@ class GetConsultationSummarySucceedResponse extends GetConsultationSummaryReposi
 }
 
 class GetConsultationSummaryFailedResponse extends GetConsultationSummaryRepositoryResponse {}
+
+sealed class DynamicConsultationResponse extends Equatable {}
+
+class DynamicConsultationSuccessResponse extends DynamicConsultationResponse {
+  final DynamicConsultation consultation;
+
+  DynamicConsultationSuccessResponse(this.consultation);
+
+  @override
+  List<Object?> get props => [consultation];
+}
+
+class DynamicConsultationErrorResponse extends DynamicConsultationResponse {
+  @override
+  List<Object?> get props => [];
+}
+
+sealed class DynamicConsultationResultsResponse extends Equatable {}
+
+class DynamicConsultationsResultsErrorResponse extends DynamicConsultationResultsResponse {
+  @override
+  List<Object?> get props => [];
+}
+
+class DynamicConsultationsResultsSuccessResponse extends DynamicConsultationResultsResponse {
+  final int participantCount;
+  final String title;
+  final String coverUrl;
+  final List<ConsultationSummaryResults> results;
+
+  DynamicConsultationsResultsSuccessResponse({
+    required this.participantCount,
+    required this.results,
+    required this.title,
+    required this.coverUrl,
+  });
+
+  @override
+  List<Object?> get props => [participantCount, results, title, coverUrl];
+}
+
+sealed class DynamicConsultationUpdateResponse extends Equatable {}
+
+class DynamicConsultationUpdateErrorResponse extends DynamicConsultationUpdateResponse {
+  @override
+  List<Object?> get props => [];
+}
+
+class DynamicConsultationUpdateSuccessResponse extends DynamicConsultationUpdateResponse {
+  final DynamicConsultationUpdate update;
+
+  DynamicConsultationUpdateSuccessResponse(this.update);
+
+  @override
+  List<Object?> get props => [update];
+}

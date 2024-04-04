@@ -6,22 +6,22 @@ class ConsultationFinishedPaginatedViewModel extends Equatable {
   final String title;
   final String coverUrl;
   final ThematiqueViewModel thematique;
-  final int step;
+  final String? label;
 
   ConsultationFinishedPaginatedViewModel({
     required this.id,
     required this.title,
     required this.coverUrl,
     required this.thematique,
-    required this.step,
+    required this.label,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         title,
         coverUrl,
         thematique,
-        step,
+        label,
       ];
 }

@@ -2,11 +2,12 @@ import 'package:agora/agora_app.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
-import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
+import 'package:agora/pages/consultation/dynamic/results/dynamic_consultation_results_page.dart';
+import 'package:agora/pages/consultation/dynamic/updates/dynamic_consultation_update_page.dart';
 import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
-import 'package:agora/pages/consultation/summary/consultation_summary_page.dart';
 import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
 import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:agora/pages/demographic/demographic_profile_page.dart';
@@ -44,10 +45,6 @@ class AgoraAppRouter {
       // Consultation
       ConsultationsPage.routeName: (context) =>
           MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
-      ConsultationFinishedPaginatedPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
-            child: ConsultationFinishedPaginatedPage(),
-          ),
       // Question au gouvernement
       QagsPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
       QagAskQuestionPage.routeName: (context) => AgoraTracker(
@@ -124,11 +121,25 @@ class AgoraAppRouter {
         );
         break;
       // Consultation
-      case ConsultationDetailsPage.routeName:
-        final arguments = settings.arguments as ConsultationDetailsArguments;
+      case DynamicConsultationPage.routeName:
+        final arguments = settings.arguments as DynamicConsultationPageArguments;
         currentRoute = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${arguments.consultationId}",
-          child: ConsultationDetailsPage(arguments: arguments),
+          child: DynamicConsultationPage(arguments),
+        );
+        break;
+      case DynamicConsultationResultsPage.routeName:
+        final id = settings.arguments as String;
+        currentRoute = AgoraTracker(
+          widgetName: "${AnalyticsScreenNames.consultationDetailsPage} $id",
+          child: DynamicConsultationResultsPage(id),
+        );
+        break;
+      case DynamicConsultationUpdatePage.routeName:
+        final argument = settings.arguments as DynamicConsultationUpdateArguments;
+        currentRoute = AgoraTracker(
+          widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${argument.updateId}",
+          child: DynamicConsultationUpdatePage(argument),
         );
         break;
       case ConsultationQuestionPage.routeName:
@@ -144,6 +155,13 @@ class AgoraAppRouter {
           child: AppFeedbackPage(),
         );
         break;
+      case ConsultationPaginatedPage.routeName:
+        final arguments = settings.arguments as ConsultationPaginatedPageType;
+        currentRoute = AgoraTracker(
+          widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
+          child: ConsultationPaginatedPage(arguments),
+        );
+        break;
       case ConsultationQuestionConfirmationPage.routeName:
         final arguments = settings.arguments as ConsultationQuestionConfirmationArguments;
         currentRoute = BlocProvider.value(
@@ -156,9 +174,6 @@ class AgoraAppRouter {
             ),
           ),
         );
-        break;
-      case ConsultationSummaryPage.routeName:
-        currentRoute = ConsultationSummaryPage(arguments: settings.arguments as ConsultationSummaryArguments);
         break;
 
       // Qag
