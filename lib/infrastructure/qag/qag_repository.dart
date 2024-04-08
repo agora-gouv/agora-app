@@ -9,7 +9,6 @@ import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
@@ -205,6 +204,7 @@ class QagDioRepository extends QagRepository {
             title: qagResponseIncoming["title"] as String,
             supportCount: qagResponseIncoming["support"]["count"] as int,
             isSupported: qagResponseIncoming["support"]["isSupported"] as bool,
+            order: qagResponseIncoming["order"] as int,
           );
         }).toList(),
         qagResponses: qagResponses.map((qagResponse) {
@@ -215,6 +215,7 @@ class QagDioRepository extends QagRepository {
             author: qagResponse["author"] as String,
             authorPortraitUrl: qagResponse["authorPortraitUrl"] as String,
             responseDate: (qagResponse["responseDate"] as String).parseToDateTime(),
+            order: qagResponse["order"] as int,
           );
         }).toList(),
       );
