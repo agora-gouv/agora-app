@@ -1,5 +1,4 @@
 import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class QagResponseState extends Equatable {

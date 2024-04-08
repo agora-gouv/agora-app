@@ -3,7 +3,6 @@ import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
@@ -100,6 +99,7 @@ class FakeQagSuccessRepository extends QagRepository {
           title: "Pour la ...",
           supportCount: 200,
           isSupported: true,
+          order: 0,
         ),
       ],
       qagResponses: [
@@ -110,6 +110,7 @@ class FakeQagSuccessRepository extends QagRepository {
           author: "author",
           authorPortraitUrl: "authorPortraitUrl",
           responseDate: DateTime(2024, 1, 23),
+          order: 1,
         ),
       ],
     );

@@ -5,7 +5,6 @@ import 'package:agora/domain/qag/header_qag.dart';
 import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
 import 'package:agora/domain/qag/qag.dart';
 import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/qag/qag_response_paginated.dart';
 import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
@@ -327,6 +326,7 @@ void main() {
                   "count": 200,
                   "isSupported": true,
                 },
+                "order": 0,
               },
             ],
             "responses": [
@@ -337,6 +337,7 @@ void main() {
                 "author": "Olivier Véran",
                 "authorPortraitUrl": "authorPortraitUrl",
                 "responseDate": "2023-01-23",
+                "order": 1,
               },
             ],
           },
@@ -364,6 +365,7 @@ void main() {
               title: "Pourquoi nana... ?",
               supportCount: 200,
               isSupported: true,
+              order: 0,
             ),
           ],
           qagResponses: [
@@ -374,6 +376,7 @@ void main() {
               author: "Olivier Véran",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: DateTime(2023, 1, 23),
+              order: 1,
             ),
           ],
         ),
