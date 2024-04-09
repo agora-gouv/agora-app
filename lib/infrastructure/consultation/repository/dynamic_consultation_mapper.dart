@@ -182,8 +182,8 @@ DynamicConsultationSectionVideo _toVideo(Map<String, dynamic> data) {
     width: data["videoWidth"] as int,
     height: data["videoHeight"] as int,
     authorName: authorInfo?["name"] as String?,
-    authorDescription: authorInfo["message"] as String?,
-    date: (authorInfo["date"] as String?)?.parseToDateTime(),
+    authorDescription: authorInfo?["message"] as String?,
+    date: (authorInfo?["date"] as String?)?.parseToDateTime(),
     transcription: data["transcription"] as String,
   );
 }
