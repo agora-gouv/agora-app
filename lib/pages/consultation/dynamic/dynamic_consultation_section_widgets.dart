@@ -901,7 +901,7 @@ class _VideoSectionWidget extends StatelessWidget {
             container: true,
             child: AgoraReadMoreV2Text(
               section.transcription,
-              style: AgoraTextStyles.light14,
+              style: AgoraTextStyles.light16,
               isTalkbackEnabled: isTalkbackEnabled,
             ),
           ),

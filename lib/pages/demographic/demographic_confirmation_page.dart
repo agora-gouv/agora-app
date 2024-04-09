@@ -71,20 +71,20 @@ class DemographicConfirmationPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (state is SendDemographicResponsesInitialLoadingState) {
-              return Column(
-                children: [
-                  AgoraToolbar(pageLabel: 'Envoi en cours'),
-                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-                  Center(child: CircularProgressIndicator()),
-                ],
-              );
-            } else {
+            if (state is SendDemographicResponsesFailureState) {
               return Column(
                 children: [
                   AgoraToolbar(pageLabel: 'Echec de l\'envoi des informations démographiques'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: AgoraErrorView()),
+                ],
+              );
+            } else {
+              return Column(
+                children: [
+                  AgoraToolbar(pageLabel: 'Envoi en cours'),
+                  SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+                  Center(child: CircularProgressIndicator()),
                 ],
               );
             }
