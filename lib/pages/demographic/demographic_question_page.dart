@@ -304,19 +304,24 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         clickName: AnalyticsEventNames.sendDemographic,
         widgetName: AnalyticsScreenNames.demographicQuestionPage,
       );
+      final consultationId = arguments is DemographicQuestionArgumentsFromQuestion
+          ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId
+          : null;
       Navigator.pushNamed(
         context,
         DemographicConfirmationPage.routeName,
         arguments: DemographicConfirmationArguments(
-          consultationId: arguments is DemographicQuestionArgumentsFromQuestion
-              ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId
-              : null,
+          consultationId: consultationId,
           consultationTitle: arguments is DemographicQuestionArgumentsFromQuestion
               ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle
               : null,
           demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
         ),
-      );
+      ).then((value) {
+        if (consultationId != null) {
+          Navigator.pop(context);
+        }
+      });
     } else {
       currentStep++;
     }

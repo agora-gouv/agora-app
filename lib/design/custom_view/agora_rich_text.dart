@@ -1,3 +1,4 @@
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -5,11 +6,13 @@ enum AgoraRichTextPoliceStyle {
   toolbar,
   section,
   police14,
+  police14Interligne140,
+  police16Interligne140,
   police22,
   police28,
 }
 
-enum AgoraRichTextItemStyle { bold, regular }
+enum AgoraRichTextItemStyle { bold, regular, italic, primaryBold }
 
 class AgoraRichTextItem {
   final String text;
@@ -59,6 +62,10 @@ class AgoraRichText extends StatelessWidget {
                   return TextSpan(text: item.text);
                 case AgoraRichTextItemStyle.bold:
                   return TextSpan(text: item.text, style: _buildBoldStyle());
+                case AgoraRichTextItemStyle.primaryBold:
+                  return TextSpan(text: item.text, style: _buildBoldStyle().copyWith(color: AgoraColors.primaryBlue));
+                case AgoraRichTextItemStyle.italic:
+                  return TextSpan(text: item.text, style: _buildRegularStyle().copyWith(fontStyle: FontStyle.italic));
               }
             }).toList(),
           ),
@@ -76,6 +83,10 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.light18.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police14:
         return AgoraTextStyles.light14.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14Interligne140:
+        return AgoraTextStyles.light14.copyWith(height: 1.4);
+      case AgoraRichTextPoliceStyle.police16Interligne140:
+        return AgoraTextStyles.light16.copyWith(height: 1.4);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.light22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:
@@ -91,6 +102,10 @@ class AgoraRichText extends StatelessWidget {
         return AgoraTextStyles.bold18.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police14:
         return AgoraTextStyles.bold14.copyWith(height: 1.2);
+      case AgoraRichTextPoliceStyle.police14Interligne140:
+        return AgoraTextStyles.bold14.copyWith(height: 1.4);
+      case AgoraRichTextPoliceStyle.police16Interligne140:
+        return AgoraTextStyles.bold16.copyWith(height: 1.4);
       case AgoraRichTextPoliceStyle.police22:
         return AgoraTextStyles.bold22.copyWith(height: 1.2);
       case AgoraRichTextPoliceStyle.police28:

@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:agora/common/helper/app_version_helper.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
+import 'package:agora/common/helper/main_color_helper.dart';
 import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
@@ -83,5 +87,19 @@ class HelperManager {
     final sentryWrapper = SentryWrapper();
     GetIt.instance.registerSingleton(sentryWrapper);
     return sentryWrapper;
+  }
+
+  static MainColorHelper initMainColorHelper(Color mainColor) {
+    final mainColorHelper = MainColorHelper(mainColor: mainColor);
+    GetIt.instance.registerSingleton(mainColorHelper);
+    return mainColorHelper;
+  }
+
+  static MainColorHelper getMainColorHelper() {
+    if (GetIt.instance.isRegistered<MainColorHelper>()) {
+      return GetIt.instance.get<MainColorHelper>();
+    }
+
+    return initMainColorHelper(AgoraColors.primaryBlue);
   }
 }

@@ -69,7 +69,7 @@ class ConsultationQuestionPage extends StatelessWidget {
                 consultationTitle: arguments.consultationTitle,
                 consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
               ),
-            );
+            ).then((value) => Navigator.of(context).pop());
           }
         },
         buildWhen: (_, responsesStockState) {

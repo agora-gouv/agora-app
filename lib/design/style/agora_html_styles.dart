@@ -31,7 +31,7 @@ class AgoraHtmlStyles {
   static Style _bodyStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: light,
-        fontSize: FontSize(textScaler.scale(14.0)),
+        fontSize: FontSize(textScaler.scale(16.0)),
         color: AgoraColors.primaryGrey,
         textDecorationColor: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
@@ -42,7 +42,7 @@ class AgoraHtmlStyles {
   static Style _listStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: light,
-        fontSize: FontSize(textScaler.scale(14.0)),
+        fontSize: FontSize(textScaler.scale(16.0)),
         color: AgoraColors.primaryGrey,
         textDecorationColor: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
@@ -53,7 +53,7 @@ class AgoraHtmlStyles {
   static Style _linkStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: light,
-        fontSize: FontSize(textScaler.scale(14.0)),
+        fontSize: FontSize(textScaler.scale(16.0)),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
@@ -63,7 +63,7 @@ class AgoraHtmlStyles {
   static Style _boldStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: medium,
-        fontSize: FontSize(textScaler.scale(14.0)),
+        fontSize: FontSize(textScaler.scale(16.0)),
         color: AgoraColors.primaryGrey,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
@@ -73,7 +73,7 @@ class AgoraHtmlStyles {
   static Style _h1Style(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: bold,
-        fontSize: FontSize(textScaler.scale(16.0)),
+        fontSize: FontSize(textScaler.scale(18.0)),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
@@ -83,7 +83,7 @@ class AgoraHtmlStyles {
   static Style _spanStyle(TextScaler textScaler) => Style(
         fontFamily: marianne,
         fontWeight: bold,
-        fontSize: FontSize(textScaler.scale(14.0)),
+        fontSize: FontSize(textScaler.scale(16.0)),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,

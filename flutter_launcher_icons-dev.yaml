@@ -5,6 +5,6 @@ flutter_launcher_icons:
   remove_alpha_ios: true
   web:
     generate: true
-    image_path: "assets/launcher_icons/ic_agora_logo.png"
+    image_path: "assets/launcher_icons/ic_agora_dev_logo.png"
     background_color: "#FFFFFF"
     theme_color: "#FFFFFF"

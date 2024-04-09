@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Sandbox" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="additionalArgs" value="--dart-define=env=Debug --dart-define=app.flavor=Sandbox" />
+    <option name="buildFlavor" value="Sandbox" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/main_sandbox.dart" />
+    <method v="2" />
+  </configuration>
+</component>

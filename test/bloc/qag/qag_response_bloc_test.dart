@@ -2,7 +2,6 @@ import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
 import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/qag/qag_response_incoming.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,6 +30,7 @@ void main() {
               title: "Pour la ...",
               supportCount: 200,
               isSupported: true,
+              order: 0,
             ),
           ],
           qagResponses: [
@@ -41,6 +41,7 @@ void main() {
               author: "author",
               authorPortraitUrl: "authorPortraitUrl",
               responseDate: DateTime(2024, 1, 23),
+              order: 1,
             ),
           ],
         ),

@@ -10,4 +10,5 @@ class AgoraCorners {
   static const Radius round = Radius.circular(123456789);
   static const double defaultRadius = 5;
   static BorderRadius borderRounded20 = BorderRadius.circular(20);
+  static BorderRadius borderRound = BorderRadius.circular(123456789);
 }

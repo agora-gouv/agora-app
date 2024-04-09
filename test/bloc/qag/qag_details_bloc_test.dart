@@ -78,7 +78,7 @@ void main() {
     response: QagDetailsResponseViewModel(
       author: "Olivier Véran",
       authorDescription: "Ministre délégué auprès de...",
-      responseDate: "20 février",
+      responseDate: "20 février 2024",
       videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
       videoWidth: 1080,
       videoHeight: 1920,
@@ -152,7 +152,7 @@ void main() {
             response: QagDetailsResponseViewModel(
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",
-              responseDate: "20 février",
+              responseDate: "20 février 2024",
               videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
               videoWidth: 1080,
               videoHeight: 1920,
@@ -239,7 +239,7 @@ void main() {
             response: QagDetailsResponseViewModel(
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",
-              responseDate: "20 février",
+              responseDate: "20 février 2024",
               videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
               videoWidth: 1080,
               videoHeight: 1920,

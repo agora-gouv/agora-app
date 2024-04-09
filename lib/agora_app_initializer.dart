@@ -2,6 +2,7 @@ import 'package:agora/agora_app.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_question_response_hive.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/config_manager.dart';
+import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
@@ -33,13 +34,21 @@ class AgoraInitializer {
     await Hive.initFlutter();
     Hive.registerAdapter(ConsultationQuestionResponsesHiveAdapter());
 
+    HelperManager.initMainColorHelper(appConfig.appBarColor);
+
     final sharedPref = await SharedPreferences.getInstance();
     final isFirstConnection = await StorageManager.getOnboardingStorageClient().isFirstTime();
     await SentryFlutter.init(
       (options) => options
         ..dsn = appConfig.sentryDsn
         ..environment = appConfig.environmentName,
-      appRunner: () => runApp(AgoraApp(sharedPref: sharedPref, shouldShowOnboarding: isFirstConnection)),
+      appRunner: () => runApp(
+        AgoraApp(
+          sharedPref: sharedPref,
+          shouldShowOnboarding: isFirstConnection,
+          agoraAppIcon: appConfig.appIcon,
+        ),
+      ),
     );
   }
 
@@ -70,13 +79,17 @@ class AgoraAppConfig extends Equatable {
   final String baseUrl;
   final String environmentName;
   final String sentryDsn;
+  final String appIcon;
+  final Color appBarColor;
 
   AgoraAppConfig({
     required this.baseUrl,
     required this.environmentName,
     required this.sentryDsn,
+    required this.appIcon,
+    required this.appBarColor,
   });
 
   @override
-  List<Object?> get props => [baseUrl, environmentName, sentryDsn];
+  List<Object?> get props => [baseUrl, environmentName, sentryDsn, appIcon, appBarColor];
 }

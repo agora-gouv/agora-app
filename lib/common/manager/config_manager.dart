@@ -20,15 +20,12 @@ class ConfigManager {
       return GetIt.instance.get<FirebaseOptions>();
     }
 
-    FirebaseOptions firebaseOptions;
-    switch (FlavorHelper.getFlavor()) {
-      case AgoraFlavor.dev:
-        firebaseOptions = DevFirebaseOptions.currentPlatform;
-        break;
-      case AgoraFlavor.prod:
-        firebaseOptions = ProdFirebaseOptions.currentPlatform;
-        break;
-    }
+    final FirebaseOptions firebaseOptions = switch (FlavorHelper.getFlavor()) {
+      AgoraFlavor.dev => DevFirebaseOptions.currentPlatform,
+      AgoraFlavor.sandbox => DevFirebaseOptions.currentPlatform,
+      AgoraFlavor.prod => ProdFirebaseOptions.currentPlatform,
+    };
+
     GetIt.instance.registerSingleton(firebaseOptions);
     return firebaseOptions;
   }

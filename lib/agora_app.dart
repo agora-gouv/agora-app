@@ -7,7 +7,7 @@ import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/common/observer/matomo_route_observer.dart';
 import 'package:agora/common/observer/navigation_observer.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/pages/consultation/details/consultation_details_page.dart';
+import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/foundation.dart';
@@ -18,11 +18,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AgoraApp extends StatefulWidget {
   final SharedPreferences sharedPref;
   final bool shouldShowOnboarding;
+  final String agoraAppIcon;
 
   static final matomoRouteObserver = MatomoRouteObserver();
   static final navigationObserver = NavigationObserver();
 
-  const AgoraApp({super.key, required this.sharedPref, required this.shouldShowOnboarding});
+  const AgoraApp({
+    super.key,
+    required this.sharedPref,
+    required this.shouldShowOnboarding,
+    required this.agoraAppIcon,
+  });
 
   @override
   State<AgoraApp> createState() => _AgoraAppState();
@@ -52,8 +58,8 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
       deeplinkHelper.onGetUriLinkStream(
         onConsultationSuccessCallback: (id) {
           navigatorKey.currentState?.pushNamed(
-            ConsultationDetailsPage.routeName,
-            arguments: ConsultationDetailsArguments(consultationId: id),
+            DynamicConsultationPage.routeName,
+            arguments: DynamicConsultationPageArguments(consultationId: id),
           );
         },
         onQagSuccessCallback: (id) {
@@ -125,6 +131,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         settings: settings,
         sharedPref: widget.sharedPref,
         redirection: redirection,
+        agoraAppIcon: widget.agoraAppIcon,
       ),
       theme: ThemeData(
         colorScheme: ColorScheme.light(
