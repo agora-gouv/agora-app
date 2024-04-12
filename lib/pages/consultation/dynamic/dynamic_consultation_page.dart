@@ -24,6 +24,7 @@ import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_video_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/fullscreen_animation_view.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
@@ -43,11 +44,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-part 'dynamic_consultation_view_model.dart';
-
 part 'dynamic_consultation_presenter.dart';
 
 part 'dynamic_consultation_section_widgets.dart';
+
+part 'dynamic_consultation_view_model.dart';
 
 class DynamicConsultationPage extends StatelessWidget {
   static const routeName = '/consultation/dynamic';
@@ -70,8 +71,12 @@ class DynamicConsultationPage extends StatelessWidget {
           return switch (viewModel) {
             _LoadingViewModel() => _LoadingPage(),
             _ErrorViewModel() => _ErrorPage(),
-            _SuccessViewModel() =>
-              _SuccessPage(viewModel, arguments.notificationTitle, arguments.notificationDescription),
+            _SuccessViewModel() => _SuccessPage(
+                viewModel,
+                arguments.notificationTitle,
+                arguments.notificationDescription,
+                arguments.shouldLaunchCongratulationAnimation,
+              ),
           };
         },
       ),
@@ -84,12 +89,14 @@ class DynamicConsultationPageArguments {
   final bool shouldReloadConsultationsWhenPop;
   final String? notificationTitle;
   final String? notificationDescription;
+  final bool shouldLaunchCongratulationAnimation;
 
   DynamicConsultationPageArguments({
     required this.consultationId,
     this.shouldReloadConsultationsWhenPop = true,
     this.notificationTitle,
     this.notificationDescription,
+    this.shouldLaunchCongratulationAnimation = false,
   });
 }
 
@@ -129,11 +136,13 @@ class _SuccessPage extends StatelessWidget {
   final _SuccessViewModel viewModel;
   final String? notificationTitle;
   final String? notificationDescription;
+  final bool shouldLaunchCongratulationAnimation;
 
   _SuccessPage(
     this.viewModel,
     this.notificationTitle,
     this.notificationDescription,
+    this.shouldLaunchCongratulationAnimation,
   );
 
   @override
@@ -143,37 +152,47 @@ class _SuccessPage extends StatelessWidget {
       notificationTitle: notificationTitle,
       notificationDescription: notificationDescription,
     );
+    final content = Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: AgoraToolbar(
+                pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}',
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
+              child: _ShareButton(viewModel.shareText),
+            ),
+            const SizedBox(width: AgoraSpacings.base),
+          ],
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: viewModel.sections.length,
+            itemBuilder: (BuildContext context, int index) {
+              return DynamicSectionWidget(viewModel.sections[index]);
+            },
+          ),
+        ),
+      ],
+    );
+
     return AgoraScaffold(
       appBarType: AppBarColorType.primaryColor,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: AgoraToolbar(
-                  pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
-                child: _ShareButton(viewModel.shareText),
-              ),
-              const SizedBox(width: AgoraSpacings.base),
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: viewModel.sections.length,
-              itemBuilder: (BuildContext context, int index) {
-                return DynamicSectionWidget(viewModel.sections[index]);
-              },
-            ),
-          ),
-        ],
-      ),
+      child: switch (shouldLaunchCongratulationAnimation) {
+        false => content,
+        true => FullscreenAnimationView(
+            animationName: "assets/animations/confetti.json",
+            startDelayMillis: 250,
+            animationSpeed: 1.25,
+            child: content,
+          )
+      },
     );
   }
 }

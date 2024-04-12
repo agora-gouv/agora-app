@@ -88,7 +88,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text('🔥', style: AgoraTextStyles.regular16),
+                    ExcludeSemantics(child: Text('🔥', style: AgoraTextStyles.regular16)),
                     SizedBox(width: AgoraSpacings.x0_25),
                     Expanded(child: Text(label!, style: AgoraTextStyles.regular12)),
                   ],

@@ -70,6 +70,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
                     consultationId: consultationId,
+                    shouldLaunchCongratulationAnimation: true,
                   ),
                 ).then((value) => Navigator.of(context).pop());
               }
