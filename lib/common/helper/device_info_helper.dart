@@ -11,6 +11,8 @@ abstract class DeviceInfoHelper {
   Future<bool> isIpad();
 
   Future<DeviceInformation> getDeviceInformations();
+
+  Future<String> getDeviceSystemData();
 }
 
 class DeviceInfoPluginHelper extends DeviceInfoHelper {
@@ -57,6 +59,20 @@ class DeviceInfoPluginHelper extends DeviceInfoHelper {
         model: iosInfo.model,
         osVersion: 'iOS ${iosInfo.systemVersion}',
       );
+    }
+  }
+
+  @override
+  Future<String> getDeviceSystemData() async {
+    if (kIsWeb) {
+      final webInfo = await deviceInfo.webBrowserInfo;
+      return "${webInfo.browserName.name} - ${webInfo.appVersion} (${webInfo.platform})";
+    } else if (PlatformStaticHelper.isAndroid()) {
+      final androidInfo = await deviceInfo.androidInfo;
+      return "${androidInfo.brand} ${androidInfo.model} - Android ${androidInfo.version.sdkInt} (${androidInfo.version.incremental})";
+    } else {
+      final iosInfo = await deviceInfo.iosInfo;
+      return "${iosInfo.utsname.machine} - ${iosInfo.systemName} ${iosInfo.systemVersion}";
     }
   }
 }

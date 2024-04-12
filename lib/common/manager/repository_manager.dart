@@ -33,7 +33,10 @@ class RepositoryManager {
   static const String _noAuthenticationDio = "noAuthenticationDio";
   static const String _authenticatedDio = "authenticatedDio";
 
-  static final userAgentBuilder = UserAgentBuilderImpl(appVersionHelper: HelperManager.getAppVersionHelper());
+  static final userAgentBuilder = UserAgentBuilderImpl(
+    appVersionHelper: HelperManager.getAppVersionHelper(),
+    deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
+  );
 
   static void initRepositoryManager({required String baseUrl, required Uint8List rootCertificate}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
