@@ -53,16 +53,21 @@ class QagDetailsPresenter {
   static QagDetailsFeedbackViewModel? _presentFeedbackFromVideoResponse(QagDetailsResponse? response) {
     if (response == null) {
       return null;
-    } else if (response.feedbackStatus == false) {
+    } else if (response.feedbackUserResponse == null) {
       return QagDetailsFeedbackNotAnsweredViewModel(
         feedbackQuestion: response.feedbackQuestion,
-        feedbackResults: response.feedbackResults,
+        previousUserResponse: null,
+        previousFeedbackResults: null,
       );
     } else if (response.feedbackResults == null) {
-      return QagDetailsFeedbackAnsweredNoResultsViewModel(feedbackQuestion: response.feedbackQuestion);
+      return QagDetailsFeedbackAnsweredNoResultsViewModel(
+        feedbackQuestion: response.feedbackQuestion,
+        userResponse: response.feedbackUserResponse!,
+      );
     } else {
       return QagDetailsFeedbackAnsweredResultsViewModel(
         feedbackQuestion: response.feedbackQuestion,
+        userResponse: response.feedbackUserResponse!,
         feedbackResults: response.feedbackResults!,
       );
     }
@@ -71,16 +76,21 @@ class QagDetailsPresenter {
   static QagDetailsFeedbackViewModel? _presentFeedbackFromTextResponse(QagDetailsTextResponse? response) {
     if (response == null) {
       return null;
-    } else if (response.feedbackStatus == false) {
+    } else if (response.feedbackUserResponse == null) {
       return QagDetailsFeedbackNotAnsweredViewModel(
         feedbackQuestion: response.feedbackQuestion,
-        feedbackResults: response.feedbackResults,
+        previousUserResponse: null,
+        previousFeedbackResults: null,
       );
     } else if (response.feedbackResults == null) {
-      return QagDetailsFeedbackAnsweredNoResultsViewModel(feedbackQuestion: response.feedbackQuestion);
+      return QagDetailsFeedbackAnsweredNoResultsViewModel(
+        feedbackQuestion: response.feedbackQuestion,
+        userResponse: response.feedbackUserResponse!,
+      );
     } else {
       return QagDetailsFeedbackAnsweredResultsViewModel(
         feedbackQuestion: response.feedbackQuestion,
+        userResponse: response.feedbackUserResponse!,
         feedbackResults: response.feedbackResults!,
       );
     }

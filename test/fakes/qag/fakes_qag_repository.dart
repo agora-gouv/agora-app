@@ -258,8 +258,9 @@ class FakeQagSuccessRepository extends QagRepository {
 
 class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
   final QagDetails qagDetails;
+  int remainingSendFeedbackCount;
 
-  FakeQagDetailsSuccessRepository({required this.qagDetails});
+  FakeQagDetailsSuccessRepository({required this.qagDetails, this.remainingSendFeedbackCount = 999});
 
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
@@ -275,13 +276,18 @@ class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
     required String qagId,
     required bool isHelpful,
   }) async {
-    return QagFeedbackSuccessBodyWithRatioResponse(
-      feedbackBody: QagFeedbackResults(
-        positiveRatio: 79,
-        negativeRatio: 21,
-        count: 31415,
-      ),
-    );
+    if (remainingSendFeedbackCount >= 0) {
+      remainingSendFeedbackCount--;
+      return QagFeedbackSuccessBodyWithRatioResponse(
+        feedbackBody: QagFeedbackResults(
+          positiveRatio: 79,
+          negativeRatio: 21,
+          count: 31415,
+        ),
+      );
+    } else {
+      return QagFeedbackFailedResponse();
+    }
   }
 
   @override
@@ -371,7 +377,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
           videoHeight: 1920,
           transcription: "Blablabla",
           feedbackQuestion: 'feedbackQuestion',
-          feedbackStatus: true,
+          feedbackUserResponse: true,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 79,
             negativeRatio: 21,
@@ -433,7 +439,7 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
           videoHeight: 1920,
           transcription: "Blablabla",
           feedbackQuestion: 'feedbackQuestion',
-          feedbackStatus: false,
+          feedbackUserResponse: null,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 79,
             negativeRatio: 21,
@@ -473,7 +479,7 @@ class FakeQagSuccessWithTextResponse extends FakeQagSuccessRepository {
           responseLabel: "responseLabel",
           responseText: "responseText",
           feedbackQuestion: "feedbackQuestionFromTextResponse",
-          feedbackStatus: true,
+          feedbackUserResponse: true,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 51,
             negativeRatio: 49,
@@ -512,7 +518,7 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
           videoHeight: 1920,
           transcription: "Blablabla",
           feedbackQuestion: 'feedbackQuestion',
-          feedbackStatus: true,
+          feedbackUserResponse: true,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 79,
             negativeRatio: 21,
@@ -527,7 +533,7 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
           responseLabel: "responseLabel",
           responseText: "responseText",
           feedbackQuestion: "feedbackQuestionFromTextResponse",
-          feedbackStatus: true,
+          feedbackUserResponse: true,
           feedbackResults: QagFeedbackResults(
             positiveRatio: 51,
             negativeRatio: 49,

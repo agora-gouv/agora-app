@@ -279,7 +279,7 @@ class QagDioRepository extends QagRepository {
                   videoHeight: qagDetailsResponse["videoHeight"] as int,
                   transcription: qagDetailsResponse["transcription"] as String,
                   feedbackQuestion: qagDetailsResponse["feedbackQuestion"] as String,
-                  feedbackStatus: qagDetailsResponse["feedbackStatus"] as bool,
+                  feedbackUserResponse: qagDetailsResponse["feedbackUserResponse"] as bool?,
                   feedbackResults: qagDetailsFeedbackResults != null
                       ? QagFeedbackResults(
                           positiveRatio: qagDetailsFeedbackResults["positiveRatio"] as int,
@@ -300,7 +300,7 @@ class QagDioRepository extends QagRepository {
                   responseLabel: qagDetailsTextResponse["responseLabel"] as String,
                   responseText: qagDetailsTextResponse["responseText"] as String,
                   feedbackQuestion: qagDetailsTextResponse["feedbackQuestion"] as String,
-                  feedbackStatus: qagDetailsTextResponse["feedbackStatus"] as bool,
+                  feedbackUserResponse: qagDetailsTextResponse["feedbackUserResponse"] as bool?,
                   feedbackResults: qagDetailsFeedbackResults != null
                       ? QagFeedbackResults(
                           positiveRatio: qagDetailsFeedbackResults["positiveRatio"] as int,
