@@ -109,7 +109,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           onPressed: () {
             context
                 .read<QagDetailsBloc>()
-                .add(EditFeedbackQagDetailsEvent(previousUserResponse: viewModel.userResponse));
+                .add(EditFeedbackQagDetailsEvent());
           },
         ),
         const SizedBox(height: AgoraSpacings.x0_5),
@@ -155,7 +155,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           onPressed: () {
             context
                 .read<QagDetailsBloc>()
-                .add(EditFeedbackQagDetailsEvent(previousUserResponse: viewModel.userResponse));
+                .add(EditFeedbackQagDetailsEvent());
           },
         ),
       ],

@@ -258,9 +258,9 @@ class FakeQagSuccessRepository extends QagRepository {
 
 class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
   final QagDetails qagDetails;
-  bool hasGivenFeedback = false;
+  int remainingSendFeedbackCount;
 
-  FakeQagDetailsSuccessRepository({required this.qagDetails});
+  FakeQagDetailsSuccessRepository({required this.qagDetails, this.remainingSendFeedbackCount = 999});
 
   @override
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
@@ -276,8 +276,8 @@ class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
     required String qagId,
     required bool isHelpful,
   }) async {
-    if (!hasGivenFeedback) {
-      hasGivenFeedback = true;
+    if (remainingSendFeedbackCount >= 0) {
+      remainingSendFeedbackCount--;
       return QagFeedbackSuccessBodyWithRatioResponse(
         feedbackBody: QagFeedbackResults(
           positiveRatio: 79,

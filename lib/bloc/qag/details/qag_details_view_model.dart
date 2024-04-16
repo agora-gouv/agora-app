@@ -172,11 +172,16 @@ class QagDetailsFeedbackErrorViewModel extends QagDetailsFeedbackViewModel {
 
 class QagDetailsFeedbackNotAnsweredViewModel extends QagDetailsFeedbackViewModel {
   final bool? previousUserResponse;
+  final QagFeedbackResults? previousFeedbackResults;
 
-  QagDetailsFeedbackNotAnsweredViewModel({required super.feedbackQuestion, required this.previousUserResponse});
+  QagDetailsFeedbackNotAnsweredViewModel({
+    required super.feedbackQuestion,
+    required this.previousUserResponse,
+    required this.previousFeedbackResults,
+  });
 
   @override
-  List<Object?> get props => [feedbackQuestion, previousUserResponse];
+  List<Object?> get props => [feedbackQuestion, previousUserResponse, previousFeedbackResults];
 }
 
 class QagDetailsFeedbackAnsweredNoResultsViewModel extends QagDetailsFeedbackViewModel {

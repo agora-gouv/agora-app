@@ -57,6 +57,7 @@ class QagDetailsPresenter {
       return QagDetailsFeedbackNotAnsweredViewModel(
         feedbackQuestion: response.feedbackQuestion,
         previousUserResponse: null,
+        previousFeedbackResults: null,
       );
     } else if (response.feedbackResults == null) {
       return QagDetailsFeedbackAnsweredNoResultsViewModel(
@@ -79,6 +80,7 @@ class QagDetailsPresenter {
       return QagDetailsFeedbackNotAnsweredViewModel(
         feedbackQuestion: response.feedbackQuestion,
         previousUserResponse: null,
+        previousFeedbackResults: null,
       );
     } else if (response.feedbackResults == null) {
       return QagDetailsFeedbackAnsweredNoResultsViewModel(

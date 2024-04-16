@@ -22,10 +22,6 @@ class SendFeedbackQagDetailsEvent extends QagDetailsEvent {
 }
 
 class EditFeedbackQagDetailsEvent extends QagDetailsEvent {
-  final bool previousUserResponse;
-
-  EditFeedbackQagDetailsEvent({required this.previousUserResponse});
-
   @override
-  List<Object?> get props => [previousUserResponse];
+  List<Object?> get props => [];
 }
