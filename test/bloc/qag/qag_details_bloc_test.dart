@@ -524,15 +524,13 @@ void main() {
               ),
             ),
           ),
-        )
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );
   });
 
   group("QaG edit feedback Event", () {
-    // If fetched state, and one answered viewModel with result, should emit not answered with previous answer
-
     blocTest(
       "when qagDetails not fetched yet - should emit nothing",
       build: () => QagDetailsBloc(

@@ -100,16 +100,15 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
 
   Widget _buildAnsweredNoResults(BuildContext context, QagDetailsFeedbackAnsweredNoResultsViewModel viewModel) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(QagStrings.feedback),
+        const Text(QagStrings.feedback, style: AgoraTextStyles.regular14),
         const SizedBox(height: AgoraSpacings.base),
         AgoraButton(
           label: 'Modifier votre réponse',
           style: AgoraButtonStyle.blueBorderButtonStyle,
           onPressed: () {
-            context
-                .read<QagDetailsBloc>()
-                .add(EditFeedbackQagDetailsEvent());
+            context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
           },
         ),
         const SizedBox(height: AgoraSpacings.x0_5),
@@ -149,14 +148,15 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AgoraSpacings.base),
-        AgoraButton(
-          label: 'Modifier votre réponse',
-          style: AgoraButtonStyle.blueBorderButtonStyle,
-          onPressed: () {
-            context
-                .read<QagDetailsBloc>()
-                .add(EditFeedbackQagDetailsEvent());
-          },
+        Align(
+          alignment: Alignment.centerLeft,
+          child: AgoraButton(
+            label: 'Modifier votre réponse',
+            style: AgoraButtonStyle.blueBorderButtonStyle,
+            onPressed: () {
+              context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
+            },
+          ),
         ),
       ],
     );
