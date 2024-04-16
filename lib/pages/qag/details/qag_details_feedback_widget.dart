@@ -9,11 +9,12 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/domain/qag/details/qag_details.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,9 +58,9 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           viewModel is QagDetailsFeedbackLoadingViewModel ? viewModel.isHelpfulClicked : null;
       return _buildNotAnswered(context, qagId, isHelpfulButtonClicked);
     } else if (viewModel is QagDetailsFeedbackAnsweredNoResultsViewModel) {
-      return _buildAnsweredNoResults();
+      return _buildAnsweredNoResults(context, viewModel);
     } else if (viewModel is QagDetailsFeedbackAnsweredResultsViewModel) {
-      return _buildAnsweredResults(viewModel.feedbackResults);
+      return _buildAnsweredResults(context, viewModel);
     } else {
       return _buildError();
     }
@@ -76,7 +77,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           onPressed: () {
             if (isHelpfulClicked == null) {
               _trackFeedback(qagId);
-              context.read<QagDetailsBloc>().add(SendFeedbackEvent(qagId: qagId, isHelpful: true));
+              context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true));
             }
           },
         ),
@@ -89,7 +90,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           onPressed: () {
             if (isHelpfulClicked == null) {
               _trackFeedback(qagId);
-              context.read<QagDetailsBloc>().add(SendFeedbackEvent(qagId: qagId, isHelpful: false));
+              context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: false));
             }
           },
         ),
@@ -97,24 +98,43 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildAnsweredNoResults() {
-    return Text(QagStrings.feedback);
+  Widget _buildAnsweredNoResults(BuildContext context, QagDetailsFeedbackAnsweredNoResultsViewModel viewModel) {
+    return Column(
+      children: [
+        const Text(QagStrings.feedback),
+        const SizedBox(height: AgoraSpacings.base),
+        AgoraButton(
+          label: 'Modifier votre réponse',
+          style: AgoraButtonStyle.blueBorderButtonStyle,
+          onPressed: () {
+            context
+                .read<QagDetailsBloc>()
+                .add(EditFeedbackQagDetailsEvent(previousUserResponse: viewModel.userResponse));
+          },
+        ),
+        const SizedBox(height: AgoraSpacings.x0_5),
+        Text(
+          'Pour rappel, vous avez répondu "${viewModel.userResponse == true ? 'Oui' : 'Non'}".',
+          style: AgoraTextStyles.light14,
+        ),
+      ],
+    );
   }
 
-  Widget _buildAnsweredResults(QagFeedbackResults results) {
+  Widget _buildAnsweredResults(BuildContext context, QagDetailsFeedbackAnsweredResultsViewModel viewModel) {
     return Column(
       children: [
         AgoraConsultationResultBar(
-          ratio: results.positiveRatio,
+          ratio: viewModel.feedbackResults.positiveRatio,
           response: QagStrings.utils,
-          isUserResponse: false,
+          isUserResponse: viewModel.userResponse == true,
           minusPadding: AgoraSpacings.horizontalPadding * 2,
         ),
         SizedBox(height: AgoraSpacings.x0_75),
         AgoraConsultationResultBar(
-          ratio: results.negativeRatio,
+          ratio: viewModel.feedbackResults.negativeRatio,
           response: QagStrings.notUtils,
-          isUserResponse: false,
+          isUserResponse: viewModel.userResponse == false,
           minusPadding: AgoraSpacings.horizontalPadding * 2,
         ),
         SizedBox(height: AgoraSpacings.x1_5),
@@ -122,8 +142,21 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           children: [
             SvgPicture.asset("assets/ic_person.svg", excludeFromSemantics: true),
             SizedBox(width: AgoraSpacings.x0_5),
-            Text(QagStrings.feedbackAnswerCount.format(results.count.toString()), style: AgoraTextStyles.light14),
+            Text(
+              QagStrings.feedbackAnswerCount.format(viewModel.feedbackResults.count.toString()),
+              style: AgoraTextStyles.light14,
+            ),
           ],
+        ),
+        const SizedBox(height: AgoraSpacings.base),
+        AgoraButton(
+          label: 'Modifier votre réponse',
+          style: AgoraButtonStyle.blueBorderButtonStyle,
+          onPressed: () {
+            context
+                .read<QagDetailsBloc>()
+                .add(EditFeedbackQagDetailsEvent(previousUserResponse: viewModel.userResponse));
+          },
         ),
       ],
     );

@@ -39,7 +39,7 @@ void main() {
       videoHeight: 1920,
       transcription: "Blablabla",
       feedbackQuestion: 'feedbackQuestion',
-      feedbackStatus: true,
+      feedbackUserResponse: true,
       feedbackResults: QagFeedbackResults(
         positiveRatio: 79,
         negativeRatio: 21,
@@ -54,7 +54,7 @@ void main() {
       responseLabel: "responseLabel",
       responseText: "responseText",
       feedbackQuestion: 'feedbackQuestion',
-      feedbackStatus: true,
+      feedbackUserResponse: true,
       feedbackResults: QagFeedbackResults(
         positiveRatio: 79,
         negativeRatio: 21,
@@ -90,6 +90,7 @@ void main() {
     ),
     feedback: QagDetailsFeedbackAnsweredResultsViewModel(
       feedbackQuestion: 'feedbackQuestion',
+      userResponse: true,
       feedbackResults: QagFeedbackResults(
         positiveRatio: 79,
         negativeRatio: 21,
@@ -165,6 +166,7 @@ void main() {
             textResponse: null,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
               feedbackQuestion: 'feedbackQuestion',
+              userResponse: true,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 79,
                 negativeRatio: 21,
@@ -204,6 +206,7 @@ void main() {
             ),
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
               feedbackQuestion: 'feedbackQuestionFromTextResponse',
+              userResponse: true,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 51,
                 negativeRatio: 49,
@@ -252,6 +255,7 @@ void main() {
             textResponse: null,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
               feedbackQuestion: 'feedbackQuestion',
+              userResponse: true,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 79,
                 negativeRatio: 21,
@@ -294,7 +298,7 @@ void main() {
       build: () => QagDetailsBloc(
         qagRepository: FakeQagSuccessWithResponseAndFeedbackGivenRepository(),
       ),
-      act: (bloc) => bloc.add(SendFeedbackEvent(qagId: qagId, isHelpful: true)),
+      act: (bloc) => bloc.add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true)),
       expect: () => [],
       wait: const Duration(milliseconds: 5),
     );
@@ -306,7 +310,7 @@ void main() {
       ),
       act: (bloc) => bloc
         ..add(FetchQagDetailsEvent(qagId: qagId))
-        ..add(SendFeedbackEvent(qagId: qagId, isHelpful: true)),
+        ..add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true)),
       expect: () => [
         QagDetailsFetchedState(
           QagDetailsViewModel(
@@ -338,7 +342,7 @@ void main() {
             qagDetails: qagDetails,
             response: QagDetailsResponse.copyWithNewFeedback(
               response: qagDetails.response!,
-              feedbackStatus: true,
+              feedbackUserResponse: true,
               feedbackResults: qagDetails.response!.feedbackResults,
             ),
           ),
@@ -346,7 +350,7 @@ void main() {
       ),
       act: (bloc) => bloc
         ..add(FetchQagDetailsEvent(qagId: qagId))
-        ..add(SendFeedbackEvent(qagId: qagId, isHelpful: true)),
+        ..add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true)),
       expect: () => [
         QagDetailsFetchedState(expectedViewModel),
       ],
@@ -361,7 +365,7 @@ void main() {
             qagDetails: qagDetails,
             response: QagDetailsResponse.copyWithNewFeedback(
               response: qagDetails.response!,
-              feedbackStatus: false,
+              feedbackUserResponse: null,
               feedbackResults: null,
             ),
           ),
@@ -369,14 +373,14 @@ void main() {
       ),
       act: (bloc) => bloc
         ..add(FetchQagDetailsEvent(qagId: qagId))
-        ..add(SendFeedbackEvent(qagId: qagId, isHelpful: true)),
+        ..add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true)),
       expect: () => [
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
             feedback: QagDetailsFeedbackNotAnsweredViewModel(
               feedbackQuestion: 'feedbackQuestion',
-              feedbackResults: null,
+              previousUserResponse: null,
             ),
           ),
         ),
@@ -400,14 +404,14 @@ void main() {
     );
 
     blocTest(
-      "when qagDetails fetched, has not given feedback but no results and repository succeed - should emit success state with loading then answered",
+      "when qagDetails fetched, has not given feedback and repository succeed - should emit success state with loading then answered",
       build: () => QagDetailsBloc(
         qagRepository: FakeQagDetailsSuccessRepository(
           qagDetails: QagDetails.copyWithNewResponse(
             qagDetails: qagDetails,
             response: QagDetailsResponse.copyWithNewFeedback(
               response: qagDetails.response!,
-              feedbackStatus: false,
+              feedbackUserResponse: null,
               feedbackResults: null,
             ),
           ),
@@ -415,14 +419,14 @@ void main() {
       ),
       act: (bloc) => bloc
         ..add(FetchQagDetailsEvent(qagId: qagId))
-        ..add(SendFeedbackEvent(qagId: qagId, isHelpful: false)),
+        ..add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: false)),
       expect: () => [
         QagDetailsFetchedState(
           QagDetailsViewModel.copyWithNewFeedback(
             viewModel: expectedViewModel,
             feedback: QagDetailsFeedbackNotAnsweredViewModel(
               feedbackQuestion: 'feedbackQuestion',
-              feedbackResults: null,
+              previousUserResponse: null,
             ),
           ),
         ),
@@ -440,6 +444,7 @@ void main() {
             viewModel: expectedViewModel,
             feedback: QagDetailsFeedbackAnsweredResultsViewModel(
               feedbackQuestion: 'feedbackQuestion',
+              userResponse: false,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 79,
                 negativeRatio: 21,
@@ -452,65 +457,13 @@ void main() {
       wait: const Duration(milliseconds: 5),
     );
 
-    blocTest(
-      "when qagDetails fetched, has not given feedback and has results and repository succeed - should emit success state with loading then answered",
-      build: () => QagDetailsBloc(
-        qagRepository: FakeQagDetailsSuccessRepository(
-          qagDetails: QagDetails.copyWithNewResponse(
-            qagDetails: qagDetails,
-            response: QagDetailsResponse.copyWithNewFeedback(
-              response: qagDetails.response!,
-              feedbackStatus: false,
-              feedbackResults: QagFeedbackResults(
-                positiveRatio: 79,
-                negativeRatio: 21,
-                count: 31415,
-              ),
-            ),
-          ),
-        ),
-      ),
-      act: (bloc) => bloc
-        ..add(FetchQagDetailsEvent(qagId: qagId))
-        ..add(SendFeedbackEvent(qagId: qagId, isHelpful: true)),
-      expect: () => [
-        QagDetailsFetchedState(
-          QagDetailsViewModel.copyWithNewFeedback(
-            viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackNotAnsweredViewModel(
-              feedbackQuestion: 'feedbackQuestion',
-              feedbackResults: QagFeedbackResults(
-                positiveRatio: 79,
-                negativeRatio: 21,
-                count: 31415,
-              ),
-            ),
-          ),
-        ),
-        QagDetailsFetchedState(
-          QagDetailsViewModel.copyWithNewFeedback(
-            viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackLoadingViewModel(
-              feedbackQuestion: 'feedbackQuestion',
-              isHelpfulClicked: true,
-            ),
-          ),
-        ),
-        QagDetailsFetchedState(
-          QagDetailsViewModel.copyWithNewFeedback(
-            viewModel: expectedViewModel,
-            feedback: QagDetailsFeedbackAnsweredResultsViewModel(
-              feedbackQuestion: 'feedbackQuestion',
-              feedbackResults: QagFeedbackResults(
-                positiveRatio: 79,
-                negativeRatio: 21,
-                count: 31415,
-              ),
-            ),
-          ),
-        ),
-      ],
-      wait: const Duration(milliseconds: 5),
-    );
+    // If has given feedback, edit, then give the same feedback, should call giveQagResponseFeedback from repository only once
+
+    // Edit feedback test cases
+    // If not is fetched state, should do nothing
+    // If fetched state but one of not answered viewModel, should do nothing
+    // If fetched state, and one answered viewModel without result, should emit not answered with previous answer
+    // If fetched state, and one answered viewModel with result, should emit not answered with previous answer
+
   });
 }

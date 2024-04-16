@@ -93,7 +93,7 @@ class QagDetailsResponse extends Equatable {
   final int videoHeight;
   final String transcription;
   final String feedbackQuestion;
-  final bool feedbackStatus;
+  final bool? feedbackUserResponse;
   final QagFeedbackResults? feedbackResults;
   final QagDetailsResponseAdditionalInfo? additionalInfo;
 
@@ -106,14 +106,14 @@ class QagDetailsResponse extends Equatable {
     required this.videoHeight,
     required this.transcription,
     required this.feedbackQuestion,
-    required this.feedbackStatus,
+    required this.feedbackUserResponse,
     required this.feedbackResults,
     required this.additionalInfo,
   });
 
   factory QagDetailsResponse.copyWithNewFeedback({
     required QagDetailsResponse response,
-    required bool feedbackStatus,
+    required bool? feedbackUserResponse,
     required QagFeedbackResults? feedbackResults,
   }) {
     return QagDetailsResponse(
@@ -125,7 +125,7 @@ class QagDetailsResponse extends Equatable {
       videoHeight: response.videoHeight,
       transcription: response.transcription,
       feedbackQuestion: response.feedbackQuestion,
-      feedbackStatus: feedbackStatus,
+      feedbackUserResponse: feedbackUserResponse,
       feedbackResults: feedbackResults,
       additionalInfo: response.additionalInfo,
     );
@@ -141,7 +141,7 @@ class QagDetailsResponse extends Equatable {
         videoHeight,
         transcription,
         feedbackQuestion,
-        feedbackStatus,
+        feedbackUserResponse,
         feedbackResults,
         additionalInfo,
       ];
@@ -151,14 +151,14 @@ class QagDetailsTextResponse extends Equatable {
   final String responseLabel;
   final String responseText;
   final String feedbackQuestion;
-  final bool feedbackStatus;
+  final bool? feedbackUserResponse;
   final QagFeedbackResults? feedbackResults;
 
   QagDetailsTextResponse({
     required this.responseLabel,
     required this.responseText,
     required this.feedbackQuestion,
-    required this.feedbackStatus,
+    required this.feedbackUserResponse,
     required this.feedbackResults,
   });
 
@@ -167,7 +167,7 @@ class QagDetailsTextResponse extends Equatable {
         responseLabel,
         responseText,
         feedbackQuestion,
-        feedbackStatus,
+        feedbackUserResponse,
         feedbackResults,
       ];
 }

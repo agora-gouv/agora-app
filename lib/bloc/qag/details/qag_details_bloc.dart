@@ -10,7 +10,8 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
 
   QagDetailsBloc({required this.qagRepository}) : super(QagDetailsInitialLoadingState()) {
     on<FetchQagDetailsEvent>(_handleQagDetails);
-    on<SendFeedbackEvent>(_handleQagFeedback);
+    on<SendFeedbackQagDetailsEvent>(_handleQagFeedback);
+    on<EditFeedbackQagDetailsEvent>(_handleEditFeedback);
   }
 
   Future<void> _handleQagDetails(
@@ -29,13 +30,14 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
   }
 
   Future<void> _handleQagFeedback(
-    SendFeedbackEvent event,
+    SendFeedbackQagDetailsEvent event,
     Emitter<QagDetailsState> emit,
   ) async {
     if (state is QagDetailsFetchedState) {
       final fetchedState = state as QagDetailsFetchedState;
 
       if (fetchedState.viewModel.feedback != null) {
+        // TODO: check if previousFeedback == newFeedback
         if (fetchedState.viewModel.feedback is QagDetailsFeedbackNotAnsweredViewModel) {
           emit(
             QagDetailsFetchedState(
@@ -61,6 +63,7 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
                   viewModel: fetchedState.viewModel,
                   feedback: QagDetailsFeedbackAnsweredNoResultsViewModel(
                     feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                    userResponse: event.isHelpful,
                   ),
                 ),
               ),
@@ -72,6 +75,7 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
                   viewModel: fetchedState.viewModel,
                   feedback: QagDetailsFeedbackAnsweredResultsViewModel(
                     feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                    userResponse: event.isHelpful,
                     feedbackResults: response.feedbackBody,
                   ),
                 ),
@@ -92,5 +96,12 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
         }
       }
     }
+  }
+
+  Future<void> _handleEditFeedback(
+    EditFeedbackQagDetailsEvent event,
+    Emitter<QagDetailsState> emit,
+  ) async {
+    // TODO: add edit feedback
   }
 }
