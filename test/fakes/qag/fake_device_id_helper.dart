@@ -18,6 +18,11 @@ class FakeDeviceInfoHelper extends DeviceInfoHelper {
   }
 
   @override
+  Future<bool> isPhysicalDevice() async {
+    return true;
+  }
+
+  @override
   Future<String> getDeviceSystemData() async {
     return "deviceData";
   }

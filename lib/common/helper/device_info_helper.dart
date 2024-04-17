@@ -12,6 +12,8 @@ abstract class DeviceInfoHelper {
 
   Future<DeviceInformation> getDeviceInformations();
 
+  Future<bool> isPhysicalDevice();
+
   Future<String> getDeviceSystemData();
 }
 
@@ -59,6 +61,19 @@ class DeviceInfoPluginHelper extends DeviceInfoHelper {
         model: iosInfo.model,
         osVersion: 'iOS ${iosInfo.systemVersion}',
       );
+    }
+  }
+
+  @override
+  Future<bool> isPhysicalDevice() async {
+    if (kIsWeb) {
+      return false;
+    } else if (PlatformStaticHelper.isAndroid()) {
+      final androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.isPhysicalDevice;
+    } else {
+      final iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.isPhysicalDevice;
     }
   }
 
