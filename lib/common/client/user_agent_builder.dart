@@ -17,6 +17,10 @@ class UserAgentBuilderImpl extends UserAgentBuilder {
 
   @override
   Future<String?> getUserAgent() async {
+    final emulatorSuffix = switch (await deviceInfoHelper.isPhysicalDevice()) {
+      true => "-emulator",
+      false => "",
+    };
     final flavorInfo = switch (FlavorHelper.getFlavor()) {
       AgoraFlavor.sandbox => ".sandbox",
       AgoraFlavor.dev => ".dev",
@@ -25,11 +29,11 @@ class UserAgentBuilderImpl extends UserAgentBuilder {
     final versionInfo = appVersionHelper;
 
     if (kIsWeb) {
-      return "Web: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
+      return "Web$emulatorSuffix: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
     } else if (Platform.isAndroid) {
-      return "Android: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
+      return "Android$emulatorSuffix: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
     } else if (Platform.isIOS) {
-      return "iOS: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
+      return "iOS$emulatorSuffix: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
     } else {
       return null;
     }
