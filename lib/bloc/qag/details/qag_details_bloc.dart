@@ -10,7 +10,8 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
 
   QagDetailsBloc({required this.qagRepository}) : super(QagDetailsInitialLoadingState()) {
     on<FetchQagDetailsEvent>(_handleQagDetails);
-    on<SendFeedbackEvent>(_handleQagFeedback);
+    on<SendFeedbackQagDetailsEvent>(_handleQagFeedback);
+    on<EditFeedbackQagDetailsEvent>(_handleEditFeedback);
   }
 
   Future<void> _handleQagDetails(
@@ -29,7 +30,7 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
   }
 
   Future<void> _handleQagFeedback(
-    SendFeedbackEvent event,
+    SendFeedbackQagDetailsEvent event,
     Emitter<QagDetailsState> emit,
   ) async {
     if (state is QagDetailsFetchedState) {
@@ -37,6 +38,15 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
 
       if (fetchedState.viewModel.feedback != null) {
         if (fetchedState.viewModel.feedback is QagDetailsFeedbackNotAnsweredViewModel) {
+          if (_emitImmediateStateIfSendSameFeedback(
+            event,
+            emit,
+            fetchedState.viewModel,
+            fetchedState.viewModel.feedback as QagDetailsFeedbackNotAnsweredViewModel,
+          )) {
+            return;
+          }
+
           emit(
             QagDetailsFetchedState(
               QagDetailsViewModel.copyWithNewFeedback(
@@ -61,6 +71,7 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
                   viewModel: fetchedState.viewModel,
                   feedback: QagDetailsFeedbackAnsweredNoResultsViewModel(
                     feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                    userResponse: event.isHelpful,
                   ),
                 ),
               ),
@@ -72,6 +83,7 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
                   viewModel: fetchedState.viewModel,
                   feedback: QagDetailsFeedbackAnsweredResultsViewModel(
                     feedbackQuestion: fetchedState.viewModel.feedback!.feedbackQuestion,
+                    userResponse: event.isHelpful,
                     feedbackResults: response.feedbackBody,
                   ),
                 ),
@@ -89,6 +101,85 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
               ),
             );
           }
+        }
+      }
+    }
+  }
+
+  bool _emitImmediateStateIfSendSameFeedback(
+    SendFeedbackQagDetailsEvent event,
+    Emitter<QagDetailsState> emit,
+    QagDetailsViewModel qagDetailsViewModel,
+    QagDetailsFeedbackNotAnsweredViewModel previousFeedbackViewModel,
+  ) {
+    if (previousFeedbackViewModel.previousUserResponse == event.isHelpful) {
+      if (previousFeedbackViewModel.previousFeedbackResults != null) {
+        emit(
+          QagDetailsFetchedState(
+            QagDetailsViewModel.copyWithNewFeedback(
+              viewModel: qagDetailsViewModel,
+              feedback: QagDetailsFeedbackAnsweredResultsViewModel(
+                feedbackQuestion: previousFeedbackViewModel.feedbackQuestion,
+                userResponse: event.isHelpful,
+                feedbackResults: previousFeedbackViewModel.previousFeedbackResults!,
+              ),
+            ),
+          ),
+        );
+      } else {
+        emit(
+          QagDetailsFetchedState(
+            QagDetailsViewModel.copyWithNewFeedback(
+              viewModel: qagDetailsViewModel,
+              feedback: QagDetailsFeedbackAnsweredNoResultsViewModel(
+                feedbackQuestion: previousFeedbackViewModel.feedbackQuestion,
+                userResponse: event.isHelpful,
+              ),
+            ),
+          ),
+        );
+      }
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> _handleEditFeedback(
+    EditFeedbackQagDetailsEvent event,
+    Emitter<QagDetailsState> emit,
+  ) async {
+    if (state is QagDetailsFetchedState) {
+      final fetchedState = state as QagDetailsFetchedState;
+      if (fetchedState.viewModel.feedback != null) {
+        switch (fetchedState.viewModel.feedback) {
+          case final QagDetailsFeedbackAnsweredNoResultsViewModel answeredNoResults:
+            emit(
+              QagDetailsFetchedState(
+                QagDetailsViewModel.copyWithNewFeedback(
+                  viewModel: fetchedState.viewModel,
+                  feedback: QagDetailsFeedbackNotAnsweredViewModel(
+                    feedbackQuestion: answeredNoResults.feedbackQuestion,
+                    previousUserResponse: answeredNoResults.userResponse,
+                    previousFeedbackResults: null,
+                  ),
+                ),
+              ),
+            );
+            break;
+          case final QagDetailsFeedbackAnsweredResultsViewModel answeredResults:
+            emit(
+              QagDetailsFetchedState(
+                QagDetailsViewModel.copyWithNewFeedback(
+                  viewModel: fetchedState.viewModel,
+                  feedback: QagDetailsFeedbackNotAnsweredViewModel(
+                    feedbackQuestion: answeredResults.feedbackQuestion,
+                    previousUserResponse: answeredResults.userResponse,
+                    previousFeedbackResults: answeredResults.feedbackResults,
+                  ),
+                ),
+              ),
+            );
+            break;
         }
       }
     }

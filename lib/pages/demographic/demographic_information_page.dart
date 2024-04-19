@@ -194,6 +194,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                       DynamicConsultationPage.routeName,
                                       arguments: DynamicConsultationPageArguments(
                                         consultationId: arguments.consultationId,
+                                        shouldLaunchCongratulationAnimation: true,
                                       ),
                                     ).then((value) => Navigator.of(context).pop());
                                   },

@@ -563,7 +563,7 @@ void main() {
               "videoHeight": 1920,
               "transcription": "Blablabla",
               "feedbackQuestion": 'feedbackQuestion',
-              "feedbackStatus": true,
+              "feedbackUserResponse": true,
               "feedbackResults": {
                 "positiveRatio": 95,
                 "negativeRatio": 5,
@@ -614,7 +614,7 @@ void main() {
               videoHeight: 1920,
               transcription: "Blablabla",
               feedbackQuestion: 'feedbackQuestion',
-              feedbackStatus: true,
+              feedbackUserResponse: true,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 95,
                 negativeRatio: 5,
@@ -654,7 +654,7 @@ void main() {
               "responseLabel": "Réponse d'Agora",
               "responseText": "La réponse textuelle de la part de l'équipe Agora",
               "feedbackQuestion": 'feedbackQuestion',
-              "feedbackStatus": true,
+              "feedbackUserResponse": true,
               "feedbackResults": {
                 "positiveRatio": 95,
                 "negativeRatio": 5,
@@ -696,7 +696,7 @@ void main() {
               responseLabel: "Réponse d'Agora",
               responseText: "La réponse textuelle de la part de l'équipe Agora",
               feedbackQuestion: "feedbackQuestion",
-              feedbackStatus: true,
+              feedbackUserResponse: true,
               feedbackResults: QagFeedbackResults(
                 positiveRatio: 95,
                 negativeRatio: 5,

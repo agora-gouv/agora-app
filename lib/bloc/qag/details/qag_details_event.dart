@@ -11,12 +11,17 @@ class FetchQagDetailsEvent extends QagDetailsEvent {
   List<Object> get props => [qagId];
 }
 
-class SendFeedbackEvent extends QagDetailsEvent {
+class SendFeedbackQagDetailsEvent extends QagDetailsEvent {
   final String qagId;
   final bool isHelpful;
 
-  SendFeedbackEvent({required this.qagId, required this.isHelpful});
+  SendFeedbackQagDetailsEvent({required this.qagId, required this.isHelpful});
 
   @override
   List<Object> get props => [qagId, isHelpful];
+}
+
+class EditFeedbackQagDetailsEvent extends QagDetailsEvent {
+  @override
+  List<Object?> get props => [];
 }

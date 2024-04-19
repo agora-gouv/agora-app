@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/common/helper/app_version_helper.dart';
+import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/flavor_helper.dart';
 import 'package:flutter/foundation.dart';
 
@@ -10,11 +11,16 @@ abstract class UserAgentBuilder {
 
 class UserAgentBuilderImpl extends UserAgentBuilder {
   final AppVersionHelper appVersionHelper;
+  final DeviceInfoHelper deviceInfoHelper;
 
-  UserAgentBuilderImpl({required this.appVersionHelper});
+  UserAgentBuilderImpl({required this.appVersionHelper, required this.deviceInfoHelper});
 
   @override
   Future<String?> getUserAgent() async {
+    final emulatorSuffix = switch (await deviceInfoHelper.isPhysicalDevice()) {
+      true => "-emulator",
+      false => "",
+    };
     final flavorInfo = switch (FlavorHelper.getFlavor()) {
       AgoraFlavor.sandbox => ".sandbox",
       AgoraFlavor.dev => ".dev",
@@ -23,11 +29,11 @@ class UserAgentBuilderImpl extends UserAgentBuilder {
     final versionInfo = appVersionHelper;
 
     if (kIsWeb) {
-      return "Web: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}";
+      return "Web$emulatorSuffix: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
     } else if (Platform.isAndroid) {
-      return "Android: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()} Android/${await versionInfo.getAndroidVersion()}";
+      return "Android$emulatorSuffix: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
     } else if (Platform.isIOS) {
-      return "iOS: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()} iOS/${await versionInfo.getIosVersion()}";
+      return "iOS$emulatorSuffix: fr.agora.gouv$flavorInfo/${await versionInfo.getVersion()}, ${await deviceInfoHelper.getDeviceSystemData()}";
     } else {
       return null;
     }

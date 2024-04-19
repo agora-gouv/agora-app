@@ -10,7 +10,6 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraConsultationAnsweredCard extends StatelessWidget {
   final String id;
@@ -78,7 +77,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
                 roundedCorner: AgoraRoundedCorner.bottomRounded,
                 child: Row(
                   children: [
-                    SvgPicture.asset('assets/ic_fire.svg', excludeFromSemantics: true),
+                    ExcludeSemantics(child: Text('🔥', style: AgoraTextStyles.regular16)),
                     SizedBox(width: AgoraSpacings.x0_5),
                     Expanded(child: Text(label!, style: AgoraTextStyles.regular12)),
                   ],

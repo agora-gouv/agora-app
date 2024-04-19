@@ -16,6 +16,16 @@ class FakeDeviceInfoHelper extends DeviceInfoHelper {
   Future<DeviceInformation> getDeviceInformations() async {
     return DeviceInformation(appVersion: 'appVersion', model: 'model', osVersion: 'osVersion');
   }
+
+  @override
+  Future<bool> isPhysicalDevice() async {
+    return true;
+  }
+
+  @override
+  Future<String> getDeviceSystemData() async {
+    return "deviceData";
+  }
 }
 
 class FakeAndroidSdkBelow33Helper extends FakeDeviceInfoHelper {
