@@ -64,6 +64,8 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
             isHelpful: event.isHelpful,
           );
 
+          await Future.delayed(Duration(seconds: 2));
+
           if (response is QagFeedbackSuccessBodyResponse) {
             emit(
               QagDetailsFetchedState(
