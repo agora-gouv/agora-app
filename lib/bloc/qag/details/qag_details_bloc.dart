@@ -7,8 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
   final QagRepository qagRepository;
+  final Duration feedbackLoadingDuration;
 
-  QagDetailsBloc({required this.qagRepository}) : super(QagDetailsInitialLoadingState()) {
+  QagDetailsBloc({required this.qagRepository, this.feedbackLoadingDuration = const Duration(seconds: 2)})
+      : super(QagDetailsInitialLoadingState()) {
     on<FetchQagDetailsEvent>(_handleQagDetails);
     on<SendFeedbackQagDetailsEvent>(_handleQagFeedback);
     on<EditFeedbackQagDetailsEvent>(_handleEditFeedback);
@@ -64,7 +66,7 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
             isHelpful: event.isHelpful,
           );
 
-          await Future.delayed(Duration(seconds: 2));
+          await Future.delayed(feedbackLoadingDuration);
 
           if (response is QagFeedbackSuccessBodyResponse) {
             emit(
