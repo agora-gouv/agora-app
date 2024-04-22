@@ -146,6 +146,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
     final support = viewModel.support;
     final response = viewModel.response;
     final textResponse = viewModel.textResponse;
+    final scrollController = ScrollController();
     return Expanded(
       child: Column(
         children: [
@@ -178,6 +179,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
               : _buildAgoraToolbarWithPopAction(context),
           Expanded(
             child: CustomScrollView(
+              controller: scrollController,
               slivers: [
                 _buildSliverContainer(
                   horizontalPadding: AgoraSpacings.base,
@@ -252,7 +254,15 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                       )
                     : SliverToBoxAdapter(),
                 _buildSliverContainer(
-                  child: QagDetailsFeedbackWidget(),
+                  child: QagDetailsFeedbackWidget(
+                    onFeedbackSent: () {
+                      scrollController.animateTo(
+                        MediaQuery.of(context).size.width,
+                        duration: Duration(milliseconds: 200),
+                        curve: Curves.fastOutSlowIn,
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

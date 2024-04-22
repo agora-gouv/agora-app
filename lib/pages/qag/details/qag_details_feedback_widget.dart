@@ -19,9 +19,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 class QagDetailsFeedbackWidget extends StatelessWidget {
-  const QagDetailsFeedbackWidget({super.key});
+  final void Function() onFeedbackSent;
+
+  const QagDetailsFeedbackWidget({super.key, required this.onFeedbackSent});
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +49,27 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
         children: [
           Semantics(header: true, child: Text(viewModel.viewModel.feedbackQuestion, style: AgoraTextStyles.medium18)),
           SizedBox(height: AgoraSpacings.base),
-          _build(context, viewModel.qagId, viewModel.viewModel),
+          _build(context, viewModel.qagId, viewModel.viewModel, onFeedbackSent),
         ],
       ),
     );
   }
 
-  Widget _build(BuildContext context, String qagId, QagDetailsFeedbackViewModel viewModel) {
+  Widget _build(
+    BuildContext context,
+    String qagId,
+    QagDetailsFeedbackViewModel viewModel,
+    void Function() onFeedbackSent,
+  ) {
     if (viewModel is QagDetailsFeedbackNotAnsweredViewModel || viewModel is QagDetailsFeedbackLoadingViewModel) {
       final isHelpfulButtonClicked =
           viewModel is QagDetailsFeedbackLoadingViewModel ? viewModel.isHelpfulClicked : null;
       return _buildNotAnswered(context, qagId, isHelpfulButtonClicked);
     } else if (viewModel is QagDetailsFeedbackAnsweredNoResultsViewModel) {
+      onFeedbackSent();
       return _buildAnsweredNoResults(context, viewModel);
     } else if (viewModel is QagDetailsFeedbackAnsweredResultsViewModel) {
+      onFeedbackSent();
       return _buildAnsweredResults(context, viewModel);
     } else {
       return _buildError();
@@ -69,31 +79,39 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
   Widget _buildNotAnswered(BuildContext context, String qagId, bool? isHelpfulClicked) {
     return Row(
       children: [
-        AgoraRoundedButton(
-          icon: "ic_thumb_white.svg",
-          label: QagStrings.utils,
-          contentPadding: AgoraRoundedButtonPadding.short,
-          isLoading: isHelpfulClicked == true,
-          onPressed: () {
-            if (isHelpfulClicked == null) {
-              _trackFeedback(qagId);
-              context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true));
-            }
-          },
-        ),
-        SizedBox(width: AgoraSpacings.base),
-        AgoraRoundedButton(
-          icon: "ic_thumb_down_white.svg",
-          label: QagStrings.notUtils,
-          contentPadding: AgoraRoundedButtonPadding.short,
-          isLoading: isHelpfulClicked == false,
-          onPressed: () {
-            if (isHelpfulClicked == null) {
-              _trackFeedback(qagId);
-              context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: false));
-            }
-          },
-        ),
+        if (isHelpfulClicked == null) ...[
+          AgoraRoundedButton(
+            icon: "ic_thumb_white.svg",
+            label: QagStrings.utils,
+            contentPadding: AgoraRoundedButtonPadding.short,
+            onPressed: () {
+              if (isHelpfulClicked == null) {
+                _trackFeedback(qagId);
+                context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true));
+              }
+            },
+          ),
+          SizedBox(width: AgoraSpacings.base),
+          AgoraRoundedButton(
+            icon: "ic_thumb_down_white.svg",
+            label: QagStrings.notUtils,
+            contentPadding: AgoraRoundedButtonPadding.short,
+            onPressed: () {
+              if (isHelpfulClicked == null) {
+                _trackFeedback(qagId);
+                context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: false));
+              }
+            },
+          ),
+        ],
+        if (isHelpfulClicked != null)
+          Expanded(
+            child: Lottie.asset(
+              'assets/animations/check.json',
+              width: 48,
+              height: 48,
+            ),
+          ),
       ],
     );
   }

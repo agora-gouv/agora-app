@@ -360,6 +360,7 @@ void main() {
     blocTest(
       "when qagDetails fetched, has not given feedback but repository failure - should emit error",
       build: () => QagDetailsBloc(
+        feedbackLoadingDuration: const Duration(milliseconds: 0),
         qagRepository: FakeQagDetailsSuccessAndFeedbackFailureRepository(
           qagDetails: QagDetails.copyWithNewResponse(
             qagDetails: qagDetails,
@@ -407,6 +408,7 @@ void main() {
     blocTest(
       "when qagDetails fetched, has not given feedback and repository succeed - should emit success state with loading then answered",
       build: () => QagDetailsBloc(
+        feedbackLoadingDuration: const Duration(milliseconds: 0),
         qagRepository: FakeQagDetailsSuccessRepository(
           qagDetails: QagDetails.copyWithNewResponse(
             qagDetails: qagDetails,
