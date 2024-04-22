@@ -401,7 +401,7 @@ void main() {
           ),
         ),
       ],
-      wait: const Duration(milliseconds: 5),
+      wait: const Duration(seconds: 2, milliseconds: 100),
     );
 
     blocTest(
@@ -456,7 +456,7 @@ void main() {
           ),
         ),
       ],
-      wait: const Duration(milliseconds: 5),
+      wait: const Duration(seconds: 2, milliseconds: 100),
     );
 
     blocTest(
