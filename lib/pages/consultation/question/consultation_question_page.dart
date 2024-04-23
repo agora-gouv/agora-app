@@ -34,12 +34,19 @@ class ConsultationQuestionArguments {
   });
 }
 
-class ConsultationQuestionPage extends StatelessWidget {
+class ConsultationQuestionPage extends StatefulWidget {
   static const routeName = "/consultationQuestionPage";
 
   final ConsultationQuestionArguments arguments;
 
   const ConsultationQuestionPage({super.key, required this.arguments});
+
+  @override
+  State<ConsultationQuestionPage> createState() => _ConsultationQuestionPageState();
+}
+
+class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
+  int currentQuestionIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +55,12 @@ class ConsultationQuestionPage extends StatelessWidget {
         BlocProvider<ConsultationQuestionsResponsesStockBloc>(
           create: (BuildContext context) => ConsultationQuestionsResponsesStockBloc(
             storageClient: StorageManager.getConsultationQuestionStorageClient(),
-          )..add(RestoreSavingConsultationResponseEvent(consultationId: arguments.consultationId)),
+          )..add(RestoreSavingConsultationResponseEvent(consultationId: widget.arguments.consultationId)),
         ),
         BlocProvider<ConsultationQuestionsBloc>(
           create: (BuildContext context) =>
               ConsultationQuestionsBloc(consultationRepository: RepositoryManager.getConsultationRepository())
-                ..add(FetchConsultationQuestionsEvent(consultationId: arguments.consultationId)),
+                ..add(FetchConsultationQuestionsEvent(consultationId: widget.arguments.consultationId)),
         ),
       ],
       child: BlocConsumer<ConsultationQuestionsResponsesStockBloc, ConsultationQuestionsResponsesStockState>(
@@ -65,8 +72,8 @@ class ConsultationQuestionPage extends StatelessWidget {
               context,
               ConsultationQuestionConfirmationPage.routeName,
               arguments: ConsultationQuestionConfirmationArguments(
-                consultationId: arguments.consultationId,
-                consultationTitle: arguments.consultationTitle,
+                consultationId: widget.arguments.consultationId,
+                consultationTitle: widget.arguments.consultationTitle,
                 consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
               ),
             ).then((value) => Navigator.of(context).pop());
@@ -121,12 +128,14 @@ class ConsultationQuestionPage extends StatelessWidget {
     ConsultationQuestionsResponsesStockState responsesStockState,
     ConsultationQuestionsFetchedState questionsState,
   ) {
+    currentQuestionIndex = responsesStockState.questionIdStack.length + 1;
     var currentQuestionId = responsesStockState.currentQuestionId;
     if (_isFirstQuestion(currentQuestionId, responsesStockState.questionIdStack)) {
-      currentQuestionId = questionsState.viewModels[0].id;
+      currentQuestionId = questionsState.consultationQuestionsViewModel.questions[0].id;
     }
-    final currentQuestion = questionsState.viewModels.firstWhere((element) => element.id == currentQuestionId);
-    final totalQuestions = questionsState.viewModels.length;
+    final currentQuestion = questionsState.consultationQuestionsViewModel.questions
+        .firstWhere((element) => element.id == currentQuestionId);
+    final totalQuestions = questionsState.consultationQuestionsViewModel.questionCount;
     final questionAlreadyAnswered = _getPreviousResponses(
       questionId: currentQuestion.id,
       inStockResponses: responsesStockState.questionsResponses,
@@ -156,7 +165,7 @@ class ConsultationQuestionPage extends StatelessWidget {
     if (currentQuestion is ConsultationQuestionUniqueViewModel) {
       return _handleQuestionUniqueChoice(
         context,
-        arguments.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -164,7 +173,7 @@ class ConsultationQuestionPage extends StatelessWidget {
     } else if (currentQuestion is ConsultationQuestionMultipleViewModel) {
       return _handleQuestionMultipleChoices(
         context,
-        arguments.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -172,7 +181,7 @@ class ConsultationQuestionPage extends StatelessWidget {
     } else if (currentQuestion is ConsultationQuestionOpenedViewModel) {
       return _handleQuestionOpened(
         context,
-        arguments.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -181,7 +190,7 @@ class ConsultationQuestionPage extends StatelessWidget {
     if (currentQuestion is ConsultationQuestionWithConditionViewModel) {
       return _handleQuestionWithConditions(
         context,
-        arguments.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
         questionAlreadyAnswered,
@@ -189,7 +198,7 @@ class ConsultationQuestionPage extends StatelessWidget {
     } else if (currentQuestion is ConsultationQuestionChapterViewModel) {
       return _handleChapter(
         context,
-        arguments.consultationId,
+        widget.arguments.consultationId,
         currentQuestion,
         totalQuestions,
       );
@@ -205,13 +214,20 @@ class ConsultationQuestionPage extends StatelessWidget {
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
   ) {
+    final questionNumberLabel = 'Question $currentQuestionIndex';
     return ConsultationQuestionUniqueChoiceView(
       uniqueChoiceQuestion: uniqueChoiceQuestion,
       totalQuestions: totalQuestions,
       previousSelectedResponses: questionAlreadyAnswered,
+      currentQuestionIndex: currentQuestionIndex,
       onUniqueResponseTap: (questionId, responseId, otherResponse) {
+        setState(() {
+          if (uniqueChoiceQuestion.nextQuestionId != null) {
+            currentQuestionIndex++;
+          }
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.answerConsultationQuestion.format(uniqueChoiceQuestion.questionProgress),
+          clickName: AnalyticsEventNames.answerConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _saveAndGoToNextQuestion(
@@ -223,8 +239,11 @@ class ConsultationQuestionPage extends StatelessWidget {
         );
       },
       onBackTap: () {
+        setState(() {
+          currentQuestionIndex--;
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.backConsultationQuestion.format(uniqueChoiceQuestion.questionProgress),
+          clickName: AnalyticsEventNames.backConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _removeAndGoToPreviousQuestion(context);
@@ -239,13 +258,20 @@ class ConsultationQuestionPage extends StatelessWidget {
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
   ) {
+    final questionNumberLabel = 'Question $currentQuestionIndex';
     return ConsultationQuestionMultipleChoicesView(
       multipleChoicesQuestion: multipleChoicesQuestion,
       totalQuestions: totalQuestions,
       previousSelectedResponses: questionAlreadyAnswered,
+      currentQuestionIndex: currentQuestionIndex,
       onMultipleResponseTap: (questionId, responseIds, otherResponse) {
+        setState(() {
+          if (multipleChoicesQuestion.nextQuestionId != null) {
+            currentQuestionIndex++;
+          }
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.answerConsultationQuestion.format(multipleChoicesQuestion.questionProgress),
+          clickName: AnalyticsEventNames.answerConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _saveAndGoToNextQuestion(
@@ -257,8 +283,11 @@ class ConsultationQuestionPage extends StatelessWidget {
         );
       },
       onBackTap: () {
+        setState(() {
+          currentQuestionIndex--;
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.backConsultationQuestion.format(multipleChoicesQuestion.questionProgress),
+          clickName: AnalyticsEventNames.backConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _removeAndGoToPreviousQuestion(context);
@@ -273,13 +302,20 @@ class ConsultationQuestionPage extends StatelessWidget {
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
   ) {
+    final questionNumberLabel = 'Question $currentQuestionIndex';
     return ConsultationQuestionOpenedView(
       openedQuestion: openedQuestion,
       totalQuestions: totalQuestions,
       previousResponses: questionAlreadyAnswered,
+      currentQuestionIndex: currentQuestionIndex,
       onOpenedResponseInput: (questionId, responseText) {
+        setState(() {
+          if (openedQuestion.nextQuestionId != null) {
+            currentQuestionIndex++;
+          }
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.answerConsultationQuestion.format(openedQuestion.questionProgress),
+          clickName: AnalyticsEventNames.answerConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _saveAndGoToNextQuestion(
@@ -291,8 +327,11 @@ class ConsultationQuestionPage extends StatelessWidget {
         );
       },
       onBackTap: () {
+        setState(() {
+          currentQuestionIndex--;
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.backConsultationQuestion.format(openedQuestion.questionProgress),
+          clickName: AnalyticsEventNames.backConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _removeAndGoToPreviousQuestion(context);
@@ -307,13 +346,18 @@ class ConsultationQuestionPage extends StatelessWidget {
     int totalQuestions,
     ConsultationQuestionResponses? questionAlreadyAnswered,
   ) {
+    final questionNumberLabel = 'Question $currentQuestionIndex';
     return ConsultationQuestionWithConditionsView(
       questionWithConditions: questionWithConditions,
       totalQuestions: totalQuestions,
       previousSelectedResponses: questionAlreadyAnswered,
+      currentQuestionIndex: currentQuestionIndex,
       onWithConditionResponseTap: (questionId, responseId, otherResponse, nextQuestionId) {
+        setState(() {
+          currentQuestionIndex++;
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.answerConsultationQuestion.format(questionWithConditions.questionProgress),
+          clickName: AnalyticsEventNames.answerConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _saveAndGoToNextQuestion(
@@ -325,8 +369,11 @@ class ConsultationQuestionPage extends StatelessWidget {
         );
       },
       onBackTap: () {
+        setState(() {
+          currentQuestionIndex--;
+        });
         TrackerHelper.trackClick(
-          clickName: AnalyticsEventNames.backConsultationQuestion.format(questionWithConditions.questionProgress),
+          clickName: AnalyticsEventNames.backConsultationQuestion.format(questionNumberLabel),
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
         );
         _removeAndGoToPreviousQuestion(context);
@@ -344,6 +391,11 @@ class ConsultationQuestionPage extends StatelessWidget {
       chapter: chapter,
       totalQuestions: totalQuestions,
       onNextTap: () {
+        setState(() {
+          if (chapter.nextQuestionId != null) {
+            currentQuestionIndex++;
+          }
+        });
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.chapterDescription,
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
@@ -358,6 +410,9 @@ class ConsultationQuestionPage extends StatelessWidget {
         );
       },
       onBackTap: () {
+        setState(() {
+          currentQuestionIndex--;
+        });
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.chapterDescription,
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
@@ -378,7 +433,7 @@ class ConsultationQuestionPage extends StatelessWidget {
     if (isChapter) {
       context.read<ConsultationQuestionsResponsesStockBloc>().add(
             AddConsultationChapterStockEvent(
-              consultationId: arguments.consultationId,
+              consultationId: widget.arguments.consultationId,
               chapterId: questionId,
               nextQuestionId: nextQuestionId,
             ),
@@ -386,7 +441,7 @@ class ConsultationQuestionPage extends StatelessWidget {
     } else {
       context.read<ConsultationQuestionsResponsesStockBloc>().add(
             AddConsultationQuestionsResponseStockEvent(
-              consultationId: arguments.consultationId,
+              consultationId: widget.arguments.consultationId,
               questionResponse: ConsultationQuestionResponses(
                 questionId: questionId,
                 responseIds: responsesIds,

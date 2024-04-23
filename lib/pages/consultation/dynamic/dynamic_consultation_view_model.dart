@@ -161,6 +161,7 @@ class ConsultationFeedbackQuestionSection extends DynamicViewModelSection {
   final String id;
   final String consultationId;
   final bool? userResponse;
+  final bool isLoading;
 
   ConsultationFeedbackQuestionSection({
     required this.title,
@@ -169,10 +170,11 @@ class ConsultationFeedbackQuestionSection extends DynamicViewModelSection {
     required this.id,
     required this.consultationId,
     required this.userResponse,
+    this.isLoading = false,
   });
 
   @override
-  List<Object?> get props => [title, picto, description, id, userResponse];
+  List<Object?> get props => [title, picto, description, id, userResponse, isLoading];
 }
 
 class ConsultationFeedbackResultsSection extends DynamicViewModelSection {

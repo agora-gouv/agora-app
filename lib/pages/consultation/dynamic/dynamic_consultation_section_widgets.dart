@@ -1009,11 +1009,13 @@ class _ConsultationFeedbackQuestionSectionContentWidget extends StatefulWidget {
 
 class _ConsultationFeedbackQuestionSectionWidgetState extends State<_ConsultationFeedbackQuestionSectionContentWidget> {
   bool? answer;
+  bool? isLoading;
 
   @override
   void initState() {
     super.initState();
     answer = widget.section.userResponse;
+    isLoading = false;
   }
 
   @override
@@ -1071,8 +1073,14 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                                   ),
                                 );
                             setState(() {
+                              isLoading = true;
                               answer = true;
                             });
+                            Future.delayed(const Duration(seconds: 2)).then(
+                              (_) => setState(() {
+                                isLoading = false;
+                              }),
+                            );
                           },
                         ),
                         SizedBox(width: AgoraSpacings.base),
@@ -1089,13 +1097,28 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                                   ),
                                 );
                             setState(() {
+                              isLoading = true;
                               answer = false;
                             });
+                            Future.delayed(const Duration(seconds: 2)).then(
+                              (_) => setState(() {
+                                isLoading = false;
+                              }),
+                            );
                           },
                         ),
                       ],
                     )
-                  else ...[
+                  else if (isLoading == true)
+                    AnimatedContainer(
+                      duration: Duration(seconds: 2),
+                      child: Lottie.asset(
+                        'assets/animations/check.json',
+                        width: 48,
+                        height: 48,
+                      ),
+                    )
+                  else if (answer != null) ...[
                     Align(
                       alignment: Alignment.centerLeft,
                       child: AgoraButton(

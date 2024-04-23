@@ -28,7 +28,7 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       AgoraQuestionsProgressBar(
-                        currentQuestionOrder: 1,
+                        currentQuestionIndex: 1,
                         totalQuestions: 2,
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),

@@ -24,8 +24,6 @@ class ConsultationQuestionsBuilder {
           id: questionUniqueChoice["id"] as String,
           title: questionUniqueChoice["title"] as String,
           order: questionUniqueChoice["order"] as int,
-          questionProgress: questionUniqueChoice["questionProgress"] as String,
-          questionProgressSemanticLabel: questionUniqueChoice["questionProgressA11y"] as String,
           responseChoices: (questionUniqueChoice["possibleChoices"] as List)
               .map(
                 (responseChoice) => ConsultationQuestionResponseChoice(
@@ -52,8 +50,6 @@ class ConsultationQuestionsBuilder {
           id: questionOpened["id"] as String,
           title: questionOpened["title"] as String,
           order: questionOpened["order"] as int,
-          questionProgress: questionOpened["questionProgress"] as String,
-          questionProgressSemanticLabel: questionOpened["questionProgressA11y"] as String,
           nextQuestionId: questionOpened["nextQuestionId"] as String?,
           popupDescription: questionOpened["popupDescription"] as String?,
         ),
@@ -70,8 +66,6 @@ class ConsultationQuestionsBuilder {
           id: questionMultipleChoices["id"] as String,
           title: questionMultipleChoices["title"] as String,
           order: questionMultipleChoices["order"] as int,
-          questionProgress: questionMultipleChoices["questionProgress"] as String,
-          questionProgressSemanticLabel: questionMultipleChoices["questionProgressA11y"] as String,
           maxChoices: questionMultipleChoices["maxChoices"] as int,
           responseChoices: (questionMultipleChoices["possibleChoices"] as List)
               .map(
@@ -99,8 +93,6 @@ class ConsultationQuestionsBuilder {
           id: withConditionQuestion["id"] as String,
           title: withConditionQuestion["title"] as String,
           order: withConditionQuestion["order"] as int,
-          questionProgress: withConditionQuestion["questionProgress"] as String,
-          questionProgressSemanticLabel: withConditionQuestion["questionProgressA11y"] as String,
           responseChoices: (withConditionQuestion["possibleChoices"] as List)
               .map(
                 (responseChoice) => ConsultationQuestionResponseWithConditionChoice(

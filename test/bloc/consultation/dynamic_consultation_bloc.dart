@@ -5,6 +5,7 @@ import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:bloc_test/bloc_test.dart';
 
+import '../../fakes/consultation/fake_consultation_question_storage_client.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
 
 void main() {
@@ -114,6 +115,7 @@ void main() {
     "when repository succeed - should emit success state",
     build: () => DynamicConsultationBloc(
       FakeConsultationSuccessRepository(consultation),
+      FakeConsultationQuestionStorageClient(),
     ),
     act: (bloc) => bloc.add(FetchDynamicConsultationEvent('id')),
     expect: () => [
@@ -125,6 +127,7 @@ void main() {
     "when repository fails - should emit error state",
     build: () => DynamicConsultationBloc(
       FakeConsultationFailureRepository(),
+      FakeConsultationQuestionStorageClient(),
     ),
     act: (bloc) => bloc.add(FetchDynamicConsultationEvent('id')),
     expect: () => [

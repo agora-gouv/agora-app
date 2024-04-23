@@ -9,11 +9,12 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
+final _barKey = GlobalKey();
+
 class ConsultationQuestionView extends StatelessWidget {
   final int order;
+  final int currentQuestionIndex;
   final int totalQuestions;
-  final String questionProgress;
-  final String questionProgressSemanticLabel;
   final String title;
   final String? popupDescription;
   final Widget child;
@@ -22,9 +23,8 @@ class ConsultationQuestionView extends StatelessWidget {
   ConsultationQuestionView({
     super.key,
     required this.order,
+    required this.currentQuestionIndex,
     required this.totalQuestions,
-    required this.questionProgress,
-    required this.questionProgressSemanticLabel,
     required this.title,
     required this.popupDescription,
     required this.child,
@@ -48,14 +48,14 @@ class ConsultationQuestionView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AgoraQuestionsProgressBar(
-                        currentQuestionOrder: order,
+                        key: _barKey,
+                        currentQuestionIndex: currentQuestionIndex,
                         totalQuestions: totalQuestions,
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),
                       Text(
-                        questionProgress,
+                        'Question $currentQuestionIndex',
                         style: AgoraTextStyles.medium16,
-                        semanticsLabel: questionProgressSemanticLabel,
                       ),
                       SizedBox(height: AgoraSpacings.base),
                       Row(

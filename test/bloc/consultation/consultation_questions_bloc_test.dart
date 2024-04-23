@@ -15,8 +15,6 @@ void main() {
       id: "questionIdA",
       title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
       order: 1,
-      questionProgress: "Question 1/4",
-      questionProgressSemanticLabel: "Question 1 sur 4",
       maxChoices: 2,
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(
@@ -51,8 +49,6 @@ void main() {
       id: "questionIdD",
       title: "Avez vous ...?",
       order: 2,
-      questionProgress: "Question 2/4",
-      questionProgressSemanticLabel: "Question 2 sur 4",
       responseChoicesViewModels: [
         ConsultationQuestionWithConditionResponseChoiceViewModel(
           id: "choiceBBB",
@@ -89,8 +85,6 @@ void main() {
       id: "questionIdB",
       title: "Si vous vous lancez dans le co-voiturage, ...",
       order: 4,
-      questionProgress: "Question 3/4",
-      questionProgressSemanticLabel: "Question 3 sur 4",
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(id: "choiceBB", label: "oui", order: 1, hasOpenTextField: false),
         ConsultationQuestionResponseChoiceViewModel(id: "choiceAA", label: "non", order: 2, hasOpenTextField: false),
@@ -108,12 +102,15 @@ void main() {
       id: "questionIdC",
       title: "Question C ?",
       order: 5,
-      questionProgress: "Question 4/4",
-      questionProgressSemanticLabel: "Question 4 sur 4",
       nextQuestionId: null,
       popupDescription: null,
     ),
   ];
+
+  final consultationQuestionsViewModel = ConsultationQuestionsViewModel(
+    questionCount: 5,
+    questions: responseChoiceViewModelsSortedByOrder,
+  );
 
   group("FetchConsultationQuestionsEvent", () {
     blocTest(
@@ -123,7 +120,7 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchConsultationQuestionsEvent(consultationId: consultationId)),
       expect: () => [
-        ConsultationQuestionsFetchedState(viewModels: responseChoiceViewModelsSortedByOrder),
+        ConsultationQuestionsFetchedState(consultationQuestionsViewModel: consultationQuestionsViewModel),
       ],
       wait: const Duration(milliseconds: 5),
     );

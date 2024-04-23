@@ -13,6 +13,7 @@ class ConsultationQuestionOpenedView extends StatefulWidget {
   final ConsultationQuestionOpenedViewModel openedQuestion;
   final ConsultationQuestionResponses? previousResponses;
   final int totalQuestions;
+  final int currentQuestionIndex;
   final Function(String questionId, String response) onOpenedResponseInput;
   final VoidCallback onBackTap;
 
@@ -21,6 +22,7 @@ class ConsultationQuestionOpenedView extends StatefulWidget {
     required this.openedQuestion,
     required this.previousResponses,
     required this.totalQuestions,
+    required this.currentQuestionIndex,
     required this.onOpenedResponseInput,
     required this.onBackTap,
   });
@@ -43,8 +45,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
     return ConsultationQuestionView(
       order: openedQuestion.order,
       totalQuestions: widget.totalQuestions,
-      questionProgress: openedQuestion.questionProgress,
-      questionProgressSemanticLabel: openedQuestion.questionProgressSemanticLabel,
+      currentQuestionIndex: widget.currentQuestionIndex,
       title: openedQuestion.title,
       popupDescription: openedQuestion.popupDescription,
       child: Column(

@@ -66,10 +66,10 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           viewModel is QagDetailsFeedbackLoadingViewModel ? viewModel.isHelpfulClicked : null;
       return _buildNotAnswered(context, qagId, isHelpfulButtonClicked);
     } else if (viewModel is QagDetailsFeedbackAnsweredNoResultsViewModel) {
-      onFeedbackSent();
+      Future.delayed(Duration(milliseconds: 500)).then((_) => onFeedbackSent());
       return _buildAnsweredNoResults(context, viewModel);
     } else if (viewModel is QagDetailsFeedbackAnsweredResultsViewModel) {
-      onFeedbackSent();
+      Future.delayed(Duration(milliseconds: 500)).then((_) => onFeedbackSent());
       return _buildAnsweredResults(context, viewModel);
     } else {
       return _buildError();
@@ -105,7 +105,8 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           ),
         ],
         if (isHelpfulClicked != null)
-          Expanded(
+          AnimatedContainer(
+            duration: const Duration(seconds: 2),
             child: Lottie.asset(
               'assets/animations/check.json',
               width: 48,

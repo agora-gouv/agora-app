@@ -16,6 +16,7 @@ class ConsultationQuestionMultipleChoicesView extends StatefulWidget {
   final ConsultationQuestionMultipleViewModel multipleChoicesQuestion;
   final ConsultationQuestionResponses? previousSelectedResponses;
   final int totalQuestions;
+  final int currentQuestionIndex;
   final Function(String questionId, List<String> responseIds, String otherResponse) onMultipleResponseTap;
   final VoidCallback onBackTap;
 
@@ -23,6 +24,7 @@ class ConsultationQuestionMultipleChoicesView extends StatefulWidget {
     super.key,
     required this.multipleChoicesQuestion,
     required this.totalQuestions,
+    required this.currentQuestionIndex,
     required this.previousSelectedResponses,
     required this.onMultipleResponseTap,
     required this.onBackTap,
@@ -48,8 +50,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       scrollController: _scrollController,
       order: multipleChoicesQuestion.order,
       totalQuestions: widget.totalQuestions,
-      questionProgress: multipleChoicesQuestion.questionProgress,
-      questionProgressSemanticLabel: multipleChoicesQuestion.questionProgressSemanticLabel,
+      currentQuestionIndex: widget.currentQuestionIndex,
       title: multipleChoicesQuestion.title,
       popupDescription: multipleChoicesQuestion.popupDescription,
       child: Column(

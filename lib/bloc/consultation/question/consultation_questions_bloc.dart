@@ -22,7 +22,7 @@ class ConsultationQuestionsBloc extends Bloc<FetchConsultationQuestionsEvent, Co
     );
     if (response is GetConsultationQuestionsSucceedResponse) {
       final consultationQuestionViewModels = ConsultationQuestionsPresenter.present(response.consultationQuestions);
-      emit(ConsultationQuestionsFetchedState(viewModels: consultationQuestionViewModels));
+      emit(ConsultationQuestionsFetchedState(consultationQuestionsViewModel: consultationQuestionViewModels));
     } else {
       emit(ConsultationQuestionsErrorState());
     }
