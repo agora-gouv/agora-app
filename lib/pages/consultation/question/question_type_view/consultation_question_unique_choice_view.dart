@@ -43,6 +43,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
       order: widget.uniqueChoiceQuestion.order,
       totalQuestions: widget.totalQuestions,
       currentQuestionIndex: widget.currentQuestionIndex,
+      isLastQuestion: widget.uniqueChoiceQuestion.nextQuestionId == null,
       title: widget.uniqueChoiceQuestion.title,
       popupDescription: widget.uniqueChoiceQuestion.popupDescription,
       child: Column(

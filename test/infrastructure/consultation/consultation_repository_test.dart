@@ -413,6 +413,7 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
+            "questionCount": 10,
             "questionsUniqueChoice": [
               {
                 "id": "question1",
@@ -537,7 +538,7 @@ void main() {
         response,
         GetConsultationQuestionsSucceedResponse(
           consultationQuestions: ConsultationQuestions(
-            questionCount: 5,
+            questionCount: 10,
             questions: [
               ConsultationQuestionUnique(
                 id: "question1",

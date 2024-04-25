@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AgoraQuestionsProgressBar extends StatefulWidget {
   final int currentQuestionIndex;
   final int totalQuestions;
+  final bool isLastQuestion;
 
   static const _barHeight = 10.0;
 
@@ -11,6 +12,7 @@ class AgoraQuestionsProgressBar extends StatefulWidget {
     super.key,
     required this.currentQuestionIndex,
     required this.totalQuestions,
+    this.isLastQuestion = false,
   });
 
   @override
@@ -32,7 +34,7 @@ class _AgoraQuestionsProgressBarState extends State<AgoraQuestionsProgressBar> {
     if (previousCurrentQuestionIndex != widget.currentQuestionIndex.toDouble()) {
       setState(() {
         previousCurrentQuestionIndex = widget.currentQuestionIndex.toDouble();
-        _size = widget.currentQuestionIndex / widget.totalQuestions;
+        _size = widget.isLastQuestion ? 1 : widget.currentQuestionIndex / widget.totalQuestions;
       });
     }
     super.didUpdateWidget(oldWidget);

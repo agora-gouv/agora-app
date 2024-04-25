@@ -51,6 +51,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
       order: multipleChoicesQuestion.order,
       totalQuestions: widget.totalQuestions,
       currentQuestionIndex: widget.currentQuestionIndex,
+      isLastQuestion: multipleChoicesQuestion.nextQuestionId == null,
       title: multipleChoicesQuestion.title,
       popupDescription: multipleChoicesQuestion.popupDescription,
       child: Column(

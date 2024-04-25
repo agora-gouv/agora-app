@@ -15,6 +15,7 @@ class ConsultationQuestionView extends StatelessWidget {
   final int order;
   final int currentQuestionIndex;
   final int totalQuestions;
+  final bool isLastQuestion;
   final String title;
   final String? popupDescription;
   final Widget child;
@@ -25,6 +26,7 @@ class ConsultationQuestionView extends StatelessWidget {
     required this.order,
     required this.currentQuestionIndex,
     required this.totalQuestions,
+    required this.isLastQuestion,
     required this.title,
     required this.popupDescription,
     required this.child,
@@ -51,6 +53,7 @@ class ConsultationQuestionView extends StatelessWidget {
                         key: _barKey,
                         currentQuestionIndex: currentQuestionIndex,
                         totalQuestions: totalQuestions,
+                        isLastQuestion: isLastQuestion,
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),
                       Text(

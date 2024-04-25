@@ -46,6 +46,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
       order: openedQuestion.order,
       totalQuestions: widget.totalQuestions,
       currentQuestionIndex: widget.currentQuestionIndex,
+      isLastQuestion: openedQuestion.nextQuestionId == null,
       title: openedQuestion.title,
       popupDescription: openedQuestion.popupDescription,
       child: Column(
