@@ -14,24 +14,23 @@ class AgoraHtmlStyles {
   static const light = FontWeight.w400;
   static const thin = FontWeight.w300;
 
-  static Map<String, Style> htmlStyle(BuildContext context) {
-    final textScaler = MediaQuery.of(context).textScaler;
+  static Map<String, Style> htmlStyle(BuildContext context, double fontSize) {
     return {
-      "body": AgoraHtmlStyles._bodyStyle(textScaler),
-      "ul": AgoraHtmlStyles._listStyle(textScaler),
-      "ol": AgoraHtmlStyles._bodyStyle(textScaler),
-      "li": AgoraHtmlStyles._bodyStyle(textScaler),
-      "b": AgoraHtmlStyles._boldStyle(textScaler),
-      "h1": AgoraHtmlStyles._h1Style(textScaler),
-      "span": AgoraHtmlStyles._spanStyle(textScaler),
-      "a": AgoraHtmlStyles._linkStyle(textScaler),
+      "body": AgoraHtmlStyles._bodyStyle(fontSize),
+      "ul": AgoraHtmlStyles._listStyle(fontSize),
+      "ol": AgoraHtmlStyles._bodyStyle(fontSize),
+      "li": AgoraHtmlStyles._bodyStyle(fontSize),
+      "b": AgoraHtmlStyles._boldStyle(fontSize),
+      "h1": AgoraHtmlStyles._h1Style(fontSize),
+      "span": AgoraHtmlStyles._spanStyle(fontSize),
+      "a": AgoraHtmlStyles._linkStyle(fontSize),
     };
   }
 
-  static Style _bodyStyle(TextScaler textScaler) => Style(
+  static Style _bodyStyle(double fontSize) => Style(
         fontFamily: marianne,
         fontWeight: light,
-        fontSize: FontSize(textScaler.scale(16.0)),
+        fontSize: FontSize(fontSize),
         color: AgoraColors.primaryGrey,
         textDecorationColor: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
@@ -39,10 +38,10 @@ class AgoraHtmlStyles {
         margin: Margins.zero,
       );
 
-  static Style _listStyle(TextScaler textScaler) => Style(
+  static Style _listStyle(double fontSize) => Style(
         fontFamily: marianne,
         fontWeight: light,
-        fontSize: FontSize(textScaler.scale(16.0)),
+        fontSize: FontSize(fontSize),
         color: AgoraColors.primaryGrey,
         textDecorationColor: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
@@ -50,40 +49,40 @@ class AgoraHtmlStyles {
         margin: Margins.zero,
       );
 
-  static Style _linkStyle(TextScaler textScaler) => Style(
+  static Style _linkStyle(double fontSize) => Style(
         fontFamily: marianne,
         fontWeight: light,
-        fontSize: FontSize(textScaler.scale(16.0)),
+        fontSize: FontSize(fontSize),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 
-  static Style _boldStyle(TextScaler textScaler) => Style(
+  static Style _boldStyle(double fontSize) => Style(
         fontFamily: marianne,
         fontWeight: medium,
-        fontSize: FontSize(textScaler.scale(16.0)),
+        fontSize: FontSize(fontSize),
         color: AgoraColors.primaryGrey,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 
-  static Style _h1Style(TextScaler textScaler) => Style(
+  static Style _h1Style(double fontSize) => Style(
         fontFamily: marianne,
         fontWeight: bold,
-        fontSize: FontSize(textScaler.scale(18.0)),
+        fontSize: FontSize(fontSize),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
       );
 
-  static Style _spanStyle(TextScaler textScaler) => Style(
+  static Style _spanStyle(double fontSize) => Style(
         fontFamily: marianne,
         fontWeight: bold,
-        fontSize: FontSize(textScaler.scale(16.0)),
+        fontSize: FontSize(fontSize),
         color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,

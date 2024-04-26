@@ -139,7 +139,6 @@ class _QagsSectionState extends State<QagsSection> {
     return Padding(
       padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
       child: Container(
-        height: 100,
         alignment: Alignment.center,
         padding: isActiveSearchBar ? EdgeInsets.zero : const EdgeInsets.symmetric(vertical: 20.0),
         child: Scrollbar(
@@ -288,6 +287,7 @@ class _QagsSectionState extends State<QagsSection> {
     return InkWell(
       onTap: () => onTap(),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.all(AgoraSpacings.base),

@@ -82,7 +82,6 @@ class QagsModeratedErrorContent extends StatelessWidget {
     TextStyle style = AgoraTextStyles.light14,
   }) {
     return RichText(
-      textScaler: MediaQuery.of(context).textScaler,
       text: TextSpan(style: style, children: spans),
     );
   }

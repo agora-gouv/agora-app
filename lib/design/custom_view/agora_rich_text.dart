@@ -53,7 +53,6 @@ class AgoraRichText extends StatelessWidget {
       label: items.map((richTextItem) => richTextItem.text.replaceAll("\n", " ")).join(),
       child: ExcludeSemantics(
         child: RichText(
-          textScaler: MediaQuery.of(context).textScaler,
           text: TextSpan(
             style: _buildRegularStyle(),
             children: items.map((item) {
