@@ -154,7 +154,7 @@ class _HeaderSectionWidget extends StatelessWidget {
                         children: [
                           ExcludeSemantics(child: Text(section.thematicLogo, style: AgoraTextStyles.regular16)),
                           const SizedBox(width: AgoraSpacings.x0_375),
-                          Text(section.thematicLabel, style: AgoraTextStyles.regular16),
+                          Expanded(child: Text(section.thematicLabel, style: AgoraTextStyles.regular16)),
                         ],
                       ),
                     ),
