@@ -456,7 +456,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
             ],
           ),
         if (_isExpanded) ...widget.section.expandedSections.map((section) => DynamicSectionWidget(section)),
-        if (!_isExpanded)
+        if (!_isExpanded && widget.section.expandedSections.isNotEmpty && widget.section.collapsedSections.isNotEmpty)
           ShowMoreButton(
             onTap: () {
               setState(() {
