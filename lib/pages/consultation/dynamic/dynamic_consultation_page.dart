@@ -45,9 +45,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 part 'dynamic_consultation_presenter.dart';
-
 part 'dynamic_consultation_section_widgets.dart';
-
 part 'dynamic_consultation_view_model.dart';
 
 class DynamicConsultationPage extends StatelessWidget {
@@ -173,6 +171,7 @@ class _SuccessPage extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
+            shrinkWrap: true,
             itemCount: viewModel.sections.length,
             itemBuilder: (BuildContext context, int index) {
               return DynamicSectionWidget(viewModel.sections[index]);
