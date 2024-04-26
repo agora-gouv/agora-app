@@ -1,13 +1,16 @@
 import 'package:agora/bloc/consultation/dynamic/dynamic_consultation_events.dart';
 import 'package:agora/bloc/consultation/dynamic/dynamic_consultation_state.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
+import 'package:agora/pages/consultation/question/consultation_question_storage_client.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DynamicConsultationBloc extends Bloc<DynamicConsultationEvent, DynamicConsultationState> {
   final ConsultationRepository consultationRepository;
+  final ConsultationQuestionStorageClient storageClient;
 
-  DynamicConsultationBloc(this.consultationRepository) : super(DynamicConsultationLoadingState()) {
+  DynamicConsultationBloc(this.consultationRepository, this.storageClient) : super(DynamicConsultationLoadingState()) {
     on<FetchDynamicConsultationEvent>(_handleFetchDynamicConsultationEvent);
+    on<DeleteConsultationResponsesEvent>(_handleDeleteConsultationResponsesEvent);
   }
 
   Future<void> _handleFetchDynamicConsultationEvent(
@@ -20,6 +23,13 @@ class DynamicConsultationBloc extends Bloc<DynamicConsultationEvent, DynamicCons
     } else {
       emit(DynamicConsultationErrorState());
     }
+  }
+
+  Future<void> _handleDeleteConsultationResponsesEvent(
+    DeleteConsultationResponsesEvent event,
+    Emitter<DynamicConsultationState> emit,
+  ) async {
+    await storageClient.clear(event.consultationId);
   }
 }
 

@@ -1,5 +1,18 @@
 import 'package:equatable/equatable.dart';
 
+class ConsultationQuestionsViewModel extends Equatable {
+  final int questionCount;
+  final List<ConsultationQuestionViewModel> questions;
+
+  ConsultationQuestionsViewModel({
+    required this.questionCount,
+    required this.questions,
+  });
+
+  @override
+  List<Object?> get props => [questionCount, questions];
+}
+
 sealed class ConsultationQuestionViewModel extends Equatable {
   final String id;
   final String title;
@@ -16,8 +29,6 @@ sealed class ConsultationQuestionViewModel extends Equatable {
 }
 
 class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel {
-  final String questionProgress;
-  final String questionProgressSemanticLabel;
   final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
   final String? nextQuestionId;
   final String? popupDescription;
@@ -26,8 +37,6 @@ class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel 
     required super.id,
     required super.title,
     required super.order,
-    required this.questionProgress,
-    required this.questionProgressSemanticLabel,
     required this.responseChoicesViewModels,
     required this.nextQuestionId,
     required this.popupDescription,
@@ -38,8 +47,6 @@ class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel 
         id,
         title,
         order,
-        questionProgress,
-        questionProgressSemanticLabel,
         responseChoicesViewModels,
         nextQuestionId,
         popupDescription,
@@ -47,8 +54,6 @@ class ConsultationQuestionUniqueViewModel extends ConsultationQuestionViewModel 
 }
 
 class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewModel {
-  final String questionProgress;
-  final String questionProgressSemanticLabel;
   final int maxChoices;
   final List<ConsultationQuestionResponseChoiceViewModel> responseChoicesViewModels;
   final String? nextQuestionId;
@@ -58,8 +63,6 @@ class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewMode
     required super.id,
     required super.title,
     required super.order,
-    required this.questionProgress,
-    required this.questionProgressSemanticLabel,
     required this.maxChoices,
     required this.responseChoicesViewModels,
     required this.nextQuestionId,
@@ -71,8 +74,6 @@ class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewMode
         id,
         title,
         order,
-        questionProgress,
-        questionProgressSemanticLabel,
         maxChoices,
         responseChoicesViewModels,
         nextQuestionId,
@@ -81,8 +82,6 @@ class ConsultationQuestionMultipleViewModel extends ConsultationQuestionViewMode
 }
 
 class ConsultationQuestionOpenedViewModel extends ConsultationQuestionViewModel {
-  final String questionProgress;
-  final String questionProgressSemanticLabel;
   final String? nextQuestionId;
   final String? popupDescription;
 
@@ -90,8 +89,6 @@ class ConsultationQuestionOpenedViewModel extends ConsultationQuestionViewModel 
     required super.id,
     required super.title,
     required super.order,
-    required this.questionProgress,
-    required this.questionProgressSemanticLabel,
     required this.nextQuestionId,
     required this.popupDescription,
   });
@@ -101,16 +98,12 @@ class ConsultationQuestionOpenedViewModel extends ConsultationQuestionViewModel 
         id,
         title,
         order,
-        questionProgress,
-        questionProgressSemanticLabel,
         nextQuestionId,
         popupDescription,
       ];
 }
 
 class ConsultationQuestionWithConditionViewModel extends ConsultationQuestionViewModel {
-  final String questionProgress;
-  final String questionProgressSemanticLabel;
   final List<ConsultationQuestionWithConditionResponseChoiceViewModel> responseChoicesViewModels;
   final String? popupDescription;
 
@@ -118,8 +111,6 @@ class ConsultationQuestionWithConditionViewModel extends ConsultationQuestionVie
     required super.id,
     required super.title,
     required super.order,
-    required this.questionProgress,
-    required this.questionProgressSemanticLabel,
     required this.responseChoicesViewModels,
     required this.popupDescription,
   });
@@ -129,8 +120,6 @@ class ConsultationQuestionWithConditionViewModel extends ConsultationQuestionVie
         id,
         title,
         order,
-        questionProgress,
-        questionProgressSemanticLabel,
         responseChoicesViewModels,
         popupDescription,
       ];

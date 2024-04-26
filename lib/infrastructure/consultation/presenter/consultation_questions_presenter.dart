@@ -1,18 +1,17 @@
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
+import 'package:agora/domain/consultation/questions/consultation_questions.dart';
 
 class ConsultationQuestionsPresenter {
-  static List<ConsultationQuestionViewModel> present(List<ConsultationQuestion> consultationQuestions) {
-    final viewModels = consultationQuestions.map(
+  static ConsultationQuestionsViewModel present(ConsultationQuestions consultationQuestions) {
+    final viewModels = consultationQuestions.questions.map(
       (consultationQuestion) {
         if (consultationQuestion is ConsultationQuestionUnique) {
           return ConsultationQuestionUniqueViewModel(
             id: consultationQuestion.id,
             title: consultationQuestion.title,
             order: consultationQuestion.order,
-            questionProgress: consultationQuestion.questionProgress,
-            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
             nextQuestionId: consultationQuestion.nextQuestionId,
             popupDescription: consultationQuestion.popupDescription,
@@ -22,8 +21,6 @@ class ConsultationQuestionsPresenter {
             id: consultationQuestion.id,
             title: consultationQuestion.title,
             order: consultationQuestion.order,
-            questionProgress: consultationQuestion.questionProgress,
-            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             maxChoices: consultationQuestion.maxChoices,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
             nextQuestionId: consultationQuestion.nextQuestionId,
@@ -34,8 +31,6 @@ class ConsultationQuestionsPresenter {
             id: consultationQuestion.id,
             title: consultationQuestion.title,
             order: consultationQuestion.order,
-            questionProgress: consultationQuestion.questionProgress,
-            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             nextQuestionId: consultationQuestion.nextQuestionId,
             popupDescription: consultationQuestion.popupDescription,
           );
@@ -44,8 +39,6 @@ class ConsultationQuestionsPresenter {
             id: consultationQuestion.id,
             title: consultationQuestion.title,
             order: consultationQuestion.order,
-            questionProgress: consultationQuestion.questionProgress,
-            questionProgressSemanticLabel: consultationQuestion.questionProgressSemanticLabel,
             responseChoicesViewModels: _buildResponseWithConditionChoices(consultationQuestion.responseChoices),
             popupDescription: consultationQuestion.popupDescription,
           );
@@ -65,7 +58,7 @@ class ConsultationQuestionsPresenter {
       },
     ).toList()
       ..sort((viewModel1, viewModel2) => viewModel1.order.compareTo(viewModel2.order));
-    return viewModels;
+    return ConsultationQuestionsViewModel(questionCount: consultationQuestions.questionCount, questions: viewModels);
   }
 
   static List<ConsultationQuestionResponseChoiceViewModel> _buildResponseChoices(

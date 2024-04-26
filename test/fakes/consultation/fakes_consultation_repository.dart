@@ -5,6 +5,7 @@ import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
+import 'package:agora/domain/consultation/questions/consultation_questions.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
@@ -97,110 +98,105 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     required String consultationId,
   }) async {
     return GetConsultationQuestionsSucceedResponse(
-      consultationQuestions: [
-        ConsultationQuestionUnique(
-          id: "questionIdB",
-          title: "Si vous vous lancez dans le co-voiturage, ...",
-          order: 4,
-          questionProgress: "Question 3/4",
-          questionProgressSemanticLabel: "Question 3 sur 4",
-          responseChoices: [
-            ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2, hasOpenTextField: false),
-            ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1, hasOpenTextField: false),
-            ConsultationQuestionResponseChoice(
-              id: "choiceCC",
-              label: "Autre (précisez)",
-              order: 3,
-              hasOpenTextField: true,
-            ),
-          ],
-          nextQuestionId: "questionIdC",
-          popupDescription: "<body>La description avec textes <b>en gras</b></body>",
-        ),
-        ConsultationQuestionOpened(
-          id: "questionIdC",
-          title: "Question C ?",
-          order: 5,
-          questionProgress: "Question 4/4",
-          questionProgressSemanticLabel: "Question 4 sur 4",
-          nextQuestionId: null,
-          popupDescription: null,
-        ),
-        ConsultationQuestionMultiple(
-          id: "questionIdA",
-          title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
-          order: 1,
-          questionProgress: "Question 1/4",
-          questionProgressSemanticLabel: "Question 1 sur 4",
-          maxChoices: 2,
-          responseChoices: [
-            ConsultationQuestionResponseChoice(
-              id: "choiceA",
-              label: "En vélo ou à pied",
-              order: 3,
-              hasOpenTextField: false,
-            ),
-            ConsultationQuestionResponseChoice(
-              id: "choiceB",
-              label: "En voiture",
-              order: 1,
-              hasOpenTextField: false,
-            ),
-            ConsultationQuestionResponseChoice(
-              id: "choiceC",
-              label: "En transports en commun",
-              order: 2,
-              hasOpenTextField: false,
-            ),
-            ConsultationQuestionResponseChoice(
-              id: "choiceD",
-              label: "Autre (précisez)",
-              order: 4,
-              hasOpenTextField: true,
-            ),
-          ],
-          nextQuestionId: "questionIdD",
-          popupDescription: "<body>La description avec textes <b>en gras</b></body>",
-        ),
-        ConsultationQuestionWithCondition(
-          id: "questionIdD",
-          title: "Avez vous ...?",
-          order: 2,
-          questionProgress: "Question 2/4",
-          questionProgressSemanticLabel: "Question 2 sur 4",
-          responseChoices: [
-            ConsultationQuestionResponseWithConditionChoice(
-              id: "choiceAAA",
-              label: "non",
-              order: 2,
-              nextQuestionId: "questionIdB",
-              hasOpenTextField: false,
-            ),
-            ConsultationQuestionResponseWithConditionChoice(
-              id: "choiceBBB",
-              label: "oui",
-              order: 1,
-              nextQuestionId: "questionIdC",
-              hasOpenTextField: false,
-            ),
-            ConsultationQuestionResponseWithConditionChoice(
-              id: "choiceCCC",
-              label: "Autre (précisez)",
-              order: 3,
-              nextQuestionId: "questionIdB",
-              hasOpenTextField: true,
-            ),
-          ],
-          popupDescription: "<body>La description avec textes <b>en gras</b></body>",
-        ),
-        ConsultationQuestionChapter(
-          id: "chapiter1",
-          title: "titre du chapitre",
-          order: 3,
-          description: "description du chapitre",
-          nextQuestionId: "questionIdB",
-        ),
-      ],
+      consultationQuestions: ConsultationQuestions(
+        questionCount: 5,
+        questions: [
+          ConsultationQuestionUnique(
+            id: "questionIdB",
+            title: "Si vous vous lancez dans le co-voiturage, ...",
+            order: 4,
+            responseChoices: [
+              ConsultationQuestionResponseChoice(id: "choiceAA", label: "non", order: 2, hasOpenTextField: false),
+              ConsultationQuestionResponseChoice(id: "choiceBB", label: "oui", order: 1, hasOpenTextField: false),
+              ConsultationQuestionResponseChoice(
+                id: "choiceCC",
+                label: "Autre (précisez)",
+                order: 3,
+                hasOpenTextField: true,
+              ),
+            ],
+            nextQuestionId: "questionIdC",
+            popupDescription: "<body>La description avec textes <b>en gras</b></body>",
+          ),
+          ConsultationQuestionOpened(
+            id: "questionIdC",
+            title: "Question C ?",
+            order: 5,
+            nextQuestionId: null,
+            popupDescription: null,
+          ),
+          ConsultationQuestionMultiple(
+            id: "questionIdA",
+            title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
+            order: 1,
+            maxChoices: 2,
+            responseChoices: [
+              ConsultationQuestionResponseChoice(
+                id: "choiceA",
+                label: "En vélo ou à pied",
+                order: 3,
+                hasOpenTextField: false,
+              ),
+              ConsultationQuestionResponseChoice(
+                id: "choiceB",
+                label: "En voiture",
+                order: 1,
+                hasOpenTextField: false,
+              ),
+              ConsultationQuestionResponseChoice(
+                id: "choiceC",
+                label: "En transports en commun",
+                order: 2,
+                hasOpenTextField: false,
+              ),
+              ConsultationQuestionResponseChoice(
+                id: "choiceD",
+                label: "Autre (précisez)",
+                order: 4,
+                hasOpenTextField: true,
+              ),
+            ],
+            nextQuestionId: "questionIdD",
+            popupDescription: "<body>La description avec textes <b>en gras</b></body>",
+          ),
+          ConsultationQuestionWithCondition(
+            id: "questionIdD",
+            title: "Avez vous ...?",
+            order: 2,
+            responseChoices: [
+              ConsultationQuestionResponseWithConditionChoice(
+                id: "choiceAAA",
+                label: "non",
+                order: 2,
+                nextQuestionId: "questionIdB",
+                hasOpenTextField: false,
+              ),
+              ConsultationQuestionResponseWithConditionChoice(
+                id: "choiceBBB",
+                label: "oui",
+                order: 1,
+                nextQuestionId: "questionIdC",
+                hasOpenTextField: false,
+              ),
+              ConsultationQuestionResponseWithConditionChoice(
+                id: "choiceCCC",
+                label: "Autre (précisez)",
+                order: 3,
+                nextQuestionId: "questionIdB",
+                hasOpenTextField: true,
+              ),
+            ],
+            popupDescription: "<body>La description avec textes <b>en gras</b></body>",
+          ),
+          ConsultationQuestionChapter(
+            id: "chapiter1",
+            title: "titre du chapitre",
+            order: 3,
+            description: "description du chapitre",
+            nextQuestionId: "questionIdB",
+          ),
+        ],
+      ),
     );
   }
 

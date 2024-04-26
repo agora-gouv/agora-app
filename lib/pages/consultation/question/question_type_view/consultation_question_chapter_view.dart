@@ -37,8 +37,9 @@ class ConsultationQuestionChapterView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AgoraQuestionsProgressBar(
-                  currentQuestionOrder: chapter.order,
+                  currentQuestionIndex: chapter.order,
                   totalQuestions: totalQuestions,
+                  isLastQuestion: chapter.nextQuestionId == null,
                 ),
                 SizedBox(height: AgoraSpacings.x0_75),
                 Text(chapter.title, style: AgoraTextStyles.medium19),
