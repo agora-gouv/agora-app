@@ -14,6 +14,7 @@ class ConsultationQuestionWithConditionsView extends StatefulWidget {
   final ConsultationQuestionWithConditionViewModel questionWithConditions;
   final ConsultationQuestionResponses? previousSelectedResponses;
   final int totalQuestions;
+  final int currentQuestionIndex;
   final Function(
     String questionId,
     String responseId,
@@ -27,6 +28,7 @@ class ConsultationQuestionWithConditionsView extends StatefulWidget {
     required this.questionWithConditions,
     required this.previousSelectedResponses,
     required this.totalQuestions,
+    required this.currentQuestionIndex,
     required this.onWithConditionResponseTap,
     required this.onBackTap,
   });
@@ -47,9 +49,9 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
     _resetPreviousResponses();
     return ConsultationQuestionView(
       order: widget.questionWithConditions.order,
+      currentQuestionIndex: widget.currentQuestionIndex,
       totalQuestions: widget.totalQuestions,
-      questionProgress: widget.questionWithConditions.questionProgress,
-      questionProgressSemanticLabel: widget.questionWithConditions.questionProgressSemanticLabel,
+      isLastQuestion: false,
       title: widget.questionWithConditions.title,
       popupDescription: widget.questionWithConditions.popupDescription,
       child: Column(

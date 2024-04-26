@@ -35,7 +35,7 @@ class _Step2Screen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       AgoraQuestionsProgressBar(
-                        currentQuestionOrder: 2,
+                        currentQuestionIndex: 2,
                         totalQuestions: 2,
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),
@@ -136,7 +136,7 @@ class _MailQuestionScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       AgoraQuestionsProgressBar(
-                        currentQuestionOrder: 2,
+                        currentQuestionIndex: 2,
                         totalQuestions: 2,
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),

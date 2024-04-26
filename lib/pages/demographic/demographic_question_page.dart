@@ -89,7 +89,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AgoraQuestionsProgressBar(
-                                currentQuestionOrder: currentStep,
+                                currentQuestionIndex: currentStep,
                                 totalQuestions: totalStep,
                               ),
                               SizedBox(height: AgoraSpacings.x0_75),
