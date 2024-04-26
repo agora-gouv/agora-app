@@ -420,7 +420,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
 
   @override
   void initState() {
-    _isExpanded = false;
+    _isExpanded = false || widget.isTalkbackEnabled;
     super.initState();
   }
 
@@ -503,24 +503,15 @@ class _RichTextSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final descriptions = section.description.split('<br/><br/>');
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: AgoraSpacings.horizontalPadding,
-        right: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: descriptions
-            .map(
-              (description) => Padding(
-                padding: const EdgeInsets.only(bottom: AgoraSpacings.base),
-                child: Semantics(container: true, child: AgoraHtml(data: description)),
-              ),
-            )
-            .toList(),
+    return Semantics(
+      container: true,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: AgoraSpacings.horizontalPadding,
+          right: AgoraSpacings.horizontalPadding,
+          top: AgoraSpacings.base,
+        ),
+        child: AgoraHtml(data: section.description),
       ),
     );
   }

@@ -170,12 +170,10 @@ class _SuccessPage extends StatelessWidget {
           ],
         ),
         Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: viewModel.sections.length,
-            itemBuilder: (BuildContext context, int index) {
-              return DynamicSectionWidget(viewModel.sections[index]);
-            },
+          child: SingleChildScrollView(
+            child: Column(
+              children: viewModel.sections.map((section) => DynamicSectionWidget(section)).toList(),
+            ),
           ),
         ),
       ],
