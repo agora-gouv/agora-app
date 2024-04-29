@@ -20,36 +20,36 @@ class QagsThematiqueSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: AgoraColors.doctor,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75),
-            child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
-              builder: (context, state) {
-                if (state is ThematiqueSuccessState) {
-                  return Scrollbar(
-                    child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      child: ThematiqueHelper.buildThematiques(
+    return Scrollbar(
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        child: Column(
+          children: [
+            Container(
+              color: AgoraColors.doctor,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75),
+                child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
+                  builder: (context, state) {
+                    if (state is ThematiqueSuccessState) {
+                      return ThematiqueHelper.buildThematiques(
                         thematiques: state.thematiqueViewModels,
                         selectedThematiqueId: currentThematiqueId,
                         onThematiqueIdSelected: onThematiqueIdSelected,
-                      ),
-                    ),
-                  );
-                } else if (state is ThematiqueInitialLoadingState) {
-                  return Center(child: QagsThematiqueLoading());
-                } else {
-                  return Center(child: AgoraErrorView());
-                }
-              },
+                      );
+                    } else if (state is ThematiqueInitialLoadingState) {
+                      return Center(child: QagsThematiqueLoading());
+                    } else {
+                      return Center(child: AgoraErrorView());
+                    }
+                  },
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
