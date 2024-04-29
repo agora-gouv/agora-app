@@ -417,10 +417,13 @@ class _ExpandableSectionWidget extends StatefulWidget {
 
 class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
   bool _isExpanded = false;
+  bool _arePreviewAndExpandedFilled = true;
 
   @override
   void initState() {
     _isExpanded = false || widget.isTalkbackEnabled;
+    _arePreviewAndExpandedFilled =
+        widget.section.previewSections.isNotEmpty && widget.section.expandedSections.isNotEmpty;
     super.initState();
   }
 
@@ -431,13 +434,13 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ...widget.section.headerSections.map((section) => DynamicSectionWidget(section)),
-        if (!_isExpanded)
+        if (!_isExpanded && _arePreviewAndExpandedFilled)
           Stack(
             children: [
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.section.collapsedSections.map((section) => DynamicSectionWidget(section)).toList(),
+                children: widget.section.previewSections.map((section) => DynamicSectionWidget(section)).toList(),
               ),
               Positioned(
                 bottom: 0,
@@ -455,8 +458,9 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
               ),
             ],
           ),
-        if (_isExpanded) ...widget.section.expandedSections.map((section) => DynamicSectionWidget(section)),
-        if (!_isExpanded && widget.section.expandedSections.isNotEmpty && widget.section.collapsedSections.isNotEmpty)
+        if (_isExpanded || (widget.section.previewSections.isEmpty && widget.section.expandedSections.isNotEmpty))
+          ...widget.section.expandedSections.map((section) => DynamicSectionWidget(section)),
+        if (!_isExpanded && _arePreviewAndExpandedFilled)
           ShowMoreButton(
             onTap: () {
               setState(() {

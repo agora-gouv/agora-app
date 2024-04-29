@@ -52,7 +52,7 @@ class DynamicConsultationPresenter {
         ExpandableSection(
           headerSections:
               consultation.headerSections.map((section) => presentSection(consultation.id, section)).toList(),
-          collapsedSections:
+          previewSections:
               consultation.collapsedSections.map((section) => presentSection(consultation.id, section)).toList(),
           expandedSections:
               consultation.expandedSections.map((section) => presentSection(consultation.id, section)).toList(),
