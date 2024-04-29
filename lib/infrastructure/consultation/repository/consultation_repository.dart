@@ -417,7 +417,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
         infoHeader: _toInfoHeader(data["infoHeader"]),
         headerSections: ((data["body"]["headerSections"] ?? []) as List).map((e) => _toSection(e)).nonNulls.toList(),
-        collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        previewSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
         downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),

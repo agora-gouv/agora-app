@@ -309,7 +309,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       shareText: 'shareText',
       responseInfos: null,
       infoHeader: null,
-      collapsedSections: [],
+      previewSections: [],
       expandedSections: [],
       participationInfo: null,
       downloadInfo: null,

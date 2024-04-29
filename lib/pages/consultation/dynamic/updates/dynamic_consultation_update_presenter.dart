@@ -46,7 +46,7 @@ class _Presenter {
           headerSections: consultation.headerSections
               .map((section) => DynamicConsultationPresenter.presentSection(consultation.id, section))
               .toList(),
-          previewSections: consultation.collapsedSections
+          previewSections: consultation.previewSections
               .map((section) => DynamicConsultationPresenter.presentSection(consultation.id, section))
               .toList(),
           expandedSections: consultation.expandedSections
