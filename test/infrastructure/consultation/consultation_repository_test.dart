@@ -1564,7 +1564,7 @@ void main() {
               logo: "📘",
               description: "<body>Texte riche</body>",
             ),
-            collapsedSections: [
+            previewSections: [
               DynamicConsultationSectionTitle('Le titre de la section'),
             ],
             expandedSections: [

@@ -211,17 +211,17 @@ class ConsultationFeedbackResultsSection extends DynamicViewModelSection {
 
 class ExpandableSection extends DynamicViewModelSection {
   final List<DynamicViewModelSection> headerSections;
-  final List<DynamicViewModelSection> collapsedSections;
+  final List<DynamicViewModelSection> previewSections;
   final List<DynamicViewModelSection> expandedSections;
 
   ExpandableSection({
     required this.headerSections,
-    required this.collapsedSections,
+    required this.previewSections,
     required this.expandedSections,
   });
 
   @override
-  List<Object?> get props => [collapsedSections, expandedSections, headerSections];
+  List<Object?> get props => [previewSections, expandedSections, headerSections];
 }
 
 class _TitleSection extends DynamicViewModelSection {
