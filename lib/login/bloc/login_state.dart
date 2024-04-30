@@ -1,4 +1,4 @@
-import 'package:agora/domain/login/login_error_type.dart';
+import 'package:agora/login/domain/login_error_type.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class LoginState extends Equatable {

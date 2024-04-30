@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/domain/login/login_error_type.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/login/domain/login_error_type.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 

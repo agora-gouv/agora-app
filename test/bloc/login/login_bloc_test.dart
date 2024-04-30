@@ -1,7 +1,7 @@
-import 'package:agora/bloc/login/login_bloc.dart';
-import 'package:agora/bloc/login/login_event.dart';
-import 'package:agora/bloc/login/login_state.dart';
-import 'package:agora/domain/login/login_error_type.dart';
+import 'package:agora/login/bloc/login_bloc.dart';
+import 'package:agora/login/bloc/login_event.dart';
+import 'package:agora/login/bloc/login_state.dart';
+import 'package:agora/login/domain/login_error_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
