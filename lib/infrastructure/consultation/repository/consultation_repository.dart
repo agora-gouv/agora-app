@@ -277,6 +277,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         results: ConsultationResponsesBuilder.buildResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
+          questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
           userResponses: userResponses,
         ),
       );
@@ -308,6 +309,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
           userResponses: userResponses,
+          questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
         ),
         etEnsuite: ConsultationSummaryEtEnsuite(
           step: etEnsuite["step"] as int,

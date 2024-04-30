@@ -39,6 +39,10 @@ class ConsultationSummaryMultipleChoicesResults extends ConsultationSummaryResul
   List<Object> get props => [questionTitle, order, responses];
 }
 
+class ConsultationSummaryOpenResults extends ConsultationSummaryResults {
+  ConsultationSummaryOpenResults({required super.questionTitle, required super.order});
+}
+
 class ConsultationSummaryResponse extends Equatable {
   final String label;
   final int ratio;

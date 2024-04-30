@@ -2,6 +2,7 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/client/agora_http_client_adapter.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
 import 'package:agora/common/client/user_agent_builder.dart';
+import 'package:agora/common/helper/flavor_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
@@ -61,7 +62,7 @@ class RepositoryManager {
         platformHelper: HelperManager.getPlatformHelper(),
       ),
     );
-    if (!kIsWeb) {
+    if (!kIsWeb && FlavorHelper.getFlavor() == AgoraFlavor.prod) {
       dio.httpClientAdapter = AgoraHttpClientAdapter(
         baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
         rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),

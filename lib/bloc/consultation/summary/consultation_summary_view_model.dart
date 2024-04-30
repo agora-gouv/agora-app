@@ -64,6 +64,13 @@ class ConsultationSummaryMultipleChoicesResultsViewModel extends ConsultationSum
   List<Object> get props => [questionTitle, order, responses];
 }
 
+class ConsultationSummaryOpenChoiceResultsViewModel extends ConsultationSummaryResultsViewModel {
+  ConsultationSummaryOpenChoiceResultsViewModel({
+    required super.questionTitle,
+    required super.order,
+  });
+}
+
 class ConsultationSummaryResponseViewModel extends Equatable {
   final String label;
   final int ratio;
