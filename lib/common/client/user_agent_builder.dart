@@ -18,8 +18,8 @@ class UserAgentBuilderImpl extends UserAgentBuilder {
   @override
   Future<String?> getUserAgent() async {
     final emulatorSuffix = switch (await deviceInfoHelper.isPhysicalDevice()) {
-      true => "-emulator",
-      false => "",
+      false => "-emulator",
+      true => "",
     };
     final flavorInfo = switch (FlavorHelper.getFlavor()) {
       AgoraFlavor.sandbox => ".sandbox",

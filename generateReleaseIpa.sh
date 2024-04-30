@@ -1,1 +1,1 @@
-flutter build ipa --target=lib/main_prod.dart --flavor=prod --dart-define=app.flavor=Prod --export-options-plist=ios/Params/ExportOptionsProd.plist --build-name="2.0.0" --build-number=47
+flutter build ipa --target=lib/main_prod.dart --flavor=prod --dart-define=app.flavor=Prod --export-options-plist=ios/Params/ExportOptionsProd.plist --build-name="2.0.2" --build-number=50
