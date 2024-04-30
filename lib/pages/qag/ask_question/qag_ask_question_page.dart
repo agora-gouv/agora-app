@@ -176,6 +176,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               AgoraHtml(
                 data: QagStrings.askQuestionDescription3,
+                fontSize: 14.0,
               ),
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.askQagObligatoireSaufContraire, style: AgoraTextStyles.light14),
