@@ -46,7 +46,6 @@ class QagDetailsResponseView extends StatelessWidget {
             Semantics(
               header: true,
               child: RichText(
-                textScaler: MediaQuery.of(context).textScaler,
                 text: TextSpan(
                   style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                   children: [
@@ -70,7 +69,6 @@ class QagDetailsResponseView extends StatelessWidget {
             ),
             SizedBox(height: AgoraSpacings.x0_5),
             RichText(
-              textScaler: MediaQuery.of(context).textScaler,
               text: TextSpan(
                 style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                 children: [
@@ -85,7 +83,6 @@ class QagDetailsResponseView extends StatelessWidget {
             ),
             SizedBox(height: AgoraSpacings.x1_5),
             RichText(
-              textScaler: MediaQuery.of(context).textScaler,
               text: TextSpan(
                 style: AgoraTextStyles.regularItalic14.copyWith(color: AgoraColors.primaryGreyOpacity80),
                 children: [

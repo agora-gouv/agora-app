@@ -123,7 +123,6 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   ),
                                   SizedBox(height: AgoraSpacings.x1_25),
                                   RichText(
-                                    textScaler: MediaQuery.of(context).textScaler,
                                     text: TextSpan(
                                       style: AgoraTextStyles.regular14,
                                       children: [

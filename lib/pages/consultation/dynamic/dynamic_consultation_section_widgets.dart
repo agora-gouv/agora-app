@@ -533,27 +533,30 @@ class _StartButtonWidget extends StatelessWidget {
         horizontal: AgoraSpacings.horizontalPadding,
         vertical: AgoraSpacings.x2,
       ),
-      child: FloatingActionButton.extended(
-        backgroundColor: AgoraColors.primaryBlue,
-        label: Text(
-          ConsultationStrings.beginButton,
-          semanticsLabel: ConsultationStrings.beginButtonDescription,
-          style: AgoraTextStyles.primaryFloatingButton,
+      child: SizedBox(
+        width: double.infinity,
+        child: FloatingActionButton.extended(
+          backgroundColor: AgoraColors.primaryBlue,
+          label: Text(
+            ConsultationStrings.beginButton,
+            semanticsLabel: ConsultationStrings.beginButtonDescription,
+            style: AgoraTextStyles.primaryFloatingButton,
+          ),
+          onPressed: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
+              widgetName: AnalyticsScreenNames.consultationDetailsPage,
+            );
+            Navigator.pushNamed(
+              context,
+              ConsultationQuestionPage.routeName,
+              arguments: ConsultationQuestionArguments(
+                consultationId: section.consultationId,
+                consultationTitle: section.title,
+              ),
+            ).then((value) => Navigator.of(context).pop());
+          },
         ),
-        onPressed: () {
-          TrackerHelper.trackClick(
-            clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
-            widgetName: AnalyticsScreenNames.consultationDetailsPage,
-          );
-          Navigator.pushNamed(
-            context,
-            ConsultationQuestionPage.routeName,
-            arguments: ConsultationQuestionArguments(
-              consultationId: section.consultationId,
-              consultationTitle: section.title,
-            ),
-          ).then((value) => Navigator.of(context).pop());
-        },
       ),
     );
   }
@@ -850,7 +853,6 @@ class _VideoSectionWidget extends StatelessWidget {
                   Semantics(
                     header: true,
                     child: RichText(
-                      textScaler: MediaQuery.of(context).textScaler,
                       text: TextSpan(
                         style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                         children: [
@@ -877,7 +879,6 @@ class _VideoSectionWidget extends StatelessWidget {
                 if (section.date != null) ...[
                   SizedBox(height: AgoraSpacings.x0_5),
                   RichText(
-                    textScaler: MediaQuery.of(context).textScaler,
                     text: TextSpan(
                       style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                       children: [

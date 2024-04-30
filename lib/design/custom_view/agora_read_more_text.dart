@@ -69,7 +69,6 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
     final TextPainter textPainter = TextPainter(
       text: text,
       textAlign: textAlign,
-      textScaler: MediaQuery.textScalerOf(context),
       textDirection: textDirection,
       locale: Localizations.localeOf(context),
       maxLines: widget.trimLength,
@@ -100,7 +99,6 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RichText(
-                textScaler: MediaQuery.of(context).textScaler,
                 textAlign: textAlign,
                 textDirection: textDirection,
                 text: TextSpan(
@@ -122,7 +120,6 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RichText(
-                textScaler: MediaQuery.of(context).textScaler,
                 textAlign: textAlign,
                 textDirection: textDirection,
                 maxLines: _readMore ? widget.trimLines : null,
@@ -136,7 +133,6 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
           );
         } else {
           textSpan = RichText(
-            textScaler: MediaQuery.of(context).textScaler,
             textAlign: textAlign,
             textDirection: textDirection,
             text: TextSpan(style: textStyle, text: data),
