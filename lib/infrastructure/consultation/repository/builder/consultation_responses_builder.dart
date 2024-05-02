@@ -1,44 +1,55 @@
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 
-class ConsultationResponsesBuilder {
-  static List<ConsultationSummaryResults> buildResults({
+class ConsultationResponsesMapper {
+  static List<ConsultationSummaryResults> toConsultationSummaryResults({
     required List<dynamic> uniqueChoiceResults,
     required List<dynamic> multipleChoicesResults,
     required List<ConsultationQuestionResponses> userResponses,
     required List<dynamic> questionWithOpenChoiceResults,
   }) {
-    final List<ConsultationSummaryResults> uniqueChoices = uniqueChoiceResults.map((uniqueChoiceResult) {
+    final List<ConsultationSummaryResults> uniqueChoices = [];
+    for (final uniqueChoiceResult in uniqueChoiceResults) {
       final questionId = uniqueChoiceResult["questionId"] as String;
-      return ConsultationSummaryUniqueChoiceResults(
-        questionTitle: uniqueChoiceResult["questionTitle"] as String,
-        order: uniqueChoiceResult["order"] as int,
-        responses: _buildSummaryResponses(uniqueChoiceResult, userResponses, questionId),
+      uniqueChoices.add(
+        ConsultationSummaryUniqueChoiceResults(
+          questionTitle: uniqueChoiceResult["questionTitle"] as String,
+          order: uniqueChoiceResult["order"] as int,
+          responses: _buildSummaryResponses(uniqueChoiceResult, userResponses, questionId),
+        ),
       );
-    }).toList();
+    }
 
-    final List<ConsultationSummaryResults> multipleChoices = multipleChoicesResults.map((multipleChoicesResult) {
+    final List<ConsultationSummaryResults> multipleChoices = [];
+    for (final multipleChoicesResult in multipleChoicesResults) {
       final questionId = multipleChoicesResult["questionId"] as String;
-      return ConsultationSummaryMultipleChoicesResults(
-        questionTitle: multipleChoicesResult["questionTitle"] as String,
-        order: multipleChoicesResult["order"] as int,
-        responses: _buildSummaryResponses(multipleChoicesResult, userResponses, questionId),
+      multipleChoices.add(
+        ConsultationSummaryMultipleChoicesResults(
+          questionTitle: multipleChoicesResult["questionTitle"] as String,
+          order: multipleChoicesResult["order"] as int,
+          responses: _buildSummaryResponses(multipleChoicesResult, userResponses, questionId),
+        ),
       );
-    }).toList();
+    }
 
-    final List<ConsultationSummaryResults> questionsWithOpenChoice =
-        questionWithOpenChoiceResults.map((questionWithOpenChoice) {
-      return ConsultationSummaryOpenResults(
-        questionTitle: questionWithOpenChoice["questionTitle"] as String,
-        order: questionWithOpenChoice["order"] as int,
+    final List<ConsultationSummaryResults> questionsWithOpenChoices = [];
+    for (final questionWithOpenChoiceResult in questionWithOpenChoiceResults) {
+      questionsWithOpenChoices.add(
+        ConsultationSummaryOpenResults(
+          questionTitle: questionWithOpenChoiceResult["questionTitle"] as String,
+          order: questionWithOpenChoiceResult["order"] as int,
+        ),
       );
-    }).toList();
+    }
 
-    return uniqueChoices + multipleChoices + questionsWithOpenChoice;
+    return uniqueChoices + multipleChoices + questionsWithOpenChoices;
   }
 
   static List<ConsultationSummaryResponse> _buildSummaryResponses(
-      multipleChoicesResult, List<ConsultationQuestionResponses> userResponses, String questionId) {
+    multipleChoicesResult,
+    List<ConsultationQuestionResponses> userResponses,
+    String questionId,
+  ) {
     return (multipleChoicesResult["responses"] as List).map(
       (response) {
         final choiceId = response["choiceId"];

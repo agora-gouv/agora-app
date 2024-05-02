@@ -19,7 +19,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 part 'dynamic_consultation_results_presenter.dart';
-
 part 'dynamic_consultation_results_view_model.dart';
 
 class DynamicConsultationResultsPage extends StatelessWidget {
@@ -58,7 +57,9 @@ class _ErrorPage extends StatelessWidget {
       child: Column(
         children: [
           AgoraToolbar(pageLabel: ConsultationStrings.summaryTabResult),
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 10 * 4,
+          ),
           Center(child: AgoraErrorView()),
         ],
       ),
@@ -132,21 +133,23 @@ class _SuccessPage extends StatelessWidget {
                     const SizedBox(height: AgoraSpacings.base),
                     ...viewModel.results.map(
                       (result) {
-                        if (result is ConsultationSummaryUniqueChoiceResultsViewModel) {
-                          return AgoraConsultationResultView(
-                            questionTitle: result.questionTitle,
-                            responses: result.responses,
-                            isMultipleChoice: false,
-                          );
-                        } else if (result is ConsultationSummaryMultipleChoicesResultsViewModel) {
-                          return AgoraConsultationResultView(
-                            questionTitle: result.questionTitle,
-                            responses: result.responses,
-                            isMultipleChoice: true,
-                          );
-                        } else {
-                          throw Exception("Results view model doesn't exists $result");
-                        }
+                        return switch (result) {
+                          ConsultationSummaryUniqueChoiceResultsViewModel() => AgoraConsultationResultView(
+                              questionTitle: result.questionTitle,
+                              responses: result.responses,
+                              isMultipleChoice: false,
+                            ),
+                          ConsultationSummaryMultipleChoicesResultsViewModel() => AgoraConsultationResultView(
+                              questionTitle: result.questionTitle,
+                              responses: result.responses,
+                              isMultipleChoice: true,
+                            ),
+                          ConsultationSummaryOpenChoiceResultsViewModel() => AgoraConsultationResultView(
+                              questionTitle: result.questionTitle,
+                              responses: [],
+                              isMultipleChoice: false,
+                            ),
+                        };
                       },
                     ),
                     Text(ConsultationStrings.summaryInformation, style: AgoraTextStyles.light14),

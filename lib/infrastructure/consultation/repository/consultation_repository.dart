@@ -274,7 +274,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         participantCount: response.data["participantCount"] as int,
         title: response.data["title"] as String,
         coverUrl: response.data["coverUrl"] as String,
-        results: ConsultationResponsesBuilder.buildResults(
+        results: ConsultationResponsesMapper.toConsultationSummaryResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
           questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
@@ -305,7 +305,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       final summary = ConsultationSummary(
         title: response.data["title"] as String,
         participantCount: response.data["participantCount"] as int,
-        results: ConsultationResponsesBuilder.buildResults(
+        results: ConsultationResponsesMapper.toConsultationSummaryResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
           userResponses: userResponses,

@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Local" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="additionalArgs" value="--dart-define=env=Debug --dart-define=app.flavor=Local" />
+    <option name="buildFlavor" value="Local" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/main_local.dart" />
+    <method v="2" />
+  </configuration>
+</component>

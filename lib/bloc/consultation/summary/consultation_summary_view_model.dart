@@ -25,7 +25,7 @@ class ConsultationSummaryViewModel extends Equatable {
       ];
 }
 
-abstract class ConsultationSummaryResultsViewModel extends Equatable {
+sealed class ConsultationSummaryResultsViewModel extends Equatable {
   final String questionTitle;
   final int order;
 

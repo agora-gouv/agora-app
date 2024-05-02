@@ -18,14 +18,17 @@ class AgoraHttpClientAdapter extends Http2Adapter {
     required X509CertificateData rootCertificateX509,
   }) {
     return switch (FlavorHelper.getFlavor()) {
-      AgoraFlavor.dev => ConnectionManager(onClientCreate: (_, config) {
-          config.validateCertificate = (certificate, host, _) {
-            return true;
-          };
-          config.onBadCertificate = (_) {
-            return true;
-          };
-        }),
+      AgoraFlavor.dev => ConnectionManager(),
+      AgoraFlavor.local => ConnectionManager(
+          onClientCreate: (_, config) {
+            config.validateCertificate = (certificate, host, _) {
+              return true;
+            };
+            config.onBadCertificate = (_) {
+              return true;
+            };
+          },
+        ),
       AgoraFlavor.sandbox => ConnectionManager(),
       AgoraFlavor.prod => ConnectionManager(
           onClientCreate: (_, config) {
