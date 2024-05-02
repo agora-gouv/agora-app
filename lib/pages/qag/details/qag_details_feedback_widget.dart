@@ -105,8 +105,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           ),
         ],
         if (isHelpfulClicked != null)
-          AnimatedContainer(
-            duration: const Duration(seconds: 2),
+          Expanded(
             child: Lottie.asset(
               'assets/animations/check.json',
               width: 48,

@@ -1115,12 +1115,15 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                       ],
                     )
                   else if (isLoading == true)
-                    AnimatedContainer(
-                      duration: Duration(seconds: 2),
-                      child: Lottie.asset(
-                        'assets/animations/check.json',
-                        width: 48,
-                        height: 48,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: AnimatedContainer(
+                        duration: Duration(seconds: 2),
+                        child: Lottie.asset(
+                          'assets/animations/check.json',
+                          width: 48,
+                          height: 48,
+                        ),
                       ),
                     )
                   else if (answer != null) ...[
