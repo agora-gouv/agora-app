@@ -1429,7 +1429,7 @@ void main() {
             ConsultationSummaryOpenResults(
               questionTitle: "Vos idées pour inciter à covoiturer ?",
               order: 3,
-            )
+            ),
           ],
         ),
       );

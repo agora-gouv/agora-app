@@ -32,7 +32,7 @@ class AgoraConsultationResultView extends StatelessWidget {
           ),
           if (isOpenQuestion) ...[
             SizedBox(height: AgoraSpacings.x0_75),
-            Text(ConsultationStrings.openQuestionInformation, style: AgoraTextStyles.light14Italic)
+            Text(ConsultationStrings.openQuestionInformation, style: AgoraTextStyles.light14Italic),
           ],
           SizedBox(height: AgoraSpacings.x1_5),
           ..._buildResponses(),
