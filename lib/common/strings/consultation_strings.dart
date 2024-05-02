@@ -57,4 +57,7 @@ class ConsultationStrings {
 
   static const String summaryInformation =
       "Les réponses aux questions ouvertes de cette consultation seront traitées et rendues disponibles sous la forme d'une synthèse une fois la consultation terminée.";
+
+  static const String openQuestionInformation =
+      "L’analyse des réponses à cette question sera disponible dans la synthèse.";
 }

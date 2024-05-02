@@ -137,7 +137,6 @@ class _SuccessPage extends StatelessWidget {
                           ConsultationSummaryUniqueChoiceResultsViewModel() => AgoraConsultationResultView(
                               questionTitle: result.questionTitle,
                               responses: result.responses,
-                              isMultipleChoice: false,
                             ),
                           ConsultationSummaryMultipleChoicesResultsViewModel() => AgoraConsultationResultView(
                               questionTitle: result.questionTitle,
@@ -147,12 +146,11 @@ class _SuccessPage extends StatelessWidget {
                           ConsultationSummaryOpenChoiceResultsViewModel() => AgoraConsultationResultView(
                               questionTitle: result.questionTitle,
                               responses: [],
-                              isMultipleChoice: false,
+                              isOpenQuestion: true,
                             ),
                         };
                       },
                     ),
-                    Text(ConsultationStrings.summaryInformation, style: AgoraTextStyles.light14),
                     const SizedBox(height: AgoraSpacings.x1_5),
                   ],
                 ),

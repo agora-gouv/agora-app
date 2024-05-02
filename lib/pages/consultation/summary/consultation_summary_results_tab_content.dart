@@ -60,7 +60,6 @@ class ConsultationSummaryResultsTabContent extends StatelessWidget {
           return AgoraConsultationResultView(
             questionTitle: result.questionTitle,
             responses: result.responses,
-            isMultipleChoice: false,
           );
         } else if (result is ConsultationSummaryMultipleChoicesResultsViewModel) {
           return AgoraConsultationResultView(

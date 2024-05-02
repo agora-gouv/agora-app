@@ -803,6 +803,12 @@ void main() {
                 ],
               }
             ],
+            "resultsOpen": [
+              {
+                "questionTitle": "Vos idées pour inciter à covoiturer ?",
+                "order": 3,
+              }
+            ],
             "etEnsuite": {
               "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
               "description":
@@ -885,6 +891,10 @@ void main() {
                   ConsultationSummaryResponse(label: "Réponse B", ratio: 80),
                 ],
               ),
+              ConsultationSummaryOpenResults(
+                questionTitle: "Vos idées pour inciter à covoiturer ?",
+                order: 3,
+              ),
             ],
             etEnsuite: ConsultationSummaryEtEnsuite(
               step: 1,
@@ -936,6 +946,7 @@ void main() {
             "participantCount": 15035,
             "resultsUniqueChoice": [],
             "resultsMultipleChoice": [],
+            "resultsOpen": [],
             "etEnsuite": {
               "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
               "description":
@@ -1363,6 +1374,12 @@ void main() {
                 ],
               }
             ],
+            "resultsOpen": [
+              {
+                "questionTitle": "Vos idées pour inciter à covoiturer ?",
+                "order": 3,
+              }
+            ],
           },
         ),
         headers: {
@@ -1409,6 +1426,10 @@ void main() {
                 ConsultationSummaryResponse(label: "Réponse B", ratio: 80),
               ],
             ),
+            ConsultationSummaryOpenResults(
+              questionTitle: "Vos idées pour inciter à covoiturer ?",
+              order: 3,
+            )
           ],
         ),
       );
