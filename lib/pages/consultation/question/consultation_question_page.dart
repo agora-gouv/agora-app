@@ -390,12 +390,8 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
     return ConsultationQuestionChapterView(
       chapter: chapter,
       totalQuestions: totalQuestions,
+      currentQuestionIndex: currentQuestionIndex,
       onNextTap: () {
-        setState(() {
-          if (chapter.nextQuestionId != null) {
-            currentQuestionIndex++;
-          }
-        });
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.chapterDescription,
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",
@@ -410,9 +406,6 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
         );
       },
       onBackTap: () {
-        setState(() {
-          currentQuestionIndex--;
-        });
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.chapterDescription,
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} $consultationId",

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 class ConsultationQuestionChapterView extends StatelessWidget {
   final ConsultationQuestionChapterViewModel chapter;
   final int totalQuestions;
+  final int currentQuestionIndex;
   final VoidCallback onNextTap;
   final VoidCallback onBackTap;
 
@@ -17,6 +18,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
     super.key,
     required this.chapter,
     required this.totalQuestions,
+    required this.currentQuestionIndex,
     required this.onNextTap,
     required this.onBackTap,
   });
@@ -37,7 +39,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AgoraQuestionsProgressBar(
-                  currentQuestionIndex: chapter.order,
+                  currentQuestionIndex: currentQuestionIndex,
                   totalQuestions: totalQuestions,
                   isLastQuestion: chapter.nextQuestionId == null,
                 ),
