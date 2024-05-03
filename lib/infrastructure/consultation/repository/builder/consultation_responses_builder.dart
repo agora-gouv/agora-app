@@ -41,8 +41,9 @@ class ConsultationResponsesMapper {
         ),
       );
     }
-
-    return uniqueChoices + multipleChoices + questionsWithOpenChoices;
+    final summaryResults = uniqueChoices + multipleChoices + questionsWithOpenChoices;
+    summaryResults.sort((a, b) => a.order.compareTo(b.order));
+    return summaryResults;
   }
 
   static List<ConsultationSummaryResponse> _buildSummaryResponses(

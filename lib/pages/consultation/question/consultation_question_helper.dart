@@ -18,10 +18,15 @@ class ConsultationQuestionHelper {
     }
   }
 
-  static Widget buildNextQuestion({required int order, required totalQuestions, required VoidCallback? onPressed}) {
+  static Widget buildNextQuestion({
+    required int currentQuestionIndex,
+    required totalQuestions,
+    required VoidCallback? onPressed,
+  }) {
     return AgoraButton(
-      label: order == totalQuestions ? ConsultationStrings.validate : ConsultationStrings.nextQuestion,
-      semanticLabel: order == totalQuestions ? ConsultationStrings.validate : SemanticsStrings.nextQuestion,
+      label: currentQuestionIndex == totalQuestions ? ConsultationStrings.validate : ConsultationStrings.nextQuestion,
+      semanticLabel:
+          currentQuestionIndex == totalQuestions ? ConsultationStrings.validate : SemanticsStrings.nextQuestion,
       style: AgoraButtonStyle.primaryButtonStyle,
       onPressed: onPressed,
     );
