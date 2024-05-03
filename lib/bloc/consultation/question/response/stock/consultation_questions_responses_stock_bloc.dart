@@ -56,19 +56,16 @@ class ConsultationQuestionsResponsesStockBloc
     AddConsultationChapterStockEvent event,
     Emitter<ConsultationQuestionsResponsesStockState> emit,
   ) async {
-    final questionIdStack = [...state.questionIdStack];
-    questionIdStack.add(event.chapterId);
-
     storageClient.save(
       consultationId: event.consultationId,
-      questionIdStack: questionIdStack,
+      questionIdStack: state.questionIdStack,
       questionsResponses: state.questionsResponses,
       restoreQuestionId: event.nextQuestionId,
     );
 
     emit(
       ConsultationQuestionsResponsesStockState(
-        questionIdStack: questionIdStack,
+        questionIdStack: state.questionIdStack,
         questionsResponses: state.questionsResponses,
         currentQuestionId: event.nextQuestionId,
       ),
