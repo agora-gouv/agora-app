@@ -1,10 +1,13 @@
 import 'package:agora/common/log/log.dart';
 
-enum AgoraFlavor { dev, sandbox, prod }
+enum AgoraFlavor { dev, sandbox, prod, local }
 
 class FlavorHelper {
   static AgoraFlavor getFlavor() {
     switch (const String.fromEnvironment('app.flavor')) {
+      case "Local":
+        Log.d("Flavor : Local");
+        return AgoraFlavor.local;
       case "Dev":
         Log.d("Flavor : Dev");
         return AgoraFlavor.dev;

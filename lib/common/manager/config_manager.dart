@@ -21,6 +21,7 @@ class ConfigManager {
     }
 
     final FirebaseOptions firebaseOptions = switch (FlavorHelper.getFlavor()) {
+      AgoraFlavor.local => DevFirebaseOptions.currentPlatform,
       AgoraFlavor.dev => DevFirebaseOptions.currentPlatform,
       AgoraFlavor.sandbox => DevFirebaseOptions.currentPlatform,
       AgoraFlavor.prod => ProdFirebaseOptions.currentPlatform,

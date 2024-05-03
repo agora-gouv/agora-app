@@ -22,6 +22,7 @@ class UserAgentBuilderImpl extends UserAgentBuilder {
       true => "",
     };
     final flavorInfo = switch (FlavorHelper.getFlavor()) {
+      AgoraFlavor.local => ".local",
       AgoraFlavor.sandbox => ".sandbox",
       AgoraFlavor.dev => ".dev",
       AgoraFlavor.prod => "",

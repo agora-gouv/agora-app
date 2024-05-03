@@ -1,69 +1,65 @@
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 
-class ConsultationResponsesBuilder {
-  static List<ConsultationSummaryResults> buildResults({
+class ConsultationResponsesMapper {
+  static List<ConsultationSummaryResults> toConsultationSummaryResults({
     required List<dynamic> uniqueChoiceResults,
     required List<dynamic> multipleChoicesResults,
     required List<ConsultationQuestionResponses> userResponses,
+    required List<dynamic> questionWithOpenChoiceResults,
   }) {
-    return _buildUniqueChoiceResults(uniqueChoiceResults, userResponses) +
-        _buildMultipleChoicesResults(multipleChoicesResults, userResponses);
-  }
-
-  static List<ConsultationSummaryResults> _buildUniqueChoiceResults(
-    List<dynamic> uniqueChoiceResults,
-    List<ConsultationQuestionResponses> userResponses,
-  ) {
-    final List<ConsultationSummaryResults> results = [];
+    final List<ConsultationSummaryResults> uniqueChoices = [];
     for (final uniqueChoiceResult in uniqueChoiceResults) {
       final questionId = uniqueChoiceResult["questionId"] as String;
-      results.add(
+      uniqueChoices.add(
         ConsultationSummaryUniqueChoiceResults(
           questionTitle: uniqueChoiceResult["questionTitle"] as String,
           order: uniqueChoiceResult["order"] as int,
-          responses: (uniqueChoiceResult["responses"] as List).map(
-            (response) {
-              final choiceId = response["choiceId"];
-              return ConsultationSummaryResponse(
-                label: response["label"] as String,
-                ratio: response["ratio"] as int,
-                isUserResponse: userResponses
-                    .any((response) => response.questionId == questionId && response.responseIds.contains(choiceId)),
-              );
-            },
-          ).toList(),
+          responses: _buildSummaryResponses(uniqueChoiceResult, userResponses, questionId),
         ),
       );
     }
-    return results;
-  }
 
-  static List<ConsultationSummaryResults> _buildMultipleChoicesResults(
-    List<dynamic> multipleChoicesResults,
-    List<ConsultationQuestionResponses> userResponses,
-  ) {
-    final List<ConsultationSummaryResults> results = [];
+    final List<ConsultationSummaryResults> multipleChoices = [];
     for (final multipleChoicesResult in multipleChoicesResults) {
       final questionId = multipleChoicesResult["questionId"] as String;
-      results.add(
+      multipleChoices.add(
         ConsultationSummaryMultipleChoicesResults(
           questionTitle: multipleChoicesResult["questionTitle"] as String,
           order: multipleChoicesResult["order"] as int,
-          responses: (multipleChoicesResult["responses"] as List).map(
-            (response) {
-              final choiceId = response["choiceId"];
-              return ConsultationSummaryResponse(
-                label: response["label"] as String,
-                ratio: response["ratio"] as int,
-                isUserResponse: userResponses
-                    .any((response) => response.questionId == questionId && response.responseIds.contains(choiceId)),
-              );
-            },
-          ).toList(),
+          responses: _buildSummaryResponses(multipleChoicesResult, userResponses, questionId),
         ),
       );
     }
-    return results;
+
+    final List<ConsultationSummaryResults> questionsWithOpenChoices = [];
+    for (final questionWithOpenChoiceResult in questionWithOpenChoiceResults) {
+      questionsWithOpenChoices.add(
+        ConsultationSummaryOpenResults(
+          questionTitle: questionWithOpenChoiceResult["questionTitle"] as String,
+          order: questionWithOpenChoiceResult["order"] as int,
+        ),
+      );
+    }
+
+    return uniqueChoices + multipleChoices + questionsWithOpenChoices;
+  }
+
+  static List<ConsultationSummaryResponse> _buildSummaryResponses(
+    multipleChoicesResult,
+    List<ConsultationQuestionResponses> userResponses,
+    String questionId,
+  ) {
+    return (multipleChoicesResult["responses"] as List).map(
+      (response) {
+        final choiceId = response["choiceId"];
+        return ConsultationSummaryResponse(
+          label: response["label"] as String,
+          ratio: response["ratio"] as int,
+          isUserResponse: userResponses
+              .any((response) => response.questionId == questionId && response.responseIds.contains(choiceId)),
+        );
+      },
+    ).toList();
   }
 }

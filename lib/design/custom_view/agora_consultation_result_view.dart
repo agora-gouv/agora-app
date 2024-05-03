@@ -9,12 +9,14 @@ class AgoraConsultationResultView extends StatelessWidget {
   final String questionTitle;
   final List<ConsultationSummaryResponseViewModel> responses;
   final bool isMultipleChoice;
+  final bool isOpenQuestion;
 
   AgoraConsultationResultView({
     super.key,
     required this.questionTitle,
     required this.responses,
-    required this.isMultipleChoice,
+    this.isMultipleChoice = false,
+    this.isOpenQuestion = false,
   });
 
   @override
@@ -28,6 +30,10 @@ class AgoraConsultationResultView extends StatelessWidget {
             header: true,
             child: Text(questionTitle, style: AgoraTextStyles.medium17),
           ),
+          if (isOpenQuestion) ...[
+            SizedBox(height: AgoraSpacings.x0_75),
+            Text(ConsultationStrings.openQuestionInformation, style: AgoraTextStyles.light14Italic),
+          ],
           SizedBox(height: AgoraSpacings.x1_5),
           ..._buildResponses(),
         ],

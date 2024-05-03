@@ -66,6 +66,10 @@ android {
 
     flavorDimensions "environment"
     productFlavors {
+        local {
+            dimension "environment"
+            applicationId "fr.social.gouv.agora.debug"
+        }
         dev {
             dimension "environment"
             applicationId "fr.social.gouv.agora.debug"
