@@ -71,7 +71,7 @@ class _ConsultationQuestionWithConditionsViewState extends State<ConsultationQue
               if (currentResponseId.isNotBlank())
                 Flexible(
                   child: ConsultationQuestionHelper.buildNextQuestion(
-                    order: widget.questionWithConditions.order,
+                    currentQuestionIndex: widget.currentQuestionIndex,
                     totalQuestions: widget.totalQuestions,
                     onPressed: () => widget.onWithConditionResponseTap(
                       widget.questionWithConditions.id,

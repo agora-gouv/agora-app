@@ -63,7 +63,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
               currentResponseId.isNotBlank()
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
-                        order: widget.uniqueChoiceQuestion.order,
+                        currentQuestionIndex: widget.currentQuestionIndex,
                         totalQuestions: widget.totalQuestions,
                         onPressed: () => widget.onUniqueResponseTap(
                           widget.uniqueChoiceQuestion.id,

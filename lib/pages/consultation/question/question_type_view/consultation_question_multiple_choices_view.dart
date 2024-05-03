@@ -71,7 +71,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
               currentResponseIds.isNotEmpty
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
-                        order: multipleChoicesQuestion.order,
+                        currentQuestionIndex: widget.currentQuestionIndex,
                         totalQuestions: widget.totalQuestions,
                         onPressed: () {
                           widget.onMultipleResponseTap(
