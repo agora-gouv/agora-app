@@ -12,6 +12,7 @@ class ConsultationQuestionUniqueChoiceView extends StatefulWidget {
   final ConsultationQuestionUniqueViewModel uniqueChoiceQuestion;
   final ConsultationQuestionResponses? previousSelectedResponses;
   final int totalQuestions;
+  final int currentQuestionIndex;
   final Function(String questionId, String responseId, String otherResponse) onUniqueResponseTap;
   final VoidCallback onBackTap;
 
@@ -20,6 +21,7 @@ class ConsultationQuestionUniqueChoiceView extends StatefulWidget {
     required this.uniqueChoiceQuestion,
     required this.previousSelectedResponses,
     required this.totalQuestions,
+    required this.currentQuestionIndex,
     required this.onUniqueResponseTap,
     required this.onBackTap,
   });
@@ -40,8 +42,8 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
     return ConsultationQuestionView(
       order: widget.uniqueChoiceQuestion.order,
       totalQuestions: widget.totalQuestions,
-      questionProgress: widget.uniqueChoiceQuestion.questionProgress,
-      questionProgressSemanticLabel: widget.uniqueChoiceQuestion.questionProgressSemanticLabel,
+      currentQuestionIndex: widget.currentQuestionIndex,
+      isLastQuestion: widget.uniqueChoiceQuestion.nextQuestionId == null,
       title: widget.uniqueChoiceQuestion.title,
       popupDescription: widget.uniqueChoiceQuestion.popupDescription,
       child: Column(
@@ -61,7 +63,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
               currentResponseId.isNotBlank()
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
-                        order: widget.uniqueChoiceQuestion.order,
+                        currentQuestionIndex: widget.currentQuestionIndex,
                         totalQuestions: widget.totalQuestions,
                         onPressed: () => widget.onUniqueResponseTap(
                           widget.uniqueChoiceQuestion.id,

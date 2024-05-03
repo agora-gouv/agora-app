@@ -25,7 +25,7 @@ class ConsultationSummaryViewModel extends Equatable {
       ];
 }
 
-abstract class ConsultationSummaryResultsViewModel extends Equatable {
+sealed class ConsultationSummaryResultsViewModel extends Equatable {
   final String questionTitle;
   final int order;
 
@@ -62,6 +62,13 @@ class ConsultationSummaryMultipleChoicesResultsViewModel extends ConsultationSum
 
   @override
   List<Object> get props => [questionTitle, order, responses];
+}
+
+class ConsultationSummaryOpenChoiceResultsViewModel extends ConsultationSummaryResultsViewModel {
+  ConsultationSummaryOpenChoiceResultsViewModel({
+    required super.questionTitle,
+    required super.order,
+  });
 }
 
 class ConsultationSummaryResponseViewModel extends Equatable {

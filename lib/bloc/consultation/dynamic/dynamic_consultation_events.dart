@@ -40,3 +40,9 @@ class DeleteConsultationUpdateFeedbackEvent extends DynamicConsultationEvent {
     required this.consultationId,
   });
 }
+
+class DeleteConsultationResponsesEvent extends DynamicConsultationEvent {
+  final String consultationId;
+
+  DeleteConsultationResponsesEvent(this.consultationId);
+}

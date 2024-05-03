@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "128862173768",
+    "project_id": "agora-dev-6c6bd",
+    "storage_bucket": "agora-dev-6c6bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128862173768:android:ca1a49d2af950684b3f67d",
+        "android_client_info": {
+          "package_name": "fr.social.gouv.agora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128862173768-rrmfootjha739d3afts42lqnhpms4d2t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5faCHfTrvzyutXnNXp-WuQiMWO7j2iFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128862173768-rrmfootjha739d3afts42lqnhpms4d2t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "128862173768-gc2r7o18hdg95r5vd8engfsl46bmv8et.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.social.gouv.agora.debug"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128862173768:android:e96bec772348b56fb3f67d",
+        "android_client_info": {
+          "package_name": "fr.social.gouv.agora.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128862173768-rrmfootjha739d3afts42lqnhpms4d2t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5faCHfTrvzyutXnNXp-WuQiMWO7j2iFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128862173768-rrmfootjha739d3afts42lqnhpms4d2t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "128862173768-gc2r7o18hdg95r5vd8engfsl46bmv8et.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.social.gouv.agora.debug"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -154,7 +154,7 @@ class _HeaderSectionWidget extends StatelessWidget {
                         children: [
                           ExcludeSemantics(child: Text(section.thematicLogo, style: AgoraTextStyles.regular16)),
                           const SizedBox(width: AgoraSpacings.x0_375),
-                          Text(section.thematicLabel, style: AgoraTextStyles.regular16),
+                          Expanded(child: Text(section.thematicLabel, style: AgoraTextStyles.regular16)),
                         ],
                       ),
                     ),
@@ -417,10 +417,13 @@ class _ExpandableSectionWidget extends StatefulWidget {
 
 class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
   bool _isExpanded = false;
+  bool _arePreviewAndExpandedFilled = true;
 
   @override
   void initState() {
     _isExpanded = false || widget.isTalkbackEnabled;
+    _arePreviewAndExpandedFilled =
+        widget.section.previewSections.isNotEmpty && widget.section.expandedSections.isNotEmpty;
     super.initState();
   }
 
@@ -431,13 +434,13 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ...widget.section.headerSections.map((section) => DynamicSectionWidget(section)),
-        if (!_isExpanded)
+        if (!_isExpanded && _arePreviewAndExpandedFilled)
           Stack(
             children: [
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.section.collapsedSections.map((section) => DynamicSectionWidget(section)).toList(),
+                children: widget.section.previewSections.map((section) => DynamicSectionWidget(section)).toList(),
               ),
               Positioned(
                 bottom: 0,
@@ -455,8 +458,9 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
               ),
             ],
           ),
-        if (_isExpanded) ...widget.section.expandedSections.map((section) => DynamicSectionWidget(section)),
-        if (!_isExpanded)
+        if (_isExpanded || (widget.section.previewSections.isEmpty && widget.section.expandedSections.isNotEmpty))
+          ...widget.section.expandedSections.map((section) => DynamicSectionWidget(section)),
+        if (!_isExpanded && _arePreviewAndExpandedFilled)
           ShowMoreButton(
             onTap: () {
               setState(() {
@@ -529,27 +533,30 @@ class _StartButtonWidget extends StatelessWidget {
         horizontal: AgoraSpacings.horizontalPadding,
         vertical: AgoraSpacings.x2,
       ),
-      child: FloatingActionButton.extended(
-        backgroundColor: AgoraColors.primaryBlue,
-        label: Text(
-          ConsultationStrings.beginButton,
-          semanticsLabel: ConsultationStrings.beginButtonDescription,
-          style: AgoraTextStyles.primaryFloatingButton,
+      child: SizedBox(
+        width: double.infinity,
+        child: FloatingActionButton.extended(
+          backgroundColor: AgoraColors.primaryBlue,
+          label: Text(
+            ConsultationStrings.beginButton,
+            semanticsLabel: ConsultationStrings.beginButtonDescription,
+            style: AgoraTextStyles.primaryFloatingButton,
+          ),
+          onPressed: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
+              widgetName: AnalyticsScreenNames.consultationDetailsPage,
+            );
+            Navigator.pushNamed(
+              context,
+              ConsultationQuestionPage.routeName,
+              arguments: ConsultationQuestionArguments(
+                consultationId: section.consultationId,
+                consultationTitle: section.title,
+              ),
+            ).then((value) => Navigator.of(context).pop());
+          },
         ),
-        onPressed: () {
-          TrackerHelper.trackClick(
-            clickName: "${AnalyticsEventNames.startConsultation} ${section.consultationId}",
-            widgetName: AnalyticsScreenNames.consultationDetailsPage,
-          );
-          Navigator.pushNamed(
-            context,
-            ConsultationQuestionPage.routeName,
-            arguments: ConsultationQuestionArguments(
-              consultationId: section.consultationId,
-              consultationTitle: section.title,
-            ),
-          ).then((value) => Navigator.of(context).pop());
-        },
       ),
     );
   }
@@ -846,7 +853,6 @@ class _VideoSectionWidget extends StatelessWidget {
                   Semantics(
                     header: true,
                     child: RichText(
-                      textScaler: MediaQuery.of(context).textScaler,
                       text: TextSpan(
                         style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                         children: [
@@ -873,7 +879,6 @@ class _VideoSectionWidget extends StatelessWidget {
                 if (section.date != null) ...[
                   SizedBox(height: AgoraSpacings.x0_5),
                   RichText(
-                    textScaler: MediaQuery.of(context).textScaler,
                     text: TextSpan(
                       style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                       children: [
@@ -1009,11 +1014,13 @@ class _ConsultationFeedbackQuestionSectionContentWidget extends StatefulWidget {
 
 class _ConsultationFeedbackQuestionSectionWidgetState extends State<_ConsultationFeedbackQuestionSectionContentWidget> {
   bool? answer;
+  bool? isLoading;
 
   @override
   void initState() {
     super.initState();
     answer = widget.section.userResponse;
+    isLoading = false;
   }
 
   @override
@@ -1071,8 +1078,14 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                                   ),
                                 );
                             setState(() {
+                              isLoading = true;
                               answer = true;
                             });
+                            Future.delayed(const Duration(seconds: 2)).then(
+                              (_) => setState(() {
+                                isLoading = false;
+                              }),
+                            );
                           },
                         ),
                         SizedBox(width: AgoraSpacings.base),
@@ -1089,13 +1102,31 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                                   ),
                                 );
                             setState(() {
+                              isLoading = true;
                               answer = false;
                             });
+                            Future.delayed(const Duration(seconds: 2)).then(
+                              (_) => setState(() {
+                                isLoading = false;
+                              }),
+                            );
                           },
                         ),
                       ],
                     )
-                  else ...[
+                  else if (isLoading == true)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: AnimatedContainer(
+                        duration: Duration(seconds: 2),
+                        child: Lottie.asset(
+                          'assets/animations/check.json',
+                          width: 48,
+                          height: 48,
+                        ),
+                      ),
+                    )
+                  else if (answer != null) ...[
                     Align(
                       alignment: Alignment.centerLeft,
                       child: AgoraButton(

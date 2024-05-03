@@ -28,6 +28,11 @@ class _Presenter {
                 order: consultationResult.order,
                 responses: _buildResponses(consultationResult.responses),
               );
+            } else if (consultationResult is ConsultationSummaryOpenResults) {
+              return ConsultationSummaryOpenChoiceResultsViewModel(
+                questionTitle: consultationResult.questionTitle,
+                order: consultationResult.order,
+              );
             } else {
               return null;
             }

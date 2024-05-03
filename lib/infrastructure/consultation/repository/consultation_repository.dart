@@ -7,7 +7,7 @@ import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
-import 'package:agora/domain/consultation/questions/consultation_question.dart';
+import 'package:agora/domain/consultation/questions/consultation_questions.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
@@ -216,12 +216,15 @@ class ConsultationDioRepository extends ConsultationRepository {
         "/consultations/$consultationId/questions",
       );
       return GetConsultationQuestionsSucceedResponse(
-        consultationQuestions: ConsultationQuestionsBuilder.buildQuestions(
-          uniqueChoiceQuestions: response.data["questionsUniqueChoice"] as List,
-          openedQuestions: response.data["questionsOpened"] as List,
-          multipleChoicesQuestions: response.data["questionsMultipleChoices"] as List,
-          withConditionQuestions: response.data["questionsWithCondition"] as List,
-          chapters: response.data["chapters"] as List,
+        consultationQuestions: ConsultationQuestions(
+          questionCount: response.data["questionCount"] as int,
+          questions: ConsultationQuestionsBuilder.buildQuestions(
+            uniqueChoiceQuestions: response.data["questionsUniqueChoice"] as List,
+            openedQuestions: response.data["questionsOpened"] as List,
+            multipleChoicesQuestions: response.data["questionsMultipleChoices"] as List,
+            withConditionQuestions: response.data["questionsWithCondition"] as List,
+            chapters: response.data["chapters"] as List,
+          ),
         ),
       );
     } catch (e, s) {
@@ -274,9 +277,10 @@ class ConsultationDioRepository extends ConsultationRepository {
         participantCount: response.data["participantCount"] as int,
         title: response.data["title"] as String,
         coverUrl: response.data["coverUrl"] as String,
-        results: ConsultationResponsesBuilder.buildResults(
+        results: ConsultationResponsesMapper.toConsultationSummaryResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
+          questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
           userResponses: userResponses,
         ),
       );
@@ -304,10 +308,11 @@ class ConsultationDioRepository extends ConsultationRepository {
       final summary = ConsultationSummary(
         title: response.data["title"] as String,
         participantCount: response.data["participantCount"] as int,
-        results: ConsultationResponsesBuilder.buildResults(
+        results: ConsultationResponsesMapper.toConsultationSummaryResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
           userResponses: userResponses,
+          questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
         ),
         etEnsuite: ConsultationSummaryEtEnsuite(
           step: etEnsuite["step"] as int,
@@ -414,7 +419,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         responseInfos: _toResponseInfo(data["responsesInfo"], consultationId),
         infoHeader: _toInfoHeader(data["infoHeader"]),
         headerSections: ((data["body"]["headerSections"] ?? []) as List).map((e) => _toSection(e)).nonNulls.toList(),
-        collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
+        previewSections: (data["body"]["sectionsPreview"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         expandedSections: (data["body"]["sections"] as List).map((e) => _toSection(e)).nonNulls.toList(),
         participationInfo: _toParticipationInfo(data["participationInfo"], shareText),
         downloadInfo: downloadUrl == null ? null : ConsultationDownloadInfo(url: downloadUrl),
@@ -529,7 +534,7 @@ abstract class GetConsultationQuestionsRepositoryResponse extends Equatable {
 }
 
 class GetConsultationQuestionsSucceedResponse extends GetConsultationQuestionsRepositoryResponse {
-  final List<ConsultationQuestion> consultationQuestions;
+  final ConsultationQuestions consultationQuestions;
 
   GetConsultationQuestionsSucceedResponse({required this.consultationQuestions});
 

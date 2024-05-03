@@ -8,6 +8,7 @@ import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
+import 'package:agora/domain/consultation/questions/consultation_questions.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
@@ -412,6 +413,7 @@ void main() {
         (server) => server.reply(
           HttpStatus.ok,
           {
+            "questionCount": 10,
             "questionsUniqueChoice": [
               {
                 "id": "question1",
@@ -535,91 +537,86 @@ void main() {
       expect(
         response,
         GetConsultationQuestionsSucceedResponse(
-          consultationQuestions: [
-            ConsultationQuestionUnique(
-              id: "question1",
-              title: "quel est la fréquence d'utilisation de transport...",
-              order: 5,
-              questionProgress: "Question 4/4",
-              questionProgressSemanticLabel: "Question 4 sur 4",
-              responseChoices: [
-                ConsultationQuestionResponseChoice(
-                  id: "choice1",
-                  label: "une à deux fois par semaine",
-                  order: 1,
-                  hasOpenTextField: false,
-                ),
-                ConsultationQuestionResponseChoice(
-                  id: "choice2",
-                  label: "Autre (précisez)",
-                  order: 2,
-                  hasOpenTextField: true,
-                ),
-              ],
-              nextQuestionId: null,
-              popupDescription: "<body>La description avec textes <b>en gras</b></body>",
-            ),
-            ConsultationQuestionOpened(
-              id: "question2",
-              title: "Donnez un feedback",
-              order: 4,
-              questionProgress: "Question 3/4",
-              questionProgressSemanticLabel: "Question 3 sur 4",
-              nextQuestionId: "question1",
-              popupDescription: null,
-            ),
-            ConsultationQuestionMultiple(
-              id: "question3",
-              title: "Quel types de transports utilisez-vous le plus ?",
-              order: 1,
-              questionProgress: "Question 1/4",
-              questionProgressSemanticLabel: "Question 1 sur 4",
-              nextQuestionId: "question6",
-              maxChoices: 2,
-              responseChoices: [
-                ConsultationQuestionResponseChoice(id: "choice1", label: "Train", order: 1, hasOpenTextField: false),
-                ConsultationQuestionResponseChoice(id: "choice2", label: "Tram", order: 2, hasOpenTextField: false),
-                ConsultationQuestionResponseChoice(
-                  id: "choice3",
-                  label: "Autre (précisez)",
-                  order: 3,
-                  hasOpenTextField: true,
-                ),
-              ],
-              popupDescription: "<body>La description avec textes <b>en gras</b></body>",
-            ),
-            ConsultationQuestionWithCondition(
-              id: "question6",
-              title: "Avez vous déjà fait du covoiturage ?",
-              order: 2,
-              questionProgress: "Question 2/4",
-              questionProgressSemanticLabel: "Question 2 sur 4",
-              responseChoices: [
-                ConsultationQuestionResponseWithConditionChoice(
-                  id: "choice1",
-                  label: "Oui",
-                  order: 1,
-                  nextQuestionId: "chapitre1",
-                  hasOpenTextField: false,
-                ),
-                ConsultationQuestionResponseWithConditionChoice(
-                  id: "choice2",
-                  label: "Autre (précisez)",
-                  order: 2,
-                  nextQuestionId: "chapitre1",
-                  hasOpenTextField: true,
-                ),
-              ],
-              popupDescription: null,
-            ),
-            ConsultationQuestionChapter(
-              id: "chapitre1",
-              title: "titre du chapitre",
-              order: 3,
-              description: "texte riche",
-              nextQuestionId: "question2",
-            ),
-          ],
+          consultationQuestions: ConsultationQuestions(
+            questionCount: 10,
+            questions: [
+              ConsultationQuestionUnique(
+                id: "question1",
+                title: "quel est la fréquence d'utilisation de transport...",
+                order: 5,
+                responseChoices: [
+                  ConsultationQuestionResponseChoice(
+                    id: "choice1",
+                    label: "une à deux fois par semaine",
+                    order: 1,
+                    hasOpenTextField: false,
+                  ),
+                  ConsultationQuestionResponseChoice(
+                    id: "choice2",
+                    label: "Autre (précisez)",
+                    order: 2,
+                    hasOpenTextField: true,
+                  ),
+                ],
+                nextQuestionId: null,
+                popupDescription: "<body>La description avec textes <b>en gras</b></body>",
+              ),
+              ConsultationQuestionOpened(
+                id: "question2",
+                title: "Donnez un feedback",
+                order: 4,
+                nextQuestionId: "question1",
+                popupDescription: null,
+              ),
+              ConsultationQuestionMultiple(
+                id: "question3",
+                title: "Quel types de transports utilisez-vous le plus ?",
+                order: 1,
+                nextQuestionId: "question6",
+                maxChoices: 2,
+                responseChoices: [
+                  ConsultationQuestionResponseChoice(id: "choice1", label: "Train", order: 1, hasOpenTextField: false),
+                  ConsultationQuestionResponseChoice(id: "choice2", label: "Tram", order: 2, hasOpenTextField: false),
+                  ConsultationQuestionResponseChoice(
+                    id: "choice3",
+                    label: "Autre (précisez)",
+                    order: 3,
+                    hasOpenTextField: true,
+                  ),
+                ],
+                popupDescription: "<body>La description avec textes <b>en gras</b></body>",
+              ),
+              ConsultationQuestionWithCondition(
+                id: "question6",
+                title: "Avez vous déjà fait du covoiturage ?",
+                order: 2,
+                responseChoices: [
+                  ConsultationQuestionResponseWithConditionChoice(
+                    id: "choice1",
+                    label: "Oui",
+                    order: 1,
+                    nextQuestionId: "chapitre1",
+                    hasOpenTextField: false,
+                  ),
+                  ConsultationQuestionResponseWithConditionChoice(
+                    id: "choice2",
+                    label: "Autre (précisez)",
+                    order: 2,
+                    nextQuestionId: "chapitre1",
+                    hasOpenTextField: true,
+                  ),
+                ],
+                popupDescription: null,
+              ),
+              ConsultationQuestionChapter(
+                id: "chapitre1",
+                title: "titre du chapitre",
+                order: 3,
+                description: "texte riche",
+                nextQuestionId: "question2",
+              ),
+            ],
+          ),
         ),
       );
     });
@@ -803,6 +800,12 @@ void main() {
                 ],
               }
             ],
+            "resultsOpen": [
+              {
+                "questionTitle": "Vos idées pour inciter à covoiturer ?",
+                "order": 3,
+              }
+            ],
             "etEnsuite": {
               "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
               "description":
@@ -885,6 +888,10 @@ void main() {
                   ConsultationSummaryResponse(label: "Réponse B", ratio: 80),
                 ],
               ),
+              ConsultationSummaryOpenResults(
+                questionTitle: "Vos idées pour inciter à covoiturer ?",
+                order: 3,
+              ),
             ],
             etEnsuite: ConsultationSummaryEtEnsuite(
               step: 1,
@@ -936,6 +943,7 @@ void main() {
             "participantCount": 15035,
             "resultsUniqueChoice": [],
             "resultsMultipleChoice": [],
+            "resultsOpen": [],
             "etEnsuite": {
               "step": 1, // Autres steps: 2, 3. Le reste on affiche une erreur
               "description":
@@ -1363,6 +1371,12 @@ void main() {
                 ],
               }
             ],
+            "resultsOpen": [
+              {
+                "questionTitle": "Vos idées pour inciter à covoiturer ?",
+                "order": 3,
+              }
+            ],
           },
         ),
         headers: {
@@ -1408,6 +1422,10 @@ void main() {
                 ConsultationSummaryResponse(label: "Réponse A", ratio: 30),
                 ConsultationSummaryResponse(label: "Réponse B", ratio: 80),
               ],
+            ),
+            ConsultationSummaryOpenResults(
+              questionTitle: "Vos idées pour inciter à covoiturer ?",
+              order: 3,
             ),
           ],
         ),
@@ -1567,7 +1585,7 @@ void main() {
               logo: "📘",
               description: "<body>Texte riche</body>",
             ),
-            collapsedSections: [
+            previewSections: [
               DynamicConsultationSectionTitle('Le titre de la section'),
             ],
             expandedSections: [

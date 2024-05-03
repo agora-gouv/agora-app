@@ -12,6 +12,7 @@ import 'package:agora/common/helper/notification_helper.dart';
 import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
@@ -39,15 +40,15 @@ import 'package:agora/pages/consultation/question/consultation_question_page.dar
 import 'package:collection/collection.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 part 'dynamic_consultation_presenter.dart';
-
 part 'dynamic_consultation_section_widgets.dart';
-
 part 'dynamic_consultation_view_model.dart';
 
 class DynamicConsultationPage extends StatelessWidget {
@@ -63,6 +64,7 @@ class DynamicConsultationPage extends StatelessWidget {
       create: (BuildContext context) {
         return DynamicConsultationBloc(
           RepositoryManager.getConsultationRepository(),
+          StorageManager.getConsultationQuestionStorageClient(),
         )..add(FetchDynamicConsultationEvent(arguments.consultationId));
       },
       child: BlocSelector<DynamicConsultationBloc, DynamicConsultationState, DynamicConsultationViewModel>(
@@ -164,6 +166,18 @@ class _SuccessPage extends StatelessWidget {
                 pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}',
               ),
             ),
+            if (kDebugMode) ...[
+              AgoraButton(
+                label: 'Supprimer',
+                style: AgoraButtonStyle.redBorderButtonStyle,
+                onPressed: () {
+                  context
+                      .read<DynamicConsultationBloc>()
+                      .add(DeleteConsultationResponsesEvent(viewModel.consultationId));
+                },
+              ),
+              const SizedBox(width: AgoraSpacings.base),
+            ],
             Padding(
               padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
               child: _ShareButton(viewModel.shareText),
@@ -172,11 +186,10 @@ class _SuccessPage extends StatelessWidget {
           ],
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: viewModel.sections.length,
-            itemBuilder: (BuildContext context, int index) {
-              return DynamicSectionWidget(viewModel.sections[index]);
-            },
+          child: SingleChildScrollView(
+            child: Column(
+              children: viewModel.sections.map((section) => DynamicSectionWidget(section)).toList(),
+            ),
           ),
         ),
       ],

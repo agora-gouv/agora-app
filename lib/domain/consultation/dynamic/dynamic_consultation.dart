@@ -290,7 +290,7 @@ class DynamicConsultationUpdate extends Equatable {
   final ConsultationResponseInfos? responseInfos;
   final ConsultationInfoHeader? infoHeader;
   final List<DynamicConsultationSection> headerSections;
-  final List<DynamicConsultationSection> collapsedSections;
+  final List<DynamicConsultationSection> previewSections;
   final List<DynamicConsultationSection> expandedSections;
   final ConsultationParticipationInfo? participationInfo;
   final ConsultationDownloadInfo? downloadInfo;
@@ -309,7 +309,7 @@ class DynamicConsultationUpdate extends Equatable {
     required this.responseInfos,
     required this.infoHeader,
     required this.headerSections,
-    required this.collapsedSections,
+    required this.previewSections,
     required this.expandedSections,
     required this.participationInfo,
     required this.downloadInfo,
@@ -328,7 +328,7 @@ class DynamicConsultationUpdate extends Equatable {
         infoHeader,
         thematicLabel,
         thematicLogo,
-        collapsedSections,
+        previewSections,
         expandedSections,
         participationInfo,
         downloadInfo,

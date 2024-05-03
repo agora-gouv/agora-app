@@ -135,7 +135,10 @@ class ParticipationCharterPage extends StatelessWidget {
               ],
             );
           } else if (participationState is GetParticipationCharterLoadedState) {
-            return AgoraHtml(data: participationState.extraText);
+            return AgoraHtml(
+              data: participationState.extraText,
+              fontSize: 14,
+            );
           } else {
             return AgoraErrorView();
           }
@@ -184,7 +187,6 @@ class ParticipationCharterPage extends StatelessWidget {
           SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
             child: RichText(
-              textScaler: MediaQuery.of(context).textScaler,
               text: TextSpan(style: style, children: spans),
             ),
           ),
@@ -192,7 +194,6 @@ class ParticipationCharterPage extends StatelessWidget {
       );
     } else {
       return RichText(
-        textScaler: MediaQuery.of(context).textScaler,
         text: TextSpan(style: style, children: spans),
       );
     }
