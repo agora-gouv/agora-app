@@ -165,18 +165,18 @@ void main() {
             responseText: "",
           ),
         ],
-        currentQuestionId: "nextQuestionId",
+        currentQuestionId: "nextQuestionId1",
       ),
       act: (bloc) => bloc.add(
         AddConsultationChapterStockEvent(
           consultationId: consultationId,
           chapterId: "chapterId",
-          nextQuestionId: "nextQuestionId",
+          nextQuestionId: "nextQuestionId2",
         ),
       ),
       expect: () => [
         ConsultationQuestionsResponsesStockState(
-          questionIdStack: ["previousQuestionId", "chapterId"],
+          questionIdStack: ["previousQuestionId"],
           questionsResponses: [
             ConsultationQuestionResponses(
               questionId: "previousQuestionId",
@@ -184,13 +184,13 @@ void main() {
               responseText: "",
             ),
           ],
-          currentQuestionId: "nextQuestionId",
+          currentQuestionId: "nextQuestionId2",
         ),
       ],
       wait: const Duration(milliseconds: 5),
       tearDown: () async {
         expect(fakeStorageClient.consultationId, consultationId);
-        expect(fakeStorageClient.questionIdStack, ["previousQuestionId", "chapterId"]);
+        expect(fakeStorageClient.questionIdStack, ["previousQuestionId"]);
         expect(
           fakeStorageClient.questionsResponses,
           [
@@ -201,7 +201,7 @@ void main() {
             ),
           ],
         );
-        expect(fakeStorageClient.restoreQuestionId, "nextQuestionId");
+        expect(fakeStorageClient.restoreQuestionId, "nextQuestionId2");
       },
     );
   });
