@@ -18,8 +18,11 @@ class ConsultationQuestionHelper {
     }
   }
 
-  static Widget buildNextQuestion(
-      {required int currentQuestionIndex, required totalQuestions, required VoidCallback? onPressed}) {
+  static Widget buildNextQuestion({
+    required int currentQuestionIndex,
+    required totalQuestions,
+    required VoidCallback? onPressed,
+  }) {
     return AgoraButton(
       label: currentQuestionIndex == totalQuestions ? ConsultationStrings.validate : ConsultationStrings.nextQuestion,
       semanticLabel:
