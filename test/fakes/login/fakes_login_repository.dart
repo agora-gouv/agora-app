@@ -1,5 +1,5 @@
-import 'package:agora/domain/login/login_error_type.dart';
-import 'package:agora/infrastructure/login/login_repository.dart';
+import 'package:agora/login/domain/login_error_type.dart';
+import 'package:agora/login/repository/login_repository.dart';
 
 class FakeLoginSuccessRepository extends LoginRepository {
   @override

@@ -1,4 +1,5 @@
 import 'package:agora/agora_app.dart';
+import 'package:agora/app_feedback/pages/app_feedback_page.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
@@ -15,7 +16,6 @@ import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
-import 'package:agora/pages/profile/app_feedback_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';

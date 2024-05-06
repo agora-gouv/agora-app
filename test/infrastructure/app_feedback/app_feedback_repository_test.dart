@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:agora/app_feedback/repository/app_feedback_repository.dart';
 import 'package:agora/domain/feedback/device_informations.dart';
 import 'package:agora/domain/feedback/feedback.dart';
-import 'package:agora/infrastructure/app_feedback/repository/app_feedback_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';

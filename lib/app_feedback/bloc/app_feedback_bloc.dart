@@ -1,7 +1,7 @@
-import 'package:agora/bloc/app_feedback/app_feedback_event.dart';
-import 'package:agora/bloc/app_feedback/app_feedback_state.dart';
+import 'package:agora/app_feedback/bloc/app_feedback_event.dart';
+import 'package:agora/app_feedback/bloc/app_feedback_state.dart';
+import 'package:agora/app_feedback/repository/app_feedback_repository.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
-import 'package:agora/infrastructure/app_feedback/repository/app_feedback_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppFeedbackBloc extends Bloc<AppFeedbackEvent, AppFeedbackState> {

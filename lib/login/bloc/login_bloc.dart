@@ -1,12 +1,12 @@
-import 'package:agora/bloc/login/login_event.dart';
-import 'package:agora/bloc/login/login_state.dart';
 import 'package:agora/common/helper/app_version_helper.dart';
 import 'package:agora/common/helper/device_info_helper.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
-import 'package:agora/infrastructure/login/login_repository.dart';
-import 'package:agora/infrastructure/login/login_storage_client.dart';
+import 'package:agora/login/bloc/login_event.dart';
+import 'package:agora/login/bloc/login_state.dart';
+import 'package:agora/login/repository/login_repository.dart';
+import 'package:agora/login/repository/login_storage_client.dart';
 import 'package:agora/push_notification/push_notification_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
