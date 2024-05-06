@@ -66,8 +66,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
               openedResponse.isNotBlank()
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
-                        currentQuestionIndex: widget.currentQuestionIndex,
-                        totalQuestions: widget.totalQuestions,
+                        isLastQuestion: openedQuestion.nextQuestionId == null,
                         onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
                       ),
                     )

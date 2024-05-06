@@ -56,8 +56,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                     const SizedBox(width: 20),
                     Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
-                        currentQuestionIndex: currentQuestionIndex,
-                        totalQuestions: totalQuestions,
+                        isLastQuestion: chapter.nextQuestionId == null,
                         onPressed: () => onNextTap(),
                       ),
                     ),
