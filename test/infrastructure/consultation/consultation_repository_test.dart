@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
-import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
@@ -320,88 +319,6 @@ void main() {
 
       // Then
       expect(response, GetConsultationsFinishedPaginatedFailedResponse());
-    });
-  });
-
-  group("Fetch consultation details", () {
-    test("when success should return consultation details", () async {
-      // Given
-      dioAdapter.onGet(
-        "/consultations/$consultationId",
-        (server) => server.reply(
-          HttpStatus.ok,
-          {
-            "id": consultationId,
-            "title": "Développer le covoiturage",
-            "coverUrl": "coverUrl",
-            "thematique": {"label": "Transports", "picto": "🚊"},
-            "endDate": "2023-03-21",
-            "questionCount": "5 à 10 questions",
-            "estimatedTime": "5 minutes",
-            "participantCount": 15035,
-            "participantCountGoal": 30000,
-            "description": "La description avec textes <b>en gras</b>",
-            "tipsDescription": "Qui peut aussi être du texte <i>riche</i>",
-            "hasAnswered": false,
-          },
-        ),
-        headers: {
-          "accept": "application/json",
-          "Authorization": "Bearer jwtToken",
-        },
-      );
-
-      // When
-      final repository = ConsultationDioRepository(
-        minimalSendingTime: Duration(milliseconds: 5),
-        httpClient: httpClient,
-        storageClient: MockConsultationQuestionHiveStorageClient([]),
-      );
-      final response = await repository.fetchConsultationDetails(consultationId: consultationId);
-
-      // Then
-      expect(
-        response,
-        GetConsultationDetailsSucceedResponse(
-          consultationDetails: ConsultationDetails(
-            id: consultationId,
-            title: "Développer le covoiturage",
-            coverUrl: "coverUrl",
-            thematique: Thematique(picto: "🚊", label: "Transports"),
-            endDate: DateTime(2023, 3, 21),
-            questionCount: "5 à 10 questions",
-            estimatedTime: "5 minutes",
-            participantCount: 15035,
-            participantCountGoal: 30000,
-            description: "La description avec textes <b>en gras</b>",
-            tipsDescription: "Qui peut aussi être du texte <i>riche</i>",
-            hasAnswered: false,
-          ),
-        ),
-      );
-    });
-
-    test("when failure should return failed", () async {
-      // Given
-      dioAdapter.onGet(
-        "/consultations/$consultationId",
-        (server) => server.reply(HttpStatus.notFound, {}),
-        headers: {
-          "accept": "application/json",
-          "Authorization": "Bearer jwtToken",
-        },
-      );
-
-      // When
-      final repository = ConsultationDioRepository(
-        minimalSendingTime: Duration(milliseconds: 5),
-        httpClient: httpClient,
-        storageClient: MockConsultationQuestionHiveStorageClient([]),
-      );
-      final response = await repository.fetchConsultationDetails(consultationId: consultationId);
-
-      // Then
-      expect(response, GetConsultationDetailsFailedResponse());
     });
   });
 

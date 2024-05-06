@@ -5,8 +5,6 @@ extension NotificationMessageExtension on String? {
     switch (this) {
       case "qagDetails":
         return NotificationMessageType.qagDetails;
-      case "consultationDetails":
-        return NotificationMessageType.consultationDetails;
       case "consultationResults":
         return NotificationMessageType.consultationResults;
       case "qagHome":

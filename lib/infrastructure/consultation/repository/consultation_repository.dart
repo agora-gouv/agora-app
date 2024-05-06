@@ -4,7 +4,6 @@ import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
-import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_questions.dart';
@@ -31,10 +30,6 @@ abstract class ConsultationRepository {
 
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
     required int pageNumber,
-  });
-
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
-    required String consultationId,
   });
 
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
@@ -174,36 +169,6 @@ class ConsultationDioRepository extends ConsultationRepository {
     } catch (e, s) {
       sentryWrapper?.captureException(e, s);
       return GetConsultationsFinishedPaginatedFailedResponse();
-    }
-  }
-
-  @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
-    required String consultationId,
-  }) async {
-    try {
-      final response = await httpClient.get(
-        "/consultations/$consultationId",
-      );
-      return GetConsultationDetailsSucceedResponse(
-        consultationDetails: ConsultationDetails(
-          id: response.data["id"] as String,
-          title: response.data["title"] as String,
-          coverUrl: response.data["coverUrl"] as String,
-          thematique: (response.data["thematique"] as Map).toThematique(),
-          endDate: (response.data["endDate"] as String).parseToDateTime(),
-          questionCount: response.data["questionCount"] as String,
-          estimatedTime: response.data["estimatedTime"] as String,
-          participantCount: response.data["participantCount"] as int,
-          participantCountGoal: response.data["participantCountGoal"] as int,
-          description: response.data["description"] as String,
-          tipsDescription: response.data["tipsDescription"] as String,
-          hasAnswered: response.data["hasAnswered"] as bool,
-        ),
-      );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
-      return GetConsultationDetailsFailedResponse();
     }
   }
 
@@ -511,22 +476,6 @@ class GetConsultationsPaginatedSucceedResponse extends GetConsultationsFinishedP
 }
 
 class GetConsultationsFinishedPaginatedFailedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {}
-
-abstract class GetConsultationDetailsRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class GetConsultationDetailsSucceedResponse extends GetConsultationDetailsRepositoryResponse {
-  final ConsultationDetails consultationDetails;
-
-  GetConsultationDetailsSucceedResponse({required this.consultationDetails});
-
-  @override
-  List<Object> get props => [consultationDetails];
-}
-
-class GetConsultationDetailsFailedResponse extends GetConsultationDetailsRepositoryResponse {}
 
 abstract class GetConsultationQuestionsRepositoryResponse extends Equatable {
   @override

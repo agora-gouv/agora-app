@@ -1,7 +1,6 @@
 import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
-import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
@@ -68,28 +67,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           label: 'label',
         ),
       ],
-    );
-  }
-
-  @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
-    required String consultationId,
-  }) async {
-    return GetConsultationDetailsSucceedResponse(
-      consultationDetails: ConsultationDetails(
-        id: "consultationId",
-        title: "Développer le covoiturage au quotidien",
-        coverUrl: "coverUrl",
-        thematique: Thematique(picto: "🚊", label: "Transports"),
-        endDate: DateTime(2023, 3, 3),
-        questionCount: "5 à 10 questions",
-        estimatedTime: "5 minutes",
-        participantCount: 15035,
-        participantCountGoal: 30000,
-        description: "<body>La description avec textes <b>en gras</b></body>",
-        tipsDescription: "<body>texte <i>riche</i></body>",
-        hasAnswered: true,
-      ),
     );
   }
 
@@ -383,13 +360,6 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
     required int pageNumber,
   }) async {
     return GetConsultationsFinishedPaginatedFailedResponse();
-  }
-
-  @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
-    required String consultationId,
-  }) async {
-    return GetConsultationDetailsFailedResponse();
   }
 
   @override
