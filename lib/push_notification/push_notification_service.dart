@@ -166,7 +166,7 @@ class FirebasePushNotificationService extends PushNotificationService {
           ),
         );
         break;
-      case NotificationMessageType.consultationResults:
+      case NotificationMessageType.consultationDetails:
         navigatorKey.currentState?.pushNamed(
           DynamicConsultationPage.routeName,
           arguments: DynamicConsultationPageArguments(
