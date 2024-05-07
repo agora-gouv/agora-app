@@ -684,6 +684,7 @@ void main() {
                 "questionTitle": "Les déplacements professionnels en covoiturage",
                 "questionId": "question repondue",
                 "order": 1,
+                "seenRatio": 100,
                 "responses": [
                   {
                     "choiceId": "choix utilisateur",
@@ -703,6 +704,7 @@ void main() {
                 "questionTitle": "Question B",
                 "questionId": "question pas repondue",
                 "order": 2,
+                "seenRatio": 65,
                 "responses": [
                   {
                     "choiceId": "pas le choix utilisateur",
@@ -792,6 +794,7 @@ void main() {
               ConsultationSummaryUniqueChoiceResults(
                 questionTitle: "Les déplacements professionnels en covoiturage",
                 order: 1,
+                seenRatio: 100,
                 responses: [
                   ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
                   ConsultationSummaryResponse(label: "Autre", ratio: 35),
@@ -800,6 +803,7 @@ void main() {
               ConsultationSummaryMultipleChoicesResults(
                 questionTitle: "Question B",
                 order: 2,
+                seenRatio: 65,
                 responses: [
                   ConsultationSummaryResponse(label: "Réponse A", ratio: 30),
                   ConsultationSummaryResponse(label: "Réponse B", ratio: 80),
@@ -1255,6 +1259,7 @@ void main() {
                 "questionTitle": "Les déplacements professionnels en covoiturage",
                 "questionId": "question repondue",
                 "order": 1,
+                "seenRatio": 100,
                 "responses": [
                   {
                     "choiceId": "choix utilisateur",
@@ -1274,6 +1279,7 @@ void main() {
                 "questionTitle": "Question B",
                 "questionId": "question pas repondue",
                 "order": 2,
+                "seenRatio": 65,
                 "responses": [
                   {
                     "choiceId": "pas le choix utilisateur",
@@ -1327,6 +1333,7 @@ void main() {
             ConsultationSummaryUniqueChoiceResults(
               questionTitle: "Les déplacements professionnels en covoiturage",
               order: 1,
+              seenRatio: 100,
               responses: [
                 ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
                 ConsultationSummaryResponse(label: "Autre", ratio: 35),
@@ -1335,6 +1342,7 @@ void main() {
             ConsultationSummaryMultipleChoicesResults(
               questionTitle: "Question B",
               order: 2,
+              seenRatio: 65,
               responses: [
                 ConsultationSummaryResponse(label: "Réponse A", ratio: 30),
                 ConsultationSummaryResponse(label: "Réponse B", ratio: 80),

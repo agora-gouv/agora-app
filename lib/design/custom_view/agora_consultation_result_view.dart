@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 class AgoraConsultationResultView extends StatelessWidget {
   final String questionTitle;
+  final int seenRatio;
   final List<ConsultationSummaryResponseViewModel> responses;
   final bool isMultipleChoice;
   final bool isOpenQuestion;
@@ -14,6 +15,7 @@ class AgoraConsultationResultView extends StatelessWidget {
   AgoraConsultationResultView({
     super.key,
     required this.questionTitle,
+    required this.seenRatio,
     required this.responses,
     this.isMultipleChoice = false,
     this.isOpenQuestion = false,
@@ -30,6 +32,10 @@ class AgoraConsultationResultView extends StatelessWidget {
             header: true,
             child: Text(questionTitle, style: AgoraTextStyles.medium17),
           ),
+          if (seenRatio < 100) ...[
+            SizedBox(height: AgoraSpacings.x0_75),
+            Text(ConsultationStrings.seenRationInformation(seenRatio), style: AgoraTextStyles.light14Italic),
+          ],
           if (isOpenQuestion) ...[
             SizedBox(height: AgoraSpacings.x0_75),
             Text(ConsultationStrings.openQuestionInformation, style: AgoraTextStyles.light14Italic),

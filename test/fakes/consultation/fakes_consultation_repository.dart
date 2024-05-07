@@ -197,6 +197,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           ConsultationSummaryUniqueChoiceResults(
             questionTitle: "Les déplacements professionnels en covoiturage",
             order: 2,
+            seenRatio: 100,
             responses: [
               ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
               ConsultationSummaryResponse(label: "En transports en commun, vélo, à pied", ratio: 17),
@@ -206,6 +207,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           ConsultationSummaryMultipleChoicesResults(
             questionTitle: "Pour quelle raison principale ?",
             order: 1,
+            seenRatio: 65,
             responses: [
               ConsultationSummaryResponse(label: "Je veux être tranquille dans ma voiture", ratio: 42),
               ConsultationSummaryResponse(label: "Autres", ratio: 58),
@@ -267,6 +269,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         ConsultationSummaryUniqueChoiceResults(
           questionTitle: "Les déplacements professionnels en covoiturage",
           order: 1,
+          seenRatio: 100,
           responses: [
             ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
             ConsultationSummaryResponse(label: "Autre", ratio: 35),
@@ -443,6 +446,7 @@ class FakeConsultationEtEnsuiteWithNullElementsRepository extends FakeConsultati
           ConsultationSummaryUniqueChoiceResults(
             questionTitle: "Les déplacements professionnels en covoiturage",
             order: 2,
+            seenRatio: 100,
             responses: [
               ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
               ConsultationSummaryResponse(label: "En transports en commun, vélo, à pied", ratio: 17),
@@ -452,6 +456,7 @@ class FakeConsultationEtEnsuiteWithNullElementsRepository extends FakeConsultati
           ConsultationSummaryMultipleChoicesResults(
             questionTitle: "Pour quelle raison principale ?",
             order: 1,
+            seenRatio: 65,
             responses: [
               ConsultationSummaryResponse(label: "Je veux être tranquille dans ma voiture", ratio: 42),
               ConsultationSummaryResponse(label: "Autres", ratio: 58),

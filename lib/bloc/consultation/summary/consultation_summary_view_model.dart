@@ -39,29 +39,33 @@ sealed class ConsultationSummaryResultsViewModel extends Equatable {
 }
 
 class ConsultationSummaryUniqueChoiceResultsViewModel extends ConsultationSummaryResultsViewModel {
+  final int seenRatio;
   final List<ConsultationSummaryResponseViewModel> responses;
 
   ConsultationSummaryUniqueChoiceResultsViewModel({
     required super.questionTitle,
     required super.order,
+    required this.seenRatio,
     required this.responses,
   });
 
   @override
-  List<Object> get props => [questionTitle, order, responses];
+  List<Object> get props => [questionTitle, order, seenRatio, responses];
 }
 
 class ConsultationSummaryMultipleChoicesResultsViewModel extends ConsultationSummaryResultsViewModel {
+  final int seenRatio;
   final List<ConsultationSummaryResponseViewModel> responses;
 
   ConsultationSummaryMultipleChoicesResultsViewModel({
     required super.questionTitle,
     required super.order,
+    required this.seenRatio,
     required this.responses,
   });
 
   @override
-  List<Object> get props => [questionTitle, order, responses];
+  List<Object> get props => [questionTitle, order, seenRatio, responses];
 }
 
 class ConsultationSummaryOpenChoiceResultsViewModel extends ConsultationSummaryResultsViewModel {

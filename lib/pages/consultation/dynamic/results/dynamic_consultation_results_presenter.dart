@@ -20,12 +20,14 @@ class _Presenter {
               return ConsultationSummaryUniqueChoiceResultsViewModel(
                 questionTitle: consultationResult.questionTitle,
                 order: consultationResult.order,
+                seenRatio: consultationResult.seenRatio,
                 responses: _buildResponses(consultationResult.responses),
               );
             } else if (consultationResult is ConsultationSummaryMultipleChoicesResults) {
               return ConsultationSummaryMultipleChoicesResultsViewModel(
                 questionTitle: consultationResult.questionTitle,
                 order: consultationResult.order,
+                seenRatio: consultationResult.seenRatio,
                 responses: _buildResponses(consultationResult.responses),
               );
             } else if (consultationResult is ConsultationSummaryOpenResults) {

@@ -30,6 +30,7 @@ void main() {
               ConsultationSummaryMultipleChoicesResultsViewModel(
                 questionTitle: "Pour quelle raison principale ?",
                 order: 1,
+                seenRatio: 65,
                 responses: [
                   ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58, isUserResponse: false),
                   ConsultationSummaryResponseViewModel(
@@ -42,6 +43,7 @@ void main() {
               ConsultationSummaryUniqueChoiceResultsViewModel(
                 questionTitle: "Les déplacements professionnels en covoiturage",
                 order: 2,
+                seenRatio: 100,
                 responses: [
                   ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65, isUserResponse: false),
                   ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18, isUserResponse: false),
@@ -109,6 +111,7 @@ void main() {
               ConsultationSummaryMultipleChoicesResultsViewModel(
                 questionTitle: "Pour quelle raison principale ?",
                 order: 1,
+                seenRatio: 65,
                 responses: [
                   ConsultationSummaryResponseViewModel(label: "Autres", ratio: 58, isUserResponse: false),
                   ConsultationSummaryResponseViewModel(
@@ -121,6 +124,7 @@ void main() {
               ConsultationSummaryUniqueChoiceResultsViewModel(
                 questionTitle: "Les déplacements professionnels en covoiturage",
                 order: 2,
+                seenRatio: 100,
                 responses: [
                   ConsultationSummaryResponseViewModel(label: "En voiture seul", ratio: 65, isUserResponse: false),
                   ConsultationSummaryResponseViewModel(label: "Autres", ratio: 18, isUserResponse: false),
