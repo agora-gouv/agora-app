@@ -15,6 +15,7 @@ class ConsultationResponsesMapper {
         ConsultationSummaryUniqueChoiceResults(
           questionTitle: uniqueChoiceResult["questionTitle"] as String,
           order: uniqueChoiceResult["order"] as int,
+          seenRatio: uniqueChoiceResult["seenRatio"] as int,
           responses: _buildSummaryResponses(uniqueChoiceResult, userResponses, questionId),
         ),
       );
@@ -27,6 +28,7 @@ class ConsultationResponsesMapper {
         ConsultationSummaryMultipleChoicesResults(
           questionTitle: multipleChoicesResult["questionTitle"] as String,
           order: multipleChoicesResult["order"] as int,
+          seenRatio: multipleChoicesResult["seenRatio"] as int,
           responses: _buildSummaryResponses(multipleChoicesResult, userResponses, questionId),
         ),
       );

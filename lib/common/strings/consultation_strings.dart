@@ -60,4 +60,7 @@ class ConsultationStrings {
 
   static const String openQuestionInformation =
       "L’analyse des réponses à cette question sera disponible dans la synthèse.";
+
+  static String seenRationInformation(int seenRatio) =>
+      "Cette question a été proposée à $seenRatio% des participants, du fait de leurs réponses précédentes.";
 }

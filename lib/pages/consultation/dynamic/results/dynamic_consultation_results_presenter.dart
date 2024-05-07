@@ -20,12 +20,14 @@ class _Presenter {
               return ConsultationSummaryUniqueChoiceResultsViewModel(
                 questionTitle: consultationResult.questionTitle,
                 order: consultationResult.order,
+                seenRatioLabel: _getSeenRatioLabel(consultationResult.seenRatio),
                 responses: _buildResponses(consultationResult.responses),
               );
             } else if (consultationResult is ConsultationSummaryMultipleChoicesResults) {
               return ConsultationSummaryMultipleChoicesResultsViewModel(
                 questionTitle: consultationResult.questionTitle,
                 order: consultationResult.order,
+                seenRatioLabel: _getSeenRatioLabel(consultationResult.seenRatio),
                 responses: _buildResponses(consultationResult.responses),
               );
             } else if (consultationResult is ConsultationSummaryOpenResults) {
@@ -53,5 +55,9 @@ class _Presenter {
         )
         .toList()
       ..sort((viewModel1, viewModel2) => viewModel2.ratio.compareTo(viewModel1.ratio));
+  }
+
+  static String? _getSeenRatioLabel(int seenRatio) {
+    return seenRatio < 100 ? ConsultationStrings.seenRationInformation(seenRatio) : null;
   }
 }

@@ -6,9 +6,6 @@ import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/consultation_questions.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
@@ -186,70 +183,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   }
 
   @override
-  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
-    required String consultationId,
-  }) async {
-    return GetConsultationSummarySucceedResponse(
-      consultationSummary: ConsultationSummary(
-        title: "Développer le covoiturage au quotidien",
-        participantCount: 15035,
-        results: [
-          ConsultationSummaryUniqueChoiceResults(
-            questionTitle: "Les déplacements professionnels en covoiturage",
-            order: 2,
-            responses: [
-              ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
-              ConsultationSummaryResponse(label: "En transports en commun, vélo, à pied", ratio: 17),
-              ConsultationSummaryResponse(label: "Autres", ratio: 18),
-            ],
-          ),
-          ConsultationSummaryMultipleChoicesResults(
-            questionTitle: "Pour quelle raison principale ?",
-            order: 1,
-            responses: [
-              ConsultationSummaryResponse(label: "Je veux être tranquille dans ma voiture", ratio: 42),
-              ConsultationSummaryResponse(label: "Autres", ratio: 58),
-            ],
-          ),
-        ],
-        etEnsuite: ConsultationSummaryEtEnsuite(
-          step: 1,
-          description: "<body>textRiche</body>",
-          explanationsTitle: "explanations title",
-          explanations: [
-            ConsultationSummaryEtEnsuiteExplanation(
-              isTogglable: false,
-              title: "toogle text title",
-              intro: "<body>image introduction</body>",
-              imageUrl: "<imageURL>",
-              imageDescription: null,
-              description: "<body>image description</body>",
-            ),
-          ],
-          video: ConsultationSummaryEtEnsuiteVideo(
-            title: "video title",
-            intro: "<body>video intro</body>",
-            videoUrl: "<videoUrl>",
-            videoWidth: 1080,
-            videoHeight: 1920,
-            transcription: "transcription video",
-          ),
-          conclusion: ConsultationSummaryEtEnsuiteConclusion(
-            title: "conclusion title",
-            description: "<body>conclusion description</body>",
-          ),
-        ),
-        presentation: ConsultationSummaryPresentation(
-          startDate: DateTime(2023, 8, 1),
-          endDate: DateTime(2023, 8, 31),
-          description: "description",
-          tipDescription: "tip description",
-        ),
-      ),
-    );
-  }
-
-  @override
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
     if (dynamicConsultation != null) {
       return DynamicConsultationSuccessResponse(dynamicConsultation!);
@@ -267,6 +200,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
         ConsultationSummaryUniqueChoiceResults(
           questionTitle: "Les déplacements professionnels en covoiturage",
           order: 1,
+          seenRatio: 100,
           responses: [
             ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
             ConsultationSummaryResponse(label: "Autre", ratio: 35),
@@ -378,13 +312,6 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   }
 
   @override
-  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
-    required String consultationId,
-  }) async {
-    return GetConsultationSummaryFailedResponse();
-  }
-
-  @override
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
     return DynamicConsultationErrorResponse();
   }
@@ -427,61 +354,5 @@ class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRe
     required int pageNumber,
   }) async {
     return GetConsultationsFinishedPaginatedFailedResponse();
-  }
-}
-
-class FakeConsultationEtEnsuiteWithNullElementsRepository extends FakeConsultationSuccessRepository {
-  @override
-  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
-    required String consultationId,
-  }) async {
-    return GetConsultationSummarySucceedResponse(
-      consultationSummary: ConsultationSummary(
-        title: "Développer le covoiturage au quotidien",
-        participantCount: 15035,
-        results: [
-          ConsultationSummaryUniqueChoiceResults(
-            questionTitle: "Les déplacements professionnels en covoiturage",
-            order: 2,
-            responses: [
-              ConsultationSummaryResponse(label: "En voiture seul", ratio: 65),
-              ConsultationSummaryResponse(label: "En transports en commun, vélo, à pied", ratio: 17),
-              ConsultationSummaryResponse(label: "Autres", ratio: 18),
-            ],
-          ),
-          ConsultationSummaryMultipleChoicesResults(
-            questionTitle: "Pour quelle raison principale ?",
-            order: 1,
-            responses: [
-              ConsultationSummaryResponse(label: "Je veux être tranquille dans ma voiture", ratio: 42),
-              ConsultationSummaryResponse(label: "Autres", ratio: 58),
-            ],
-          ),
-        ],
-        etEnsuite: ConsultationSummaryEtEnsuite(
-          step: 1,
-          description: "<body>textRiche</body>",
-          explanationsTitle: null,
-          explanations: [
-            ConsultationSummaryEtEnsuiteExplanation(
-              isTogglable: false,
-              title: "toogle text title",
-              intro: "<body>image introduction</body>",
-              imageUrl: "<imageURL>",
-              imageDescription: "<imageDescription>",
-              description: "<body>image description</body>",
-            ),
-          ],
-          video: null,
-          conclusion: null,
-        ),
-        presentation: ConsultationSummaryPresentation(
-          startDate: DateTime(2023, 8, 1),
-          endDate: DateTime(2023, 8, 31),
-          description: "description",
-          tipDescription: "tip description",
-        ),
-      ),
-    );
   }
 }
