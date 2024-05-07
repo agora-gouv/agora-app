@@ -8,9 +8,6 @@ import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_questions.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
@@ -39,10 +36,6 @@ abstract class ConsultationRepository {
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
     required List<ConsultationQuestionResponses> questionsResponses,
-  });
-
-  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
-    required String consultationId,
   });
 
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId);
@@ -256,75 +249,6 @@ class ConsultationDioRepository extends ConsultationRepository {
   }
 
   @override
-  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
-    required String consultationId,
-  }) async {
-    try {
-      final asyncResponse = httpClient.get(
-        "/consultations/$consultationId/responses",
-      );
-      final (_, userResponses, _) = await storageClient.get(consultationId);
-      final response = await asyncResponse;
-      final etEnsuite = response.data["etEnsuite"];
-      final presentation = response.data["presentation"];
-      final explanations = etEnsuite["explanations"] as List;
-      final etEnsuiteVideo = etEnsuite["video"] as Map?;
-      final etEnsuiteConclusion = etEnsuite["conclusion"] as Map?;
-      final summary = ConsultationSummary(
-        title: response.data["title"] as String,
-        participantCount: response.data["participantCount"] as int,
-        results: ConsultationResponsesMapper.toConsultationSummaryResults(
-          uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
-          multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
-          userResponses: userResponses,
-          questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
-        ),
-        etEnsuite: ConsultationSummaryEtEnsuite(
-          step: etEnsuite["step"] as int,
-          description: etEnsuite["description"] as String,
-          explanationsTitle: etEnsuite["explanationsTitle"] as String?,
-          explanations: explanations.map((explanation) {
-            return ConsultationSummaryEtEnsuiteExplanation(
-              isTogglable: explanation["isTogglable"] as bool,
-              title: explanation["title"] as String,
-              intro: explanation["intro"] as String,
-              imageUrl: (explanation['image'] as Map?)?['url'] as String?,
-              imageDescription: (explanation['image'] as Map?)?['description'] as String?,
-              description: explanation["description"] as String,
-            );
-          }).toList(),
-          video: etEnsuiteVideo != null
-              ? ConsultationSummaryEtEnsuiteVideo(
-                  title: etEnsuiteVideo["title"] as String,
-                  intro: etEnsuiteVideo["intro"] as String,
-                  videoUrl: etEnsuiteVideo["videoUrl"] as String,
-                  videoWidth: etEnsuiteVideo["videoWidth"] as int,
-                  videoHeight: etEnsuiteVideo["videoHeight"] as int,
-                  transcription: etEnsuiteVideo["transcription"] as String,
-                )
-              : null,
-          conclusion: etEnsuiteConclusion != null
-              ? ConsultationSummaryEtEnsuiteConclusion(
-                  title: etEnsuiteConclusion["title"] as String,
-                  description: etEnsuiteConclusion["description"] as String,
-                )
-              : null,
-        ),
-        presentation: ConsultationSummaryPresentation(
-          startDate: (presentation["startDate"] as String).parseToDateTime(),
-          endDate: (presentation["endDate"] as String).parseToDateTime(),
-          description: presentation["description"] as String,
-          tipDescription: presentation["tipsDescription"] as String,
-        ),
-      );
-      return GetConsultationSummarySucceedResponse(consultationSummary: summary);
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
-      return GetConsultationSummaryFailedResponse();
-    }
-  }
-
-  @override
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
     try {
       final response = await httpClient.get(
@@ -508,22 +432,6 @@ class SendConsultationResponsesSucceedResponse extends SendConsultationResponses
 }
 
 class SendConsultationResponsesFailureResponse extends SendConsultationResponsesRepositoryResponse {}
-
-abstract class GetConsultationSummaryRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class GetConsultationSummarySucceedResponse extends GetConsultationSummaryRepositoryResponse {
-  final ConsultationSummary consultationSummary;
-
-  GetConsultationSummarySucceedResponse({required this.consultationSummary});
-
-  @override
-  List<Object> get props => [consultationSummary];
-}
-
-class GetConsultationSummaryFailedResponse extends GetConsultationSummaryRepositoryResponse {}
 
 sealed class DynamicConsultationResponse extends Equatable {}
 
