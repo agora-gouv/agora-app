@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "fr.gouv.agora"
-        minSdkVersion 19
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
