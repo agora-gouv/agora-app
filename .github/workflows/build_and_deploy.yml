@@ -86,6 +86,8 @@ jobs:
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-dev-release.apk \
             --token "$STAGING_FIREBASE_CI_TOKEN" \
             --app "$STAGING_AGORA_ANDROID_APP_ID" \
+            --groups "$STAGING_FIREBASE_RELEASE_GROUPS"
         env:
           STAGING_FIREBASE_CI_TOKEN: ${{ secrets.STAGING_FIREBASE_CI_TOKEN }}
           STAGING_AGORA_ANDROID_APP_ID: ${{ secrets.STAGING_AGORA_ANDROID_APP_ID }}
+          STAGING_FIREBASE_RELEASE_GROUPS: ${{ secrets.STAGING_FIREBASE_RELEASE_GROUPS }}
