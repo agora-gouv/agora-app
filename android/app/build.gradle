@@ -51,10 +51,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(agoraKeystore)
-            storePassword agoraKeystorePassword
-            keyAlias agoraKeyAlias
-            keyPassword agoraAliasPassword
+            storeFile file(keystoreProperties['agoraKeystore'])
+            storePassword keystoreProperties['agoraKeystorePassword']
+            keyAlias keystoreProperties['agoraKeyAlias']
+            keyPassword keystoreProperties['agoraAliasPassword']
         }
     }
 
