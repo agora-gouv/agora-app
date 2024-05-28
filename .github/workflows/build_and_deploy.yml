@@ -17,10 +17,10 @@ jobs:
         with:
           varFilePath: ./.github/variables/myvars.env
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: ${{ env.JAVA_DISTRIBUTION }}
+#          java-version: ${{ env.JAVA_VERSION }}
 
       - uses: subosito/flutter-action@v2
         with:
@@ -60,13 +60,6 @@ jobs:
           echo "$STAGING_KEYSTORE_B64" | base64 --decode > android/keystore/agora.keystore
         env:
           STAGING_KEYSTORE_B64: ${{ secrets.STAGING_KEYSTORE_B64 }}
-
-#      - name: Write env
-#        shell: bash
-#        run: |
-#          echo "$STAGING_RUNTIME_ENV_B64" | base64 --decode > env/.env.staging
-#        env:
-#          STAGING_RUNTIME_ENV_B64: ${{ secrets.STAGING_RUNTIME_ENV_B64 }}
 
       - name: Install Flutter dependencies
         shell: bash
