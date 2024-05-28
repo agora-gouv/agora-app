@@ -81,7 +81,7 @@ jobs:
           --release \
           --dart-define=app.flavor=Dev
 
-      - name: CEJ - Deploy Android apk to Firebase App Distribution
+      - name: AGORA - Deploy Android apk to Firebase App Distribution
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-dev-release.apk \
             --token "$STAGING_FIREBASE_CI_TOKEN" \
