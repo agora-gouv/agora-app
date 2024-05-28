@@ -85,7 +85,7 @@ jobs:
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-dev-release.apk \
             --token "$STAGING_FIREBASE_CI_TOKEN" \
-            --app 1:128862173768:android:e96bec772348b56fb3f67d \
+            --app "$STAGING_AGORA_ANDROID_APP_ID" \
         env:
           STAGING_FIREBASE_CI_TOKEN: ${{ secrets.STAGING_FIREBASE_CI_TOKEN }}
-          CEJ_STAGING_ANDROID_APP_ID: ${{ secrets.AGORA_STAGING_ANDROID_APP_ID }}
+          CEJ_STAGING_ANDROID_APP_ID: ${{ secrets.STAGING_AGORA_ANDROID_APP_ID }}
