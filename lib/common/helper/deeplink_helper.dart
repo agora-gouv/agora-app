@@ -2,22 +2,21 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:agora/common/log/log.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:app_links/app_links.dart';
 
-/// see https://pub.dev/packages/uni_links
 class DeeplinkHelper {
   static const String _consultationPath = "consultations";
   static const String _qagPath = "qags";
   static final _uuidRegExp =
       RegExp(r'[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}');
-
-  StreamSubscription<Uri?>? _sub;
+  late StreamSubscription<Uri> _sub;
 
   Future<void> onInitial({
     required Function(String consutlationId) onConsultationSuccessCallback,
     required Function(String qagId) onQagSuccessCallback,
   }) async {
-    final uri = await getInitialUri();
+    final appLinks = AppLinks();
+    final uri = await appLinks.getInitialLink();
     if (uri != null) {
       Log.d("deeplink initiate uri : $uri");
       final featurePath = uri.pathSegments.first;
@@ -50,32 +49,33 @@ class DeeplinkHelper {
     required Function(String consutlationId) onConsultationSuccessCallback,
     required Function(String qagId) onQagSuccessCallback,
   }) async {
-    _sub = uriLinkStream.listen(
-      (Uri? uri) {
-        if (uri != null) {
-          final featurePath = uri.pathSegments.first;
-          final id = uri.pathSegments.last;
-          switch (featurePath) {
-            case _consultationPath:
-              _handleDeeplink(
-                id: id,
-                onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
-                onMatchFailedCallback: () => Log.e("deeplink listen uri : no consultation id match error"),
-              );
-              break;
-            case _qagPath:
-              _handleDeeplink(
-                id: id,
-                onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
-                onMatchFailedCallback: () => Log.e("deeplink listen uri : no qag id match error"),
-              );
-              break;
-            default:
-              Log.e("deeplink listen uri : unknown path error: ${uri.path}");
-              break;
-          }
-        } else {
-          Log.d("deeplink listen uri : null uri error");
+    final appLinks = AppLinks();
+
+    _sub = appLinks.uriLinkStream.listen(
+      (Uri uri) {
+        print('Got uri: $uri');
+        final featurePath = uri.pathSegments.first;
+        final id = uri.pathSegments.last;
+        print('featurePath: $featurePath');
+        print('id: $id');
+        switch (featurePath) {
+          case _consultationPath:
+            _handleDeeplink(
+              id: id,
+              onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
+              onMatchFailedCallback: () => Log.e("deeplink listen uri : no consultation id match error"),
+            );
+            break;
+          case _qagPath:
+            _handleDeeplink(
+              id: id,
+              onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
+              onMatchFailedCallback: () => Log.e("deeplink listen uri : no qag id match error"),
+            );
+            break;
+          default:
+            Log.e("deeplink listen uri : unknown path error: ${uri.path}");
+            break;
         }
       },
       onError: (Object err) {
@@ -98,6 +98,6 @@ class DeeplinkHelper {
   }
 
   void dispose() {
-    _sub?.cancel();
+    _sub.cancel();
   }
 }

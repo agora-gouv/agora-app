@@ -1,7 +1,7 @@
-import 'package:agora/agora_app.dart';
 import 'package:agora/bloc/notification/permission/notification_permission_bloc.dart';
 import 'package:agora/bloc/notification/permission/notification_permission_event.dart';
 import 'package:agora/bloc/notification/permission/notification_permission_state.dart';
+import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
@@ -26,7 +26,6 @@ import 'package:agora/login/bloc/login_state.dart';
 import 'package:agora/login/domain/login_error_type.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
-import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/foundation.dart';
@@ -42,13 +41,15 @@ class LoadingPage extends StatefulWidget {
   static const routeName = "/";
 
   final SharedPreferences sharedPref;
-  final Redirection redirection;
+  final void Function(BuildContext) onRedirect;
+  final DeeplinkHelper deepLinkHelper;
   final String agoraAppIcon;
 
   const LoadingPage({
     super.key,
     required this.sharedPref,
-    required this.redirection,
+    required this.onRedirect,
+    required this.deepLinkHelper,
     required this.agoraAppIcon,
   });
 
@@ -112,7 +113,7 @@ class _LoadingPageState extends State<LoadingPage> {
           child: BlocConsumer<LoginBloc, LoginState>(
             listener: (context, loginState) async {
               if (loginState is LoginSuccessState) {
-                _pushPageWithCondition(context);
+                await _pushPageWithCondition(context);
               }
             },
             builder: (context, loginState) {
@@ -236,29 +237,26 @@ class _LoadingPageState extends State<LoadingPage> {
     }
   }
 
-  void _pushPageWithCondition(BuildContext context) {
-    if (widget.redirection.shouldShowQagDetails) {
-      Navigator.pushReplacementNamed(context, QagsPage.routeName);
-      Navigator.pushNamed(
-        context,
-        QagDetailsPage.routeName,
-        arguments: QagDetailsArguments(qagId: widget.redirection.qagId!, reload: QagReload.qagsPage),
-      );
-    } else {
-      Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
-      if (widget.redirection.shouldShowConsultationDetails) {
+  Future<void> _pushPageWithCondition(BuildContext context) async {
+    widget.onRedirect(context);
+    await widget.deepLinkHelper.onInitial(
+      onConsultationSuccessCallback: (id) {
+        Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
         Navigator.pushNamed(
           context,
           DynamicConsultationPage.routeName,
-          arguments: DynamicConsultationPageArguments(consultationId: widget.redirection.consultationId!),
+          arguments: DynamicConsultationPageArguments(consultationId: id),
         );
-      }
-      if (widget.redirection.shouldShowOnboarding) {
-        Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
-          StorageManager.getOnboardingStorageClient().save(false);
-        });
-      }
-    }
+      },
+      onQagSuccessCallback: (id) {
+        Navigator.pushReplacementNamed(context, QagsPage.routeName);
+        Navigator.pushNamed(
+          context,
+          QagDetailsPage.routeName,
+          arguments: QagDetailsArguments(qagId: id, reload: QagReload.qagsPage),
+        );
+      },
+    );
     if (!kIsWeb) {
       Log.d("notification : start app");
       ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
