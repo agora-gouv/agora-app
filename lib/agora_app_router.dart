@@ -1,6 +1,6 @@
-import 'package:agora/agora_app.dart';
 import 'package:agora/app_feedback/pages/app_feedback_page.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
@@ -108,7 +108,8 @@ class AgoraAppRouter {
   static MaterialPageRoute<dynamic> handleAgoraGenerateRoute({
     required RouteSettings settings,
     required SharedPreferences sharedPref,
-    required Redirection redirection,
+    required void Function(BuildContext) onRedirect,
+    required DeeplinkHelper deepLinkHelper,
     required String agoraAppIcon,
   }) {
     Widget currentRoute;
@@ -116,7 +117,8 @@ class AgoraAppRouter {
       case LoadingPage.routeName:
         currentRoute = LoadingPage(
           sharedPref: sharedPref,
-          redirection: redirection,
+          deepLinkHelper: deepLinkHelper,
+          onRedirect: onRedirect,
           agoraAppIcon: agoraAppIcon,
         );
         break;
