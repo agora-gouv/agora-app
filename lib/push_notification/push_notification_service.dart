@@ -10,6 +10,7 @@ import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
+import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
@@ -178,10 +179,12 @@ class FirebasePushNotificationService extends PushNotificationService {
         );
         break;
       case NotificationMessageType.homeQags:
-        navigatorKey.currentState?.pushNamed(QagsPage.routeName);
+        navigatorKey.currentState?.pushReplacementNamed(QagsPage.routeName);
+        break;
+      case NotificationMessageType.homeConsultations:
+        navigatorKey.currentState?.pushReplacementNamed(ConsultationsPage.routeName);
         break;
       default:
-        // Do nothing
         break;
     }
   }
