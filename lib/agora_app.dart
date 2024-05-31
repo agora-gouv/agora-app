@@ -8,11 +8,11 @@ import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/common/observer/matomo_route_observer.dart';
 import 'package:agora/common/observer/navigation_observer.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -40,7 +40,7 @@ class AgoraApp extends StatefulWidget {
 class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
   final deeplinkHelper = DeeplinkHelper();
   void Function(BuildContext) onRedirect = (context) {
-    Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
+    Navigator.pushReplacementNamed(context, QagsPage.routeName);
   };
 
   @override
@@ -50,7 +50,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
 
     if (widget.shouldShowOnboarding) {
       onRedirect = (context) {
-        Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
+        Navigator.pushReplacementNamed(context, QagsPage.routeName);
         Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
           StorageManager.getOnboardingStorageClient().save(false);
         });

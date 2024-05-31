@@ -9,6 +9,8 @@ extension NotificationMessageExtension on String? {
         return NotificationMessageType.consultationDetails;
       case "qagHome":
         return NotificationMessageType.homeQags;
+      case "consultationHome":
+        return NotificationMessageType.homeConsultations;
       default:
         return null;
     }
