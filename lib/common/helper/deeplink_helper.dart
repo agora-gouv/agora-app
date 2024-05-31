@@ -53,11 +53,8 @@ class DeeplinkHelper {
 
     _sub = appLinks.uriLinkStream.listen(
       (Uri uri) {
-        print('Got uri: $uri');
         final featurePath = uri.pathSegments.first;
         final id = uri.pathSegments.last;
-        print('featurePath: $featurePath');
-        print('id: $id');
         switch (featurePath) {
           case _consultationPath:
             _handleDeeplink(

@@ -59,7 +59,6 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
     if (!kIsWeb) {
       deeplinkHelper.onGetUriLinkStream(
         onConsultationSuccessCallback: (id) {
-          print('consultation id: $id');
           navigatorKey.currentState?.pushNamed(
             DynamicConsultationPage.routeName,
             arguments: DynamicConsultationPageArguments(consultationId: id),
