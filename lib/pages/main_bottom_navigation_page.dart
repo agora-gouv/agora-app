@@ -65,7 +65,7 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
         return AgoraBottomNavigationBarItem(
           activateIcon: "ic_question.svg",
           inactivateIcon: "ic_question_inactivate.svg",
-          label: "Questions au gouvernement",
+          label: "Questions au Gouvernement",
         );
     }
   }
