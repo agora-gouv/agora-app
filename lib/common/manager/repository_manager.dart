@@ -20,6 +20,8 @@ import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:agora/login/repository/login_repository.dart';
 import 'package:agora/login/repository/mocks_login_repository.dart';
+import 'package:agora/welcome/repository/mocks_welcome_repository.dart';
+import 'package:agora/welcome/repository/welcome_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
@@ -226,6 +228,18 @@ class RepositoryManager {
       return GetIt.instance.get<MockNotificationRepository>();
     }
     final repository = MockNotificationRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      sentryWrapper: HelperManager.getSentryWrapper(),
+    );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static WelcomeRepository getWelcomeRepository() {
+    if (GetIt.instance.isRegistered<MocksWelcomeRepository>()) {
+      return GetIt.instance.get<MocksWelcomeRepository>();
+    }
+    final repository = WelcomeDioRepository(
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
     );

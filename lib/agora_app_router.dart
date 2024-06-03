@@ -30,6 +30,7 @@ import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.dart';
 import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:agora/pages/webview/webview_page.dart';
+import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,6 +102,11 @@ class AgoraAppRouter {
       WebviewPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.webviewPage,
             child: WebviewPage(),
+          ),
+      // Welcome Page
+      WelcomePage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.welcomePage,
+            child: WelcomePage(),
           ),
     };
   }

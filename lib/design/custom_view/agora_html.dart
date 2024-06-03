@@ -11,8 +11,9 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 class AgoraHtml extends StatelessWidget {
   final String data;
   final double fontSize;
+  final TextAlign textAlign;
 
-  const AgoraHtml({super.key, required this.data, this.fontSize = 16.0});
+  const AgoraHtml({super.key, required this.data, this.fontSize = 16.0, this.textAlign = TextAlign.start});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class AgoraHtml extends StatelessWidget {
         data: MediaQueryData(),
         child: Html(
           data: data,
-          style: AgoraHtmlStyles.htmlStyle(context, fontSize),
+          style: AgoraHtmlStyles.htmlStyle(context, fontSize, textAlign),
           onLinkTap: (url, _, __) async {
             if (url != null && isQagUrl(url)) {
               Navigator.pushNamed(

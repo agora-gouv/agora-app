@@ -13,6 +13,7 @@ import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -40,7 +41,7 @@ class AgoraApp extends StatefulWidget {
 class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
   final deeplinkHelper = DeeplinkHelper();
   void Function(BuildContext) onRedirect = (context) {
-    Navigator.pushReplacementNamed(context, QagsPage.routeName);
+    Navigator.pushReplacementNamed(context, WelcomePage.routeName);
   };
 
   @override

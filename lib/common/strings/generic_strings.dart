@@ -53,4 +53,8 @@ class GenericStrings {
   static const String no = "Non";
 
   static const String notificationEmpty = "Vous n'avez pas encore de notification.";
+
+  static const String welcomeTitle = "👋 Bonjour !";
+  static const String welcomeDescription = "Que souhaitez-vous faire dans Agora aujourd'hui ?";
+  static const String welcomeNewsTitle = "À la une";
 }
