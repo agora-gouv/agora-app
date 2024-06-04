@@ -27,6 +27,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RepositoryManager {
   static const String _baseUrl = "baseUrl";
@@ -46,7 +47,7 @@ class RepositoryManager {
     GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
   }
 
-  static Dio _getDio() {
+  static Dio _getDio({SharedPreferences? sharedPref}) {
     if (GetIt.instance.isRegistered<Dio>(instanceName: _authenticatedDio)) {
       return GetIt.instance.get<Dio>(instanceName: _authenticatedDio);
     }
@@ -57,7 +58,7 @@ class RepositoryManager {
     dio.interceptors.add(
       AuthInterceptor(
         repository: RepositoryManager.getLoginRepository(),
-        loginStorageClient: StorageManager.getLoginStorageClient(),
+        loginStorageClient: StorageManager.getLoginStorageClient(sharedPref: sharedPref),
         pushNotificationService: ServiceManager.getPushNotificationService(),
         jwtHelper: HelperManager.getJwtHelper(),
         appVersionHelper: HelperManager.getAppVersionHelper(),
@@ -125,12 +126,12 @@ class RepositoryManager {
     return agoraDioHttpClient;
   }
 
-  static AgoraDioHttpClient _getAgoraDioHttpClient() {
+  static AgoraDioHttpClient _getAgoraDioHttpClient({SharedPreferences? sharedPref}) {
     if (GetIt.instance.isRegistered<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient)) {
       return GetIt.instance.get<AgoraDioHttpClient>(instanceName: _authenticatedHttpClient);
     }
     final agoraDioHttpClient = AgoraDioHttpClient(
-      dio: _getDio(),
+      dio: _getDio(sharedPref: sharedPref),
       jwtHelper: HelperManager.getJwtHelper(),
       userAgentBuilder: userAgentBuilder,
     );
@@ -235,12 +236,12 @@ class RepositoryManager {
     return repository;
   }
 
-  static WelcomeRepository getWelcomeRepository() {
+  static WelcomeRepository getWelcomeRepository({SharedPreferences? sharedPref}) {
     if (GetIt.instance.isRegistered<MocksWelcomeRepository>()) {
       return GetIt.instance.get<MocksWelcomeRepository>();
     }
-    final repository = WelcomeDioRepository(
-      httpClient: _getAgoraDioHttpClient(),
+    final repository = MocksWelcomeRepository(
+      httpClient: _getAgoraDioHttpClient(sharedPref: sharedPref),
       sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);

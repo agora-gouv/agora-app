@@ -86,7 +86,7 @@ class _LoadingPageState extends State<LoadingPage> {
         ),
         BlocProvider(
           create: (context) => LoginBloc(
-            repository: RepositoryManager.getLoginRepository(),
+            loginRepository: RepositoryManager.getLoginRepository(),
             loginStorageClient: StorageManager.getLoginStorageClient(sharedPref: widget.sharedPref),
             deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
             pushNotificationService: ServiceManager.getPushNotificationService(),
@@ -94,6 +94,7 @@ class _LoadingPageState extends State<LoadingPage> {
             roleHelper: HelperManager.getRoleHelper(),
             appVersionHelper: HelperManager.getAppVersionHelper(),
             platformHelper: HelperManager.getPlatformHelper(),
+            welcomeRepository: RepositoryManager.getWelcomeRepository(sharedPref: widget.sharedPref),
           )..add(CheckLoginEvent()),
         ),
       ],

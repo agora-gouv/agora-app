@@ -9,20 +9,28 @@ abstract class WelcomeRepository {
 class WelcomeDioRepository extends WelcomeRepository {
   final AgoraDioHttpClient httpClient;
   final SentryWrapper? sentryWrapper;
-  final Duration minimalSendingTime;
+
+  WelcomeALaUne? _welcomeALaUne;
 
   WelcomeDioRepository({
     required this.httpClient,
-    this.minimalSendingTime = const Duration(seconds: 2),
     this.sentryWrapper,
   });
 
   @override
   Future<WelcomeALaUne?> getWelcomeALaUne() async {
-    final timer = Future.delayed(minimalSendingTime);
+    if (_welcomeALaUne != null) {
+      return _welcomeALaUne;
+    } else {
+      final fromNetwork = await _fetchOnlineWelcomeALaUne();
+      _welcomeALaUne = fromNetwork;
+      return fromNetwork;
+    }
+  }
+
+  Future<WelcomeALaUne?> _fetchOnlineWelcomeALaUne() async {
     try {
       final response = await httpClient.get('/welcome_page/last_news');
-      await timer;
       return WelcomeALaUne(
         description: response.data['description'] as String,
         actionText: response.data['callToActionText'] as String,
@@ -31,14 +39,7 @@ class WelcomeDioRepository extends WelcomeRepository {
       );
     } catch (e, s) {
       sentryWrapper?.captureException(e, s);
-      return WelcomeALaUne(
-        description:
-            'Une nouvelle consultation sur la planification écologique est lancée en région Centre-Val-de-Loire !',
-        actionText: 'rendez-vous dans la section Consultations citoyennes',
-        routeName: '/consultationsPage',
-        routeArgument: null,
-      );
     }
-    // return null;
+    return null;
   }
 }

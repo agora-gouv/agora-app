@@ -36,10 +36,15 @@ class WelcomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: AgoraSpacings.x2),
+                  SizedBox(height: AgoraSpacings.x0_75),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: SvgPicture.asset("assets/ic_marianne.svg", excludeFromSemantics: true),
+                    child: SvgPicture.asset(
+                      "assets/ic_marianne.svg",
+                      height: 70,
+                      width: 70,
+                      excludeFromSemantics: true,
+                    ),
                   ),
                   SizedBox(height: AgoraSpacings.base),
                   Semantics(
@@ -47,14 +52,14 @@ class WelcomePage extends StatelessWidget {
                     focused: true,
                     child: Text(
                       GenericStrings.welcomeTitle,
-                      style: AgoraTextStyles.bold34.copyWith(color: AgoraColors.primaryBlue),
+                      style: AgoraTextStyles.bold28.copyWith(color: AgoraColors.primaryBlue),
                       textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
                     ),
                   ),
-                  SizedBox(height: AgoraSpacings.x1_5),
+                  SizedBox(height: AgoraSpacings.base),
                   Text(
                     GenericStrings.welcomeDescription,
-                    style: AgoraTextStyles.regular18,
+                    style: AgoraTextStyles.regular16,
                     textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
                   ),
                 ],
@@ -71,11 +76,11 @@ class WelcomePage extends StatelessWidget {
                     textContent: [
                       TextSpan(
                         text: "Poser ma ",
-                        style: AgoraTextStyles.light18.copyWith(color: AgoraColors.white),
+                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.white),
                       ),
                       TextSpan(
                         text: "question au Gouvernement",
-                        style: AgoraTextStyles.bold18.copyWith(color: AgoraColors.white),
+                        style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.white),
                       ),
                     ],
                     onTap: () {
@@ -91,11 +96,11 @@ class WelcomePage extends StatelessWidget {
                     textContent: [
                       TextSpan(
                         text: "Suivre les ",
-                        style: AgoraTextStyles.light18.copyWith(color: AgoraColors.primaryBlue),
+                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
                       ),
                       TextSpan(
                         text: "réponses des ministres",
-                        style: AgoraTextStyles.bold18.copyWith(color: AgoraColors.primaryBlue),
+                        style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.primaryBlue),
                       ),
                     ],
                     onTap: () {
@@ -112,11 +117,11 @@ class WelcomePage extends StatelessWidget {
                     textContent: [
                       TextSpan(
                         text: "Participer aux ",
-                        style: AgoraTextStyles.light18.copyWith(color: AgoraColors.white),
+                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.white),
                       ),
                       TextSpan(
                         text: "consultations citoyennes",
-                        style: AgoraTextStyles.bold18.copyWith(color: AgoraColors.white),
+                        style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.white),
                       ),
                     ],
                     onTap: () {
@@ -143,31 +148,20 @@ class WelcomePage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SizedBox(height: AgoraSpacings.x1_5),
-                                RichText(
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: "🔥 ",
-                                        style: AgoraTextStyles.regular40,
-                                      ),
-                                      TextSpan(
-                                        text: GenericStrings.welcomeNewsTitle,
-                                        style: AgoraTextStyles.regular26.copyWith(fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
+                                SizedBox(height: AgoraSpacings.x0_75),
+                                Text(
+                                  GenericStrings.welcomeNewsTitle,
+                                  style: AgoraTextStyles.regular26.copyWith(fontWeight: FontWeight.w600),
                                 ),
-                                SizedBox(height: AgoraSpacings.x1_5),
+                                SizedBox(height: AgoraSpacings.x0_75),
                                 AgoraHtml(
                                   data: aLaUne.description,
                                   textAlign: TextAlign.end,
                                 ),
-                                SizedBox(height: AgoraSpacings.x1_5),
+                                SizedBox(height: AgoraSpacings.x0_75),
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    SizedBox(width: AgoraSpacings.x6),
+                                    SizedBox(width: AgoraSpacings.x4_5),
                                     Expanded(
                                       child: Text(
                                         aLaUne.actionText,
@@ -175,7 +169,7 @@ class WelcomePage extends StatelessWidget {
                                         textAlign: TextAlign.right,
                                       ),
                                     ),
-                                    SizedBox(width: AgoraSpacings.x1_5),
+                                    SizedBox(width: AgoraSpacings.x0_75),
                                     SvgPicture.asset(
                                       "assets/ic_chevrons.svg",
                                       colorFilter: ColorFilter.mode(AgoraColors.black, BlendMode.srcIn),

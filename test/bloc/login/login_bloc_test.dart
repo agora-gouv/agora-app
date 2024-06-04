@@ -13,6 +13,7 @@ import '../../fakes/login/fake_login_storage_client.dart';
 import '../../fakes/login/fakes_login_repository.dart';
 import '../../fakes/push_notification/fakes_push_notification_service.dart';
 import '../../fakes/qag/fake_device_id_helper.dart';
+import '../../fakes/welcome/fakes_welcome_repository.dart';
 
 void main() {
   group("check login event - when signup (loginToken not stored)", () {
@@ -23,7 +24,8 @@ void main() {
     blocTest(
       "when repository success - should emit success state",
       build: () => LoginBloc(
-        repository: FakeLoginSuccessRepository(),
+        loginRepository: FakeLoginSuccessRepository(),
+        welcomeRepository: FakeWelcomeSuccessRepository(),
         loginStorageClient: loginStorage1,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
@@ -52,7 +54,8 @@ void main() {
     blocTest(
       "when repository failed with timeout - should emit error state",
       build: () => LoginBloc(
-        repository: FakeLoginTimeoutFailureRepository(),
+        loginRepository: FakeLoginTimeoutFailureRepository(),
+        welcomeRepository: FakeWelcomeSuccessRepository(),
         loginStorageClient: loginStorage2,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
@@ -81,7 +84,8 @@ void main() {
     blocTest(
       "when repository failed - should emit error state",
       build: () => LoginBloc(
-        repository: FakeLoginFailureRepository(),
+        loginRepository: FakeLoginFailureRepository(),
+        welcomeRepository: FakeWelcomeSuccessRepository(),
         loginStorageClient: loginStorage3,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
@@ -113,7 +117,8 @@ void main() {
       "when repository success - should emit login success state",
       setUp: () => signUpLoginStorage.save(userId: "userId", loginToken: "loginToken"),
       build: () => LoginBloc(
-        repository: FakeLoginSuccessRepository(),
+        loginRepository: FakeLoginSuccessRepository(),
+        welcomeRepository: FakeWelcomeSuccessRepository(),
         loginStorageClient: signUpLoginStorage,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
@@ -141,7 +146,8 @@ void main() {
       "when repository failed with timeout - should emit error state",
       setUp: () => signUpLoginStorage2.save(userId: "userId", loginToken: "loginToken"),
       build: () => LoginBloc(
-        repository: FakeLoginTimeoutFailureRepository(),
+        loginRepository: FakeLoginTimeoutFailureRepository(),
+        welcomeRepository: FakeWelcomeSuccessRepository(),
         loginStorageClient: signUpLoginStorage2,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
@@ -169,7 +175,8 @@ void main() {
       "when repository failed - should emit error state",
       setUp: () => signUpLoginStorage3.save(userId: "userId", loginToken: "loginToken"),
       build: () => LoginBloc(
-        repository: FakeLoginFailureRepository(),
+        loginRepository: FakeLoginFailureRepository(),
+        welcomeRepository: FakeWelcomeSuccessRepository(),
         loginStorageClient: signUpLoginStorage3,
         deviceInfoHelper: FakeDeviceInfoHelper(),
         pushNotificationService: FakePushNotificationService(),
