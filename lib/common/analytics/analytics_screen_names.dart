@@ -35,4 +35,6 @@ class AnalyticsScreenNames {
   static const String participationCharterPage = "Profil - Charte de participation";
 
   static const String webviewPage = "Page web interne";
+
+  static const String welcomePage = "Page de bienvenue";
 }

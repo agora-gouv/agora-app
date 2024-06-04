@@ -8,10 +8,11 @@ import 'package:agora/login/bloc/login_state.dart';
 import 'package:agora/login/repository/login_repository.dart';
 import 'package:agora/login/repository/login_storage_client.dart';
 import 'package:agora/push_notification/push_notification_service.dart';
+import 'package:agora/welcome/repository/welcome_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginRepository repository;
+  final LoginRepository loginRepository;
   final LoginStorageClient loginStorageClient;
   final DeviceInfoHelper deviceInfoHelper;
   final PushNotificationService pushNotificationService;
@@ -19,9 +20,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final RoleHelper roleHelper;
   final AppVersionHelper appVersionHelper;
   final PlatformHelper platformHelper;
+  final WelcomeRepository welcomeRepository;
 
   LoginBloc({
-    required this.repository,
+    required this.loginRepository,
     required this.loginStorageClient,
     required this.deviceInfoHelper,
     required this.pushNotificationService,
@@ -29,6 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required this.roleHelper,
     required this.appVersionHelper,
     required this.platformHelper,
+    required this.welcomeRepository,
   }) : super(LoginInitialState()) {
     on<CheckLoginEvent>(_handleCheckLoginEvent);
   }
@@ -40,6 +43,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final version = await appVersionHelper.getVersion();
     final buildNumber = await appVersionHelper.getBuildNumber();
     final platformName = platformHelper.getPlatformName();
+    await welcomeRepository.getWelcomeALaUne();
     if (loginToken != null) {
       emit(
         await _login(
@@ -69,7 +73,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required String buildNumber,
     required String platformName,
   }) async {
-    final response = await repository.login(
+    final response = await loginRepository.login(
       firebaseMessagingToken: fcmToken,
       loginToken: loginToken,
       appVersion: appVersion,
@@ -93,7 +97,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required String buildNumber,
     required String platformName,
   }) async {
-    final response = await repository.signup(
+    final response = await loginRepository.signup(
       firebaseMessagingToken: fcmToken,
       appVersion: appVersion,
       buildNumber: buildNumber,
