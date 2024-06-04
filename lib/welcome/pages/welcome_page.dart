@@ -65,132 +65,151 @@ class WelcomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Column(
-              children: [
-                SizedBox(height: AgoraSpacings.x2),
-                Padding(
-                  padding: const EdgeInsets.only(right: AgoraSpacings.x4_5),
-                  child: WelcomeCard(
-                    backgroundColor: AgoraColors.primaryBlue,
-                    iconPath: "assets/ic_welcome_question.svg",
-                    textContent: [
-                      TextSpan(
-                        text: "Poser ma ",
-                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.white),
-                      ),
-                      TextSpan(
-                        text: "question au Gouvernement",
-                        style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.white),
-                      ),
-                    ],
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, QagsPage.routeName);
-                    },
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+              child: Column(
+                children: [
+                  SizedBox(height: AgoraSpacings.x2),
+                  Padding(
+                    padding: const EdgeInsets.only(right: AgoraSpacings.x4_5),
+                    child: WelcomeCard(
+                      backgroundColor: AgoraColors.primaryBlue,
+                      iconPath: "assets/ic_welcome_question.svg",
+                      textContent: [
+                        TextSpan(
+                          text: "Poser ma ",
+                          style: AgoraTextStyles.light16.copyWith(color: AgoraColors.white),
+                        ),
+                        TextSpan(
+                          text: "question au Gouvernement",
+                          style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.white),
+                        ),
+                      ],
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, QagsPage.routeName);
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: AgoraSpacings.x3),
-                  child: WelcomeCard(
-                    iconPath: "assets/ic_reponse.svg",
-                    iconColorFilter: ColorFilter.mode(AgoraColors.primaryBlue, BlendMode.srcIn),
-                    textContent: [
-                      TextSpan(
-                        text: "Suivre les ",
-                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
-                      ),
-                      TextSpan(
-                        text: "réponses des ministres",
-                        style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.primaryBlue),
-                      ),
-                    ],
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, QagsPage.routeName);
-                      Navigator.pushNamed(context, QagResponsePaginatedPage.routeName);
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(right: AgoraSpacings.x3),
+                    child: WelcomeCard(
+                      iconPath: "assets/ic_reponse.svg",
+                      iconColorFilter: ColorFilter.mode(AgoraColors.primaryBlue, BlendMode.srcIn),
+                      textContent: [
+                        TextSpan(
+                          text: "Suivre les ",
+                          style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryBlue),
+                        ),
+                        TextSpan(
+                          text: "réponses des ministres",
+                          style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.primaryBlue),
+                        ),
+                      ],
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, QagsPage.routeName);
+                        Navigator.pushNamed(context, QagResponsePaginatedPage.routeName);
+                      },
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: AgoraSpacings.x1_5),
-                  child: WelcomeCard(
-                    backgroundColor: AgoraColors.red,
-                    iconPath: "assets/ic_welcome_consultation.svg",
-                    textContent: [
-                      TextSpan(
-                        text: "Participer aux ",
-                        style: AgoraTextStyles.light16.copyWith(color: AgoraColors.white),
-                      ),
-                      TextSpan(
-                        text: "consultations citoyennes",
-                        style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.white),
-                      ),
-                    ],
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(right: AgoraSpacings.x1_5),
+                    child: WelcomeCard(
+                      backgroundColor: AgoraColors.red,
+                      iconPath: "assets/ic_welcome_consultation.svg",
+                      textContent: [
+                        TextSpan(
+                          text: "Participer aux ",
+                          style: AgoraTextStyles.light16.copyWith(color: AgoraColors.white),
+                        ),
+                        TextSpan(
+                          text: "consultations citoyennes",
+                          style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.white),
+                        ),
+                      ],
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
+                      },
+                    ),
                   ),
-                ),
-                BlocProvider(
-                  create: (context) => WelcomeBloc(
-                    welcomeRepository: RepositoryManager.getWelcomeRepository(),
-                  )..add(GetWelcomeALaUneEvent()),
-                  child: BlocSelector<WelcomeBloc, WelcomeState, WelcomeALaUneViewModel>(
-                    selector: WelcomeALaUnePresenter.getViewModelFromState,
-                    builder: (context, vm) {
-                      final aLaUne = vm.welcomeALaUne;
-                      if (aLaUne != null) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.pushReplacementNamed(context, QagsPage.routeName);
-                            Navigator.pushNamed(context, aLaUne.routeName, arguments: aLaUne.routeArgument);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(height: AgoraSpacings.x0_75),
-                                Text(
-                                  GenericStrings.welcomeNewsTitle,
-                                  style: AgoraTextStyles.regular26.copyWith(fontWeight: FontWeight.w600),
-                                ),
-                                SizedBox(height: AgoraSpacings.x0_75),
-                                AgoraHtml(
-                                  data: aLaUne.description,
-                                  textAlign: TextAlign.end,
-                                ),
-                                SizedBox(height: AgoraSpacings.x0_75),
-                                Row(
-                                  children: [
-                                    SizedBox(width: AgoraSpacings.x4_5),
-                                    Expanded(
-                                      child: Text(
-                                        aLaUne.actionText,
-                                        style: AgoraTextStyles.regular14,
-                                        textAlign: TextAlign.right,
-                                      ),
+                  Expanded(
+                    child: BlocProvider(
+                      create: (context) => WelcomeBloc(
+                        welcomeRepository: RepositoryManager.getWelcomeRepository(),
+                      )..add(GetWelcomeALaUneEvent()),
+                      child: BlocSelector<WelcomeBloc, WelcomeState, WelcomeALaUneViewModel>(
+                        selector: WelcomeALaUnePresenter.getViewModelFromState,
+                        builder: (context, vm) {
+                          if (vm.status == AllPurposeStatus.error || vm.welcomeALaUne == null) {
+                            return SizedBox();
+                          } else {
+                            final aLaUne = vm.welcomeALaUne!;
+                            return DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: AgoraColors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                  ),
+                                ],
+                              ),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushReplacementNamed(context, QagsPage.routeName);
+                                    Navigator.pushNamed(context, aLaUne.routeName, arguments: aLaUne.routeArgument);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(height: AgoraSpacings.x0_75),
+                                        Text(
+                                          GenericStrings.welcomeNewsTitle,
+                                          style: AgoraTextStyles.regular26.copyWith(fontWeight: FontWeight.w600),
+                                        ),
+                                        SizedBox(height: AgoraSpacings.x0_75),
+                                        AgoraHtml(
+                                          data: aLaUne.description,
+                                          textAlign: TextAlign.end,
+                                        ),
+                                        SizedBox(height: AgoraSpacings.x0_75),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: AgoraSpacings.x4_5),
+                                            Expanded(
+                                              child: Text(
+                                                aLaUne.actionText,
+                                                style: AgoraTextStyles.regular14,
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                            SizedBox(width: AgoraSpacings.x0_75),
+                                            SvgPicture.asset(
+                                              "assets/ic_chevrons.svg",
+                                              colorFilter: ColorFilter.mode(AgoraColors.black, BlendMode.srcIn),
+                                              width: 15,
+                                              height: 15,
+                                              excludeFromSemantics: true,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(width: AgoraSpacings.x0_75),
-                                    SvgPicture.asset(
-                                      "assets/ic_chevrons.svg",
-                                      colorFilter: ColorFilter.mode(AgoraColors.black, BlendMode.srcIn),
-                                      width: 15,
-                                      height: 15,
-                                      excludeFromSemantics: true,
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                SizedBox(height: AgoraSpacings.x1_5),
-                              ],
-                            ),
-                          ),
-                        );
-                      } else {
-                        return SizedBox();
-                      }
-                    },
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
