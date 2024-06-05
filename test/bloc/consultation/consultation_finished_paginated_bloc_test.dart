@@ -7,6 +7,7 @@ import 'package:agora/pages/consultation/finished_paginated/consultation_finishe
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../fakes/concertation/fakes_concertation_repository.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
 
 void main() {
@@ -15,6 +16,7 @@ void main() {
       "when repository succeed and page number to load is 1 - should emit success state",
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) =>
           bloc.add(FetchConsultationPaginatedEvent(pageNumber: 1, type: ConsultationPaginatedPageType.finished)),
@@ -28,12 +30,20 @@ void main() {
           maxPage: 3,
           currentPageNumber: 1,
           consultationPaginatedViewModels: [
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId",
               title: "Quelles solutions pour les déserts médicaux ?",
               coverUrl: "coverUrl",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+            ),
+            ConsultationPaginatedViewModel(
+              id: "concertationId1",
+              title: "Développer le covoiturage",
+              coverUrl: "coverUrl1",
+              externalLink: "externalLink1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              label: 'Plus que 3 jours',
             ),
           ],
         ),
@@ -45,6 +55,7 @@ void main() {
       "when repository succeed and type is answered - should emit success state",
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) =>
           bloc.add(FetchConsultationPaginatedEvent(pageNumber: 1, type: ConsultationPaginatedPageType.answered)),
@@ -58,7 +69,7 @@ void main() {
           maxPage: 3,
           currentPageNumber: 1,
           consultationPaginatedViewModels: [
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId",
               title: "Quelles solutions pour les déserts médicaux ?",
               coverUrl: "coverUrl",
@@ -75,12 +86,13 @@ void main() {
       "when repository succeed and page number to load is other than 1 - should emit success state",
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       seed: () => ConsultationPaginatedFetchedState(
         maxPage: 3,
         currentPageNumber: 1,
         consultationPaginatedViewModels: [
-          ConsultationFinishedPaginatedViewModel(
+          ConsultationPaginatedViewModel(
             id: "consultationId1",
             title: "Quelles ... ?",
             coverUrl: "coverUrl1",
@@ -100,7 +112,7 @@ void main() {
           maxPage: 3,
           currentPageNumber: 2,
           consultationPaginatedViewModels: [
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId1",
               title: "Quelles ... ?",
               coverUrl: "coverUrl1",
@@ -113,19 +125,27 @@ void main() {
           maxPage: 3,
           currentPageNumber: 2,
           consultationPaginatedViewModels: [
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId1",
               title: "Quelles ... ?",
               coverUrl: "coverUrl1",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
             ),
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId",
               title: "Quelles solutions pour les déserts médicaux ?",
               coverUrl: "coverUrl",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+            ),
+            ConsultationPaginatedViewModel(
+              id: "concertationId1",
+              title: "Développer le covoiturage",
+              coverUrl: "coverUrl1",
+              externalLink: "externalLink1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              label: 'Plus que 3 jours',
             ),
           ],
         ),
@@ -137,19 +157,20 @@ void main() {
       "when repository succeed and page number reset to 1 - should emit success state",
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       seed: () => ConsultationPaginatedFetchedState(
         maxPage: 3,
         currentPageNumber: 2,
         consultationPaginatedViewModels: [
-          ConsultationFinishedPaginatedViewModel(
+          ConsultationPaginatedViewModel(
             id: "consultationId1",
             title: "Quelles ... ?",
             coverUrl: "coverUrl1",
             thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
             label: 'label',
           ),
-          ConsultationFinishedPaginatedViewModel(
+          ConsultationPaginatedViewModel(
             id: "consultationId2",
             title: "Quelles ... ?",
             coverUrl: "coverUrl2",
@@ -174,12 +195,20 @@ void main() {
           maxPage: 3,
           currentPageNumber: 1,
           consultationPaginatedViewModels: [
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId",
               title: "Quelles solutions pour les déserts médicaux ?",
               coverUrl: "coverUrl",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+            ),
+            ConsultationPaginatedViewModel(
+              id: "concertationId1",
+              title: "Développer le covoiturage",
+              coverUrl: "coverUrl1",
+              externalLink: "externalLink1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              label: 'Plus que 3 jours',
             ),
           ],
         ),
@@ -191,6 +220,7 @@ void main() {
       "when repository failed and page number to load is 1 - should emit failure state",
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationFailureRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(
         FetchConsultationPaginatedEvent(
@@ -217,12 +247,13 @@ void main() {
       "when repository failed and page number to load is other than 1 - should emit failure state",
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationFailureRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       seed: () => ConsultationPaginatedFetchedState(
         maxPage: 3,
         currentPageNumber: 1,
         consultationPaginatedViewModels: [
-          ConsultationFinishedPaginatedViewModel(
+          ConsultationPaginatedViewModel(
             id: "consultationId1",
             title: "Quelles ... ?",
             coverUrl: "coverUrl1",
@@ -242,7 +273,7 @@ void main() {
           maxPage: 3,
           currentPageNumber: 2,
           consultationPaginatedViewModels: [
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId1",
               title: "Quelles ... ?",
               coverUrl: "coverUrl1",
@@ -255,7 +286,7 @@ void main() {
           maxPage: 3,
           currentPageNumber: 2,
           consultationPaginatedViewModels: [
-            ConsultationFinishedPaginatedViewModel(
+            ConsultationPaginatedViewModel(
               id: "consultationId1",
               title: "Quelles ... ?",
               coverUrl: "coverUrl1",

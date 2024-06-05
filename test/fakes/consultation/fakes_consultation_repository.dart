@@ -1,5 +1,4 @@
 import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
@@ -25,7 +24,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl1",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
-          highlightLabel: "Plus que 3 jours",
+          label: "Plus que 3 jours",
         ),
       ],
       finishedConsultations: [
@@ -56,7 +55,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     return GetConsultationsPaginatedSucceedResponse(
       maxPage: 3,
       consultationsPaginated: [
-        ConsultationFinishedPaginated(
+        ConsultationFinished(
           id: "consultationId",
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl",
@@ -245,7 +244,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
     return GetConsultationsPaginatedSucceedResponse(
       maxPage: 3,
       consultationsPaginated: [
-        ConsultationFinishedPaginated(
+        ConsultationFinished(
           id: "consultationId",
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl",
@@ -274,7 +273,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
-          highlightLabel: null,
+          label: null,
         ),
       ],
       finishedConsultations: [],

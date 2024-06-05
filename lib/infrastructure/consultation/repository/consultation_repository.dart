@@ -2,7 +2,6 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
@@ -84,7 +83,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: ongoingConsultation["coverUrl"] as String,
             thematique: (ongoingConsultation["thematique"] as Map).toThematique(),
             endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
-            highlightLabel: ongoingConsultation["highlightLabel"] as String?,
+            label: ongoingConsultation["highlightLabel"] as String?,
           );
         }).toList(),
         finishedConsultations: finishedConsultations.map((finishedConsultation) {
@@ -94,6 +93,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
+            updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
           );
         }).toList(),
         answeredConsultations: answeredConsultations.map((answeredConsultation) {
@@ -126,7 +126,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         consultationsPaginated: (response.data["consultations"] as List).map((consultation) {
-          return ConsultationFinishedPaginated(
+          return ConsultationFinished(
             id: consultation["id"] as String,
             title: consultation["title"] as String,
             coverUrl: consultation["coverUrl"] as String,
@@ -150,12 +150,13 @@ class ConsultationDioRepository extends ConsultationRepository {
       return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         consultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
-          return ConsultationFinishedPaginated(
+          return ConsultationFinished(
             id: finishedConsultation["id"] as String,
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
+            updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
           );
         }).toList(),
       );
@@ -388,7 +389,7 @@ abstract class GetConsultationsFinishedPaginatedRepositoryResponse extends Equat
 
 class GetConsultationsPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
   final int maxPage;
-  final List<ConsultationFinishedPaginated> consultationsPaginated;
+  final List<ConsultationFinished> consultationsPaginated;
 
   GetConsultationsPaginatedSucceedResponse({
     required this.maxPage,

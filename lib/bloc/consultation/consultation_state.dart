@@ -11,7 +11,7 @@ class ConsultationInitialLoadingState extends ConsultationState {}
 
 class ConsultationsFetchedState extends ConsultationState {
   final List<ConsultationOngoingViewModel> ongoingViewModels;
-  final List<ConsultationFinishedViewModel> finishedViewModels;
+  final List<ConsultationViewModel> finishedViewModels;
   final List<ConsultationAnsweredViewModel> answeredViewModels;
   final bool shouldDisplayFinishedAllButton;
 

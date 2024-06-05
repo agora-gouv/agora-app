@@ -1,5 +1,7 @@
 import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_event.dart';
 import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_state.dart';
+import 'package:agora/concertation/repository/concertation_repository.dart';
+import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/infrastructure/consultation/presenter/consultation_finished_paginated_presenter.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
@@ -7,9 +9,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, ConsultationPaginatedState> {
   final ConsultationRepository consultationRepository;
+  final ConcertationRepository concertationRepository;
 
   ConsultationPaginatedBloc({
     required this.consultationRepository,
+    required this.concertationRepository,
   }) : super(ConsultationFinishedPaginatedInitialState()) {
     on<FetchConsultationPaginatedEvent>(_handleFetchConsultationPaginated);
   }
@@ -25,19 +29,25 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
         consultationPaginatedViewModels: event.pageNumber == 1 ? [] : state.consultationPaginatedViewModels,
       ),
     );
-    final response = await switch (event.type) {
-      ConsultationPaginatedPageType.finished =>
-        consultationRepository.fetchConsultationsFinishedPaginated(pageNumber: event.pageNumber),
-      ConsultationPaginatedPageType.answered =>
-        consultationRepository.fetchConsultationsAnsweredPaginated(pageNumber: event.pageNumber),
-    };
-    if (response is GetConsultationsPaginatedSucceedResponse) {
+    GetConsultationsFinishedPaginatedRepositoryResponse consultationResponse;
+    List<Concertation> concertations = [];
+
+    if (event.type == ConsultationPaginatedPageType.finished) {
+      consultationResponse =
+          await consultationRepository.fetchConsultationsFinishedPaginated(pageNumber: event.pageNumber);
+      concertations = await concertationRepository.getConcertations();
+    } else {
+      consultationResponse =
+          await consultationRepository.fetchConsultationsAnsweredPaginated(pageNumber: event.pageNumber);
+    }
+    if (consultationResponse is GetConsultationsPaginatedSucceedResponse) {
       final viewModels = ConsultationFinishedPaginatedPresenter.presentPaginatedConsultations(
-        response.consultationsPaginated,
+        consultationResponse.consultationsPaginated,
+        concertations,
       );
       emit(
         ConsultationPaginatedFetchedState(
-          maxPage: response.maxPage,
+          maxPage: consultationResponse.maxPage,
           currentPageNumber: event.pageNumber,
           consultationPaginatedViewModels:
               event.pageNumber == 1 ? viewModels : state.consultationPaginatedViewModels + viewModels,
