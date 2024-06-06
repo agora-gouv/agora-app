@@ -1,5 +1,6 @@
-import 'package:agora/agora_app.dart';
+import 'package:agora/app_feedback/pages/app_feedback_page.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
@@ -15,7 +16,6 @@ import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
-import 'package:agora/pages/profile/app_feedback_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
@@ -30,6 +30,7 @@ import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.dart';
 import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:agora/pages/webview/webview_page.dart';
+import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -102,13 +103,19 @@ class AgoraAppRouter {
             widgetName: AnalyticsScreenNames.webviewPage,
             child: WebviewPage(),
           ),
+      // Welcome Page
+      WelcomePage.routeName: (context) => AgoraTracker(
+            widgetName: AnalyticsScreenNames.welcomePage,
+            child: WelcomePage(),
+          ),
     };
   }
 
   static MaterialPageRoute<dynamic> handleAgoraGenerateRoute({
     required RouteSettings settings,
     required SharedPreferences sharedPref,
-    required Redirection redirection,
+    required void Function(BuildContext) onRedirect,
+    required DeeplinkHelper deepLinkHelper,
     required String agoraAppIcon,
   }) {
     Widget currentRoute;
@@ -116,7 +123,8 @@ class AgoraAppRouter {
       case LoadingPage.routeName:
         currentRoute = LoadingPage(
           sharedPref: sharedPref,
-          redirection: redirection,
+          deepLinkHelper: deepLinkHelper,
+          onRedirect: onRedirect,
           agoraAppIcon: agoraAppIcon,
         );
         break;

@@ -136,11 +136,13 @@ class _SuccessPage extends StatelessWidget {
                         return switch (result) {
                           ConsultationSummaryUniqueChoiceResultsViewModel() => AgoraConsultationResultView(
                               questionTitle: result.questionTitle,
+                              seenRatioLabel: result.seenRatioLabel,
                               responses: result.responses,
                             ),
                           ConsultationSummaryMultipleChoicesResultsViewModel() => AgoraConsultationResultView(
                               questionTitle: result.questionTitle,
                               responses: result.responses,
+                              seenRatioLabel: result.seenRatioLabel,
                               isMultipleChoice: true,
                             ),
                           ConsultationSummaryOpenChoiceResultsViewModel() => AgoraConsultationResultView(

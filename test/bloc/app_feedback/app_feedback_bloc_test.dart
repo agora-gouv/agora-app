@@ -1,9 +1,9 @@
-import 'package:agora/bloc/app_feedback/app_feedback_bloc.dart';
-import 'package:agora/bloc/app_feedback/app_feedback_event.dart';
-import 'package:agora/bloc/app_feedback/app_feedback_state.dart';
+import 'package:agora/app_feedback/bloc/app_feedback_bloc.dart';
+import 'package:agora/app_feedback/bloc/app_feedback_event.dart';
+import 'package:agora/app_feedback/bloc/app_feedback_state.dart';
+import 'package:agora/app_feedback/repository/app_feedback_repository.dart';
 import 'package:agora/domain/feedback/device_informations.dart';
 import 'package:agora/domain/feedback/feedback.dart';
-import 'package:agora/infrastructure/app_feedback/repository/app_feedback_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

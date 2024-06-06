@@ -25,10 +25,10 @@ class ProfileStrings {
       "Êtes-vous sûr(e) de vouloir supprimer vos informations démographiques\u{00A0}?";
 
   static const String participateCharterLink = "https://www.agora.gouv.fr/charte-participation";
-  static const String cguLink = "https://agora.beta.gouv.fr/cgu";
-  static const String feedbackLink = "https://agora.beta.gouv.fr/retours-application";
-  static const String privacyPolicyLink = "https://agora.beta.gouv.fr/politique-confidentialite";
-  static const String legalNoticeLink = "https://agora.beta.gouv.fr/mentions-legales";
+  static const String cguLink = "https://www.agora.gouv.fr/cgu";
+  static const String feedbackLink = "https://www.agora.gouv.fr/retours-application";
+  static const String privacyPolicyLink = "https://www.agora.gouv.fr/politique-confidentialite";
+  static const String legalNoticeLink = "https://www.agora.gouv.fr/mentions-legales";
 
   static const String displayMore = "Afficher plus de notifications";
   static const String retry = "Réessayer";

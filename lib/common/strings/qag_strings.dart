@@ -36,7 +36,7 @@ class QagStrings {
   static const String questionTitle = "Ma question";
   static const String questionHint =
       "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}? (10 caractères minimum)";
-  static const String questionRequiredCondition = "Erreur: la question doit comporter au moins 10 caractères.";
+  static const String questionRequiredCondition = "Erreur\u{00A0}: la question doit comporter au moins 10 caractères.";
   static const String detailsTitle = "Détails supplémentaires";
   static const String detailsDescription =
       "Ajoutez davantage d'informations ou de contexte si vous le souhaitez (facultatif)";
@@ -90,9 +90,9 @@ class QagStrings {
   static const String similarQagDetected = "Question similaire détectée";
 
   static const String shareQaGDeeplink =
-      "👋 J'ai posé une question au gouvernement sur l'application Agora. Aide-moi en la soutenant pour qu'elle ait plus de chance d'être vue\u{00A0}!\n%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
+      "👋 J'ai posé une question au gouvernement sur l'application Agora. Aide-moi en la soutenant pour qu'elle ait plus de chance d'être vue\u{00A0}!\n%1s\nhttps://www.agora.gouv.fr/qags/%2s";
   static const String shareQaGAnsweredDeeplink =
-      "Je pense que la réponse du gouvernement peut t'intéresser 👉\u{00A0}%1s\nhttps://agora.beta.gouv.fr/qags/%2s";
+      "Je pense que la réponse du gouvernement peut t'intéresser 👉\u{00A0}%1s\nhttps://www.agora.gouv.fr/qags/%2s";
 
   static const String returnToQuestion = "Retour à ma question";
   static const String goToAllQuestion = "Voir les questions";

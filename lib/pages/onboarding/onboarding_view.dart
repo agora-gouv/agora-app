@@ -3,6 +3,7 @@ import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/onboarding/onboarding_auto_scroll_page.dart';
@@ -44,7 +45,8 @@ class OnboardingView extends StatelessWidget {
                     focused: true,
                     child: Text(
                       GenericStrings.onboardingStep0Title,
-                      style: AgoraTextStyles.light28,
+                      style:
+                          AgoraTextStyles.light30.copyWith(color: AgoraColors.primaryBlue, fontWeight: FontWeight.w600),
                       textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
                     ),
                   ),

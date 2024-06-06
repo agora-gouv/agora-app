@@ -1,10 +1,10 @@
 class ConsultationStrings {
-  static const String toolbarPart1 = "Participer aux";
-  static const String toolbarPart2 = "consultations";
+  static const String toolbarPart1 = "Consultations";
+  static const String toolbarPart2 = "citoyennes";
   static const String ongoingConsultationPart1 = "Consultations";
   static const String ongoingConsultationPart2 = "en cours";
   static const String finishConsultationPart1 = "Ça a été fait";
-  static const String finishConsultationPart2 = "grâce à vous";
+  static const String finishConsultationPart2 = "avec vous";
   static const String answeredConsultationPart1 = "Mes ";
   static const String answeredConsultationPart2 = "consultations";
   static const String ongoingConsultationEmpty = "Vous avez répondu à toutes les consultations en cours\u{00A0}!";
@@ -53,11 +53,14 @@ class ConsultationStrings {
   static const String shortly = "PROCHAINEMENT";
 
   static const String shareConsultationDeeplink =
-      "Comme moi, tu peux participer à la Consultation\u{00A0}: %1s\nhttps://agora.beta.gouv.fr/consultations/%2s";
+      "Comme moi, tu peux participer à la Consultation\u{00A0}: %1s\nhttps://www.agora.gouv.fr/consultations/%2s";
 
   static const String summaryInformation =
       "Les réponses aux questions ouvertes de cette consultation seront traitées et rendues disponibles sous la forme d'une synthèse une fois la consultation terminée.";
 
   static const String openQuestionInformation =
       "L’analyse des réponses à cette question sera disponible dans la synthèse.";
+
+  static String seenRationInformation(int seenRatio) =>
+      "Cette question a été proposée à $seenRatio% des participants, du fait de leurs réponses précédentes.";
 }

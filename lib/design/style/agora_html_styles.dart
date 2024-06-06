@@ -14,8 +14,9 @@ class AgoraHtmlStyles {
   static const light = FontWeight.w400;
   static const thin = FontWeight.w300;
 
-  static Map<String, Style> htmlStyle(BuildContext context, double fontSize) {
+  static Map<String, Style> htmlStyle(BuildContext context, double fontSize, TextAlign textAlign) {
     return {
+      "html": Style(textAlign: textAlign),
       "body": AgoraHtmlStyles._bodyStyle(fontSize),
       "ul": AgoraHtmlStyles._listStyle(fontSize),
       "ol": AgoraHtmlStyles._bodyStyle(fontSize),

@@ -1,30 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-class ConsultationSummaryViewModel extends Equatable {
-  final String title;
-  final String participantCount;
-  final List<ConsultationSummaryResultsViewModel> results;
-  final ConsultationSummaryEtEnsuiteViewModel etEnsuite;
-  final ConsultationSummaryPresentationViewModel presentation;
-
-  ConsultationSummaryViewModel({
-    required this.title,
-    required this.participantCount,
-    required this.results,
-    required this.etEnsuite,
-    required this.presentation,
-  });
-
-  @override
-  List<Object?> get props => [
-        title,
-        participantCount,
-        results,
-        etEnsuite,
-        presentation,
-      ];
-}
-
 sealed class ConsultationSummaryResultsViewModel extends Equatable {
   final String questionTitle;
   final int order;
@@ -39,11 +14,13 @@ sealed class ConsultationSummaryResultsViewModel extends Equatable {
 }
 
 class ConsultationSummaryUniqueChoiceResultsViewModel extends ConsultationSummaryResultsViewModel {
+  final String? seenRatioLabel;
   final List<ConsultationSummaryResponseViewModel> responses;
 
   ConsultationSummaryUniqueChoiceResultsViewModel({
     required super.questionTitle,
     required super.order,
+    required this.seenRatioLabel,
     required this.responses,
   });
 
@@ -52,11 +29,13 @@ class ConsultationSummaryUniqueChoiceResultsViewModel extends ConsultationSummar
 }
 
 class ConsultationSummaryMultipleChoicesResultsViewModel extends ConsultationSummaryResultsViewModel {
+  final String? seenRatioLabel;
   final List<ConsultationSummaryResponseViewModel> responses;
 
   ConsultationSummaryMultipleChoicesResultsViewModel({
     required super.questionTitle,
     required super.order,
+    required this.seenRatioLabel,
     required this.responses,
   });
 

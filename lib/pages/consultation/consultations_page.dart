@@ -47,6 +47,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
         create: (BuildContext context) {
           return ConsultationBloc(
             consultationRepository: RepositoryManager.getConsultationRepository(),
+            concertationRepository: RepositoryManager.getConcertationRepository(),
           )..add(FetchConsultationsEvent());
         },
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
@@ -63,11 +64,11 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
                       items: [
                         AgoraRichTextItem(
                           text: "${ConsultationStrings.toolbarPart1}\n",
-                          style: AgoraRichTextItemStyle.regular,
+                          style: AgoraRichTextItemStyle.bold,
                         ),
                         AgoraRichTextItem(
                           text: ConsultationStrings.toolbarPart2,
-                          style: AgoraRichTextItemStyle.bold,
+                          style: AgoraRichTextItemStyle.regular,
                         ),
                       ],
                     ),

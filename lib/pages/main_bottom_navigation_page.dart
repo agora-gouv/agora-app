@@ -20,8 +20,8 @@ class MainBottomNavigationPage extends StatefulWidget {
 
 class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
   final List<MainBottomNavigationPages> pages = [
-    MainBottomNavigationPages.consultation,
     MainBottomNavigationPages.qag,
+    MainBottomNavigationPages.consultation,
   ];
   late int _currentIndex;
 
@@ -59,13 +59,13 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
         return AgoraBottomNavigationBarItem(
           activateIcon: "ic_consultation.svg",
           inactivateIcon: "ic_consultation_inactivate.svg",
-          label: "Consultations",
+          label: "Consultations citoyennes",
         );
       case MainBottomNavigationPages.qag:
         return AgoraBottomNavigationBarItem(
           activateIcon: "ic_question.svg",
           inactivateIcon: "ic_question_inactivate.svg",
-          label: "Questions citoyennes",
+          label: "Questions au Gouvernement",
         );
     }
   }

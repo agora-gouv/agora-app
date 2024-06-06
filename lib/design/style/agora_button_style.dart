@@ -7,126 +7,126 @@ import 'package:flutter/material.dart';
 
 class AgoraButtonStyle {
   static ButtonStyle primaryButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
+    backgroundColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.disabled)) {
+        if (states.contains(WidgetState.disabled)) {
           return AgoraColors.gravelFint;
         } else {
           return AgoraColors.primaryBlue;
         }
       },
     ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.primaryButton),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
-    padding: MaterialStateProperty.all(
+    overlayColor: WidgetStateProperty.all(AgoraColors.overlay),
+    textStyle: WidgetStateProperty.all(AgoraTextStyles.primaryButton),
+    elevation: WidgetStateProperty.all(0),
+    shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    padding: WidgetStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    minimumSize: kIsWeb ? WidgetStateProperty.all(Size(0, 48)) : WidgetStateProperty.all(Size(0, 0)),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle blueBorderButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
+    backgroundColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.disabled)) {
+        if (states.contains(WidgetState.disabled)) {
           return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.transparent;
         }
       },
     ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.primaryBlueTextButton),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
-    side: MaterialStateProperty.all(BorderSide(color: AgoraColors.primaryBlue, width: 1.0, style: BorderStyle.solid)),
-    padding: MaterialStateProperty.all(
+    overlayColor: WidgetStateProperty.all(AgoraColors.overlay),
+    textStyle: WidgetStateProperty.all(AgoraTextStyles.primaryBlueTextButton),
+    elevation: WidgetStateProperty.all(0),
+    shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    side: WidgetStateProperty.all(BorderSide(color: AgoraColors.primaryBlue, width: 1.0, style: BorderStyle.solid)),
+    padding: WidgetStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    minimumSize: kIsWeb ? WidgetStateProperty.all(Size(0, 48)) : WidgetStateProperty.all(Size(0, 0)),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle redBorderButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
+    backgroundColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.disabled)) {
+        if (states.contains(WidgetState.disabled)) {
           return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.transparent;
         }
       },
     ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.redTextButton),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
-    side: MaterialStateProperty.all(BorderSide(color: AgoraColors.red, width: 1.0, style: BorderStyle.solid)),
-    padding: MaterialStateProperty.all(
+    overlayColor: WidgetStateProperty.all(AgoraColors.overlay),
+    textStyle: WidgetStateProperty.all(AgoraTextStyles.redTextButton),
+    elevation: WidgetStateProperty.all(0),
+    shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    side: WidgetStateProperty.all(BorderSide(color: AgoraColors.red, width: 1.0, style: BorderStyle.solid)),
+    padding: WidgetStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    minimumSize: kIsWeb ? WidgetStateProperty.all(Size(0, 48)) : WidgetStateProperty.all(Size(0, 0)),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle greyButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
+    backgroundColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.disabled)) {
+        if (states.contains(WidgetState.disabled)) {
           return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.steam;
         }
       },
     ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
-    padding: MaterialStateProperty.all(
+    overlayColor: WidgetStateProperty.all(AgoraColors.overlay),
+    textStyle: WidgetStateProperty.all(AgoraTextStyles.lightGreyButton),
+    elevation: WidgetStateProperty.all(0),
+    shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    padding: WidgetStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    minimumSize: kIsWeb ? WidgetStateProperty.all(Size(0, 48)) : WidgetStateProperty.all(Size(0, 0)),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle lightGreyButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
+    backgroundColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.disabled)) {
+        if (states.contains(WidgetState.disabled)) {
           return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.cascadingWhite;
         }
       },
     ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
-    padding: MaterialStateProperty.all(
+    overlayColor: WidgetStateProperty.all(AgoraColors.overlay),
+    textStyle: WidgetStateProperty.all(AgoraTextStyles.lightGreyButton),
+    elevation: WidgetStateProperty.all(0),
+    shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded))),
+    padding: WidgetStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    minimumSize: kIsWeb ? WidgetStateProperty.all(Size(0, 48)) : WidgetStateProperty.all(Size(0, 0)),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 
   static ButtonStyle lightGreyWithBorderButtonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.resolveWith(
+    backgroundColor: WidgetStateProperty.resolveWith(
       (states) {
-        if (states.contains(MaterialState.disabled)) {
+        if (states.contains(WidgetState.disabled)) {
           return AgoraColors.stereotypicalDuck;
         } else {
           return AgoraColors.cascadingWhite;
         }
       },
     ),
-    overlayColor: MaterialStateProperty.all(AgoraColors.overlay),
-    textStyle: MaterialStateProperty.all(AgoraTextStyles.lightGreyButton),
-    elevation: MaterialStateProperty.all(0),
-    shape: MaterialStateProperty.all(
+    overlayColor: WidgetStateProperty.all(AgoraColors.overlay),
+    textStyle: WidgetStateProperty.all(AgoraTextStyles.lightGreyButton),
+    elevation: WidgetStateProperty.all(0),
+    shape: WidgetStateProperty.all(
       RoundedRectangleBorder(
         side: BorderSide(
           color: AgoraColors.border,
@@ -136,10 +136,10 @@ class AgoraButtonStyle {
         borderRadius: BorderRadius.all(AgoraCorners.rounded),
       ),
     ),
-    padding: MaterialStateProperty.all(
+    padding: WidgetStateProperty.all(
       EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     ),
-    minimumSize: kIsWeb ? MaterialStateProperty.all(Size(0, 48)) : MaterialStateProperty.all(Size(0, 0)),
+    minimumSize: kIsWeb ? WidgetStateProperty.all(Size(0, 48)) : WidgetStateProperty.all(Size(0, 0)),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
   );
 }

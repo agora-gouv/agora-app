@@ -20,10 +20,26 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle regular40 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 40,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
   static const TextStyle regular26 = TextStyle(
     fontFamily: marianne,
     fontWeight: regular,
     fontSize: 26,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle bold34 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: FontWeight.w600,
+    fontSize: 34.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );
@@ -259,6 +275,14 @@ class AgoraTextStyles {
     fontFamily: marianne,
     fontWeight: regular,
     fontSize: 12.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle light30 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 30.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );

@@ -7,10 +7,10 @@ extension NotificationMessageExtension on String? {
         return NotificationMessageType.qagDetails;
       case "consultationDetails":
         return NotificationMessageType.consultationDetails;
-      case "consultationResults":
-        return NotificationMessageType.consultationResults;
       case "qagHome":
         return NotificationMessageType.homeQags;
+      case "consultationHome":
+        return NotificationMessageType.homeConsultations;
       default:
         return null;
     }

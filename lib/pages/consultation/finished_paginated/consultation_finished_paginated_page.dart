@@ -4,6 +4,7 @@ import 'package:agora/bloc/consultation/finished_paginated/consultation_finished
 import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -36,6 +37,7 @@ class ConsultationPaginatedPage extends StatelessWidget {
         BlocProvider(
           create: (BuildContext context) => ConsultationPaginatedBloc(
             consultationRepository: RepositoryManager.getConsultationRepository(),
+            concertationRepository: RepositoryManager.getConcertationRepository(),
           )..add(FetchConsultationPaginatedEvent(pageNumber: initialPage, type: type)),
         ),
       ],
@@ -79,7 +81,7 @@ class ConsultationPaginatedPage extends StatelessWidget {
     if (largerThanMobile) {
       for (var index = 0; index < consultationFinishedViewModels.length; index = index + 2) {
         final finishedViewModel1 = consultationFinishedViewModels[index];
-        ConsultationFinishedPaginatedViewModel? finishedViewModel2;
+        ConsultationPaginatedViewModel? finishedViewModel2;
         if (index + 1 < consultationFinishedViewModels.length) {
           finishedViewModel2 = consultationFinishedViewModels[index + 1];
         }
@@ -96,7 +98,7 @@ class ConsultationPaginatedPage extends StatelessWidget {
                     imageUrl: finishedViewModel1.coverUrl,
                     label: finishedViewModel1.label,
                     style: AgoraConsultationFinishedStyle.grid,
-                    onClick: () => _onCardClick(context, finishedViewModel1.id),
+                    onClick: () => _onCardClick(context, finishedViewModel1.id, finishedViewModel1.externalLink),
                     index: consultationFinishedViewModels.indexOf(finishedViewModel1),
                     maxIndex: consultationFinishedViewModels.length,
                   ),
@@ -111,7 +113,7 @@ class ConsultationPaginatedPage extends StatelessWidget {
                           imageUrl: finishedViewModel2.coverUrl,
                           label: finishedViewModel2.label,
                           style: AgoraConsultationFinishedStyle.grid,
-                          onClick: () => _onCardClick(context, finishedViewModel2!.id),
+                          onClick: () => _onCardClick(context, finishedViewModel2!.id, finishedViewModel2.externalLink),
                           index: consultationFinishedViewModels.indexOf(finishedViewModel2),
                           maxIndex: consultationFinishedViewModels.length,
                         ),
@@ -133,7 +135,7 @@ class ConsultationPaginatedPage extends StatelessWidget {
             imageUrl: finishedViewModel.coverUrl,
             label: finishedViewModel.label,
             style: AgoraConsultationFinishedStyle.column,
-            onClick: () => _onCardClick(context, finishedViewModel.id),
+            onClick: () => _onCardClick(context, finishedViewModel.id, finishedViewModel.externalLink),
             index: consultationFinishedViewModels.indexOf(finishedViewModel),
             maxIndex: consultationFinishedViewModels.length,
           ),
@@ -187,19 +189,23 @@ class ConsultationPaginatedPage extends StatelessWidget {
     return widgets;
   }
 
-  void _onCardClick(BuildContext context, String consultationId) {
+  void _onCardClick(BuildContext context, String consultationId, String? externalLink) {
     TrackerHelper.trackClick(
       clickName: "${AnalyticsEventNames.finishedConsultation} $consultationId",
       widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
     );
-    Navigator.pushNamed(
-      context,
-      DynamicConsultationPage.routeName,
-      arguments: DynamicConsultationPageArguments(
-        consultationId: consultationId,
-        shouldReloadConsultationsWhenPop: false,
-      ),
-    );
+    if (externalLink != null) {
+      LaunchUrlHelper.webview(context, externalLink);
+    } else {
+      Navigator.pushNamed(
+        context,
+        DynamicConsultationPage.routeName,
+        arguments: DynamicConsultationPageArguments(
+          consultationId: consultationId,
+          shouldReloadConsultationsWhenPop: false,
+        ),
+      );
+    }
   }
 }
 

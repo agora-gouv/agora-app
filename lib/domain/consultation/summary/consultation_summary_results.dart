@@ -14,29 +14,33 @@ abstract class ConsultationSummaryResults extends Equatable {
 }
 
 class ConsultationSummaryUniqueChoiceResults extends ConsultationSummaryResults {
+  final int seenRatio;
   final List<ConsultationSummaryResponse> responses;
 
   ConsultationSummaryUniqueChoiceResults({
     required super.questionTitle,
     required super.order,
+    required this.seenRatio,
     required this.responses,
   });
 
   @override
-  List<Object> get props => [questionTitle, order, responses];
+  List<Object> get props => [questionTitle, order, seenRatio, responses];
 }
 
 class ConsultationSummaryMultipleChoicesResults extends ConsultationSummaryResults {
+  final int seenRatio;
   final List<ConsultationSummaryResponse> responses;
 
   ConsultationSummaryMultipleChoicesResults({
     required super.questionTitle,
     required super.order,
+    required this.seenRatio,
     required this.responses,
   });
 
   @override
-  List<Object> get props => [questionTitle, order, responses];
+  List<Object> get props => [questionTitle, order, seenRatio, responses];
 }
 
 class ConsultationSummaryOpenResults extends ConsultationSummaryResults {

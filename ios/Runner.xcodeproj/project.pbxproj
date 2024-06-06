@@ -544,7 +544,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E1FC3E750F1BD9D44D7C625C /* Pods-Runner.debug-sandbox.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-sandbox;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -630,7 +630,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7E72359137D16C12D728D1FF /* Pods-Runner.profile-sandbox.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-sandbox;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -717,7 +717,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A356CDD1EF02077E48023488 /* Pods-Runner.release-sandbox.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-sandbox;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Octo Technology Mobile (8PN3J7J93H)";

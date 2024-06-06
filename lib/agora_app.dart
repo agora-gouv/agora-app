@@ -3,13 +3,17 @@ import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/log/log.dart';
 import 'package:agora/common/manager/service_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/common/observer/matomo_route_observer.dart';
 import 'package:agora/common/observer/navigation_observer.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
 import 'package:agora/pages/loading_page.dart';
+import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
+import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -36,7 +40,9 @@ class AgoraApp extends StatefulWidget {
 
 class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
   final deeplinkHelper = DeeplinkHelper();
-  final redirection = Redirection();
+  void Function(BuildContext) onRedirect = (context) {
+    Navigator.pushReplacementNamed(context, WelcomePage.routeName);
+  };
 
   @override
   void initState() {
@@ -44,17 +50,14 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this); // for didChangeAppLifecycleState
 
     if (widget.shouldShowOnboarding) {
-      redirection.showOnboarding();
+      onRedirect = (context) {
+        Navigator.pushReplacementNamed(context, QagsPage.routeName);
+        Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
+          StorageManager.getOnboardingStorageClient().save(false);
+        });
+      };
     }
     if (!kIsWeb) {
-      deeplinkHelper.onInitial(
-        onConsultationSuccessCallback: (id) {
-          redirection.showConsultationDetails(id);
-        },
-        onQagSuccessCallback: (id) {
-          redirection.showQagDetails(id);
-        },
-      );
       deeplinkHelper.onGetUriLinkStream(
         onConsultationSuccessCallback: (id) {
           navigatorKey.currentState?.pushNamed(
@@ -130,7 +133,8 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
       onGenerateRoute: (RouteSettings settings) => AgoraAppRouter.handleAgoraGenerateRoute(
         settings: settings,
         sharedPref: widget.sharedPref,
-        redirection: redirection,
+        deepLinkHelper: deeplinkHelper,
+        onRedirect: onRedirect,
         agoraAppIcon: widget.agoraAppIcon,
       ),
       theme: ThemeData(
@@ -141,29 +145,5 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
       ),
       debugShowCheckedModeBanner: false,
     );
-  }
-}
-
-class Redirection {
-  bool shouldShowOnboarding = false;
-
-  bool shouldShowQagDetails = false;
-  String? qagId;
-
-  bool shouldShowConsultationDetails = false;
-  String? consultationId;
-
-  void showOnboarding() {
-    shouldShowOnboarding = true;
-  }
-
-  void showQagDetails(String id) {
-    shouldShowQagDetails = true;
-    qagId = id;
-  }
-
-  void showConsultationDetails(String id) {
-    shouldShowConsultationDetails = true;
-    consultationId = id;
   }
 }

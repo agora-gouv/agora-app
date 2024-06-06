@@ -2,16 +2,11 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/consultation/consultation_finished_paginated.dart';
 import 'package:agora/domain/consultation/consultations_error_type.dart';
-import 'package:agora/domain/consultation/details/consultation_details.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
 import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
 import 'package:agora/domain/consultation/questions/consultation_questions.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_et_ensuite.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_presentation.dart';
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_questions_builder.dart';
 import 'package:agora/infrastructure/consultation/repository/builder/consultation_responses_builder.dart';
@@ -33,10 +28,6 @@ abstract class ConsultationRepository {
     required int pageNumber,
   });
 
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
-    required String consultationId,
-  });
-
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
   });
@@ -44,10 +35,6 @@ abstract class ConsultationRepository {
   Future<SendConsultationResponsesRepositoryResponse> sendConsultationResponses({
     required String consultationId,
     required List<ConsultationQuestionResponses> questionsResponses,
-  });
-
-  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
-    required String consultationId,
   });
 
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId);
@@ -96,7 +83,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: ongoingConsultation["coverUrl"] as String,
             thematique: (ongoingConsultation["thematique"] as Map).toThematique(),
             endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
-            highlightLabel: ongoingConsultation["highlightLabel"] as String?,
+            label: ongoingConsultation["highlightLabel"] as String?,
           );
         }).toList(),
         finishedConsultations: finishedConsultations.map((finishedConsultation) {
@@ -106,6 +93,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
+            updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
           );
         }).toList(),
         answeredConsultations: answeredConsultations.map((answeredConsultation) {
@@ -138,7 +126,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         consultationsPaginated: (response.data["consultations"] as List).map((consultation) {
-          return ConsultationFinishedPaginated(
+          return ConsultationFinished(
             id: consultation["id"] as String,
             title: consultation["title"] as String,
             coverUrl: consultation["coverUrl"] as String,
@@ -162,48 +150,19 @@ class ConsultationDioRepository extends ConsultationRepository {
       return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         consultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
-          return ConsultationFinishedPaginated(
+          return ConsultationFinished(
             id: finishedConsultation["id"] as String,
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
+            updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
           );
         }).toList(),
       );
     } catch (e, s) {
       sentryWrapper?.captureException(e, s);
       return GetConsultationsFinishedPaginatedFailedResponse();
-    }
-  }
-
-  @override
-  Future<GetConsultationDetailsRepositoryResponse> fetchConsultationDetails({
-    required String consultationId,
-  }) async {
-    try {
-      final response = await httpClient.get(
-        "/consultations/$consultationId",
-      );
-      return GetConsultationDetailsSucceedResponse(
-        consultationDetails: ConsultationDetails(
-          id: response.data["id"] as String,
-          title: response.data["title"] as String,
-          coverUrl: response.data["coverUrl"] as String,
-          thematique: (response.data["thematique"] as Map).toThematique(),
-          endDate: (response.data["endDate"] as String).parseToDateTime(),
-          questionCount: response.data["questionCount"] as String,
-          estimatedTime: response.data["estimatedTime"] as String,
-          participantCount: response.data["participantCount"] as int,
-          participantCountGoal: response.data["participantCountGoal"] as int,
-          description: response.data["description"] as String,
-          tipsDescription: response.data["tipsDescription"] as String,
-          hasAnswered: response.data["hasAnswered"] as bool,
-        ),
-      );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
-      return GetConsultationDetailsFailedResponse();
     }
   }
 
@@ -287,75 +246,6 @@ class ConsultationDioRepository extends ConsultationRepository {
     } catch (e, s) {
       sentryWrapper?.captureException(e, s);
       return DynamicConsultationsResultsErrorResponse();
-    }
-  }
-
-  @override
-  Future<GetConsultationSummaryRepositoryResponse> fetchConsultationSummary({
-    required String consultationId,
-  }) async {
-    try {
-      final asyncResponse = httpClient.get(
-        "/consultations/$consultationId/responses",
-      );
-      final (_, userResponses, _) = await storageClient.get(consultationId);
-      final response = await asyncResponse;
-      final etEnsuite = response.data["etEnsuite"];
-      final presentation = response.data["presentation"];
-      final explanations = etEnsuite["explanations"] as List;
-      final etEnsuiteVideo = etEnsuite["video"] as Map?;
-      final etEnsuiteConclusion = etEnsuite["conclusion"] as Map?;
-      final summary = ConsultationSummary(
-        title: response.data["title"] as String,
-        participantCount: response.data["participantCount"] as int,
-        results: ConsultationResponsesMapper.toConsultationSummaryResults(
-          uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
-          multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
-          userResponses: userResponses,
-          questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
-        ),
-        etEnsuite: ConsultationSummaryEtEnsuite(
-          step: etEnsuite["step"] as int,
-          description: etEnsuite["description"] as String,
-          explanationsTitle: etEnsuite["explanationsTitle"] as String?,
-          explanations: explanations.map((explanation) {
-            return ConsultationSummaryEtEnsuiteExplanation(
-              isTogglable: explanation["isTogglable"] as bool,
-              title: explanation["title"] as String,
-              intro: explanation["intro"] as String,
-              imageUrl: (explanation['image'] as Map?)?['url'] as String?,
-              imageDescription: (explanation['image'] as Map?)?['description'] as String?,
-              description: explanation["description"] as String,
-            );
-          }).toList(),
-          video: etEnsuiteVideo != null
-              ? ConsultationSummaryEtEnsuiteVideo(
-                  title: etEnsuiteVideo["title"] as String,
-                  intro: etEnsuiteVideo["intro"] as String,
-                  videoUrl: etEnsuiteVideo["videoUrl"] as String,
-                  videoWidth: etEnsuiteVideo["videoWidth"] as int,
-                  videoHeight: etEnsuiteVideo["videoHeight"] as int,
-                  transcription: etEnsuiteVideo["transcription"] as String,
-                )
-              : null,
-          conclusion: etEnsuiteConclusion != null
-              ? ConsultationSummaryEtEnsuiteConclusion(
-                  title: etEnsuiteConclusion["title"] as String,
-                  description: etEnsuiteConclusion["description"] as String,
-                )
-              : null,
-        ),
-        presentation: ConsultationSummaryPresentation(
-          startDate: (presentation["startDate"] as String).parseToDateTime(),
-          endDate: (presentation["endDate"] as String).parseToDateTime(),
-          description: presentation["description"] as String,
-          tipDescription: presentation["tipsDescription"] as String,
-        ),
-      );
-      return GetConsultationSummarySucceedResponse(consultationSummary: summary);
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
-      return GetConsultationSummaryFailedResponse();
     }
   }
 
@@ -499,7 +389,7 @@ abstract class GetConsultationsFinishedPaginatedRepositoryResponse extends Equat
 
 class GetConsultationsPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
   final int maxPage;
-  final List<ConsultationFinishedPaginated> consultationsPaginated;
+  final List<ConsultationFinished> consultationsPaginated;
 
   GetConsultationsPaginatedSucceedResponse({
     required this.maxPage,
@@ -511,22 +401,6 @@ class GetConsultationsPaginatedSucceedResponse extends GetConsultationsFinishedP
 }
 
 class GetConsultationsFinishedPaginatedFailedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {}
-
-abstract class GetConsultationDetailsRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class GetConsultationDetailsSucceedResponse extends GetConsultationDetailsRepositoryResponse {
-  final ConsultationDetails consultationDetails;
-
-  GetConsultationDetailsSucceedResponse({required this.consultationDetails});
-
-  @override
-  List<Object> get props => [consultationDetails];
-}
-
-class GetConsultationDetailsFailedResponse extends GetConsultationDetailsRepositoryResponse {}
 
 abstract class GetConsultationQuestionsRepositoryResponse extends Equatable {
   @override
@@ -559,22 +433,6 @@ class SendConsultationResponsesSucceedResponse extends SendConsultationResponses
 }
 
 class SendConsultationResponsesFailureResponse extends SendConsultationResponsesRepositoryResponse {}
-
-abstract class GetConsultationSummaryRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class GetConsultationSummarySucceedResponse extends GetConsultationSummaryRepositoryResponse {
-  final ConsultationSummary consultationSummary;
-
-  GetConsultationSummarySucceedResponse({required this.consultationSummary});
-
-  @override
-  List<Object> get props => [consultationSummary];
-}
-
-class GetConsultationSummaryFailedResponse extends GetConsultationSummaryRepositoryResponse {}
 
 sealed class DynamicConsultationResponse extends Equatable {}
 

@@ -1,21 +1,23 @@
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:equatable/equatable.dart';
 
-class ConsultationOngoing extends Equatable {
+class Consultation extends Equatable {
   final String id;
   final String title;
   final String coverUrl;
   final Thematique thematique;
-  final DateTime endDate;
-  final String? highlightLabel;
+  final String? label;
+  final DateTime? updateDate;
+  final DateTime? endDate;
 
-  ConsultationOngoing({
+  Consultation({
     required this.id,
     required this.title,
     required this.coverUrl,
     required this.thematique,
-    required this.endDate,
-    required this.highlightLabel,
+    this.label,
+    this.updateDate,
+    this.endDate,
   });
 
   @override
@@ -24,57 +26,69 @@ class ConsultationOngoing extends Equatable {
         title,
         coverUrl,
         thematique,
+        label,
+        updateDate,
         endDate,
-        highlightLabel,
       ];
 }
 
-class ConsultationFinished extends Equatable {
-  final String id;
-  final String title;
-  final String coverUrl;
-  final Thematique thematique;
-  final String? label;
+class ConsultationOngoing extends Consultation {
+  ConsultationOngoing({
+    required super.id,
+    required super.title,
+    required super.coverUrl,
+    required super.thematique,
+    super.label,
+    super.endDate,
+  });
 
+  @override
+  List<Object?> get props => [...super.props];
+}
+
+class ConsultationFinished extends Consultation {
   ConsultationFinished({
-    required this.id,
-    required this.title,
-    required this.coverUrl,
-    required this.thematique,
-    required this.label,
+    required super.id,
+    required super.title,
+    required super.coverUrl,
+    required super.thematique,
+    super.label,
+    super.updateDate,
+  });
+
+  @override
+  List<Object?> get props => [...super.props];
+}
+
+class Concertation extends Consultation {
+  final String externalLink;
+
+  Concertation({
+    required super.id,
+    required super.title,
+    required super.coverUrl,
+    required super.thematique,
+    super.label,
+    super.updateDate,
+    required this.externalLink,
   });
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        coverUrl,
-        thematique,
-        label,
+        ...super.props,
+        externalLink,
       ];
 }
 
-class ConsultationAnswered extends Equatable {
-  final String id;
-  final String title;
-  final String coverUrl;
-  final Thematique thematique;
-  final String? label;
-
+class ConsultationAnswered extends Consultation {
   ConsultationAnswered({
-    required this.id,
-    required this.title,
-    required this.coverUrl,
-    required this.thematique,
-    required this.label,
+    required super.id,
+    required super.title,
+    required super.coverUrl,
+    required super.thematique,
+    super.label,
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        title,
-        coverUrl,
-        thematique,
-        label,
-      ];
+  List<Object?> get props => [...super.props];
 }

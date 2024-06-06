@@ -25,6 +25,7 @@ void main() {
           ConsultationSummaryUniqueChoiceResults(
             questionTitle: "Les déplacements professionnels en covoiturage",
             order: 1,
+            seenRatio: 100,
             responses: [
               ConsultationSummaryResponse(label: "En voiture seul", ratio: 65, isUserResponse: true),
               ConsultationSummaryResponse(label: "Autre", ratio: 35),
