@@ -4,6 +4,7 @@ import 'package:agora/bloc/consultation/consultation_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/list_extension.dart';
+import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
@@ -133,14 +134,18 @@ class ConsultationsFinishedSection extends StatelessWidget {
                 clickName: "${AnalyticsEventNames.finishedConsultation} ${finishedViewModel.id}",
                 widgetName: AnalyticsScreenNames.consultationsPage,
               );
-              Navigator.pushNamed(
-                context,
-                DynamicConsultationPage.routeName,
-                arguments: DynamicConsultationPageArguments(
-                  consultationId: finishedViewModel.id,
-                  shouldReloadConsultationsWhenPop: false,
-                ),
-              );
+              if (finishedViewModel is ConsultationFinishedViewModel) {
+                Navigator.pushNamed(
+                  context,
+                  DynamicConsultationPage.routeName,
+                  arguments: DynamicConsultationPageArguments(
+                    consultationId: finishedViewModel.id,
+                    shouldReloadConsultationsWhenPop: false,
+                  ),
+                );
+              } else if (finishedViewModel is ConcertationViewModel) {
+                LaunchUrlHelper.webview(context, finishedViewModel.externalLink);
+              }
             },
             index: finishedViewModels.indexOf(finishedViewModel) + 1,
             maxIndex: finishedViewModels.length + 1,
