@@ -69,7 +69,7 @@ class _Header extends StatelessWidget {
       child: Column(
         crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
-          SizedBox(height: AgoraSpacings.x0_75),
+          SizedBox(height: AgoraSpacings.x2),
           _LogoGouvernement(),
           SizedBox(height: AgoraSpacings.base),
           _Titre(largerThanMobile: largerThanMobile),
@@ -265,7 +265,7 @@ class _ALaUne extends StatelessWidget {
                           ),
                           SizedBox(height: AgoraSpacings.x0_75),
                           AgoraRichText(
-                            policeStyle: AgoraRichTextPoliceStyle.police14Interligne140,
+                            policeStyle: AgoraRichTextPoliceStyle.police16Interligne140,
                             textAlign: TextAlign.end,
                             items: [
                               ...parseSimpleHtml(aLaUne.description)
@@ -301,7 +301,7 @@ class _ALaUneBouton extends StatelessWidget {
         Expanded(
           child: Text(
             aLaUne.actionText,
-            style: AgoraTextStyles.regular14,
+            style: AgoraTextStyles.regular12,
             textAlign: TextAlign.right,
           ),
         ),
