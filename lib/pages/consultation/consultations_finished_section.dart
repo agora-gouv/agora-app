@@ -22,11 +22,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intersperse/intersperse.dart';
 
 class ConsultationsFinishedSection extends StatelessWidget {
-  final List<ConsultationFinishedViewModel> finishedViewModels;
+  final List<ConsultationViewModel> finishedViewModels;
   final bool shouldDisplayAllButton;
 
   const ConsultationsFinishedSection({
-    super.key,
     required this.finishedViewModels,
     required this.shouldDisplayAllButton,
   });

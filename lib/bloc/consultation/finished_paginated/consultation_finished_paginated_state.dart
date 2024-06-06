@@ -2,7 +2,7 @@ import 'package:agora/bloc/consultation/finished_paginated/consultation_finished
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationPaginatedState extends Equatable {
-  final List<ConsultationFinishedPaginatedViewModel> consultationPaginatedViewModels;
+  final List<ConsultationPaginatedViewModel> consultationPaginatedViewModels;
   final int currentPageNumber;
   final int maxPage;
 

@@ -8,6 +8,7 @@ import 'package:agora/common/helper/flavor_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
 import 'package:agora/infrastructure/consultation/repository/mocks_consultation_repository.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
@@ -242,6 +243,18 @@ class RepositoryManager {
     }
     final repository = MocksWelcomeRepository(
       httpClient: _getAgoraDioHttpClient(sharedPref: sharedPref),
+      sentryWrapper: HelperManager.getSentryWrapper(),
+    );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static ConcertationDioRepository getConcertationRepository() {
+    if (GetIt.instance.isRegistered<ConcertationDioRepository>()) {
+      return GetIt.instance.get<ConcertationDioRepository>();
+    }
+    final repository = ConcertationDioRepository(
+      httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);

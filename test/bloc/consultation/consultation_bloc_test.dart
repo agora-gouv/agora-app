@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import '../../fakes/concertation/fakes_concertation_repository.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
 
 void main() {
@@ -20,6 +21,7 @@ void main() {
       "when repository succeed - should emit success state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -31,7 +33,7 @@ void main() {
               coverUrl: "coverUrl1",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
-              highlightLabel: "Plus que 3 jours",
+              label: "Plus que 3 jours",
             ),
           ],
           finishedViewModels: [
@@ -41,6 +43,14 @@ void main() {
               coverUrl: "coverUrl2",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+            ),
+            ConcertationViewModel(
+              id: "concertationId1",
+              title: "Développer le covoiturage",
+              coverUrl: "coverUrl1",
+              externalLink: "externalLink1",
+              thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
+              label: 'Plus que 3 jours',
             ),
           ],
           answeredViewModels: [
@@ -62,6 +72,7 @@ void main() {
       "when repository succeed and finished consultation is empty - should emit success state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -73,7 +84,7 @@ void main() {
               coverUrl: "coverUrl",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
-              highlightLabel: null,
+              label: null,
             ),
           ],
           finishedViewModels: [
@@ -96,6 +107,7 @@ void main() {
       "when repository failed with timeout - should emit failure state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationTimeoutFailureRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -108,6 +120,7 @@ void main() {
       "when repository failed - should emit failure state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationFailureRepository(),
+        concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [

@@ -1,19 +1,21 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:equatable/equatable.dart';
 
-class ConsultationFinishedPaginatedViewModel extends Equatable {
+class ConsultationPaginatedViewModel extends Equatable {
   final String id;
   final String title;
   final String coverUrl;
   final ThematiqueViewModel thematique;
   final String? label;
+  final String? externalLink;
 
-  ConsultationFinishedPaginatedViewModel({
+  ConsultationPaginatedViewModel({
     required this.id,
     required this.title,
     required this.coverUrl,
     required this.thematique,
     required this.label,
+    this.externalLink,
   });
 
   @override
@@ -23,5 +25,6 @@ class ConsultationFinishedPaginatedViewModel extends Equatable {
         coverUrl,
         thematique,
         label,
+        externalLink,
       ];
 }

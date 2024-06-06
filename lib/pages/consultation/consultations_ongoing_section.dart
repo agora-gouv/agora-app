@@ -116,7 +116,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
                     thematique: ongoingViewModel1.thematique,
                     title: ongoingViewModel1.title,
                     endDate: ongoingViewModel1.endDate,
-                    highlightLabel: ongoingViewModel1.highlightLabel,
+                    highlightLabel: ongoingViewModel1.label,
                     style: AgoraConsultationOngoingCardStyle.gridLeft,
                   ),
                 ),
@@ -128,7 +128,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
                           thematique: ongoingViewModel2.thematique,
                           title: ongoingViewModel2.title,
                           endDate: ongoingViewModel2.endDate,
-                          highlightLabel: ongoingViewModel2.highlightLabel,
+                          highlightLabel: ongoingViewModel2.label,
                           style: AgoraConsultationOngoingCardStyle.gridRight,
                         ),
                       )
@@ -148,7 +148,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
             thematique: ongoingViewModel.thematique,
             title: ongoingViewModel.title,
             endDate: ongoingViewModel.endDate,
-            highlightLabel: ongoingViewModel.highlightLabel,
+            highlightLabel: ongoingViewModel.label,
             style: AgoraConsultationOngoingCardStyle.column,
           ),
         );
