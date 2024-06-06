@@ -100,9 +100,9 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
                   },
                   children: [
                     OnboardingView(animationController),
-                    OnboardingStepView(step: OnboardingStep.participate),
-                    OnboardingStepView(step: OnboardingStep.askYourQuestion),
-                    OnboardingStepView(step: OnboardingStep.invent),
+                    OnboardingStepView(step: OnboardingStep.question),
+                    OnboardingStepView(step: OnboardingStep.reponse),
+                    OnboardingStepView(step: OnboardingStep.consultation),
                   ],
                 ),
               ),

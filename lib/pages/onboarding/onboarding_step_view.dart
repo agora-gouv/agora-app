@@ -9,7 +9,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
-enum OnboardingStep { participate, askYourQuestion, invent }
+enum OnboardingStep { consultation, question, reponse }
 
 class OnboardingStepView extends StatelessWidget {
   final OnboardingStep step;
@@ -78,36 +78,36 @@ class OnboardingStepView extends StatelessWidget {
 
   List<AgoraRichTextItem> _buildTitle() {
     switch (step) {
-      case OnboardingStep.participate:
+      case OnboardingStep.question:
         return [
           AgoraRichTextItem(
-            text: GenericStrings.onboardingStep1Title1,
+            text: GenericStrings.tutoQuestionTitre1,
             style: AgoraRichTextItemStyle.bold,
           ),
           AgoraRichTextItem(
-            text: GenericStrings.onboardingStep1Title2,
+            text: GenericStrings.tutoQuestionTitre2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
-      case OnboardingStep.askYourQuestion:
+      case OnboardingStep.reponse:
         return [
           AgoraRichTextItem(
-            text: GenericStrings.onboardingStep2Title1,
+            text: GenericStrings.tutoReponseTitre1,
             style: AgoraRichTextItemStyle.bold,
           ),
           AgoraRichTextItem(
-            text: GenericStrings.onboardingStep2Title2,
+            text: GenericStrings.tutoReponseTitre2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
-      case OnboardingStep.invent:
+      case OnboardingStep.consultation:
         return [
           AgoraRichTextItem(
-            text: GenericStrings.onboardingStep3Title1,
+            text: GenericStrings.tutoConsultationTitre1,
             style: AgoraRichTextItemStyle.bold,
           ),
           AgoraRichTextItem(
-            text: GenericStrings.onboardingStep3Title2,
+            text: GenericStrings.tutoConsultationTitre2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
@@ -118,33 +118,33 @@ class OnboardingStepView extends StatelessWidget {
 
   String _buildDescription() {
     switch (step) {
-      case OnboardingStep.participate:
-        return GenericStrings.onboardingStep1Description;
-      case OnboardingStep.askYourQuestion:
-        return GenericStrings.onboardingStep2Description;
-      case OnboardingStep.invent:
-        return GenericStrings.onboardingStep3Description;
+      case OnboardingStep.consultation:
+        return GenericStrings.tutoConsultationDescription;
+      case OnboardingStep.reponse:
+        return GenericStrings.tutoReponseDescription;
+      case OnboardingStep.question:
+        return GenericStrings.tutoQuestionDescription;
     }
   }
 
   String _buildImage() {
     switch (step) {
-      case OnboardingStep.participate:
-        return "assets/ic_onboarding_step1.png";
-      case OnboardingStep.askYourQuestion:
-        return "assets/ic_onboarding_step2.png";
-      case OnboardingStep.invent:
-        return "assets/ic_onboarding_step3.png";
+      case OnboardingStep.consultation:
+        return "assets/step_consultation_tuto.png";
+      case OnboardingStep.reponse:
+        return "assets/step_reponse_tuto.png";
+      case OnboardingStep.question:
+        return "assets/step_question_tuto.png";
     }
   }
 
   int _buildStep() {
     switch (step) {
-      case OnboardingStep.participate:
+      case OnboardingStep.question:
         return 1;
-      case OnboardingStep.askYourQuestion:
+      case OnboardingStep.reponse:
         return 2;
-      case OnboardingStep.invent:
+      case OnboardingStep.consultation:
         return 3;
     }
   }
@@ -152,11 +152,11 @@ class OnboardingStepView extends StatelessWidget {
 
 String _getLabelNumberPage(OnboardingStep step) {
   switch (step) {
-    case OnboardingStep.participate:
+    case OnboardingStep.question:
       return 'première';
-    case OnboardingStep.askYourQuestion:
+    case OnboardingStep.reponse:
       return 'deuxième';
-    case OnboardingStep.invent:
+    case OnboardingStep.consultation:
       return 'troisième';
   }
 }
