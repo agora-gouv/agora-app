@@ -1,5 +1,5 @@
 import 'package:agora/common/helper/responsive_helper.dart';
-import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/common/strings/tutoriel_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_step_circle.dart';
@@ -81,33 +81,33 @@ class OnboardingStepView extends StatelessWidget {
       case OnboardingStep.question:
         return [
           AgoraRichTextItem(
-            text: GenericStrings.tutoQuestionTitre1,
+            text: TutorielStrings.tutoQuestionTitre1,
             style: AgoraRichTextItemStyle.bold,
           ),
           AgoraRichTextItem(
-            text: GenericStrings.tutoQuestionTitre2,
+            text: TutorielStrings.tutoQuestionTitre2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
       case OnboardingStep.reponse:
         return [
           AgoraRichTextItem(
-            text: GenericStrings.tutoReponseTitre1,
+            text: TutorielStrings.tutoReponseTitre1,
             style: AgoraRichTextItemStyle.bold,
           ),
           AgoraRichTextItem(
-            text: GenericStrings.tutoReponseTitre2,
+            text: TutorielStrings.tutoReponseTitre2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
       case OnboardingStep.consultation:
         return [
           AgoraRichTextItem(
-            text: GenericStrings.tutoConsultationTitre1,
+            text: TutorielStrings.tutoConsultationTitre1,
             style: AgoraRichTextItemStyle.bold,
           ),
           AgoraRichTextItem(
-            text: GenericStrings.tutoConsultationTitre2,
+            text: TutorielStrings.tutoConsultationTitre2,
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
@@ -119,22 +119,22 @@ class OnboardingStepView extends StatelessWidget {
   String _buildDescription() {
     switch (step) {
       case OnboardingStep.consultation:
-        return GenericStrings.tutoConsultationDescription;
+        return TutorielStrings.tutoConsultationDescription;
       case OnboardingStep.reponse:
-        return GenericStrings.tutoReponseDescription;
+        return TutorielStrings.tutoReponseDescription;
       case OnboardingStep.question:
-        return GenericStrings.tutoQuestionDescription;
+        return TutorielStrings.tutoQuestionDescription;
     }
   }
 
   String _buildImage() {
     switch (step) {
       case OnboardingStep.consultation:
-        return "assets/step_consultation_tuto.png";
+        return "assets/tuto_consultations.png";
       case OnboardingStep.reponse:
-        return "assets/step_reponse_tuto.png";
+        return "assets/tuto_reponses.png";
       case OnboardingStep.question:
-        return "assets/step_question_tuto.png";
+        return "assets/tuto_questions.png";
     }
   }
 

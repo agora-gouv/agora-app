@@ -12,21 +12,21 @@ import 'package:flutter/material.dart';
 enum AgoraQagResponseStyle { small, large }
 
 class AgoraQagResponseCard extends StatelessWidget {
-  final String title;
   final ThematiqueViewModel thematique;
-  final String authorImageUrl;
-  final String author;
+  final String titre;
+  final String auteurImageUrl;
+  final String auteur;
   final String date;
   final AgoraQagResponseStyle style;
-  final VoidCallback onClick;
+  final void Function() onClick;
   final int index;
   final int maxIndex;
 
   AgoraQagResponseCard({
     required this.thematique,
-    required this.title,
-    required this.authorImageUrl,
-    required this.author,
+    required this.titre,
+    required this.auteurImageUrl,
+    required this.auteur,
     required this.date,
     required this.style,
     required this.onClick,
@@ -61,7 +61,7 @@ class AgoraQagResponseCard extends StatelessWidget {
                   Container(width: double.infinity),
                   ThematiqueHelper.buildCard(context, thematique),
                   SizedBox(height: AgoraSpacings.x0_25),
-                  Text(title, style: AgoraTextStyles.regular16),
+                  Text(titre, style: AgoraTextStyles.regular16),
                 ],
               ),
             ),
@@ -72,13 +72,13 @@ class AgoraQagResponseCard extends StatelessWidget {
               roundedCorner: AgoraRoundedCorner.bottomRounded,
               child: Row(
                 children: [
-                  AgoraRoundedImage(imageUrl: authorImageUrl, size: 27),
+                  AgoraRoundedImage(imageUrl: auteurImageUrl, size: 27),
                   SizedBox(width: AgoraSpacings.x0_5),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(author, style: AgoraTextStyles.medium12),
+                        Text(auteur, style: AgoraTextStyles.medium12),
                         Text(date, style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
                       ],
                     ),

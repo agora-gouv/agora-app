@@ -7,6 +7,7 @@ import 'package:agora/bloc/qag/moderation/moderate/qag_moderate_event.dart';
 import 'package:agora/bloc/qag/moderation/moderate/qag_moderate_state.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
@@ -154,7 +155,7 @@ class _ModerationPageState extends State<ModerationPage> {
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       qagsWidgets.add(
         AgoraRoundedButton(
-          label: QagStrings.displayMore,
+          label: GenericStrings.displayMore,
           style: AgoraRoundedButtonStyle.primaryButtonStyle,
           onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
         ),

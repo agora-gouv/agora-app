@@ -16,7 +16,6 @@ import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/profile/profile_page.dart';
 import 'package:agora/pages/qag/qags_ask_question_section.dart';
-import 'package:agora/pages/qag/qags_response_section.dart';
 import 'package:agora/pages/qag/qags_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
@@ -89,7 +88,6 @@ class _QagsPageState extends State<QagsPage> {
                 },
               ),
               SizedBox(height: AgoraSpacings.base),
-              QagsResponseSection(),
               QagsAskQuestionSectionPage(key: onSearchAnchorKey),
               QagsSection(
                 defaultSelected: QagTab.trending,
