@@ -9,7 +9,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/simple_html_parser.dart';
 import 'package:agora/pages/qag/qags_page.dart';
-import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.dart';
+import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:agora/welcome/bloc/welcome_bloc.dart';
 import 'package:agora/welcome/bloc/welcome_event.dart';
 import 'package:agora/welcome/bloc/welcome_state.dart';
@@ -181,8 +181,7 @@ class _ReponseCard extends StatelessWidget {
           ),
         ],
         onTap: () {
-          Navigator.pushReplacementNamed(context, QagsPage.routeName);
-          Navigator.pushNamed(context, QagResponsePaginatedPage.routeName);
+          Navigator.pushReplacementNamed(context, ReponsesPage.routeName);
         },
       ),
     );

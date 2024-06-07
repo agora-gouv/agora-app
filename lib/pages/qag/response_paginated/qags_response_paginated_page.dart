@@ -5,6 +5,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_qag_response_card.dart';
@@ -67,10 +68,10 @@ class QagResponsePaginatedPage extends StatelessWidget {
     for (final qagResponse in state.qagResponseViewModels) {
       widgets.add(
         AgoraQagResponseCard(
-          title: qagResponse.title,
+          titre: qagResponse.title,
           thematique: qagResponse.thematique,
-          authorImageUrl: qagResponse.authorPortraitUrl,
-          author: qagResponse.author,
+          auteurImageUrl: qagResponse.authorPortraitUrl,
+          auteur: qagResponse.author,
           date: qagResponse.responseDate,
           style: AgoraQagResponseStyle.large,
           maxIndex: state.qagResponseViewModels.length,
@@ -102,7 +103,7 @@ class QagResponsePaginatedPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AgoraRoundedButton(
-              label: QagStrings.retry,
+              label: GenericStrings.retry,
               style: AgoraRoundedButtonStyle.primaryButtonStyle,
               onPressed: () => context
                   .read<QagResponsePaginatedBloc>()
@@ -116,7 +117,7 @@ class QagResponsePaginatedPage extends StatelessWidget {
       if (state.currentPageNumber < state.maxPage) {
         widgets.add(
           AgoraRoundedButton(
-            label: QagStrings.displayMore,
+            label: GenericStrings.displayMore,
             style: AgoraRoundedButtonStyle.primaryButtonStyle,
             onPressed: () => context
                 .read<QagResponsePaginatedBloc>()

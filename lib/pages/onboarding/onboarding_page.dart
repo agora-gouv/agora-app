@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/common/strings/tutoriel_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -217,7 +217,7 @@ class _FloatingNextButton extends StatelessWidget {
       child: FloatingActionButton.extended(
         backgroundColor: AgoraColors.primaryBlue,
         label: Text(
-          step == 0 ? ConsultationStrings.beginButton : GenericStrings.onboardingStep3LetsGo,
+          step == 0 ? ConsultationStrings.beginButton : TutorielStrings.tutoStep3LetsGo,
           style: AgoraTextStyles.primaryFloatingButton,
         ),
         onPressed: onTap,

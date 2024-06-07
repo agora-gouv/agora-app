@@ -1,5 +1,5 @@
 import 'package:agora/common/helper/responsive_helper.dart';
-import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/common/strings/tutoriel_strings.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
@@ -44,7 +44,7 @@ class OnboardingView extends StatelessWidget {
                     header: true,
                     focused: true,
                     child: Text(
-                      GenericStrings.onboardingStep0Title,
+                      TutorielStrings.tutoAccueilTitre,
                       style:
                           AgoraTextStyles.light30.copyWith(color: AgoraColors.primaryBlue, fontWeight: FontWeight.w600),
                       textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
@@ -57,15 +57,15 @@ class OnboardingView extends StatelessWidget {
                     textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
                     items: [
                       AgoraRichTextItem(
-                        text: GenericStrings.onboardingStep0Description1,
+                        text: TutorielStrings.tutoAccueilDescription1,
                         style: AgoraRichTextItemStyle.regular,
                       ),
                       AgoraRichTextItem(
-                        text: GenericStrings.onboardingStep0Description2,
+                        text: TutorielStrings.tutoAccueilDescription2,
                         style: AgoraRichTextItemStyle.bold,
                       ),
                       AgoraRichTextItem(
-                        text: GenericStrings.onboardingStep0Description3,
+                        text: TutorielStrings.tutoAccueilDescription3,
                         style: AgoraRichTextItemStyle.regular,
                       ),
                     ],

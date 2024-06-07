@@ -5,9 +5,10 @@ import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navi
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:flutter/material.dart';
 
-enum MainBottomNavigationPages { consultation, qag }
+enum MainBottomNavigationPages { consultation, reponse, qag }
 
 class MainBottomNavigationPage extends StatefulWidget {
   final MainBottomNavigationPages startPage;
@@ -21,6 +22,7 @@ class MainBottomNavigationPage extends StatefulWidget {
 class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
   final List<MainBottomNavigationPages> pages = [
     MainBottomNavigationPages.qag,
+    MainBottomNavigationPages.reponse,
     MainBottomNavigationPages.consultation,
   ];
   late int _currentIndex;
@@ -55,27 +57,35 @@ class _MainBottomNavigationPageState extends State<MainBottomNavigationPage> {
 
   AgoraBottomNavigationBarItem _getBottomNavigationBarItem(MainBottomNavigationPages page) {
     switch (page) {
-      case MainBottomNavigationPages.consultation:
-        return AgoraBottomNavigationBarItem(
-          activateIcon: "ic_consultation.svg",
-          inactivateIcon: "ic_consultation_inactivate.svg",
-          label: "Consultations citoyennes",
-        );
       case MainBottomNavigationPages.qag:
         return AgoraBottomNavigationBarItem(
           activateIcon: "ic_question.svg",
           inactivateIcon: "ic_question_inactivate.svg",
-          label: "Questions au Gouvernement",
+          label: "Questions",
+        );
+      case MainBottomNavigationPages.reponse:
+        return AgoraBottomNavigationBarItem(
+          activateIcon: "ic_reponse.svg",
+          inactivateIcon: "ic_reponse_inactivate.svg",
+          label: "Réponses",
+        );
+      case MainBottomNavigationPages.consultation:
+        return AgoraBottomNavigationBarItem(
+          activateIcon: "ic_consultation.svg",
+          inactivateIcon: "ic_consultation_inactivate.svg",
+          label: "Consultations",
         );
     }
   }
 
   Widget _getDisplayedPage() {
     switch (pages[_currentIndex]) {
-      case MainBottomNavigationPages.consultation:
-        return ConsultationsPage();
       case MainBottomNavigationPages.qag:
         return QagsPage();
+      case MainBottomNavigationPages.reponse:
+        return ReponsesPage();
+      case MainBottomNavigationPages.consultation:
+        return ConsultationsPage();
     }
   }
 }

@@ -13,6 +13,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
@@ -221,7 +222,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                         Text(viewModel.description, style: AgoraTextStyles.light14),
                         SizedBox(height: AgoraSpacings.base),
                         Text(
-                          QagStrings.authorAndDate.format2(viewModel.username, viewModel.date),
+                          StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
                           style: AgoraTextStyles.medium14,
                         ),
                         SizedBox(height: AgoraSpacings.x3),

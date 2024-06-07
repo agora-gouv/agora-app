@@ -1,7 +1,7 @@
 import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_view_model.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class QagResponsePaginatedState extends Equatable {
+sealed class QagResponsePaginatedState extends Equatable {
   final List<QagResponsePaginatedViewModel> qagResponseViewModels;
   final int currentPageNumber;
   final int maxPage;

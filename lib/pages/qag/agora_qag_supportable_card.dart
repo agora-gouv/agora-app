@@ -6,7 +6,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/design/custom_view/agora_like_animation_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/agora_qag_card.dart';
+import 'package:agora/design/custom_view/agora_question_card.dart';
 import 'package:agora/domain/qag/qag_support.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:equatable/equatable.dart';
@@ -35,11 +35,11 @@ class AgoraQagSupportableCard extends StatelessWidget {
         BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
           selector: (supportState) => _toViewModel(supportState),
           builder: (context, viewModel) {
-            return AgoraQagCard(
+            return AgoraQuestionCard(
               id: qagViewModel.id,
               thematique: qagViewModel.thematique,
-              title: qagViewModel.title,
-              username: qagViewModel.username,
+              titre: qagViewModel.title,
+              nom: qagViewModel.username,
               date: qagViewModel.date,
               supportCount: viewModel.supportCount(),
               isSupported: viewModel.isSupported(),
