@@ -14,14 +14,12 @@ import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_response_presenter.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qags_response_loading.dart';
-import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -102,12 +100,6 @@ class _ReponsesAVenirHeader extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          SizedBox(width: AgoraSpacings.x0_75),
-          AgoraRoundedButton(
-            label: GenericStrings.all,
-            style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-            onPressed: () => Navigator.pushNamed(context, ReponsesPage.routeName),
           ),
         ],
       ),
