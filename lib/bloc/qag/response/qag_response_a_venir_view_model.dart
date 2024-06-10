@@ -7,6 +7,7 @@ class QagResponseAVenirViewModel extends Equatable {
   final String title;
   final int supportCount;
   final bool isSupported;
+  final String semaineGagnanteLabel;
 
   QagResponseAVenirViewModel({
     required this.qagId,
@@ -14,6 +15,7 @@ class QagResponseAVenirViewModel extends Equatable {
     required this.title,
     required this.supportCount,
     required this.isSupported,
+    required this.semaineGagnanteLabel,
   });
 
   @override
@@ -23,5 +25,6 @@ class QagResponseAVenirViewModel extends Equatable {
         title,
         supportCount,
         isSupported,
+        semaineGagnanteLabel,
       ];
 }

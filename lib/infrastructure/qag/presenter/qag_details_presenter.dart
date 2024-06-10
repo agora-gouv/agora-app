@@ -12,7 +12,7 @@ class QagDetailsPresenter {
       thematique: qagDetails.thematique.toThematiqueViewModel(),
       title: qagDetails.title,
       description: qagDetails.description,
-      date: qagDetails.date.formatToDayMonth(),
+      date: qagDetails.date.formatToDayLongMonth(),
       username: qagDetails.username,
       canShare: qagDetails.canShare,
       canSupport: qagDetails.canSupport,

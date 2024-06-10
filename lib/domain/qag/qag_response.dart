@@ -13,14 +13,18 @@ sealed class QagResponsePreview extends Equatable {
 class QagResponseIncoming extends QagResponsePreview {
   final int supportCount;
   final bool isSupported;
+  final DateTime dateLundiPrecedent;
+  final DateTime dateLundiSuivant;
 
   QagResponseIncoming({
     required super.qagId,
     required super.thematique,
     required super.title,
+    required super.order,
     required this.supportCount,
     required this.isSupported,
-    required super.order,
+    required this.dateLundiPrecedent,
+    required this.dateLundiSuivant,
   });
 
   @override
@@ -31,6 +35,8 @@ class QagResponseIncoming extends QagResponsePreview {
         supportCount,
         isSupported,
         order,
+        dateLundiPrecedent,
+        dateLundiSuivant,
       ];
 }
 
