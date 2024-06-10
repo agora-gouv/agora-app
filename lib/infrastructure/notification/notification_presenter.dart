@@ -10,7 +10,7 @@ class NotificationPresenter {
       return NotificationViewModel(
         title: notification.title,
         type: notification.type,
-        date: notification.date.formatToDayMonth(),
+        date: notification.date.formatToDayLongMonth(),
       );
     }).toList();
   }

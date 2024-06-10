@@ -13,7 +13,7 @@ class ConsultationPresenter {
         title: consultation.title,
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),
-        endDate: consultation.endDate!.formatToDayMonth(),
+        endDate: consultation.endDate!.formatToDayLongMonth(),
         label: consultation.label,
       );
     }).toList();

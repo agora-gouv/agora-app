@@ -17,7 +17,7 @@ class QagResponsePaginatedPresenter {
             title: qagResponse.title,
             author: qagResponse.author,
             authorPortraitUrl: qagResponse.authorPortraitUrl,
-            responseDate: QagStrings.answeredAt.format(qagResponse.responseDate.formatToDayMonth()),
+            responseDate: QagStrings.answeredAt.format(qagResponse.responseDate.formatToDayLongMonth()),
           ),
         )
         .toList();

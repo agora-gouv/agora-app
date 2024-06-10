@@ -11,7 +11,7 @@ class QagSimilarPresenter {
         thematique: similarQag.thematique.toThematiqueViewModel(),
         title: similarQag.title,
         description: similarQag.description,
-        date: similarQag.date.formatToDayMonth(),
+        date: similarQag.date.formatToDayLongMonth(),
         username: similarQag.username,
         supportCount: similarQag.supportCount,
         isSupported: similarQag.isSupported,

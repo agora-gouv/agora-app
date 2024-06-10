@@ -185,6 +185,7 @@ class _ReponseAVenirCard extends StatelessWidget {
           isSupported: qagResponse.isSupported,
           index: index,
           maxIndex: maxIndex,
+          semaineGagnanteLabel: qagResponse.semaineGagnanteLabel,
           onClick: () {
             TrackerHelper.trackClick(
               clickName: "${AnalyticsEventNames.incomingAnsweredQag} ${qagResponse.qagId}",

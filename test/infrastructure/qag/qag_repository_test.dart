@@ -366,6 +366,8 @@ void main() {
               supportCount: 200,
               isSupported: true,
               order: 0,
+              dateLundiPrecedent: DateTime(2024, 6, 3),
+              dateLundiSuivant: DateTime(2024, 6, 10),
             ),
           ],
           qagResponses: [

@@ -205,6 +205,8 @@ class QagDioRepository extends QagRepository {
             supportCount: qagResponseIncoming["support"]["count"] as int,
             isSupported: qagResponseIncoming["support"]["isSupported"] as bool,
             order: qagResponseIncoming["order"] as int,
+            dateLundiPrecedent: (qagResponseIncoming["previousMondayDate"] as String).parseToDateTime(),
+            dateLundiSuivant: (qagResponseIncoming["nextMondayDate"] as String).parseToDateTime(),
           );
         }).toList(),
         qagResponses: qagResponses.map((qagResponse) {

@@ -2,14 +2,13 @@ import 'dart:math';
 
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
-import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraQagResponseAVenirCard extends StatelessWidget {
   final String title;
@@ -19,6 +18,7 @@ class AgoraQagResponseAVenirCard extends StatelessWidget {
   final VoidCallback onClick;
   final int index;
   final int maxIndex;
+  final String semaineGagnanteLabel;
 
   AgoraQagResponseAVenirCard({
     required this.thematique,
@@ -28,6 +28,7 @@ class AgoraQagResponseAVenirCard extends StatelessWidget {
     required this.onClick,
     required this.index,
     required this.maxIndex,
+    required this.semaineGagnanteLabel,
   });
 
   @override
@@ -48,7 +49,7 @@ class AgoraQagResponseAVenirCard extends StatelessWidget {
               _CardContent(thematique: thematique, isSupported: isSupported, supportCount: supportCount, title: title),
               SizedBox(height: AgoraSpacings.x0_25),
               Spacer(),
-              _BandeauCard(),
+              _BandeauCard(semaineGagnanteLabel),
             ],
           ),
         ),
@@ -99,28 +100,34 @@ class _CardContent extends StatelessWidget {
 }
 
 class _BandeauCard extends StatelessWidget {
-  const _BandeauCard();
+  final String semaineGagnanteLabel;
+
+  const _BandeauCard(this.semaineGagnanteLabel);
 
   @override
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
       cardColor: AgoraColors.doctor,
       padding: EdgeInsets.symmetric(
-        vertical: AgoraSpacings.base - 1,
+        vertical: AgoraSpacings.x0_5,
         horizontal: AgoraSpacings.x0_75,
       ),
       roundedCorner: AgoraRoundedCorner.bottomRounded,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset("assets/ic_consultation_step2_finished.svg", excludeFromSemantics: true),
-          SizedBox(width: AgoraSpacings.x0_25),
+          Text('🏆', style: AgoraTextStyles.regular12.copyWith(fontSize: 20)),
+          SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
-              child: Text(
-                QagStrings.incomingResponse,
-                style: AgoraTextStyles.regular12.copyWith(color: AgoraColors.blue525),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  ReponseStrings.qagPopulaire,
+                  style: AgoraTextStyles.regular12.copyWith(fontWeight: FontWeight.w800),
+                ),
+                Text(semaineGagnanteLabel, style: AgoraTextStyles.regular12),
+              ],
             ),
           ),
         ],

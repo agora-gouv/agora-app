@@ -4,7 +4,6 @@ class QagStrings {
   static const String qagResponsePart1 = "Les réponses ";
   static const String qagResponsePart2 = "aux questions";
   static const String mostPopularQuestion = "La question la plus populaire";
-  static const String incomingResponse = "Réponse à venir";
 
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
