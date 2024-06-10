@@ -327,6 +327,8 @@ void main() {
                   "isSupported": true,
                 },
                 "order": 0,
+                "previousMondayDate": "2024-06-03",
+                "nextMondayDate": "2024-06-10",
               },
             ],
             "responses": [
