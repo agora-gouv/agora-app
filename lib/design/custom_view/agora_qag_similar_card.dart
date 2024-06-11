@@ -1,7 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
-import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -70,7 +70,7 @@ class AgoraQagSimilarCard extends StatelessWidget {
                   cardColor: AgoraColors.doctor,
                   padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
                   roundedCorner: AgoraRoundedCorner.bottomRounded,
-                  child: Text(QagStrings.authorAndDate.format2(username, date), style: AgoraTextStyles.light12),
+                  child: Text(StringUtils.authorAndDate.format2(username, date), style: AgoraTextStyles.light12),
                 ),
               ),
             ],

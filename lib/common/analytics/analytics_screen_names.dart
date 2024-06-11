@@ -1,5 +1,6 @@
 class AnalyticsScreenNames {
   static const String onboardingPage = "Écran d'onboarding";
+
   static const String consultationsPage = "Liste des consultations";
   static const String consultationDetailsPage = "Détails d'une consultation";
   static const String consultationQuestionPage = "Questionnaire d'une consultation";
@@ -17,6 +18,8 @@ class AnalyticsScreenNames {
   static const String qagAskQuestionPage = "Poser une QaG";
   static const String qagSimilarPage = "Liste des QaGs similaires";
   static const String qagsResponsePaginatedPage = "Liste infinie des réponses aux QaGs";
+
+  static const String reponsesPage = "Liste des réponses";
 
   static const String profilePage = "Profil";
   static const String moderationPage = "Modération";

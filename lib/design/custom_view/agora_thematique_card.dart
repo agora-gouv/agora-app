@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 
 enum AgoraThematiqueSize { medium, large }
 
-class AgoraThematiqueCard extends StatelessWidget {
+class AgoraThematiqueLabel extends StatelessWidget {
   final String picto;
   final String label;
   final AgoraThematiqueSize size;
 
-  AgoraThematiqueCard({
+  AgoraThematiqueLabel({
     required this.picto,
     required this.label,
     required this.size,

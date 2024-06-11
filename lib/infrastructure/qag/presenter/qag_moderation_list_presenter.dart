@@ -13,7 +13,7 @@ class QagModerationListPresenter {
           thematique: qagToModeration.thematique.toThematiqueViewModel(),
           title: qagToModeration.title,
           description: qagToModeration.description,
-          date: qagToModeration.date.formatToDayMonth(),
+          date: qagToModeration.date.formatToDayLongMonth(),
           username: qagToModeration.username,
           supportCount: qagToModeration.supportCount,
           isSupported: qagToModeration.isSupported,

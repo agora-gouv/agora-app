@@ -90,7 +90,7 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
         const SizedBox(width: AgoraSpacings.base),
         Expanded(
           child: Center(
-            child: _HorizontalHelper(itemsCount: widget.itemsCount, scrollController: widget.scrollController),
+            child: _HorizontalHelper(itemsCount: widget.itemsCount ~/ 2, scrollController: widget.scrollController),
           ),
         ),
         const SizedBox(width: AgoraSpacings.base),

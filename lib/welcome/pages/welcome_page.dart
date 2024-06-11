@@ -9,7 +9,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
 import 'package:agora/pages/consultation/dynamic/simple_html_parser.dart';
 import 'package:agora/pages/qag/qags_page.dart';
-import 'package:agora/pages/qag/response_paginated/qags_response_paginated_page.dart';
+import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:agora/welcome/bloc/welcome_bloc.dart';
 import 'package:agora/welcome/bloc/welcome_event.dart';
 import 'package:agora/welcome/bloc/welcome_state.dart';
@@ -69,7 +69,7 @@ class _Header extends StatelessWidget {
       child: Column(
         crossAxisAlignment: largerThanMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
-          SizedBox(height: AgoraSpacings.x0_75),
+          SizedBox(height: AgoraSpacings.x2),
           _LogoGouvernement(),
           SizedBox(height: AgoraSpacings.base),
           _Titre(largerThanMobile: largerThanMobile),
@@ -181,8 +181,7 @@ class _ReponseCard extends StatelessWidget {
           ),
         ],
         onTap: () {
-          Navigator.pushReplacementNamed(context, QagsPage.routeName);
-          Navigator.pushNamed(context, QagResponsePaginatedPage.routeName);
+          Navigator.pushReplacementNamed(context, ReponsesPage.routeName);
         },
       ),
     );
@@ -265,7 +264,7 @@ class _ALaUne extends StatelessWidget {
                           ),
                           SizedBox(height: AgoraSpacings.x0_75),
                           AgoraRichText(
-                            policeStyle: AgoraRichTextPoliceStyle.police14Interligne140,
+                            policeStyle: AgoraRichTextPoliceStyle.police16Interligne140,
                             textAlign: TextAlign.end,
                             items: [
                               ...parseSimpleHtml(aLaUne.description)
@@ -301,7 +300,7 @@ class _ALaUneBouton extends StatelessWidget {
         Expanded(
           child: Text(
             aLaUne.actionText,
-            style: AgoraTextStyles.regular14,
+            style: AgoraTextStyles.regular12,
             textAlign: TextAlign.right,
           ),
         ),

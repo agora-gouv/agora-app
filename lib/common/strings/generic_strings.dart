@@ -4,7 +4,6 @@ class GenericStrings {
       "Direction interministérielle de la transformation publique\u{00A0}- TSA 70732\u{00A0}- 75334 Paris Cedex 07";
   static const String cnil = "https://www.cnil.fr";
 
-  static const String retry = "Réessayer";
   static const String contactSupport = "Contacter le support";
   static const String updateApp = "Mettre à jour l'application";
   static const String authenticationErrorMessage = "Une erreur est survenue lors de votre authentification.";
@@ -25,29 +24,13 @@ class GenericStrings {
   static const String modify = "Modifier";
   static const String close = "Fermer";
   static const String delete = "Supprimer";
+  static const String retry = "Réessayer";
+  static const String displayMore = "Afficher plus";
   static const String searchBarDelete = "Effacer la saisie";
   static const String searchBarClose = "Quitter la recherche";
   static const String searchBarOpen = "Commencer une recherche";
   static const String readCompleteCharter = "Lire la charte complète";
   static const String modificationSuccess = "La modification a été prise en compte.";
-
-  static const String onboardingStep0Title = "Bienvenue sur Agora\u{00A0}!";
-  static const String onboardingStep0Description1 = "La première appli qui fait ";
-  static const String onboardingStep0Description2 = "dialoguer ";
-  static const String onboardingStep0Description3 = "les citoyens et le Gouvernement";
-  static const String tutoConsultationTitre1 = "Participez ";
-  static const String tutoConsultationTitre2 = "aux consultations citoyennes";
-  static const String tutoConsultationDescription =
-      "Donnez votre avis sur des projets qui vous concernent et suivez leurs avancées.";
-  static const String tutoQuestionTitre1 = "Posez vos questions ";
-  static const String tutoQuestionTitre2 = "au Gouvernement";
-  static const String tutoQuestionDescription =
-      "… et soutenez celles des autres citoyens pour élire la question de la semaine.";
-  static const String tutoReponseTitre1 = "Suivez les réponses ";
-  static const String tutoReponseTitre2 = "des ministres";
-  static const String tutoReponseDescription =
-      "Chaque semaine, les ministres répondent en vidéo à la question la plus populaire.";
-  static const String onboardingStep3LetsGo = "C'est parti";
 
   static const String yes = "Oui";
   static const String no = "Non";
@@ -55,6 +38,6 @@ class GenericStrings {
   static const String notificationEmpty = "Vous n'avez pas encore de notification.";
 
   static const String welcomeTitle = "👋 Bonjour !";
-  static const String welcomeDescription = "Que souhaitez-vous faire sur Agora aujourd'hui ?";
+  static const String welcomeDescription = "Que souhaitez-vous faire sur Agora aujourd'hui\u{00A0}?";
   static const String welcomeNewsTitle = "🔥 À la une";
 }

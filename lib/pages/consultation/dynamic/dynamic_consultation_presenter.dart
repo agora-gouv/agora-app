@@ -30,7 +30,7 @@ class DynamicConsultationPresenter {
         ),
         if (questionsInfos != null)
           QuestionsInfoSection(
-            endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayMonth()),
+            endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayLongMonth()),
             questionCount: questionsInfos.questionCount,
             estimatedTime: questionsInfos.estimatedTime,
             participantCount: questionsInfos.participantCount,

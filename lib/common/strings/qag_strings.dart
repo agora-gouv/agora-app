@@ -4,9 +4,7 @@ class QagStrings {
   static const String qagResponsePart1 = "Les réponses ";
   static const String qagResponsePart2 = "aux questions";
   static const String mostPopularQuestion = "La question la plus populaire";
-  static const String incomingResponse = "Réponse à venir";
-  static const String qagResponseInfoBubble =
-      "Chaque semaine, le Gouvernement répond directement sur l’appli à la question citoyenne la plus populaire, c’est-à-dire celle qui a obtenu le plus de soutiens le lundi à 14h et est en tête de l’onglet “Le top”.";
+
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
   static const String search = "🔍";
@@ -21,7 +19,7 @@ class QagStrings {
   static const String searchQagHint = "Rechercher un mot-clef";
   static const String by = "Par";
   static const String at = "le";
-  static const String authorAndDate = "De %1s - le %2s";
+
   static const String share = "Partager";
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";
@@ -56,7 +54,7 @@ class QagStrings {
   static const String supportQuestion = "Soutenir cette question";
   static const String questionSupported = "Question soutenue";
 
-  static const String governmentResponseTitle = "Réponse du gouvernement";
+  static const String governmentResponseTitle = "Réponse du Gouvernement";
   static const String answerTo = "En réponse à";
   static const String transcription = "Transcription";
   static const String utils = "Oui\u{00A0}!";
@@ -69,8 +67,6 @@ class QagStrings {
   static const String feedbackAnswerCount = "%s personnes ont répondu.";
   static const String answeredAt = "a répondu le %s";
   static const String emptyList = "Pas de question en ce moment";
-  static const String displayMore = "Afficher plus";
-  static const String retry = "Réessayer";
   static const String validate = "Valider";
   static const String refuse = "Refuser";
   static const String totalNumber = "Nombre total\u{00A0}: %s";

@@ -12,7 +12,7 @@ class ThematiqueHelper {
     ThematiqueViewModel thematique, {
     AgoraThematiqueSize size = AgoraThematiqueSize.medium,
   }) {
-    return AgoraThematiqueCard(picto: thematique.picto, label: thematique.label, size: size);
+    return AgoraThematiqueLabel(picto: thematique.picto, label: thematique.label, size: size);
   }
 
   static Widget buildThematiques({
