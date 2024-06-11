@@ -79,11 +79,7 @@ class _ReponsesSection extends StatelessWidget {
       )..add(FetchQagsResponsePaginatedEvent(pageNumber: initialPage)),
       child: BlocBuilder<QagResponsePaginatedBloc, QagResponsePaginatedState>(
         builder: (context, state) {
-          return switch (state) {
-            QagResponsePaginatedInitialState _ || QagResponsePaginatedLoadingState _ => _LoadingReponseList(),
-            QagResponsePaginatedErrorState _ => _ErrorReponseList(state.currentPageNumber),
-            QagResponsePaginatedFetchedState _ => _ReponseList(state),
-          };
+          return _ReponseList(state);
         },
       ),
     );
@@ -91,7 +87,7 @@ class _ReponsesSection extends StatelessWidget {
 }
 
 class _ReponseList extends StatelessWidget {
-  final QagResponsePaginatedFetchedState state;
+  final QagResponsePaginatedState state;
 
   const _ReponseList(this.state);
 
@@ -135,7 +131,11 @@ class _ReponseList extends StatelessWidget {
             );
           },
         ),
-        if (state.currentPageNumber < state.maxPage)
+        if (state is QagResponsePaginatedInitialState || state is QagResponsePaginatedLoadingState)
+          _LoadingReponseList()
+        else if (state is QagResponsePaginatedErrorState)
+          _ErrorReponseList(state.currentPageNumber)
+        else if (state.currentPageNumber < state.maxPage)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
             child: AgoraRoundedButton(
@@ -157,7 +157,7 @@ class _LoadingReponseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AgoraSpacings.base),
+      padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
       child: Center(child: CircularProgressIndicator()),
     );
   }
