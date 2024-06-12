@@ -196,7 +196,6 @@ jobs:
           --build-name="3.0.0" \
           --build-number=50 \
           --export-options-plist=ios/prod_export_options.plist \
-          --verbose
 
       - name: Deploy app to App Store Connect
         shell: bash
