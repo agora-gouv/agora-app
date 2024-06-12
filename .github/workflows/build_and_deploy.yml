@@ -2,7 +2,7 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "tech-automatiser-build-dev-ios" ]
   workflow_dispatch:
 
 jobs:
