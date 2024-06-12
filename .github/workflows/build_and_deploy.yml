@@ -8,6 +8,7 @@ on:
 jobs:
 
   build-android-staging:
+    if: startsWith(github.event.head_commit.message, 'build-android-staging')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -81,7 +82,7 @@ jobs:
           STAGING_FIREBASE_RELEASE_GROUPS: ${{ secrets.STAGING_FIREBASE_RELEASE_GROUPS }}
 
   build-ios-staging:
-    if: startsWith(github.event.head_commit.message, 'wip')
+    if: startsWith(github.event.head_commit.message, 'build-ios-staging')
     runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
