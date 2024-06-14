@@ -34,6 +34,7 @@ class AgoraHtmlStyles {
         fontSize: FontSize(fontSize),
         color: AgoraColors.primaryGrey,
         textDecorationColor: AgoraColors.primaryBlue,
+        textAlign: TextAlign.justify,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
