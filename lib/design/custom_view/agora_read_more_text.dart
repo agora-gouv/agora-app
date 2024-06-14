@@ -36,7 +36,7 @@ class AgoraReadMoreText extends StatefulWidget {
     this.trimMode = AgoraTrimMode.line,
     this.style = AgoraTextStyles.light14,
     this.trimTextStyle = AgoraTextStyles.light14Underline,
-    this.textAlign = TextAlign.start,
+    this.textAlign = TextAlign.justify,
     this.textDirection = TextDirection.ltr,
   }) : assert(
           (trimMode == AgoraTrimMode.line && trimLines > 0) || (trimMode == AgoraTrimMode.length && trimLength > 0),
@@ -157,7 +157,7 @@ class AgoraReadMoreV2Text extends StatefulWidget {
     super.key,
     this.trimLines = 5,
     this.style = AgoraTextStyles.light14,
-    this.textAlign = TextAlign.start,
+    this.textAlign = TextAlign.justify,
     required this.isTalkbackEnabled,
   });
 
@@ -189,6 +189,7 @@ class AgoraReadMoreV2TextState extends State<AgoraReadMoreV2Text> {
             Text(
               widget.data,
               style: widget.style,
+              textAlign: widget.textAlign,
               maxLines: _isExpanded ? null : widget.trimLines,
             ),
             if (!_isExpanded)
