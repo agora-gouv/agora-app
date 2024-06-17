@@ -70,7 +70,7 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
           opacity: hasReachedLeftEnd ? 0.5 : 1,
           child: AgoraIconButton(
             icon: 'ic_backward_helper.svg',
-            semanticLabel: 'Scroll vers la gauche',
+            semanticLabel: 'Faire défiler vers la gauche',
             iconSize: 16,
             iconColor: AgoraColors.primaryBlue,
             borderColor: AgoraColors.orochimaru,
@@ -100,7 +100,7 @@ class _HorizontalScrollHelperState extends State<HorizontalScrollHelper> {
             icon: 'ic_forward_helper.svg',
             iconSize: 16,
             iconColor: AgoraColors.primaryBlue,
-            semanticLabel: 'Scroll vers la droite',
+            semanticLabel: 'Faire défiler vers la droite',
             borderColor: AgoraColors.orochimaru,
             backgroundColor: hasReachedRightEnd ? Colors.transparent : Colors.white,
             padding: AgoraSpacings.base,

@@ -35,14 +35,10 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
             top: AgoraSpacings.base,
             right: AgoraSpacings.horizontalPadding,
           ),
-          child: Column(
+          child: Row(
             children: [
-              Row(
-                children: [
-                  Expanded(child: _TitreEtInfo()),
-                  _PoserQuestionBouton(viewModel),
-                ],
-              ),
+              Expanded(child: _TitreEtInfo()),
+              Expanded(child: _PoserQuestionBouton(viewModel)),
             ],
           ),
         );

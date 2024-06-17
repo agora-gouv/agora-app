@@ -7,7 +7,6 @@ class QagStrings {
 
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
-  static const String search = "🔍";
   static const String trending = "Tendances";
   static const String popular = "Le top";
   static const String latest = "Récentes";
@@ -21,6 +20,7 @@ class QagStrings {
   static const String at = "le";
 
   static const String share = "Partager";
+  static const String askQuestionTitle = "Poser ma question au Gouvernement";
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";

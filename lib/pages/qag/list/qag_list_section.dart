@@ -158,7 +158,11 @@ class QagListSection extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(QagStrings.emptyList, style: AgoraTextStyles.medium14),
+              Text(
+                QagStrings.emptyList,
+                style: AgoraTextStyles.medium14,
+                textAlign: TextAlign.center,
+              ),
               SizedBox(height: AgoraSpacings.x1_5),
               AgoraRoundedButton(
                 label: QagStrings.askQuestion,
