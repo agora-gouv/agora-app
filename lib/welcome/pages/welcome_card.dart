@@ -52,6 +52,7 @@ class WelcomeCard extends StatelessWidget {
                   SizedBox(width: AgoraSpacings.base),
                   Expanded(
                     child: RichText(
+                      textScaler: MediaQuery.textScalerOf(context),
                       text: TextSpan(
                         children: textContent,
                       ),

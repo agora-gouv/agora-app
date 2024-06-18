@@ -223,31 +223,31 @@ class _ALaUne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      child: Expanded(
-        child: BlocProvider(
-          create: (context) => WelcomeBloc(
-            welcomeRepository: RepositoryManager.getWelcomeRepository(),
-          )..add(GetWelcomeALaUneEvent()),
-          child: BlocSelector<WelcomeBloc, WelcomeState, WelcomeALaUneViewModel>(
-            selector: WelcomeALaUnePresenter.getViewModelFromState,
-            builder: (context, vm) {
-              if (vm.status == AllPurposeStatus.error || vm.welcomeALaUne == null) {
-                return SizedBox();
-              } else {
-                final aLaUne = vm.welcomeALaUne!;
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: AgoraColors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                      ),
-                    ],
-                  ),
+    return Expanded(
+      child: BlocProvider(
+        create: (context) => WelcomeBloc(
+          welcomeRepository: RepositoryManager.getWelcomeRepository(),
+        )..add(GetWelcomeALaUneEvent()),
+        child: BlocSelector<WelcomeBloc, WelcomeState, WelcomeALaUneViewModel>(
+          selector: WelcomeALaUnePresenter.getViewModelFromState,
+          builder: (context, vm) {
+            if (vm.status == AllPurposeStatus.error || vm.welcomeALaUne == null) {
+              return SizedBox();
+            } else {
+              final aLaUne = vm.welcomeALaUne!;
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AgoraColors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                    ),
+                  ],
+                ),
+                child: Semantics(
+                  button: true,
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
@@ -283,10 +283,10 @@ class _ALaUne extends StatelessWidget {
                       ),
                     ),
                   ),
-                );
-              }
-            },
-          ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );
