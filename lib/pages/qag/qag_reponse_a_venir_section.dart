@@ -1,5 +1,6 @@
 import 'package:agora/bloc/qag/response/qag_response_a_venir_view_model.dart';
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
+import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
@@ -44,7 +45,9 @@ class QagReponsesAVenirSection extends StatelessWidget {
             child: switch (viewModel) {
               _LoadingViewModel _ => QagsResponseLoading(),
               _EmptyViewModel _ => SizedBox(),
-              _ErrorViewModel _ => Center(child: AgoraErrorView()),
+              _ErrorViewModel _ => Center(
+                  child: AgoraErrorView(onReload: () => context.read<QagResponseBloc>().add(FetchQagsResponseEvent())),
+                ),
               final _ResponseListViewModel viewModel => _ReponseAVenirListWidget(viewModel.viewModels),
             },
           ),

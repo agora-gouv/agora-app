@@ -16,7 +16,7 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
@@ -127,7 +127,7 @@ class _ErrorPage extends StatelessWidget {
         children: [
           AgoraToolbar(pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       ),
     );

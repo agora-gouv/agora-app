@@ -208,7 +208,7 @@ class _QagsSectionState extends State<QagsSection> {
                           header: true,
                           button: true,
                           selected: currentSelected == QagTab.popular,
-                          tooltip: 'élément 2 sur 4',
+                          tooltip: 'Élément 2 sur 4',
                           child: _buildTabButton(
                             label: QagStrings.popular,
                             isSelected: currentSelected == QagTab.popular,

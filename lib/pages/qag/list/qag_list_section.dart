@@ -59,12 +59,8 @@ class QagListSection extends StatelessWidget {
             section = Column(
               children: [
                 SizedBox(height: AgoraSpacings.base),
-                AgoraErrorView(),
-                SizedBox(height: AgoraSpacings.base),
-                AgoraRoundedButton(
-                  label: GenericStrings.retry,
-                  style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                  onPressed: () => context.read<QagListBloc>().add(
+                AgoraErrorView(
+                  onReload: () => context.read<QagListBloc>().add(
                         FetchQagsListEvent(
                           thematiqueId: thematiqueId,
                           thematiqueLabel: thematiqueLabel,
@@ -127,17 +123,8 @@ class QagListSection extends StatelessWidget {
                       ),
                     );
                   case QagListFooterType.error:
-                    return Column(
-                      children: [
-                        AgoraErrorView(),
-                        SizedBox(height: AgoraSpacings.base),
-                        AgoraRoundedButton(
-                          label: GenericStrings.retry,
-                          style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                          onPressed: () =>
-                              context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId)),
-                        ),
-                      ],
+                    return AgoraErrorView(
+                      onReload: () => context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId)),
                     );
                 }
               }

@@ -1,7 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_bloc.dart';
 import 'package:agora/bloc/thematique/thematique_state.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/pages/qag/qags_thematique_loading.dart';
@@ -41,7 +41,7 @@ class QagsThematiqueSection extends StatelessWidget {
                     } else if (state is ThematiqueInitialLoadingState) {
                       return Center(child: QagsThematiqueLoading());
                     } else {
-                      return Center(child: AgoraErrorView());
+                      return Center(child: AgoraErrorText());
                     }
                   },
                 ),

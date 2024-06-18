@@ -9,7 +9,7 @@ import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -85,7 +85,7 @@ class QagSearch extends StatelessWidget {
           );
         } else {
           SemanticsHelper.announceGenericError();
-          section = Center(child: AgoraErrorView());
+          section = Center(child: AgoraErrorText());
         }
         return ConstrainedBox(
           constraints: BoxConstraints(

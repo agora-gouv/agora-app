@@ -21,7 +21,7 @@ import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
@@ -144,7 +144,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       return Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       );
     } else {
@@ -206,7 +206,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               if (isQuestionLengthError) ...[
                 SizedBox(height: AgoraSpacings.x0_75),
-                AgoraErrorView(errorMessage: QagStrings.questionRequiredCondition),
+                AgoraErrorText(errorMessage: QagStrings.questionRequiredCondition),
               ],
               const SizedBox(height: AgoraSpacings.x0_75),
               _AstuceElement(),
@@ -342,12 +342,12 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                     children: [
                       if (createQagState is CreateQagErrorState) ...[
                         SizedBox(height: AgoraSpacings.base),
-                        AgoraErrorView(),
+                        AgoraErrorText(),
                         SizedBox(height: AgoraSpacings.base),
                       ],
                       if (createQagState is CreateQagErrorUnauthorizedState) ...[
                         SizedBox(height: AgoraSpacings.base),
-                        AgoraErrorView(errorMessage: GenericStrings.errorUnauthorizedMessage),
+                        AgoraErrorText(errorMessage: GenericStrings.errorUnauthorizedMessage),
                         SizedBox(height: AgoraSpacings.base),
                       ],
                       if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),

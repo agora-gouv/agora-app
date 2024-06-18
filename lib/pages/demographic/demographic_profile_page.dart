@@ -119,7 +119,11 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
       return Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-          Center(child: AgoraErrorView()),
+          Center(
+            child: AgoraErrorView(
+              onReload: () => context.read<DemographicInformationBloc>().add(GetDemographicInformationEvent()),
+            ),
+          ),
         ],
       );
     }
