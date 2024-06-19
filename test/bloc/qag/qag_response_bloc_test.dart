@@ -16,12 +16,13 @@ void main() {
 
   group("FetchQagsResponseEvent", () {
     blocTest(
-      "when repository succeed - should emit success state",
+      "when repository succeed - should emit loading then success state",
       build: () => QagResponseBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
+        QagResponseInitialLoadingState(),
         QagResponseFetchedState(
           incomingQagResponses: [
             QagResponseIncoming(
@@ -52,12 +53,13 @@ void main() {
     );
 
     blocTest(
-      "when repository failed - should emit failure state",
+      "when repository failed - should emit loading then failure state",
       build: () => QagResponseBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
+        QagResponseInitialLoadingState(),
         QagResponseErrorState(),
       ],
       wait: const Duration(milliseconds: 5),

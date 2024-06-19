@@ -1,7 +1,7 @@
 import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class ThematiqueState extends Equatable {
+sealed class ThematiqueState extends Equatable {
   @override
   List<Object?> get props => [];
 }

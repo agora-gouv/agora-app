@@ -4,7 +4,7 @@ import 'package:agora/bloc/consultation/question/response/send/consultation_ques
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
 import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_event.dart';
 import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
@@ -122,7 +122,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
         children: [
           _buildToolbar(context, 'Erreur dans l\'envoi du questionnaire'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       );
     }

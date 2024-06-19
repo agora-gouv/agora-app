@@ -134,7 +134,11 @@ class _ReponseList extends StatelessWidget {
         if (state is QagResponsePaginatedInitialState || state is QagResponsePaginatedLoadingState)
           _LoadingReponseList()
         else if (state is QagResponsePaginatedErrorState)
-          _ErrorReponseList(state.currentPageNumber)
+          AgoraErrorView(
+            onReload: () => context
+                .read<QagResponsePaginatedBloc>()
+                .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
+          )
         else if (state.currentPageNumber < state.maxPage)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
@@ -159,34 +163,6 @@ class _LoadingReponseList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
       child: Center(child: CircularProgressIndicator()),
-    );
-  }
-}
-
-class _ErrorReponseList extends StatelessWidget {
-  final int currentPageNumber;
-
-  const _ErrorReponseList(this.currentPageNumber);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AgoraErrorView(),
-        SizedBox(height: AgoraSpacings.base),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AgoraRoundedButton(
-              label: GenericStrings.retry,
-              style: AgoraRoundedButtonStyle.primaryButtonStyle,
-              onPressed: () => context
-                  .read<QagResponsePaginatedBloc>()
-                  .add(FetchQagsResponsePaginatedEvent(pageNumber: currentPageNumber)),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

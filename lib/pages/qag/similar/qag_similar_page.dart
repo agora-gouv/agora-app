@@ -12,7 +12,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_qag_similar_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -142,7 +142,7 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
         return Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-            Center(child: AgoraErrorView()),
+            Center(child: AgoraErrorText()),
           ],
         );
     }
@@ -173,7 +173,7 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
               showAgoraDialog(
                 context: context,
                 columnChildren: [
-                  AgoraErrorView(),
+                  AgoraErrorText(),
                   SizedBox(height: AgoraSpacings.x0_75),
                   AgoraButton(
                     label: GenericStrings.close,

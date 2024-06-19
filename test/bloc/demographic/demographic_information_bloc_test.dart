@@ -11,12 +11,13 @@ import '../../fakes/demographic/fakes_demographic_repository.dart';
 void main() {
   group("GetDemographicInformationEvent", () {
     blocTest(
-      "when repository succeed - should emit success state",
+      "when repository succeed - should emit loading then success state",
       build: () => DemographicInformationBloc(
         demographicRepository: FakeDemographicSuccessRepository(),
       ),
       act: (bloc) => bloc.add(GetDemographicInformationEvent()),
       expect: () => [
+        GetDemographicInformationInitialLoadingState(),
         GetDemographicInformationSuccessState(
           demographicInformationResponse: [
             DemographicInformation(demographicType: DemographicType.gender, data: "M"),
@@ -37,12 +38,13 @@ void main() {
     );
 
     blocTest(
-      "when repository failed - should emit failure state",
+      "when repository failed - should emit loading then failure state",
       build: () => DemographicInformationBloc(
         demographicRepository: FakeDemographicFailureRepository(),
       ),
       act: (bloc) => bloc.add(GetDemographicInformationEvent()),
       expect: () => [
+        GetDemographicInformationInitialLoadingState(),
         GetDemographicInformationFailureState(),
       ],
       wait: const Duration(milliseconds: 5),

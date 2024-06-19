@@ -148,23 +148,14 @@ class ConsultationPaginatedPage extends StatelessWidget {
       widgets.add(Center(child: CircularProgressIndicator()));
       widgets.add(SizedBox(height: AgoraSpacings.base));
     } else if (state is ConsultationPaginatedErrorState) {
-      widgets.add(AgoraErrorView());
-      widgets.add(SizedBox(height: AgoraSpacings.base));
       widgets.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AgoraRoundedButton(
-              label: GenericStrings.retry,
-              style: AgoraRoundedButtonStyle.primaryButtonStyle,
-              onPressed: () => context.read<ConsultationPaginatedBloc>().add(
-                    FetchConsultationPaginatedEvent(
-                      pageNumber: state.currentPageNumber,
-                      type: type,
-                    ),
-                  ),
-            ),
-          ],
+        AgoraErrorView(
+          onReload: () => context.read<ConsultationPaginatedBloc>().add(
+                FetchConsultationPaginatedEvent(
+                  pageNumber: state.currentPageNumber,
+                  type: type,
+                ),
+              ),
         ),
       );
       widgets.add(SizedBox(height: AgoraSpacings.base));

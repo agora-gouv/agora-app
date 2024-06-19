@@ -103,10 +103,19 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
     } else if (state is ConsultationErrorState && state.errorType == ConsultationsErrorType.timeout) {
       return _buildPadding(
         context,
-        AgoraErrorView(errorMessage: GenericStrings.timeoutErrorMessage, textAlign: TextAlign.center),
+        AgoraErrorView(
+          errorMessage: GenericStrings.timeoutErrorMessage,
+          textAlign: TextAlign.center,
+          onReload: () => context.read<ConsultationBloc>().add(FetchConsultationsEvent()),
+        ),
       );
     } else if (state is ConsultationErrorState && state.errorType == ConsultationsErrorType.generic) {
-      return _buildPadding(context, AgoraErrorView());
+      return _buildPadding(
+        context,
+        AgoraErrorView(
+          onReload: () => context.read<ConsultationBloc>().add(FetchConsultationsEvent()),
+        ),
+      );
     }
     return [];
   }

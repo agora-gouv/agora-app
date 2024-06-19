@@ -10,7 +10,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_qag_moderation_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -83,7 +83,7 @@ class _ModerationPageState extends State<ModerationPage> {
                 return Column(
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-                    Center(child: AgoraErrorView()),
+                    Center(child: AgoraErrorText()),
                   ],
                 );
               }

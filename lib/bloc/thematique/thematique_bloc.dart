@@ -13,6 +13,7 @@ class ThematiqueBloc extends Bloc<FetchThematiqueEvent, ThematiqueState> {
   }
 
   Future<void> _handleFetchFilterThematique(FetchFilterThematiqueEvent event, Emitter<ThematiqueState> emit) async {
+    emit(ThematiqueInitialLoadingState());
     final thematiquesResponse = await repository.fetchThematiques();
     if (thematiquesResponse is GetThematiqueSucceedResponse) {
       final thematiqueViewModels = ThematiquePresenter.presentFilterThematique(thematiquesResponse.thematiques);
@@ -23,6 +24,7 @@ class ThematiqueBloc extends Bloc<FetchThematiqueEvent, ThematiqueState> {
   }
 
   Future<void> _handleFetchAskQaGThematique(FetchAskQaGThematiqueEvent event, Emitter<ThematiqueState> emit) async {
+    emit(ThematiqueInitialLoadingState());
     final thematiquesResponse = await repository.fetchThematiques();
     if (thematiquesResponse is GetThematiqueSucceedResponse) {
       final thematiqueViewModels = ThematiquePresenter.presentAskQaGThematique(thematiquesResponse.thematiques);

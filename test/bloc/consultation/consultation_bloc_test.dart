@@ -18,13 +18,14 @@ void main() {
 
   group("fetchConsultationsEvent", () {
     blocTest(
-      "when repository succeed - should emit success state",
+      "when repository succeed - should emit loading then success state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
         concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
+        ConsultationInitialLoadingState(),
         ConsultationsFetchedState(
           ongoingViewModels: [
             ConsultationOngoingViewModel(
@@ -69,13 +70,14 @@ void main() {
     );
 
     blocTest(
-      "when repository succeed and finished consultation is empty - should emit success state",
+      "when repository succeed and finished consultation is empty - should emit loading then success state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
         concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
+        ConsultationInitialLoadingState(),
         ConsultationsFetchedState(
           ongoingViewModels: [
             ConsultationOngoingViewModel(
@@ -104,26 +106,28 @@ void main() {
     );
 
     blocTest(
-      "when repository failed with timeout - should emit failure state",
+      "when repository failed with timeout - should emit loading then failure state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationTimeoutFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
+        ConsultationInitialLoadingState(),
         ConsultationErrorState(errorType: ConsultationsErrorType.timeout),
       ],
       wait: const Duration(milliseconds: 5),
     );
 
     blocTest(
-      "when repository failed - should emit failure state",
+      "when repository failed - should emit loading then failure state",
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
+        ConsultationInitialLoadingState(),
         ConsultationErrorState(errorType: ConsultationsErrorType.generic),
       ],
       wait: const Duration(milliseconds: 5),

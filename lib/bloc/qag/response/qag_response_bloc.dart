@@ -14,6 +14,7 @@ class QagResponseBloc extends Bloc<FetchQagsResponseEvent, QagResponseState> {
     FetchQagsResponseEvent event,
     Emitter<QagResponseState> emit,
   ) async {
+    emit(QagResponseInitialLoadingState());
     final response = await qagRepository.fetchQagsResponse();
     if (response is GetQagsResponseSucceedResponse) {
       emit(

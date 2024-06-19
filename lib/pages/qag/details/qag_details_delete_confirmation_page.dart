@@ -5,7 +5,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
@@ -101,7 +101,7 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
                         ),
                         if (state is QagDeleteErrorState) ...[
                           SizedBox(height: AgoraSpacings.base),
-                          AgoraErrorView(),
+                          AgoraErrorText(),
                         ],
                       ],
                     ),
