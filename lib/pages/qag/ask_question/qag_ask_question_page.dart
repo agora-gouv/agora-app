@@ -22,6 +22,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_error_text.dart';
+import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
@@ -144,7 +145,11 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       return Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-          Center(child: AgoraErrorText()),
+          Center(
+            child: AgoraErrorView(
+              onReload: () => context.read<ThematiqueBloc>().add(FetchAskQaGThematiqueEvent()),
+            ),
+          ),
         ],
       );
     } else {
