@@ -37,7 +37,7 @@ class AgoraQagResponseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget currentChild = Semantics(
-      tooltip: "Élément $index sur $maxIndex",
+      tooltip: "Élément ${index + 1} sur $maxIndex",
       button: true,
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,

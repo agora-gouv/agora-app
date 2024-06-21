@@ -71,10 +71,12 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
                         ),
                       ),
                     )
-                  : ConsultationQuestionHelper.buildIgnoreButton(
-                      onPressed: () {
-                        widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, UuidUtils.uuidZero, "");
-                      },
+                  : Flexible(
+                      child: ConsultationQuestionHelper.buildIgnoreButton(
+                        onPressed: () {
+                          widget.onUniqueResponseTap(widget.uniqueChoiceQuestion.id, UuidUtils.uuidZero, "");
+                        },
+                      ),
                     ),
             ],
           ),

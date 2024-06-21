@@ -123,6 +123,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   ),
                                   SizedBox(height: AgoraSpacings.x1_25),
                                   RichText(
+                                    textScaler: MediaQuery.textScalerOf(context),
                                     text: TextSpan(
                                       style: AgoraTextStyles.regular14,
                                       children: [
@@ -158,49 +159,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                               ),
                             ),
                           SizedBox(height: AgoraSpacings.x1_25),
-                          Row(
-                            children: [
-                              AgoraButton(
-                                label: DemographicStrings.begin,
-                                style: AgoraButtonStyle.primaryButtonStyle,
-                                onPressed: () {
-                                  TrackerHelper.trackClick(
-                                    clickName: AnalyticsEventNames.beginDemographic,
-                                    widgetName: AnalyticsScreenNames.demographicInformationPage,
-                                  );
-                                  Navigator.pushNamed(
-                                    context,
-                                    DemographicQuestionPage.routeName,
-                                    arguments: DemographicQuestionArgumentsFromQuestion(
-                                      consultationId: arguments.consultationId,
-                                      consultationTitle: arguments.consultationTitle,
-                                    ),
-                                  ).then((value) => Navigator.of(context).pop());
-                                },
-                              ),
-                              SizedBox(width: AgoraSpacings.base),
-                              Flexible(
-                                child: AgoraButton(
-                                  label: DemographicStrings.toNoAnswer,
-                                  style: AgoraButtonStyle.blueBorderButtonStyle,
-                                  onPressed: () {
-                                    TrackerHelper.trackClick(
-                                      clickName: AnalyticsEventNames.ignoreDemographic,
-                                      widgetName: AnalyticsScreenNames.demographicInformationPage,
-                                    );
-                                    Navigator.pushNamed(
-                                      context,
-                                      DynamicConsultationPage.routeName,
-                                      arguments: DynamicConsultationPageArguments(
-                                        consultationId: arguments.consultationId,
-                                        shouldLaunchCongratulationAnimation: true,
-                                      ),
-                                    ).then((value) => Navigator.of(context).pop());
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                          _SuiteBoutons(arguments: arguments),
                         ],
                       ),
                     ),
@@ -217,6 +176,81 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SuiteBoutons extends StatelessWidget {
+  const _SuiteBoutons({required this.arguments});
+
+  final DemographicInformationArguments arguments;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _CommencerBouton(arguments: arguments),
+        SizedBox(width: AgoraSpacings.base),
+        _NePasRepondreBouton(arguments: arguments),
+      ],
+    );
+  }
+}
+
+class _NePasRepondreBouton extends StatelessWidget {
+  const _NePasRepondreBouton({required this.arguments});
+
+  final DemographicInformationArguments arguments;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: AgoraButton(
+        label: DemographicStrings.toNoAnswer,
+        style: AgoraButtonStyle.blueBorderButtonStyle,
+        onPressed: () {
+          TrackerHelper.trackClick(
+            clickName: AnalyticsEventNames.ignoreDemographic,
+            widgetName: AnalyticsScreenNames.demographicInformationPage,
+          );
+          Navigator.pushNamed(
+            context,
+            DynamicConsultationPage.routeName,
+            arguments: DynamicConsultationPageArguments(
+              consultationId: arguments.consultationId,
+              shouldLaunchCongratulationAnimation: true,
+            ),
+          ).then((value) => Navigator.of(context).pop());
+        },
+      ),
+    );
+  }
+}
+
+class _CommencerBouton extends StatelessWidget {
+  const _CommencerBouton({required this.arguments});
+
+  final DemographicInformationArguments arguments;
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraButton(
+      label: DemographicStrings.begin,
+      style: AgoraButtonStyle.primaryButtonStyle,
+      onPressed: () {
+        TrackerHelper.trackClick(
+          clickName: AnalyticsEventNames.beginDemographic,
+          widgetName: AnalyticsScreenNames.demographicInformationPage,
+        );
+        Navigator.pushNamed(
+          context,
+          DemographicQuestionPage.routeName,
+          arguments: DemographicQuestionArgumentsFromQuestion(
+            consultationId: arguments.consultationId,
+            consultationTitle: arguments.consultationTitle,
+          ),
+        ).then((value) => Navigator.of(context).pop());
+      },
     );
   }
 }

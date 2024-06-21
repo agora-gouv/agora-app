@@ -70,8 +70,10 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
                         onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
                       ),
                     )
-                  : ConsultationQuestionHelper.buildIgnoreButton(
-                      onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
+                  : Flexible(
+                      child: ConsultationQuestionHelper.buildIgnoreButton(
+                        onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
+                      ),
                     ),
             ],
           ),

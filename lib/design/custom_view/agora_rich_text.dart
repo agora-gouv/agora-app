@@ -47,12 +47,14 @@ class AgoraRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textScaler = MediaQuery.textScalerOf(context);
     return Semantics(
       header: semantic.header,
       focused: semantic.focused,
       label: items.map((richTextItem) => richTextItem.text.replaceAll("\n", " ")).join(),
       child: ExcludeSemantics(
         child: RichText(
+          textScaler: textScaler,
           text: TextSpan(
             style: _buildRegularStyle(),
             children: items.map((item) {

@@ -36,7 +36,7 @@ class AgoraQagResponseAVenirCard extends StatelessWidget {
     return SizedBox(
       width: max(MediaQuery.of(context).size.width * 0.65, AgoraSpacings.carrouselMinWidth),
       child: Semantics(
-        tooltip: "Élément $index sur $maxIndex",
+        tooltip: "Élément ${index + 1} sur $maxIndex",
         button: true,
         child: AgoraRoundedCard(
           borderColor: AgoraColors.primaryBlue,

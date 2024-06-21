@@ -853,6 +853,7 @@ class _VideoSectionWidget extends StatelessWidget {
                   Semantics(
                     header: true,
                     child: RichText(
+                      textScaler: MediaQuery.textScalerOf(context),
                       text: TextSpan(
                         style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                         children: [
@@ -879,6 +880,7 @@ class _VideoSectionWidget extends StatelessWidget {
                 if (section.date != null) ...[
                   SizedBox(height: AgoraSpacings.x0_5),
                   RichText(
+                    textScaler: MediaQuery.textScalerOf(context),
                     text: TextSpan(
                       style: AgoraTextStyles.light16.copyWith(color: AgoraColors.primaryGreyOpacity80),
                       children: [

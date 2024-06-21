@@ -93,7 +93,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
             return AgoraSecondaryStyleView(
-              pageLabel: QagStrings.askQuestionTitle1 + QagStrings.askQuestionTitle2,
+              pageLabel: QagStrings.askQuestionTitle,
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
@@ -278,6 +278,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         context: context,
                         columnChildren: [
                           RichText(
+                            textScaler: MediaQuery.textScalerOf(context),
                             text: TextSpan(
                               style: AgoraTextStyles.light16,
                               children: [
@@ -463,6 +464,7 @@ class _AstuceElement extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: AgoraSpacings.base),
                   child: RichText(
+                    textScaler: MediaQuery.textScalerOf(context),
                     text: TextSpan(
                       style: AgoraTextStyles.regular14,
                       children: [

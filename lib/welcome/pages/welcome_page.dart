@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/emoji_helper.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
@@ -110,6 +111,7 @@ class _Titre extends StatelessWidget {
       focused: true,
       child: Text(
         GenericStrings.welcomeTitle,
+        semanticsLabel: EmojiHelper.clean(GenericStrings.welcomeTitle),
         style: AgoraTextStyles.bold28.copyWith(color: AgoraColors.primaryBlue),
         textAlign: largerThanMobile ? TextAlign.center : TextAlign.start,
       ),
@@ -244,36 +246,40 @@ class _ALaUne extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, QagsPage.routeName);
-                      Navigator.pushNamed(context, aLaUne.routeName, arguments: aLaUne.routeArgument);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: AgoraSpacings.x0_75),
-                          Text(
-                            GenericStrings.welcomeNewsTitle,
-                            style: AgoraTextStyles.regular26.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(height: AgoraSpacings.x0_75),
-                          AgoraRichText(
-                            policeStyle: AgoraRichTextPoliceStyle.police16Interligne140,
-                            textAlign: TextAlign.end,
-                            items: [
-                              ...parseSimpleHtml(aLaUne.description)
-                                  .map((data) => AgoraRichTextItem(text: data.text, style: data.style)),
-                            ],
-                          ),
-                          SizedBox(height: AgoraSpacings.x0_75),
-                          _ALaUneBouton(aLaUne: aLaUne),
-                        ],
+                child: Semantics(
+                  button: true,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, QagsPage.routeName);
+                        Navigator.pushNamed(context, aLaUne.routeName, arguments: aLaUne.routeArgument);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: AgoraSpacings.x0_75),
+                            Text(
+                              GenericStrings.welcomeNewsTitle,
+                              semanticsLabel: EmojiHelper.clean(GenericStrings.welcomeNewsTitle),
+                              style: AgoraTextStyles.regular26.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: AgoraSpacings.x0_75),
+                            AgoraRichText(
+                              policeStyle: AgoraRichTextPoliceStyle.police16Interligne140,
+                              textAlign: TextAlign.end,
+                              items: [
+                                ...parseSimpleHtml(aLaUne.description)
+                                    .map((data) => AgoraRichTextItem(text: data.text, style: data.style)),
+                              ],
+                            ),
+                            SizedBox(height: AgoraSpacings.x0_75),
+                            _ALaUneBouton(aLaUne: aLaUne),
+                          ],
+                        ),
                       ),
                     ),
                   ),
