@@ -167,14 +167,16 @@ class _SuccessPage extends StatelessWidget {
               ),
             ),
             if (kDebugMode) ...[
-              AgoraButton(
-                label: 'Supprimer',
-                style: AgoraButtonStyle.redBorderButtonStyle,
-                onPressed: () {
-                  context
-                      .read<DynamicConsultationBloc>()
-                      .add(DeleteConsultationResponsesEvent(viewModel.consultationId));
-                },
+              Flexible(
+                child: AgoraButton(
+                  label: 'Supprimer',
+                  style: AgoraButtonStyle.redBorderButtonStyle,
+                  onPressed: () {
+                    context
+                        .read<DynamicConsultationBloc>()
+                        .add(DeleteConsultationResponsesEvent(viewModel.consultationId));
+                  },
+                ),
               ),
               const SizedBox(width: AgoraSpacings.base),
             ],

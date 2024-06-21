@@ -99,6 +99,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RichText(
+                textScaler: MediaQuery.textScalerOf(context),
                 textAlign: textAlign,
                 textDirection: textDirection,
                 text: TextSpan(
@@ -120,6 +121,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
             mainAxisSize: MainAxisSize.min,
             children: [
               RichText(
+                textScaler: MediaQuery.textScalerOf(context),
                 textAlign: textAlign,
                 textDirection: textDirection,
                 maxLines: _readMore ? widget.trimLines : null,
@@ -133,6 +135,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
           );
         } else {
           textSpan = RichText(
+            textScaler: MediaQuery.textScalerOf(context),
             textAlign: textAlign,
             textDirection: textDirection,
             text: TextSpan(style: textStyle, text: data),

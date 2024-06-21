@@ -43,6 +43,7 @@ class _ProfileDemographicInformationPageState extends State<ProfileDemographicIn
               child: Semantics(
                 focused: true,
                 child: RichText(
+                  textScaler: MediaQuery.textScalerOf(context),
                   text: TextSpan(
                     style: AgoraTextStyles.light20,
                     children: [
@@ -107,6 +108,7 @@ class _ProfileDemographicInformationPageState extends State<ProfileDemographicIn
                           ),
                           SizedBox(height: AgoraSpacings.x1_25),
                           RichText(
+                            textScaler: MediaQuery.textScalerOf(context),
                             text: TextSpan(
                               style: AgoraTextStyles.regular14,
                               children: [

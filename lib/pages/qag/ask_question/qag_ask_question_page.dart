@@ -273,6 +273,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         context: context,
                         columnChildren: [
                           RichText(
+                            textScaler: MediaQuery.textScalerOf(context),
                             text: TextSpan(
                               style: AgoraTextStyles.light16,
                               children: [
@@ -458,6 +459,7 @@ class _AstuceElement extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: AgoraSpacings.base),
                   child: RichText(
+                    textScaler: MediaQuery.textScalerOf(context),
                     text: TextSpan(
                       style: AgoraTextStyles.regular14,
                       children: [

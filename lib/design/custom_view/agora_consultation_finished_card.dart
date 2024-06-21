@@ -62,7 +62,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   ) {
     final image = _buildImage(context, carrouselWidth);
     return Semantics(
-      tooltip: "Élément ${index + 1} sur $maxIndex",
+      tooltip: "Élément $index sur $maxIndex",
       button: isButton,
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
