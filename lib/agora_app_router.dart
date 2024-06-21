@@ -11,7 +11,7 @@ import 'package:agora/pages/consultation/question/consultation_question_confirma
 import 'package:agora/pages/consultation/question/consultation_question_page.dart';
 import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
 import 'package:agora/pages/demographic/demographic_information_page.dart';
-import 'package:agora/pages/demographic/demographic_profile_page.dart';
+import 'package:agora/pages/demographic/demographic_profil_page.dart';
 import 'package:agora/pages/demographic/demographic_question_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/main_bottom_navigation_page.dart';
@@ -19,8 +19,8 @@ import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
-import 'package:agora/pages/profile/profile_demographic_information_page.dart';
-import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/profile/profil_information_page.dart';
+import 'package:agora/pages/profile/profil_page.dart';
 import 'package:agora/pages/qag/ask_question/ask_question_qag_search.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
 import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dart';
@@ -59,9 +59,9 @@ class AgoraAppRouter {
             child: QagSimilarPage(),
           ),
       // Profile
-      ProfilePage.routeName: (context) => AgoraTracker(
+      ProfilPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.profilePage,
-            child: ProfilePage(),
+            child: ProfilPage(),
           ),
       ModerationPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.moderationPage,
@@ -79,9 +79,9 @@ class AgoraAppRouter {
             widgetName: AnalyticsScreenNames.participationCharterPage,
             child: ParticipationCharterPage(),
           ),
-      ProfileDemographicInformationPage.routeName: (context) => AgoraTracker(
+      ProfilInformationsPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.profileDemographicInformationPage,
-            child: ProfileDemographicInformationPage(),
+            child: ProfilInformationsPage(),
           ),
       // Demographique
       DemographicInformationPage.routeName: (context) => AgoraTracker(
@@ -92,9 +92,9 @@ class AgoraAppRouter {
             widgetName: AnalyticsScreenNames.demographicQuestionPage,
             child: DemographicQuestionPage(),
           ),
-      DemographicProfilePage.routeName: (context) => AgoraTracker(
+      DemographicProfilPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.demographicProfilePage,
-            child: DemographicProfilePage(),
+            child: DemographicProfilPage(),
           ),
       // Webview
       WebviewPage.routeName: (context) => AgoraTracker(

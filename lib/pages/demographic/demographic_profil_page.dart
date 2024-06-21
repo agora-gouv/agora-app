@@ -18,6 +18,7 @@ import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -35,14 +36,14 @@ class DemographicProfileArguments {
   DemographicProfileArguments({required this.modificationSuccess});
 }
 
-class DemographicProfilePage extends StatefulWidget {
-  static const routeName = "/demographicProfilePage";
+class DemographicProfilPage extends StatefulWidget {
+  static const routeName = "/demographicProfilPage";
 
   @override
-  State<DemographicProfilePage> createState() => _DemographicProfilePageState();
+  State<DemographicProfilPage> createState() => _DemographicProfilPageState();
 }
 
-class _DemographicProfilePageState extends State<DemographicProfilePage> {
+class _DemographicProfilPageState extends State<DemographicProfilPage> {
   bool isFirstTimeDisplayedPopUp = true;
 
   @override
@@ -69,19 +70,7 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
           builder: (context, state) {
             return AgoraSecondaryStyleView(
               pageLabel: DemographicStrings.my + DemographicStrings.information,
-              title: AgoraRichText(
-                policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                items: [
-                  AgoraRichTextItem(
-                    text: '${DemographicStrings.my}\n',
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                  AgoraRichTextItem(
-                    text: DemographicStrings.information,
-                    style: AgoraRichTextItemStyle.bold,
-                  ),
-                ],
-              ),
+              title: _Title(),
               button: state is GetDemographicInformationSuccessState
                   ? AgoraSecondaryStyleViewButton(
                       icon: null,
@@ -109,23 +98,9 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
       final viewModels = DemographicInformationPresenter.present(state.demographicInformationResponse);
       return _buildContent(context, viewModels, state.demographicInformationResponse);
     } else if (state is GetDemographicInformationInitialLoadingState) {
-      return Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-          Center(child: CircularProgressIndicator()),
-        ],
-      );
+      return _LoadingView();
     } else {
-      return Column(
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-          Center(
-            child: AgoraErrorView(
-              onReload: () => context.read<DemographicInformationBloc>().add(GetDemographicInformationEvent()),
-            ),
-          ),
-        ],
-      );
+      return _ErrorView();
     }
   }
 
@@ -277,5 +252,88 @@ class _DemographicProfilePageState extends State<DemographicProfilePage> {
       widgets.add(SizedBox(height: AgoraSpacings.base));
     }
     return widgets;
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title();
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraRichText(
+      policeStyle: AgoraRichTextPoliceStyle.toolbar,
+      items: [
+        AgoraRichTextItem(
+          text: '${DemographicStrings.my}\n',
+          style: AgoraRichTextItemStyle.regular,
+        ),
+        AgoraRichTextItem(
+          text: DemographicStrings.information,
+          style: AgoraRichTextItemStyle.bold,
+        ),
+      ],
+    );
+  }
+}
+
+class _ErrorView extends StatelessWidget {
+  const _ErrorView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
+        Center(
+          child: AgoraErrorView(
+            onReload: () => context.read<DemographicInformationBloc>().add(GetDemographicInformationEvent()),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LoadingView extends StatelessWidget {
+  const _LoadingView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.all(AgoraSpacings.base),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 12, width: 100),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 12, width: 180),
+            SizedBox(height: AgoraSpacings.x2),
+            SkeletonBox(height: 12, width: 150),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 12, width: 90),
+            SizedBox(height: AgoraSpacings.x2),
+            SkeletonBox(height: 12, width: 170),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 12, width: 150),
+            SizedBox(height: AgoraSpacings.x2),
+            SkeletonBox(height: 12, width: 100),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 12, width: 180),
+            SizedBox(height: AgoraSpacings.x2),
+            SkeletonBox(height: 12, width: 150),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 12, width: 90),
+            SizedBox(height: AgoraSpacings.x2),
+            SkeletonBox(height: 12, width: 170),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 12, width: 150),
+          ],
+        ),
+      ),
+    );
   }
 }
