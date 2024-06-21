@@ -16,8 +16,9 @@ import 'package:agora/design/custom_view/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/profile/profil_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:agora/pages/qag/qag_reponse_a_venir_section.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class ReponsesPage extends StatelessWidget {
                 ],
               ),
               onProfileClick: () {
-                Navigator.pushNamed(context, ProfilePage.routeName);
+                Navigator.pushNamed(context, ProfilPage.routeName);
               },
             ),
             SizedBox(height: AgoraSpacings.base),
@@ -160,9 +161,18 @@ class _LoadingReponseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-      child: Center(child: CircularProgressIndicator()),
+    return ListView.separated(
+      padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      separatorBuilder: (_, index) => SizedBox(height: AgoraSpacings.base),
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return SkeletonBox(
+          height: 120,
+        );
+      },
     );
   }
 }

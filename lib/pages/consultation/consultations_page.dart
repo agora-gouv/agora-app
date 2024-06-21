@@ -16,7 +16,7 @@ import 'package:agora/pages/consultation/consultations_answered_section.dart';
 import 'package:agora/pages/consultation/consultations_finished_section.dart';
 import 'package:agora/pages/consultation/consultations_loading_skeleton.dart';
 import 'package:agora/pages/consultation/consultations_ongoing_section.dart';
-import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/profile/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,7 +72,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
                         ),
                       ],
                     ),
-                    onProfileClick: () => Navigator.pushNamed(context, ProfilePage.routeName),
+                    onProfileClick: () => Navigator.pushNamed(context, ProfilPage.routeName),
                   ),
                   Column(children: _handleConsultationsState(context, state)),
                 ],

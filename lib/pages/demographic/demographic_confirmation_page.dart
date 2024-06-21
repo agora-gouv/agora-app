@@ -8,8 +8,8 @@ import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
-import 'package:agora/pages/demographic/demographic_profile_page.dart';
-import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/demographic/demographic_profil_page.dart';
+import 'package:agora/pages/profile/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,8 +53,8 @@ class DemographicConfirmationPage extends StatelessWidget {
               if (_isProfileJourney()) {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  DemographicProfilePage.routeName,
-                  ModalRoute.withName(ProfilePage.routeName),
+                  DemographicProfilPage.routeName,
+                  ModalRoute.withName(ProfilPage.routeName),
                   arguments: DemographicProfileArguments(
                     modificationSuccess: state is SendDemographicResponsesSuccessState,
                   ),

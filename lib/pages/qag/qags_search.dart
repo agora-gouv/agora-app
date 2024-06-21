@@ -11,6 +11,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_presenter.dart';
@@ -29,104 +30,151 @@ class QagSearch extends StatelessWidget {
     return BlocSelector<QagSearchBloc, QagSearchState, _ViewModel>(
       selector: _ViewModel.fromState,
       builder: (context, viewModel) {
-        final Widget section;
-
-        if (viewModel is _QagSearchWithResultViewModel) {
-          section = _buildQagSearchListView(context, viewModel.qags);
-        } else if (viewModel is _QagSearchLoadingViewModel) {
-          section = Center(child: CircularProgressIndicator());
-        } else if (viewModel is _QagSearchNoResultViewModel) {
-          SemanticsHelper.announceEmptyResult();
-          section = Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(top: AgoraSpacings.base),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    QagStrings.searchQagEmptyList,
-                    style: AgoraTextStyles.regular14,
-                  ),
-                  const SizedBox(height: AgoraSpacings.base),
-                  AgoraRoundedButton(
-                    label: QagStrings.askQuestion,
-                    onPressed: () {
-                      TrackerHelper.trackClick(
-                        clickName: AnalyticsEventNames.askQuestion,
-                        widgetName: AnalyticsScreenNames.qagsPage,
-                      );
-                      if (fromHome) {
-                        Navigator.pushNamed(context, QagAskQuestionPage.routeName);
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        } else if (viewModel is _QagSearchEmptyViewModel) {
-          section = Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: AgoraSpacings.base,
-                left: AgoraSpacings.base,
-                right: AgoraSpacings.base,
-              ),
-              child: Text(
-                QagStrings.searchQagEnterSomeCharacteres,
-                style: AgoraTextStyles.regular14,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-        } else {
-          SemanticsHelper.announceGenericError();
-          section = Center(child: AgoraErrorText());
-        }
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height * 0.70,
-          ),
-          child: section,
-        );
-      },
-    );
-  }
-
-  ListView _buildQagSearchListView(BuildContext context, List<QagViewModel> viewModel) {
-    SemanticsHelper.announceNewQagsInList();
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: viewModel.length,
-      itemBuilder: (context, index) {
-        final item = viewModel[index];
-        return BlocProvider.value(
-          value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-          child: Column(
-            children: [
-              AgoraQagSupportableCard(
-                qagViewModel: item,
-                widgetName: AnalyticsScreenNames.qagsPage,
-                onQagSupportChange: (qagSupport) {
-                  context.read<QagSearchBloc>().add(UpdateQagSearchSupportEvent(qagSupport));
-                },
-              ),
-              SizedBox(height: AgoraSpacings.base),
-            ],
-          ),
-        );
+        return switch (viewModel) {
+          _QagSearchWithResultViewModel _ => _QagSearchListView(viewModel: viewModel.qags),
+          _QagSearchLoadingViewModel _ => _LoadingView(),
+          _QagSearchNoResultViewModel _ => _NoResultView(fromHome: fromHome),
+          _QagSearchEmptyViewModel _ => _EmptyView(),
+          _QagSearchErrorViewModel _ => _ErrorView(),
+        };
       },
     );
   }
 }
 
-abstract class _ViewModel {
+class _QagSearchListView extends StatelessWidget {
+  final List<QagViewModel> viewModel;
+
+  const _QagSearchListView({required this.viewModel});
+
+  @override
+  Widget build(BuildContext context) {
+    SemanticsHelper.announceNewQagsInList();
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height * 0.70,
+      ),
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: viewModel.length,
+        itemBuilder: (context, index) {
+          final item = viewModel[index];
+          return BlocProvider.value(
+            value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+            child: Column(
+              children: [
+                AgoraQagSupportableCard(
+                  qagViewModel: item,
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                  onQagSupportChange: (qagSupport) {
+                    context.read<QagSearchBloc>().add(UpdateQagSearchSupportEvent(qagSupport));
+                  },
+                ),
+                SizedBox(height: AgoraSpacings.base),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ErrorView extends StatelessWidget {
+  const _ErrorView();
+
+  @override
+  Widget build(BuildContext context) {
+    SemanticsHelper.announceGenericError();
+    return Center(child: AgoraErrorText());
+  }
+}
+
+class _EmptyView extends StatelessWidget {
+  const _EmptyView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: AgoraSpacings.base,
+          left: AgoraSpacings.base,
+          right: AgoraSpacings.base,
+        ),
+        child: Text(
+          QagStrings.searchQagEnterSomeCharacteres,
+          style: AgoraTextStyles.regular14,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}
+
+class _NoResultView extends StatelessWidget {
+  const _NoResultView({required this.fromHome});
+
+  final bool fromHome;
+
+  @override
+  Widget build(BuildContext context) {
+    SemanticsHelper.announceEmptyResult();
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Padding(
+        padding: const EdgeInsets.only(top: AgoraSpacings.base),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              QagStrings.searchQagEmptyList,
+              style: AgoraTextStyles.regular14,
+            ),
+            const SizedBox(height: AgoraSpacings.base),
+            AgoraRoundedButton(
+              label: QagStrings.askQuestion,
+              onPressed: () {
+                TrackerHelper.trackClick(
+                  clickName: AnalyticsEventNames.askQuestion,
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                );
+                if (fromHome) {
+                  Navigator.pushNamed(context, QagAskQuestionPage.routeName);
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LoadingView extends StatelessWidget {
+  const _LoadingView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AgoraSpacings.base),
+      child: Column(
+        children: [
+          SkeletonBox(height: 100),
+          const SizedBox(height: AgoraSpacings.base),
+          SkeletonBox(height: 100),
+        ],
+      ),
+    );
+  }
+}
+
+sealed class _ViewModel {
   static _ViewModel fromState(QagSearchState state) {
     if (state is QagSearchLoadedState && state.qags.isEmpty) {
       return _QagSearchNoResultViewModel();

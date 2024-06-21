@@ -16,23 +16,23 @@ import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/demographic/demographic_profile_page.dart';
+import 'package:agora/pages/demographic/demographic_profil_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
-import 'package:agora/pages/profile/profile_demographic_information_page.dart';
+import 'package:agora/pages/profile/profil_information_page.dart';
 import 'package:agora/pages/qag/moderation/moderation_page.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatefulWidget {
-  static const routeName = "/profilePage";
+class ProfilPage extends StatefulWidget {
+  static const routeName = "/profilPage";
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfilPage> createState() => _ProfilPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilPageState extends State<ProfilPage> {
   var shouldReloadQagsPage = false;
 
   @override
@@ -73,12 +73,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     _track(AnalyticsEventNames.myInformation);
                     if (isFirstDisplay) {
                       StorageManager.getProfileDemographicStorageClient().save(false);
-                      Navigator.pushNamed(context, ProfileDemographicInformationPage.routeName);
+                      Navigator.pushNamed(context, ProfilInformationsPage.routeName);
                       setState(() {
                         // utils to reload isFirstDisplay after saving in storage client
                       });
                     } else {
-                      Navigator.pushNamed(context, DemographicProfilePage.routeName);
+                      Navigator.pushNamed(context, DemographicProfilPage.routeName);
                     }
                   },
                 );
