@@ -45,7 +45,8 @@ class QagReponsesAVenirSection extends StatelessWidget {
             child: switch (viewModel) {
               _LoadingViewModel _ => QagsResponseLoading(),
               _EmptyViewModel _ => SizedBox(),
-              _ErrorViewModel _ => Center(
+              _ErrorViewModel _ => Padding(
+                  padding: const EdgeInsets.only(right: 20),
                   child: AgoraErrorView(onReload: () => context.read<QagResponseBloc>().add(FetchQagsResponseEvent())),
                 ),
               final _ResponseListViewModel viewModel => _ReponseAVenirListWidget(viewModel.viewModels),

@@ -13,7 +13,7 @@ class AgoraHtml extends StatelessWidget {
   final double fontSize;
   final TextAlign textAlign;
 
-  const AgoraHtml({super.key, required this.data, this.fontSize = 16.0, this.textAlign = TextAlign.start});
+  const AgoraHtml({super.key, required this.data, this.fontSize = 16.0, this.textAlign = TextAlign.justify});
 
   @override
   Widget build(BuildContext context) {
