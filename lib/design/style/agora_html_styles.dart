@@ -17,10 +17,10 @@ class AgoraHtmlStyles {
   static Map<String, Style> htmlStyle(BuildContext context, double fontSize, TextAlign textAlign) {
     return {
       "html": Style(textAlign: textAlign),
-      "body": AgoraHtmlStyles._bodyStyle(fontSize),
+      "body": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
       "ul": AgoraHtmlStyles._listStyle(fontSize),
-      "ol": AgoraHtmlStyles._bodyStyle(fontSize),
-      "li": AgoraHtmlStyles._bodyStyle(fontSize),
+      "ol": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
+      "li": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
       "b": AgoraHtmlStyles._boldStyle(fontSize),
       "h1": AgoraHtmlStyles._h1Style(fontSize),
       "span": AgoraHtmlStyles._spanStyle(fontSize),
@@ -28,13 +28,13 @@ class AgoraHtmlStyles {
     };
   }
 
-  static Style _bodyStyle(double fontSize) => Style(
+  static Style _bodyStyle(double fontSize, TextAlign textAlign) => Style(
         fontFamily: marianne,
         fontWeight: light,
         fontSize: FontSize(fontSize),
         color: AgoraColors.primaryGrey,
         textDecorationColor: AgoraColors.primaryBlue,
-        textAlign: TextAlign.justify,
+        textAlign: textAlign,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
