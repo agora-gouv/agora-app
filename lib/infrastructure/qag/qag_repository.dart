@@ -232,7 +232,7 @@ class QagDioRepository extends QagRepository {
     required int pageNumber,
   }) async {
     try {
-      final response = await httpClient.get("/qags/responses/page/$pageNumber");
+      final response = await httpClient.get("/qags/responses/$pageNumber");
       return GetQagsResponsePaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         paginatedQagsResponse: _transformToQagResponsePaginatedList(response.data["responses"] as List),
