@@ -54,11 +54,13 @@ class _TitreEtInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AgoraRichText(
-          items: [
-            AgoraRichTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
-            AgoraRichTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
-          ],
+        Flexible(
+          child: AgoraRichText(
+            items: [
+              AgoraRichTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
+              AgoraRichTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
+            ],
+          ),
         ),
         _InfoBouton(),
       ],

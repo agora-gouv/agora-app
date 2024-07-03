@@ -34,6 +34,7 @@ class AgoraMenuItem extends StatelessWidget {
               if (isExternalRedirect) ...[
                 Expanded(
                   child: RichText(
+                    textScaler: MediaQuery.textScalerOf(context),
                     text: TextSpan(
                       children: [
                         TextSpan(text: title, style: AgoraTextStyles.regular18),

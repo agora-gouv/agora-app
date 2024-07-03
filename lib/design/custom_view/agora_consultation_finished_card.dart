@@ -157,6 +157,7 @@ class _Title extends StatelessWidget {
       return Semantics(
         label: "Lien externe vers la consultation $title",
         child: RichText(
+          textScaler: MediaQuery.textScalerOf(context),
           text: TextSpan(
             children: [
               TextSpan(text: title, style: AgoraTextStyles.medium18),
