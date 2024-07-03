@@ -82,7 +82,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
             style == AgoraConsultationFinishedStyle.column
                 ? _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink))
                 : _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink)),
-            SizedBox(height: AgoraSpacings.x0_5),
+            Spacer(),
             if (label != null)
               AgoraRoundedCard(
                 cardColor: AgoraColors.consultationLabelRed,

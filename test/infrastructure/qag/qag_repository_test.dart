@@ -413,7 +413,7 @@ void main() {
     test("when success should return qags response paginated", () async {
       // Given
       dioAdapter.onGet(
-        "/qags/responses/page/1",
+        "/qags/responses/1",
         (server) => server.reply(
           HttpStatus.ok,
           {
@@ -464,7 +464,7 @@ void main() {
     test("when failure should return failed", () async {
       // Given
       dioAdapter.onGet(
-        "/qags/responses/page/1",
+        "/qags/responses/1",
         (server) => server.reply(HttpStatus.notFound, {}),
         headers: {
           "accept": "application/json",
