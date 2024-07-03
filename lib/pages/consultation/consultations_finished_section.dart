@@ -147,6 +147,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                 LaunchUrlHelper.webview(context, finishedViewModel.externalLink);
               }
             },
+            isExternalLink: finishedViewModel is ConcertationViewModel,
             index: finishedViewModels.indexOf(finishedViewModel) + 1,
             maxIndex: finishedViewModels.length + 1,
           );

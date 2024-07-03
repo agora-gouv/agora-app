@@ -133,6 +133,7 @@ class _ProfilPageState extends State<ProfilPage> {
             ),
             AgoraMenuItem(
               title: ProfileStrings.privacyPolicy,
+              isExternalRedirect: true,
               onClick: () {
                 _track(AnalyticsEventNames.privacyPolicy);
                 LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink);
@@ -140,6 +141,7 @@ class _ProfilPageState extends State<ProfilPage> {
             ),
             AgoraMenuItem(
               title: ProfileStrings.termsOfService,
+              isExternalRedirect: true,
               onClick: () {
                 _track(AnalyticsEventNames.termsOfService);
                 LaunchUrlHelper.webview(context, ProfileStrings.cguLink);
@@ -147,6 +149,7 @@ class _ProfilPageState extends State<ProfilPage> {
             ),
             AgoraMenuItem(
               title: ProfileStrings.legalNotice,
+              isExternalRedirect: true,
               onClick: () {
                 _track(AnalyticsEventNames.legalNotice);
                 LaunchUrlHelper.webview(context, ProfileStrings.legalNoticeLink);
