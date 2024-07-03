@@ -187,7 +187,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.askQagObligatoireSaufContraire, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.base),
-              _MandatoryField(QagStrings.questionTitle),
+              Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
                 maxLength: _questionMaxLength,
@@ -257,7 +257,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 onChanged: (input) => setState(() => details = input),
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              _MandatoryField(QagStrings.thematiqueTitle),
+              Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18),
               SizedBox(height: AgoraSpacings.x0_5),
               QagThematiquesDropDown(
                 firstValue: null,
@@ -269,41 +269,8 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-                    child: _MandatoryField(QagStrings.yourNameTitle),
-                  ),
-                  AgoraMoreInformation(
-                    onClick: () {
-                      showAgoraDialog(
-                        context: context,
-                        columnChildren: [
-                          RichText(
-                            textScaler: MediaQuery.textScalerOf(context),
-                            text: TextSpan(
-                              style: AgoraTextStyles.light16,
-                              children: [
-                                TextSpan(text: QagStrings.yourNameInfoBubble1),
-                                WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                TextSpan(
-                                  text: QagStrings.yourNameInfoBubble2,
-                                  style: AgoraTextStyles.light16Underline.copyWith(color: AgoraColors.primaryBlue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: AgoraSpacings.x0_75),
-                          AgoraButton(
-                            label: GenericStrings.close,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                  Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
+                  _InfoBouton(),
                 ],
               ),
               SizedBox(height: AgoraSpacings.x0_375),
@@ -437,6 +404,48 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   }
 }
 
+class _InfoBouton extends StatelessWidget {
+  const _InfoBouton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: AgoraMoreInformation(
+        onClick: () {
+          showAgoraDialog(
+            context: context,
+            columnChildren: [
+              RichText(
+                textScaler: MediaQuery.textScalerOf(context),
+                text: TextSpan(
+                  style: AgoraTextStyles.light16,
+                  children: [
+                    TextSpan(text: QagStrings.yourNameInfoBubble1),
+                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                    TextSpan(
+                      text: QagStrings.yourNameInfoBubble2,
+                      style: AgoraTextStyles.light16Underline.copyWith(color: AgoraColors.primaryBlue),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: AgoraSpacings.x0_75),
+              AgoraButton(
+                label: GenericStrings.close,
+                style: AgoraButtonStyle.primaryButtonStyle,
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
 class _AstuceElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -483,23 +492,6 @@ class _AstuceElement extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _MandatoryField extends StatelessWidget {
-  final String label;
-
-  _MandatoryField(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(label, style: AgoraTextStyles.medium18),
-        const SizedBox(width: AgoraSpacings.x0_25),
-        Text('*', style: AgoraTextStyles.medium18.copyWith(color: AgoraColors.red)),
-      ],
     );
   }
 }

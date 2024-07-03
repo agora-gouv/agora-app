@@ -195,6 +195,7 @@ class ParticipationCharterPage extends StatelessWidget {
       );
     } else {
       return RichText(
+        textScaler: MediaQuery.textScalerOf(context),
         text: TextSpan(style: style, children: spans),
       );
     }
