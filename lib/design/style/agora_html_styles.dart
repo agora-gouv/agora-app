@@ -65,7 +65,6 @@ class AgoraHtmlStyles {
         fontFamily: marianne,
         fontWeight: medium,
         fontSize: FontSize(fontSize),
-        color: AgoraColors.primaryGrey,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
