@@ -43,7 +43,7 @@ class _AgoraQuestionsProgressBarState extends State<AgoraQuestionsProgressBar> {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: '${(widget.currentQuestionIndex / widget.totalQuestions * 100).toInt()}%',
+      label: 'Progression du questionnaire ${(widget.currentQuestionIndex / widget.totalQuestions * 100).toInt()}%',
       child: Stack(
         children: [
           Container(
