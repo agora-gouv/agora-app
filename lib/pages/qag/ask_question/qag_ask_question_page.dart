@@ -46,6 +46,7 @@ import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class QagAskQuestionPage extends StatefulWidget {
   static const routeName = "/qagAskQuestionPage";
@@ -187,9 +188,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.askQagObligatoireSaufContraire, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.base),
-              Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18),
+              ExcludeSemantics(child: Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
+                contentDescription: QagStrings.questionTitle,
                 maxLength: _questionMaxLength,
                 hintText: QagStrings.questionHint,
                 showCounterText: true,
@@ -197,7 +199,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 onChanged: (input) {
                   setState(() {
                     question = input;
-
                     var shouldCheckQuestionLength = false;
                     if (question.length >= _questionMinLength) {
                       isQuestionLengthError = false;
@@ -246,18 +247,19 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 },
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              Text(QagStrings.detailsTitle, style: AgoraTextStyles.medium18),
+              ExcludeSemantics(child: Text(QagStrings.detailsTitle, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.x0_5),
-              Text(QagStrings.detailsDescription, style: AgoraTextStyles.light14),
+              ExcludeSemantics(child: Text(QagStrings.detailsDescription, style: AgoraTextStyles.light14)),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
+                contentDescription: "${QagStrings.detailsTitle} ${QagStrings.detailsDescription}",
                 maxLength: _detailMaxLength,
                 hintText: QagStrings.detailsHint,
                 showCounterText: true,
                 onChanged: (input) => setState(() => details = input),
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18),
+              ExcludeSemantics(child: Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.x0_5),
               QagThematiquesDropDown(
                 firstValue: null,
@@ -275,6 +277,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               SizedBox(height: AgoraSpacings.x0_375),
               AgoraTextField(
+                contentDescription: QagStrings.yourNameTitle,
                 maxLength: _nameMaxLength,
                 hintText: QagStrings.yourNameHint,
                 showCounterText: true,
@@ -428,6 +431,18 @@ class _InfoBouton extends StatelessWidget {
                       style: AgoraTextStyles.light16Underline.copyWith(color: AgoraColors.primaryBlue),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                    ),
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 2, left: 4),
+                        child: SvgPicture.asset(
+                          'assets/ic_external_link.svg',
+                          excludeFromSemantics: true,
+                          height: 20,
+                          width: 20,
+                          colorFilter: const ColorFilter.mode(AgoraColors.primaryGrey, BlendMode.srcIn),
+                        ),
+                      ),
                     ),
                   ],
                 ),
