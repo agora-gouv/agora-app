@@ -29,6 +29,7 @@ class AgoraTextField extends StatefulWidget {
   final bool error;
   final bool blockToMaxLength;
   final String? contentDescription;
+  final FocusNode? focusNode;
 
   AgoraTextField({
     this.hintText,
@@ -45,6 +46,7 @@ class AgoraTextField extends StatefulWidget {
     this.blockToMaxLength = false,
     this.textInputType = TextFieldInputType.multiline,
     this.contentDescription,
+    this.focusNode,
   });
 
   @override
@@ -93,6 +95,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                   tooltip: "${_tooMuchInput ? 'Limite de caractères dépassée : ' : 'Limite de caractères : '}${SemanticsHelper.step(textCount, widget.maxLength)}",
                   child: ExcludeSemantics(
                     child: TextField(
+                      focusNode: widget.focusNode,
                       minLines: widget.minLines ?? 1,
                       maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
                       scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),

@@ -46,6 +46,7 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
   String otherResponse = "";
   TextEditingController? textEditingController;
   bool shouldResetPreviousOtherResponse = true;
+  FocusNode textFieldFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,12 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
         borderColor: widget.isSelected ? AgoraColors.primaryBlue : AgoraColors.border,
         borderWidth: widget.isSelected ? 2.0 : 1.0,
         cardColor: AgoraColors.white,
-        onTap: () => widget.onTap(widget.responseId),
+        onTap: () {
+          widget.onTap(widget.responseId);
+          if (!widget.isSelected && !textFieldFocusNode.hasFocus) {
+            textFieldFocusNode.requestFocus();
+          }
+        },
         child: SizedBox(
           width: double.infinity,
           child: Row(
@@ -66,18 +72,28 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.responseLabel,
-                      style: AgoraTextStyles.light14,
-                      semanticsLabel: SemanticsHelper.cardResponse(
-                        responseLabel: widget.responseLabel,
-                        currentStep: widget.semantic.currentIndex,
-                        totalStep: widget.semantic.totalIndex,
+                    if (widget.hasOpenTextField && widget.isSelected) ...[
+                      ExcludeSemantics(
+                        child: Text(
+                          widget.responseLabel,
+                          style: AgoraTextStyles.light14,
+                        ),
                       ),
-                    ),
+                    ] else
+                      Text(
+                        widget.responseLabel,
+                        style: AgoraTextStyles.light14,
+                        semanticsLabel: SemanticsHelper.cardResponse(
+                          responseLabel: widget.responseLabel,
+                          currentStep: widget.semantic.currentIndex,
+                          totalStep: widget.semantic.totalIndex,
+                        ),
+                      ),
                     if (widget.hasOpenTextField && widget.isSelected) ...[
                       SizedBox(height: AgoraSpacings.x0_75),
                       AgoraTextField(
+                        contentDescription: widget.responseLabel,
+                        focusNode: textFieldFocusNode,
                         hintText: ConsultationStrings.otherChoiceHint,
                         controller: textEditingController,
                         showCounterText: true,
