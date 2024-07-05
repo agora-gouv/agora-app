@@ -92,7 +92,8 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                 child: Semantics(
                   textField: true,
                   label: widget.contentDescription,
-                  tooltip: "${_tooMuchInput ? 'Limite de caractères dépassée : ' : 'Limite de caractères : '}${SemanticsHelper.step(textCount, widget.maxLength)}",
+                  tooltip:
+                      "${_tooMuchInput ? 'Limite de caractères dépassée : ' : 'Limite de caractères : '}${SemanticsHelper.step(textCount, widget.maxLength)}",
                   child: ExcludeSemantics(
                     child: TextField(
                       focusNode: widget.focusNode,
