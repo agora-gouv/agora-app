@@ -90,7 +90,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                 child: Semantics(
                   textField: true,
                   label: widget.contentDescription,
-                  tooltip: "${_tooMuchInput ? 'Limite de caractères dépassée : ' : 'Limite de caractères : '}$textCount/${widget.maxLength}",
+                  tooltip: "${_tooMuchInput ? 'Limite de caractères dépassée : ' : 'Limite de caractères : '}${SemanticsHelper.step(textCount, widget.maxLength)}",
                   child: ExcludeSemantics(
                     child: TextField(
                       minLines: widget.minLines ?? 1,
@@ -144,11 +144,12 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
         ),
         if (widget.showCounterText) ...[
           SizedBox(height: AgoraSpacings.x0_25),
-          Text(
-            "${_tooMuchInput ? 'Limite de caractères dépassée : ' : ''}$textCount/${widget.maxLength}",
-            style: AgoraTextStyles.light12
-                .copyWith(color: _tooMuchInput ? AgoraColors.fluorescentRed : AgoraColors.primaryGreyOpacity70),
-            semanticsLabel: SemanticsHelper.step(textCount, widget.maxLength),
+          ExcludeSemantics(
+            child: Text(
+              "${_tooMuchInput ? 'Limite de caractères dépassée : ' : ''}$textCount/${widget.maxLength}",
+              style: AgoraTextStyles.light12
+                  .copyWith(color: _tooMuchInput ? AgoraColors.fluorescentRed : AgoraColors.primaryGreyOpacity70),
+            ),
           ),
         ],
       ],
