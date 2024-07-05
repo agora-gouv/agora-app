@@ -29,6 +29,7 @@ class AgoraTextField extends StatefulWidget {
   final bool error;
   final bool blockToMaxLength;
   final String? contentDescription;
+  final FocusNode? focusNode;
 
   AgoraTextField({
     this.hintText,
@@ -45,6 +46,7 @@ class AgoraTextField extends StatefulWidget {
     this.blockToMaxLength = false,
     this.textInputType = TextFieldInputType.multiline,
     this.contentDescription,
+    this.focusNode,
   });
 
   @override
@@ -90,45 +92,48 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                 child: Semantics(
                   textField: true,
                   label: widget.contentDescription,
-                  maxValueLength: widget.maxLength,
-                  child: TextField(
-                    minLines: widget.minLines ?? 1,
-                    maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
-                    scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),
-                    maxLength: widget.blockToMaxLength || widget.textInputType == TextFieldInputType.number
-                        ? widget.maxLength
-                        : widget.maxLength * 2,
-                    controller: widget.controller,
-                    inputFormatters: _buildTextInputFormatter(),
-                    keyboardType: _buildTextInputType(),
-                    style: AgoraTextStyles.light14,
-                    textInputAction: widget.textInputAction,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(AgoraSpacings.base),
-                      border: UnderlineInputBorder(borderSide: BorderSide.none),
-                      hintText: widget.hintText,
-                      semanticCounterText: '${widget.maxLength} charactères maximum',
-                      hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.hintColor),
-                      counterText: "",
-                    ),
-                    onChanged: (String input) {
-                      setState(() {
-                        _tooMuchInput = input.length > widget.maxLength;
-                        textCount = input.length;
-                      });
-                      widget.onChanged?.call(input);
+                  tooltip:
+                      "${_tooMuchInput ? 'Limite de caractères dépassée : ' : 'Limite de caractères : '}${SemanticsHelper.step(textCount, widget.maxLength)}",
+                  child: ExcludeSemantics(
+                    child: TextField(
+                      focusNode: widget.focusNode,
+                      minLines: widget.minLines ?? 1,
+                      maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
+                      scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),
+                      maxLength: widget.blockToMaxLength || widget.textInputType == TextFieldInputType.number
+                          ? widget.maxLength
+                          : widget.maxLength * 2,
+                      controller: widget.controller,
+                      inputFormatters: _buildTextInputFormatter(),
+                      keyboardType: _buildTextInputType(),
+                      style: AgoraTextStyles.light14,
+                      textInputAction: widget.textInputAction,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(AgoraSpacings.base),
+                        border: UnderlineInputBorder(borderSide: BorderSide.none),
+                        hintText: widget.hintText,
+                        hintStyle: AgoraTextStyles.light14.copyWith(color: AgoraColors.hintColor),
+                        counterText: "",
+                      ),
+                      onChanged: (String input) {
+                        setState(() {
+                          _tooMuchInput = input.length > widget.maxLength;
+                          textCount = input.length;
+                        });
+                        widget.onChanged?.call(input);
 
-                      final announceCharNumber = 0.9 * widget.maxLength;
-                      if (textCount == announceCharNumber) {
-                        final remainingCharNumber = widget.maxLength - announceCharNumber;
-                        SemanticsService.announce(
-                          SemanticsStrings.remainingChar.format(remainingCharNumber.toInt().toString()),
-                          TextDirection.ltr,
-                        );
-                      } else if (textCount == widget.maxLength) {
-                        SemanticsService.announce(SemanticsStrings.maxCharAttempt, TextDirection.ltr);
-                      }
-                    },
+                        final announceCharNumber = 0.9 * widget.maxLength;
+                        if (textCount == announceCharNumber) {
+                          final remainingCharNumber = widget.maxLength - announceCharNumber;
+                          SemanticsService.announce(
+                            SemanticsStrings.remainingChar.format(remainingCharNumber.toInt().toString()),
+                            TextDirection.ltr,
+                          );
+                        } else if (textCount == widget.maxLength) {
+                          SemanticsService.announce(SemanticsStrings.maxCharAttempt, TextDirection.ltr);
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -143,11 +148,12 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
         ),
         if (widget.showCounterText) ...[
           SizedBox(height: AgoraSpacings.x0_25),
-          Text(
-            "${_tooMuchInput ? 'Limite de caractères dépassée ' : ''}$textCount/${widget.maxLength}",
-            style: AgoraTextStyles.light12
-                .copyWith(color: _tooMuchInput ? AgoraColors.fluorescentRed : AgoraColors.primaryGreyOpacity70),
-            semanticsLabel: SemanticsHelper.step(textCount, widget.maxLength),
+          ExcludeSemantics(
+            child: Text(
+              "${_tooMuchInput ? 'Limite de caractères dépassée : ' : ''}$textCount/${widget.maxLength}",
+              style: AgoraTextStyles.light12
+                  .copyWith(color: _tooMuchInput ? AgoraColors.fluorescentRed : AgoraColors.primaryGreyOpacity70),
+            ),
           ),
         ],
       ],

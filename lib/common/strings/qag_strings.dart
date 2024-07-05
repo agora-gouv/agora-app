@@ -35,17 +35,16 @@ class QagStrings {
   static const String questionHint =
       "Exemple\u{00A0}: Pourquoi avoir créé cette application\u{00A0}? (10 caractères minimum)";
   static const String questionRequiredCondition = "Erreur\u{00A0}: la question doit comporter au moins 10 caractères.";
-  static const String detailsTitle = "Détails supplémentaires";
-  static const String detailsDescription =
-      "Ajoutez davantage d'informations ou de contexte si vous le souhaitez (facultatif)";
+  static const String detailsTitle = "Détails supplémentaires (facultatif)";
+  static const String detailsDescription = "Ajoutez davantage d'informations ou de contexte si vous le souhaitez";
   static const String detailsHint = "Exemple\u{00A0}: Je vous pose cette question parce que …\n";
   static const String thematiqueTitle = "Thématique";
   static const String thematiqueHint = "Choisissez votre thématique";
   static const String yourNameTitle = "Mon prénom";
   static const String yourNameInfoBubble1 =
-      "Le Prénom que vous choisissez pour votre question sera visible de l'ensemble des Utilisateurs.\nIl n'est jamais rapproché des autres informations de profil que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée le lundi suivant sa publication, le Prénom sera définitivement supprimé (délai maximum de 7 jours).\n\nPour en savoir plus,";
+      "Le prénom que vous choisissez pour votre question sera visible de l'ensemble des utilisateurs.\nIl n'est jamais rapproché des autres informations de profil que vous pouvez entrer dans l'application.\nLorsque votre question sera archivée le lundi suivant sa publication, le prénom sera définitivement supprimé (délai maximum de 7 jours).\n\nPour en savoir plus,";
   static const String yourNameInfoBubble2 = "lire la politique de confidentialité.";
-  static const String yourNameHint = "David";
+  static const String yourNameHint = "Exemple\u{00A0}: David";
   static const String askQuestionInformation =
       "Toutes les questions sont bienvenues, du moment qu'elles sont conformes à la charte de participation que vous pouvez lire ci-dessous. Les questions qui ne respectent pas la charte pourront être modérées. Attention, une fois envoyée, vous ne pourrez plus modifier votre question.";
   static const String askQuestionCheckboxLabel = "Ma question respecte la charte";

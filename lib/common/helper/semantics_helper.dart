@@ -20,7 +20,7 @@ class SemanticsHelper {
   }
 
   static void announceNewQagsInList() {
-    SemanticsService.announce('La liste des questions au gourvernement a changé', TextDirection.ltr);
+    SemanticsService.announce('La liste des questions au gouvernement a changé', TextDirection.ltr);
   }
 
   static void announceEmptyResult() {
