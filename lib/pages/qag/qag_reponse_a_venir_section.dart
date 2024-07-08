@@ -139,10 +139,12 @@ class _ReponseAVenirListWidget extends StatelessWidget {
         ),
         if (viewModels.length > 1) ...[
           const SizedBox(height: AgoraSpacings.base),
-          HorizontalScrollHelper(
-            itemsCount: viewModels.length + 1,
-            scrollController: scrollController,
-            key: _questionScrollHelperKey,
+          ExcludeSemantics(
+            child: HorizontalScrollHelper(
+              itemsCount: viewModels.length + 1,
+              scrollController: scrollController,
+              key: _questionScrollHelperKey,
+            ),
           ),
         ],
       ],
