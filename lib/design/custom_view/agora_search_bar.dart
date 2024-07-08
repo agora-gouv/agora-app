@@ -199,7 +199,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                       );
                     },
                     animation: _con,
-                    child: GestureDetector(
+                    child: InkWell(
                       onTap: () {
                         try {
                           // * if field empty then the user trying to close bar

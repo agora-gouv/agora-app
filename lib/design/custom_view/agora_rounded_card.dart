@@ -7,6 +7,7 @@ enum AgoraRoundedCorner { topRounded, bottomRounded, allRounded }
 
 class AgoraRoundedCard extends StatelessWidget {
   final Color cardColor;
+  final Color? focusColor;
   final Color? borderColor;
   final double borderWidth;
   final VoidCallback? onTap;
@@ -17,6 +18,7 @@ class AgoraRoundedCard extends StatelessWidget {
 
   AgoraRoundedCard({
     this.cardColor = AgoraColors.white,
+    this.focusColor = AgoraColors.neutral200,
     this.borderColor,
     this.onTap,
     this.borderWidth = 1.0,
@@ -52,6 +54,7 @@ class AgoraRoundedCard extends StatelessWidget {
     }
     if (onTap != null) {
       currentChild = InkWell(
+        focusColor: focusColor,
         onTap: () {
           onTap!();
         },

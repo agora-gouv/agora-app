@@ -9,6 +9,7 @@ class WelcomeCard extends StatelessWidget {
   final ColorFilter? iconColorFilter;
   final List<TextSpan> textContent;
   final void Function() onTap;
+  final bool isDarkCard;
 
   const WelcomeCard({
     this.backgroundColor = AgoraColors.white,
@@ -16,6 +17,7 @@ class WelcomeCard extends StatelessWidget {
     this.iconColorFilter,
     required this.textContent,
     required this.onTap,
+    this.isDarkCard = false,
   });
 
   @override
@@ -36,6 +38,9 @@ class WelcomeCard extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
+            highlightColor: AgoraColors.neutral200,
+            hoverColor: AgoraColors.neutral200,
+            focusColor: isDarkCard ? AgoraColors.rhineCastle : AgoraColors.neutral200,
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.all(AgoraSpacings.x1_25),

@@ -142,6 +142,7 @@ class _QaGCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: AgoraSpacings.x4_5),
       child: WelcomeCard(
+        isDarkCard: true,
         backgroundColor: AgoraColors.primaryBlue,
         iconPath: "assets/ic_welcome_question.svg",
         textContent: [
@@ -198,6 +199,7 @@ class _ConsultationCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: AgoraSpacings.x1_5),
       child: WelcomeCard(
+        isDarkCard: true,
         backgroundColor: AgoraColors.red,
         iconPath: "assets/ic_welcome_consultation.svg",
         textContent: [

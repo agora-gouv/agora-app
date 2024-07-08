@@ -39,7 +39,8 @@ class QagDetailsSupportView extends StatelessWidget {
         BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
           selector: (supportState) => _toViewModel(supportState),
           builder: (context, viewModel) {
-            onSupportChange(viewModel.supportCount(), viewModel.isSupported());
+            final isSupported = viewModel.isSupported();
+            onSupportChange(viewModel.supportCount(), isSupported);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,23 +50,23 @@ class QagDetailsSupportView extends StatelessWidget {
                     if (canSupport)
                       Flexible(
                         child: AgoraRoundedButton(
-                          icon: _buildButtonIcon(viewModel.isSupported()),
-                          label: _buildButtonLabel(viewModel.isSupported()),
+                          icon: _buildButtonIcon(isSupported),
+                          label: _buildButtonLabel(isSupported),
                           isLoading: viewModel.isLoading,
-                          style: _buildButtonStyle(viewModel.isSupported()),
+                          style: _buildButtonStyle(isSupported),
                           onPressed: () =>
-                              _buildOnPressed(context, qagId, viewModel.isSupported(), viewModel.isLoading),
+                              _buildOnPressed(context, qagId, isSupported, viewModel.isLoading),
                         ),
                       ),
                     SizedBox(width: AgoraSpacings.x0_5),
                     Semantics(
                       button: canSupport,
-                      child: GestureDetector(
+                      child: InkWell(
                         onTap: canSupport
-                            ? () => _buildOnPressed(context, qagId, viewModel.isSupported(), viewModel.isLoading)
+                            ? () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading)
                             : null,
                         child: AgoraLikeView(
-                          isSupported: viewModel.isSupported(),
+                          isSupported: isSupported,
                           supportCount: viewModel.supportCount(),
                           shouldHaveVerticalPadding: true,
                           likeViewKey: _likeViewKey,

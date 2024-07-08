@@ -17,6 +17,8 @@ class AgoraColors {
   static const Color steam = Color(0xFFDDDDDD);
   static const Color white = Color(0xFFFFFFFF);
   static const Color whiteOpacity90 = Color(0xD9FFFFFF);
+  static const Color neutral200 = Color(0xFFE7ECFA);
+  static const Color neutral400 = Color(0xFFA0B2EC);
   static const Color doctor = Color(0xFFF9F9F9);
   static const Color cascadingWhite = Color(0xFFF6F6F6);
   static const Color superSilver = Color(0xFFEEEEEE);

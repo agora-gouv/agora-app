@@ -15,6 +15,7 @@ class AgoraIconButton extends StatelessWidget {
   final Color? borderColor;
   final Color? backgroundColor;
   final double padding;
+  final Color focusColor;
 
   AgoraIconButton({
     required this.icon,
@@ -26,6 +27,7 @@ class AgoraIconButton extends StatelessWidget {
     this.borderColor,
     this.backgroundColor,
     this.padding = AgoraSpacings.x0_75,
+    this.focusColor = AgoraColors.neutral200,
   });
 
   @override
@@ -35,6 +37,7 @@ class AgoraIconButton extends StatelessWidget {
       label: semanticLabel,
       child: AgoraRoundedCard(
         padding: EdgeInsets.symmetric(vertical: padding, horizontal: padding),
+        focusColor: focusColor,
         borderColor: borderColor ?? AgoraColors.steam,
         cardColor: backgroundColor ?? AgoraColors.transparent,
         borderWidth: 1,

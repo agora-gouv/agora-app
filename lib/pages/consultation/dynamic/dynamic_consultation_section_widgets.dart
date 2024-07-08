@@ -536,6 +536,7 @@ class _StartButtonWidget extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: FloatingActionButton.extended(
+          focusColor: AgoraColors.neutral400,
           backgroundColor: AgoraColors.primaryBlue,
           label: Text(
             ConsultationStrings.beginButton,

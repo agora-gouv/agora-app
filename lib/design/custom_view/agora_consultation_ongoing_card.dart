@@ -146,6 +146,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                 SizedBox(width: AgoraSpacings.base),
                 AgoraIconButton(
                   icon: "ic_share.svg",
+                  focusColor: AgoraColors.neutral400,
                   semanticLabel: "${SemanticsStrings.shareConsultation} $title",
                   onClick: () {
                     TrackerHelper.trackClick(
