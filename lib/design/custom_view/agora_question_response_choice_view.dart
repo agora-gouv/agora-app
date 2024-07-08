@@ -5,6 +5,7 @@ import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,7 +18,7 @@ class AgoraQuestionResponseChoiceSemantic {
 
 class AgoraQuestionResponseChoiceView extends StatefulWidget {
   final String responseId;
-  final String responseLabel;
+  final List<StringSegment> responseLabel;
   final bool hasOpenTextField;
   final bool isSelected;
   final String previousOtherResponse;
@@ -75,16 +76,17 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
                     if (widget.hasOpenTextField && widget.isSelected) ...[
                       ExcludeSemantics(
                         child: Text(
-                          widget.responseLabel,
+                          widget.responseLabel.map((seg) => seg.text).join(),
                           style: AgoraTextStyles.light14,
                         ),
                       ),
                     ] else
                       Text(
-                        widget.responseLabel,
+                        widget.responseLabel.map((seg) => seg.text).join(),
                         style: AgoraTextStyles.light14,
                         semanticsLabel: SemanticsHelper.cardResponse(
-                          responseLabel: widget.responseLabel,
+                          responseLabel:
+                              widget.responseLabel.where((seg) => !seg.isEmoji).map((seg) => seg.text).join(),
                           currentStep: widget.semantic.currentIndex,
                           totalStep: widget.semantic.totalIndex,
                         ),
@@ -92,7 +94,8 @@ class _AgoraQuestionResponseChoiceViewState extends State<AgoraQuestionResponseC
                     if (widget.hasOpenTextField && widget.isSelected) ...[
                       SizedBox(height: AgoraSpacings.x0_75),
                       AgoraTextField(
-                        contentDescription: widget.responseLabel,
+                        contentDescription:
+                            widget.responseLabel.where((seg) => !seg.isEmoji).map((seg) => seg.text).join(),
                         focusNode: textFieldFocusNode,
                         hintText: ConsultationStrings.otherChoiceHint,
                         controller: textEditingController,

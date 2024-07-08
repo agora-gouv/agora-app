@@ -4,6 +4,7 @@ import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 import 'package:agora/pages/consultation/question/consultation_question_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.x0_75),
-                Text(chapter.title, style: AgoraTextStyles.medium19),
+                _Title(texte: chapter.title),
                 SizedBox(height: AgoraSpacings.base),
                 AgoraHtml(data: chapter.description),
                 SizedBox(height: AgoraSpacings.x1_5),
@@ -69,6 +70,29 @@ class ConsultationQuestionChapterView extends StatelessWidget {
           ),
           SizedBox(height: AgoraSpacings.x1_5),
         ],
+      ),
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  final List<StringSegment> texte;
+
+  const _Title({required this.texte});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: texte
+            .map(
+              (segment) => TextSpan(
+                text: segment.text,
+                style: AgoraTextStyles.medium19,
+                semanticsLabel: segment.isEmoji ? '' : segment.text,
+              ),
+            )
+            .toList(),
       ),
     );
   }

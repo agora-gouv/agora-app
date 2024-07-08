@@ -2,6 +2,7 @@ import 'package:agora/bloc/consultation/question/consultation_questions_bloc.dar
 import 'package:agora/bloc/consultation/question/consultation_questions_event.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_state.dart';
 import 'package:agora/bloc/consultation/question/consultation_questions_view_model.dart';
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,31 +14,31 @@ void main() {
   final responseChoiceViewModelsSortedByOrder = [
     ConsultationQuestionMultipleViewModel(
       id: "questionIdA",
-      title: "Comment vous rendez-vous généralement sur votre lieu de travail ?",
+      title: [StringSegment("Comment vous rendez-vous généralement sur votre lieu de travail ?", false)],
       order: 1,
       maxChoices: 2,
       responseChoicesViewModels: [
         ConsultationQuestionResponseChoiceViewModel(
           id: "choiceB",
-          label: "En voiture",
+          label: [StringSegment("En voiture ", false), StringSegment("🚗", true)],
           order: 1,
           hasOpenTextField: false,
         ),
         ConsultationQuestionResponseChoiceViewModel(
           id: "choiceC",
-          label: "En transports en commun",
+          label: [StringSegment("En transports en commun ", false), StringSegment("🚃", true)],
           order: 2,
           hasOpenTextField: false,
         ),
         ConsultationQuestionResponseChoiceViewModel(
           id: "choiceA",
-          label: "En vélo ou à pied",
+          label: [StringSegment("En vélo ou à pied ", false), StringSegment("🚲", true)],
           order: 3,
           hasOpenTextField: false,
         ),
         ConsultationQuestionResponseChoiceViewModel(
           id: "choiceD",
-          label: "Autre (précisez)",
+          label: [StringSegment("Autre (précisez)", false)],
           order: 4,
           hasOpenTextField: true,
         ),
@@ -47,26 +48,26 @@ void main() {
     ),
     ConsultationQuestionWithConditionViewModel(
       id: "questionIdD",
-      title: "Avez vous ...?",
+      title: [StringSegment("Avez vous ...?", false)],
       order: 2,
       responseChoicesViewModels: [
         ConsultationQuestionWithConditionResponseChoiceViewModel(
           id: "choiceBBB",
-          label: "oui",
+          label: [StringSegment("oui", false)],
           order: 1,
           nextQuestionId: "questionIdC",
           hasOpenTextField: false,
         ),
         ConsultationQuestionWithConditionResponseChoiceViewModel(
           id: "choiceAAA",
-          label: "non",
+          label: [StringSegment("non", false)],
           order: 2,
           nextQuestionId: "questionIdB",
           hasOpenTextField: false,
         ),
         ConsultationQuestionWithConditionResponseChoiceViewModel(
           id: "choiceCCC",
-          label: "Autre (précisez)",
+          label: [StringSegment("Autre (précisez)", false)],
           order: 3,
           nextQuestionId: "questionIdB",
           hasOpenTextField: true,
@@ -76,21 +77,31 @@ void main() {
     ),
     ConsultationQuestionChapterViewModel(
       id: "chapiter1",
-      title: "titre du chapitre",
+      title: [StringSegment("titre du chapitre", false)],
       order: 3,
       description: "description du chapitre",
       nextQuestionId: "questionIdB",
     ),
     ConsultationQuestionUniqueViewModel(
       id: "questionIdB",
-      title: "Si vous vous lancez dans le co-voiturage, ...",
+      title: [StringSegment("Si vous vous lancez dans le co-voiturage, ...", false)],
       order: 4,
       responseChoicesViewModels: [
-        ConsultationQuestionResponseChoiceViewModel(id: "choiceBB", label: "oui", order: 1, hasOpenTextField: false),
-        ConsultationQuestionResponseChoiceViewModel(id: "choiceAA", label: "non", order: 2, hasOpenTextField: false),
+        ConsultationQuestionResponseChoiceViewModel(
+          id: "choiceBB",
+          label: [StringSegment("oui", false)],
+          order: 1,
+          hasOpenTextField: false,
+        ),
+        ConsultationQuestionResponseChoiceViewModel(
+          id: "choiceAA",
+          label: [StringSegment("non", false)],
+          order: 2,
+          hasOpenTextField: false,
+        ),
         ConsultationQuestionResponseChoiceViewModel(
           id: "choiceCC",
-          label: "Autre (précisez)",
+          label: [StringSegment("Autre (précisez)", false)],
           order: 3,
           hasOpenTextField: true,
         ),
@@ -100,7 +111,7 @@ void main() {
     ),
     ConsultationQuestionOpenedViewModel(
       id: "questionIdC",
-      title: "Question C ?",
+      title: [StringSegment("Question C ?", false)],
       order: 5,
       nextQuestionId: null,
       popupDescription: null,

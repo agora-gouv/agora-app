@@ -1,3 +1,4 @@
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 import 'package:equatable/equatable.dart';
 
 class ConsultationQuestionsViewModel extends Equatable {
@@ -15,7 +16,7 @@ class ConsultationQuestionsViewModel extends Equatable {
 
 sealed class ConsultationQuestionViewModel extends Equatable {
   final String id;
-  final String title;
+  final List<StringSegment> title;
   final int order;
 
   ConsultationQuestionViewModel({
@@ -143,7 +144,7 @@ class ConsultationQuestionChapterViewModel extends ConsultationQuestionViewModel
 
 class ConsultationQuestionResponseChoiceViewModel extends Equatable {
   final String id;
-  final String label;
+  final List<StringSegment> label;
   final int order;
   final bool hasOpenTextField;
 
@@ -165,7 +166,7 @@ class ConsultationQuestionResponseChoiceViewModel extends Equatable {
 
 class ConsultationQuestionWithConditionResponseChoiceViewModel extends Equatable {
   final String id;
-  final String label;
+  final List<StringSegment> label;
   final int order;
   final String nextQuestionId;
   final bool hasOpenTextField;
