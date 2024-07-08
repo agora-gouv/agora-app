@@ -65,6 +65,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                       SizedBox(width: AgoraSpacings.x0_75),
                       AgoraRoundedButton(
                         label: GenericStrings.all,
+                        semanticLabel: "voir toutes les consultations terminées",
                         style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                         onPressed: () => Navigator.pushNamed(
                           context,
