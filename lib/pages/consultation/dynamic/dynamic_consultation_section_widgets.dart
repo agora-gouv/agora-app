@@ -492,7 +492,7 @@ class ShowMoreButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: horizontalPadding),
         child: AgoraButton(
           label: label,
-          style: AgoraButtonStyle.blueBorderButtonStyle,
+          buttonStyle: AgoraButtonStyle.blueBorder,
           onPressed: onTap,
         ),
       ),
@@ -640,7 +640,7 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: AgoraButton(
                               label: section.buttonLabel,
-                              style: AgoraButtonStyle.blueBorderButtonStyle,
+                              buttonStyle: AgoraButtonStyle.blueBorder,
                               onPressed: () {
                                 Navigator.pushNamed(
                                   context,
@@ -967,7 +967,7 @@ class _DownloadSectionWidget extends StatelessWidget {
                       child: AgoraButton(
                         label: 'Télécharger',
                         semanticLabel: 'Télécharger la synthèse complète',
-                        style: AgoraButtonStyle.blueBorderButtonStyle,
+                        buttonStyle: AgoraButtonStyle.blueBorder,
                         onPressed: () {
                           LaunchUrlHelper.launchUrlFromAgora(
                             url: section.url,
@@ -1134,7 +1134,7 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                       alignment: Alignment.centerLeft,
                       child: AgoraButton(
                         label: 'Modifier votre réponse',
-                        style: AgoraButtonStyle.blueBorderButtonStyle,
+                        buttonStyle: AgoraButtonStyle.blueBorder,
                         onPressed: () {
                           context.read<DynamicConsultationFeedbackBloc>().add(
                                 DeleteConsultationUpdateFeedbackEvent(
@@ -1469,7 +1469,7 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                     child: AgoraButton(
                       label: 'Partager',
                       semanticLabel: 'Partager cette consultation',
-                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      buttonStyle: AgoraButtonStyle.blueBorder,
                       onPressed: () {
                         ShareHelper.sharePreformatted(context: context, data: section.shareText);
                       },

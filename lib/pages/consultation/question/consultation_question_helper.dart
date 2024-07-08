@@ -1,7 +1,6 @@
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationQuestionHelper {
@@ -10,7 +9,7 @@ class ConsultationQuestionHelper {
       return AgoraButton(
         label: ConsultationStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
-        style: AgoraButtonStyle.blueBorderButtonStyle,
+        buttonStyle: AgoraButtonStyle.blueBorder,
         onPressed: onBackTap,
       );
     } else {
@@ -25,7 +24,7 @@ class ConsultationQuestionHelper {
     return AgoraButton(
       label: isLastQuestion ? ConsultationStrings.validate : ConsultationStrings.nextQuestion,
       semanticLabel: isLastQuestion ? ConsultationStrings.validate : SemanticsStrings.nextQuestion,
-      style: AgoraButtonStyle.primaryButtonStyle,
+      buttonStyle: AgoraButtonStyle.primary,
       onPressed: onPressed,
     );
   }
@@ -34,7 +33,7 @@ class ConsultationQuestionHelper {
     return AgoraButton(
       label: ConsultationStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
-      style: AgoraButtonStyle.blueBorderButtonStyle,
+      buttonStyle: AgoraButtonStyle.blueBorder,
       onPressed: onPressed,
     );
   }

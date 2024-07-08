@@ -21,7 +21,6 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -160,7 +159,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                       child: AgoraButton(
                         icon: "ic_share.svg",
                         label: QagStrings.share,
-                        style: AgoraButtonStyle.lightGreyButtonStyle,
+                        buttonStyle: AgoraButtonStyle.lightGrey,
                         onPressed: () {
                           TrackerHelper.trackClick(
                             clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
@@ -297,7 +296,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         SizedBox(height: AgoraSpacings.base),
         AgoraButton(
           label: GenericStrings.delete,
-          style: AgoraButtonStyle.redBorderButtonStyle,
+          buttonStyle: AgoraButtonStyle.redBorder,
           onPressed: () => Navigator.pushNamed(
             context,
             QagDetailsDeleteConfirmationPage.routeName,

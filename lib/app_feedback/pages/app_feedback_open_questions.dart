@@ -84,14 +84,14 @@ class _Step2Screen extends StatelessWidget {
                               AgoraButton(
                                 label: ConsultationStrings.previousQuestion,
                                 semanticLabel: SemanticsStrings.previousQuestion,
-                                style: AgoraButtonStyle.blueBorderButtonStyle,
+                                buttonStyle: AgoraButtonStyle.blueBorder,
                                 onPressed: onPrevious,
                               ),
                               const SizedBox(width: AgoraSpacings.base),
                               AgoraButton(
                                 label: ConsultationStrings.validate,
                                 semanticLabel: ConsultationStrings.validate,
-                                style: AgoraButtonStyle.primaryButtonStyle,
+                                buttonStyle: AgoraButtonStyle.primary,
                                 onPressed: () {
                                   context.read<AppFeedbackBloc>().add(
                                         SendAppFeedbackEvent(
@@ -171,7 +171,7 @@ class _MailQuestionScreen extends StatelessWidget {
                           AgoraButton(
                             label: FeedbackStrings.mailHint,
                             semanticLabel: FeedbackStrings.mailHint,
-                            style: AgoraButtonStyle.primaryButtonStyle,
+                            buttonStyle: AgoraButtonStyle.primary,
                             onPressed: () {
                               LaunchUrlHelper.mailtoAgora('Je souhaite participer à un atelier utilisateur');
                             },
@@ -180,7 +180,7 @@ class _MailQuestionScreen extends StatelessWidget {
                           AgoraButton(
                             label: FeedbackStrings.mailButtonLabel,
                             semanticLabel: FeedbackStrings.mailButtonLabel,
-                            style: AgoraButtonStyle.blueBorderButtonStyle,
+                            buttonStyle: AgoraButtonStyle.blueBorder,
                             onPressed: () {
                               context.read<AppFeedbackBloc>().add(AppFeedbackMailSentEvent());
                             },

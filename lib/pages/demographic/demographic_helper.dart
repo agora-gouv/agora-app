@@ -1,7 +1,6 @@
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:flutter/material.dart';
 
 class DemographicHelper {
@@ -29,7 +28,7 @@ class DemographicHelper {
       return AgoraButton(
         label: DemographicStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
-        style: AgoraButtonStyle.blueBorderButtonStyle,
+        buttonStyle: AgoraButtonStyle.blueBorder,
         onPressed: onBackTap,
       );
     } else {
@@ -41,7 +40,7 @@ class DemographicHelper {
     return AgoraButton(
       label: step == totalStep ? DemographicStrings.send : DemographicStrings.nextQuestion,
       semanticLabel: step == totalStep ? DemographicStrings.send : SemanticsStrings.nextQuestion,
-      style: AgoraButtonStyle.primaryButtonStyle,
+      buttonStyle: AgoraButtonStyle.primary,
       onPressed: onPressed,
     );
   }
@@ -50,7 +49,7 @@ class DemographicHelper {
     return AgoraButton(
       label: DemographicStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
-      style: AgoraButtonStyle.blueBorderButtonStyle,
+      buttonStyle: AgoraButtonStyle.blueBorder,
       onPressed: onPressed,
     );
   }

@@ -26,7 +26,6 @@ import 'package:agora/design/custom_view/agora_video_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/fullscreen_animation_view.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -170,7 +169,7 @@ class _SuccessPage extends StatelessWidget {
               Flexible(
                 child: AgoraButton(
                   label: 'Supprimer',
-                  style: AgoraButtonStyle.redBorderButtonStyle,
+                  buttonStyle: AgoraButtonStyle.redBorder,
                   onPressed: () {
                     context
                         .read<DynamicConsultationBloc>()
@@ -224,7 +223,7 @@ class _ShareButton extends StatelessWidget {
       child: AgoraButton(
         icon: "ic_share.svg",
         label: QagStrings.share,
-        style: AgoraButtonStyle.lightGreyButtonStyle,
+        buttonStyle: AgoraButtonStyle.lightGrey,
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.shareConsultation,
