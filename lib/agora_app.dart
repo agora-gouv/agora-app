@@ -142,6 +142,9 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
           primary: AgoraColors.primaryBlue,
           secondary: AgoraColors.primaryBlue,
         ),
+        hoverColor: AgoraColors.neutral400,
+        highlightColor: AgoraColors.neutral400,
+        focusColor: AgoraColors.neutral200,
       ),
       debugShowCheckedModeBanner: false,
     );

@@ -15,7 +15,6 @@ import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_response_presenter.dart';
@@ -94,7 +93,7 @@ class _ReponsesAVenirHeader extends StatelessWidget {
                           SizedBox(height: AgoraSpacings.x0_75),
                           AgoraButton(
                             label: GenericStrings.close,
-                            style: AgoraButtonStyle.primaryButtonStyle,
+                            buttonStyle: AgoraButtonStyle.primary,
                             onPressed: () => Navigator.pop(context),
                           ),
                         ],

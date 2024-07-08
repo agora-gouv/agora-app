@@ -12,7 +12,6 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -169,7 +168,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     SizedBox(height: AgoraSpacings.x1_25),
                     AgoraButton(
                       label: ProfileStrings.feedbackTipsButton,
-                      style: AgoraButtonStyle.primaryButtonStyle,
+                      buttonStyle: AgoraButtonStyle.primary,
                       onPressed: () {
                         _track(AnalyticsEventNames.giveFeedback);
                         Navigator.of(context).pushNamed(AppFeedbackPage.routeName);

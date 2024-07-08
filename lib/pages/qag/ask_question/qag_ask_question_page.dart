@@ -31,7 +31,6 @@ import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -230,7 +229,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       if (state.hasSimilar) {
                         return AgoraButton(
                           label: QagStrings.similarQagDetected,
-                          style: AgoraButtonStyle.blueBorderButtonStyle,
+                          buttonStyle: AgoraButtonStyle.blueBorder,
                           icon: "ic_info_2.svg",
                           onPressed: () => Navigator.pushNamed(
                             context,
@@ -288,7 +287,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               AgoraButton(
                 label: QagStrings.readNotice,
-                style: AgoraButtonStyle.lightGreyButtonStyle,
+                buttonStyle: AgoraButtonStyle.lightGrey,
                 onPressed: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
               ),
               SizedBox(height: AgoraSpacings.x1_5),
@@ -331,7 +330,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       AgoraButton(
                         label: QagStrings.send,
                         isLoading: createQagState is CreateQagLoadingState,
-                        style: AgoraButtonStyle.primaryButtonStyle,
+                        buttonStyle: AgoraButtonStyle.primary,
                         onPressed: _couldSend()
                             ? () {
                                 TrackerHelper.trackClick(
@@ -450,7 +449,7 @@ class _InfoBouton extends StatelessWidget {
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraButton(
                 label: GenericStrings.close,
-                style: AgoraButtonStyle.primaryButtonStyle,
+                buttonStyle: AgoraButtonStyle.primary,
                 onPressed: () => Navigator.pop(context),
               ),
             ],

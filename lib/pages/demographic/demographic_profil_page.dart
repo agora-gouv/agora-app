@@ -19,7 +19,6 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -151,7 +150,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
             },
             child: AgoraButton(
               label: DemographicStrings.suppressMyInformation,
-              style: AgoraButtonStyle.redBorderButtonStyle,
+              buttonStyle: AgoraButtonStyle.redBorder,
               onPressed: () {
                 showAgoraDialog(
                   context: context,
@@ -162,7 +161,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
                       children: [
                         AgoraButton(
                           label: GenericStrings.yes,
-                          style: AgoraButtonStyle.primaryButtonStyle,
+                          buttonStyle: AgoraButtonStyle.primary,
                           onPressed: () {
                             context
                                 .read<SendDemographicResponsesBloc>()
@@ -173,7 +172,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
                         SizedBox(width: AgoraSpacings.x0_75),
                         AgoraButton(
                           label: GenericStrings.no,
-                          style: AgoraButtonStyle.blueBorderButtonStyle,
+                          buttonStyle: AgoraButtonStyle.blueBorder,
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],
@@ -209,7 +208,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
         SizedBox(height: AgoraSpacings.x0_75),
         AgoraButton(
           label: GenericStrings.close,
-          style: AgoraButtonStyle.primaryButtonStyle,
+          buttonStyle: AgoraButtonStyle.primary,
           onPressed: () => Navigator.pop(context),
         ),
       ],
@@ -224,7 +223,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
         SizedBox(height: AgoraSpacings.x0_75),
         AgoraButton(
           label: GenericStrings.close,
-          style: AgoraButtonStyle.primaryButtonStyle,
+          buttonStyle: AgoraButtonStyle.primary,
           onPressed: () => Navigator.pop(context),
         ),
       ],

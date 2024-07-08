@@ -15,7 +15,6 @@ import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -117,7 +116,7 @@ class _Success extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.x1_5),
                 AgoraButton(
                   label: FeedbackStrings.otherReturnButtonLabel,
-                  style: AgoraButtonStyle.primaryButtonStyle,
+                  buttonStyle: AgoraButtonStyle.primary,
                   onPressed: () {
                     context.read<AppFeedbackBloc>().add(ReinitAppFeedbackEvent());
                   },
@@ -125,7 +124,7 @@ class _Success extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.base),
                 AgoraButton(
                   label: ConsultationStrings.returnToHome,
-                  style: AgoraButtonStyle.blueBorderButtonStyle,
+                  buttonStyle: AgoraButtonStyle.blueBorder,
                   onPressed: () {
                     Navigator.popUntil(
                       context,

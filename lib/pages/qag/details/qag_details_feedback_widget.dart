@@ -11,7 +11,6 @@ import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
 import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -124,7 +123,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
         const SizedBox(height: AgoraSpacings.base),
         AgoraButton(
           label: 'Modifier votre réponse',
-          style: AgoraButtonStyle.blueBorderButtonStyle,
+          buttonStyle: AgoraButtonStyle.blueBorder,
           onPressed: () {
             context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
           },
@@ -170,7 +169,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: AgoraButton(
             label: 'Modifier votre réponse',
-            style: AgoraButtonStyle.blueBorderButtonStyle,
+            buttonStyle: AgoraButtonStyle.blueBorder,
             onPressed: () {
               context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
             },

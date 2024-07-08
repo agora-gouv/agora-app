@@ -91,7 +91,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
 
     return MouseRegion(
       onHover: (_) => _cancelAndRestartTimer(),
-      child: GestureDetector(
+      child: InkWell(
         onTap: () => _cancelAndRestartTimer(),
         child: AbsorbPointer(
           absorbing: notifier.hideStuff,
@@ -158,7 +158,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     super.didChangeDependencies();
   }
 
-  GestureDetector _buildOptionsButton(
+  InkWell _buildOptionsButton(
     Color iconColor,
     double barHeight,
   ) {
@@ -168,7 +168,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
       options.addAll(chewieController.additionalOptions!(context));
     }
 
-    return GestureDetector(
+    return InkWell(
       onTap: () async {
         _hideTimer?.cancel();
 
@@ -317,7 +317,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: chewieController.isFullScreen ? "Quitter le mode plein écran" : "Plein écran",
-      child: GestureDetector(
+      child: InkWell(
         onTap: _onExpandCollapse,
         child: AnimatedOpacity(
           opacity: notifier.hideStuff ? 0.0 : 1.0,
@@ -355,7 +355,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     final bool showPlayButton = widget.showPlayButton && !_latestValue.isPlaying && !_dragging;
 
     return ExcludeSemantics(
-      child: GestureDetector(
+      child: InkWell(
         onTap: _latestValue.isPlaying
             ? _cancelAndRestartTimer
             : () {
@@ -387,7 +387,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: _latestValue.volume == 0 ? "Activer le son" : "Désactiver le son",
-      child: GestureDetector(
+      child: InkWell(
         onTap: () {
           _cancelAndRestartTimer();
           final isMuted = _latestValue.volume == 0;
@@ -437,7 +437,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: _latestValue.isPlaying ? "Pause" : "Lecture",
-      child: GestureDetector(
+      child: InkWell(
         onTap: _playPause,
         child: Container(
           height: barHeight,
@@ -494,7 +494,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: _subtitleOn ? "Désactiver les sous-titres" : "Activer les sous-titres",
-      child: GestureDetector(
+      child: InkWell(
         onTap: _subtitleToggle,
         child: Container(
           height: barHeight,
@@ -524,7 +524,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: "Reculer de 15 secondes",
-      child: GestureDetector(
+      child: InkWell(
         onTap: _skipBack,
         child: Container(
           height: barHeight,
@@ -548,7 +548,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: "Avancer de 15 secondes",
-      child: GestureDetector(
+      child: InkWell(
         onTap: _skipForward,
         child: Container(
           height: barHeight,
@@ -578,7 +578,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: "Vitesse de lecture: $selectedSpeed",
-      child: GestureDetector(
+      child: InkWell(
         onTap: () async {
           _hideTimer?.cancel();
 

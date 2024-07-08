@@ -13,7 +13,6 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +62,7 @@ class ParticipationCharterPage extends StatelessWidget {
                     Flexible(
                       child: AgoraButton(
                         label: GenericStrings.readCompleteCharter,
-                        style: AgoraButtonStyle.blueBorderButtonStyle,
+                        buttonStyle: AgoraButtonStyle.blueBorder,
                         onPressed: () {
                           LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
                         },
@@ -72,7 +71,7 @@ class ParticipationCharterPage extends StatelessWidget {
                     SizedBox(width: AgoraSpacings.base),
                     AgoraButton(
                       label: GenericStrings.back,
-                      style: AgoraButtonStyle.primaryButtonStyle,
+                      buttonStyle: AgoraButtonStyle.primary,
                       onPressed: () {
                         Navigator.pop(context);
                       },

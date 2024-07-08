@@ -40,6 +40,7 @@ class AgoraRoundedButton extends StatelessWidget {
       return Semantics(
         button: true,
         child: AgoraRoundedCard(
+          focusColor: _buildFocusColor(),
           borderColor: _buildBorderColor(),
           cornerRadius: AgoraCorners.rounded50,
           padding: _buildPadding(),
@@ -79,6 +80,17 @@ class AgoraRoundedButton extends StatelessWidget {
         return AgoraColors.primaryBlue;
       case AgoraRoundedButtonStyle.greyBorderButtonStyle:
         return AgoraColors.orochimaru;
+    }
+  }
+
+  Color _buildFocusColor() {
+    switch (style) {
+      case AgoraRoundedButtonStyle.primaryButtonStyle:
+        return AgoraColors.neutral400;
+      case AgoraRoundedButtonStyle.blueBorderButtonStyle:
+        return AgoraColors.neutral200;
+      case AgoraRoundedButtonStyle.greyBorderButtonStyle:
+        return AgoraColors.neutral200;
     }
   }
 
