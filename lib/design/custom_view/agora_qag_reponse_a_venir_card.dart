@@ -116,7 +116,7 @@ class _BandeauCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('🏆', style: AgoraTextStyles.regular12.copyWith(fontSize: 20)),
+          ExcludeSemantics(child: Text('🏆', style: AgoraTextStyles.regular12.copyWith(fontSize: 20))),
           SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
             child: Column(

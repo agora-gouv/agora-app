@@ -106,19 +106,19 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             responseChoices: [
               ConsultationQuestionResponseChoice(
                 id: "choiceA",
-                label: "En vélo ou à pied",
+                label: "En vélo ou à pied 🚲",
                 order: 3,
                 hasOpenTextField: false,
               ),
               ConsultationQuestionResponseChoice(
                 id: "choiceB",
-                label: "En voiture",
+                label: "En voiture 🚗",
                 order: 1,
                 hasOpenTextField: false,
               ),
               ConsultationQuestionResponseChoice(
                 id: "choiceC",
-                label: "En transports en commun",
+                label: "En transports en commun 🚃",
                 order: 2,
                 hasOpenTextField: false,
               ),
