@@ -54,17 +54,15 @@ class QagDetailsSupportView extends StatelessWidget {
                           label: _buildButtonLabel(isSupported),
                           isLoading: viewModel.isLoading,
                           style: _buildButtonStyle(isSupported),
-                          onPressed: () =>
-                              _buildOnPressed(context, qagId, isSupported, viewModel.isLoading),
+                          onPressed: () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading),
                         ),
                       ),
                     SizedBox(width: AgoraSpacings.x0_5),
                     Semantics(
                       button: canSupport,
                       child: InkWell(
-                        onTap: canSupport
-                            ? () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading)
-                            : null,
+                        onTap:
+                            canSupport ? () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading) : null,
                         child: AgoraLikeView(
                           isSupported: isSupported,
                           supportCount: viewModel.supportCount(),
