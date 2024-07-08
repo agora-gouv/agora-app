@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 
 class StringParser {
   static List<StringSegment> splitByEmoji(String input) {
-    final regex = RegExp(r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
+    final regex =
+        RegExp(r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
     final matches = regex.allMatches(input);
 
     if (matches.isEmpty) {
@@ -24,7 +25,6 @@ class StringParser {
     return result;
   }
 }
-
 
 class StringSegment extends Equatable {
   final String text;
