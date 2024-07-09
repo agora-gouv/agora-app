@@ -25,7 +25,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
   static const totalStep = 4;
   final _controller = PageController(initialPage: 0);
   int step = 0;
-  late final AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void initState() {
@@ -126,9 +126,9 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
               child: _PauseButton(
                 onTap: (isPlaying) {
                   if (isPlaying) {
-                    animationController.stop();
+                    animationController?.stop();
                   } else {
-                    animationController.forward();
+                    animationController?.forward();
                   }
                 },
               ),

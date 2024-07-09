@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingView extends StatelessWidget {
-  final AnimationController animationController;
+  final AnimationController? animationController;
 
   OnboardingView(this.animationController);
 
