@@ -8,7 +8,7 @@ class ProfileStrings {
   static const String participationCharter = "Charte de participation";
   static const String deleteAccount = "Supprimer mon application";
   static const String privacyPolicy = "Politique de confidentialité";
-  static const String termsOfService = "Conditions générales d'utilisation";
+  static const String termsOfService = "Conditions générales\nd'utilisation";
   static const String legalNotice = "Mentions légales";
   static const String feedbackTipsTitle = "Inventez avec nous le futur de l'appli\u{00A0}!";
   static const String feedbackTipsDescription =
