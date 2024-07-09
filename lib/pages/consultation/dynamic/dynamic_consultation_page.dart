@@ -14,6 +14,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
 import 'package:agora/design/custom_view/agora_error_text.dart';
@@ -222,7 +223,8 @@ class _ShareButton extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
       child: AgoraButton(
         icon: "ic_share.svg",
-        label: QagStrings.share,
+        label: GenericStrings.share,
+        semanticLabel: "Partager la consultation",
         buttonStyle: AgoraButtonStyle.lightGrey,
         onPressed: () {
           TrackerHelper.trackClick(
