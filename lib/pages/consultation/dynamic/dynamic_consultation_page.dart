@@ -222,7 +222,7 @@ class _ShareButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
       child: AgoraButton(
-        icon: "ic_share.svg",
+        prefixIcon: "ic_share.svg",
         label: GenericStrings.share,
         semanticLabel: "Partager la consultation",
         buttonStyle: AgoraButtonStyle.lightGrey,

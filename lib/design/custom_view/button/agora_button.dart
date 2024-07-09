@@ -9,7 +9,10 @@ class AgoraButton extends StatelessWidget {
   final bool isLoading;
   final String label;
   final String? semanticLabel;
-  final String? icon;
+  final String? prefixIcon;
+  final ColorFilter? prefixIconColorFilter;
+  final String? suffixIcon;
+  final ColorFilter? suffixIconColorFilter;
   final AgoraButtonStyle buttonStyle;
   final bool expanded;
   final bool isDisabled;
@@ -19,7 +22,10 @@ class AgoraButton extends StatelessWidget {
     this.isLoading = false,
     required this.label,
     this.semanticLabel,
-    this.icon,
+    this.prefixIcon,
+    this.prefixIconColorFilter,
+    this.suffixIcon,
+    this.suffixIconColorFilter,
     this.buttonStyle = AgoraButtonStyle.primary,
     this.expanded = false,
     this.isDisabled = false,
@@ -52,17 +58,28 @@ class AgoraButton extends StatelessWidget {
                       shape: borderShape,
                       color: _getBackgroundColor(buttonStyle, isDisabled),
                     ),
-              child: icon != null
+              child: prefixIcon != null || suffixIcon != null
                   ? Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       alignment: WrapAlignment.center,
                       children: [
-                        SvgPicture.asset(
-                          "assets/${icon!}",
-                          excludeFromSemantics: true,
-                        ),
-                        const SizedBox(width: 8),
+                        if (prefixIcon != null) ...[
+                          SvgPicture.asset(
+                            "assets/${prefixIcon!}",
+                            excludeFromSemantics: true,
+                            colorFilter: prefixIconColorFilter,
+                          ),
+                          const SizedBox(width: 8),
+                        ],
                         Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
+                        if (suffixIcon != null) ...[
+                          const SizedBox(width: 8),
+                          SvgPicture.asset(
+                            "assets/${suffixIcon!}",
+                            excludeFromSemantics: true,
+                            colorFilter: suffixIconColorFilter,
+                          ),
+                        ],
                       ],
                     )
                   : Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
