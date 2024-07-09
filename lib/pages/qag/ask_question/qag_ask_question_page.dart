@@ -230,7 +230,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         return AgoraButton(
                           label: QagStrings.similarQagDetected,
                           buttonStyle: AgoraButtonStyle.blueBorder,
-                          icon: "ic_info_2.svg",
+                          prefixIcon: "ic_info_2.svg",
                           onPressed: () => Navigator.pushNamed(
                             context,
                             QagSimilarPage.routeName,

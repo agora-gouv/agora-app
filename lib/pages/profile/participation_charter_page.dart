@@ -13,6 +13,7 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,8 @@ class ParticipationCharterPage extends StatelessWidget {
                         onPressed: () {
                           LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
                         },
+                        suffixIcon: "ic_external_link.svg",
+                        suffixIconColorFilter: ColorFilter.mode(AgoraColors.primaryBlue, BlendMode.srcIn),
                       ),
                     ),
                     SizedBox(width: AgoraSpacings.base),

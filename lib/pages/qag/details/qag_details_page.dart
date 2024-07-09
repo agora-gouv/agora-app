@@ -157,7 +157,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
                       child: AgoraButton(
-                        icon: "ic_share.svg",
+                        prefixIcon: "ic_share.svg",
                         label: GenericStrings.share,
                         semanticLabel: "Partager la question",
                         buttonStyle: AgoraButtonStyle.lightGrey,
