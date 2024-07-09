@@ -16,7 +16,7 @@ class OnboardingAutoScrollPage extends StatefulWidget {
     required this.animationController,
   });
 
-  final AnimationController animationController;
+  final AnimationController? animationController;
 
   /// Widget to display in loop
   final Widget child;
@@ -53,7 +53,7 @@ class OnboardingAutoScrollPage extends StatefulWidget {
 }
 
 class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> with SingleTickerProviderStateMixin {
-  late final AnimationController animationController;
+  AnimationController? animationController;
   late Animation<Offset> offset;
 
   ValueNotifier<bool> shouldScroll = ValueNotifier<bool>(false);
@@ -65,8 +65,8 @@ class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> wit
 
     scrollController.addListener(() async {
       if (widget.enableScrollInput) {
-        if (animationController.isAnimating) {
-          animationController.stop();
+        if (animationController != null && animationController!.isAnimating) {
+          animationController!.stop();
         } else {
           await Future.delayed(widget.delayAfterScrollInput);
           animationHandler();
@@ -76,16 +76,18 @@ class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> wit
 
     animationController = widget.animationController;
 
-    offset = Tween<Offset>(
-      begin: Offset.zero,
-      end: widget.scrollDirection == Axis.horizontal
-          ? widget.reverseScroll
-              ? const Offset(.1, 0)
-              : const Offset(-.1, 0)
-          : widget.reverseScroll
-              ? const Offset(0, .1)
-              : const Offset(0, -.1),
-    ).animate(animationController);
+    if (animationController != null) {
+      offset = Tween<Offset>(
+        begin: Offset.zero,
+        end: widget.scrollDirection == Axis.horizontal
+            ? widget.reverseScroll
+                ? const Offset(.1, 0)
+                : const Offset(-.1, 0)
+            : widget.reverseScroll
+                ? const Offset(0, .1)
+                : const Offset(0, -.1),
+      ).animate(animationController!);
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await Future.delayed(widget.delay);
@@ -100,8 +102,8 @@ class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> wit
       shouldScroll.value = true;
 
       if (shouldScroll.value && mounted) {
-        animationController.forward().then((_) async {
-          animationController.reset();
+        animationController?.forward().then((_) async {
+          animationController?.reset();
 
           if (shouldScroll.value && mounted) {
             animationHandler();
@@ -156,7 +158,9 @@ class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> wit
 
   @override
   void dispose() {
-    animationController.dispose();
+    if (animationController != null) {
+      animationController!.dispose();
+    }
     super.dispose();
   }
 }

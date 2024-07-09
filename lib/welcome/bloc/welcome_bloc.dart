@@ -16,11 +16,13 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
     GetWelcomeALaUneEvent event,
     Emitter<WelcomeState> emit,
   ) async {
-    final welcomeALaUne = await welcomeRepository.getWelcomeALaUne();
-    if (welcomeALaUne != null) {
-      emit(WelcomeState(status: AllPurposeStatus.success, welcomeALaUne: welcomeALaUne));
-    } else {
-      emit(WelcomeState(status: AllPurposeStatus.error, welcomeALaUne: null));
+    if (state.status != AllPurposeStatus.success) {
+      final welcomeALaUne = await welcomeRepository.getWelcomeALaUne();
+      if (welcomeALaUne != null) {
+        emit(WelcomeState(status: AllPurposeStatus.success, welcomeALaUne: welcomeALaUne));
+      } else {
+        emit(WelcomeState(status: AllPurposeStatus.error, welcomeALaUne: null));
+      }
     }
   }
 }

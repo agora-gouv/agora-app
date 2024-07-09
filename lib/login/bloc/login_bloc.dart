@@ -43,7 +43,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final version = await appVersionHelper.getVersion();
     final buildNumber = await appVersionHelper.getBuildNumber();
     final platformName = platformHelper.getPlatformName();
-    await welcomeRepository.getWelcomeALaUne();
     if (loginToken != null) {
       emit(
         await _login(
@@ -54,6 +53,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           platformName: platformName,
         ),
       );
+      await welcomeRepository.getWelcomeALaUne();
     } else {
       emit(
         await _signup(

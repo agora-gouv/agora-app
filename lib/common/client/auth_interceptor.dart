@@ -43,7 +43,7 @@ class AuthInterceptor extends Interceptor {
           options.headers["Authorization"] = "Bearer ${response.jwtToken}";
         }
       }
-    } else {
+    } else if (options.path != "/signup") {
       final response = await login();
 
       if (response is LoginSucceedResponse) {
