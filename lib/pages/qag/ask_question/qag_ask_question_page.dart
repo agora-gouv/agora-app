@@ -330,6 +330,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       AgoraButton(
                         label: QagStrings.send,
                         isLoading: createQagState is CreateQagLoadingState,
+                        isDisabled: !_couldSend(),
                         buttonStyle: AgoraButtonStyle.primary,
                         onPressed: _couldSend()
                             ? () {
