@@ -31,16 +31,16 @@ dependencies:
   video_player: ^2.7.1
   chewie: ^1.5.0
   share_plus: ^7.2.1
-  firebase_core: ^2.15.1
+  firebase_core: ^2.32.0
   firebase_messaging: ^14.6.7
   flutter_local_notifications: ^16.2.0 # not support for web
   flutter_secure_storage: ^9.0.0
-  matomo_tracker: ^4.1.1
+  matomo_tracker: ^5.0.0-dev.1 # pre-release version, check to change to stable release
   percent_indicator: ^4.2.3
   webview_flutter: ^4.2.4 # not support for web
   flutter_widget_from_html: ^0.14.9 # only support web
   responsive_framework: ^1.1.0
-  package_info_plus: ^5.0.1
+  package_info_plus: ^6.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1

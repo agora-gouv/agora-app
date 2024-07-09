@@ -2,12 +2,13 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "tech-automatiser-build-dev-ios" ]
   workflow_dispatch:
 
 jobs:
 
   build-android-staging:
+    if: startsWith(github.event.head_commit.message, 'build-android-staging')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -79,3 +80,132 @@ jobs:
           STAGING_FIREBASE_CI_TOKEN: ${{ secrets.STAGING_FIREBASE_CI_TOKEN }}
           STAGING_AGORA_ANDROID_APP_ID: ${{ secrets.STAGING_AGORA_ANDROID_APP_ID }}
           STAGING_FIREBASE_RELEASE_GROUPS: ${{ secrets.STAGING_FIREBASE_RELEASE_GROUPS }}
+
+  build-ios-staging:
+    if: startsWith(github.event.head_commit.message, 'build-ios-staging')
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Environment Variables
+        uses: ./.github/actions/setvars
+        with:
+          varFilePath: ./.github/variables/myvars.env
+
+#      - name: Write ssh gitlab private key
+#        shell: bash
+#        run: |
+#          echo "$SSH_GITLAB_PRIVATE_KEY" > ~/.ssh/id_ed25519
+#        env:
+#          SSH_GITLAB_PRIVATE_KEY: ${{ secrets.SSH_GITLAB_PRIVATE_KEY }}
+#
+#      - name: ssh agent
+#        shell: bash
+#        run: |
+#          chmod 600 ~/.ssh/id_ed25519
+#          eval "$(ssh-agent -s)"
+#          ssh-add ~/.ssh/id_ed25519
+#          ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+
+      - uses: subosito/flutter-action@v2
+        with:
+          cache: true
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Check Codemagic CLI cache
+        uses: actions/cache@v4
+        id: codemagic-cache
+        with:
+          path: /Users/runner/hostedtoolcache/Python/${{ env.PYTHON_VERSION }}/x64
+          key: ${{ runner.os }}-codemagic
+
+      - name: Install Codemagic CLI tools
+        if: steps.codemagic-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          pip3 install codemagic-cli-tools
+
+#      - name: Write env
+#        shell: bash
+#        run: |
+#          echo "$PROD_RUNTIME_ENV_B64" | base64 --decode > env/.env.prod
+#        env:
+#          PROD_RUNTIME_ENV_B64: ${{ secrets.PROD_RUNTIME_ENV_B64 }}
+
+      - name: Install Flutter dependencies
+        shell: bash
+        run: |
+          flutter pub get
+
+      - name: Install CocoaPods dependencies
+        shell: bash
+        run: |
+          find . -name "Podfile" -execdir pod install \;
+
+      - name: Write Apple dev API Key
+        shell: bash
+        run: |
+          mkdir ~/.private_keys
+          echo "$APPLE_PROD_API_KEY_B64" | base64 --decode > ios/AuthKey_"$APPLE_PROD_API_KEY".p8
+        env:
+          APPLE_PROD_API_KEY: ${{ secrets.APPLE_PROD_API_KEY }}
+          APPLE_PROD_API_KEY_B64: ${{ secrets.APPLE_PROD_API_KEY_B64 }}
+
+      - name: Set up a temporary keychain for code signing
+        shell: bash
+        run: |
+          keychain initialize
+
+      - name: Fetch the code signing files from App Store Connect
+        shell: bash
+        run: |
+          export APP_STORE_CONNECT_ISSUER_ID="$APPLE_PROD_API_ISSUER"
+          export APP_STORE_CONNECT_KEY_IDENTIFIER="$APPLE_PROD_API_KEY"
+          export APP_STORE_CONNECT_PRIVATE_KEY=`cat ios/AuthKey_"$APPLE_PROD_API_KEY".p8`
+          app-store-connect fetch-signing-files fr.social.gouv.agora.debug \
+            --platform IOS \
+            --type IOS_APP_STORE \
+            --certificate-key=@env:APPLE_P12_PRIVATE_KEY \
+            --create
+        env:
+          APPLE_PROD_API_ISSUER: ${{ secrets.APPLE_PROD_API_ISSUER }}
+          APPLE_PROD_API_KEY: ${{ secrets.APPLE_PROD_API_KEY }}
+          APPLE_P12_PRIVATE_KEY: ${{secrets.APPLE_P12_PRIVATE_KEY}}
+
+      - name: Add fetched certificates to keychain
+        shell: bash
+        run: |
+          keychain add-certificates
+
+      - name: Update Xcode project settings with fetched code signing profiles and create prod_export_options.plist
+        shell: bash
+        run: |
+          xcode-project use-profiles --export-options-plist ios/prod_export_options.plist
+
+      - name: Build IPA with generated prod_export_options.plist
+        shell: bash
+        run: |
+          flutter build ipa \
+          -t lib/main_dev.dart \
+          --flavor dev \
+          --dart-define=app.flavor=Dev \
+          --build-name="3.0.0" \
+          --build-number=50 \
+          --export-options-plist=ios/prod_export_options.plist \
+
+      - name: Deploy app to App Store Connect
+        shell: bash
+        run: |
+          export APP_STORE_CONNECT_ISSUER_ID="$APPLE_PROD_API_ISSUER"
+          export APP_STORE_CONNECT_KEY_IDENTIFIER="$APPLE_PROD_API_KEY"
+          export APP_STORE_CONNECT_PRIVATE_KEY=`cat ios/AuthKey_"$APPLE_PROD_API_KEY".p8`
+          app-store-connect publish \
+            --path $(find $(pwd) -name "CEJ.ipa")
+        env:
+          APPLE_PROD_API_ISSUER: ${{ secrets.APPLE_PROD_API_ISSUER }}
+          APPLE_PROD_API_KEY: ${{ secrets.APPLE_PROD_API_KEY }}
+          APPLE_P12_PRIVATE_KEY: ${{secrets.APPLE_P12_PRIVATE_KEY}}
