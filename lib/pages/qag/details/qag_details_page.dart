@@ -158,7 +158,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
                       child: AgoraButton(
                         icon: "ic_share.svg",
-                        label: QagStrings.share,
+                        label: GenericStrings.share,
+                        semanticLabel: "Partager la question",
                         buttonStyle: AgoraButtonStyle.lightGrey,
                         onPressed: () {
                           TrackerHelper.trackClick(

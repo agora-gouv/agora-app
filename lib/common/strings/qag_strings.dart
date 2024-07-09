@@ -19,7 +19,6 @@ class QagStrings {
   static const String by = "Par";
   static const String at = "le";
 
-  static const String share = "Partager";
   static const String askQuestionTitle = "Poser ma question au Gouvernement";
   static const String askQuestionTitle1 = "Poser ma\n";
   static const String askQuestionTitle2 = "question au Gouvernement";
