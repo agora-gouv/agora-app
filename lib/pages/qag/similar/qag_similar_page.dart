@@ -12,13 +12,12 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_qag_similar_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
@@ -100,7 +99,7 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
                 Flexible(
                   child: AgoraButton(
                     label: GenericStrings.close,
-                    style: AgoraButtonStyle.blueBorderButtonStyle,
+                    buttonStyle: AgoraButtonStyle.blueBorder,
                     onPressed: () {
                       if (shouldReloadQags) {
                         Navigator.pushNamedAndRemoveUntil(
@@ -122,7 +121,7 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
                 SizedBox(width: AgoraSpacings.base),
                 AgoraButton(
                   label: QagStrings.returnToQuestion,
-                  style: AgoraButtonStyle.primaryButtonStyle,
+                  buttonStyle: AgoraButtonStyle.primary,
                   onPressed: () => _backAction(context),
                 ),
               ],
@@ -142,7 +141,7 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
         return Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-            Center(child: AgoraErrorView()),
+            Center(child: AgoraErrorText()),
           ],
         );
     }
@@ -173,11 +172,11 @@ class _QagSimilarPageState extends State<QagSimilarPage> {
               showAgoraDialog(
                 context: context,
                 columnChildren: [
-                  AgoraErrorView(),
+                  AgoraErrorText(),
                   SizedBox(height: AgoraSpacings.x0_75),
                   AgoraButton(
                     label: GenericStrings.close,
-                    style: AgoraButtonStyle.primaryButtonStyle,
+                    buttonStyle: AgoraButtonStyle.primary,
                     onPressed: () => Navigator.pop(context),
                   ),
                 ],

@@ -23,7 +23,7 @@ class DemographicResponseHelper {
       DemographicResponseChoice(responseLabel: "Professions intermédiaires", responseCode: "PI"),
       DemographicResponseChoice(responseLabel: "Employés", responseCode: "EM"),
       DemographicResponseChoice(responseLabel: "Ouvriers", responseCode: "OU"),
-      DemographicResponseChoice(responseLabel: "Etudiants", responseCode: "ET"),
+      DemographicResponseChoice(responseLabel: "Étudiants", responseCode: "ET"),
       DemographicResponseChoice(responseLabel: "Retraités", responseCode: "RE"),
       DemographicResponseChoice(responseLabel: "Autre / Sans activité professionnelle", responseCode: "AU"),
       DemographicResponseChoice(responseLabel: "Je ne sais pas", responseCode: "UN"),

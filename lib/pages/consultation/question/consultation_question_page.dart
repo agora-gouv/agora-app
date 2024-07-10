@@ -11,7 +11,7 @@ import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
@@ -89,7 +89,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
               if (questionsState is ConsultationQuestionsFetchedState) {
                 return _handleQuestionsFetchedState(context, responsesStockState, questionsState);
               } else if (questionsState is ConsultationQuestionsErrorState) {
-                return _buildCommonState(context, AgoraErrorView());
+                return _buildCommonState(context, AgoraErrorText());
               } else {
                 return _buildCommonState(context, CircularProgressIndicator());
               }

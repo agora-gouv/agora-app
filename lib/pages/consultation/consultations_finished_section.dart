@@ -65,6 +65,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                       SizedBox(width: AgoraSpacings.x0_75),
                       AgoraRoundedButton(
                         label: GenericStrings.all,
+                        semanticLabel: "voir toutes les consultations terminées",
                         style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                         onPressed: () => Navigator.pushNamed(
                           context,
@@ -102,10 +103,12 @@ class ConsultationsFinishedSection extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: AgoraSpacings.base),
-                              HorizontalScrollHelper(
-                                itemsCount: finishedViewModels.length,
-                                scrollController: scrollController,
-                                key: _consultationScrollHelperKey,
+                              ExcludeSemantics(
+                                child: HorizontalScrollHelper(
+                                  itemsCount: finishedViewModels.length,
+                                  scrollController: scrollController,
+                                  key: _consultationScrollHelperKey,
+                                ),
                               ),
                             ],
                           );
@@ -147,6 +150,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                 LaunchUrlHelper.webview(context, finishedViewModel.externalLink);
               }
             },
+            isExternalLink: finishedViewModel is ConcertationViewModel,
             index: finishedViewModels.indexOf(finishedViewModel) + 1,
             maxIndex: finishedViewModels.length + 1,
           );

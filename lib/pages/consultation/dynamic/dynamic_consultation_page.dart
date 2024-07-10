@@ -14,9 +14,10 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
@@ -26,7 +27,6 @@ import 'package:agora/design/custom_view/agora_video_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/fullscreen_animation_view.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -127,7 +127,7 @@ class _ErrorPage extends StatelessWidget {
         children: [
           AgoraToolbar(pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       ),
     );
@@ -167,14 +167,16 @@ class _SuccessPage extends StatelessWidget {
               ),
             ),
             if (kDebugMode) ...[
-              AgoraButton(
-                label: 'Supprimer',
-                style: AgoraButtonStyle.redBorderButtonStyle,
-                onPressed: () {
-                  context
-                      .read<DynamicConsultationBloc>()
-                      .add(DeleteConsultationResponsesEvent(viewModel.consultationId));
-                },
+              Flexible(
+                child: AgoraButton(
+                  label: 'Supprimer',
+                  buttonStyle: AgoraButtonStyle.redBorder,
+                  onPressed: () {
+                    context
+                        .read<DynamicConsultationBloc>()
+                        .add(DeleteConsultationResponsesEvent(viewModel.consultationId));
+                  },
+                ),
               ),
               const SizedBox(width: AgoraSpacings.base),
             ],
@@ -220,9 +222,10 @@ class _ShareButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
       child: AgoraButton(
-        icon: "ic_share.svg",
-        label: QagStrings.share,
-        style: AgoraButtonStyle.lightGreyButtonStyle,
+        prefixIcon: "ic_share.svg",
+        label: GenericStrings.share,
+        semanticLabel: "Partager la consultation",
+        buttonStyle: AgoraButtonStyle.lightGrey,
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.shareConsultation,

@@ -24,7 +24,9 @@ class AgoraHtml extends StatelessWidget {
       );
     } else {
       return MediaQuery(
-        data: MediaQueryData(),
+        data: MediaQueryData(
+          textScaler: MediaQuery.textScalerOf(context),
+        ),
         child: Html(
           data: data,
           style: AgoraHtmlStyles.htmlStyle(context, fontSize, textAlign),

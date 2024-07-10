@@ -81,11 +81,13 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
                         },
                       ),
                     )
-                  : ConsultationQuestionHelper.buildIgnoreButton(
-                      onPressed: () => widget.onMultipleResponseTap(
-                        multipleChoicesQuestion.id,
-                        [UuidUtils.uuidZero],
-                        "",
+                  : Flexible(
+                      child: ConsultationQuestionHelper.buildIgnoreButton(
+                        onPressed: () => widget.onMultipleResponseTap(
+                          multipleChoicesQuestion.id,
+                          [UuidUtils.uuidZero],
+                          "",
+                        ),
                       ),
                     ),
             ],

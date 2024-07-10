@@ -5,6 +5,7 @@ import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 import 'package:agora/pages/consultation/question/consultation_question_helper.dart';
 import 'package:agora/pages/consultation/question/question_type_view/consultation_question_view.dart';
 import 'package:flutter/material.dart';
@@ -70,8 +71,10 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
                         onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
                       ),
                     )
-                  : ConsultationQuestionHelper.buildIgnoreButton(
-                      onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
+                  : Flexible(
+                      child: ConsultationQuestionHelper.buildIgnoreButton(
+                        onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, ""),
+                      ),
                     ),
             ],
           ),
@@ -96,14 +99,15 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
     }
   }
 
-  List<Widget> _buildOpenedChoiceResponse(String title) {
+  List<Widget> _buildOpenedChoiceResponse(List<StringSegment> title) {
+    final semanticTitle = title.where((segment) => !segment.isEmoji).map((seg) => seg.text).join();
     return [
       Text(ConsultationStrings.openedQuestionNotice, style: AgoraTextStyles.medium14),
       SizedBox(height: AgoraSpacings.base),
       AgoraTextField(
         hintText: ConsultationStrings.hintText,
         controller: textEditingController,
-        contentDescription: title,
+        contentDescription: semanticTitle,
         showCounterText: true,
         blockToMaxLength: true,
         onChanged: (openedResponseInput) {

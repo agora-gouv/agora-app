@@ -108,7 +108,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget _buildItemWidget(int selectedIndex, AgoraBottomNavigationBarItem item) {
     return Semantics(
       selected: selectedIndex == _currentSelectedIndex,
-      label: 'Onglet ${selectedIndex + 1} sur 2',
+      label: 'Onglet ${selectedIndex + 1} sur 3',
       button: true,
       child: SizedBox(
         width: _width / _items.length,

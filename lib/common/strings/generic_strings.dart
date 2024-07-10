@@ -23,6 +23,7 @@ class GenericStrings {
   static const String back = "Retour";
   static const String modify = "Modifier";
   static const String close = "Fermer";
+  static const String share = "Partager";
   static const String delete = "Supprimer";
   static const String retry = "Réessayer";
   static const String displayMore = "Afficher plus";

@@ -7,6 +7,7 @@ import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 import 'package:flutter/material.dart';
 
 final _barKey = GlobalKey();
@@ -16,7 +17,7 @@ class ConsultationQuestionView extends StatelessWidget {
   final int currentQuestionIndex;
   final int totalQuestions;
   final bool isLastQuestion;
-  final String title;
+  final List<StringSegment> title;
   final String? popupDescription;
   final Widget child;
   final ScrollController? scrollController;
@@ -67,8 +68,10 @@ class ConsultationQuestionView extends StatelessWidget {
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-                              child:
-                                  Text(title, style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue)),
+                              child: _Title(
+                                texte: title,
+                                textStyle: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+                              ),
                             ),
                           ),
                           if (popupDescription != null) ...[
@@ -106,6 +109,30 @@ class ConsultationQuestionView extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  final List<StringSegment> texte;
+  final TextStyle textStyle;
+
+  const _Title({required this.texte, this.textStyle = AgoraTextStyles.medium19});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: texte
+            .map(
+              (segment) => TextSpan(
+                text: segment.text,
+                style: textStyle,
+                semanticsLabel: segment.isEmoji ? '' : segment.text,
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }

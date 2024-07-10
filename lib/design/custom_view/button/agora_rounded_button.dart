@@ -13,23 +13,23 @@ enum AgoraRoundedButtonPadding { normal, short }
 class AgoraRoundedButton extends StatelessWidget {
   final String? icon;
   final String label;
+  final String? semanticLabel;
   final bool isLoading;
   final AgoraRoundedButtonStyle style;
   final AgoraRoundedButtonPadding contentPadding;
   final EdgeInsetsGeometry? textPadding;
   final VoidCallback onPressed;
-  final String? accessibilityLabel;
 
   const AgoraRoundedButton({
     super.key,
     this.icon,
     required this.label,
+    this.semanticLabel,
     this.isLoading = false,
     this.style = AgoraRoundedButtonStyle.primaryButtonStyle,
     this.contentPadding = AgoraRoundedButtonPadding.normal,
     this.textPadding,
     required this.onPressed,
-    this.accessibilityLabel,
   });
 
   @override
@@ -40,6 +40,7 @@ class AgoraRoundedButton extends StatelessWidget {
       return Semantics(
         button: true,
         child: AgoraRoundedCard(
+          focusColor: _buildFocusColor(),
           borderColor: _buildBorderColor(),
           cornerRadius: AgoraCorners.rounded50,
           padding: _buildPadding(),
@@ -57,7 +58,7 @@ class AgoraRoundedButton extends StatelessWidget {
                   padding: textPadding ?? EdgeInsets.all(0),
                   child: Text(
                     label,
-                    semanticsLabel: accessibilityLabel,
+                    semanticsLabel: semanticLabel,
                     style: _buildTextStyle(),
                     textAlign: TextAlign.center,
                   ),
@@ -79,6 +80,17 @@ class AgoraRoundedButton extends StatelessWidget {
         return AgoraColors.primaryBlue;
       case AgoraRoundedButtonStyle.greyBorderButtonStyle:
         return AgoraColors.orochimaru;
+    }
+  }
+
+  Color _buildFocusColor() {
+    switch (style) {
+      case AgoraRoundedButtonStyle.primaryButtonStyle:
+        return AgoraColors.neutral400;
+      case AgoraRoundedButtonStyle.blueBorderButtonStyle:
+        return AgoraColors.neutral200;
+      case AgoraRoundedButtonStyle.greyBorderButtonStyle:
+        return AgoraColors.neutral200;
     }
   }
 

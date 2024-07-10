@@ -20,6 +20,7 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     FetchConsultationsEvent event,
     Emitter<ConsultationState> emit,
   ) async {
+    emit(ConsultationInitialLoadingState());
     final response = await consultationRepository.fetchConsultations();
     if (response is GetConsultationsSucceedResponse) {
       final ongoingViewModels = ConsultationPresenter.presentOngoingConsultations(response.ongoingConsultations);

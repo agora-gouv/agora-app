@@ -60,8 +60,12 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                         children: [
                           AgoraQuestionResponseChoiceView(
                             responseId: 'id',
-                            responseLabel:
+                            responseLabel: [
+                              StringSegment(
                                 'J’ai remarqué un bug, quelque chose qui ne semble pas fonctionner correctement',
+                                false,
+                              ),
+                            ],
                             hasOpenTextField: false,
                             isSelected: choice == _AppFeedbackChoice.bug,
                             previousOtherResponse: '',
@@ -74,7 +78,9 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                           SizedBox(height: AgoraSpacings.base),
                           AgoraQuestionResponseChoiceView(
                             responseId: 'id',
-                            responseLabel: 'J’ai une idée d’amélioration ou de nouvelle fonctionnalité',
+                            responseLabel: [
+                              StringSegment('J’ai une idée d’amélioration ou de nouvelle fonctionnalité', false),
+                            ],
                             hasOpenTextField: false,
                             isSelected: choice == _AppFeedbackChoice.feature,
                             previousOtherResponse: '',
@@ -87,7 +93,12 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                           SizedBox(height: AgoraSpacings.base),
                           AgoraQuestionResponseChoiceView(
                             responseId: 'id',
-                            responseLabel: 'J’ai un commentaire, des critiques à faire sur l’application en général ',
+                            responseLabel: [
+                              StringSegment(
+                                'J’ai un commentaire, des critiques à faire sur l’application en général ',
+                                false,
+                              ),
+                            ],
                             hasOpenTextField: false,
                             isSelected: choice == _AppFeedbackChoice.comment,
                             previousOtherResponse: '',
@@ -100,7 +111,12 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                           SizedBox(height: AgoraSpacings.base),
                           AgoraQuestionResponseChoiceView(
                             responseId: 'id',
-                            responseLabel: 'J’aimerais participer à un atelier utilisateur ',
+                            responseLabel: [
+                              StringSegment(
+                                'J’aimerais participer à un atelier utilisateur ',
+                                false,
+                              ),
+                            ],
                             hasOpenTextField: false,
                             isSelected: choice == _AppFeedbackChoice.mail,
                             previousOtherResponse: '',
@@ -117,7 +133,7 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                               child: AgoraButton(
                                 label: ConsultationStrings.nextQuestion,
                                 semanticLabel: SemanticsStrings.nextQuestion,
-                                style: AgoraButtonStyle.primaryButtonStyle,
+                                buttonStyle: AgoraButtonStyle.primary,
                                 onPressed: () {
                                   widget.onTypeChosed(choice!);
                                 },

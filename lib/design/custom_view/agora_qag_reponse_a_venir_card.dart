@@ -36,7 +36,7 @@ class AgoraQagResponseAVenirCard extends StatelessWidget {
     return SizedBox(
       width: max(MediaQuery.of(context).size.width * 0.65, AgoraSpacings.carrouselMinWidth),
       child: Semantics(
-        tooltip: "Élément $index sur $maxIndex",
+        tooltip: "Élément ${index + 1} sur $maxIndex",
         button: true,
         child: AgoraRoundedCard(
           borderColor: AgoraColors.primaryBlue,
@@ -116,7 +116,7 @@ class _BandeauCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('🏆', style: AgoraTextStyles.regular12.copyWith(fontSize: 20)),
+          ExcludeSemantics(child: Text('🏆', style: AgoraTextStyles.regular12.copyWith(fontSize: 20))),
           SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
             child: Column(

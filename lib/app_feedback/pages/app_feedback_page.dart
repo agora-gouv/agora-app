@@ -7,7 +7,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/feedback_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -15,12 +15,12 @@ import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/feedback/feedback.dart';
 import 'package:agora/pages/consultation/consultations_page.dart';
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -117,7 +117,7 @@ class _Success extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.x1_5),
                 AgoraButton(
                   label: FeedbackStrings.otherReturnButtonLabel,
-                  style: AgoraButtonStyle.primaryButtonStyle,
+                  buttonStyle: AgoraButtonStyle.primary,
                   onPressed: () {
                     context.read<AppFeedbackBloc>().add(ReinitAppFeedbackEvent());
                   },
@@ -125,7 +125,7 @@ class _Success extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.base),
                 AgoraButton(
                   label: ConsultationStrings.returnToHome,
-                  style: AgoraButtonStyle.blueBorderButtonStyle,
+                  buttonStyle: AgoraButtonStyle.blueBorder,
                   onPressed: () {
                     Navigator.popUntil(
                       context,
@@ -152,7 +152,7 @@ class _Error extends StatelessWidget {
         children: [
           AgoraToolbar(pageLabel: FeedbackStrings.errorLabel),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       ),
     );

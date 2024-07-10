@@ -4,12 +4,12 @@ import 'package:agora/bloc/demographic/send/demographic_responses_send_state.dar
 import 'package:agora/bloc/demographic/stock/demographic_responses_stock_bloc.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
-import 'package:agora/pages/demographic/demographic_profile_page.dart';
-import 'package:agora/pages/profile/profile_page.dart';
+import 'package:agora/pages/demographic/demographic_profil_page.dart';
+import 'package:agora/pages/profile/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,8 +53,8 @@ class DemographicConfirmationPage extends StatelessWidget {
               if (_isProfileJourney()) {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  DemographicProfilePage.routeName,
-                  ModalRoute.withName(ProfilePage.routeName),
+                  DemographicProfilPage.routeName,
+                  ModalRoute.withName(ProfilPage.routeName),
                   arguments: DemographicProfileArguments(
                     modificationSuccess: state is SendDemographicResponsesSuccessState,
                   ),
@@ -75,9 +75,9 @@ class DemographicConfirmationPage extends StatelessWidget {
             if (state is SendDemographicResponsesFailureState) {
               return Column(
                 children: [
-                  AgoraToolbar(pageLabel: 'Echec de l\'envoi des informations démographiques'),
+                  AgoraToolbar(pageLabel: 'Échec de l\'envoi des informations démographiques'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-                  Center(child: AgoraErrorView()),
+                  Center(child: AgoraErrorText()),
                 ],
               );
             } else {

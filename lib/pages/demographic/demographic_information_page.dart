@@ -9,7 +9,6 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -123,6 +122,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                                   ),
                                   SizedBox(height: AgoraSpacings.x1_25),
                                   RichText(
+                                    textScaler: MediaQuery.textScalerOf(context),
                                     text: TextSpan(
                                       style: AgoraTextStyles.regular14,
                                       children: [
@@ -158,49 +158,7 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                               ),
                             ),
                           SizedBox(height: AgoraSpacings.x1_25),
-                          Row(
-                            children: [
-                              AgoraButton(
-                                label: DemographicStrings.begin,
-                                style: AgoraButtonStyle.primaryButtonStyle,
-                                onPressed: () {
-                                  TrackerHelper.trackClick(
-                                    clickName: AnalyticsEventNames.beginDemographic,
-                                    widgetName: AnalyticsScreenNames.demographicInformationPage,
-                                  );
-                                  Navigator.pushNamed(
-                                    context,
-                                    DemographicQuestionPage.routeName,
-                                    arguments: DemographicQuestionArgumentsFromQuestion(
-                                      consultationId: arguments.consultationId,
-                                      consultationTitle: arguments.consultationTitle,
-                                    ),
-                                  ).then((value) => Navigator.of(context).pop());
-                                },
-                              ),
-                              SizedBox(width: AgoraSpacings.base),
-                              Flexible(
-                                child: AgoraButton(
-                                  label: DemographicStrings.toNoAnswer,
-                                  style: AgoraButtonStyle.blueBorderButtonStyle,
-                                  onPressed: () {
-                                    TrackerHelper.trackClick(
-                                      clickName: AnalyticsEventNames.ignoreDemographic,
-                                      widgetName: AnalyticsScreenNames.demographicInformationPage,
-                                    );
-                                    Navigator.pushNamed(
-                                      context,
-                                      DynamicConsultationPage.routeName,
-                                      arguments: DynamicConsultationPageArguments(
-                                        consultationId: arguments.consultationId,
-                                        shouldLaunchCongratulationAnimation: true,
-                                      ),
-                                    ).then((value) => Navigator.of(context).pop());
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                          _SuiteBoutons(arguments: arguments),
                         ],
                       ),
                     ),
@@ -217,6 +175,81 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
           ],
         ),
       ),
+    );
+  }
+}
+
+class _SuiteBoutons extends StatelessWidget {
+  const _SuiteBoutons({required this.arguments});
+
+  final DemographicInformationArguments arguments;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _CommencerBouton(arguments: arguments),
+        SizedBox(width: AgoraSpacings.base),
+        _NePasRepondreBouton(arguments: arguments),
+      ],
+    );
+  }
+}
+
+class _NePasRepondreBouton extends StatelessWidget {
+  const _NePasRepondreBouton({required this.arguments});
+
+  final DemographicInformationArguments arguments;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: AgoraButton(
+        label: DemographicStrings.toNoAnswer,
+        buttonStyle: AgoraButtonStyle.blueBorder,
+        onPressed: () {
+          TrackerHelper.trackClick(
+            clickName: AnalyticsEventNames.ignoreDemographic,
+            widgetName: AnalyticsScreenNames.demographicInformationPage,
+          );
+          Navigator.pushNamed(
+            context,
+            DynamicConsultationPage.routeName,
+            arguments: DynamicConsultationPageArguments(
+              consultationId: arguments.consultationId,
+              shouldLaunchCongratulationAnimation: true,
+            ),
+          ).then((value) => Navigator.of(context).pop());
+        },
+      ),
+    );
+  }
+}
+
+class _CommencerBouton extends StatelessWidget {
+  const _CommencerBouton({required this.arguments});
+
+  final DemographicInformationArguments arguments;
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraButton(
+      label: DemographicStrings.begin,
+      buttonStyle: AgoraButtonStyle.primary,
+      onPressed: () {
+        TrackerHelper.trackClick(
+          clickName: AnalyticsEventNames.beginDemographic,
+          widgetName: AnalyticsScreenNames.demographicInformationPage,
+        );
+        Navigator.pushNamed(
+          context,
+          DemographicQuestionPage.routeName,
+          arguments: DemographicQuestionArgumentsFromQuestion(
+            consultationId: arguments.consultationId,
+            consultationTitle: arguments.consultationTitle,
+          ),
+        ).then((value) => Navigator.of(context).pop());
+      },
     );
   }
 }

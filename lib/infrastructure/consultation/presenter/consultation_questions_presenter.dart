@@ -2,6 +2,7 @@ import 'package:agora/bloc/consultation/question/consultation_questions_view_mod
 import 'package:agora/domain/consultation/questions/consultation_question.dart';
 import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
 import 'package:agora/domain/consultation/questions/consultation_questions.dart';
+import 'package:agora/pages/consultation/dynamic/string_parser.dart';
 
 class ConsultationQuestionsPresenter {
   static ConsultationQuestionsViewModel present(ConsultationQuestions consultationQuestions) {
@@ -10,7 +11,7 @@ class ConsultationQuestionsPresenter {
         if (consultationQuestion is ConsultationQuestionUnique) {
           return ConsultationQuestionUniqueViewModel(
             id: consultationQuestion.id,
-            title: consultationQuestion.title,
+            title: StringParser.splitByEmoji(consultationQuestion.title),
             order: consultationQuestion.order,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
             nextQuestionId: consultationQuestion.nextQuestionId,
@@ -19,7 +20,7 @@ class ConsultationQuestionsPresenter {
         } else if (consultationQuestion is ConsultationQuestionMultiple) {
           return ConsultationQuestionMultipleViewModel(
             id: consultationQuestion.id,
-            title: consultationQuestion.title,
+            title: StringParser.splitByEmoji(consultationQuestion.title),
             order: consultationQuestion.order,
             maxChoices: consultationQuestion.maxChoices,
             responseChoicesViewModels: _buildResponseChoices(consultationQuestion.responseChoices),
@@ -29,7 +30,7 @@ class ConsultationQuestionsPresenter {
         } else if (consultationQuestion is ConsultationQuestionOpened) {
           return ConsultationQuestionOpenedViewModel(
             id: consultationQuestion.id,
-            title: consultationQuestion.title,
+            title: StringParser.splitByEmoji(consultationQuestion.title),
             order: consultationQuestion.order,
             nextQuestionId: consultationQuestion.nextQuestionId,
             popupDescription: consultationQuestion.popupDescription,
@@ -37,7 +38,7 @@ class ConsultationQuestionsPresenter {
         } else if (consultationQuestion is ConsultationQuestionWithCondition) {
           return ConsultationQuestionWithConditionViewModel(
             id: consultationQuestion.id,
-            title: consultationQuestion.title,
+            title: StringParser.splitByEmoji(consultationQuestion.title),
             order: consultationQuestion.order,
             responseChoicesViewModels: _buildResponseWithConditionChoices(consultationQuestion.responseChoices),
             popupDescription: consultationQuestion.popupDescription,
@@ -45,7 +46,7 @@ class ConsultationQuestionsPresenter {
         } else if (consultationQuestion is ConsultationQuestionChapter) {
           return ConsultationQuestionChapterViewModel(
             id: consultationQuestion.id,
-            title: consultationQuestion.title,
+            title: StringParser.splitByEmoji(consultationQuestion.title),
             order: consultationQuestion.order,
             description: consultationQuestion.description,
             nextQuestionId: consultationQuestion.nextQuestionId,
@@ -68,7 +69,7 @@ class ConsultationQuestionsPresenter {
         .map(
           (responseChoice) => ConsultationQuestionResponseChoiceViewModel(
             id: responseChoice.id,
-            label: responseChoice.label,
+            label: StringParser.splitByEmoji(responseChoice.label),
             order: responseChoice.order,
             hasOpenTextField: responseChoice.hasOpenTextField,
           ),
@@ -84,7 +85,7 @@ class ConsultationQuestionsPresenter {
         .map(
           (responseChoice) => ConsultationQuestionWithConditionResponseChoiceViewModel(
             id: responseChoice.id,
-            label: responseChoice.label,
+            label: StringParser.splitByEmoji(responseChoice.label),
             order: responseChoice.order,
             nextQuestionId: responseChoice.nextQuestionId,
             hasOpenTextField: responseChoice.hasOpenTextField,

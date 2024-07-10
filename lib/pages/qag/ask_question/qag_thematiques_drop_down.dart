@@ -53,6 +53,7 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
             widget.onSelected(value);
           });
         },
+        itemHeight: null,
         items: widget.elements.map<DropdownMenuItem<T>>((T value) {
           final thematique = value as ThematiqueWithIdViewModel;
           return DropdownMenuItem<T>(

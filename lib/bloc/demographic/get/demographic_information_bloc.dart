@@ -17,6 +17,7 @@ class DemographicInformationBloc extends Bloc<DemographicInformationEvent, Demog
     GetDemographicInformationEvent event,
     Emitter<DemographicInformationState> emit,
   ) async {
+    emit(GetDemographicInformationInitialLoadingState());
     final response = await demographicRepository.getDemographicResponses();
     if (response is GetDemographicInformationSucceedResponse) {
       emit(GetDemographicInformationSuccessState(demographicInformationResponse: response.demographicInformations));

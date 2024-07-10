@@ -13,7 +13,6 @@ import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
@@ -35,14 +34,10 @@ class QagsAskQuestionSectionPage extends StatelessWidget {
             top: AgoraSpacings.base,
             right: AgoraSpacings.horizontalPadding,
           ),
-          child: Column(
+          child: Row(
             children: [
-              Row(
-                children: [
-                  Expanded(child: _TitreEtInfo()),
-                  _PoserQuestionBouton(viewModel),
-                ],
-              ),
+              Expanded(child: _TitreEtInfo()),
+              Expanded(child: _PoserQuestionBouton(viewModel)),
             ],
           ),
         );
@@ -58,11 +53,13 @@ class _TitreEtInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AgoraRichText(
-          items: [
-            AgoraRichTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
-            AgoraRichTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
-          ],
+        Flexible(
+          child: AgoraRichText(
+            items: [
+              AgoraRichTextItem(text: "${QagStrings.allQagPart1}\n", style: AgoraRichTextItemStyle.regular),
+              AgoraRichTextItem(text: QagStrings.allQagPart2, style: AgoraRichTextItemStyle.bold),
+            ],
+          ),
         ),
         _InfoBouton(),
       ],
@@ -87,7 +84,7 @@ class _InfoBouton extends StatelessWidget {
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraButton(
                 label: GenericStrings.close,
-                style: AgoraButtonStyle.primaryButtonStyle,
+                buttonStyle: AgoraButtonStyle.primary,
                 onPressed: () => Navigator.pop(context),
               ),
             ],

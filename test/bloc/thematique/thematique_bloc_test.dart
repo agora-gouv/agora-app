@@ -10,10 +10,11 @@ import '../../fakes/thematique/fakes_thematique_repository.dart';
 void main() {
   group("FetchFilterThematiqueEvent", () {
     blocTest(
-      "when repository succeed - should emit success state",
+      "when repository succeed - should emit loading then success state",
       build: () => ThematiqueBloc(repository: FakeThematiqueSuccessRepository()),
       act: (bloc) => bloc.add(FetchFilterThematiqueEvent()),
       expect: () => [
+        ThematiqueInitialLoadingState(),
         ThematiqueSuccessState(
           [
             ThematiqueWithIdViewModel(id: null, picto: "\ud83d\udca1", label: "Toutes"),
@@ -33,20 +34,21 @@ void main() {
     );
 
     blocTest(
-      "when repository failed - should emit failure state",
+      "when repository failed - should emit loading then failure state",
       build: () => ThematiqueBloc(repository: FakeThematiqueFailureRepository()),
       act: (bloc) => bloc.add(FetchFilterThematiqueEvent()),
-      expect: () => [ThematiqueErrorState()],
+      expect: () => [ThematiqueInitialLoadingState(), ThematiqueErrorState()],
       wait: const Duration(milliseconds: 5),
     );
   });
 
   group("FetchAskQaGThematiqueEvent", () {
     blocTest(
-      "when repository succeed - should emit success state",
+      "when repository succeed - should emit loading then success state",
       build: () => ThematiqueBloc(repository: FakeThematiqueSuccessRepository()),
       act: (bloc) => bloc.add(FetchAskQaGThematiqueEvent()),
       expect: () => [
+        ThematiqueInitialLoadingState(),
         ThematiqueSuccessState(
           [
             ThematiqueWithIdViewModel(id: "9", picto: "\ud83d\udce6", label: "Autre / Je ne sais pas"),
@@ -65,10 +67,10 @@ void main() {
     );
 
     blocTest(
-      "when repository failed - should emit failure state",
+      "when repository failed - should emit loading then failure state",
       build: () => ThematiqueBloc(repository: FakeThematiqueFailureRepository()),
       act: (bloc) => bloc.add(FetchAskQaGThematiqueEvent()),
-      expect: () => [ThematiqueErrorState()],
+      expect: () => [ThematiqueInitialLoadingState(), ThematiqueErrorState()],
       wait: const Duration(milliseconds: 5),
     );
   });

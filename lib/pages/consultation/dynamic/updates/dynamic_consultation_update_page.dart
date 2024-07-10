@@ -4,7 +4,7 @@ import 'package:agora/bloc/consultation/dynamic/updates/dynamic_consultation_upd
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -69,7 +69,7 @@ class _ErrorPage extends StatelessWidget {
         children: [
           AgoraToolbar(pageLabel: ConsultationStrings.summaryTabPresentation),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       ),
     );

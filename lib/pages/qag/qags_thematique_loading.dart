@@ -17,43 +17,40 @@ class QagsThematiqueLoading extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Row(
-              children: [
+          Row(
+            children: [
+              SkeletonBox(
+                width: 76.0,
+                height: 76.0,
+              ),
+              SizedBox(width: AgoraSpacings.x0_75),
+              SkeletonBox(
+                width: 76.0,
+                height: 76.0,
+              ),
+              SizedBox(width: AgoraSpacings.x0_75),
+              SkeletonBox(
+                width: 76.0,
+                height: 76.0,
+              ),
+              if (ResponsiveHelper.isLargerThanMobile(context)) ...[
+                const SizedBox(width: AgoraSpacings.x0_75),
                 SkeletonBox(
                   width: 76.0,
                   height: 76.0,
                 ),
-                SizedBox(width: AgoraSpacings.x0_75),
+                const SizedBox(width: AgoraSpacings.x0_75),
                 SkeletonBox(
                   width: 76.0,
                   height: 76.0,
                 ),
-                SizedBox(width: AgoraSpacings.x0_75),
+                const SizedBox(width: AgoraSpacings.x0_75),
                 SkeletonBox(
                   width: 76.0,
                   height: 76.0,
                 ),
-                if (ResponsiveHelper.isLargerThanMobile(context)) ...[
-                  const SizedBox(width: AgoraSpacings.x0_75),
-                  SkeletonBox(
-                    width: 76.0,
-                    height: 76.0,
-                  ),
-                  const SizedBox(width: AgoraSpacings.x0_75),
-                  SkeletonBox(
-                    width: 76.0,
-                    height: 76.0,
-                  ),
-                  const SizedBox(width: AgoraSpacings.x0_75),
-                  SkeletonBox(
-                    width: 76.0,
-                    height: 76.0,
-                  ),
-                ],
               ],
-            ),
+            ],
           ),
         ],
       ),

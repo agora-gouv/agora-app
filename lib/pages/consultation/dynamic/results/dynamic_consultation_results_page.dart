@@ -5,7 +5,7 @@ import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_view.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -60,7 +60,7 @@ class _ErrorPage extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height / 10 * 4,
           ),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       ),
     );

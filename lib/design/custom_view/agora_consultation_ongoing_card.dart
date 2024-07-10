@@ -14,7 +14,6 @@ import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_thematique_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_icon_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -130,9 +129,9 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                 Flexible(
                   child: ExcludeSemantics(
                     child: AgoraButton(
-                      icon: "ic_question_confirmation.svg",
+                      prefixIcon: "ic_question_confirmation.svg",
                       label: ConsultationStrings.participate,
-                      style: AgoraButtonStyle.primaryButtonStyle,
+                      buttonStyle: AgoraButtonStyle.primary,
                       onPressed: () {
                         TrackerHelper.trackClick(
                           clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
@@ -146,6 +145,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                 SizedBox(width: AgoraSpacings.base),
                 AgoraIconButton(
                   icon: "ic_share.svg",
+                  focusColor: AgoraColors.neutral400,
                   semanticLabel: "${SemanticsStrings.shareConsultation} $title",
                   onClick: () {
                     TrackerHelper.trackClick(

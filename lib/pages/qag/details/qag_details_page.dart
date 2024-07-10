@@ -14,14 +14,13 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/string_utils.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -137,7 +136,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         children: [
           AgoraToolbar(pageLabel: 'Détail question citoyenne'),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorView()),
+          Center(child: AgoraErrorText()),
         ],
       );
     }
@@ -158,9 +157,10 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
                       child: AgoraButton(
-                        icon: "ic_share.svg",
-                        label: QagStrings.share,
-                        style: AgoraButtonStyle.lightGreyButtonStyle,
+                        prefixIcon: "ic_share.svg",
+                        label: GenericStrings.share,
+                        semanticLabel: "Partager la question",
+                        buttonStyle: AgoraButtonStyle.lightGrey,
                         onPressed: () {
                           TrackerHelper.trackClick(
                             clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
@@ -297,7 +297,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         SizedBox(height: AgoraSpacings.base),
         AgoraButton(
           label: GenericStrings.delete,
-          style: AgoraButtonStyle.redBorderButtonStyle,
+          buttonStyle: AgoraButtonStyle.redBorder,
           onPressed: () => Navigator.pushNamed(
             context,
             QagDetailsDeleteConfirmationPage.routeName,

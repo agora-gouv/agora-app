@@ -3,11 +3,10 @@ import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/string_utils.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -96,7 +95,7 @@ class AgoraQagModerationCard extends StatelessWidget {
                     child: AgoraButton(
                       label: QagStrings.refuse,
                       isLoading: refuseLoading,
-                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                      buttonStyle: AgoraButtonStyle.blueBorder,
                       onPressed: () => onRefuse(),
                     ),
                   ),
@@ -105,7 +104,7 @@ class AgoraQagModerationCard extends StatelessWidget {
                     child: AgoraButton(
                       label: QagStrings.validate,
                       isLoading: validateLoading,
-                      style: AgoraButtonStyle.primaryButtonStyle,
+                      buttonStyle: AgoraButtonStyle.primary,
                       onPressed: () => onValidate(),
                     ),
                   ),
@@ -113,7 +112,7 @@ class AgoraQagModerationCard extends StatelessWidget {
               ),
             ),
             if (error) ...[
-              AgoraErrorView(),
+              AgoraErrorText(),
               SizedBox(height: AgoraSpacings.base),
             ],
           ],

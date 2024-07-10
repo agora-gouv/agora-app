@@ -1,5 +1,6 @@
 import 'package:agora/bloc/qag/response/qag_response_a_venir_view_model.dart';
 import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
+import 'package:agora/bloc/qag/response/qag_response_event.dart';
 import 'package:agora/bloc/qag/response/qag_response_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
@@ -14,7 +15,6 @@ import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/infrastructure/qag/presenter/qag_response_presenter.dart';
@@ -44,7 +44,10 @@ class QagReponsesAVenirSection extends StatelessWidget {
             child: switch (viewModel) {
               _LoadingViewModel _ => QagsResponseLoading(),
               _EmptyViewModel _ => SizedBox(),
-              _ErrorViewModel _ => Center(child: AgoraErrorView()),
+              _ErrorViewModel _ => Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: AgoraErrorView(onReload: () => context.read<QagResponseBloc>().add(FetchQagsResponseEvent())),
+                ),
               final _ResponseListViewModel viewModel => _ReponseAVenirListWidget(viewModel.viewModels),
             },
           ),
@@ -90,7 +93,7 @@ class _ReponsesAVenirHeader extends StatelessWidget {
                           SizedBox(height: AgoraSpacings.x0_75),
                           AgoraButton(
                             label: GenericStrings.close,
-                            style: AgoraButtonStyle.primaryButtonStyle,
+                            buttonStyle: AgoraButtonStyle.primary,
                             onPressed: () => Navigator.pop(context),
                           ),
                         ],
@@ -136,10 +139,12 @@ class _ReponseAVenirListWidget extends StatelessWidget {
         ),
         if (viewModels.length > 1) ...[
           const SizedBox(height: AgoraSpacings.base),
-          HorizontalScrollHelper(
-            itemsCount: viewModels.length + 1,
-            scrollController: scrollController,
-            key: _questionScrollHelperKey,
+          ExcludeSemantics(
+            child: HorizontalScrollHelper(
+              itemsCount: viewModels.length + 1,
+              scrollController: scrollController,
+              key: _questionScrollHelperKey,
+            ),
           ),
         ],
       ],

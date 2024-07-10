@@ -1,5 +1,4 @@
 import 'package:agora/design/custom_view/agora_little_separator.dart';
-import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
@@ -23,7 +22,7 @@ class AgoraSecondaryStyleViewButton {
 }
 
 class AgoraSecondaryStyleView extends StatelessWidget {
-  final AgoraRichText title;
+  final Widget title;
   final AgoraSecondaryStyleViewButton? button;
   final VoidCallback? onBackClick;
   final Widget child;
@@ -65,7 +64,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                     AgoraRoundedButton(
                       icon: button!.icon,
                       label: button!.title,
-                      accessibilityLabel: button!.accessibilityLabel,
+                      semanticLabel: button!.accessibilityLabel,
                       style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                       contentPadding: AgoraRoundedButtonPadding.short,
                       onPressed: () => button!.onClick(),

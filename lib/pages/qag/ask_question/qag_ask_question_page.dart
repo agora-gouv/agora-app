@@ -21,6 +21,7 @@ import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
@@ -30,7 +31,6 @@ import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/agora_text_field.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -45,6 +45,7 @@ import 'package:agora/pages/qag/similar/qag_similar_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class QagAskQuestionPage extends StatefulWidget {
   static const routeName = "/qagAskQuestionPage";
@@ -92,7 +93,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
           builder: (context, state) {
             return AgoraSecondaryStyleView(
-              pageLabel: QagStrings.askQuestionTitle1 + QagStrings.askQuestionTitle2,
+              pageLabel: QagStrings.askQuestionTitle,
               title: AgoraRichText(
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 items: [
@@ -144,7 +145,11 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       return Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 3),
-          Center(child: AgoraErrorView()),
+          Center(
+            child: AgoraErrorView(
+              onReload: () => context.read<ThematiqueBloc>().add(FetchAskQaGThematiqueEvent()),
+            ),
+          ),
         ],
       );
     } else {
@@ -177,13 +182,15 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               AgoraHtml(
                 data: QagStrings.askQuestionDescription3,
                 fontSize: 14.0,
+                textAlign: TextAlign.start,
               ),
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.askQagObligatoireSaufContraire, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.base),
-              _MandatoryField(QagStrings.questionTitle),
+              ExcludeSemantics(child: Text(QagStrings.questionTitle, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
+                contentDescription: QagStrings.questionTitle,
                 maxLength: _questionMaxLength,
                 hintText: QagStrings.questionHint,
                 showCounterText: true,
@@ -191,7 +198,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 onChanged: (input) {
                   setState(() {
                     question = input;
-
                     var shouldCheckQuestionLength = false;
                     if (question.length >= _questionMinLength) {
                       isQuestionLengthError = false;
@@ -206,7 +212,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               if (isQuestionLengthError) ...[
                 SizedBox(height: AgoraSpacings.x0_75),
-                AgoraErrorView(errorMessage: QagStrings.questionRequiredCondition),
+                AgoraErrorText(errorMessage: QagStrings.questionRequiredCondition),
               ],
               const SizedBox(height: AgoraSpacings.x0_75),
               _AstuceElement(),
@@ -223,8 +229,8 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       if (state.hasSimilar) {
                         return AgoraButton(
                           label: QagStrings.similarQagDetected,
-                          style: AgoraButtonStyle.blueBorderButtonStyle,
-                          icon: "ic_info_2.svg",
+                          buttonStyle: AgoraButtonStyle.blueBorder,
+                          prefixIcon: "ic_info_2.svg",
                           onPressed: () => Navigator.pushNamed(
                             context,
                             QagSimilarPage.routeName,
@@ -240,18 +246,19 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 },
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              Text(QagStrings.detailsTitle, style: AgoraTextStyles.medium18),
+              ExcludeSemantics(child: Text(QagStrings.detailsTitle, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.x0_5),
-              Text(QagStrings.detailsDescription, style: AgoraTextStyles.light14),
+              ExcludeSemantics(child: Text(QagStrings.detailsDescription, style: AgoraTextStyles.light14)),
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraTextField(
+                contentDescription: "${QagStrings.detailsTitle} ${QagStrings.detailsDescription}",
                 maxLength: _detailMaxLength,
                 hintText: QagStrings.detailsHint,
                 showCounterText: true,
                 onChanged: (input) => setState(() => details = input),
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              _MandatoryField(QagStrings.thematiqueTitle),
+              ExcludeSemantics(child: Text(QagStrings.thematiqueTitle, style: AgoraTextStyles.medium18)),
               SizedBox(height: AgoraSpacings.x0_5),
               QagThematiquesDropDown(
                 firstValue: null,
@@ -263,44 +270,13 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-                    child: _MandatoryField(QagStrings.yourNameTitle),
-                  ),
-                  AgoraMoreInformation(
-                    onClick: () {
-                      showAgoraDialog(
-                        context: context,
-                        columnChildren: [
-                          RichText(
-                            text: TextSpan(
-                              style: AgoraTextStyles.light16,
-                              children: [
-                                TextSpan(text: QagStrings.yourNameInfoBubble1),
-                                WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                                TextSpan(
-                                  text: QagStrings.yourNameInfoBubble2,
-                                  style: AgoraTextStyles.light16Underline.copyWith(color: AgoraColors.primaryBlue),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: AgoraSpacings.x0_75),
-                          AgoraButton(
-                            label: GenericStrings.close,
-                            style: AgoraButtonStyle.primaryButtonStyle,
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                  Text(QagStrings.yourNameTitle, style: AgoraTextStyles.medium18),
+                  _InfoBouton(),
                 ],
               ),
               SizedBox(height: AgoraSpacings.x0_375),
               AgoraTextField(
+                contentDescription: QagStrings.yourNameTitle,
                 maxLength: _nameMaxLength,
                 hintText: QagStrings.yourNameHint,
                 showCounterText: true,
@@ -311,7 +287,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               AgoraButton(
                 label: QagStrings.readNotice,
-                style: AgoraButtonStyle.lightGreyButtonStyle,
+                buttonStyle: AgoraButtonStyle.lightGrey,
                 onPressed: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
               ),
               SizedBox(height: AgoraSpacings.x1_5),
@@ -342,19 +318,20 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                     children: [
                       if (createQagState is CreateQagErrorState) ...[
                         SizedBox(height: AgoraSpacings.base),
-                        AgoraErrorView(),
+                        AgoraErrorText(),
                         SizedBox(height: AgoraSpacings.base),
                       ],
                       if (createQagState is CreateQagErrorUnauthorizedState) ...[
                         SizedBox(height: AgoraSpacings.base),
-                        AgoraErrorView(errorMessage: GenericStrings.errorUnauthorizedMessage),
+                        AgoraErrorText(errorMessage: GenericStrings.errorUnauthorizedMessage),
                         SizedBox(height: AgoraSpacings.base),
                       ],
                       if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),
                       AgoraButton(
                         label: QagStrings.send,
                         isLoading: createQagState is CreateQagLoadingState,
-                        style: AgoraButtonStyle.primaryButtonStyle,
+                        isDisabled: !_couldSend(),
+                        buttonStyle: AgoraButtonStyle.primary,
                         onPressed: _couldSend()
                             ? () {
                                 TrackerHelper.trackClick(
@@ -430,6 +407,60 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   }
 }
 
+class _InfoBouton extends StatelessWidget {
+  const _InfoBouton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: AgoraMoreInformation(
+        onClick: () {
+          showAgoraDialog(
+            context: context,
+            columnChildren: [
+              RichText(
+                textScaler: MediaQuery.textScalerOf(context),
+                text: TextSpan(
+                  style: AgoraTextStyles.light16,
+                  children: [
+                    TextSpan(text: QagStrings.yourNameInfoBubble1),
+                    WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
+                    TextSpan(
+                      text: QagStrings.yourNameInfoBubble2,
+                      style: AgoraTextStyles.light16Underline.copyWith(color: AgoraColors.primaryBlue),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+                    ),
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 2, left: 4),
+                        child: SvgPicture.asset(
+                          'assets/ic_external_link.svg',
+                          excludeFromSemantics: true,
+                          height: 20,
+                          width: 20,
+                          colorFilter: const ColorFilter.mode(AgoraColors.primaryGrey, BlendMode.srcIn),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: AgoraSpacings.x0_75),
+              AgoraButton(
+                label: GenericStrings.close,
+                buttonStyle: AgoraButtonStyle.primary,
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
 class _AstuceElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -458,6 +489,7 @@ class _AstuceElement extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: AgoraSpacings.base),
                   child: RichText(
+                    textScaler: MediaQuery.textScalerOf(context),
                     text: TextSpan(
                       style: AgoraTextStyles.regular14,
                       children: [
@@ -475,23 +507,6 @@ class _AstuceElement extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _MandatoryField extends StatelessWidget {
-  final String label;
-
-  _MandatoryField(this.label);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(label, style: AgoraTextStyles.medium18),
-        const SizedBox(width: AgoraSpacings.x0_25),
-        Text('*', style: AgoraTextStyles.medium18.copyWith(color: AgoraColors.red)),
-      ],
     );
   }
 }

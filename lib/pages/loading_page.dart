@@ -15,7 +15,6 @@ import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/style/agora_button_style.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -151,7 +150,7 @@ class _LoadingPageState extends State<LoadingPage> {
                                   Flexible(
                                     child: AgoraButton(
                                       label: GenericStrings.contactSupport,
-                                      style: AgoraButtonStyle.blueBorderButtonStyle,
+                                      buttonStyle: AgoraButtonStyle.blueBorder,
                                       onPressed: () {
                                         final Uri emailUri = Uri(
                                           scheme: 'mailto',
@@ -165,7 +164,7 @@ class _LoadingPageState extends State<LoadingPage> {
                                   SizedBox(width: AgoraSpacings.base),
                                   AgoraButton(
                                     label: GenericStrings.retry,
-                                    style: AgoraButtonStyle.primaryButtonStyle,
+                                    buttonStyle: AgoraButtonStyle.primary,
                                     onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
                                   ),
                                 ],
@@ -176,7 +175,7 @@ class _LoadingPageState extends State<LoadingPage> {
                               SizedBox(height: AgoraSpacings.x1_25),
                               AgoraButton(
                                 label: GenericStrings.updateApp,
-                                style: AgoraButtonStyle.primaryButtonStyle,
+                                buttonStyle: AgoraButtonStyle.primary,
                                 expanded: true,
                                 onPressed: () => LaunchUrlHelper.launchStore(),
                               ),
@@ -289,13 +288,13 @@ class _LoadingPageState extends State<LoadingPage> {
           children: [
             AgoraButton(
               label: GenericStrings.rejectNotificationPermissionButton,
-              style: AgoraButtonStyle.lightGreyButtonStyle,
+              buttonStyle: AgoraButtonStyle.lightGrey,
               onPressed: () => Navigator.pop(context),
             ),
             SizedBox(height: AgoraSpacings.base),
             AgoraButton(
               label: GenericStrings.acceptNotificationPermissionButton,
-              style: AgoraButtonStyle.primaryButtonStyle,
+              buttonStyle: AgoraButtonStyle.primary,
               onPressed: () {
                 openAppSettings();
                 Navigator.pop(context);

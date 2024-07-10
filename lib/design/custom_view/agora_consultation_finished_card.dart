@@ -7,6 +7,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 enum AgoraConsultationFinishedStyle { carrousel, column, grid }
 
@@ -18,6 +19,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   final String? label;
   final AgoraConsultationFinishedStyle style;
   final VoidCallback onClick;
+  final bool isExternalLink;
   final int index;
   final int maxIndex;
 
@@ -29,6 +31,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     required this.label,
     required this.style,
     required this.onClick,
+    this.isExternalLink = false,
     required this.index,
     required this.maxIndex,
   });
@@ -70,17 +73,17 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
         onTap: () => onClick(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             style == AgoraConsultationFinishedStyle.carrousel
                 ? Column(children: [image, SizedBox(height: AgoraSpacings.x0_5)])
                 : Padding(padding: const EdgeInsets.all(AgoraSpacings.base), child: image),
             _buildPadding(child: ThematiqueHelper.buildCard(context, thematique)),
             style == AgoraConsultationFinishedStyle.column
-                ? _buildPadding(child: Text(title, style: AgoraTextStyles.medium18))
-                : Expanded(child: _buildPadding(child: Text(title, style: AgoraTextStyles.medium18))),
-            SizedBox(height: AgoraSpacings.x0_5),
-            if (label != null)
+                ? _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink))
+                : _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink)),
+            if (label != null) ...[
+              Spacer(),
               AgoraRoundedCard(
                 cardColor: AgoraColors.consultationLabelRed,
                 padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_5),
@@ -94,6 +97,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                   ],
                 ),
               ),
+            ],
           ],
         ),
       ),
@@ -139,5 +143,43 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class _Title extends StatelessWidget {
+  final String title;
+  final bool isExternalLink;
+
+  const _Title({required this.title, this.isExternalLink = false});
+
+  @override
+  Widget build(BuildContext context) {
+    if (isExternalLink) {
+      return Semantics(
+        label: "Lien externe vers la consultation $title",
+        child: RichText(
+          textScaler: MediaQuery.textScalerOf(context),
+          text: TextSpan(
+            children: [
+              TextSpan(text: title, style: AgoraTextStyles.medium18),
+              WidgetSpan(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 2, left: 4),
+                  child: SvgPicture.asset(
+                    'assets/ic_external_link.svg',
+                    excludeFromSemantics: true,
+                    height: 20,
+                    width: 20,
+                    colorFilter: const ColorFilter.mode(AgoraColors.primaryGrey, BlendMode.srcIn),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Text(title, style: AgoraTextStyles.medium18);
+    }
   }
 }

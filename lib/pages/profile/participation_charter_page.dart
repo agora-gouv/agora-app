@@ -6,14 +6,14 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/participate_charter_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_html.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
-import 'package:agora/design/style/agora_button_style.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -63,16 +63,18 @@ class ParticipationCharterPage extends StatelessWidget {
                     Flexible(
                       child: AgoraButton(
                         label: GenericStrings.readCompleteCharter,
-                        style: AgoraButtonStyle.blueBorderButtonStyle,
+                        buttonStyle: AgoraButtonStyle.blueBorder,
                         onPressed: () {
                           LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
                         },
+                        suffixIcon: "ic_external_link.svg",
+                        suffixIconColorFilter: ColorFilter.mode(AgoraColors.primaryBlue, BlendMode.srcIn),
                       ),
                     ),
                     SizedBox(width: AgoraSpacings.base),
                     AgoraButton(
                       label: GenericStrings.back,
-                      style: AgoraButtonStyle.primaryButtonStyle,
+                      buttonStyle: AgoraButtonStyle.primary,
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -140,7 +142,7 @@ class ParticipationCharterPage extends StatelessWidget {
               fontSize: 14,
             );
           } else {
-            return AgoraErrorView();
+            return AgoraErrorText();
           }
         },
       ),
@@ -187,6 +189,7 @@ class ParticipationCharterPage extends StatelessWidget {
           SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
             child: RichText(
+              textScaler: MediaQuery.textScalerOf(context),
               text: TextSpan(style: style, children: spans),
             ),
           ),
@@ -194,6 +197,7 @@ class ParticipationCharterPage extends StatelessWidget {
       );
     } else {
       return RichText(
+        textScaler: MediaQuery.textScalerOf(context),
         text: TextSpan(style: style, children: spans),
       );
     }

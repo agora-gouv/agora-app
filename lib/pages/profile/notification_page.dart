@@ -4,12 +4,13 @@ import 'package:agora/bloc/notification/get/notification_state.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_notification_card.dart';
 import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -83,10 +84,20 @@ class _NotificationPageState extends State<NotificationPage> {
     }
 
     if (state is NotificationInitialState || state is NotificationLoadingState) {
-      widgets.add(Center(child: CircularProgressIndicator()));
+      widgets.add(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 80),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 80),
+          ],
+        ),
+      );
       widgets.add(SizedBox(height: AgoraSpacings.base));
     } else if (state is NotificationErrorState) {
-      widgets.add(AgoraErrorView());
+      widgets.add(AgoraErrorText());
       widgets.add(SizedBox(height: AgoraSpacings.base));
       widgets.add(
         Row(
