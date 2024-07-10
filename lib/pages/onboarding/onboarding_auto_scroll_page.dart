@@ -155,12 +155,4 @@ class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> wit
       ),
     );
   }
-
-  @override
-  void dispose() {
-    if (animationController != null) {
-      animationController!.dispose();
-    }
-    super.dispose();
-  }
 }
