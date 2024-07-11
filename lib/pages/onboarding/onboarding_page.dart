@@ -38,6 +38,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
 
   @override
   void dispose() {
+    animationController?.dispose();
     _controller.dispose();
     super.dispose();
   }

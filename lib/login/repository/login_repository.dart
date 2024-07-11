@@ -59,7 +59,8 @@ class LoginDioRepository extends LoginRepository {
         final response = exception.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
           return SignupFailedResponse(errorType: LoginErrorType.updateVersion);
-        } else if (exception.type == DioExceptionType.connectionTimeout || exception.type == DioExceptionType.receiveTimeout) {
+        } else if (exception.type == DioExceptionType.connectionTimeout ||
+            exception.type == DioExceptionType.receiveTimeout) {
           return SignupFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
@@ -100,7 +101,8 @@ class LoginDioRepository extends LoginRepository {
         final response = exception.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
           return LoginFailedResponse(errorType: LoginErrorType.updateVersion);
-        } else if (exception.type == DioExceptionType.connectionTimeout || exception.type == DioExceptionType.receiveTimeout) {
+        } else if (exception.type == DioExceptionType.connectionTimeout ||
+            exception.type == DioExceptionType.receiveTimeout) {
           return LoginFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
