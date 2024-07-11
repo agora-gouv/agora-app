@@ -8,13 +8,13 @@ abstract class WelcomeRepository {
 
 class WelcomeDioRepository extends WelcomeRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
   WelcomeALaUne? _welcomeALaUne;
 
   WelcomeDioRepository({
     required this.httpClient,
-    this.sentryWrapper,
+    required this.sentryWrapper,
   });
 
   @override
@@ -29,16 +29,17 @@ class WelcomeDioRepository extends WelcomeRepository {
   }
 
   Future<WelcomeALaUne?> _fetchOnlineWelcomeALaUne() async {
+    const uri = '/welcome_page/last_news';
     try {
-      final response = await httpClient.get('/welcome_page/last_news');
+      final response = await httpClient.get(uri);
       return WelcomeALaUne(
         description: response.data['description'] as String,
         actionText: response.data['callToActionText'] as String,
         routeName: response.data['routeName'] as String,
         routeArgument: response.data['routeArgument'] as String?,
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
     }
     return null;
   }

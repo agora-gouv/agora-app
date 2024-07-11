@@ -9,21 +9,22 @@ abstract class AppFeedbackRepository {
 
 class AppFeedbackDioRepository extends AppFeedbackRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
   final Duration minimalSendingTime;
 
   AppFeedbackDioRepository({
     required this.httpClient,
     this.minimalSendingTime = const Duration(seconds: 2),
-    this.sentryWrapper,
+    required this.sentryWrapper,
   });
 
   @override
   Future<bool> sendFeedback(AppFeedback feedback, DeviceInformation deviceInformations) async {
     final timer = Future.delayed(minimalSendingTime);
+    const uri = '/feedback';
     try {
       final response = await httpClient.post(
-        '/feedback',
+        uri,
         data: {
           "type": switch (feedback.type) {
             AppFeedbackType.bug => "bug",
@@ -42,8 +43,8 @@ class AppFeedbackDioRepository extends AppFeedbackRepository {
       );
       await timer;
       return response.statusCode == 200;
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       await timer;
       return false;
     }

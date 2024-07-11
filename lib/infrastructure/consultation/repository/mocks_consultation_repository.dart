@@ -4,6 +4,6 @@ class MockConsultationRepository extends ConsultationDioRepository {
   MockConsultationRepository({
     required super.httpClient,
     required super.storageClient,
-    super.sentryWrapper,
+    required super.sentryWrapper,
   });
 }

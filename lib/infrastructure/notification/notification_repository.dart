@@ -12,16 +12,17 @@ abstract class NotificationRepository {
 
 class NotificationDioRepository extends NotificationRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
-  NotificationDioRepository({required this.httpClient, this.sentryWrapper});
+  NotificationDioRepository({required this.httpClient, required this.sentryWrapper});
 
   @override
   Future<GetNotificationsRepositoryResponse> getNotifications({
     required int pageNumber,
   }) async {
+    final uri = "/notifications/paginated/$pageNumber";
     try {
-      final response = await httpClient.get("/notifications/paginated/$pageNumber");
+      final response = await httpClient.get(uri);
       return GetNotificationsSucceedResponse(
         notificationInformation: NotificationInformation(
           hasMoreNotifications: response.data["hasMoreNotifications"] as bool,
@@ -34,8 +35,8 @@ class NotificationDioRepository extends NotificationRepository {
           }).toList(),
         ),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetNotificationsFailureResponse();
     }
   }

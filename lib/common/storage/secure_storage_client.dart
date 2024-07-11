@@ -26,8 +26,8 @@ class FlutterSecureStorageClient extends SecureStorageClient {
     if (isFirstRun) {
       try {
         secureStorage.deleteAll();
-      } catch (e, s) {
-        sentryWrapper.captureException(e, s, message: "Error while resetting secureStorage");
+      } catch (exception, stacktrace) {
+        sentryWrapper.captureException(exception, stacktrace, message: "Error while resetting secureStorage");
       }
       sharedPref.setBool(firstRunKey, false);
     }
@@ -37,8 +37,8 @@ class FlutterSecureStorageClient extends SecureStorageClient {
   Future<void> write({required String key, required String value}) async {
     try {
       await secureStorage.write(key: key, value: value);
-    } catch (e, s) {
-      sentryWrapper.captureException(e, s, message: "Error while saving $key to secureStorage");
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Error while saving $key to secureStorage");
       return;
     }
   }
@@ -56,8 +56,8 @@ class FlutterSecureStorageClient extends SecureStorageClient {
   Future<void> delete({required String key}) async {
     try {
       return await secureStorage.delete(key: key);
-    } catch (e, s) {
-      sentryWrapper.captureException(e, s, message: "Error while deleting $key from secureStorage");
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Error while deleting $key from secureStorage");
       return;
     }
   }

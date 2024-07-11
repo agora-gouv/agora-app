@@ -55,23 +55,22 @@ abstract class ConsultationRepository {
 
 class ConsultationDioRepository extends ConsultationRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
   final Duration minimalSendingTime;
   final ConsultationQuestionStorageClient storageClient;
 
   ConsultationDioRepository({
     required this.httpClient,
-    this.sentryWrapper,
+    required this.sentryWrapper,
     this.minimalSendingTime = const Duration(seconds: 2),
     required this.storageClient,
   });
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
+    const uri = "/consultations";
     try {
-      final response = await httpClient.get(
-        "/consultations",
-      );
+      final response = await httpClient.get(uri);
       final ongoingConsultations = response.data["ongoing"] as List;
       final finishedConsultations = response.data["finished"] as List;
       final answeredConsultations = response.data["answered"] as List;
@@ -106,13 +105,13 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e, s) {
-      if (e is DioException) {
-        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+    } catch (exception, stacktrace) {
+      if (exception is DioException) {
+        if (exception.type == DioExceptionType.connectionTimeout || exception.type == DioExceptionType.receiveTimeout) {
           return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
         }
       }
-      sentryWrapper?.captureException(e, s);
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetConsultationsFailedResponse();
     }
   }
@@ -121,8 +120,9 @@ class ConsultationDioRepository extends ConsultationRepository {
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
     required int pageNumber,
   }) async {
+    final uri = "/consultations/answered/$pageNumber";
     try {
-      final response = await httpClient.get("/consultations/answered/$pageNumber");
+      final response = await httpClient.get(uri);
       return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         consultationsPaginated: (response.data["consultations"] as List).map((consultation) {
@@ -135,8 +135,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetConsultationsFinishedPaginatedFailedResponse();
     }
   }
@@ -145,8 +145,9 @@ class ConsultationDioRepository extends ConsultationRepository {
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
   }) async {
+    final uri = "/consultations/finished/$pageNumber";
     try {
-      final response = await httpClient.get("/consultations/finished/$pageNumber");
+      final response = await httpClient.get(uri);
       return GetConsultationsPaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         consultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
@@ -160,8 +161,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetConsultationsFinishedPaginatedFailedResponse();
     }
   }
@@ -170,10 +171,9 @@ class ConsultationDioRepository extends ConsultationRepository {
   Future<GetConsultationQuestionsRepositoryResponse> fetchConsultationQuestions({
     required String consultationId,
   }) async {
+    final uri = "/consultations/$consultationId/questions";
     try {
-      final response = await httpClient.get(
-        "/consultations/$consultationId/questions",
-      );
+      final response = await httpClient.get(uri);
       return GetConsultationQuestionsSucceedResponse(
         consultationQuestions: ConsultationQuestions(
           questionCount: response.data["questionCount"] as int,
@@ -186,8 +186,8 @@ class ConsultationDioRepository extends ConsultationRepository {
           ),
         ),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetConsultationQuestionsFailedResponse();
     }
   }
@@ -197,10 +197,11 @@ class ConsultationDioRepository extends ConsultationRepository {
     required String consultationId,
     required List<ConsultationQuestionResponses> questionsResponses,
   }) async {
+    final uri = "/consultations/$consultationId/responses";
     try {
       final timer = Future.delayed(minimalSendingTime);
       final response = await httpClient.post(
-        "/consultations/$consultationId/responses",
+        uri,
         data: {
           "consultationId": consultationId,
           "responses": questionsResponses
@@ -218,18 +219,17 @@ class ConsultationDioRepository extends ConsultationRepository {
       return SendConsultationResponsesSucceedResponse(
         shouldDisplayDemographicInformation: response.data["askDemographicInfo"] as bool,
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return SendConsultationResponsesFailureResponse();
     }
   }
 
   @override
   Future<DynamicConsultationResultsResponse> fetchDynamicConsultationResults({required String consultationId}) async {
+    final uri = "/v2/consultations/$consultationId/responses";
     try {
-      final asyncResponse = httpClient.get(
-        "/v2/consultations/$consultationId/responses",
-      );
+      final asyncResponse = httpClient.get(uri);
       final (_, userResponses, _) = await storageClient.get(consultationId);
       final response = await asyncResponse;
       return DynamicConsultationsResultsSuccessResponse(
@@ -243,18 +243,17 @@ class ConsultationDioRepository extends ConsultationRepository {
           userResponses: userResponses,
         ),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return DynamicConsultationsResultsErrorResponse();
     }
   }
 
   @override
   Future<DynamicConsultationResponse> getDynamicConsultation(String consultationId) async {
+    final uri = "/v2/consultations/$consultationId";
     try {
-      final response = await httpClient.get(
-        "/v2/consultations/$consultationId",
-      );
+      final response = await httpClient.get(uri);
       final data = response.data;
       final shareText = data["shareText"] as String;
       final downloadUrl = data["downloadAnalysisUrl"] as String?;
@@ -280,8 +279,8 @@ class ConsultationDioRepository extends ConsultationRepository {
         goals: _toGoals(data["goals"]),
       );
       return DynamicConsultationSuccessResponse(consultation);
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return DynamicConsultationErrorResponse();
     }
   }
@@ -291,10 +290,9 @@ class ConsultationDioRepository extends ConsultationRepository {
     required String updateId,
     required String consultationId,
   }) async {
+    final uri = "/v2/consultations/$consultationId/updates/$updateId";
     try {
-      final response = await httpClient.get(
-        "/v2/consultations/$consultationId/updates/$updateId",
-      );
+      final response = await httpClient.get(uri);
       final data = response.data;
       final shareText = data["shareText"] as String;
       final downloadUrl = data["downloadAnalysisUrl"] as String?;
@@ -319,32 +317,34 @@ class ConsultationDioRepository extends ConsultationRepository {
         goals: _toGoals(data["goals"]),
       );
       return DynamicConsultationUpdateSuccessResponse(consultation);
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return DynamicConsultationUpdateErrorResponse();
     }
   }
 
   @override
   Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive) async {
+    final uri = "/consultations/$consultationId/updates/$updateId/feedback";
     try {
       await httpClient.post(
-        "/consultations/$consultationId/updates/$updateId/feedback",
+        uri,
         data: {
           "isPositive": isPositive,
         },
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
     }
   }
 
   @override
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {
+    final uri = "/consultations/$consultationId/updates/$updateId/feedback";
     try {
-      await httpClient.delete("/consultations/$consultationId/updates/$updateId/feedback");
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+      await httpClient.delete(uri);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
     }
   }
 }

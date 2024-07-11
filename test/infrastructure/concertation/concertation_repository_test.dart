@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/domain/consultation/consultation.dart';
 import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,6 +12,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   group("Fetch concertations", () {
     test("when success should return concertations", () async {
@@ -40,6 +42,7 @@ void main() {
       // When
       final repository = ConcertationDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getConcertations();
 
@@ -78,6 +81,7 @@ void main() {
       // When
       final repository = ConcertationDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getConcertations();
 

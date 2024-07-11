@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:agora/login/domain/login_error_type.dart';
 import 'package:agora/login/repository/login_repository.dart';
 import 'package:dio/dio.dart';
@@ -10,6 +11,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   const userId = "userId";
   const fcmToken = "fcmToken";
@@ -47,6 +49,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
@@ -93,6 +96,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
@@ -122,6 +126,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
@@ -151,6 +156,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.signup(
         firebaseMessagingToken: fcmToken,
@@ -193,6 +199,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
@@ -241,6 +248,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
@@ -274,6 +282,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
@@ -307,6 +316,7 @@ void main() {
       // When
       final repository = LoginDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.login(
         firebaseMessagingToken: fcmToken,
