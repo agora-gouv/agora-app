@@ -141,6 +141,7 @@ class ConsultationPaginatedPage extends StatelessWidget {
             isExternalLink: finishedViewModel.externalLink != null,
             index: consultationFinishedViewModels.indexOf(finishedViewModel),
             maxIndex: consultationFinishedViewModels.length,
+            fixedSize: false,
           ),
         );
         widgets.add(SizedBox(height: AgoraSpacings.base));
