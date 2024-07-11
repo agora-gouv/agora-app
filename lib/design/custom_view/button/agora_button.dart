@@ -43,21 +43,14 @@ class AgoraButton extends StatelessWidget {
       child = _buildSemantic(
         child: Material(
           elevation: 0,
+          color: _getBackgroundColor(buttonStyle, isDisabled),
+          shape: borderShape,
           child: InkWell(
             onTap: onPressed,
             focusColor: AgoraColors.neutral400,
             customBorder: borderShape,
             child: Ink(
               padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-              decoration: isDisabled
-                  ? ShapeDecoration(
-                      shape: borderShape,
-                      color: AgoraColors.gravelFint,
-                    )
-                  : ShapeDecoration(
-                      shape: borderShape,
-                      color: _getBackgroundColor(buttonStyle, isDisabled),
-                    ),
               child: prefixIcon != null || suffixIcon != null
                   ? Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
