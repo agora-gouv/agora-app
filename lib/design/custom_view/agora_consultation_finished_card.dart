@@ -22,6 +22,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   final bool isExternalLink;
   final int index;
   final int maxIndex;
+  final bool fixedSize;
 
   AgoraConsultationFinishedCard({
     required this.id,
@@ -34,6 +35,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     this.isExternalLink = false,
     required this.index,
     required this.maxIndex,
+    this.fixedSize = true,
   });
 
   @override
@@ -74,6 +76,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
         onTap: () => onClick(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: fixedSize ? MainAxisSize.max : MainAxisSize.min,
           children: [
             style == AgoraConsultationFinishedStyle.carrousel
                 ? Column(children: [image, SizedBox(height: AgoraSpacings.x0_5)])
@@ -83,7 +86,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                 ? _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink))
                 : _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink)),
             if (label != null) ...[
-              Spacer(),
+              if (fixedSize) Spacer(),
               AgoraRoundedCard(
                 cardColor: AgoraColors.consultationLabelRed,
                 padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_5),

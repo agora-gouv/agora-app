@@ -145,7 +145,7 @@ class _SuccessFooter extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('🤝', style: AgoraTextStyles.regular26),
+          ExcludeSemantics(child: Text('🤝', style: AgoraTextStyles.regular26)),
           const SizedBox(width: AgoraSpacings.base),
           Expanded(
             child: AgoraRichText(
