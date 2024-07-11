@@ -10,17 +10,18 @@ abstract class ConcertationRepository {
 
 class ConcertationDioRepository extends ConcertationRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
   ConcertationDioRepository({
     required this.httpClient,
-    this.sentryWrapper,
+    required this.sentryWrapper,
   });
 
   @override
   Future<List<Concertation>> getConcertations() async {
+    const uri = '/concertations';
     try {
-      final response = await httpClient.get('/concertations');
+      final response = await httpClient.get(uri);
       return (response.data as List).map(
         (concertation) {
           final thematiqueJson = concertation['thematique'] as Map<String, dynamic>;
@@ -38,8 +39,8 @@ class ConcertationDioRepository extends ConcertationRepository {
           );
         },
       ).toList();
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
     }
     return [];
   }

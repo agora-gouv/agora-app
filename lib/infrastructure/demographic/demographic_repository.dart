@@ -16,14 +16,15 @@ abstract class DemographicRepository {
 
 class DemographicDioRepository extends DemographicRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
-  DemographicDioRepository({required this.httpClient, this.sentryWrapper});
+  DemographicDioRepository({required this.httpClient, required this.sentryWrapper});
 
   @override
   Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
+    const uri = "/profile";
     try {
-      final response = await httpClient.get("/profile");
+      final response = await httpClient.get(uri);
       return GetDemographicInformationSucceedResponse(
         demographicInformations: DemographicType.values.map((demographicType) {
           return DemographicInformation(
@@ -32,8 +33,8 @@ class DemographicDioRepository extends DemographicRepository {
           );
         }).toList(),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetDemographicInformationFailureResponse();
     }
   }
@@ -42,15 +43,16 @@ class DemographicDioRepository extends DemographicRepository {
   Future<SendDemographicResponsesRepositoryResponse> sendDemographicResponses({
     required List<DemographicResponse> demographicResponses,
   }) async {
+    const uri = "/profile";
     try {
       final data = {};
       for (var demographicType in DemographicType.values) {
         data.putIfAbsent(demographicType.toTypeString(), () => _buildResponse(demographicType, demographicResponses));
       }
-      await httpClient.post("/profile", data: data);
+      await httpClient.post(uri, data: data);
       return SendDemographicResponsesSucceedResponse();
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return SendDemographicResponsesFailureResponse();
     }
   }

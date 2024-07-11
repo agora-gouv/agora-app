@@ -10,6 +10,7 @@ import 'package:agora/domain/qag/qag_similar.dart';
 import 'package:agora/domain/qag/qags_error_type.dart';
 import 'package:agora/domain/qag/qas_list_filter.dart';
 import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:agora/infrastructure/qag/qag_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,6 +20,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   const qagId = "qagId";
   const thematiqueId = "thematiqueId";
@@ -47,6 +49,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.createQag(
         title: "qag title",
@@ -79,6 +82,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.createQag(
         title: "qag title",
@@ -111,6 +115,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.createQag(
         title: "qag title",
@@ -142,6 +147,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchAskQagStatus();
 
@@ -169,6 +175,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchAskQagStatus();
 
@@ -193,6 +200,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchAskQagStatus();
 
@@ -245,6 +253,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagList(
         pageNumber: 1,
@@ -297,6 +306,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagList(
         pageNumber: 1,
@@ -353,6 +363,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagsResponse();
 
@@ -401,6 +412,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagsResponse();
 
@@ -439,6 +451,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagsResponsePaginated(pageNumber: 1);
 
@@ -475,6 +488,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagsResponsePaginated(pageNumber: 1);
 
@@ -514,6 +528,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -590,6 +605,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -676,6 +692,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -726,6 +743,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -747,6 +765,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagDetails(qagId: qagId);
 
@@ -770,6 +789,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.deleteQag(qagId: qagId);
 
@@ -788,6 +808,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.deleteQag(qagId: qagId);
 
@@ -811,6 +832,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.supportQag(qagId: qagId);
 
@@ -829,6 +851,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.supportQag(qagId: qagId);
 
@@ -852,6 +875,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.deleteSupportQag(qagId: qagId);
 
@@ -870,6 +894,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.deleteSupportQag(qagId: qagId);
 
@@ -903,6 +928,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
@@ -925,6 +951,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.giveQagResponseFeedback(qagId: qagId, isHelpful: true);
 
@@ -964,6 +991,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagModerationList();
 
@@ -1004,6 +1032,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchQagModerationList();
 
@@ -1030,6 +1059,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.moderateQag(qagId: qagId, isAccepted: true);
 
@@ -1054,6 +1084,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.moderateQag(qagId: qagId, isAccepted: true);
 
@@ -1080,6 +1111,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.hasSimilarQag(title: "qag title");
 
@@ -1101,6 +1133,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.hasSimilarQag(title: "qag title");
 
@@ -1142,6 +1175,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getSimilarQags(title: "qag title");
 
@@ -1180,6 +1214,7 @@ void main() {
       // When
       final repository = QagDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getSimilarQags(title: "qag title");
 

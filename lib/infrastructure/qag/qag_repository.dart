@@ -82,11 +82,11 @@ abstract class QagRepository {
 
 class QagDioRepository extends QagRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
   QagDioRepository({
     required this.httpClient,
-    this.sentryWrapper,
+    required this.sentryWrapper,
   });
 
   @override
@@ -96,9 +96,10 @@ class QagDioRepository extends QagRepository {
     required String author,
     required String thematiqueId,
   }) async {
+    const uri = "/qags";
     try {
       final response = await httpClient.post(
-        "/qags",
+        uri,
         data: {
           "title": title,
           "description": description,
@@ -107,11 +108,11 @@ class QagDioRepository extends QagRepository {
         },
       );
       return CreateQagSucceedResponse(qagId: response.data["qagId"] as String);
-    } catch (e, s) {
-      if ((e as DioException).response?.statusCode == 403) {
+    } catch (exception, stacktrace) {
+      if ((exception as DioException).response?.statusCode == 403) {
         return CreateQagFailedUnauthorizedResponse();
       }
-      sentryWrapper?.captureException(e, s);
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return CreateQagFailedResponse();
     }
   }
@@ -120,9 +121,10 @@ class QagDioRepository extends QagRepository {
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({
     required String? keywords,
   }) async {
+    const uri = "/qags/search";
     try {
       final response = await httpClient.get(
-        "/qags/search",
+        uri,
         queryParameters: {
           "keywords": keywords,
         },
@@ -130,28 +132,29 @@ class QagDioRepository extends QagRepository {
       return GetSearchQagsSucceedResponse(
         searchQags: _transformToQagList(response.data["results"] as List),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetSearchQagsFailedResponse();
     }
   }
 
   @override
   Future<AskQagStatusRepositoryResponse> fetchAskQagStatus() async {
+    const uri = "/qags/ask_status";
     try {
       final response = await httpClient.get(
-        "/qags/ask_status",
+        uri,
       );
       return AskQagStatusSucceedResponse(
         askQagError: response.data["askQagErrorText"] as String?,
       );
-    } catch (e, s) {
-      if (e is DioException) {
-        if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+    } catch (exception, stacktrace) {
+      if (exception is DioException) {
+        if (exception.type == DioExceptionType.connectionTimeout || exception.type == DioExceptionType.receiveTimeout) {
           return AskQagStatusFailedResponse(errorType: QagsErrorType.timeout);
         }
       }
-      sentryWrapper?.captureException(e, s);
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return AskQagStatusFailedResponse(errorType: QagsErrorType.generic);
     }
   }
@@ -162,9 +165,10 @@ class QagDioRepository extends QagRepository {
     required String? thematiqueId,
     required QagListFilter filter,
   }) async {
+    const uri = "/v2/qags";
     try {
       final response = await httpClient.get(
-        "/v2/qags",
+        uri,
         queryParameters: {
           "pageNumber": pageNumber,
           "thematiqueId": thematiqueId,
@@ -184,16 +188,17 @@ class QagDioRepository extends QagRepository {
               )
             : null,
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetQagListFailedResponse();
     }
   }
 
   @override
   Future<GetQagsResponseRepositoryResponse> fetchQagsResponse() async {
+    const uri = "/qags/responses";
     try {
-      final response = await httpClient.get("/qags/responses");
+      final response = await httpClient.get(uri);
       final qagResponsesIncoming = response.data["incomingResponses"] as List;
       final qagResponses = response.data["responses"] as List;
       return GetQagsResponseSucceedResponse(
@@ -221,8 +226,8 @@ class QagDioRepository extends QagRepository {
           );
         }).toList(),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetQagsResponseFailedResponse();
     }
   }
@@ -231,14 +236,15 @@ class QagDioRepository extends QagRepository {
   Future<GetQagsResponsePaginatedRepositoryResponse> fetchQagsResponsePaginated({
     required int pageNumber,
   }) async {
+    final uri = "/qags/responses/$pageNumber";
     try {
-      final response = await httpClient.get("/qags/responses/$pageNumber");
+      final response = await httpClient.get(uri);
       return GetQagsResponsePaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         paginatedQagsResponse: _transformToQagResponsePaginatedList(response.data["responses"] as List),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetQagsResponsePaginatedFailedResponse();
     }
   }
@@ -247,8 +253,9 @@ class QagDioRepository extends QagRepository {
   Future<GetQagDetailsRepositoryResponse> fetchQagDetails({
     required String qagId,
   }) async {
+    final uri = "/qags/$qagId";
     try {
-      final response = await httpClient.get("/qags/$qagId");
+      final response = await httpClient.get(uri);
       final qagDetailsSupport = response.data["support"] as Map;
       final qagDetailsResponse = response.data["response"] as Map?;
       final qagDetailsTextResponse = response.data["textResponse"] as Map?;
@@ -314,25 +321,26 @@ class QagDioRepository extends QagRepository {
               : null,
         ),
       );
-    } catch (e, s) {
-      if (e is DioException) {
-        final response = e.response;
+    } catch (exception, stacktrace) {
+      if (exception is DioException) {
+        final response = exception.response;
         if (response != null && response.statusCode == HttpStatus.locked) {
           return GetQagDetailsModerateFailedResponse();
         }
       }
-      sentryWrapper?.captureException(e, s);
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetQagDetailsFailedResponse();
     }
   }
 
   @override
   Future<DeleteQagRepositoryResponse> deleteQag({required String qagId}) async {
+    final uri = "/qags/$qagId";
     try {
-      await httpClient.delete("/qags/$qagId");
+      await httpClient.delete(uri);
       return DeleteQagSucceedResponse();
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return DeleteQagFailedResponse();
     }
   }
@@ -341,22 +349,24 @@ class QagDioRepository extends QagRepository {
   Future<SupportQagRepositoryResponse> supportQag({
     required String qagId,
   }) async {
+    final uri = "/qags/$qagId/support";
     try {
-      await httpClient.post("/qags/$qagId/support");
+      await httpClient.post(uri);
       return SupportQagSucceedResponse();
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return SupportQagFailedResponse();
     }
   }
 
   @override
   Future<DeleteSupportQagRepositoryResponse> deleteSupportQag({required String qagId}) async {
+    final uri = "/qags/$qagId/support";
     try {
-      await httpClient.delete("/qags/$qagId/support");
+      await httpClient.delete(uri);
       return DeleteSupportQagSucceedResponse();
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return DeleteSupportQagFailedResponse();
     }
   }
@@ -366,9 +376,10 @@ class QagDioRepository extends QagRepository {
     required String qagId,
     required bool isHelpful,
   }) async {
+    final uri = "/qags/$qagId/feedback";
     try {
       final response = await httpClient.post(
-        "/qags/$qagId/feedback",
+        uri,
         data: {"isHelpful": isHelpful},
       );
 
@@ -385,16 +396,17 @@ class QagDioRepository extends QagRepository {
       } else {
         return QagFeedbackSuccessBodyResponse();
       }
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return QagFeedbackFailedResponse();
     }
   }
 
   @override
   Future<QagModerationListRepositoryResponse> fetchQagModerationList() async {
+    const uri = "/moderate/qags";
     try {
-      final response = await httpClient.get("/moderate/qags");
+      final response = await httpClient.get(uri);
       return QagModerationListSuccessResponse(
         qagModerationList: QagModerationList(
           totalNumber: response.data["totalNumber"] as int,
@@ -414,8 +426,8 @@ class QagDioRepository extends QagRepository {
               .toList(),
         ),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return QagModerationListFailedResponse();
     }
   }
@@ -425,14 +437,15 @@ class QagDioRepository extends QagRepository {
     required String qagId,
     required bool isAccepted,
   }) async {
+    final uri = "/moderate/qags/$qagId";
     try {
       await httpClient.put(
-        "/moderate/qags/$qagId",
+        uri,
         data: {"isAccepted": isAccepted},
       );
       return ModerateQagSuccessResponse();
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return ModerateQagFailedResponse();
     }
   }
@@ -441,23 +454,25 @@ class QagDioRepository extends QagRepository {
   Future<QagHasSimilarRepositoryResponse> hasSimilarQag({
     required String title,
   }) async {
+    const uri = "/qags/has_similar";
     try {
       final response = await httpClient.get(
-        "/qags/has_similar",
+        uri,
         data: {"title": title},
       );
       return QagHasSimilarSuccessResponse(hasSimilar: response.data["hasSimilar"] as bool);
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return QagHasSimilarFailedResponse();
     }
   }
 
   @override
   Future<QagSimilarRepositoryResponse> getSimilarQags({required String title}) async {
+    const uri = "/qags/similar";
     try {
       final response = await httpClient.get(
-        "/qags/similar",
+        uri,
         data: {"title": title},
       );
       return QagSimilarSuccessResponse(
@@ -476,8 +491,8 @@ class QagDioRepository extends QagRepository {
             )
             .toList(),
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return QagSimilarFailedResponse();
     }
   }

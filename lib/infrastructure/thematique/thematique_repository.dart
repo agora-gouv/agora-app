@@ -9,14 +9,15 @@ abstract class ThematiqueRepository {
 
 class ThematiqueDioRepository extends ThematiqueRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
-  ThematiqueDioRepository({required this.httpClient, this.sentryWrapper});
+  ThematiqueDioRepository({required this.httpClient, required this.sentryWrapper});
 
   @override
   Future<ThematiqueRepositoryResponse> fetchThematiques() async {
+    const uri = "/thematiques";
     try {
-      final response = await httpClient.get("/thematiques");
+      final response = await httpClient.get(uri);
       final thematiques = (response.data["thematiques"] as List)
           .map(
             (thematique) => ThematiqueWithId(
@@ -27,8 +28,8 @@ class ThematiqueDioRepository extends ThematiqueRepository {
           )
           .toList();
       return GetThematiqueSucceedResponse(thematiques: thematiques);
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return GetThematiqueFailedResponse();
     }
   }

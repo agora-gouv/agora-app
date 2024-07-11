@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/domain/thematique/thematique_with_id.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,6 +10,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   group('Fetch thematiques', () {
     test("when success should return thematiques", () async {
@@ -40,6 +42,7 @@ void main() {
       // When
       final repository = ThematiqueDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchThematiques();
 
@@ -66,6 +69,7 @@ void main() {
       // When
       final repository = ThematiqueDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchThematiques();
 

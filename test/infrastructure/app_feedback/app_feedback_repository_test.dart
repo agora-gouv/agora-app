@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:agora/app_feedback/repository/app_feedback_repository.dart';
 import 'package:agora/domain/feedback/device_informations.dart';
 import 'package:agora/domain/feedback/feedback.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -10,6 +11,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
   final bug = AppFeedback(
     type: AppFeedbackType.bug,
     description: 'description',
@@ -49,6 +51,7 @@ void main() {
     final repository = AppFeedbackDioRepository(
       httpClient: httpClient,
       minimalSendingTime: Duration(milliseconds: 5),
+      sentryWrapper: sentryWrapper,
     );
     final response = await repository.sendFeedback(bug, deviceInfo);
 
@@ -80,6 +83,7 @@ void main() {
     final repository = AppFeedbackDioRepository(
       httpClient: httpClient,
       minimalSendingTime: Duration(milliseconds: 5),
+      sentryWrapper: sentryWrapper,
     );
     final response = await repository.sendFeedback(comment, deviceInfo);
 
@@ -116,6 +120,7 @@ void main() {
     final repository = AppFeedbackDioRepository(
       httpClient: httpClient,
       minimalSendingTime: Duration(milliseconds: 5),
+      sentryWrapper: sentryWrapper,
     );
     final response = await repository.sendFeedback(bug, deviceInfo);
 

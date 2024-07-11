@@ -4,6 +4,7 @@ import 'package:agora/domain/demographic/demographic_information.dart';
 import 'package:agora/domain/demographic/demographic_question_type.dart';
 import 'package:agora/domain/demographic/demographic_response.dart';
 import 'package:agora/infrastructure/demographic/demographic_repository.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -11,6 +12,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   group("Get demographic information", () {
     test("when success should return information", () async {
@@ -39,6 +41,7 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getDemographicResponses();
 
@@ -74,6 +77,7 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getDemographicResponses();
 
@@ -107,6 +111,7 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.sendDemographicResponses(
         demographicResponses: [
@@ -145,6 +150,7 @@ void main() {
       // When
       final repository = DemographicDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.sendDemographicResponses(
         demographicResponses: [

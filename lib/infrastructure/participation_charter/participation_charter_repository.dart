@@ -8,19 +8,20 @@ abstract class ParticipationCharterRepository {
 
 class ParticipationCharterDioRepository extends ParticipationCharterRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
-  ParticipationCharterDioRepository({required this.httpClient, this.sentryWrapper});
+  ParticipationCharterDioRepository({required this.httpClient, required this.sentryWrapper});
 
   @override
   Future<GetParticipationCharterRepositoryResponse> getParticipationCharterResponse() async {
+    const uri = "/participation_charter";
     try {
-      final response = await httpClient.get("/participation_charter");
+      final response = await httpClient.get(uri);
       return GetParticipationCharterSucceedResponse(
         extraText: response.data["extraText"] as String,
       );
-    } catch (e, s) {
-      sentryWrapper?.captureException(e, s);
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return SendDemographicResponsesFailureResponse();
     }
   }

@@ -11,6 +11,7 @@ import 'package:agora/domain/consultation/questions/responses/consultation_quest
 import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
+import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 import 'package:agora/pages/consultation/question/consultation_question_storage_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,6 +21,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   const consultationId = "consultationId";
 
@@ -73,6 +75,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -143,6 +146,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -186,6 +190,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -213,6 +218,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -236,6 +242,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -276,6 +283,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
 
@@ -314,6 +322,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
 
@@ -447,6 +456,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
@@ -554,6 +564,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
@@ -604,6 +615,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
@@ -654,6 +666,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
@@ -802,6 +815,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getDynamicConsultation('consultationId');
 
@@ -935,6 +949,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getDynamicConsultation('consultationId');
 
@@ -1019,6 +1034,7 @@ void main() {
             responseText: '',
           ),
         ]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchDynamicConsultationResults(consultationId: consultationId);
 
@@ -1073,6 +1089,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchDynamicConsultationResults(consultationId: consultationId);
 
@@ -1183,6 +1200,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchDynamicConsultationUpdate(
         consultationId: 'consultationId',
@@ -1295,6 +1313,7 @@ void main() {
         minimalSendingTime: Duration(milliseconds: 5),
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.fetchDynamicConsultationUpdate(
         consultationId: 'consultationId',
