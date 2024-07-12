@@ -9,7 +9,7 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/common/parser/simple_html_parser.dart';
-import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:agora/welcome/bloc/welcome_bloc.dart';
 import 'package:agora/welcome/bloc/welcome_event.dart';

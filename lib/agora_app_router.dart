@@ -21,13 +21,12 @@ import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/profile/profil_information_page.dart';
 import 'package:agora/pages/profile/profil_page.dart';
-import 'package:agora/pages/qag/ask_question/ask_question_qag_search.dart';
-import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
-import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
-import 'package:agora/pages/qag/moderation/moderation_page.dart';
-import 'package:agora/pages/qag/qags_page.dart';
-import 'package:agora/pages/qag/similar/qag_similar_page.dart';
+import 'package:agora/qag/ask/pages/ask_question_qag_search.dart';
+import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
+import 'package:agora/qag/details/pages/qag_details_delete_confirmation_page.dart';
+import 'package:agora/qag/details/pages/qag_details_page.dart';
+import 'package:agora/qag/moderation/pages/moderation_page.dart';
+import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/pages/webview/webview_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
@@ -53,10 +52,6 @@ class AgoraAppRouter {
       QagAskQuestionPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.qagAskQuestionPage,
             child: QagAskQuestionPage(),
-          ),
-      QagSimilarPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.qagSimilarPage,
-            child: QagSimilarPage(),
           ),
       // Profile
       ProfilPage.routeName: (context) => AgoraTracker(

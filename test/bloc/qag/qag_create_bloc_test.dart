@@ -1,6 +1,6 @@
-import 'package:agora/bloc/qag/create/qag_create_bloc.dart';
-import 'package:agora/bloc/qag/create/qag_create_event.dart';
-import 'package:agora/bloc/qag/create/qag_create_state.dart';
+import 'package:agora/qag/ask/bloc/create/qag_create_bloc.dart';
+import 'package:agora/qag/ask/bloc/create/qag_create_event.dart';
+import 'package:agora/qag/ask/bloc/create/qag_create_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

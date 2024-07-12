@@ -1,6 +1,6 @@
-import 'package:agora/bloc/qag/support/qag_support_bloc.dart';
-import 'package:agora/bloc/qag/support/qag_support_event.dart';
-import 'package:agora/bloc/qag/support/qag_support_state.dart';
+import 'package:agora/qag/details/bloc/support/qag_support_bloc.dart';
+import 'package:agora/qag/details/bloc/support/qag_support_event.dart';
+import 'package:agora/qag/details/bloc/support/qag_support_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -16,8 +16,8 @@ import 'package:agora/infrastructure/demographic/mocks_demographic_repository.da
 import 'package:agora/infrastructure/notification/mocks_notification_repository.dart';
 import 'package:agora/infrastructure/notification/notification_repository.dart';
 import 'package:agora/infrastructure/participation_charter/mocks_participation_charter_repository.dart';
-import 'package:agora/infrastructure/qag/mocks_qag_repository.dart';
-import 'package:agora/infrastructure/qag/qag_repository.dart';
+import 'package:agora/qag/repository/mocks_qag_repository.dart';
+import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/infrastructure/thematique/thematique_repository.dart';
 import 'package:agora/login/repository/login_repository.dart';
 import 'package:agora/login/repository/mocks_login_repository.dart';
