@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/consultation/consultations_error_type.dart';
-import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
-import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
-import 'package:agora/domain/consultation/questions/consultation_question.dart';
-import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
-import 'package:agora/domain/consultation/questions/consultation_questions.dart';
-import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
+import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/domain/consultations_error_type.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.dart';
+import 'package:agora/consultation/domain/questions/consultation_question.dart';
+import 'package:agora/consultation/domain/questions/consultation_question_response_choice.dart';
+import 'package:agora/consultation/domain/questions/consultation_questions.dart';
+import 'package:agora/consultation/domain/questions/responses/consultation_question_response.dart';
+import 'package:agora/consultation/domain/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
-import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
-import 'package:agora/pages/consultation/question/consultation_question_storage_client.dart';
+import 'package:agora/consultation/pages/question/consultation_question_storage_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 

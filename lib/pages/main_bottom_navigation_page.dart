@@ -3,7 +3,7 @@ import 'package:agora/design/custom_view/agora_responsive_view.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/pages/consultation/consultations_page.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/pages/qag/qags_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:flutter/material.dart';

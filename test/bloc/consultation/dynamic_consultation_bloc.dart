@@ -1,8 +1,8 @@
-import 'package:agora/bloc/consultation/dynamic/dynamic_consultation_bloc.dart';
-import 'package:agora/bloc/consultation/dynamic/dynamic_consultation_events.dart';
-import 'package:agora/bloc/consultation/dynamic/dynamic_consultation_state.dart';
-import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
-import 'package:agora/domain/consultation/dynamic/dynamic_consultation_section.dart';
+import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_bloc.dart';
+import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_events.dart';
+import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_state.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.dart';
 import 'package:bloc_test/bloc_test.dart';
 
 import '../../fakes/consultation/fake_consultation_question_storage_client.dart';

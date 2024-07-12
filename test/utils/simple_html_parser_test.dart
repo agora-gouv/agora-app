@@ -1,5 +1,5 @@
 import 'package:agora/design/custom_view/agora_rich_text.dart';
-import 'package:agora/pages/consultation/dynamic/simple_html_parser.dart';
+import 'package:agora/common/parser/simple_html_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

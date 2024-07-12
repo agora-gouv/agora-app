@@ -1,7 +1,7 @@
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/design/style/agora_html_styles.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

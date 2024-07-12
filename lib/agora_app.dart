@@ -8,7 +8,7 @@ import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/common/observer/matomo_route_observer.dart';
 import 'package:agora/common/observer/navigation_observer.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/pages/loading_page.dart';
 import 'package:agora/pages/onboarding/onboarding_page.dart';
 import 'package:agora/pages/qag/details/qag_details_page.dart';

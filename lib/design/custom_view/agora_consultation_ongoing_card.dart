@@ -1,5 +1,5 @@
-import 'package:agora/bloc/consultation/consultation_bloc.dart';
-import 'package:agora/bloc/consultation/consultation_event.dart';
+import 'package:agora/consultation/bloc/consultation_bloc.dart';
+import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
@@ -17,7 +17,7 @@ import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

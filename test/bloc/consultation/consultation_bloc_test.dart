@@ -1,9 +1,9 @@
-import 'package:agora/bloc/consultation/consultation_bloc.dart';
-import 'package:agora/bloc/consultation/consultation_event.dart';
-import 'package:agora/bloc/consultation/consultation_state.dart';
-import 'package:agora/bloc/consultation/consultation_view_model.dart';
+import 'package:agora/consultation/bloc/consultation_bloc.dart';
+import 'package:agora/consultation/bloc/consultation_event.dart';
+import 'package:agora/consultation/bloc/consultation_state.dart';
+import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
-import 'package:agora/domain/consultation/consultations_error_type.dart';
+import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

@@ -7,7 +7,7 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/design/custom_view/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/pages/demographic/demographic_profil_page.dart';
 import 'package:agora/pages/profile/profil_page.dart';
 import 'package:flutter/material.dart';
