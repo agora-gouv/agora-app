@@ -5,7 +5,7 @@ import 'package:agora/infrastructure/notification/permission/notification_first_
 import 'package:agora/infrastructure/onboarding/onboarding_storage_client.dart';
 import 'package:agora/infrastructure/profile/profile_demographic_storage_client.dart';
 import 'package:agora/login/repository/login_storage_client.dart';
-import 'package:agora/pages/consultation/question/consultation_question_storage_client.dart';
+import 'package:agora/consultation/pages/question/consultation_question_storage_client.dart';
 import 'package:agora/push_notification/push_notification_storage_client.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';

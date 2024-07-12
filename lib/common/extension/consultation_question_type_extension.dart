@@ -1,4 +1,4 @@
-import 'package:agora/domain/consultation/questions/consultation_question_type.dart';
+import 'package:agora/consultation/domain/questions/consultation_question_type.dart';
 
 extension ConsultationQuestionTypeExtension on String {
   ConsultationQuestionType toConsultationQuestionType() {

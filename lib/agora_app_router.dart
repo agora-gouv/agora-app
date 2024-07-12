@@ -2,13 +2,13 @@ import 'package:agora/app_feedback/pages/app_feedback_page.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/pages/consultation/consultations_page.dart';
-import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
-import 'package:agora/pages/consultation/dynamic/results/dynamic_consultation_results_page.dart';
-import 'package:agora/pages/consultation/dynamic/updates/dynamic_consultation_update_page.dart';
-import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
-import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
-import 'package:agora/pages/consultation/question/consultation_question_page.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
+import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
+import 'package:agora/consultation/pages/consultation_finished_paginated_page.dart';
+import 'package:agora/consultation/pages/question/consultation_question_confirmation_page.dart';
+import 'package:agora/consultation/pages/question/consultation_question_page.dart';
 import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
 import 'package:agora/pages/demographic/demographic_information_page.dart';
 import 'package:agora/pages/demographic/demographic_profil_page.dart';
@@ -161,11 +161,11 @@ class AgoraAppRouter {
           child: AppFeedbackPage(),
         );
         break;
-      case ConsultationPaginatedPage.routeName:
+      case ConsultationFinishedPaginatedPage.routeName:
         final arguments = settings.arguments as ConsultationPaginatedPageType;
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
-          child: ConsultationPaginatedPage(arguments),
+          child: ConsultationFinishedPaginatedPage(arguments),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:

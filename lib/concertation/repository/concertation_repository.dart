@@ -1,6 +1,6 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
-import 'package:agora/domain/consultation/consultation.dart';
+import 'package:agora/consultation/domain/consultation.dart';
 import 'package:agora/domain/thematique/thematique.dart';
 import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
 

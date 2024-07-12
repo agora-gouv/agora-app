@@ -1,9 +1,9 @@
-import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_bloc.dart';
-import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_event.dart';
-import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_state.dart';
-import 'package:agora/bloc/consultation/finished_paginated/consultation_finished_paginated_view_model.dart';
+import 'package:agora/consultation/bloc/finished_paginated/consultation_finished_paginated_bloc.dart';
+import 'package:agora/consultation/bloc/finished_paginated/consultation_finished_paginated_event.dart';
+import 'package:agora/consultation/bloc/finished_paginated/consultation_finished_paginated_state.dart';
+import 'package:agora/consultation/bloc/finished_paginated/consultation_finished_paginated_view_model.dart';
 import 'package:agora/bloc/thematique/thematique_view_model.dart';
-import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
+import 'package:agora/consultation/pages/consultation_finished_paginated_page.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

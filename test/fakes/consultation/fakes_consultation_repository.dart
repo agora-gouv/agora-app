@@ -1,13 +1,13 @@
-import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/consultation/consultations_error_type.dart';
-import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
-import 'package:agora/domain/consultation/questions/consultation_question.dart';
-import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
-import 'package:agora/domain/consultation/questions/consultation_questions.dart';
-import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
+import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/domain/consultations_error_type.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
+import 'package:agora/consultation/domain/questions/consultation_question.dart';
+import 'package:agora/consultation/domain/questions/consultation_question_response_choice.dart';
+import 'package:agora/consultation/domain/questions/consultation_questions.dart';
+import 'package:agora/consultation/domain/questions/responses/consultation_question_response.dart';
+import 'package:agora/consultation/domain/summary/consultation_summary_results.dart';
 import 'package:agora/domain/thematique/thematique.dart';
-import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/repository/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
   FakeConsultationSuccessRepository([this.dynamicConsultation]);

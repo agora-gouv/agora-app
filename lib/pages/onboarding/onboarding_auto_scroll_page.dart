@@ -57,12 +57,10 @@ class _OnboardingAutoScrollPageState extends State<OnboardingAutoScrollPage> wit
   late Animation<Offset> offset;
 
   ValueNotifier<bool> shouldScroll = ValueNotifier<bool>(false);
-  late final ScrollController scrollController;
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
-    scrollController = ScrollController();
-
     scrollController.addListener(() async {
       if (widget.enableScrollInput) {
         if (animationController != null && animationController!.isAnimating) {

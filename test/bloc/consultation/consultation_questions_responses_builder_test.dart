@@ -1,5 +1,5 @@
-import 'package:agora/bloc/consultation/question/response/send/consultation_questions_responses_builder.dart';
-import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
+import 'package:agora/consultation/bloc/question/response/send/consultation_questions_responses_builder.dart';
+import 'package:agora/consultation/domain/questions/responses/consultation_question_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
