@@ -1,4 +1,4 @@
-import 'package:agora/domain/qag/qag_paginated_filter.dart';
+import 'package:agora/qag/domain/qag_paginated_filter.dart';
 
 extension QagPaginatedFilterExtension on QagPaginatedFilter {
   String toFilterString() {

@@ -1,6 +1,6 @@
-import 'package:agora/bloc/qag/ask_qag/ask_qag_status_bloc.dart';
-import 'package:agora/bloc/qag/ask_qag/ask_qag_status_event.dart';
-import 'package:agora/bloc/qag/ask_qag/ask_qag_status_state.dart';
+import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
+import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
+import 'package:agora/qag/ask/bloc/ask_qag_status_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

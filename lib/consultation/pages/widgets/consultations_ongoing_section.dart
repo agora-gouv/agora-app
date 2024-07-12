@@ -10,7 +10,7 @@ import 'package:agora/design/custom_view/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/qag/pages/qags_page.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsOngoingSection extends StatelessWidget {

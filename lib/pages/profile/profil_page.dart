@@ -21,7 +21,7 @@ import 'package:agora/pages/profile/delete_account_page.dart';
 import 'package:agora/pages/profile/notification_page.dart';
 import 'package:agora/pages/profile/participation_charter_page.dart';
 import 'package:agora/pages/profile/profil_information_page.dart';
-import 'package:agora/pages/qag/moderation/moderation_page.dart';
+import 'package:agora/qag/moderation/pages/moderation_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfilPage extends StatefulWidget {

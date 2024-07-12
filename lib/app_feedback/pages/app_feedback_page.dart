@@ -21,7 +21,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/domain/feedback/feedback.dart';
 import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/common/parser/string_parser.dart';
-import 'package:agora/pages/qag/qags_page.dart';
+import 'package:agora/qag/pages/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
