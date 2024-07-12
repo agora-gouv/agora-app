@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/welcome/domain/welcome_a_la_une.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';
 import 'package:flutter_test/flutter_test.dart';

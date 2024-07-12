@@ -1,6 +1,6 @@
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 
 class FakesConcertationRepository extends ConcertationRepository {
   @override

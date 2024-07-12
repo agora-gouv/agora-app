@@ -1,4 +1,4 @@
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:equatable/equatable.dart';
 
 class QagModerationListViewModel extends Equatable {

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
-import 'package:agora/domain/thematique/thematique.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/thematique/domain/thematique.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 

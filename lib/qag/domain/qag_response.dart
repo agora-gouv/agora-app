@@ -1,4 +1,4 @@
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class QagResponsePreview extends Equatable {

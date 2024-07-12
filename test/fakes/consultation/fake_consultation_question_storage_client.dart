@@ -1,5 +1,5 @@
-import 'package:agora/consultation/domain/questions/responses/consultation_question_response.dart';
-import 'package:agora/consultation/pages/question/consultation_question_storage_client.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
+import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
 
 class FakeConsultationQuestionStorageClient extends ConsultationQuestionStorageClient {
   String? consultationId;

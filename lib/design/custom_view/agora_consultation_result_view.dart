@@ -1,4 +1,4 @@
-import 'package:agora/consultation/bloc/summary/consultation_summary_view_model.dart';
+import 'package:agora/consultation/dynamic/pages/results/consultation_summary_view_model.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
 import 'package:agora/design/style/agora_spacings.dart';

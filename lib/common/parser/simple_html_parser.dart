@@ -1,5 +1,5 @@
 import 'package:agora/common/strings/string_utils.dart';
-import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:equatable/equatable.dart';
 
 class SimpleHtmlData extends Equatable {

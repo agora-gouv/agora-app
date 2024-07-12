@@ -2,7 +2,7 @@ import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
 import 'package:agora/qag/ask/bloc/search/qag_search_event.dart';
 import 'package:agora/qag/ask/bloc/search/qag_search_state.dart';
 import 'package:agora/qag/domain/qag.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

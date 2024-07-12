@@ -1,23 +1,23 @@
-import 'package:agora/domain/demographic/demographic_question_type.dart';
+import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 
-extension DemographicTypeExtension on DemographicType {
+extension DemographicTypeExtension on DemographicQuestionType {
   String toTypeString() {
     switch (this) {
-      case DemographicType.gender:
+      case DemographicQuestionType.gender:
         return "gender";
-      case DemographicType.yearOfBirth:
+      case DemographicQuestionType.yearOfBirth:
         return "yearOfBirth";
-      case DemographicType.department:
+      case DemographicQuestionType.department:
         return "department";
-      case DemographicType.cityType:
+      case DemographicQuestionType.cityType:
         return "cityType";
-      case DemographicType.jobCategory:
+      case DemographicQuestionType.jobCategory:
         return "jobCategory";
-      case DemographicType.voteFrequency:
+      case DemographicQuestionType.voteFrequency:
         return "voteFrequency";
-      case DemographicType.publicMeetingFrequency:
+      case DemographicQuestionType.publicMeetingFrequency:
         return "publicMeetingFrequency";
-      case DemographicType.consultationFrequency:
+      case DemographicQuestionType.consultationFrequency:
         return "consultationFrequency";
     }
   }

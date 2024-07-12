@@ -1,6 +1,6 @@
-import 'package:agora/bloc/participation_charter/participation_charter_bloc.dart';
-import 'package:agora/bloc/participation_charter/participation_charter_event.dart';
-import 'package:agora/bloc/participation_charter/participation_charter_state.dart';
+import 'package:agora/profil/participation_charter/bloc/participation_charter_bloc.dart';
+import 'package:agora/profil/participation_charter/bloc/participation_charter_event.dart';
+import 'package:agora/profil/participation_charter/bloc/participation_charter_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

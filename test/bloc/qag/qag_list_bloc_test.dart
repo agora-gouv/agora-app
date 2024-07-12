@@ -6,7 +6,7 @@ import 'package:agora/qag/domain/header_qag.dart';
 import 'package:agora/qag/domain/qag.dart';
 import 'package:agora/qag/domain/qag_support.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

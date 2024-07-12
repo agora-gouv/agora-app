@@ -1,5 +1,6 @@
-import 'package:agora/domain/notification/notification.dart';
-import 'package:agora/infrastructure/notification/notification_repository.dart';
+import 'package:agora/profil/notification/domain/notification.dart';
+import 'package:agora/profil/notification/domain/notification_information.dart';
+import 'package:agora/profil/notification/repository/notification_repository.dart';
 
 class FakeNotificationSuccessRepository extends NotificationRepository {
   @override

@@ -1,10 +1,10 @@
 import 'package:agora/qag/ask/bloc/create/qag_create_bloc.dart';
 import 'package:agora/qag/ask/bloc/create/qag_create_event.dart';
 import 'package:agora/qag/ask/bloc/create/qag_create_state.dart';
-import 'package:agora/bloc/thematique/thematique_bloc.dart';
-import 'package:agora/bloc/thematique/thematique_event.dart';
-import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_bloc.dart';
+import 'package:agora/thematique/bloc/thematique_event.dart';
+import 'package:agora/thematique/bloc/thematique_state.dart';
+import 'package:agora/thematique/bloc/thematique_with_id_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
@@ -19,22 +19,22 @@ import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
-import 'package:agora/design/custom_view/agora_error_text.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_html.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
+import 'package:agora/design/custom_view/error/agora_error_view.dart';
+import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
-import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
-import 'package:agora/design/custom_view/agora_text_field.dart';
+import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/loading_page.dart';
-import 'package:agora/pages/profile/participation_charter_page.dart';
+import 'package:agora/splash_page.dart';
+import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
 import 'package:agora/qag/ask/pages/ask_question_qag_search.dart';
 import 'package:agora/qag/ask/pages/qag_thematiques_drop_down.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
@@ -117,7 +117,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       Navigator.pushNamedAndRemoveUntil(
         context,
         QagsPage.routeName,
-        ModalRoute.withName(LoadingPage.routeName),
+        ModalRoute.withName(SplashPage.routeName),
       );
     } else {
       Navigator.pop(context);
@@ -268,7 +268,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       QagsPage.routeName,
-                      ModalRoute.withName(LoadingPage.routeName),
+                      ModalRoute.withName(SplashPage.routeName),
                     );
                     Navigator.pushNamed(
                       context,

@@ -1,8 +1,8 @@
-import 'package:agora/bloc/thematique/thematique_bloc.dart';
-import 'package:agora/bloc/thematique/thematique_event.dart';
-import 'package:agora/bloc/thematique/thematique_state.dart';
+import 'package:agora/thematique/bloc/thematique_bloc.dart';
+import 'package:agora/thematique/bloc/thematique_event.dart';
+import 'package:agora/thematique/bloc/thematique_state.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
-import 'package:agora/design/custom_view/agora_error_view.dart';
+import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/qag/widgets/qags_thematique_loading.dart';

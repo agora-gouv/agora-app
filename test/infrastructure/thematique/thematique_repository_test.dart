@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:agora/domain/thematique/thematique_with_id.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
-import 'package:agora/infrastructure/thematique/thematique_repository.dart';
+import 'package:agora/thematique/domain/thematique_with_id.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
+import 'package:agora/thematique/repository/thematique_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';

@@ -1,5 +1,5 @@
-import 'package:agora/consultation/domain/questions/consultation_question.dart';
-import 'package:agora/consultation/domain/questions/consultation_question_response_choice.dart';
+import 'package:agora/consultation/question/domain/consultation_question.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response_choice.dart';
 
 class ConsultationQuestionsBuilder {
   static List<ConsultationQuestion> buildQuestions({

@@ -1,6 +1,6 @@
 import 'package:agora/common/helper/app_version_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
-import 'package:agora/domain/feedback/device_informations.dart';
+import 'package:agora/profil/app_feedback/domain/device_informations.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 

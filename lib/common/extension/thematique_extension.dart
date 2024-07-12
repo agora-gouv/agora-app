@@ -1,5 +1,5 @@
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 
 extension ThematiqueExtension on Thematique {
   ThematiqueViewModel toThematiqueViewModel() {

@@ -1,5 +1,5 @@
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/welcome/domain/welcome_a_la_une.dart';
 
 abstract class WelcomeRepository {

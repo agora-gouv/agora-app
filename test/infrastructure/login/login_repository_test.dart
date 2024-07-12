@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/login/domain/login_error_type.dart';
 import 'package:agora/login/repository/login_repository.dart';
 import 'package:dio/dio.dart';
