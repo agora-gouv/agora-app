@@ -1,4 +1,4 @@
-import 'package:agora/consultation/domain/summary/consultation_summary_results.dart';
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class DynamicConsultationResultsState extends Equatable {}

@@ -5,7 +5,7 @@ import 'package:agora/qag/domain/header_qag.dart';
 import 'package:agora/qag/domain/qag.dart';
 import 'package:agora/qag/domain/qag_list_extension.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
-import 'package:agora/infrastructure/header_qag/header_qag_repository.dart';
+import 'package:agora/qag/repository/header_qag_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

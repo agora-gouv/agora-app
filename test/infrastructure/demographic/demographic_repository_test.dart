@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:agora/domain/demographic/demographic_information.dart';
-import 'package:agora/domain/demographic/demographic_question_type.dart';
-import 'package:agora/domain/demographic/demographic_response.dart';
-import 'package:agora/infrastructure/demographic/demographic_repository.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/profil/demographic/domain/demographic_information.dart';
+import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
+import 'package:agora/profil/demographic/domain/demographic_response.dart';
+import 'package:agora/profil/demographic/repository/demographic_repository.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -50,14 +50,14 @@ void main() {
         response,
         GetDemographicInformationSucceedResponse(
           demographicInformations: [
-            DemographicInformation(demographicType: DemographicType.gender, data: "M"),
-            DemographicInformation(demographicType: DemographicType.yearOfBirth, data: "1999"),
-            DemographicInformation(demographicType: DemographicType.department, data: null),
-            DemographicInformation(demographicType: DemographicType.cityType, data: "R"),
-            DemographicInformation(demographicType: DemographicType.jobCategory, data: null),
-            DemographicInformation(demographicType: DemographicType.voteFrequency, data: null),
-            DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: null),
-            DemographicInformation(demographicType: DemographicType.consultationFrequency, data: "P"),
+            DemographicInformation(demographicType: DemographicQuestionType.gender, data: "M"),
+            DemographicInformation(demographicType: DemographicQuestionType.yearOfBirth, data: "1999"),
+            DemographicInformation(demographicType: DemographicQuestionType.department, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.cityType, data: "R"),
+            DemographicInformation(demographicType: DemographicQuestionType.jobCategory, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: "P"),
           ],
         ),
       );
@@ -115,10 +115,10 @@ void main() {
       );
       final response = await repository.sendDemographicResponses(
         demographicResponses: [
-          DemographicResponse(demographicType: DemographicType.gender, response: "M"),
-          DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
-          DemographicResponse(demographicType: DemographicType.cityType, response: "R"),
-          DemographicResponse(demographicType: DemographicType.consultationFrequency, response: "P"),
+          DemographicResponse(demographicType: DemographicQuestionType.gender, response: "M"),
+          DemographicResponse(demographicType: DemographicQuestionType.yearOfBirth, response: "1999"),
+          DemographicResponse(demographicType: DemographicQuestionType.cityType, response: "R"),
+          DemographicResponse(demographicType: DemographicQuestionType.consultationFrequency, response: "P"),
         ],
       );
 
@@ -154,10 +154,10 @@ void main() {
       );
       final response = await repository.sendDemographicResponses(
         demographicResponses: [
-          DemographicResponse(demographicType: DemographicType.gender, response: "M"),
-          DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
-          DemographicResponse(demographicType: DemographicType.cityType, response: "R"),
-          DemographicResponse(demographicType: DemographicType.consultationFrequency, response: "P"),
+          DemographicResponse(demographicType: DemographicQuestionType.gender, response: "M"),
+          DemographicResponse(demographicType: DemographicQuestionType.yearOfBirth, response: "1999"),
+          DemographicResponse(demographicType: DemographicQuestionType.cityType, response: "R"),
+          DemographicResponse(demographicType: DemographicQuestionType.consultationFrequency, response: "P"),
         ],
       );
 

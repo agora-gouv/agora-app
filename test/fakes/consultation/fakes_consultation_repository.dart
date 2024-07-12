@@ -1,12 +1,12 @@
 import 'package:agora/consultation/domain/consultation.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
-import 'package:agora/consultation/domain/questions/consultation_question.dart';
-import 'package:agora/consultation/domain/questions/consultation_question_response_choice.dart';
-import 'package:agora/consultation/domain/questions/consultation_questions.dart';
-import 'package:agora/consultation/domain/questions/responses/consultation_question_response.dart';
-import 'package:agora/consultation/domain/summary/consultation_summary_results.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/consultation/question/domain/consultation_question.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response_choice.dart';
+import 'package:agora/consultation/question/domain/consultation_questions.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {

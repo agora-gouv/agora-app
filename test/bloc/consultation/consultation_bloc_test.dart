@@ -2,7 +2,7 @@ import 'package:agora/consultation/bloc/consultation_bloc.dart';
 import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/bloc/consultation_state.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';

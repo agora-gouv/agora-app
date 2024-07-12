@@ -1,5 +1,5 @@
-import 'package:agora/consultation/domain/questions/responses/consultation_question_response.dart';
-import 'package:agora/consultation/domain/summary/consultation_summary_results.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
 
 class ConsultationResponsesMapper {
   static List<ConsultationSummaryResults> toConsultationSummaryResults({

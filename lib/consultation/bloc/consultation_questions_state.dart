@@ -1,4 +1,4 @@
-import 'package:agora/consultation/bloc/question/consultation_questions_view_model.dart';
+import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ConsultationQuestionsState extends Equatable {

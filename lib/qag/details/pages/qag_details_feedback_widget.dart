@@ -8,7 +8,7 @@ import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
-import 'package:agora/design/custom_view/agora_error_text.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_colors.dart';

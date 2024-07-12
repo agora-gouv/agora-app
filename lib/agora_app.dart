@@ -9,8 +9,8 @@ import 'package:agora/common/observer/matomo_route_observer.dart';
 import 'package:agora/common/observer/navigation_observer.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
-import 'package:agora/pages/loading_page.dart';
-import 'package:agora/pages/onboarding/onboarding_page.dart';
+import 'package:agora/splash_page.dart';
+import 'package:agora/profil/onboarding/pages/onboarding_page.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
@@ -98,7 +98,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Agora",
-      initialRoute: LoadingPage.routeName,
+      initialRoute: SplashPage.routeName,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [

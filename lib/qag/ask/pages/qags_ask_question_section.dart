@@ -9,7 +9,7 @@ import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
-import 'package:agora/design/custom_view/agora_rich_text.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';

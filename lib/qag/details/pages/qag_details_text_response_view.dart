@@ -1,5 +1,5 @@
 import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
-import 'package:agora/design/custom_view/agora_html.dart';
+import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';

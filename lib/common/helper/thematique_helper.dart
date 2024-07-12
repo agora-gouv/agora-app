@@ -1,7 +1,7 @@
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
-import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
-import 'package:agora/design/custom_view/agora_thematique_card.dart';
-import 'package:agora/design/custom_view/agora_thematique_toggle_button.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_with_id_view_model.dart';
+import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
+import 'package:agora/design/custom_view/button/agora_thematique_toggle_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';

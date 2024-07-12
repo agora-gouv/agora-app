@@ -1,4 +1,4 @@
-import 'package:agora/infrastructure/participation_charter/participation_charter_repository.dart';
+import 'package:agora/profil/participation_charter/repository/participation_charter_repository.dart';
 
 class FakeParticipationCharterSuccessRepository extends ParticipationCharterRepository {
   @override

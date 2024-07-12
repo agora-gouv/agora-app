@@ -1,4 +1,4 @@
-import 'package:agora/infrastructure/header_qag/header_qag_repository.dart';
+import 'package:agora/qag/repository/header_qag_repository.dart';
 
 class HeaderQagStorageClientNoClosedStub extends HeaderQagStorageClient {
   @override

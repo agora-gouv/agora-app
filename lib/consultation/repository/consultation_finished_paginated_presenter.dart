@@ -1,4 +1,4 @@
-import 'package:agora/consultation/bloc/finished_paginated/consultation_finished_paginated_view_model.dart';
+import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/consultation/domain/consultation.dart';
 

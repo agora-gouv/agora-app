@@ -1,8 +1,8 @@
-import 'package:agora/bloc/demographic/get/demographic_information_bloc.dart';
-import 'package:agora/bloc/demographic/get/demographic_information_event.dart';
-import 'package:agora/bloc/demographic/get/demographic_information_state.dart';
-import 'package:agora/domain/demographic/demographic_information.dart';
-import 'package:agora/domain/demographic/demographic_question_type.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_bloc.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_event.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_state.dart';
+import 'package:agora/profil/demographic/domain/demographic_information.dart';
+import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -20,17 +20,17 @@ void main() {
         GetDemographicInformationInitialLoadingState(),
         GetDemographicInformationSuccessState(
           demographicInformationResponse: [
-            DemographicInformation(demographicType: DemographicType.gender, data: "M"),
-            DemographicInformation(demographicType: DemographicType.yearOfBirth, data: "1999"),
+            DemographicInformation(demographicType: DemographicQuestionType.gender, data: "M"),
+            DemographicInformation(demographicType: DemographicQuestionType.yearOfBirth, data: "1999"),
             DemographicInformation(
-              demographicType: DemographicType.department,
+              demographicType: DemographicQuestionType.department,
               data: "75",
             ),
-            DemographicInformation(demographicType: DemographicType.cityType, data: "R"),
-            DemographicInformation(demographicType: DemographicType.jobCategory, data: null),
-            DemographicInformation(demographicType: DemographicType.voteFrequency, data: "J"),
-            DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: "S"),
-            DemographicInformation(demographicType: DemographicType.consultationFrequency, data: "P"),
+            DemographicInformation(demographicType: DemographicQuestionType.cityType, data: "R"),
+            DemographicInformation(demographicType: DemographicQuestionType.jobCategory, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: "J"),
+            DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: "S"),
+            DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: "P"),
           ],
         ),
       ],
@@ -59,34 +59,34 @@ void main() {
       ),
       seed: () => GetDemographicInformationSuccessState(
         demographicInformationResponse: [
-          DemographicInformation(demographicType: DemographicType.gender, data: "M"),
-          DemographicInformation(demographicType: DemographicType.yearOfBirth, data: "1999"),
+          DemographicInformation(demographicType: DemographicQuestionType.gender, data: "M"),
+          DemographicInformation(demographicType: DemographicQuestionType.yearOfBirth, data: "1999"),
           DemographicInformation(
-            demographicType: DemographicType.department,
+            demographicType: DemographicQuestionType.department,
             data: "Paris (75)",
           ),
-          DemographicInformation(demographicType: DemographicType.cityType, data: "R"),
-          DemographicInformation(demographicType: DemographicType.jobCategory, data: "C"),
-          DemographicInformation(demographicType: DemographicType.voteFrequency, data: "J"),
-          DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: "S"),
-          DemographicInformation(demographicType: DemographicType.consultationFrequency, data: "P"),
+          DemographicInformation(demographicType: DemographicQuestionType.cityType, data: "R"),
+          DemographicInformation(demographicType: DemographicQuestionType.jobCategory, data: "C"),
+          DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: "J"),
+          DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: "S"),
+          DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: "P"),
         ],
       ),
       act: (bloc) => bloc.add(RemoveDemographicInformationEvent()),
       expect: () => [
         GetDemographicInformationSuccessState(
           demographicInformationResponse: [
-            DemographicInformation(demographicType: DemographicType.gender, data: null),
-            DemographicInformation(demographicType: DemographicType.yearOfBirth, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.gender, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.yearOfBirth, data: null),
             DemographicInformation(
-              demographicType: DemographicType.department,
+              demographicType: DemographicQuestionType.department,
               data: null,
             ),
-            DemographicInformation(demographicType: DemographicType.cityType, data: null),
-            DemographicInformation(demographicType: DemographicType.jobCategory, data: null),
-            DemographicInformation(demographicType: DemographicType.voteFrequency, data: null),
-            DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: null),
-            DemographicInformation(demographicType: DemographicType.consultationFrequency, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.cityType, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.jobCategory, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: null),
+            DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: null),
           ],
         ),
       ],

@@ -13,7 +13,7 @@ import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 

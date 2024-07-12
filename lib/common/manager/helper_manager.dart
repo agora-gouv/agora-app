@@ -8,7 +8,7 @@ import 'package:agora/common/helper/permission_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/helper/role_helper.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';

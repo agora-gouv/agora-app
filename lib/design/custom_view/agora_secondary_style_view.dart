@@ -1,5 +1,5 @@
 import 'package:agora/design/custom_view/agora_little_separator.dart';
-import 'package:agora/design/custom_view/agora_single_scroll_view.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';

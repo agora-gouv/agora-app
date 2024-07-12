@@ -1,5 +1,5 @@
-import 'package:agora/domain/thematique/thematique_with_id.dart';
-import 'package:agora/infrastructure/thematique/thematique_repository.dart';
+import 'package:agora/thematique/domain/thematique_with_id.dart';
+import 'package:agora/thematique/repository/thematique_repository.dart';
 
 class FakeThematiqueSuccessRepository extends ThematiqueRepository {
   @override

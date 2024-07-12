@@ -6,7 +6,7 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/profile/participation_charter_page.dart';
+import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

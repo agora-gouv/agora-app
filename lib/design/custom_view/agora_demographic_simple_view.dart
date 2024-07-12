@@ -1,5 +1,5 @@
 import 'package:agora/common/helper/semantics_helper.dart';
-import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';

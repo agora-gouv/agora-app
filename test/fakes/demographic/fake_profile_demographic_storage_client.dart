@@ -1,6 +1,6 @@
-import 'package:agora/infrastructure/profile/profile_demographic_storage_client.dart';
+import 'package:agora/profil/demographic/repository/demographic_storage_client.dart';
 
-class FakeProfileDemographicStorageClient extends ProfileDemographicStorageClient {
+class FakeProfileDemographicStorageClient extends DemographicStorageClient {
   bool? _isFirstTimeDisplay;
 
   @override

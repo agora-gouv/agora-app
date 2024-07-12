@@ -6,7 +6,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/design/custom_view/agora_like_animation_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/agora_question_card.dart';
+import 'package:agora/design/custom_view/card/agora_question_card.dart';
 import 'package:agora/qag/domain/qag_support.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:equatable/equatable.dart';

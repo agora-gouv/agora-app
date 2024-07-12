@@ -1,6 +1,6 @@
-import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
-import 'package:agora/design/custom_view/agora_rounded_card.dart';
-import 'package:agora/design/custom_view/agora_thematique_card.dart';
+import 'package:agora/thematique/bloc/thematique_with_id_view_model.dart';
+import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';

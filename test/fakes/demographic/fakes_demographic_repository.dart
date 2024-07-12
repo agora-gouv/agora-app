@@ -1,21 +1,21 @@
-import 'package:agora/domain/demographic/demographic_information.dart';
-import 'package:agora/domain/demographic/demographic_question_type.dart';
-import 'package:agora/domain/demographic/demographic_response.dart';
-import 'package:agora/infrastructure/demographic/demographic_repository.dart';
+import 'package:agora/profil/demographic/domain/demographic_information.dart';
+import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
+import 'package:agora/profil/demographic/domain/demographic_response.dart';
+import 'package:agora/profil/demographic/repository/demographic_repository.dart';
 
 class FakeDemographicSuccessRepository extends DemographicRepository {
   @override
   Future<GetDemographicInformationRepositoryResponse> getDemographicResponses() async {
     return GetDemographicInformationSucceedResponse(
       demographicInformations: [
-        DemographicInformation(demographicType: DemographicType.gender, data: "M"),
-        DemographicInformation(demographicType: DemographicType.yearOfBirth, data: "1999"),
-        DemographicInformation(demographicType: DemographicType.department, data: "75"),
-        DemographicInformation(demographicType: DemographicType.cityType, data: "R"),
-        DemographicInformation(demographicType: DemographicType.jobCategory, data: null),
-        DemographicInformation(demographicType: DemographicType.voteFrequency, data: "J"),
-        DemographicInformation(demographicType: DemographicType.publicMeetingFrequency, data: "S"),
-        DemographicInformation(demographicType: DemographicType.consultationFrequency, data: "P"),
+        DemographicInformation(demographicType: DemographicQuestionType.gender, data: "M"),
+        DemographicInformation(demographicType: DemographicQuestionType.yearOfBirth, data: "1999"),
+        DemographicInformation(demographicType: DemographicQuestionType.department, data: "75"),
+        DemographicInformation(demographicType: DemographicQuestionType.cityType, data: "R"),
+        DemographicInformation(demographicType: DemographicQuestionType.jobCategory, data: null),
+        DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: "J"),
+        DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: "S"),
+        DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: "P"),
       ],
     );
   }

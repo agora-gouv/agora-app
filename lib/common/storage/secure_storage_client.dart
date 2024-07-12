@@ -1,4 +1,4 @@
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

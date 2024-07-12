@@ -1,4 +1,4 @@
-import 'package:agora/infrastructure/notification/permission/notification_first_request_permission_storage_client.dart';
+import 'package:agora/profil/notification/repository/notification_first_request_permission_storage_client.dart';
 
 class FakeNotificationFirstRequestPermissionStorageClient extends NotificationFirstRequestPermissionStorageClient {
   late bool isFirstConnectionStorage;
