@@ -344,7 +344,8 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         .add(DeleteDemographicResponseStockEvent(demographicType: demographicType));
   }
 
-  DemographicResponse? _getOldResponse(DemographicQuestionType demographicType, List<DemographicResponse> oldResponses) {
+  DemographicResponse? _getOldResponse(
+      DemographicQuestionType demographicType, List<DemographicResponse> oldResponses) {
     try {
       return oldResponses.firstWhere((oldResponse) => oldResponse.demographicType == demographicType);
     } catch (e) {

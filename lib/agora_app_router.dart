@@ -43,8 +43,7 @@ class AgoraAppRouter {
             child: OnboardingPage(),
           ),
       // Consultation
-      ConsultationsPage.routeName: (context) =>
-          MainBottomNavigationBar(startPage: NavigationPages.consultation),
+      ConsultationsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPages.consultation),
       // Question au gouvernement
       QagsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPages.qag),
       // Reponse
