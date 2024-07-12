@@ -440,7 +440,8 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: widget.section.previewSections.map((section) => DynamicConsultationSectionWidget(section)).toList(),
+                children:
+                    widget.section.previewSections.map((section) => DynamicConsultationSectionWidget(section)).toList(),
               ),
               Positioned(
                 bottom: 0,
