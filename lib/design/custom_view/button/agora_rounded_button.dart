@@ -46,6 +46,7 @@ class AgoraRoundedButton extends StatelessWidget {
           padding: _buildPadding(),
           cardColor: _buildCardColor(),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -55,7 +56,7 @@ class AgoraRoundedButton extends StatelessWidget {
               ],
               Flexible(
                 child: Padding(
-                  padding: textPadding ?? EdgeInsets.all(0),
+                  padding: textPadding ?? EdgeInsets.zero,
                   child: Text(
                     label,
                     semanticsLabel: semanticLabel,
