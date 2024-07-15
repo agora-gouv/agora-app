@@ -82,7 +82,7 @@ class AgoraScaffold extends StatelessWidget {
               )
             : null,
       ),
-      body: child,
+      body: SafeArea(child: child),
       floatingActionButton: floatingActionButton,
       floatingActionButtonLocation: floatingActionButtonLocation,
     );

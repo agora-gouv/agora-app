@@ -139,138 +139,149 @@ class _QagsSectionState extends State<QagsSection> {
     return Padding(
       padding: const EdgeInsets.only(left: AgoraSpacings.x0_5, top: AgoraSpacings.x0_75, bottom: AgoraSpacings.base),
       child: Scrollbar(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AnimSearchBar(
-                height: 40,
-                width: MediaQuery.of(context).size.width * 0.95,
-                textController: textController,
-                boxShadow: false,
-                textFieldColor: AgoraColors.doctor,
-                color: AgoraColors.transparent,
-                onClose: () {
-                  setState(() {
-                    textController.clear();
-                    isActiveSearchBar = false;
-                    currentSelected = QagTab.trending;
-                  });
-                  widget.onSearchBarOpen(isActiveSearchBar);
-                  context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
-                },
-                helpText: QagStrings.searchQagHint,
-                textInputAction: TextInputAction.search,
-                onClearText: () {},
-                onSubmitted: (String e) {},
-                autoFocus: true,
-                searchBarOpen: (bool isSearchOpen) => {
-                  setState(() {
-                    isActiveSearchBar = isSearchOpen;
-                    currentSelected = isSearchOpen ? QagTab.search : QagTab.trending;
-                  }),
-                  widget.onSearchBarOpen(isActiveSearchBar),
-                },
-              ),
-              Visibility(
-                visible: !isActiveSearchBar,
-                child: Semantics(
-                  label: 'Liste des catégories, 4 éléments',
+        child: LayoutBuilder(
+          builder: (context, constraint){
+            return SingleChildScrollView(
+              padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+              scrollDirection: Axis.horizontal,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minWidth: constraint.maxWidth),
+                child: IntrinsicWidth(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Semantics(
-                        header: true,
-                        button: true,
-                        selected: currentSelected == QagTab.trending,
-                        tooltip: 'Élément 1 sur 4',
-                        child: _buildTabButton(
-                          label: QagStrings.trending,
-                          isSelected: currentSelected == QagTab.trending,
-                          onTap: () {
-                            TrackerHelper.trackClick(
-                              clickName: AnalyticsEventNames.qagTrending,
-                              widgetName: AnalyticsScreenNames.qagsPage,
-                            );
-                            if (currentSelected != QagTab.trending) {
-                              Future.delayed(Duration(seconds: 1))
-                                  .then((value) => SemanticsHelper.announceNewQagsInList());
-                              setState(() => currentSelected = QagTab.trending);
-                            }
-                          },
-                        ),
+                      AnimSearchBar(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        textController: textController,
+                        boxShadow: false,
+                        textFieldColor: AgoraColors.doctor,
+                        color: AgoraColors.transparent,
+                        onClose: () {
+                          setState(() {
+                            textController.clear();
+                            isActiveSearchBar = false;
+                            currentSelected = QagTab.trending;
+                          });
+                          widget.onSearchBarOpen(isActiveSearchBar);
+                          context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
+                        },
+                        helpText: QagStrings.searchQagHint,
+                        textInputAction: TextInputAction.search,
+                        onClearText: () {},
+                        onSubmitted: (String e) {},
+                        autoFocus: true,
+                        searchBarOpen: (bool isSearchOpen) => {
+                          setState(() {
+                            isActiveSearchBar = isSearchOpen;
+                            currentSelected = isSearchOpen ? QagTab.search : QagTab.trending;
+                          }),
+                          widget.onSearchBarOpen(isActiveSearchBar),
+                        },
                       ),
-                      Semantics(
-                        header: true,
-                        button: true,
-                        selected: currentSelected == QagTab.popular,
-                        tooltip: 'Élément 2 sur 4',
-                        child: _buildTabButton(
-                          label: QagStrings.popular,
-                          isSelected: currentSelected == QagTab.popular,
-                          onTap: () {
-                            TrackerHelper.trackClick(
-                              clickName: AnalyticsEventNames.qagPopular,
-                              widgetName: AnalyticsScreenNames.qagsPage,
-                            );
-                            if (currentSelected != QagTab.popular) {
-                              Future.delayed(Duration(seconds: 1))
-                                  .then((value) => SemanticsHelper.announceNewQagsInList());
-                              setState(() => currentSelected = QagTab.popular);
-                            }
-                          },
-                        ),
-                      ),
-                      Semantics(
-                        header: true,
-                        button: true,
-                        selected: currentSelected == QagTab.latest,
-                        tooltip: 'Élément 3 sur 4',
-                        child: _buildTabButton(
-                          label: QagStrings.latest,
-                          isSelected: currentSelected == QagTab.latest,
-                          onTap: () {
-                            TrackerHelper.trackClick(
-                              clickName: AnalyticsEventNames.qagLatest,
-                              widgetName: AnalyticsScreenNames.qagsPage,
-                            );
-                            if (currentSelected != QagTab.latest) {
-                              Future.delayed(Duration(seconds: 1))
-                                  .then((value) => SemanticsHelper.announceNewQagsInList());
-                              setState(() => currentSelected = QagTab.latest);
-                            }
-                          },
-                        ),
-                      ),
-                      Semantics(
-                        header: true,
-                        button: true,
-                        selected: currentSelected == QagTab.supporting,
-                        tooltip: 'Élément 4 sur 4',
-                        child: _buildTabButton(
-                          label: QagStrings.supporting,
-                          isSelected: currentSelected == QagTab.supporting,
-                          onTap: () {
-                            TrackerHelper.trackClick(
-                              clickName: AnalyticsEventNames.qagSupporting,
-                              widgetName: AnalyticsScreenNames.qagsPage,
-                            );
-                            if (currentSelected != QagTab.supporting) {
-                              Future.delayed(Duration(seconds: 1))
-                                  .then((value) => SemanticsHelper.announceNewQagsInList());
-                              setState(() => currentSelected = QagTab.supporting);
-                            }
-                          },
+                      Expanded(
+                        child: Visibility(
+                          visible: !isActiveSearchBar,
+                          child: Semantics(
+                            label: 'Liste des catégories, 4 éléments',
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Semantics(
+                                  header: true,
+                                  button: true,
+                                  selected: currentSelected == QagTab.trending,
+                                  tooltip: 'Élément 1 sur 4',
+                                  child: _buildTabButton(
+                                    label: QagStrings.trending,
+                                    isSelected: currentSelected == QagTab.trending,
+                                    onTap: () {
+                                      TrackerHelper.trackClick(
+                                        clickName: AnalyticsEventNames.qagTrending,
+                                        widgetName: AnalyticsScreenNames.qagsPage,
+                                      );
+                                      if (currentSelected != QagTab.trending) {
+                                        Future.delayed(Duration(seconds: 1))
+                                            .then((value) => SemanticsHelper.announceNewQagsInList());
+                                        setState(() => currentSelected = QagTab.trending);
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Semantics(
+                                  header: true,
+                                  button: true,
+                                  selected: currentSelected == QagTab.popular,
+                                  tooltip: 'Élément 2 sur 4',
+                                  child: _buildTabButton(
+                                    label: QagStrings.popular,
+                                    isSelected: currentSelected == QagTab.popular,
+                                    onTap: () {
+                                      TrackerHelper.trackClick(
+                                        clickName: AnalyticsEventNames.qagPopular,
+                                        widgetName: AnalyticsScreenNames.qagsPage,
+                                      );
+                                      if (currentSelected != QagTab.popular) {
+                                        Future.delayed(Duration(seconds: 1))
+                                            .then((value) => SemanticsHelper.announceNewQagsInList());
+                                        setState(() => currentSelected = QagTab.popular);
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Semantics(
+                                  header: true,
+                                  button: true,
+                                  selected: currentSelected == QagTab.latest,
+                                  tooltip: 'Élément 3 sur 4',
+                                  child: _buildTabButton(
+                                    label: QagStrings.latest,
+                                    isSelected: currentSelected == QagTab.latest,
+                                    onTap: () {
+                                      TrackerHelper.trackClick(
+                                        clickName: AnalyticsEventNames.qagLatest,
+                                        widgetName: AnalyticsScreenNames.qagsPage,
+                                      );
+                                      if (currentSelected != QagTab.latest) {
+                                        Future.delayed(Duration(seconds: 1))
+                                            .then((value) => SemanticsHelper.announceNewQagsInList());
+                                        setState(() => currentSelected = QagTab.latest);
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Semantics(
+                                  header: true,
+                                  button: true,
+                                  selected: currentSelected == QagTab.supporting,
+                                  tooltip: 'Élément 4 sur 4',
+                                  child: _buildTabButton(
+                                    label: QagStrings.supporting,
+                                    isSelected: currentSelected == QagTab.supporting,
+                                    onTap: () {
+                                      TrackerHelper.trackClick(
+                                        clickName: AnalyticsEventNames.qagSupporting,
+                                        widgetName: AnalyticsScreenNames.qagsPage,
+                                      );
+                                      if (currentSelected != QagTab.supporting) {
+                                        Future.delayed(Duration(seconds: 1))
+                                            .then((value) => SemanticsHelper.announceNewQagsInList());
+                                        setState(() => currentSelected = QagTab.supporting);
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -24,7 +24,7 @@ Future<T?> showAgoraDialog<T>({
           ),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: columnChildren,
             ),
           ),
