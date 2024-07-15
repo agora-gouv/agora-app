@@ -140,7 +140,7 @@ class _QagsSectionState extends State<QagsSection> {
       padding: const EdgeInsets.only(left: AgoraSpacings.x0_5, top: AgoraSpacings.x0_75, bottom: AgoraSpacings.base),
       child: Scrollbar(
         child: LayoutBuilder(
-          builder: (context, constraint){
+          builder: (context, constraint) {
             return SingleChildScrollView(
               padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
               scrollDirection: Axis.horizontal,
