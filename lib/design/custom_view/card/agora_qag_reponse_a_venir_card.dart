@@ -87,6 +87,7 @@ class _CardContent extends StatelessWidget {
                 supportCount: supportCount,
                 style: AgoraLikeStyle.police12,
                 shouldHaveHorizontalPadding: false,
+                isQuestionGagnante: true,
               ),
             ],
           ),

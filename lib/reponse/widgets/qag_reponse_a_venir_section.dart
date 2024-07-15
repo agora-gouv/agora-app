@@ -199,7 +199,7 @@ class _ReponseAVenirCard extends StatelessWidget {
             Navigator.pushNamed(
               context,
               QagDetailsPage.routeName,
-              arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null),
+              arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null, isQuestionGagnante: true),
             );
           },
         ),
