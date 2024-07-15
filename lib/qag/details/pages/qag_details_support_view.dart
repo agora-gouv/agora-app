@@ -18,6 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class QagDetailsSupportView extends StatelessWidget {
   final String qagId;
   final bool canSupport;
+  final bool isQuestionGagnante;
   final QagDetailsSupportViewModel support;
   final Function(int supportCount, bool isSupported) onSupportChange;
 
@@ -25,6 +26,7 @@ class QagDetailsSupportView extends StatelessWidget {
     super.key,
     required this.qagId,
     required this.canSupport,
+    this.isQuestionGagnante = false,
     required this.support,
     required this.onSupportChange,
   });
@@ -69,6 +71,7 @@ class QagDetailsSupportView extends StatelessWidget {
                           shouldHaveVerticalPadding: true,
                           likeViewKey: _likeViewKey,
                           shouldVocaliseSupport: canSupport,
+                          isQuestionGagnante: isQuestionGagnante,
                         ),
                       ),
                     ),

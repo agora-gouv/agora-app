@@ -37,12 +37,14 @@ enum QagReload { qagsPage, qagsPaginatedPage }
 
 class QagDetailsArguments {
   final String qagId;
+  final bool isQuestionGagnante;
   final String? notificationTitle;
   final String? notificationDescription;
   final QagReload? reload;
 
   QagDetailsArguments({
     required this.qagId,
+    this.isQuestionGagnante = false,
     this.notificationTitle,
     this.notificationDescription,
     required this.reload,
@@ -206,6 +208,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                             isSupported: support.isSupported,
                             supportCount: support.count,
                             shouldVocaliseSupport: false,
+                            isQuestionGagnante: widget.arguments.isQuestionGagnante,
                           ),
                         ),
                       ],
@@ -229,6 +232,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                         QagDetailsSupportView(
                           qagId: viewModel.id,
                           canSupport: viewModel.canSupport,
+                          isQuestionGagnante: widget.arguments.isQuestionGagnante,
                           support: support,
                           onSupportChange: (supportCount, isSupported) {
                             backResult = QagDetailsBackResult(

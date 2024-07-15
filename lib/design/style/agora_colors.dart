@@ -42,6 +42,7 @@ class AgoraColors {
   static const Color brun = Color(0xFF716043);
   static const Color lightBrun = Color(0xFFFEECC2);
   static const Color blur = Color(0x123D3C49);
+  static const Color gold = Color(0xFFFFD700);
 
   // couleur de pastille
   static const Color mintZest = Color(0xFFCFFCD9);
