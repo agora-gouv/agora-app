@@ -10,7 +10,9 @@ class DemographicStrings {
   static const String informationLongDescription4 = "Promis, on ne vous demandera ces infos qu'une seule fois\u{00A0}!";
   static const String readMore = "Lire la suite";
   static const String begin = "Commencer";
+  static const String beginSemantic = "Commencer à répondre aux questions supplémentaires";
   static const String toNoAnswer = "Ne pas répondre";
+  static const String toNoAnswerSemantic = "Ne pas répondre aux questions supplémentaires";
   static const String profileStep = "Votre profil %1s/%2s";
   static const String question1 = "Vous êtes…";
   static const String question2 = "Quelle est votre année de naissance\u{00A0}?";
@@ -83,6 +85,6 @@ class DemographicStrings {
 
   static const String unknown = "Je ne sais pas";
   static const String notSpecified = "Non renseigné";
-  static const String moreInformations = "Pour en savoir plus, lire la ";
-  static const String moreInformationsLink = "politique de confidentialité.";
+  static const String moreInformations = "Pour en savoir plus, ";
+  static const String moreInformationsLink = "lire la politique de confidentialité.";
 }

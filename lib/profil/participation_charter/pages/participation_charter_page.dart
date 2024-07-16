@@ -10,7 +10,7 @@ import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
+import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_colors.dart';

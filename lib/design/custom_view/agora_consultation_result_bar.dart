@@ -56,7 +56,7 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
               cardColor: AgoraColors.white,
               borderColor: widget.isUserResponse ? AgoraColors.primaryBlue : AgoraColors.border,
               borderWidth: widget.isUserResponse ? 2 : 1,
-              padding: null,
+              padding: EdgeInsets.zero,
               child: SizedBox(
                 height: barHeight,
                 width: totalWidth,
@@ -64,7 +64,7 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
             ),
             AgoraRoundedCard(
               cardColor: AgoraColors.primaryBlueOpacity10,
-              padding: null,
+              padding: EdgeInsets.zero,
               child: SizedBox(
                 height: barHeight,
                 width: totalWidth * participantsPercentage,

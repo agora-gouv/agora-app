@@ -151,7 +151,7 @@ class _QagsSectionState extends State<QagsSection> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       AnimSearchBar(
-                        height: 40,
+                        height: 48,
                         width: MediaQuery.of(context).size.width * 0.95,
                         textController: textController,
                         boxShadow: false,

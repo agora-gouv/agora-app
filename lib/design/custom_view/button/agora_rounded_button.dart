@@ -41,7 +41,7 @@ class AgoraRoundedButton extends StatelessWidget {
         button: true,
         child: AgoraRoundedCard(
           focusColor: _buildFocusColor(),
-          borderColor: _buildBorderColor(),
+          borderColor: _buildBorderColor() ?? AgoraColors.transparent,
           cornerRadius: AgoraCorners.rounded50,
           padding: _buildPadding(),
           cardColor: _buildCardColor(),

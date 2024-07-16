@@ -181,7 +181,7 @@ class _EtrangerCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: AgoraSpacings.base,
+        vertical: AgoraSpacings.x0_5,
         horizontal: AgoraSpacings.x0_375,
       ),
       child: AgoraCheckbox(

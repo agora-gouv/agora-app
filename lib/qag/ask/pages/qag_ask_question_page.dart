@@ -25,7 +25,7 @@ import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
+import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
@@ -255,13 +255,13 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 buttonStyle: AgoraButtonStyle.lightGrey,
                 onPressed: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
               ),
-              SizedBox(height: AgoraSpacings.x1_5),
+              SizedBox(height: AgoraSpacings.base),
               AgoraCheckbox(
                 value: isCheck,
                 label: QagStrings.askQuestionCheckboxLabel,
                 onChanged: (value) => setState(() => isCheck = value),
               ),
-              SizedBox(height: AgoraSpacings.x2),
+              SizedBox(height: AgoraSpacings.x1_5),
               BlocConsumer<CreateQagBloc, CreateQagState>(
                 listener: (context, createQagState) {
                   if (createQagState is CreateQagSuccessState) {
@@ -461,7 +461,7 @@ class _AstuceElement extends StatelessWidget {
                         TextSpan(text: QagStrings.astuceQuestionDescription),
                         TextSpan(
                           text: QagStrings.astuceQuestionDescriptionLink,
-                          style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
+                          style: AgoraTextStyles.light14UnderlineBlue,
                         ),
                       ],
                     ),

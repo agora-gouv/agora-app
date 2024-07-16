@@ -7,12 +7,12 @@ import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/text/agora_link_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/pages/demographic_profil_page.dart';
 import 'package:agora/profil/demographic/pages/demographic_question_page.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -184,21 +184,23 @@ class _Description5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      textScaler: MediaQuery.textScalerOf(context),
-      text: TextSpan(
-        style: AgoraTextStyles.regular14,
-        children: [
-          TextSpan(text: ProfileStrings.demographicInformationDescription5),
-          WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-          TextSpan(
-            text: ProfileStrings.demographicInformationDescription6,
-            style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        Text(ProfileStrings.demographicInformationDescription5, style: AgoraTextStyles.regular14),
+        SizedBox(height: AgoraSpacings.x0_75),
+        AgoraLinkText(
+          highlightColor: AgoraColors.neutral300,
+          splashColor: AgoraColors.neutral300,
+          onTap: () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+          textItems: [
+            TextSpan(text: ProfileStrings.demographicInformationDescription6, style: AgoraTextStyles.regular14),
+            TextSpan(
+              text: ProfileStrings.demographicInformationDescription7,
+              style: AgoraTextStyles.light14UnderlineBlue,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

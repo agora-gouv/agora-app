@@ -85,6 +85,9 @@ class QagsSupportableCard extends StatelessWidget {
             if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
               likeAnimationView.animate();
             }
+            if (_toLikeViewModel(previousState).isSupported && !_toLikeViewModel(currentState).isSupported) {
+              likeAnimationView.reverseAnimate();
+            }
             return false;
           },
           listener: (context, state) => {},

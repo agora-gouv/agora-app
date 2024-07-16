@@ -21,7 +21,7 @@ class AgoraThematiqueLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
       cardColor: AgoraColors.transparent,
-      padding: null,
+      padding: EdgeInsets.zero,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
