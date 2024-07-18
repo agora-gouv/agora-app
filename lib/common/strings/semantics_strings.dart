@@ -5,15 +5,17 @@ class SemanticsStrings {
   static const String onboardingLastStepButton = "Accéder à l'application";
 
   static const String shareConsultation = "Partager la consultation";
+  static const String consultationNotificationInformation = "Vous serez tenue au courant des prochaines étapes";
+
   static const String moreInformation = "En savoir plus";
   static const String moreInformationAboutGovernmentResponse =
       "En savoir plus sur le fonctionnement des réponses du Gouvernement aux questions citoyennes";
-  static const String supportNumber = "Nombre de soutien\u{00A0}: %s";
+  static const String supportNumber = "Nombre de soutien: %s";
   static const String nextPage = "Page suivante";
   static const String previousPage = "Page précédente";
   static const String copyMail = "Copier le mail";
   static const String copyCode = "Copier le code";
-  static const String close = "Fermer cette fenêttre d'information";
+  static const String close = "Fermer cette fenêtre d'information";
 
   static const String support = "La question est soutenue de votre part";
   static const String notSupport = "La question n'est pas soutenue de votre part";
@@ -21,8 +23,8 @@ class SemanticsStrings {
   static const String ongoingConsultationEmpty = "Vous avez répondu à toutes les consultations en cours";
   static const String informationTitle = "Nous avons quelques questions supplémentaires pour vous";
 
-  static const String select = "séléctionné";
-  static const String noSelect = "non séléctionné";
+  static const String select = "sélectionné";
+  static const String noSelect = "non sélectionné";
   static const String button = "bouton";
 
   static const String maxChoiceAttempt = "Vous avez atteint le maximum de choix possibles.";

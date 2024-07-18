@@ -45,6 +45,7 @@ class ConsultationStrings {
       "Vous devez répondre à cette question pour accéder à la suite de la consultation, adaptée pour vous.";
   static const String otherChoiceHint = "Précisez votre réponse";
   static const String severalResponsePossible = "Plusieurs réponses possibles.";
+  static const String suiviConsultation = "Suivi de la consultation";
 
   static const String inProgress = "En cours";
   static const String coming = "A venir";
