@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_bloc.dart';
 import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_events.dart';
 import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_state.dart';

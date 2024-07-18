@@ -1236,6 +1236,7 @@ class _NotificationSectionWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 ConsultationStrings.notificationInformation,
+                semanticsLabel: SemanticsStrings.consultationNotificationInformation,
                 style: AgoraTextStyles.light14,
               ),
             ),
@@ -1272,15 +1273,14 @@ class _HistorySectionWidget extends StatelessWidget {
               Semantics(
                 header: true,
                 child: Text(
-                  'Suivi de la consultation',
-                  style: AgoraTextStyles.medium18.copyWith(
-                    color: AgoraColors.primaryBlue,
-                  ),
+                  ConsultationStrings.suiviConsultation,
+                  style: AgoraTextStyles.medium18.copyWith(color: AgoraColors.primaryBlue),
                 ),
               ),
               const SizedBox(height: AgoraSpacings.x2),
               ...section.steps.mapIndexed(
-                (i, e) => _HistoryElementWidget(e, i == section.steps.length - 1, section.consultationId),
+                (index, element) =>
+                    _HistoryElementWidget(element, index == section.steps.length - 1, section.consultationId),
               ),
             ],
           ),
@@ -1300,28 +1300,31 @@ class _HistoryElementWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      container: true,
+      link: step.status != ConsultationHistoryStepStatus.incoming,
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            if (step.type == ConsultationHistoryStepType.results) {
-              Navigator.pushNamed(
-                context,
-                DynamicConsultationResultsPage.routeName,
-                arguments: consultationId,
-              );
-            } else {
-              Navigator.pushNamed(
-                context,
-                DynamicConsultationUpdatePage.routeName,
-                arguments: DynamicConsultationUpdateArguments(
-                  updateId: step.updateId!,
-                  consultationId: consultationId,
-                ),
-              );
-            }
-          },
+          borderRadius: BorderRadius.circular(16),
+          onTap: step.status == ConsultationHistoryStepStatus.incoming
+              ? null
+              : () {
+                  if (step.type == ConsultationHistoryStepType.results) {
+                    Navigator.pushNamed(
+                      context,
+                      DynamicConsultationResultsPage.routeName,
+                      arguments: consultationId,
+                    );
+                  } else {
+                    Navigator.pushNamed(
+                      context,
+                      DynamicConsultationUpdatePage.routeName,
+                      arguments: DynamicConsultationUpdateArguments(
+                        updateId: step.updateId!,
+                        consultationId: consultationId,
+                      ),
+                    );
+                  }
+                },
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
