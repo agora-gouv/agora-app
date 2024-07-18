@@ -1,7 +1,9 @@
 class SemanticsStrings {
-  static const String step = "Étape %s sur 3";
   static const String stepV2 = "Étape %1s sur %2s";
   static const String profileStep = "Votre profil %1s sur %2s";
+  static const String onboardingBegin = "Commencer le tutoriel";
+  static const String onboardingLastStepButton = "Accéder à l'application";
+
   static const String shareConsultation = "Partager la consultation";
   static const String moreInformation = "En savoir plus";
   static const String moreInformationAboutGovernmentResponse =

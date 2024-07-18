@@ -67,7 +67,7 @@ class OnboardingStepView extends StatelessWidget {
             ],
           ),
           SizedBox(height: AgoraSpacings.x2),
-          AgoraStepCircle(currentStep: _buildStep(), style: AgoraStepCircleStyle.single),
+          ExcludeSemantics(child: AgoraStepCircle(currentStep: _buildStep(), style: AgoraStepCircleStyle.single)),
           SizedBox(height: AgoraSpacings.x0_5),
           Spacer(),
           SizedBox(height: AgoraSpacings.x3),
