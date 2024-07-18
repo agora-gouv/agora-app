@@ -19,6 +19,10 @@ class SemanticsHelper {
     return "$currentStep sur $totalStep";
   }
 
+  static void announceOnboardingAnimationStatus(bool isPlaying) {
+    SemanticsService.announce(isPlaying ? "L'animation est arrêtée" : "L'animation est lancée", TextDirection.ltr);
+  }
+
   static void announceNewQagsInList() {
     SemanticsService.announce('La liste des questions au gouvernement a changé', TextDirection.ltr);
   }
@@ -33,7 +37,7 @@ class SemanticsHelper {
 
   static void announceCollapsing(bool isCollapsed) {
     if (isCollapsed) {
-      SemanticsService.announce('Catégorie depliée', TextDirection.ltr);
+      SemanticsService.announce('Catégorie dépliée', TextDirection.ltr);
     } else {
       SemanticsService.announce('Catégorie repliée', TextDirection.ltr);
     }
@@ -67,7 +71,7 @@ class SemanticsHelper {
     if (areSubtitleEnabled) {
       SemanticsService.announce('Sous-titres désactivés', TextDirection.ltr);
     } else {
-      SemanticsService.announce('Sous-titres sactivés', TextDirection.ltr);
+      SemanticsService.announce('Sous-titres activés', TextDirection.ltr);
     }
   }
 }

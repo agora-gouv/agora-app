@@ -74,35 +74,40 @@ class OnboardingView extends StatelessWidget {
                   Spacer(),
                   kIsWeb
                       ? Center(child: Image.asset("assets/ic_onboarding_web.png", width: 460, height: 400))
-                      : Column(
-                          children: [
-                            ExcludeSemantics(
-                              child: OnboardingAutoScrollPage(
-                                scrollDirection: Axis.horizontal,
-                                gap: 0,
-                                animationController: animationController,
-                                child: _buildFirstThematiqueList(context),
-                              ),
-                            ),
-                            SizedBox(height: AgoraSpacings.base),
-                            ExcludeSemantics(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: OnboardingAutoScrollPage(
-                                      scrollDirection: Axis.horizontal,
-                                      reverseScroll: true,
-                                      animationController: animationController,
-                                      gap: 0,
-                                      child: _buildSecondThematiqueList(context),
-                                    ),
+                      : MergeSemantics(
+                        child: Semantics(
+                          label: "Animation montrant les différentes thématiques de l'application qui sont : la Transition écologique, la Santé, les Transports, l'Éducation et la jeunesse, le Travail, l'Europe et l'international, la Sécurité et la défense, la Démocratie",
+                          child: Column(
+                              children: [
+                                ExcludeSemantics(
+                                  child: OnboardingAutoScrollPage(
+                                    scrollDirection: Axis.horizontal,
+                                    gap: 0,
+                                    animationController: animationController,
+                                    child: _buildFirstThematiqueList(context),
                                   ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(height: AgoraSpacings.base),
+                                ExcludeSemantics(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: OnboardingAutoScrollPage(
+                                          scrollDirection: Axis.horizontal,
+                                          reverseScroll: true,
+                                          animationController: animationController,
+                                          gap: 0,
+                                          child: _buildSecondThematiqueList(context),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
                         ),
+                      ),
                   Spacer(),
                   SizedBox(height: AgoraSpacings.x3),
                 ],

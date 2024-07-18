@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:agora/common/helper/responsive_helper.dart';
-import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/common/strings/tutoriel_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -26,6 +26,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
   final _controller = PageController(initialPage: 0);
   int step = 0;
   AnimationController? animationController;
+  final backButtonFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -61,7 +62,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _BackFloatingButton(onTap: () => _previousPage(context)),
+        _BackFloatingButton(backButtonFocusNode: backButtonFocusNode, onTap: () => _previousPage(context)),
         const SizedBox(width: AgoraSpacings.base),
         Flexible(child: _NextFloatingActionButton(onTap: () => _nextPage(context))),
       ],
@@ -69,6 +70,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
   }
 
   void _nextPage(BuildContext context) {
+    backButtonFocusNode.requestFocus();
     setState(() => step++);
     if (step >= totalStep) {
       Navigator.pop(context);
@@ -78,6 +80,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
   }
 
   void _previousPage(BuildContext context) {
+    backButtonFocusNode.requestFocus();
     setState(() => step--);
     _controller.jumpToPage(step);
   }
@@ -118,7 +121,7 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
             Positioned(
               left: AgoraSpacings.base,
               bottom: AgoraSpacings.base * 2 + 56,
-              child: _BackFloatingButton(onTap: () => _previousPage(context)),
+              child: _BackFloatingButton(backButtonFocusNode: backButtonFocusNode, onTap: () => _previousPage(context)),
             ),
           if (step == 0)
             Positioned(
@@ -141,9 +144,11 @@ class _OnboardingPageState extends State<OnboardingPage> with SingleTickerProvid
 }
 
 class _BackFloatingButton extends StatelessWidget {
+  final FocusNode backButtonFocusNode;
   final void Function() onTap;
 
   _BackFloatingButton({
+    required this.backButtonFocusNode,
     required this.onTap,
   });
 
@@ -159,6 +164,9 @@ class _BackFloatingButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          focusNode: backButtonFocusNode,
+          borderRadius: BorderRadius.circular(14),
+          focusColor: AgoraColors.neutral400,
           onTap: onTap,
           child: Semantics(
             label: SemanticsStrings.previousPage,
@@ -190,6 +198,7 @@ class _NextFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      focusColor: AgoraColors.neutral400,
       backgroundColor: AgoraColors.primaryBlue,
       onPressed: onTap,
       child: Semantics(
@@ -216,9 +225,11 @@ class _FloatingNextButton extends StatelessWidget {
           ? min(MediaQuery.of(context).size.width, ResponsiveHelper.maxScreenSize) - AgoraSpacings.horizontalPadding * 2
           : MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2,
       child: FloatingActionButton.extended(
+        focusColor: AgoraColors.neutral400,
         backgroundColor: AgoraColors.primaryBlue,
         label: Text(
-          step == 0 ? ConsultationStrings.beginButton : TutorielStrings.tutoStep3LetsGo,
+          step == 0 ? TutorielStrings.beginButton : TutorielStrings.tutoStep3LetsGo,
+          semanticsLabel: step == 0 ? SemanticsStrings.onboardingBegin : SemanticsStrings.onboardingLastStepButton,
           style: AgoraTextStyles.primaryFloatingButton,
         ),
         onPressed: onTap,
@@ -243,25 +254,29 @@ class _PauseButtonState extends State<_PauseButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      width: 56,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AgoraColors.primaryBlue, width: 2),
-        color: AgoraColors.white,
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            widget.onTap(isPlaying);
-            setState(() {
-              isPlaying = !isPlaying;
-            });
-          },
-          child: Semantics(
-            label: isPlaying ? SemanticsStrings.animPause : SemanticsStrings.animPlay,
+    return Semantics(
+      label: isPlaying ? SemanticsStrings.animPause : SemanticsStrings.animPlay,
+      button: true,
+      child: Container(
+        height: 56,
+        width: 56,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AgoraColors.primaryBlue, width: 2),
+          color: AgoraColors.white,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            focusColor: AgoraColors.neutral400,
+            onTap: () {
+              SemanticsHelper.announceOnboardingAnimationStatus(isPlaying);
+              widget.onTap(isPlaying);
+              setState(() {
+                isPlaying = !isPlaying;
+              });
+            },
             child: Center(
               child: SizedBox(
                 height: 24,
