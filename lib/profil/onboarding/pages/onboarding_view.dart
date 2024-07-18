@@ -75,9 +75,10 @@ class OnboardingView extends StatelessWidget {
                   kIsWeb
                       ? Center(child: Image.asset("assets/ic_onboarding_web.png", width: 460, height: 400))
                       : MergeSemantics(
-                        child: Semantics(
-                          label: "Animation montrant les différentes thématiques de l'application qui sont : la Transition écologique, la Santé, les Transports, l'Éducation et la jeunesse, le Travail, l'Europe et l'international, la Sécurité et la défense, la Démocratie",
-                          child: Column(
+                          child: Semantics(
+                            label:
+                                "Animation montrant les différentes thématiques de l'application qui sont : la Transition écologique, la Santé, les Transports, l'Éducation et la jeunesse, le Travail, l'Europe et l'international, la Sécurité et la défense, la Démocratie",
+                            child: Column(
                               children: [
                                 ExcludeSemantics(
                                   child: OnboardingAutoScrollPage(
@@ -106,8 +107,8 @@ class OnboardingView extends StatelessWidget {
                                 ),
                               ],
                             ),
+                          ),
                         ),
-                      ),
                   Spacer(),
                   SizedBox(height: AgoraSpacings.x3),
                 ],
