@@ -38,7 +38,7 @@ class ConsultationQuestionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AgoraToolbar(style: AgoraToolbarStyle.close, pageLabel: 'Questionnaire de la consultation'),
+        AgoraToolbar(style: AgoraToolbarStyle.close, semanticPageLabel: 'Question $currentQuestionIndex de la consultation'),
         Expanded(
           child: AgoraSingleScrollView(
             scrollController: scrollController,
@@ -57,9 +57,11 @@ class ConsultationQuestionView extends StatelessWidget {
                         isLastQuestion: isLastQuestion,
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),
-                      Text(
-                        'Question $currentQuestionIndex',
-                        style: AgoraTextStyles.medium16,
+                      ExcludeSemantics(
+                        child: Text(
+                          'Question $currentQuestionIndex',
+                          style: AgoraTextStyles.medium16,
+                        ),
                       ),
                       SizedBox(height: AgoraSpacings.base),
                       Row(

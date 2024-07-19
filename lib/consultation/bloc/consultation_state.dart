@@ -2,7 +2,7 @@ import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class ConsultationState extends Equatable {
+sealed class ConsultationState extends Equatable {
   @override
   List<Object?> get props => [];
 }

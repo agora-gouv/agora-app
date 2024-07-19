@@ -25,10 +25,11 @@ class AgoraRichTextItem {
 }
 
 class AgoraRichTextSemantic {
+  final String? label;
   final bool header;
   final bool? focused;
 
-  const AgoraRichTextSemantic({this.header = true, this.focused});
+  const AgoraRichTextSemantic({this.label, this.header = true, this.focused});
 }
 
 class AgoraRichText extends StatelessWidget {
@@ -51,7 +52,7 @@ class AgoraRichText extends StatelessWidget {
     return Semantics(
       header: semantic.header,
       focused: semantic.focused,
-      label: items.map((richTextItem) => richTextItem.text.replaceAll("\n", " ")).join(),
+      label: semantic.label ?? items.map((richTextItem) => richTextItem.text.replaceAll("\n", " ")).join(),
       child: ExcludeSemantics(
         child: RichText(
           textScaler: textScaler,

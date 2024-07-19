@@ -75,7 +75,7 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
             return Column(
               children: [
                 AgoraTopDiagonal(),
-                AgoraToolbar(pageLabel: 'Suppression question'),
+                AgoraToolbar(semanticPageLabel: 'Suppression question'),
                 SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(

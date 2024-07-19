@@ -65,6 +65,7 @@ class DemographicConfirmationPage extends StatelessWidget {
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
                     consultationId: consultationId!,
+                    consultationTitle: consultationTitle!,
                     shouldLaunchCongratulationAnimation: true,
                   ),
                 ).then((value) => Navigator.of(context).pop());
@@ -75,7 +76,7 @@ class DemographicConfirmationPage extends StatelessWidget {
             if (state is SendDemographicResponsesFailureState) {
               return Column(
                 children: [
-                  AgoraToolbar(pageLabel: 'Échec de l\'envoi des informations démographiques'),
+                  AgoraToolbar(semanticPageLabel: 'Échec de l\'envoi des informations démographiques'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: AgoraErrorText()),
                 ],
@@ -83,7 +84,7 @@ class DemographicConfirmationPage extends StatelessWidget {
             } else {
               return Column(
                 children: [
-                  AgoraToolbar(pageLabel: 'Envoi en cours'),
+                  AgoraToolbar(semanticPageLabel: 'Envoi en cours'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: CircularProgressIndicator()),
                 ],

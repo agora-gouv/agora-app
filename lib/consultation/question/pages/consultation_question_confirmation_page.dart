@@ -70,6 +70,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
                     consultationId: consultationId,
+                    consultationTitle: consultationTitle,
                     shouldLaunchCongratulationAnimation: true,
                   ),
                 ).then((value) => Navigator.of(context).pop());
@@ -130,7 +131,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
 
   Widget _buildToolbar(BuildContext context, String label) {
     return AgoraToolbar(
-      pageLabel: label,
+      semanticPageLabel: label,
       onBackClick: () => Navigator.popUntil(context, ModalRoute.withName(DynamicConsultationPage.routeName)),
     );
   }

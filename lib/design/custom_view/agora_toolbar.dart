@@ -17,20 +17,20 @@ class AgoraToolbar extends StatelessWidget {
   final VoidCallback? onBackClick;
   final AgoraToolbarStyle style;
   final AgoraToolbarSemantic semantic;
-  final String pageLabel;
+  final String semanticPageLabel;
 
   const AgoraToolbar({
     super.key,
     this.onBackClick,
     this.style = AgoraToolbarStyle.back,
     this.semantic = const AgoraToolbarSemantic(),
-    required this.pageLabel,
+    required this.semanticPageLabel,
   });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: pageLabel,
+      label: semanticPageLabel,
       focused: semantic.focused,
       explicitChildNodes: true,
       child: Semantics(

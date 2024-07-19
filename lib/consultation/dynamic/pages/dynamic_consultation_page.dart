@@ -41,7 +41,6 @@ import 'package:agora/consultation/question/pages/consultation_question_page.dar
 import 'package:collection/collection.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,8 +48,28 @@ import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 part 'dynamic_consultation_presenter.dart';
+
 part 'dynamic_consultation_section_widgets.dart';
+
 part 'dynamic_consultation_view_model.dart';
+
+class DynamicConsultationPageArguments {
+  final String consultationId;
+  final String consultationTitle;
+  final bool shouldReloadConsultationsWhenPop;
+  final String? notificationTitle;
+  final String? notificationDescription;
+  final bool shouldLaunchCongratulationAnimation;
+
+  DynamicConsultationPageArguments({
+    required this.consultationId,
+    required this.consultationTitle,
+    this.shouldReloadConsultationsWhenPop = true,
+    this.notificationTitle,
+    this.notificationDescription,
+    this.shouldLaunchCongratulationAnimation = false,
+  });
+}
 
 class DynamicConsultationPage extends StatelessWidget {
   static const routeName = '/consultation/dynamic';
@@ -73,9 +92,10 @@ class DynamicConsultationPage extends StatelessWidget {
         builder: (BuildContext context, DynamicConsultationViewModel viewModel) {
           return switch (viewModel) {
             _LoadingViewModel() => _LoadingPage(),
-            _ErrorViewModel() => _ErrorPage(),
+            _ErrorViewModel() => _ErrorPage(consultationTitle: arguments.consultationTitle),
             _SuccessViewModel() => _SuccessPage(
                 viewModel,
+                arguments.consultationTitle,
                 arguments.notificationTitle,
                 arguments.notificationDescription,
                 arguments.shouldLaunchCongratulationAnimation,
@@ -87,62 +107,16 @@ class DynamicConsultationPage extends StatelessWidget {
   }
 }
 
-class DynamicConsultationPageArguments {
-  final String consultationId;
-  final bool shouldReloadConsultationsWhenPop;
-  final String? notificationTitle;
-  final String? notificationDescription;
-  final bool shouldLaunchCongratulationAnimation;
-
-  DynamicConsultationPageArguments({
-    required this.consultationId,
-    this.shouldReloadConsultationsWhenPop = true,
-    this.notificationTitle,
-    this.notificationDescription,
-    this.shouldLaunchCongratulationAnimation = false,
-  });
-}
-
-class _LoadingPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AgoraScaffold(
-      child: Center(
-        child: Column(
-          children: [
-            AgoraToolbar(pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}'),
-            SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-            CircularProgressIndicator(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AgoraScaffold(
-      child: Column(
-        children: [
-          AgoraToolbar(pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}'),
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorText()),
-        ],
-      ),
-    );
-  }
-}
-
 class _SuccessPage extends StatelessWidget {
   final _SuccessViewModel viewModel;
+  final String consultationTitle;
   final String? notificationTitle;
   final String? notificationDescription;
   final bool shouldLaunchCongratulationAnimation;
 
   _SuccessPage(
     this.viewModel,
+    this.consultationTitle,
     this.notificationTitle,
     this.notificationDescription,
     this.shouldLaunchCongratulationAnimation,
@@ -162,25 +136,7 @@ class _SuccessPage extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Expanded(
-              child: AgoraToolbar(
-                pageLabel: '${ConsultationStrings.toolbarPart1}${ConsultationStrings.toolbarPart2}',
-              ),
-            ),
-            if (kDebugMode) ...[
-              Flexible(
-                child: AgoraButton(
-                  label: 'Supprimer',
-                  buttonStyle: AgoraButtonStyle.redBorder,
-                  onPressed: () {
-                    context
-                        .read<DynamicConsultationBloc>()
-                        .add(DeleteConsultationResponsesEvent(viewModel.consultationId));
-                  },
-                ),
-              ),
-              const SizedBox(width: AgoraSpacings.base),
-            ],
+            Expanded(child: AgoraToolbar(semanticPageLabel: "Consultation : $consultationTitle")),
             Padding(
               padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
               child: _ShareButton(viewModel.shareText),
@@ -209,6 +165,44 @@ class _SuccessPage extends StatelessWidget {
             child: content,
           )
       },
+    );
+  }
+}
+
+class _LoadingPage extends StatelessWidget {
+  const _LoadingPage();
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraScaffold(
+      child: Center(
+        child: Column(
+          children: [
+            AgoraToolbar(semanticPageLabel: ""),
+            SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+            CircularProgressIndicator(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ErrorPage extends StatelessWidget {
+  final String consultationTitle;
+
+  const _ErrorPage({required this.consultationTitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraScaffold(
+      child: Column(
+        children: [
+          AgoraToolbar(semanticPageLabel: "Consultation : $consultationTitle"),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: AgoraErrorText()),
+        ],
+      ),
     );
   }
 }

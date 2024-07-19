@@ -27,7 +27,8 @@ class AgoraSecondaryStyleView extends StatelessWidget {
   final VoidCallback? onBackClick;
   final Widget child;
   final AgoraSecondaryScrollType scrollType;
-  final String pageLabel;
+  final String semanticPageLabel;
+  final bool isTitleHasSemantic;
 
   const AgoraSecondaryStyleView({
     super.key,
@@ -36,7 +37,8 @@ class AgoraSecondaryStyleView extends StatelessWidget {
     this.onBackClick,
     this.scrollType = AgoraSecondaryScrollType.generic,
     required this.child,
-    required this.pageLabel,
+    required this.semanticPageLabel,
+    this.isTitleHasSemantic = false,
   });
 
   @override
@@ -54,10 +56,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Semantics(
-                      excludeSemantics: true,
-                      child: title,
-                    ),
+                    child: Semantics(excludeSemantics: !isTitleHasSemantic, header: isTitleHasSemantic, child: title),
                   ),
                   if (button != null) ...[
                     SizedBox(width: AgoraSpacings.x0_75),
@@ -90,7 +89,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
 
     return Column(
       children: [
-        AgoraToolbar(onBackClick: onBackClick, pageLabel: pageLabel),
+        AgoraToolbar(onBackClick: onBackClick, semanticPageLabel: semanticPageLabel),
         Expanded(child: currentChild),
       ],
     );

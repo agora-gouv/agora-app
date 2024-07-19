@@ -1,3 +1,4 @@
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/profil/notification/bloc/permission/notification_permission_bloc.dart';
 import 'package:agora/profil/notification/bloc/permission/notification_permission_event.dart';
 import 'package:agora/profil/notification/bloc/permission/notification_permission_state.dart';
@@ -245,7 +246,10 @@ class _SplashPageState extends State<SplashPage> {
         Navigator.pushNamed(
           context,
           DynamicConsultationPage.routeName,
-          arguments: DynamicConsultationPageArguments(consultationId: id),
+          arguments: DynamicConsultationPageArguments(
+            consultationId: id,
+            consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
+          ),
         );
       },
       onQagSuccessCallback: (id) {
