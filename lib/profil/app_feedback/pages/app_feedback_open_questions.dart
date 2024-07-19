@@ -23,7 +23,7 @@ class _Step2Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AgoraToolbar(style: AgoraToolbarStyle.close, pageLabel: 'Formulaire de retour sur l\'application'),
+        AgoraToolbar(style: AgoraToolbarStyle.close, semanticPageLabel: 'Formulaire de retour sur l\'application'),
         Expanded(
           child: AgoraSingleScrollView(
             physics: BouncingScrollPhysics(),
@@ -124,7 +124,7 @@ class _MailQuestionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AgoraToolbar(style: AgoraToolbarStyle.close, pageLabel: 'Formulaire de retour sur l\'application'),
+        AgoraToolbar(style: AgoraToolbarStyle.close, semanticPageLabel: 'Formulaire de retour sur l\'application'),
         Expanded(
           child: AgoraSingleScrollView(
             physics: BouncingScrollPhysics(),

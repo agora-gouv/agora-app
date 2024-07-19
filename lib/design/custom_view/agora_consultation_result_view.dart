@@ -59,7 +59,7 @@ class AgoraConsultationResultView extends StatelessWidget {
           child: Semantics(
             label: 'Choix ${responses.indexOf(response) + 1} sur ${responses.length}',
             child: AgoraConsultationResultBar(
-              ratio: response.ratio,
+              participantsPercentage: response.ratio,
               response: response.label,
               isUserResponse: response.isUserResponse,
               minusPadding: AgoraSpacings.horizontalPadding * 2,

@@ -217,6 +217,7 @@ class _NePasRepondreBouton extends StatelessWidget {
             DynamicConsultationPage.routeName,
             arguments: DynamicConsultationPageArguments(
               consultationId: arguments.consultationId,
+              consultationTitle: arguments.consultationTitle,
               shouldLaunchCongratulationAnimation: true,
             ),
           ).then((value) => Navigator.of(context).pop());

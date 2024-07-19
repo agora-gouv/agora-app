@@ -112,7 +112,7 @@ class _HeaderSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      container: true,
+      header: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,7 +154,13 @@ class _HeaderSectionWidget extends StatelessWidget {
                         children: [
                           ExcludeSemantics(child: Text(section.thematicLogo, style: AgoraTextStyles.regular16)),
                           const SizedBox(width: AgoraSpacings.x0_375),
-                          Expanded(child: Text(section.thematicLabel, style: AgoraTextStyles.regular16)),
+                          Expanded(
+                            child: Text(
+                              section.thematicLabel,
+                              style: AgoraTextStyles.regular16,
+                              semanticsLabel: "Thématique : ${section.thematicLabel}",
+                            ),
+                          ),
                         ],
                       ),
                     ),

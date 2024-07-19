@@ -68,7 +68,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
         child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
           builder: (context, state) {
             return AgoraSecondaryStyleView(
-              pageLabel: DemographicStrings.my + DemographicStrings.information,
+              semanticPageLabel: DemographicStrings.my + DemographicStrings.information,
               title: _Title(),
               button: state is GetDemographicInformationSuccessState
                   ? AgoraSecondaryStyleViewButton(

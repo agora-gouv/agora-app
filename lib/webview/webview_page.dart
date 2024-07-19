@@ -21,7 +21,7 @@ class WebviewPage extends StatelessWidget {
     return AgoraScaffold(
       child: Column(
         children: [
-          AgoraToolbar(pageLabel: 'Page internet'),
+          AgoraToolbar(semanticPageLabel: 'Page internet'),
           Expanded(
             child: Stack(
               children: [

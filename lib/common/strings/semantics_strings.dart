@@ -6,6 +6,9 @@ class SemanticsStrings {
 
   static const String shareConsultation = "Partager la consultation";
   static const String consultationNotificationInformation = "Vous serez tenue au courant des prochaines étapes";
+  static const String consultationTerminees = "Consultations terminées";
+  static const String allConsultationTerminees = "Toutes les consultations terminées";
+
 
   static const String moreInformation = "En savoir plus";
   static const String moreInformationAboutGovernmentResponse =

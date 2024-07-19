@@ -7,6 +7,7 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/common/observer/matomo_route_observer.dart';
 import 'package:agora/common/observer/navigation_observer.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/splash_page.dart';
@@ -62,7 +63,10 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         onConsultationSuccessCallback: (id) {
           navigatorKey.currentState?.pushNamed(
             DynamicConsultationPage.routeName,
-            arguments: DynamicConsultationPageArguments(consultationId: id),
+            arguments: DynamicConsultationPageArguments(
+              consultationId: id,
+              consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
+            ),
           );
         },
         onQagSuccessCallback: (id) {

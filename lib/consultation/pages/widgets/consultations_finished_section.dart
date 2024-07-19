@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
@@ -49,6 +50,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AgoraRichText(
+                        semantic: AgoraRichTextSemantic(label: SemanticsStrings.consultationTerminees),
                         items: [
                           AgoraRichTextItem(
                             text: "${ConsultationStrings.finishConsultationPart1}\n",
@@ -143,6 +145,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
                     consultationId: finishedViewModel.id,
+                    consultationTitle: finishedViewModel.title,
                     shouldReloadConsultationsWhenPop: false,
                   ),
                 );

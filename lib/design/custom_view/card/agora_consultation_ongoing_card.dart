@@ -189,7 +189,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     Navigator.pushNamed(
       context,
       DynamicConsultationPage.routeName,
-      arguments: DynamicConsultationPageArguments(consultationId: consultationId),
+      arguments: DynamicConsultationPageArguments(consultationId: consultationId, consultationTitle: title),
     ).then((value) => context.read<ConsultationBloc>().add(FetchConsultationsEvent()));
   }
 }

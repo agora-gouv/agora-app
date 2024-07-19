@@ -148,7 +148,7 @@ class QagDetailsTextResponseViewModel extends Equatable {
       ];
 }
 
-abstract class QagDetailsFeedbackViewModel extends Equatable {
+sealed class QagDetailsFeedbackViewModel extends Equatable {
   final String feedbackQuestion;
 
   QagDetailsFeedbackViewModel({required this.feedbackQuestion});
