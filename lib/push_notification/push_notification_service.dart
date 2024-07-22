@@ -10,11 +10,11 @@ import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
-import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
+import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
-import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -157,10 +157,12 @@ class FirebasePushNotificationService extends PushNotificationService {
     final messageType = (message.data["type"] as String?).toNotificationMessageType();
     switch (messageType) {
       case NotificationMessageType.qagDetails:
+        final qagId = message.data["qagId"] as String?;
+        if (qagId == null) return;
         navigatorKey.currentState?.pushNamed(
           QagDetailsPage.routeName,
           arguments: QagDetailsArguments(
-            qagId: message.data["qagId"] as String,
+            qagId: qagId,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
             notificationDescription: shouldDisplayMessage ? message.notification?.body : null,
             reload: QagReload.qagsPage,
