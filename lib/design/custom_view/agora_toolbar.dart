@@ -47,7 +47,9 @@ class AgoraToolbar extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: AgoraSpacings.horizontalPadding, vertical: AgoraSpacings.x0_75,),
+                horizontal: AgoraSpacings.horizontalPadding,
+                vertical: AgoraSpacings.x0_75,
+              ),
               child: style == AgoraToolbarStyle.back ? _buildBack() : _buildClose(),
             ),
           ),
