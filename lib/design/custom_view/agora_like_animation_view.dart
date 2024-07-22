@@ -15,6 +15,10 @@ class AgoraLikeAnimationView extends StatelessWidget {
     animationControllerKey.currentState?.startAnimation();
   }
 
+  void reverseAnimate() {
+    animationControllerKey.currentState?.reverseAnimation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<_AgoraAnimatedLikeView>(
@@ -56,8 +60,10 @@ class _AgoraAnimatedLikeView extends StatefulWidget {
 }
 
 class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with SingleTickerProviderStateMixin {
+  final durationTime = 750;
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 750),
+    duration: Duration(milliseconds: durationTime),
+    reverseDuration: Duration(milliseconds: durationTime),
     vsync: this,
   );
 
@@ -77,6 +83,10 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
 
   void startAnimation() {
     _controller.forward(from: 0.0);
+  }
+
+  void reverseAnimation() {
+    _controller.reverse(from: durationTime.toDouble());
   }
 
   @override

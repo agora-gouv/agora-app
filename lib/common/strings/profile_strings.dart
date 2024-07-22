@@ -46,6 +46,7 @@ class ProfileStrings {
   static const String demographicInformationDescription4 =
       "De savoir s'il y a des différences de réponses, par exemple entre les départements ou entre les catégories d'âge.";
   static const String demographicInformationDescription5 =
-      "Ces informations vous seront demandées une seule fois et ne permettent pas de vous identifier. Vous pourrez les retrouver, les modifier ou les supprimer à tout instant sur cette page. Pour en savoir plus, ";
-  static const String demographicInformationDescription6 = "lire la politique de confidentialité.";
+      "Ces informations vous seront demandées une seule fois et ne permettent pas de vous identifier. Vous pourrez les retrouver, les modifier ou les supprimer à tout instant sur cette page.";
+  static const String demographicInformationDescription6 = "Pour en savoir plus, ";
+  static const String demographicInformationDescription7 = "lire la politique de confidentialité.";
 }

@@ -180,6 +180,84 @@ class _AgoraLikeViewNonCliquable extends StatelessWidget {
   }
 }
 
+class AgoraLike extends StatelessWidget {
+  final bool isSupported;
+  final int supportCount;
+  final bool shouldHaveHorizontalPadding;
+  final bool shouldHaveVerticalPadding;
+  final AgoraLikeStyle style;
+  final GlobalKey? likeViewKey;
+  final bool shouldVocaliseSupport;
+  final bool isLoading;
+
+  const AgoraLike({
+    required this.isSupported,
+    required this.supportCount,
+    this.shouldHaveHorizontalPadding = true,
+    this.shouldHaveVerticalPadding = false,
+    this.style = AgoraLikeStyle.police14,
+    this.likeViewKey,
+    this.shouldVocaliseSupport = true,
+    this.isLoading = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Ink(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(AgoraCorners.rounded42),
+        border: Border.all(color: AgoraColors.lightRedOpacity19),
+        color: AgoraColors.lightRedOpacity4,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : AgoraSpacings.x0_375,
+          vertical: shouldHaveVerticalPadding ? 2 : 0,
+        ),
+        child: isLoading
+            ? _LikeLoading()
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    key: likeViewKey,
+                    _getIcon(isSupported),
+                    width: _buildIconSize(style),
+                    excludeFromSemantics: true,
+                  ),
+                  SizedBox(width: AgoraSpacings.x0_25),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
+                    child: Text(
+                      supportCount.toString(),
+                      style: _buildTextStyle(style),
+                      semanticsLabel:
+                          "${shouldVocaliseSupport ? isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport : ''}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
+                    ),
+                  ),
+                ],
+              ),
+      ),
+    );
+  }
+}
+
+class _LikeLoading extends StatelessWidget {
+  const _LikeLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4),
+      child: SizedBox(
+        height: 20,
+        width: 20,
+        child: CircularProgressIndicator(color: AgoraColors.red, strokeWidth: 2),
+      ),
+    );
+  }
+}
+
 double _buildIconSize(AgoraLikeStyle style) {
   switch (style) {
     case AgoraLikeStyle.police12:

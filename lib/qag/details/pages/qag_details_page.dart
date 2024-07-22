@@ -233,7 +233,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                           qagId: viewModel.id,
                           canSupport: viewModel.canSupport,
                           isQuestionGagnante: widget.arguments.isQuestionGagnante,
-                          support: support,
+                          supportViewModel: support,
                           onSupportChange: (supportCount, isSupported) {
                             backResult = QagDetailsBackResult(
                               qagId: viewModel.id,

@@ -9,12 +9,12 @@ import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/text/agora_link_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/profil/demographic/pages/demographic_question_page.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -74,90 +74,23 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            DemographicStrings.informationShortDescription,
-                            style: AgoraTextStyles.regular14,
-                            semanticsLabel:
-                                "${DemographicStrings.informationShortDescription}\n\n${DemographicStrings.informationLongDescription1}${DemographicStrings.informationLongDescription2}${DemographicStrings.informationLongDescription3}\n${DemographicStrings.informationLongDescription4}",
-                          ),
-                          SizedBox(height: AgoraSpacings.x1_25),
+                          Text(DemographicStrings.informationShortDescription, style: AgoraTextStyles.regular14),
+                          SizedBox(height: AgoraSpacings.x0_5),
                           if (isReadMore)
-                            ExcludeSemantics(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    DemographicStrings.informationLongDescription1,
-                                    style: AgoraTextStyles.regular14,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
-                                      SizedBox(width: AgoraSpacings.x0_5),
-                                      Expanded(
-                                        child: Text(
-                                          DemographicStrings.informationLongDescription2,
-                                          style: AgoraTextStyles.regular14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
-                                      SizedBox(width: AgoraSpacings.x0_5),
-                                      Expanded(
-                                        child: Text(
-                                          DemographicStrings.informationLongDescription3,
-                                          style: AgoraTextStyles.regular14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    DemographicStrings.informationLongDescription4,
-                                    style: AgoraTextStyles.regular14,
-                                  ),
-                                  SizedBox(height: AgoraSpacings.x1_25),
-                                  RichText(
-                                    textScaler: MediaQuery.textScalerOf(context),
-                                    text: TextSpan(
-                                      style: AgoraTextStyles.regular14,
-                                      children: [
-                                        TextSpan(text: DemographicStrings.moreInformations),
-                                        TextSpan(
-                                          text: DemographicStrings.moreInformationsLink,
-                                          style:
-                                              AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () =>
-                                                LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
+                            _LireLaSuiteContent()
                           else
-                            ExcludeSemantics(
-                              child: InkWell(
-                                onTap: () {
-                                  TrackerHelper.trackClick(
-                                    clickName: AnalyticsEventNames.readMore,
-                                    widgetName: AnalyticsScreenNames.demographicInformationPage,
-                                  );
-                                  setState(() => isReadMore = true);
-                                },
-                                child: Text(
-                                  DemographicStrings.readMore,
-                                  style: AgoraTextStyles.regular14Underline.copyWith(color: AgoraColors.primaryBlue),
-                                ),
-                              ),
+                            AgoraLinkText(
+                              label: DemographicStrings.readMore,
+                              textPadding: EdgeInsets.zero,
+                              onTap: () {
+                                TrackerHelper.trackClick(
+                                  clickName: AnalyticsEventNames.readMore,
+                                  widgetName: AnalyticsScreenNames.demographicInformationPage,
+                                );
+                                setState(() => isReadMore = true);
+                              },
                             ),
-                          SizedBox(height: AgoraSpacings.x1_25),
+                          SizedBox(height: AgoraSpacings.base),
                           _SuiteBoutons(arguments: arguments),
                         ],
                       ),
@@ -175,6 +108,86 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
           ],
         ),
       ),
+    );
+  }
+}
+
+class _LireLaSuiteContent extends StatelessWidget {
+  const _LireLaSuiteContent();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        MergeSemantics(
+          child: Semantics(
+            label:
+                "${DemographicStrings.informationLongDescription1}\n${DemographicStrings.informationLongDescription2}\n${DemographicStrings.informationLongDescription3}\n${DemographicStrings.informationLongDescription4}\n",
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: AgoraSpacings.x0_75),
+                ExcludeSemantics(
+                  child: Text(
+                    DemographicStrings.informationLongDescription1,
+                    style: AgoraTextStyles.regular14,
+                  ),
+                ),
+                ExcludeSemantics(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
+                      SizedBox(width: AgoraSpacings.x0_5),
+                      Expanded(
+                        child: Text(
+                          DemographicStrings.informationLongDescription2,
+                          style: AgoraTextStyles.regular14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ExcludeSemantics(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ExcludeSemantics(child: Text("\u2022", style: AgoraTextStyles.regular14)),
+                      SizedBox(width: AgoraSpacings.x0_5),
+                      Expanded(
+                        child: Text(
+                          DemographicStrings.informationLongDescription3,
+                          style: AgoraTextStyles.regular14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ExcludeSemantics(
+                  child: Text(
+                    DemographicStrings.informationLongDescription4,
+                    style: AgoraTextStyles.regular14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: AgoraSpacings.x0_75),
+        AgoraLinkText(
+          textItems: [
+            TextSpan(
+              text: DemographicStrings.moreInformations,
+              style: AgoraTextStyles.regular14,
+            ),
+            TextSpan(
+              text: DemographicStrings.moreInformationsLink,
+              style: AgoraTextStyles.light14UnderlineBlue,
+            ),
+          ],
+          onTap: () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
+        ),
+      ],
     );
   }
 }
@@ -197,15 +210,16 @@ class _SuiteBoutons extends StatelessWidget {
 }
 
 class _NePasRepondreBouton extends StatelessWidget {
-  const _NePasRepondreBouton({required this.arguments});
-
   final DemographicInformationArguments arguments;
+
+  const _NePasRepondreBouton({required this.arguments});
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: AgoraButton(
         label: DemographicStrings.toNoAnswer,
+        semanticLabel: DemographicStrings.toNoAnswerSemantic,
         buttonStyle: AgoraButtonStyle.blueBorder,
         onPressed: () {
           TrackerHelper.trackClick(
@@ -227,14 +241,15 @@ class _NePasRepondreBouton extends StatelessWidget {
 }
 
 class _CommencerBouton extends StatelessWidget {
-  const _CommencerBouton({required this.arguments});
-
   final DemographicInformationArguments arguments;
+
+  const _CommencerBouton({required this.arguments});
 
   @override
   Widget build(BuildContext context) {
     return AgoraButton(
       label: DemographicStrings.begin,
+      semanticLabel: DemographicStrings.beginSemantic,
       buttonStyle: AgoraButtonStyle.primary,
       onPressed: () {
         TrackerHelper.trackClick(

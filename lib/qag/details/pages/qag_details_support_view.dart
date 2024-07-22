@@ -19,7 +19,7 @@ class QagDetailsSupportView extends StatelessWidget {
   final String qagId;
   final bool canSupport;
   final bool isQuestionGagnante;
-  final QagDetailsSupportViewModel support;
+  final QagDetailsSupportViewModel supportViewModel;
   final Function(int supportCount, bool isSupported) onSupportChange;
 
   const QagDetailsSupportView({
@@ -27,7 +27,7 @@ class QagDetailsSupportView extends StatelessWidget {
     required this.qagId,
     required this.canSupport,
     this.isQuestionGagnante = false,
-    required this.support,
+    required this.supportViewModel,
     required this.onSupportChange,
   });
 
@@ -90,6 +90,9 @@ class QagDetailsSupportView extends StatelessWidget {
             if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
               likeAnimationView.animate();
             }
+            if (_toLikeViewModel(previousState).isSupported && !_toLikeViewModel(currentState).isSupported) {
+              likeAnimationView.reverseAnimate();
+            }
             return false;
           },
           listener: (context, state) => {},
@@ -115,11 +118,11 @@ class QagDetailsSupportView extends StatelessWidget {
   }
 
   bool _isInitiallySupported() {
-    return support.isSupported;
+    return supportViewModel.isSupported;
   }
 
   int _initialSupportCount() {
-    return support.count;
+    return supportViewModel.count;
   }
 
   int _supportCountWhenUnliked() {

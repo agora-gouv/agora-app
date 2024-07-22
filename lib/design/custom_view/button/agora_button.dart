@@ -49,33 +49,38 @@ class AgoraButton extends StatelessWidget {
             onTap: onPressed,
             focusColor: AgoraColors.neutral400,
             customBorder: borderShape,
-            child: Ink(
-              padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-              child: prefixIcon != null || suffixIcon != null
-                  ? Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        if (prefixIcon != null) ...[
-                          SvgPicture.asset(
-                            "assets/${prefixIcon!}",
-                            excludeFromSemantics: true,
-                            colorFilter: prefixIconColorFilter,
-                          ),
-                          const SizedBox(width: 8),
-                        ],
-                        Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
-                        if (suffixIcon != null) ...[
-                          const SizedBox(width: 8),
-                          SvgPicture.asset(
-                            "assets/${suffixIcon!}",
-                            excludeFromSemantics: true,
-                            colorFilter: suffixIconColorFilter,
-                          ),
-                        ],
-                      ],
-                    )
-                  : Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: 48,
+                minWidth: 48,
+              ),
+              child: Ink(
+                padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  runAlignment: WrapAlignment.center,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    if (prefixIcon != null) ...[
+                      SvgPicture.asset(
+                        "assets/${prefixIcon!}",
+                        excludeFromSemantics: true,
+                        colorFilter: prefixIconColorFilter,
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                    Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
+                    if (suffixIcon != null) ...[
+                      const SizedBox(width: 8),
+                      SvgPicture.asset(
+                        "assets/${suffixIcon!}",
+                        excludeFromSemantics: true,
+                        colorFilter: suffixIconColorFilter,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
             ),
           ),
         ),

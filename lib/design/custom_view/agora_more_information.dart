@@ -15,10 +15,14 @@ class AgoraMoreInformation extends StatelessWidget {
       button: true,
       label: semanticsLabel ?? SemanticsStrings.moreInformation,
       child: InkWell(
+        borderRadius: BorderRadius.circular(20.0),
         onTap: () => onClick(),
-        child: Padding(
-          padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-          child: SvgPicture.asset("assets/ic_info.svg", excludeFromSemantics: true),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+          child: Padding(
+            padding: const EdgeInsets.all(AgoraSpacings.x0_75),
+            child: SvgPicture.asset("assets/ic_info.svg", excludeFromSemantics: true),
+          ),
         ),
       ),
     );

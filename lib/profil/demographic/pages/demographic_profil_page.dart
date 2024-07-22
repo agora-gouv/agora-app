@@ -1,3 +1,4 @@
+import 'package:agora/design/custom_view/text/agora_link_text.dart';
 import 'package:agora/profil/demographic/bloc/get/demographic_information_bloc.dart';
 import 'package:agora/profil/demographic/bloc/get/demographic_information_event.dart';
 import 'package:agora/profil/demographic/bloc/get/demographic_information_state.dart';
@@ -16,7 +17,7 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
+import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -25,7 +26,6 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/repository/demographic_information_presenter.dart';
 import 'package:agora/profil/demographic/pages/demographic_question_page.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -122,21 +122,12 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
           SizedBox(height: AgoraSpacings.base),
           Text(DemographicStrings.demographicInformationNotice1, style: AgoraTextStyles.light14),
           SizedBox(height: AgoraSpacings.x0_5),
-          RichText(
-            textScaler: MediaQuery.textScalerOf(context),
-            text: TextSpan(
-              style: AgoraTextStyles.light14,
-              children: [
-                TextSpan(text: DemographicStrings.demographicInformationNotice2),
-                WidgetSpan(child: SizedBox(width: AgoraSpacings.x0_25)),
-                TextSpan(
-                  text: DemographicStrings.demographicInformationNotice3,
-                  style: AgoraTextStyles.light14Underline.copyWith(color: AgoraColors.primaryBlue),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
-                ),
-              ],
-            ),
+          Text(DemographicStrings.demographicInformationNotice2, style: AgoraTextStyles.light14),
+          SizedBox(height: AgoraSpacings.x0_5),
+          AgoraLinkText(
+            label: DemographicStrings.demographicInformationNotice3,
+            textPadding: EdgeInsets.zero,
+            onTap: () => LaunchUrlHelper.webview(context, ProfileStrings.privacyPolicyLink),
           ),
           SizedBox(height: AgoraSpacings.x1_25),
           BlocListener<SendDemographicResponsesBloc, SendDemographicResponsesState>(
@@ -156,24 +147,29 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
                   context: context,
                   columnChildren: [
                     Text(ProfileStrings.suppressDemographicPopUp, style: AgoraTextStyles.medium16),
-                    SizedBox(height: AgoraSpacings.x0_75),
+                    SizedBox(height: AgoraSpacings.x1_5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AgoraButton(
-                          label: GenericStrings.yes,
-                          buttonStyle: AgoraButtonStyle.primary,
-                          onPressed: () {
-                            context
-                                .read<SendDemographicResponsesBloc>()
-                                .add(SendDemographicResponsesEvent(demographicResponses: []));
-                            Navigator.pop(context);
-                          },
+                        Expanded(
+                          child: AgoraButton(
+                            label: GenericStrings.yes,
+                            buttonStyle: AgoraButtonStyle.primary,
+                            onPressed: () {
+                              context
+                                  .read<SendDemographicResponsesBloc>()
+                                  .add(SendDemographicResponsesEvent(demographicResponses: []));
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
-                        SizedBox(width: AgoraSpacings.x0_75),
-                        AgoraButton(
-                          label: GenericStrings.no,
-                          buttonStyle: AgoraButtonStyle.blueBorder,
-                          onPressed: () => Navigator.pop(context),
+                        SizedBox(width: AgoraSpacings.x1_5),
+                        Expanded(
+                          child: AgoraButton(
+                            label: GenericStrings.no,
+                            buttonStyle: AgoraButtonStyle.blueBorder,
+                            onPressed: () => Navigator.pop(context),
+                          ),
                         ),
                       ],
                     ),
