@@ -85,7 +85,7 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
     _controller.forward(from: 0.0);
   }
 
-  void reverseAnimation(){
+  void reverseAnimation() {
     _controller.reverse(from: durationTime.toDouble());
   }
 

@@ -250,10 +250,10 @@ class _LikeLoading extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4),
       child: SizedBox(
-          height: 20,
-          width: 20,
-          child: CircularProgressIndicator(color: AgoraColors.red, strokeWidth: 2),
-        ),
+        height: 20,
+        width: 20,
+        child: CircularProgressIndicator(color: AgoraColors.red, strokeWidth: 2),
+      ),
     );
   }
 }
