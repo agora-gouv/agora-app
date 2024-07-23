@@ -1072,7 +1072,7 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                         AgoraRoundedButton(
                           icon: "ic_thumb_white.svg",
                           label: QagStrings.yes,
-                          contentPadding: AgoraRoundedButtonPadding.short,
+                          contentPadding: AgoraRoundedButtonPadding.normal,
                           onPressed: () {
                             context.read<DynamicConsultationFeedbackBloc>().add(
                                   SendConsultationUpdateFeedbackEvent(
@@ -1096,7 +1096,8 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                         AgoraRoundedButton(
                           icon: "ic_thumb_down_white.svg",
                           label: QagStrings.no,
-                          contentPadding: AgoraRoundedButtonPadding.short,
+                          contentPadding: AgoraRoundedButtonPadding.normal,
+                          iconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
                           onPressed: () {
                             context.read<DynamicConsultationFeedbackBloc>().add(
                                   SendConsultationUpdateFeedbackEvent(
