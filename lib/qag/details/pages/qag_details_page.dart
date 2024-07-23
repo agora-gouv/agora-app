@@ -1,8 +1,3 @@
-import 'package:agora/qag/details/bloc/qag_details_bloc.dart';
-import 'package:agora/qag/details/bloc/qag_details_event.dart';
-import 'package:agora/qag/details/bloc/qag_details_state.dart';
-import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
-import 'package:agora/qag/details/bloc/support/qag_support_bloc.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
@@ -14,16 +9,21 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/string_utils.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/text/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
+import 'package:agora/design/custom_view/text/agora_read_more_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/qag/details/bloc/qag_details_bloc.dart';
+import 'package:agora/qag/details/bloc/qag_details_event.dart';
+import 'package:agora/qag/details/bloc/qag_details_state.dart';
+import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
+import 'package:agora/qag/details/bloc/support/qag_support_bloc.dart';
 import 'package:agora/qag/details/pages/qag_details_delete_confirmation_page.dart';
 import 'package:agora/qag/details/pages/qag_details_feedback_widget.dart';
 import 'package:agora/qag/details/pages/qag_details_response_view.dart';
@@ -209,6 +209,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                             supportCount: support.count,
                             shouldVocaliseSupport: false,
                             isQuestionGagnante: widget.arguments.isQuestionGagnante,
+                            style: AgoraLikeStyle.police16,
                           ),
                         ),
                       ],

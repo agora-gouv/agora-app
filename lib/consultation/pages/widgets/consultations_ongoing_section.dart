@@ -1,13 +1,13 @@
-import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/consultation/bloc/consultation_view_model.dart';
+import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/pages/qags_page.dart';

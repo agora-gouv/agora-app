@@ -1,18 +1,18 @@
-import 'package:agora/profil/notification/bloc/get/notification_bloc.dart';
-import 'package:agora/profil/notification/bloc/get/notification_event.dart';
-import 'package:agora/profil/notification/bloc/get/notification_state.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
-import 'package:agora/design/custom_view/card/agora_notification_card.dart';
-import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
+import 'package:agora/design/custom_view/card/agora_notification_card.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/profil/notification/bloc/get/notification_bloc.dart';
+import 'package:agora/profil/notification/bloc/get/notification_event.dart';
+import 'package:agora/profil/notification/bloc/get/notification_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,13 +50,6 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                 ],
               ),
-              // button: AgoraSecondaryStyleViewButton(
-              //   icon: "ic_bell_light_blue.svg",
-              //   title: ProfileStrings.parameters,
-              //   onClick: () {
-              //     // TODO next ticket
-              //   },
-              // ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
                 child: Column(children: _buildContent(context, state)),

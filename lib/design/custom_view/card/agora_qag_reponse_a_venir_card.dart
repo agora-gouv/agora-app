@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
@@ -8,6 +7,7 @@ import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
 
 class AgoraQagResponseAVenirCard extends StatelessWidget {
@@ -85,7 +85,7 @@ class _CardContent extends StatelessWidget {
               AgoraLikeView(
                 isSupported: isSupported,
                 supportCount: supportCount,
-                style: AgoraLikeStyle.police12,
+                style: AgoraLikeStyle.police14,
                 shouldHaveHorizontalPadding: false,
                 isQuestionGagnante: true,
               ),
