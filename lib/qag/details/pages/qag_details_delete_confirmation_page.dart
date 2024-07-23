@@ -1,20 +1,20 @@
-import 'package:agora/qag/details/bloc/delete/qag_delete_bloc.dart';
-import 'package:agora/qag/details/bloc/delete/qag_delete_event.dart';
-import 'package:agora/qag/details/bloc/delete/qag_delete_state.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/splash_page.dart';
+import 'package:agora/qag/details/bloc/delete/qag_delete_bloc.dart';
+import 'package:agora/qag/details/bloc/delete/qag_delete_event.dart';
+import 'package:agora/qag/details/bloc/delete/qag_delete_state.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
+import 'package:agora/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -58,8 +58,8 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
                   SizedBox(height: AgoraSpacings.x0_75),
                   AgoraButton(
                     label: GenericStrings.close,
-                    buttonStyle: AgoraButtonStyle.primary,
-                    onPressed: () {
+                    style: AgoraButtonStyle.primary,
+                    onTap: () {
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         QagsPage.routeName,
@@ -94,9 +94,9 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
                         SizedBox(height: AgoraSpacings.x1_5),
                         AgoraButton(
                           label: GenericStrings.delete,
-                          buttonStyle: AgoraButtonStyle.redBorder,
+                          style: AgoraButtonStyle.redBorder,
                           isLoading: state is QagDeleteLoadingState,
-                          onPressed: () => context.read<QagDeleteBloc>().add(DeleteQagEvent(qagId: arguments.qagId)),
+                          onTap: () => context.read<QagDeleteBloc>().add(DeleteQagEvent(qagId: arguments.qagId)),
                         ),
                         if (state is QagDeleteErrorState) ...[
                           SizedBox(height: AgoraSpacings.base),

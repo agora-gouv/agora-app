@@ -9,8 +9,8 @@ class ConsultationQuestionHelper {
       return AgoraButton(
         label: ConsultationStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
-        buttonStyle: AgoraButtonStyle.blueBorder,
-        onPressed: onBackTap,
+        style: AgoraButtonStyle.blueBorder,
+        onTap: onBackTap,
       );
     } else {
       return Container();
@@ -19,13 +19,13 @@ class ConsultationQuestionHelper {
 
   static Widget buildNextQuestion({
     required bool isLastQuestion,
-    required VoidCallback? onPressed,
+    required void Function() onTap,
   }) {
     return AgoraButton(
       label: isLastQuestion ? ConsultationStrings.validate : ConsultationStrings.nextQuestion,
       semanticLabel: isLastQuestion ? ConsultationStrings.validate : SemanticsStrings.nextQuestion,
-      buttonStyle: AgoraButtonStyle.primary,
-      onPressed: onPressed,
+      style: AgoraButtonStyle.primary,
+      onTap: onTap,
     );
   }
 
@@ -33,8 +33,8 @@ class ConsultationQuestionHelper {
     return AgoraButton(
       label: ConsultationStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
-      buttonStyle: AgoraButtonStyle.blueBorder,
-      onPressed: onPressed,
+      style: AgoraButtonStyle.blueBorder,
+      onTap: onPressed,
     );
   }
 }

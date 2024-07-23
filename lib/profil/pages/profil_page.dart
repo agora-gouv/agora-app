@@ -1,4 +1,3 @@
-import 'package:agora/profil/app_feedback/pages/app_feedback_page.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
@@ -7,20 +6,21 @@ import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_menu_item.dart';
-import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
+import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/profil/app_feedback/pages/app_feedback_page.dart';
 import 'package:agora/profil/demographic/pages/demographic_profil_page.dart';
+import 'package:agora/profil/notification/pages/notification_page.dart';
 import 'package:agora/profil/onboarding/pages/onboarding_page.dart';
 import 'package:agora/profil/pages/delete_account_page.dart';
-import 'package:agora/profil/notification/pages/notification_page.dart';
-import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
 import 'package:agora/profil/pages/profil_information_page.dart';
+import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
 import 'package:agora/qag/moderation/pages/moderation_page.dart';
 import 'package:flutter/material.dart';
 
@@ -168,8 +168,8 @@ class _ProfilPageState extends State<ProfilPage> {
                     SizedBox(height: AgoraSpacings.x1_25),
                     AgoraButton(
                       label: ProfileStrings.feedbackTipsButton,
-                      buttonStyle: AgoraButtonStyle.primary,
-                      onPressed: () {
+                      style: AgoraButtonStyle.primary,
+                      onTap: () {
                         _track(AnalyticsEventNames.giveFeedback);
                         Navigator.of(context).pushNamed(AppFeedbackPage.routeName);
                       },

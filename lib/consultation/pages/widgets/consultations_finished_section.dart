@@ -10,7 +10,7 @@ import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_finished_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/scroll/agora_horizontal_scroll_helper.dart';
@@ -63,11 +63,12 @@ class ConsultationsFinishedSection extends StatelessWidget {
                     ),
                     if (shouldDisplayAllButton) ...[
                       SizedBox(width: AgoraSpacings.x0_75),
-                      AgoraRoundedButton(
+                      AgoraButton(
                         label: GenericStrings.all,
                         semanticLabel: "voir toutes les consultations terminées",
-                        style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                        onPressed: () => Navigator.pushNamed(
+                        style: AgoraButtonStyle.transparentWithBorder,
+                        isRounded: true,
+                        onTap: () => Navigator.pushNamed(
                           context,
                           ConsultationFinishedPaginatedPage.routeName,
                           arguments: ConsultationPaginatedPageType.finished,

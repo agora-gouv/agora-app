@@ -162,8 +162,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
                         prefixIcon: "ic_share.svg",
                         label: GenericStrings.share,
                         semanticLabel: "Partager la question",
-                        buttonStyle: AgoraButtonStyle.lightGrey,
-                        onPressed: () {
+                        style: AgoraButtonStyle.lightGrey,
+                        onTap: () {
                           TrackerHelper.trackClick(
                             clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
                             widgetName: AnalyticsScreenNames.qagDetailsPage,
@@ -302,8 +302,8 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         SizedBox(height: AgoraSpacings.base),
         AgoraButton(
           label: GenericStrings.delete,
-          buttonStyle: AgoraButtonStyle.redBorder,
-          onPressed: () => Navigator.pushNamed(
+          style: AgoraButtonStyle.redBorder,
+          onTap: () => Navigator.pushNamed(
             context,
             QagDetailsDeleteConfirmationPage.routeName,
             arguments: QagDetailsDeleteConfirmationArguments(

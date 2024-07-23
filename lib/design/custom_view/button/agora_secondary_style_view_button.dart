@@ -1,7 +1,7 @@
 import 'package:agora/design/custom_view/agora_little_separator.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
@@ -22,21 +22,26 @@ class AgoraSecondaryStyleViewButton {
 }
 
 class AgoraSecondaryStyleView extends StatelessWidget {
-  final Widget title;
-  final AgoraSecondaryStyleViewButton? button;
-  final VoidCallback? onBackClick;
   final Widget child;
-  final AgoraSecondaryScrollType scrollType;
+  final Widget title;
   final String pageLabel;
+  final AgoraSecondaryScrollType scrollType;
+  final String? buttonLabel;
+  final String? buttonIcon;
+  final String? buttonSemanticLabel;
+  final void Function()? onTapButton;
+  final VoidCallback? onBackClick;
 
   const AgoraSecondaryStyleView({
-    super.key,
-    required this.title,
-    this.button,
-    this.onBackClick,
-    this.scrollType = AgoraSecondaryScrollType.generic,
     required this.child,
+    required this.title,
     required this.pageLabel,
+    this.scrollType = AgoraSecondaryScrollType.generic,
+    this.buttonLabel,
+    this.buttonIcon,
+    this.buttonSemanticLabel,
+    this.onTapButton,
+    this.onBackClick,
   });
 
   @override
@@ -59,15 +64,15 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                       child: title,
                     ),
                   ),
-                  if (button != null) ...[
+                  if (buttonLabel != null) ...[
                     SizedBox(width: AgoraSpacings.x0_75),
-                    AgoraRoundedButton(
-                      icon: button!.icon,
-                      label: button!.title,
-                      semanticLabel: button!.accessibilityLabel,
-                      style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                      contentPadding: AgoraRoundedButtonPadding.short,
-                      onPressed: () => button!.onClick(),
+                    AgoraButton(
+                      label: buttonLabel!,
+                      isRounded: true,
+                      prefixIcon: buttonIcon,
+                      semanticLabel: buttonSemanticLabel,
+                      style: AgoraButtonStyle.transparentWithBorder,
+                      onTap: onTapButton!,
                     ),
                   ],
                 ],

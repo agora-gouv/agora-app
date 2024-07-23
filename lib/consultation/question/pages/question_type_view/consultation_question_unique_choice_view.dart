@@ -1,11 +1,11 @@
-import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/uuid/uuid_utils.dart';
-import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
-import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 import 'package:agora/consultation/question/pages/consultation_question_helper.dart';
 import 'package:agora/consultation/question/pages/question_type_view/consultation_question_view.dart';
+import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
+import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationQuestionUniqueChoiceView extends StatefulWidget {
@@ -64,7 +64,7 @@ class _ConsultationQuestionUniqueChoiceViewState extends State<ConsultationQuest
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
                         isLastQuestion: widget.uniqueChoiceQuestion.nextQuestionId == null,
-                        onPressed: () => widget.onUniqueResponseTap(
+                        onTap: () => widget.onUniqueResponseTap(
                           widget.uniqueChoiceQuestion.id,
                           currentResponseId,
                           otherResponseText,

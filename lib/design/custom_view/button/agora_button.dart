@@ -6,36 +6,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraButton extends StatelessWidget {
-  final bool isLoading;
   final String label;
+  final void Function() onTap;
+  final bool isLoading;
+  final bool isExpanded;
+  final bool isDisabled;
+  final bool isRounded;
+  final AgoraButtonStyle style;
+  final EdgeInsets contentPadding;
   final String? semanticLabel;
   final String? prefixIcon;
+  final EdgeInsets? prefixIconPadding;
   final ColorFilter? prefixIconColorFilter;
   final String? suffixIcon;
+  final EdgeInsets? suffixIconPadding;
   final ColorFilter? suffixIconColorFilter;
-  final AgoraButtonStyle buttonStyle;
-  final bool expanded;
-  final bool isDisabled;
-  final void Function()? onPressed;
 
   AgoraButton({
-    this.isLoading = false,
     required this.label,
+    required this.onTap,
+    this.isLoading = false,
+    this.isExpanded = false,
+    this.isDisabled = false,
+    this.isRounded = false,
+    this.style = AgoraButtonStyle.primary,
+    this.contentPadding = const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
     this.semanticLabel,
     this.prefixIcon,
+    this.prefixIconPadding,
     this.prefixIconColorFilter,
     this.suffixIcon,
+    this.suffixIconPadding,
     this.suffixIconColorFilter,
-    this.buttonStyle = AgoraButtonStyle.primary,
-    this.expanded = false,
-    this.isDisabled = false,
-    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    final borderShape =
-        RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded), side: _getBorder(buttonStyle));
+    final borderShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(isRounded ? AgoraCorners.rounded50 : AgoraCorners.rounded),
+      side: _getBorder(style),
+    );
     Widget child;
     if (isLoading) {
       child = Center(child: CircularProgressIndicator());
@@ -43,10 +53,10 @@ class AgoraButton extends StatelessWidget {
       child = _buildSemantic(
         child: Material(
           elevation: 0,
-          color: _getBackgroundColor(buttonStyle, isDisabled),
+          color: _getBackgroundColor(style, isDisabled),
           shape: borderShape,
           child: InkWell(
-            onTap: onPressed,
+            onTap: onTap,
             focusColor: AgoraColors.neutral400,
             customBorder: borderShape,
             child: ConstrainedBox(
@@ -55,27 +65,33 @@ class AgoraButton extends StatelessWidget {
                 minWidth: 48,
               ),
               child: Ink(
-                padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+                padding: contentPadding,
                 child: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   runAlignment: WrapAlignment.center,
                   alignment: WrapAlignment.center,
                   children: [
                     if (prefixIcon != null) ...[
-                      SvgPicture.asset(
-                        "assets/${prefixIcon!}",
-                        excludeFromSemantics: true,
-                        colorFilter: prefixIconColorFilter,
+                      Padding(
+                        padding: prefixIconPadding ?? EdgeInsets.zero,
+                        child: SvgPicture.asset(
+                          "assets/${prefixIcon!}",
+                          excludeFromSemantics: true,
+                          colorFilter: prefixIconColorFilter,
+                        ),
                       ),
                       const SizedBox(width: 8),
                     ],
-                    Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
+                    Text(label, textAlign: TextAlign.center, style: _getTextStyle(style)),
                     if (suffixIcon != null) ...[
                       const SizedBox(width: 8),
-                      SvgPicture.asset(
-                        "assets/${suffixIcon!}",
-                        excludeFromSemantics: true,
-                        colorFilter: suffixIconColorFilter,
+                      Padding(
+                        padding: suffixIconPadding ?? EdgeInsets.zero,
+                        child: SvgPicture.asset(
+                          "assets/${suffixIcon!}",
+                          excludeFromSemantics: true,
+                          colorFilter: suffixIconColorFilter,
+                        ),
                       ),
                     ],
                   ],
@@ -86,7 +102,7 @@ class AgoraButton extends StatelessWidget {
         ),
       );
     }
-    if (expanded) {
+    if (isExpanded) {
       child = SizedBox(width: double.infinity, child: child);
     }
     return child;
@@ -97,7 +113,7 @@ class AgoraButton extends StatelessWidget {
       return Semantics(
         label: semanticLabel,
         button: true,
-        enabled: onPressed != null,
+        enabled: !isDisabled,
         child: ExcludeSemantics(child: child),
       );
     } else {
@@ -115,6 +131,7 @@ Color _getBackgroundColor(AgoraButtonStyle style, bool isDisabled) {
       AgoraButtonStyle.blueBorder || AgoraButtonStyle.redBorder => AgoraColors.transparent,
       AgoraButtonStyle.grey || AgoraButtonStyle.lightGreyWithBorder => AgoraColors.steam,
       AgoraButtonStyle.lightGrey => AgoraColors.cascadingWhite,
+      AgoraButtonStyle.transparentWithBorder => AgoraColors.transparent,
     };
   }
 }
@@ -126,7 +143,8 @@ TextStyle _getTextStyle(AgoraButtonStyle style) {
     AgoraButtonStyle.redBorder => AgoraTextStyles.redTextButton,
     AgoraButtonStyle.grey ||
     AgoraButtonStyle.lightGrey ||
-    AgoraButtonStyle.lightGreyWithBorder =>
+    AgoraButtonStyle.lightGreyWithBorder ||
+    AgoraButtonStyle.transparentWithBorder =>
       AgoraTextStyles.lightGreyButton,
   };
 }
@@ -137,6 +155,8 @@ BorderSide _getBorder(AgoraButtonStyle style) {
     AgoraButtonStyle.blueBorder => BorderSide(color: AgoraColors.primaryBlue, width: 1.0, style: BorderStyle.solid),
     AgoraButtonStyle.redBorder => BorderSide(color: AgoraColors.red, width: 1.0, style: BorderStyle.solid),
     AgoraButtonStyle.lightGreyWithBorder => BorderSide(color: AgoraColors.border, width: 1, style: BorderStyle.solid),
+    AgoraButtonStyle.transparentWithBorder =>
+      BorderSide(color: AgoraColors.orochimaru, width: 1, style: BorderStyle.solid),
   };
 }
 
@@ -147,4 +167,5 @@ enum AgoraButtonStyle {
   grey,
   lightGrey,
   lightGreyWithBorder,
+  transparentWithBorder,
 }

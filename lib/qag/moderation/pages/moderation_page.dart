@@ -4,7 +4,7 @@ import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/card/agora_qag_moderation_card.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
@@ -154,10 +154,10 @@ class _ModerationPageState extends State<ModerationPage> {
     if (viewModel.qagsToModerationViewModels.isEmpty) {
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       qagsWidgets.add(
-        AgoraRoundedButton(
+        AgoraButton(
           label: GenericStrings.displayMore,
-          style: AgoraRoundedButtonStyle.primaryButtonStyle,
-          onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
+          isRounded: true,
+          onTap: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
         ),
       );
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));

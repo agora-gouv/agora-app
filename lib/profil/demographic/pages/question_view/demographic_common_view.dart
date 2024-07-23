@@ -1,15 +1,15 @@
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/design/custom_view/text/agora_link_text.dart';
-import 'package:agora/profil/demographic/domain/demographic_response_choice.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/text/agora_link_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:agora/profil/demographic/domain/demographic_response.dart';
+import 'package:agora/profil/demographic/domain/demographic_response_choice.dart';
 import 'package:agora/profil/demographic/pages/helpers/demographic_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -72,8 +72,8 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
                 SizedBox(height: AgoraSpacings.x0_75),
                 AgoraButton(
                   label: GenericStrings.close,
-                  buttonStyle: AgoraButtonStyle.primary,
-                  onPressed: () => Navigator.pop(context),
+                  style: AgoraButtonStyle.primary,
+                  onTap: () => Navigator.pop(context),
                 ),
               ],
             );

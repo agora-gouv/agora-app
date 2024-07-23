@@ -1,9 +1,5 @@
 import 'dart:math';
 
-import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_bloc.dart';
-import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_events.dart';
-import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/date_extension.dart';
@@ -14,30 +10,33 @@ import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/common/parser/simple_html_parser.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_bloc.dart';
+import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_events.dart';
+import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_state.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.dart';
+import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
+import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
+import 'package:agora/consultation/question/pages/consultation_question_page.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
+import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
+import 'package:agora/design/custom_view/fullscreen_animation_view.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_read_more_text.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/video/agora_video_view.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
-import 'package:agora/design/custom_view/fullscreen_animation_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
-import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.dart';
-import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
-import 'package:agora/common/parser/simple_html_parser.dart';
-import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
-import 'package:agora/consultation/question/pages/consultation_question_page.dart';
+import 'package:agora/design/video/agora_video_view.dart';
 import 'package:collection/collection.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:equatable/equatable.dart';
@@ -171,8 +170,8 @@ class _SuccessPage extends StatelessWidget {
               Flexible(
                 child: AgoraButton(
                   label: 'Supprimer',
-                  buttonStyle: AgoraButtonStyle.redBorder,
-                  onPressed: () {
+                  style: AgoraButtonStyle.redBorder,
+                  onTap: () {
                     context
                         .read<DynamicConsultationBloc>()
                         .add(DeleteConsultationResponsesEvent(viewModel.consultationId));
@@ -226,8 +225,8 @@ class _ShareButton extends StatelessWidget {
         prefixIcon: "ic_share.svg",
         label: GenericStrings.share,
         semanticLabel: "Partager la consultation",
-        buttonStyle: AgoraButtonStyle.lightGrey,
-        onPressed: () {
+        style: AgoraButtonStyle.lightGrey,
+        onTap: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.shareConsultation,
             widgetName: AnalyticsScreenNames.consultationDetailsPage,

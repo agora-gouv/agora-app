@@ -1,14 +1,14 @@
-import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/common/uuid/uuid_utils.dart';
-import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
-import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 import 'package:agora/consultation/question/pages/consultation_question_helper.dart';
 import 'package:agora/consultation/question/pages/question_type_view/consultation_question_view.dart';
+import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
@@ -72,7 +72,7 @@ class _ConsultationQuestionMultipleChoicesViewState extends State<ConsultationQu
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
                         isLastQuestion: multipleChoicesQuestion.nextQuestionId == null,
-                        onPressed: () {
+                        onTap: () {
                           widget.onMultipleResponseTap(
                             multipleChoicesQuestion.id,
                             [...currentResponseIds],

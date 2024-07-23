@@ -2,7 +2,7 @@ import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_answered_card.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -51,11 +51,12 @@ class ConsultationsAnsweredSection extends StatelessWidget {
           ),
           if (answeredViewModels.isNotEmpty) ...[
             SizedBox(width: AgoraSpacings.x0_75),
-            AgoraRoundedButton(
+            AgoraButton(
               label: GenericStrings.all,
+              isRounded: true,
               semanticLabel: "voir toutes les consultations répondues",
-              style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-              onPressed: () => Navigator.pushNamed(
+              style: AgoraButtonStyle.transparentWithBorder,
+              onTap: () => Navigator.pushNamed(
                 context,
                 ConsultationFinishedPaginatedPage.routeName,
                 arguments: ConsultationPaginatedPageType.answered,

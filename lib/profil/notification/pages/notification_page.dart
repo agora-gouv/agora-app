@@ -2,7 +2,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/card/agora_notification_card.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
@@ -96,10 +96,10 @@ class _NotificationPageState extends State<NotificationPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AgoraRoundedButton(
+            AgoraButton(
               label: ProfileStrings.retry,
-              style: AgoraRoundedButtonStyle.primaryButtonStyle,
-              onPressed: () =>
+              isRounded: true,
+              onTap: () =>
                   context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: state.currentPageNumber)),
             ),
           ],
@@ -109,10 +109,10 @@ class _NotificationPageState extends State<NotificationPage> {
     } else {
       if (state.hasMoreNotifications) {
         widgets.add(
-          AgoraRoundedButton(
+          AgoraButton(
             label: ProfileStrings.displayMore,
-            style: AgoraRoundedButtonStyle.primaryButtonStyle,
-            onPressed: () =>
+            isRounded: true,
+            onTap: () =>
                 context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: state.currentPageNumber + 1)),
           ),
         );

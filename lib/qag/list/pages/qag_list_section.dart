@@ -6,7 +6,7 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_qag_header.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -113,10 +113,10 @@ class QagListSection extends StatelessWidget {
                     return Center(child: CircularProgressIndicator());
                   case QagListFooterType.loaded:
                     return Center(
-                      child: AgoraRoundedButton(
+                      child: AgoraButton(
                         label: GenericStrings.displayMore,
-                        style: AgoraRoundedButtonStyle.primaryButtonStyle,
-                        onPressed: () {
+                        isRounded: true,
+                        onTap: () {
                           context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
                         },
                       ),
@@ -150,9 +150,10 @@ class QagListSection extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: AgoraSpacings.x1_5),
-              AgoraRoundedButton(
+              AgoraButton(
                 label: QagStrings.askQuestion,
-                onPressed: () {
+                isRounded: true,
+                onTap: () {
                   TrackerHelper.trackClick(
                     clickName: AnalyticsEventNames.askQuestionInEmptyList,
                     widgetName: AnalyticsScreenNames.qagsPage,

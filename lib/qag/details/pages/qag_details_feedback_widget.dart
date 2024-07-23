@@ -5,7 +5,6 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -79,11 +78,12 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
     return Row(
       children: [
         if (isHelpfulClicked == null) ...[
-          AgoraRoundedButton(
-            icon: "ic_thumb_white.svg",
+          AgoraButton(
             label: QagStrings.utils,
-            contentPadding: AgoraRoundedButtonPadding.normal,
-            onPressed: () {
+            isRounded: true,
+            prefixIcon: "ic_thumb_white.svg",
+            contentPadding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.base),
+            onTap: () {
               if (isHelpfulClicked == null) {
                 _trackFeedback(qagId);
                 context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true));
@@ -91,12 +91,13 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
             },
           ),
           SizedBox(width: AgoraSpacings.base),
-          AgoraRoundedButton(
-            icon: "ic_thumb_down_white.svg",
+          AgoraButton(
             label: QagStrings.notUtils,
-            contentPadding: AgoraRoundedButtonPadding.normal,
-            iconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
-            onPressed: () {
+            isRounded: true,
+            prefixIcon: "ic_thumb_down_white.svg",
+            contentPadding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.base),
+            prefixIconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
+            onTap: () {
               if (isHelpfulClicked == null) {
                 _trackFeedback(qagId);
                 context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: false));
@@ -124,8 +125,8 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
         const SizedBox(height: AgoraSpacings.base),
         AgoraButton(
           label: 'Modifier votre réponse',
-          buttonStyle: AgoraButtonStyle.blueBorder,
-          onPressed: () {
+          style: AgoraButtonStyle.blueBorder,
+          onTap: () {
             context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
           },
         ),
@@ -170,8 +171,8 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: AgoraButton(
             label: 'Modifier votre réponse',
-            buttonStyle: AgoraButtonStyle.blueBorder,
-            onPressed: () {
+            style: AgoraButtonStyle.blueBorder,
+            onTap: () {
               context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
             },
           ),

@@ -1,11 +1,11 @@
+import 'package:agora/common/parser/string_parser.dart';
 import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
-import 'package:agora/design/custom_view/text/agora_html.dart';
+import 'package:agora/consultation/question/pages/consultation_question_helper.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/common/parser/string_parser.dart';
-import 'package:agora/consultation/question/pages/consultation_question_helper.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationQuestionChapterView extends StatelessWidget {
@@ -60,7 +60,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                     Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
                         isLastQuestion: chapter.nextQuestionId == null,
-                        onPressed: () => onNextTap(),
+                        onTap: () => onNextTap(),
                       ),
                     ),
                   ],

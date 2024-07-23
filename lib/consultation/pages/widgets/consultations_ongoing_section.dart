@@ -5,7 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -78,10 +78,11 @@ class ConsultationsOngoingSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: AgoraSpacings.base),
-                AgoraRoundedButton(
-                  label: ConsultationStrings.gotoQags,
-                  style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                  onPressed: () {
+                AgoraButton(
+                  label: ConsultationStrings.goToQaG,
+                  isRounded: true,
+                  style: AgoraButtonStyle.transparentWithBorder,
+                  onTap: () {
                     TrackerHelper.trackClick(
                       clickName: AnalyticsEventNames.gotoQagsFromConsultations,
                       widgetName: AnalyticsScreenNames.consultationsPage,

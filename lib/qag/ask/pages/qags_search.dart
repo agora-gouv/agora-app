@@ -4,7 +4,7 @@ import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -135,9 +135,10 @@ class _NoResultView extends StatelessWidget {
               style: AgoraTextStyles.regular14,
             ),
             const SizedBox(height: AgoraSpacings.base),
-            AgoraRoundedButton(
+            AgoraButton(
               label: QagStrings.askQuestion,
-              onPressed: () {
+              isRounded: true,
+              onTap: () {
                 TrackerHelper.trackClick(
                   clickName: AnalyticsEventNames.askQuestion,
                   widgetName: AnalyticsScreenNames.qagsPage,

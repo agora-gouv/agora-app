@@ -84,15 +84,15 @@ class _Step2Screen extends StatelessWidget {
                               AgoraButton(
                                 label: ConsultationStrings.previousQuestion,
                                 semanticLabel: SemanticsStrings.previousQuestion,
-                                buttonStyle: AgoraButtonStyle.blueBorder,
-                                onPressed: onPrevious,
+                                style: AgoraButtonStyle.blueBorder,
+                                onTap: onPrevious,
                               ),
                               const SizedBox(width: AgoraSpacings.base),
                               AgoraButton(
                                 label: ConsultationStrings.validate,
                                 semanticLabel: ConsultationStrings.validate,
-                                buttonStyle: AgoraButtonStyle.primary,
-                                onPressed: () {
+                                style: AgoraButtonStyle.primary,
+                                onTap: () {
                                   context.read<AppFeedbackBloc>().add(
                                         SendAppFeedbackEvent(
                                           AppFeedback(
@@ -171,8 +171,8 @@ class _MailQuestionScreen extends StatelessWidget {
                           AgoraButton(
                             label: FeedbackStrings.mailHint,
                             semanticLabel: FeedbackStrings.mailHint,
-                            buttonStyle: AgoraButtonStyle.primary,
-                            onPressed: () {
+                            style: AgoraButtonStyle.primary,
+                            onTap: () {
                               LaunchUrlHelper.mailtoAgora('Je souhaite participer à un atelier utilisateur');
                             },
                           ),
@@ -180,8 +180,8 @@ class _MailQuestionScreen extends StatelessWidget {
                           AgoraButton(
                             label: FeedbackStrings.mailButtonLabel,
                             semanticLabel: FeedbackStrings.mailButtonLabel,
-                            buttonStyle: AgoraButtonStyle.blueBorder,
-                            onPressed: () {
+                            style: AgoraButtonStyle.blueBorder,
+                            onTap: () {
                               context.read<AppFeedbackBloc>().add(AppFeedbackMailSentEvent());
                             },
                           ),

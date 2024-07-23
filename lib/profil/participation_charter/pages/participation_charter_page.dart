@@ -1,21 +1,21 @@
-import 'package:agora/profil/participation_charter/bloc/participation_charter_bloc.dart';
-import 'package:agora/profil/participation_charter/bloc/participation_charter_event.dart';
-import 'package:agora/profil/participation_charter/bloc/participation_charter_state.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/participate_charter_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
+import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/profil/participation_charter/bloc/participation_charter_bloc.dart';
+import 'package:agora/profil/participation_charter/bloc/participation_charter_event.dart';
+import 'package:agora/profil/participation_charter/bloc/participation_charter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,8 +63,8 @@ class ParticipationCharterPage extends StatelessWidget {
                     Flexible(
                       child: AgoraButton(
                         label: GenericStrings.readCompleteCharter,
-                        buttonStyle: AgoraButtonStyle.blueBorder,
-                        onPressed: () {
+                        style: AgoraButtonStyle.blueBorder,
+                        onTap: () {
                           LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
                         },
                         suffixIcon: "ic_external_link.svg",
@@ -74,8 +74,8 @@ class ParticipationCharterPage extends StatelessWidget {
                     SizedBox(width: AgoraSpacings.base),
                     AgoraButton(
                       label: GenericStrings.back,
-                      buttonStyle: AgoraButtonStyle.primary,
-                      onPressed: () {
+                      style: AgoraButtonStyle.primary,
+                      onTap: () {
                         Navigator.pop(context);
                       },
                     ),

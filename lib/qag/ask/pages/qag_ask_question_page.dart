@@ -15,7 +15,6 @@ import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
@@ -252,8 +251,8 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               AgoraButton(
                 label: QagStrings.readNotice,
-                buttonStyle: AgoraButtonStyle.lightGrey,
-                onPressed: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
+                style: AgoraButtonStyle.lightGrey,
+                onTap: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
               ),
               SizedBox(height: AgoraSpacings.base),
               AgoraCheckbox(
@@ -296,23 +295,21 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         label: QagStrings.send,
                         isLoading: createQagState is CreateQagLoadingState,
                         isDisabled: !_couldSend(),
-                        buttonStyle: AgoraButtonStyle.primary,
-                        onPressed: _couldSend()
-                            ? () {
-                                TrackerHelper.trackClick(
-                                  clickName: AnalyticsEventNames.sendAskQuestion,
-                                  widgetName: AnalyticsScreenNames.qagAskQuestionPage,
-                                );
-                                context.read<CreateQagBloc>().add(
-                                      CreateQagEvent(
-                                        title: question,
-                                        description: details,
-                                        author: firstname,
-                                        thematiqueId: thematique!.id!,
-                                      ),
-                                    );
-                              }
-                            : null,
+                        style: AgoraButtonStyle.primary,
+                        onTap: () {
+                          TrackerHelper.trackClick(
+                            clickName: AnalyticsEventNames.sendAskQuestion,
+                            widgetName: AnalyticsScreenNames.qagAskQuestionPage,
+                          );
+                          context.read<CreateQagBloc>().add(
+                                CreateQagEvent(
+                                  title: question,
+                                  description: details,
+                                  author: firstname,
+                                  thematiqueId: thematique!.id!,
+                                ),
+                              );
+                        },
                       ),
                     ],
                   );
@@ -335,9 +332,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           Text(errorCase, style: AgoraTextStyles.light14),
           SizedBox(height: AgoraSpacings.x1_5, width: double.infinity),
           Center(
-            child: AgoraRoundedButton(
+            child: AgoraButton(
               label: QagStrings.goToAllQuestion,
-              onPressed: () {
+              isRounded: true,
+              onTap: () {
                 Navigator.pop(context);
               },
             ),
@@ -415,8 +413,8 @@ class _InfoBouton extends StatelessWidget {
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraButton(
                 label: GenericStrings.close,
-                buttonStyle: AgoraButtonStyle.primary,
-                onPressed: () => Navigator.pop(context),
+                style: AgoraButtonStyle.primary,
+                onTap: () => Navigator.pop(context),
               ),
             ],
           );

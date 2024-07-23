@@ -1,6 +1,3 @@
-import 'package:agora/profil/notification/bloc/permission/notification_permission_bloc.dart';
-import 'package:agora/profil/notification/bloc/permission/notification_permission_event.dart';
-import 'package:agora/profil/notification/bloc/permission/notification_permission_state.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
@@ -11,6 +8,8 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
@@ -23,8 +22,9 @@ import 'package:agora/login/bloc/login_bloc.dart';
 import 'package:agora/login/bloc/login_event.dart';
 import 'package:agora/login/bloc/login_state.dart';
 import 'package:agora/login/domain/login_error_type.dart';
-import 'package:agora/consultation/pages/consultations_page.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/profil/notification/bloc/permission/notification_permission_bloc.dart';
+import 'package:agora/profil/notification/bloc/permission/notification_permission_event.dart';
+import 'package:agora/profil/notification/bloc/permission/notification_permission_state.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:flutter/foundation.dart';
@@ -150,8 +150,8 @@ class _SplashPageState extends State<SplashPage> {
                                   Flexible(
                                     child: AgoraButton(
                                       label: GenericStrings.contactSupport,
-                                      buttonStyle: AgoraButtonStyle.blueBorder,
-                                      onPressed: () {
+                                      style: AgoraButtonStyle.blueBorder,
+                                      onTap: () {
                                         final Uri emailUri = Uri(
                                           scheme: 'mailto',
                                           path: GenericStrings.mailSupport,
@@ -164,8 +164,8 @@ class _SplashPageState extends State<SplashPage> {
                                   SizedBox(width: AgoraSpacings.base),
                                   AgoraButton(
                                     label: GenericStrings.retry,
-                                    buttonStyle: AgoraButtonStyle.primary,
-                                    onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
+                                    style: AgoraButtonStyle.primary,
+                                    onTap: () => context.read<LoginBloc>().add(CheckLoginEvent()),
                                   ),
                                 ],
                               ),
@@ -175,9 +175,9 @@ class _SplashPageState extends State<SplashPage> {
                               SizedBox(height: AgoraSpacings.x1_25),
                               AgoraButton(
                                 label: GenericStrings.updateApp,
-                                buttonStyle: AgoraButtonStyle.primary,
-                                expanded: true,
-                                onPressed: () => LaunchUrlHelper.launchStore(),
+                                style: AgoraButtonStyle.primary,
+                                isExpanded: true,
+                                onTap: () => LaunchUrlHelper.launchStore(),
                               ),
                             ],
                             SizedBox(height: screenHeight * 0.1),
@@ -288,14 +288,14 @@ class _SplashPageState extends State<SplashPage> {
           children: [
             AgoraButton(
               label: GenericStrings.rejectNotificationPermissionButton,
-              buttonStyle: AgoraButtonStyle.lightGrey,
-              onPressed: () => Navigator.pop(context),
+              style: AgoraButtonStyle.lightGrey,
+              onTap: () => Navigator.pop(context),
             ),
             SizedBox(height: AgoraSpacings.base),
             AgoraButton(
               label: GenericStrings.acceptNotificationPermissionButton,
-              buttonStyle: AgoraButtonStyle.primary,
-              onPressed: () {
+              style: AgoraButtonStyle.primary,
+              onTap: () {
                 openAppSettings();
                 Navigator.pop(context);
               },

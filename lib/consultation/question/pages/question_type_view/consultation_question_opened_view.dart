@@ -1,13 +1,13 @@
-import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/parser/string_parser.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
+import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
+import 'package:agora/consultation/question/pages/consultation_question_helper.dart';
+import 'package:agora/consultation/question/pages/question_type_view/consultation_question_view.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/consultation/question/domain/consultation_question_response.dart';
-import 'package:agora/common/parser/string_parser.dart';
-import 'package:agora/consultation/question/pages/consultation_question_helper.dart';
-import 'package:agora/consultation/question/pages/question_type_view/consultation_question_view.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationQuestionOpenedView extends StatefulWidget {
@@ -68,7 +68,7 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
                   ? Flexible(
                       child: ConsultationQuestionHelper.buildNextQuestion(
                         isLastQuestion: openedQuestion.nextQuestionId == null,
-                        onPressed: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
+                        onTap: () => widget.onOpenedResponseInput(openedQuestion.id, openedResponse),
                       ),
                     )
                   : Flexible(

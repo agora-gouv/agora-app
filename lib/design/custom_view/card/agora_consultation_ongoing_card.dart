@@ -1,6 +1,3 @@
-import 'package:agora/consultation/bloc/consultation_bloc.dart';
-import 'package:agora/consultation/bloc/consultation_event.dart';
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
@@ -9,15 +6,18 @@ import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/consultation/bloc/consultation_bloc.dart';
+import 'package:agora/consultation/bloc/consultation_event.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/custom_view/card/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -131,8 +131,8 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                     child: AgoraButton(
                       prefixIcon: "ic_question_confirmation.svg",
                       label: ConsultationStrings.participate,
-                      buttonStyle: AgoraButtonStyle.primary,
-                      onPressed: () {
+                      style: AgoraButtonStyle.primary,
+                      onTap: () {
                         TrackerHelper.trackClick(
                           clickName: "${AnalyticsEventNames.participateConsultation} $consultationId",
                           widgetName: AnalyticsScreenNames.consultationsPage,

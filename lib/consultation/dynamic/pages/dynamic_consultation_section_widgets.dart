@@ -493,8 +493,8 @@ class ShowMoreButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: horizontalPadding),
         child: AgoraButton(
           label: label,
-          buttonStyle: AgoraButtonStyle.blueBorder,
-          onPressed: onTap,
+          style: AgoraButtonStyle.blueBorder,
+          onTap: onTap,
         ),
       ),
     );
@@ -641,8 +641,8 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: AgoraButton(
                               label: section.buttonLabel,
-                              buttonStyle: AgoraButtonStyle.blueBorder,
-                              onPressed: () {
+                              style: AgoraButtonStyle.blueBorder,
+                              onTap: () {
                                 Navigator.pushNamed(
                                   context,
                                   DynamicConsultationResultsPage.routeName,
@@ -968,8 +968,8 @@ class _DownloadSectionWidget extends StatelessWidget {
                       child: AgoraButton(
                         label: 'Télécharger',
                         semanticLabel: 'Télécharger la synthèse complète',
-                        buttonStyle: AgoraButtonStyle.blueBorder,
-                        onPressed: () {
+                        style: AgoraButtonStyle.blueBorder,
+                        onTap: () {
                           LaunchUrlHelper.launchUrlFromAgora(
                             url: section.url,
                             launchMode: LaunchMode.externalApplication,
@@ -1069,11 +1069,13 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                   if (answer == null)
                     Row(
                       children: [
-                        AgoraRoundedButton(
-                          icon: "ic_thumb_white.svg",
+                        AgoraButton(
                           label: QagStrings.yes,
-                          contentPadding: AgoraRoundedButtonPadding.normal,
-                          onPressed: () {
+                          isRounded: true,
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.base),
+                          prefixIcon: "ic_thumb_white.svg",
+                          onTap: () {
                             context.read<DynamicConsultationFeedbackBloc>().add(
                                   SendConsultationUpdateFeedbackEvent(
                                     consultationId: widget.section.consultationId,
@@ -1093,12 +1095,14 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                           },
                         ),
                         SizedBox(width: AgoraSpacings.base),
-                        AgoraRoundedButton(
-                          icon: "ic_thumb_down_white.svg",
+                        AgoraButton(
                           label: QagStrings.no,
-                          contentPadding: AgoraRoundedButtonPadding.normal,
-                          iconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
-                          onPressed: () {
+                          isRounded: true,
+                          prefixIcon: "ic_thumb_down_white.svg",
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.base),
+                          prefixIconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
+                          onTap: () {
                             context.read<DynamicConsultationFeedbackBloc>().add(
                                   SendConsultationUpdateFeedbackEvent(
                                     consultationId: widget.section.consultationId,
@@ -1136,8 +1140,8 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                       alignment: Alignment.centerLeft,
                       child: AgoraButton(
                         label: 'Modifier votre réponse',
-                        buttonStyle: AgoraButtonStyle.blueBorder,
-                        onPressed: () {
+                        style: AgoraButtonStyle.blueBorder,
+                        onTap: () {
                           context.read<DynamicConsultationFeedbackBloc>().add(
                                 DeleteConsultationUpdateFeedbackEvent(
                                   consultationId: widget.section.consultationId,
@@ -1474,8 +1478,8 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                     child: AgoraButton(
                       label: 'Partager',
                       semanticLabel: 'Partager cette consultation',
-                      buttonStyle: AgoraButtonStyle.blueBorder,
-                      onPressed: () {
+                      style: AgoraButtonStyle.blueBorder,
+                      onTap: () {
                         ShareHelper.sharePreformatted(context: context, data: section.shareText);
                       },
                     ),

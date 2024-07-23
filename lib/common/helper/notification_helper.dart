@@ -25,8 +25,8 @@ class NotificationHelper {
             ],
             AgoraButton(
               label: GenericStrings.close,
-              buttonStyle: AgoraButtonStyle.primary,
-              onPressed: () => Navigator.pop(context),
+              style: AgoraButtonStyle.primary,
+              onTap: () => Navigator.pop(context),
             ),
           ],
         );

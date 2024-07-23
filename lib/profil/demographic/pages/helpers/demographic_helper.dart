@@ -28,8 +28,8 @@ class DemographicHelper {
       return AgoraButton(
         label: DemographicStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
-        buttonStyle: AgoraButtonStyle.blueBorder,
-        onPressed: onBackTap,
+        style: AgoraButtonStyle.blueBorder,
+        onTap: onBackTap,
       );
     } else {
       return Container();
@@ -40,8 +40,8 @@ class DemographicHelper {
     return AgoraButton(
       label: step == totalStep ? DemographicStrings.send : DemographicStrings.nextQuestion,
       semanticLabel: step == totalStep ? DemographicStrings.send : SemanticsStrings.nextQuestion,
-      buttonStyle: AgoraButtonStyle.primary,
-      onPressed: onPressed,
+      style: AgoraButtonStyle.primary,
+      onTap: onPressed,
     );
   }
 
@@ -49,8 +49,8 @@ class DemographicHelper {
     return AgoraButton(
       label: DemographicStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
-      buttonStyle: AgoraButtonStyle.blueBorder,
-      onPressed: onPressed,
+      style: AgoraButtonStyle.blueBorder,
+      onTap: onPressed,
     );
   }
 }

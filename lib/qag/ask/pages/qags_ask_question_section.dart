@@ -8,7 +8,6 @@ import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -84,8 +83,8 @@ class _InfoBouton extends StatelessWidget {
               SizedBox(height: AgoraSpacings.x0_75),
               AgoraButton(
                 label: GenericStrings.close,
-                buttonStyle: AgoraButtonStyle.primary,
-                onPressed: () => Navigator.pop(context),
+                style: AgoraButtonStyle.primary,
+                onTap: () => Navigator.pop(context),
               ),
             ],
           );
@@ -108,9 +107,10 @@ class _PoserQuestionBouton extends StatelessWidget {
           height: 30,
           radius: 20,
         ),
-      final _AskQagStatusEnabledViewModel vm => AgoraRoundedButton(
+      final _AskQagStatusEnabledViewModel vm => AgoraButton(
           label: QagStrings.askQuestion,
-          onPressed: () {
+          isRounded: true,
+          onTap: () {
             TrackerHelper.trackClick(
               clickName: AnalyticsEventNames.askQuestion,
               widgetName: AnalyticsScreenNames.qagsPage,

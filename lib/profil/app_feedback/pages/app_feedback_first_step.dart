@@ -133,8 +133,8 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                               child: AgoraButton(
                                 label: ConsultationStrings.nextQuestion,
                                 semanticLabel: SemanticsStrings.nextQuestion,
-                                buttonStyle: AgoraButtonStyle.primary,
-                                onPressed: () {
+                                style: AgoraButtonStyle.primary,
+                                onTap: () {
                                   widget.onTypeChosed(choice!);
                                 },
                               ),

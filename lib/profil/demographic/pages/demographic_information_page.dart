@@ -5,15 +5,15 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/text/agora_link_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/profil/demographic/pages/demographic_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -220,8 +220,8 @@ class _NePasRepondreBouton extends StatelessWidget {
       child: AgoraButton(
         label: DemographicStrings.toNoAnswer,
         semanticLabel: DemographicStrings.toNoAnswerSemantic,
-        buttonStyle: AgoraButtonStyle.blueBorder,
-        onPressed: () {
+        style: AgoraButtonStyle.blueBorder,
+        onTap: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.ignoreDemographic,
             widgetName: AnalyticsScreenNames.demographicInformationPage,
@@ -250,8 +250,8 @@ class _CommencerBouton extends StatelessWidget {
     return AgoraButton(
       label: DemographicStrings.begin,
       semanticLabel: DemographicStrings.beginSemantic,
-      buttonStyle: AgoraButtonStyle.primary,
-      onPressed: () {
+      style: AgoraButtonStyle.primary,
+      onTap: () {
         TrackerHelper.trackClick(
           clickName: AnalyticsEventNames.beginDemographic,
           widgetName: AnalyticsScreenNames.demographicInformationPage,

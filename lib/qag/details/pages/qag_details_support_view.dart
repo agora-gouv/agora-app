@@ -4,7 +4,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_like_animation_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
@@ -51,12 +51,13 @@ class QagDetailsSupportView extends StatelessWidget {
                   children: [
                     if (canSupport)
                       Flexible(
-                        child: AgoraRoundedButton(
-                          icon: _buildButtonIcon(isSupported),
+                        child: AgoraButton(
                           label: _buildButtonLabel(isSupported),
+                          isRounded: true,
+                          prefixIcon: _buildButtonIcon(isSupported),
                           isLoading: viewModel.isLoading,
                           style: _buildButtonStyle(isSupported),
-                          onPressed: () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading),
+                          onTap: () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading),
                         ),
                       ),
                     SizedBox(width: AgoraSpacings.x0_5),
@@ -171,11 +172,11 @@ class QagDetailsSupportView extends StatelessWidget {
     }
   }
 
-  AgoraRoundedButtonStyle _buildButtonStyle(bool isSupported) {
+  AgoraButtonStyle _buildButtonStyle(bool isSupported) {
     if (isSupported) {
-      return AgoraRoundedButtonStyle.blueBorderButtonStyle;
+      return AgoraButtonStyle.blueBorder;
     } else {
-      return AgoraRoundedButtonStyle.primaryButtonStyle;
+      return AgoraButtonStyle.primary;
     }
   }
 
