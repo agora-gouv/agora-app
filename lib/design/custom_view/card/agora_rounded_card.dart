@@ -51,8 +51,8 @@ class AgoraRoundedCard extends StatelessWidget {
             ),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: 48,
-                minWidth: 48,
+                minHeight: onTap != null ? 48 : 0,
+                minWidth: onTap != null ? 48 : 0,
               ),
               child: Padding(padding: padding, child: child),
             ),

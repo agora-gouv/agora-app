@@ -1,19 +1,19 @@
-import 'package:agora/qag/details/bloc/qag_details_bloc.dart';
-import 'package:agora/qag/details/bloc/qag_details_event.dart';
-import 'package:agora/qag/details/bloc/qag_details_state.dart';
-import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/qag/details/bloc/qag_details_bloc.dart';
+import 'package:agora/qag/details/bloc/qag_details_event.dart';
+import 'package:agora/qag/details/bloc/qag_details_state.dart';
+import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,7 +82,7 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           AgoraRoundedButton(
             icon: "ic_thumb_white.svg",
             label: QagStrings.utils,
-            contentPadding: AgoraRoundedButtonPadding.short,
+            contentPadding: AgoraRoundedButtonPadding.normal,
             onPressed: () {
               if (isHelpfulClicked == null) {
                 _trackFeedback(qagId);
@@ -94,7 +94,8 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
           AgoraRoundedButton(
             icon: "ic_thumb_down_white.svg",
             label: QagStrings.notUtils,
-            contentPadding: AgoraRoundedButtonPadding.short,
+            contentPadding: AgoraRoundedButtonPadding.normal,
+            iconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
             onPressed: () {
               if (isHelpfulClicked == null) {
                 _trackFeedback(qagId);

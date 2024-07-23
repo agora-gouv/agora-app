@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 enum AgoraLikeStyle {
   police12,
   police14,
+  police16,
 }
 
 class AgoraLikeView extends StatelessWidget {
@@ -259,21 +260,19 @@ class _LikeLoading extends StatelessWidget {
 }
 
 double _buildIconSize(AgoraLikeStyle style) {
-  switch (style) {
-    case AgoraLikeStyle.police12:
-      return 14;
-    case AgoraLikeStyle.police14:
-      return 18;
-  }
+  return switch (style) {
+    AgoraLikeStyle.police12 => 14,
+    AgoraLikeStyle.police14 => 18,
+    AgoraLikeStyle.police16 => 22,
+  };
 }
 
 TextStyle _buildTextStyle(AgoraLikeStyle style) {
-  switch (style) {
-    case AgoraLikeStyle.police12:
-      return AgoraTextStyles.medium12;
-    case AgoraLikeStyle.police14:
-      return AgoraTextStyles.medium14;
-  }
+  return switch (style) {
+    AgoraLikeStyle.police12 => AgoraTextStyles.medium12,
+    AgoraLikeStyle.police14 => AgoraTextStyles.medium14,
+    AgoraLikeStyle.police16 => AgoraTextStyles.medium16,
+  };
 }
 
 String _getIcon(bool isSupported) {

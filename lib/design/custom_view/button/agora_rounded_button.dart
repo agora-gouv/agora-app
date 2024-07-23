@@ -18,6 +18,7 @@ class AgoraRoundedButton extends StatelessWidget {
   final AgoraRoundedButtonStyle style;
   final AgoraRoundedButtonPadding contentPadding;
   final EdgeInsetsGeometry? textPadding;
+  final EdgeInsetsGeometry? iconPadding;
   final VoidCallback onPressed;
 
   const AgoraRoundedButton({
@@ -29,6 +30,7 @@ class AgoraRoundedButton extends StatelessWidget {
     this.style = AgoraRoundedButtonStyle.primaryButtonStyle,
     this.contentPadding = AgoraRoundedButtonPadding.normal,
     this.textPadding,
+    this.iconPadding,
     required this.onPressed,
   });
 
@@ -50,10 +52,11 @@ class AgoraRoundedButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (icon != null) ...[
-                SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
-                SizedBox(width: AgoraSpacings.x0_5),
-              ],
+              if (icon != null && !isLoading)
+                Padding(
+                  padding: iconPadding ?? EdgeInsets.only(right: AgoraSpacings.x0_5),
+                  child: SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
+                ),
               Flexible(
                 child: Padding(
                   padding: textPadding ?? EdgeInsets.zero,
