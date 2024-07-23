@@ -1,9 +1,9 @@
 import 'package:agora/common/manager/helper_manager.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/design/custom_view/agora_responsive_view.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/profil/pages/profil_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
@@ -79,8 +79,8 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
         );
       case NavigationPage.profil:
         return AgoraBottomNavigationBarItem(
-          activateIcon: "ic_consultation.svg",
-          inactivateIcon: "ic_consultation_inactivate.svg",
+          activateIcon: "ic_profil.svg",
+          inactivateIcon: "ic_profil_inactivate.svg",
           label: "Profil",
         );
     }

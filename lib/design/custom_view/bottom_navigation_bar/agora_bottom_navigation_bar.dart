@@ -136,7 +136,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
       textAlign: TextAlign.center,
       style: selectedIndex == _currentSelectedIndex
           ? AgoraTextStyles.medium13.copyWith(color: _activeLabelColor)
-          : AgoraTextStyles.medium13.copyWith(color: _inactiveLabelColor),
+          : AgoraTextStyles.light13.copyWith(color: _inactiveLabelColor),
     );
   }
 }
