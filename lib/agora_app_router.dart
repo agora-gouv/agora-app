@@ -43,11 +43,11 @@ class AgoraAppRouter {
             child: OnboardingPage(),
           ),
       // Consultation
-      ConsultationsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPages.consultation),
+      ConsultationsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.consultation),
       // Question au gouvernement
-      QagsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPages.qag),
+      QagsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.qag),
       // Reponse
-      ReponsesPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPages.reponse),
+      ReponsesPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.reponse),
       QagAskQuestionPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.qagAskQuestionPage,
             child: QagAskQuestionPage(),
