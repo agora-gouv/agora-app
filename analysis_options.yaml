@@ -3,19 +3,22 @@ include: package:flutter_lints/flutter.yaml
 linter:
   # Switch on or off rules
   rules:
+    sort_constructors_first: false
+    sort_unnamed_constructors_first: false
     always_use_package_imports: true
     always_declare_return_types: true
     prefer_final_fields: true
     prefer_final_locals: true
     sort_child_properties_last: true
     avoid_print: true
-    constant_identifier_names: true
+    constant_identifier_names: false
     prefer_const_constructors: false
     prefer_const_literals_to_create_immutables: false
     prefer_const_constructors_in_immutables: false
     use_key_in_widget_constructors: false
     depend_on_referenced_packages: false
     require_trailing_commas: true
+    non_constant_identifier_names: false
 
 analyzer:
   language:

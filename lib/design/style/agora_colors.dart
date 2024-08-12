@@ -45,6 +45,9 @@ class AgoraColors {
   static const Color blur = Color(0x123D3C49);
   static const Color gold = Color(0xFFFFD700);
 
+  static const Color focus = Color(0xFF0C75F6);
+  static const Color disabled = Color(0xFF6D6F73);
+
   // couleur de pastille
   static const Color mintZest = Color(0xFFCFFCD9);
   static const Color icyPlains = Color(0xFFCFDEFC);
