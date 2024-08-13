@@ -9,7 +9,6 @@ class SemanticsStrings {
   static const String consultationTerminees = "Consultations terminées";
   static const String allConsultationTerminees = "Toutes les consultations terminées";
 
-
   static const String moreInformation = "En savoir plus";
   static const String moreInformationAboutGovernmentResponse =
       "En savoir plus sur le fonctionnement des réponses du Gouvernement aux questions citoyennes";
