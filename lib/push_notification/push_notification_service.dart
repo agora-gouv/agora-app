@@ -157,8 +157,6 @@ class FirebasePushNotificationService extends PushNotificationService {
 
   void _redirectionFromNotificationMessage(RemoteMessage message, bool shouldDisplayMessage) {
     final messageType = (message.data["type"] as String?).toNotificationMessageType();
-    print("Yoooo");
-    print(messageType);
     switch (messageType) {
       case NotificationMessageType.qagDetails:
         final qagId = message.data["qagId"] as String?;
