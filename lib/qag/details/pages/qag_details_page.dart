@@ -214,7 +214,7 @@ class _Header extends StatelessWidget {
               Expanded(
                 child: AgoraToolbar(
                   onBackClick: () => Navigator.pop(context, backResult),
-                  semanticPageLabel: 'Détail question citoyenne',
+                  semanticPageLabel: 'Détail de la question citoyenne ${viewModel.title}',
                 ),
               ),
               _ShareButton(viewModel),
