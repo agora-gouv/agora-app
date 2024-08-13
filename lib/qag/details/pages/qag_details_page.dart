@@ -40,7 +40,7 @@ class QagDetailsArguments {
   final bool isQuestionGagnante;
   final String? notificationTitle;
   final String? notificationDescription;
-  final QagReload? reload;
+  final QagReload reload;
 
   QagDetailsArguments({
     required this.qagId,
@@ -179,7 +179,7 @@ class _Success extends StatelessWidget {
                 _DescriptionSliver(
                   viewModel: viewModel,
                   isQuestionGagnante: arguments.isQuestionGagnante,
-                  reload: arguments.reload!,
+                  reload: arguments.reload,
                   onSupportChange: onSupportChange,
                 ),
                 if (viewModel.response != null)

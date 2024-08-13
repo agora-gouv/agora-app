@@ -1,7 +1,3 @@
-import 'package:agora/reponse/bloc/qag_response_a_venir_view_model.dart';
-import 'package:agora/reponse/bloc/qag_response_bloc.dart';
-import 'package:agora/reponse/bloc/qag_response_event.dart';
-import 'package:agora/reponse/bloc/qag_response_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
@@ -9,16 +5,20 @@ import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
+import 'package:agora/design/custom_view/agora_more_information.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/card/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/scroll/agora_horizontal_scroll_helper.dart';
-import 'package:agora/design/custom_view/agora_more_information.dart';
-import 'package:agora/design/custom_view/card/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/qag/repository/presenter/qag_response_presenter.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
+import 'package:agora/qag/repository/presenter/qag_response_presenter.dart';
+import 'package:agora/reponse/bloc/qag_response_a_venir_view_model.dart';
+import 'package:agora/reponse/bloc/qag_response_bloc.dart';
+import 'package:agora/reponse/bloc/qag_response_event.dart';
+import 'package:agora/reponse/bloc/qag_response_state.dart';
 import 'package:agora/reponse/widgets/qags_response_loading.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
@@ -199,7 +199,11 @@ class _ReponseAVenirCard extends StatelessWidget {
             Navigator.pushNamed(
               context,
               QagDetailsPage.routeName,
-              arguments: QagDetailsArguments(qagId: qagResponse.qagId, reload: null, isQuestionGagnante: true),
+              arguments: QagDetailsArguments(
+                qagId: qagResponse.qagId,
+                reload: QagReload.qagsPaginatedPage,
+                isQuestionGagnante: true,
+              ),
             );
           },
         ),
