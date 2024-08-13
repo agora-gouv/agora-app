@@ -3,4 +3,5 @@ enum NotificationMessageType {
   homeQags,
   consultationDetails,
   homeConsultations,
+  reponseSupport,
 }
