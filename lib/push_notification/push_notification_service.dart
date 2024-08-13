@@ -12,12 +12,14 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/pages/consultations_page.dart';
+import 'package:agora/profil/notification/pages/notification_page.dart';
 import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 @pragma('vm:entry-point')
@@ -185,6 +187,13 @@ class FirebasePushNotificationService extends PushNotificationService {
         break;
       case NotificationMessageType.homeConsultations:
         navigatorKey.currentState?.pushReplacementNamed(ConsultationsPage.routeName);
+        break;
+      case NotificationMessageType.reponseSupport:
+        if (navigatorKey.currentContext != null &&
+            ModalRoute.of(navigatorKey.currentContext!)?.settings.name != NotificationPage.routeName) {
+          navigatorKey.currentState?.pushReplacementNamed(QagsPage.routeName);
+          navigatorKey.currentState?.pushNamed(NotificationPage.routeName);
+        }
         break;
       default:
         break;
