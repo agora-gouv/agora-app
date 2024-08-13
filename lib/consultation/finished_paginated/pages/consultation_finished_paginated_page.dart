@@ -13,7 +13,6 @@ import 'package:agora/consultation/finished_paginated/bloc/consultation_finished
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_state.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_secondary_style_view.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_finished_card.dart';

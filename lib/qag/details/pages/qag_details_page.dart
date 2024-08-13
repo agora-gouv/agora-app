@@ -349,7 +349,7 @@ class _DescriptionSliver extends StatelessWidget {
                 qagId: viewModel.id,
                 canSupport: viewModel.canSupport,
                 isQuestionGagnante: isQuestionGagnante,
-                support: viewModel.support,
+                supportViewModel: viewModel.support,
                 onSupportChange: onSupportChange,
               ),
               if (viewModel.canDelete) _DeleteQaG(viewModel.id, reload),
