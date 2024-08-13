@@ -39,7 +39,9 @@ class ConsultationQuestionView extends StatelessWidget {
     return Column(
       children: [
         AgoraToolbar(
-            style: AgoraToolbarStyle.close, semanticPageLabel: 'Question $currentQuestionIndex de la consultation'),
+          style: AgoraToolbarStyle.close,
+          semanticPageLabel: 'Question $currentQuestionIndex de la consultation',
+        ),
         Expanded(
           child: AgoraSingleScrollView(
             scrollController: scrollController,
