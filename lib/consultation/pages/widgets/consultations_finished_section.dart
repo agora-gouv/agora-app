@@ -144,7 +144,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   context,
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
-                    consultationId: finishedViewModel.id,
+                    consultationIdOrSlug: finishedViewModel.id,
                     consultationTitle: finishedViewModel.title,
                     shouldReloadConsultationsWhenPop: false,
                   ),

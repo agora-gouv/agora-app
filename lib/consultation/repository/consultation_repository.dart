@@ -1,17 +1,17 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
-import 'package:agora/consultation/question/domain/consultation_questions.dart';
-import 'package:agora/consultation/question/domain/consultation_question_response.dart';
-import 'package:agora/consultation/domain/consultation_summary_results.dart';
 import 'package:agora/consultation/dynamic/repository/dynamic_consultation_mapper.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
+import 'package:agora/consultation/question/domain/consultation_questions.dart';
+import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
 import 'package:agora/consultation/repository/consultation_questions_builder.dart';
 import 'package:agora/consultation/repository/consultation_responses_builder.dart';
-import 'package:agora/common/log/sentry_wrapper.dart';
-import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -76,6 +76,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         ongoingConsultations: ongoingConsultations.map((ongoingConsultation) {
           return ConsultationOngoing(
             id: ongoingConsultation["id"] as String,
+            slug: ongoingConsultation['slug'] as String,
             title: ongoingConsultation["title"] as String,
             coverUrl: ongoingConsultation["coverUrl"] as String,
             thematique: (ongoingConsultation["thematique"] as Map).toThematique(),
@@ -86,6 +87,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         finishedConsultations: finishedConsultations.map((finishedConsultation) {
           return ConsultationFinished(
             id: finishedConsultation["id"] as String,
+            slug: finishedConsultation['slug'] as String,
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
@@ -96,6 +98,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         answeredConsultations: answeredConsultations.map((answeredConsultation) {
           return ConsultationAnswered(
             id: answeredConsultation["id"] as String,
+            slug: answeredConsultation['slug'] as String,
             title: answeredConsultation["title"] as String,
             coverUrl: answeredConsultation["coverUrl"] as String,
             thematique: (answeredConsultation["thematique"] as Map).toThematique(),
@@ -126,6 +129,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         consultationsPaginated: (response.data["consultations"] as List).map((consultation) {
           return ConsultationFinished(
             id: consultation["id"] as String,
+            slug: consultation['slug'] as String,
             title: consultation["title"] as String,
             coverUrl: consultation["coverUrl"] as String,
             thematique: (consultation["thematique"] as Map).toThematique(),
@@ -151,6 +155,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         consultationsPaginated: (response.data["consultations"] as List).map((finishedConsultation) {
           return ConsultationFinished(
             id: finishedConsultation["id"] as String,
+            slug: finishedConsultation['slug'] as String,
             title: finishedConsultation["title"] as String,
             coverUrl: finishedConsultation["coverUrl"] as String,
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),

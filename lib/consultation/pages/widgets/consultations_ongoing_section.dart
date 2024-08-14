@@ -111,6 +111,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
                 Expanded(
                   child: AgoraConsultationOngoingCard(
                     consultationId: ongoingViewModel1.id,
+                    consultationSlug: ongoingViewModel1.slug,
                     imageUrl: ongoingViewModel1.coverUrl,
                     thematique: ongoingViewModel1.thematique,
                     title: ongoingViewModel1.title,
@@ -123,6 +124,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
                     ? Expanded(
                         child: AgoraConsultationOngoingCard(
                           consultationId: ongoingViewModel2.id,
+                          consultationSlug: ongoingViewModel2.slug,
                           imageUrl: ongoingViewModel2.coverUrl,
                           thematique: ongoingViewModel2.thematique,
                           title: ongoingViewModel2.title,
@@ -143,6 +145,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
         ongoingConsultationsWidgets.add(
           AgoraConsultationOngoingCard(
             consultationId: ongoingViewModel.id,
+            consultationSlug: ongoingViewModel.slug,
             imageUrl: ongoingViewModel.coverUrl,
             thematique: ongoingViewModel.thematique,
             title: ongoingViewModel.title,

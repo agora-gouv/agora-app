@@ -20,18 +20,14 @@ class DeeplinkHelper {
     if (uri != null) {
       Log.d("deeplink initiate uri : $uri");
       final featurePath = uri.pathSegments.first;
-      final id = uri.pathSegments.last;
+      final idOrSlug = uri.pathSegments.last;
       switch (featurePath) {
         case _consultationPath:
-          _handleDeeplink(
-            id: id,
-            onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
-            onMatchFailedCallback: () => Log.e("deeplink initiate uri : no consultation id match error"),
-          );
+          onConsultationSuccessCallback(idOrSlug);
           break;
         case _qagPath:
           _handleDeeplink(
-            id: id,
+            id: idOrSlug,
             onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
             onMatchFailedCallback: () => Log.e("deeplink initiate uri : no qag id match error"),
           );
@@ -54,18 +50,14 @@ class DeeplinkHelper {
     _sub = appLinks.uriLinkStream.listen(
       (Uri uri) {
         final featurePath = uri.pathSegments.first;
-        final id = uri.pathSegments.last;
+        final idOrSlug = uri.pathSegments.last;
         switch (featurePath) {
           case _consultationPath:
-            _handleDeeplink(
-              id: id,
-              onMatchSuccessCallback: (id) => onConsultationSuccessCallback(id),
-              onMatchFailedCallback: () => Log.e("deeplink listen uri : no consultation id match error"),
-            );
+            onConsultationSuccessCallback(idOrSlug);
             break;
           case _qagPath:
             _handleDeeplink(
-              id: id,
+              id: idOrSlug,
               onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
               onMatchFailedCallback: () => Log.e("deeplink listen uri : no qag id match error"),
             );

@@ -1,7 +1,3 @@
-import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/profil/notification/bloc/permission/notification_permission_bloc.dart';
-import 'package:agora/profil/notification/bloc/permission/notification_permission_event.dart';
-import 'package:agora/profil/notification/bloc/permission/notification_permission_state.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/platform_helper.dart';
@@ -11,7 +7,10 @@ import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
@@ -24,8 +23,9 @@ import 'package:agora/login/bloc/login_bloc.dart';
 import 'package:agora/login/bloc/login_event.dart';
 import 'package:agora/login/bloc/login_state.dart';
 import 'package:agora/login/domain/login_error_type.dart';
-import 'package:agora/consultation/pages/consultations_page.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/profil/notification/bloc/permission/notification_permission_bloc.dart';
+import 'package:agora/profil/notification/bloc/permission/notification_permission_event.dart';
+import 'package:agora/profil/notification/bloc/permission/notification_permission_state.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:flutter/foundation.dart';
@@ -241,13 +241,13 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _pushPageWithCondition(BuildContext context) async {
     widget.onRedirect(context);
     await widget.deepLinkHelper.onInitial(
-      onConsultationSuccessCallback: (id) {
+      onConsultationSuccessCallback: (slug) {
         Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
         Navigator.pushNamed(
           context,
           DynamicConsultationPage.routeName,
           arguments: DynamicConsultationPageArguments(
-            consultationId: id,
+            consultationIdOrSlug: slug,
             consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
           ),
         );

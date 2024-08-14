@@ -1,6 +1,6 @@
-import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
+import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultation.dart';
 
 class ConsultationPresenter {
@@ -10,6 +10,7 @@ class ConsultationPresenter {
     return ongoingConsultations.map((consultation) {
       return ConsultationOngoingViewModel(
         id: consultation.id,
+        slug: consultation.slug,
         title: consultation.title,
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),
@@ -37,6 +38,7 @@ class ConsultationPresenter {
           finishedViewModels.add(
             ConcertationViewModel(
               id: consultation.id,
+              slug: consultation.slug,
               title: consultation.title,
               coverUrl: consultation.coverUrl,
               thematique: consultation.thematique.toThematiqueViewModel(),
@@ -48,6 +50,7 @@ class ConsultationPresenter {
           finishedViewModels.add(
             ConsultationFinishedViewModel(
               id: consultation.id,
+              slug: consultation.slug,
               title: consultation.title,
               coverUrl: consultation.coverUrl,
               thematique: consultation.thematique.toThematiqueViewModel(),
@@ -61,6 +64,7 @@ class ConsultationPresenter {
       return ongoingConsultations.map((consultation) {
         return ConsultationFinishedViewModel(
           id: consultation.id,
+          slug: consultation.slug,
           title: consultation.title,
           coverUrl: consultation.coverUrl,
           thematique: consultation.thematique.toThematiqueViewModel(),
@@ -76,6 +80,7 @@ class ConsultationPresenter {
     return answeredConsultations.map((consultation) {
       return ConsultationAnsweredViewModel(
         id: consultation.id,
+        slug: consultation.slug,
         title: consultation.title,
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),

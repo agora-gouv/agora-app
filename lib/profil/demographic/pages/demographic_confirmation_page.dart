@@ -1,13 +1,13 @@
+import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_bloc.dart';
 import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_event.dart';
 import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_state.dart';
 import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_bloc.dart';
-import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
-import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/profil/demographic/pages/demographic_profil_page.dart';
 import 'package:agora/profil/pages/profil_page.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,7 @@ class DemographicConfirmationPage extends StatelessWidget {
                   context,
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
-                    consultationId: consultationId!,
+                    consultationIdOrSlug: consultationId!,
                     consultationTitle: consultationTitle!,
                     shouldLaunchCongratulationAnimation: true,
                   ),
