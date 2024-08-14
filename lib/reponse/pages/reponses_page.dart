@@ -128,7 +128,7 @@ class _ReponseList extends StatelessWidget {
                   QagDetailsPage.routeName,
                   arguments: QagDetailsArguments(
                     qagId: qagResponseViewModels[index].qagId,
-                    reload: null,
+                    reload: QagReload.qagsPaginatedPage,
                     isQuestionGagnante: true,
                   ),
                 );

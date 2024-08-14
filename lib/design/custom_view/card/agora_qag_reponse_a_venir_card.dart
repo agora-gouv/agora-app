@@ -120,15 +120,19 @@ class _BandeauCard extends StatelessWidget {
           ExcludeSemantics(child: Text('🏆', style: AgoraTextStyles.regular12.copyWith(fontSize: 20))),
           SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  ReponseStrings.qagPopulaire,
-                  style: AgoraTextStyles.regular12.copyWith(fontWeight: FontWeight.w800),
-                ),
-                Text(semaineGagnanteLabel, style: AgoraTextStyles.regular12),
-              ],
+            child: Semantics(
+              label: "${ReponseStrings.qagPopulaire} sur la $semaineGagnanteLabel",
+              excludeSemantics: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    ReponseStrings.qagPopulaire,
+                    style: AgoraTextStyles.regular12.copyWith(fontWeight: FontWeight.w800),
+                  ),
+                  Text(semaineGagnanteLabel, style: AgoraTextStyles.regular12),
+                ],
+              ),
             ),
           ),
         ],

@@ -1,13 +1,13 @@
+import 'package:agora/common/parser/string_parser.dart';
 import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
-import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
+import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/common/parser/string_parser.dart';
 import 'package:flutter/material.dart';
 
 final _barKey = GlobalKey();
@@ -38,7 +38,10 @@ class ConsultationQuestionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AgoraToolbar(style: AgoraToolbarStyle.close, pageLabel: 'Questionnaire de la consultation'),
+        AgoraToolbar(
+          style: AgoraToolbarStyle.close,
+          semanticPageLabel: 'Question $currentQuestionIndex de la consultation',
+        ),
         Expanded(
           child: AgoraSingleScrollView(
             scrollController: scrollController,
@@ -57,9 +60,11 @@ class ConsultationQuestionView extends StatelessWidget {
                         isLastQuestion: isLastQuestion,
                       ),
                       SizedBox(height: AgoraSpacings.x0_75),
-                      Text(
-                        'Question $currentQuestionIndex',
-                        style: AgoraTextStyles.medium16,
+                      ExcludeSemantics(
+                        child: Text(
+                          'Question $currentQuestionIndex',
+                          style: AgoraTextStyles.medium16,
+                        ),
                       ),
                       SizedBox(height: AgoraSpacings.base),
                       Row(

@@ -22,7 +22,7 @@ class DeleteAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraScaffold(
       child: AgoraSecondaryStyleView(
-        pageLabel: DemographicStrings.delete + DemographicStrings.myAccount,
+        semanticPageLabel: DemographicStrings.delete + DemographicStrings.myAccount,
         scrollType: AgoraSecondaryScrollType.custom,
         title: AgoraRichText(
           policeStyle: AgoraRichTextPoliceStyle.toolbar,

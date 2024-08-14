@@ -18,7 +18,6 @@ class ConsultationsOngoingSection extends StatelessWidget {
   final bool answeredSectionEmpty;
 
   const ConsultationsOngoingSection({
-    super.key,
     required this.ongoingViewModels,
     required this.answeredSectionEmpty,
   });

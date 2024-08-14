@@ -4,25 +4,31 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsLoadingSkeleton extends StatelessWidget {
+  const ConsultationsLoadingSkeleton();
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: AgoraSpacings.horizontalPadding,
-        top: AgoraSpacings.base,
-        right: AgoraSpacings.horizontalPadding,
-        bottom: AgoraSpacings.x2,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _buildQagHeader(context),
-          SizedBox(height: AgoraSpacings.base),
-          _OnGoingConsultationLoadingItem(),
-          SizedBox(height: AgoraSpacings.base),
-          _OnGoingConsultationLoadingItem(),
-        ],
-      ),
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            left: AgoraSpacings.horizontalPadding,
+            top: AgoraSpacings.base,
+            right: AgoraSpacings.horizontalPadding,
+            bottom: AgoraSpacings.x2,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _buildQagHeader(context),
+              SizedBox(height: AgoraSpacings.base),
+              _OnGoingConsultationLoadingItem(),
+              SizedBox(height: AgoraSpacings.base),
+              _OnGoingConsultationLoadingItem(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

@@ -66,7 +66,7 @@ class _ContentState extends State<_Content> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.max,
       children: [
-        AgoraToolbar(pageLabel: 'Recherche'),
+        AgoraToolbar(semanticPageLabel: 'Recherche'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5),
           child: Container(

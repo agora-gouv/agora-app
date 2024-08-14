@@ -65,7 +65,7 @@ class _Loading extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AgoraToolbar(pageLabel: 'Envoi en cours'),
+            AgoraToolbar(semanticPageLabel: 'Envoi en cours'),
             Flexible(flex: 1, child: SizedBox()),
             Lottie.asset(
               'assets/animations/loading_consultation.json',
@@ -150,7 +150,7 @@ class _Error extends StatelessWidget {
     return AgoraScaffold(
       child: Column(
         children: [
-          AgoraToolbar(pageLabel: FeedbackStrings.errorLabel),
+          AgoraToolbar(semanticPageLabel: FeedbackStrings.errorLabel),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: AgoraErrorText()),
         ],

@@ -30,126 +30,88 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
     return BlocSelector<QagDetailsBloc, QagDetailsState, _ViewModel?>(
       selector: _ViewModel.fromState,
       builder: (context, viewModel) {
-        return viewModel is _DisplayedViewModel ? _buildContent(context, viewModel) : SizedBox();
+        return viewModel is _DisplayedViewModel
+            ? Container(
+                color: AgoraColors.background,
+                padding: const EdgeInsets.only(
+                  left: AgoraSpacings.horizontalPadding,
+                  right: AgoraSpacings.horizontalPadding,
+                  bottom: AgoraSpacings.horizontalPadding,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Semantics(
+                      header: true,
+                      child: Text(viewModel.viewModel.feedbackQuestion, style: AgoraTextStyles.medium18),
+                    ),
+                    SizedBox(height: AgoraSpacings.base),
+                    _Content(viewModel.qagId, viewModel.viewModel, onFeedbackSent),
+                  ],
+                ),
+              )
+            : SizedBox();
       },
     );
   }
+}
 
-  Widget _buildContent(BuildContext context, _DisplayedViewModel viewModel) {
-    return Container(
-      color: AgoraColors.background,
-      padding: const EdgeInsets.only(
-        left: AgoraSpacings.horizontalPadding,
-        right: AgoraSpacings.horizontalPadding,
-        bottom: AgoraSpacings.horizontalPadding,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Semantics(header: true, child: Text(viewModel.viewModel.feedbackQuestion, style: AgoraTextStyles.medium18)),
-          SizedBox(height: AgoraSpacings.base),
-          _build(context, viewModel.qagId, viewModel.viewModel, onFeedbackSent),
-        ],
-      ),
-    );
+class _Content extends StatelessWidget {
+  final String qagId;
+  final QagDetailsFeedbackViewModel viewModel;
+  final void Function() onFeedbackSent;
+
+  const _Content(this.qagId, this.viewModel, this.onFeedbackSent);
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (viewModel) {
+      QagDetailsFeedbackErrorViewModel _ => _Error(),
+      final QagDetailsFeedbackLoadingViewModel loadingVm =>
+        _NotAnswered(qagId, loadingVm.isHelpfulClicked, onFeedbackSent),
+      QagDetailsFeedbackNotAnsweredViewModel _ => _NotAnswered(qagId, null, onFeedbackSent),
+      final QagDetailsFeedbackAnsweredNoResultsViewModel vm => _AnsweredNoResults(vm),
+      final QagDetailsFeedbackAnsweredResultsViewModel vm => _AnsweredResults(vm)
+    };
   }
+}
 
-  Widget _build(
-    BuildContext context,
-    String qagId,
-    QagDetailsFeedbackViewModel viewModel,
-    void Function() onFeedbackSent,
-  ) {
-    if (viewModel is QagDetailsFeedbackNotAnsweredViewModel || viewModel is QagDetailsFeedbackLoadingViewModel) {
-      final isHelpfulButtonClicked =
-          viewModel is QagDetailsFeedbackLoadingViewModel ? viewModel.isHelpfulClicked : null;
-      return _buildNotAnswered(context, qagId, isHelpfulButtonClicked);
-    } else if (viewModel is QagDetailsFeedbackAnsweredNoResultsViewModel) {
-      Future.delayed(Duration(milliseconds: 500)).then((_) => onFeedbackSent());
-      return _buildAnsweredNoResults(context, viewModel);
-    } else if (viewModel is QagDetailsFeedbackAnsweredResultsViewModel) {
-      Future.delayed(Duration(milliseconds: 500)).then((_) => onFeedbackSent());
-      return _buildAnsweredResults(context, viewModel);
-    } else {
-      return _buildError();
-    }
-  }
+class _Error extends StatelessWidget {
+  const _Error();
 
-  Widget _buildNotAnswered(BuildContext context, String qagId, bool? isHelpfulClicked) {
-    return Row(
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: [
-        if (isHelpfulClicked == null) ...[
-          AgoraRoundedButton(
-            icon: "ic_thumb_white.svg",
-            label: QagStrings.utils,
-            contentPadding: AgoraRoundedButtonPadding.normal,
-            onPressed: () {
-              if (isHelpfulClicked == null) {
-                _trackFeedback(qagId);
-                context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true));
-              }
-            },
-          ),
-          SizedBox(width: AgoraSpacings.base),
-          AgoraRoundedButton(
-            icon: "ic_thumb_down_white.svg",
-            label: QagStrings.notUtils,
-            contentPadding: AgoraRoundedButtonPadding.normal,
-            iconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
-            onPressed: () {
-              if (isHelpfulClicked == null) {
-                _trackFeedback(qagId);
-                context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: false));
-              }
-            },
-          ),
-        ],
-        if (isHelpfulClicked != null)
-          Expanded(
-            child: Lottie.asset(
-              'assets/animations/check.json',
-              width: 48,
-              height: 48,
-            ),
-          ),
+        SizedBox(height: AgoraSpacings.base),
+        AgoraErrorText(),
       ],
     );
   }
+}
 
-  Widget _buildAnsweredNoResults(BuildContext context, QagDetailsFeedbackAnsweredNoResultsViewModel viewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(QagStrings.feedback, style: AgoraTextStyles.regular14),
-        const SizedBox(height: AgoraSpacings.base),
-        AgoraButton(
-          label: 'Modifier votre réponse',
-          buttonStyle: AgoraButtonStyle.blueBorder,
-          onPressed: () {
-            context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
-          },
-        ),
-        const SizedBox(height: AgoraSpacings.x0_5),
-        Text(
-          'Pour rappel, vous avez répondu "${viewModel.userResponse == true ? 'Oui' : 'Non'}".',
-          style: AgoraTextStyles.light14,
-        ),
-      ],
-    );
-  }
+class _AnsweredResults extends StatelessWidget {
+  final QagDetailsFeedbackAnsweredResultsViewModel viewModel;
 
-  Widget _buildAnsweredResults(BuildContext context, QagDetailsFeedbackAnsweredResultsViewModel viewModel) {
+  const _AnsweredResults(this.viewModel);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
-        AgoraConsultationResultBar(
-          ratio: viewModel.feedbackResults.positiveRatio,
-          response: QagStrings.utils,
-          isUserResponse: viewModel.userResponse == true,
-          minusPadding: AgoraSpacings.horizontalPadding * 2,
+        Semantics(
+          focusable: true,
+          focused: true,
+          child: AgoraConsultationResultBar(
+            participantsPercentage: viewModel.feedbackResults.positiveRatio,
+            response: QagStrings.utils,
+            isUserResponse: viewModel.userResponse == true,
+            minusPadding: AgoraSpacings.horizontalPadding * 2,
+          ),
         ),
         SizedBox(height: AgoraSpacings.x0_75),
         AgoraConsultationResultBar(
-          ratio: viewModel.feedbackResults.negativeRatio,
+          participantsPercentage: viewModel.feedbackResults.negativeRatio,
           response: QagStrings.notUtils,
           isUserResponse: viewModel.userResponse == false,
           minusPadding: AgoraSpacings.horizontalPadding * 2,
@@ -179,22 +141,93 @@ class QagDetailsFeedbackWidget extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildError() {
+class _AnsweredNoResults extends StatelessWidget {
+  final QagDetailsFeedbackAnsweredNoResultsViewModel viewModel;
+
+  const _AnsweredNoResults(this.viewModel);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: AgoraSpacings.base),
-        AgoraErrorText(),
+        const Text(QagStrings.feedback, style: AgoraTextStyles.regular14),
+        const SizedBox(height: AgoraSpacings.base),
+        AgoraButton(
+          label: 'Modifier votre réponse',
+          buttonStyle: AgoraButtonStyle.blueBorder,
+          onPressed: () {
+            context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
+          },
+        ),
+        const SizedBox(height: AgoraSpacings.x0_5),
+        Text(
+          'Pour rappel, vous avez répondu "${viewModel.userResponse == true ? 'Oui' : 'Non'}".',
+          style: AgoraTextStyles.light14,
+        ),
       ],
     );
   }
+}
 
-  void _trackFeedback(String qagId) {
-    TrackerHelper.trackClick(
-      clickName: "${AnalyticsEventNames.giveQagFeedback} $qagId",
-      widgetName: AnalyticsScreenNames.qagDetailsPage,
+class _NotAnswered extends StatelessWidget {
+  final String qagId;
+  final bool? isHelpfulClicked;
+  final void Function() onFeedbackSent;
+
+  const _NotAnswered(this.qagId, this.isHelpfulClicked, this.onFeedbackSent);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        if (isHelpfulClicked == null) ...[
+          AgoraRoundedButton(
+            icon: "ic_thumb_white.svg",
+            label: QagStrings.utils,
+            contentPadding: AgoraRoundedButtonPadding.short,
+            onPressed: () {
+              Future.delayed(Duration(milliseconds: 2500)).then((_) => onFeedbackSent());
+              if (isHelpfulClicked == null) {
+                _trackFeedback(qagId);
+                context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: true));
+              }
+            },
+          ),
+          SizedBox(width: AgoraSpacings.base),
+          AgoraRoundedButton(
+            icon: "ic_thumb_down_white.svg",
+            label: QagStrings.notUtils,
+            contentPadding: AgoraRoundedButtonPadding.short,
+            onPressed: () {
+              Future.delayed(Duration(milliseconds: 2500)).then((_) => onFeedbackSent());
+              if (isHelpfulClicked == null) {
+                _trackFeedback(qagId);
+                context.read<QagDetailsBloc>().add(SendFeedbackQagDetailsEvent(qagId: qagId, isHelpful: false));
+              }
+            },
+          ),
+        ],
+        if (isHelpfulClicked != null)
+          Expanded(
+            child: Lottie.asset(
+              'assets/animations/check.json',
+              width: 48,
+              height: 48,
+            ),
+          ),
+      ],
     );
   }
+}
+
+void _trackFeedback(String qagId) {
+  TrackerHelper.trackClick(
+    clickName: "${AnalyticsEventNames.giveQagFeedback} $qagId",
+    widgetName: AnalyticsScreenNames.qagDetailsPage,
+  );
 }
 
 abstract class _ViewModel extends Equatable {

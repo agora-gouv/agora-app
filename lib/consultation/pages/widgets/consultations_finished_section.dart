@@ -7,6 +7,7 @@ import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
@@ -49,6 +50,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AgoraRichText(
+                        semantic: AgoraRichTextSemantic(label: SemanticsStrings.consultationTerminees),
                         items: [
                           AgoraRichTextItem(
                             text: "${ConsultationStrings.finishConsultationPart1}\n",
@@ -143,6 +145,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
                     consultationId: finishedViewModel.id,
+                    consultationTitle: finishedViewModel.title,
                     shouldReloadConsultationsWhenPop: false,
                   ),
                 );

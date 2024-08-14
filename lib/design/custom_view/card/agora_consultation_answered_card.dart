@@ -44,6 +44,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
             DynamicConsultationPage.routeName,
             arguments: DynamicConsultationPageArguments(
               consultationId: id,
+              consultationTitle: title,
               shouldReloadConsultationsWhenPop: false,
             ),
           );

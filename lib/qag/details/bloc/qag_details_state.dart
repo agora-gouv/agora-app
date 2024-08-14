@@ -1,7 +1,7 @@
 import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class QagDetailsState extends Equatable {
+sealed class QagDetailsState extends Equatable {
   @override
   List<Object?> get props => [];
 }

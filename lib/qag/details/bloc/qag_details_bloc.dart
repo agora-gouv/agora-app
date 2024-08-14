@@ -184,6 +184,8 @@ class QagDetailsBloc extends Bloc<QagDetailsEvent, QagDetailsState> {
               ),
             );
             break;
+          default:
+            break;
         }
       }
     }

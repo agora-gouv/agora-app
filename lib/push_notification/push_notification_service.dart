@@ -10,6 +10,7 @@ import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/navigator/navigator_key.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/profil/notification/pages/notification_page.dart';
@@ -176,6 +177,7 @@ class FirebasePushNotificationService extends PushNotificationService {
           DynamicConsultationPage.routeName,
           arguments: DynamicConsultationPageArguments(
             consultationId: message.data["consultationId"] as String,
+            consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
             shouldReloadConsultationsWhenPop: false,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
             notificationDescription: shouldDisplayMessage ? message.notification?.body : null,

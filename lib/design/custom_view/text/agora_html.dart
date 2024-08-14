@@ -1,4 +1,5 @@
 import 'package:agora/common/helper/launch_url_helper.dart';
+import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/style/agora_html_styles.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
@@ -44,7 +45,10 @@ class AgoraHtml extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 DynamicConsultationPage.routeName,
-                arguments: DynamicConsultationPageArguments(consultationId: extractIdFromUrl(url)),
+                arguments: DynamicConsultationPageArguments(
+                  consultationId: extractIdFromUrl(url),
+                  consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
+                ),
               );
             } else {
               LaunchUrlHelper.webview(context, url);
