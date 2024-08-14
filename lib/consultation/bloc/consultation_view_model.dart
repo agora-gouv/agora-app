@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class ConsultationViewModel extends Equatable {
   final String id;
+  final String slug;
   final String title;
   final String coverUrl;
   final ThematiqueViewModel thematique;
@@ -10,6 +11,7 @@ class ConsultationViewModel extends Equatable {
 
   ConsultationViewModel({
     required this.id,
+    required this.slug,
     required this.title,
     required this.coverUrl,
     required this.thematique,
@@ -19,6 +21,7 @@ class ConsultationViewModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        slug,
         title,
         coverUrl,
         thematique,
@@ -31,6 +34,7 @@ class ConsultationOngoingViewModel extends ConsultationViewModel {
 
   ConsultationOngoingViewModel({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,
@@ -45,6 +49,7 @@ class ConsultationOngoingViewModel extends ConsultationViewModel {
 class ConsultationFinishedViewModel extends ConsultationViewModel {
   ConsultationFinishedViewModel({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,
@@ -58,6 +63,7 @@ class ConsultationFinishedViewModel extends ConsultationViewModel {
 class ConsultationAnsweredViewModel extends ConsultationViewModel {
   ConsultationAnsweredViewModel({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,
@@ -73,6 +79,7 @@ class ConcertationViewModel extends ConsultationViewModel {
 
   ConcertationViewModel({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,

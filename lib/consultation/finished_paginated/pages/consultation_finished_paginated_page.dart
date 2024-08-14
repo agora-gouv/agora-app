@@ -213,7 +213,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
         context,
         DynamicConsultationPage.routeName,
         arguments: DynamicConsultationPageArguments(
-          consultationId: consultationId,
+          consultationIdOrSlug: consultationId,
           consultationTitle: consultationTitle,
           shouldReloadConsultationsWhenPop: false,
         ),

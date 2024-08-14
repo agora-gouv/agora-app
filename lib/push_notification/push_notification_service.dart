@@ -176,7 +176,7 @@ class FirebasePushNotificationService extends PushNotificationService {
         navigatorKey.currentState?.pushNamed(
           DynamicConsultationPage.routeName,
           arguments: DynamicConsultationPageArguments(
-            consultationId: message.data["consultationId"] as String,
+            consultationIdOrSlug: message.data["consultationId"] as String,
             consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
             shouldReloadConsultationsWhenPop: false,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,

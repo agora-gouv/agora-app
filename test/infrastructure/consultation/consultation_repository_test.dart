@@ -1,18 +1,18 @@
 import 'dart:io';
 
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.dart';
 import 'package:agora/consultation/question/domain/consultation_question.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response_choice.dart';
 import 'package:agora/consultation/question/domain/consultation_questions.dart';
-import 'package:agora/consultation/question/domain/consultation_question_response.dart';
-import 'package:agora/consultation/domain/consultation_summary_results.dart';
-import 'package:agora/thematique/domain/thematique.dart';
-import 'package:agora/consultation/repository/consultation_repository.dart';
-import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
+import 'package:agora/consultation/repository/consultation_repository.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -34,6 +34,7 @@ void main() {
           "ongoing": [
             {
               "id": "consultationId1",
+              "slug": "consultationId1",
               "title": "Développer le covoiturage",
               "coverUrl": "coverUrl1",
               "thematique": {"label": "Transports", "picto": "🚊"},
@@ -45,6 +46,7 @@ void main() {
           "finished": [
             {
               "id": "consultationId2",
+              "slug": "consultationId2",
               "title": "Quelles solutions pour les déserts médicaux ?",
               "coverUrl": "coverUrl2",
               "thematique": {"label": "Santé", "picto": "🩺"},
@@ -56,6 +58,7 @@ void main() {
           "answered": [
             {
               "id": "consultationId3",
+              "slug": "consultationId3",
               "title": "Quand commencer ?",
               "coverUrl": "coverUrl3",
               "thematique": {"label": "Santé", "picto": "🩺"},
@@ -86,6 +89,7 @@ void main() {
           ongoingConsultations: [
             ConsultationOngoing(
               id: "consultationId1",
+              slug: "consultationId1",
               title: "Développer le covoiturage",
               coverUrl: "coverUrl1",
               thematique: Thematique(picto: "🚊", label: "Transports"),
@@ -96,6 +100,7 @@ void main() {
           finishedConsultations: [
             ConsultationFinished(
               id: "consultationId2",
+              slug: "consultationId2",
               title: "Quelles solutions pour les déserts médicaux ?",
               coverUrl: "coverUrl2",
               thematique: Thematique(picto: "🩺", label: "Santé"),
@@ -106,6 +111,7 @@ void main() {
           answeredConsultations: [
             ConsultationAnswered(
               id: "consultationId3",
+              slug: "consultationId3",
               title: "Quand commencer ?",
               coverUrl: "coverUrl3",
               thematique: Thematique(picto: "🩺", label: "Santé"),
@@ -124,6 +130,7 @@ void main() {
           "ongoing": [
             {
               "id": "consultationId1",
+              "slug": "consultationId1",
               "title": "Développer le covoiturage",
               "coverUrl": "coverUrl1",
               "thematique": {"label": "Transports", "picto": "🚊"},
@@ -157,6 +164,7 @@ void main() {
           ongoingConsultations: [
             ConsultationOngoing(
               id: "consultationId1",
+              slug: "consultationId1",
               title: "Développer le covoiturage",
               coverUrl: "coverUrl1",
               thematique: Thematique(picto: "🚊", label: "Transports"),
@@ -263,6 +271,7 @@ void main() {
           "consultations": [
             {
               "id": "consultationId",
+              "slug": "consultationId",
               "title": "Quelles solutions pour les déserts médicaux ?",
               "coverUrl": "coverUrl",
               "thematique": {"label": "Santé", "picto": "🩺"},
@@ -295,6 +304,7 @@ void main() {
           consultationsPaginated: [
             ConsultationFinished(
               id: "consultationId",
+              slug: "consultationId",
               title: "Quelles solutions pour les déserts médicaux ?",
               coverUrl: "coverUrl",
               thematique: Thematique(picto: "🩺", label: "Santé"),

@@ -1,15 +1,15 @@
+import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/question/bloc/response/send/consultation_questions_responses_bloc.dart';
 import 'package:agora/consultation/question/bloc/response/send/consultation_questions_responses_event.dart';
 import 'package:agora/consultation/question/bloc/response/send/consultation_questions_responses_state.dart';
 import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_bloc.dart';
 import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_event.dart';
-import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/profil/demographic/pages/demographic_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,7 +69,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                   context,
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
-                    consultationId: consultationId,
+                    consultationIdOrSlug: consultationId,
                     consultationTitle: consultationTitle,
                     shouldLaunchCongratulationAnimation: true,
                   ),

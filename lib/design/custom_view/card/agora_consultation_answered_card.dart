@@ -1,14 +1,14 @@
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
-import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/design/custom_view/agora_rounded_image.dart';
+import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
 
 class AgoraConsultationAnsweredCard extends StatelessWidget {
@@ -43,7 +43,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
             context,
             DynamicConsultationPage.routeName,
             arguments: DynamicConsultationPageArguments(
-              consultationId: id,
+              consultationIdOrSlug: id,
               consultationTitle: title,
               shouldReloadConsultationsWhenPop: false,
             ),

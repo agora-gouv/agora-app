@@ -8,6 +8,7 @@ class FakesConcertationRepository extends ConcertationRepository {
     return [
       Concertation(
         id: "concertationId1",
+        slug: "concertationId1",
         title: "Développer le covoiturage",
         coverUrl: "coverUrl1",
         externalLink: "externalLink1",
