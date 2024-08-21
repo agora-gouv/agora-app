@@ -44,3 +44,6 @@ t
 /android/app/release
 
 devtools_options.yaml
+
+# Sift / SBOMs
+pub.json

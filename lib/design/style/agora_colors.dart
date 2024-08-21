@@ -18,6 +18,7 @@ class AgoraColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color whiteOpacity90 = Color(0xD9FFFFFF);
   static const Color neutral200 = Color(0xFFE7ECFA);
+  static const Color neutral300 = Color(0xFFBDCCF8);
   static const Color neutral400 = Color(0xFFA0B2EC);
   static const Color doctor = Color(0xFFF9F9F9);
   static const Color cascadingWhite = Color(0xFFF6F6F6);
@@ -42,6 +43,7 @@ class AgoraColors {
   static const Color brun = Color(0xFF716043);
   static const Color lightBrun = Color(0xFFFEECC2);
   static const Color blur = Color(0x123D3C49);
+  static const Color gold = Color(0xFFFFD700);
 
   // couleur de pastille
   static const Color mintZest = Color(0xFFCFFCD9);

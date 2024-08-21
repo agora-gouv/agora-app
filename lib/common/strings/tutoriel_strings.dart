@@ -16,4 +16,5 @@ class TutorielStrings {
   static const String tutoReponseDescription =
       "Chaque semaine, les ministres répondent à la question la plus populaire.";
   static const String tutoStep3LetsGo = "C'est parti";
+  static const String beginButton = "Commencer";
 }

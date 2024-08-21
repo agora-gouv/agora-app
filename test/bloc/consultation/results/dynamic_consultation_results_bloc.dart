@@ -1,7 +1,7 @@
-import 'package:agora/bloc/consultation/dynamic/dynamic_consultation_events.dart';
-import 'package:agora/bloc/consultation/dynamic/responses/dynamic_consultation_results_state.dart';
-import 'package:agora/bloc/consultation/dynamic/responses/dynamic_consultations_results_bloc.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
+import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_events.dart';
+import 'package:agora/consultation/dynamic/bloc/responses/dynamic_consultation_results_state.dart';
+import 'package:agora/consultation/dynamic/bloc/responses/dynamic_consultations_results_bloc.dart';
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
 import 'package:bloc_test/bloc_test.dart';
 
 import '../../../fakes/consultation/fakes_consultation_repository.dart';

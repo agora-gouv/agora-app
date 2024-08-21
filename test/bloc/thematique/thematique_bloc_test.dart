@@ -1,7 +1,7 @@
-import 'package:agora/bloc/thematique/thematique_bloc.dart';
-import 'package:agora/bloc/thematique/thematique_event.dart';
-import 'package:agora/bloc/thematique/thematique_state.dart';
-import 'package:agora/bloc/thematique/thematique_with_id_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_bloc.dart';
+import 'package:agora/thematique/bloc/thematique_event.dart';
+import 'package:agora/thematique/bloc/thematique_state.dart';
+import 'package:agora/thematique/bloc/thematique_with_id_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

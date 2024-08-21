@@ -1,13 +1,13 @@
-import 'package:agora/domain/qag/details/qag_details.dart';
-import 'package:agora/domain/qag/header_qag.dart';
-import 'package:agora/domain/qag/moderation/qag_moderation_list.dart';
-import 'package:agora/domain/qag/qag.dart';
-import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/qag/qag_response_paginated.dart';
-import 'package:agora/domain/qag/qag_similar.dart';
-import 'package:agora/domain/qag/qas_list_filter.dart';
-import 'package:agora/domain/thematique/thematique.dart';
-import 'package:agora/infrastructure/qag/qag_repository.dart';
+import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/qag/domain/header_qag.dart';
+import 'package:agora/qag/domain/qag_moderation_list.dart';
+import 'package:agora/qag/domain/qag.dart';
+import 'package:agora/qag/domain/qag_response.dart';
+import 'package:agora/qag/domain/qag_response_paginated.dart';
+import 'package:agora/qag/domain/qag_similar.dart';
+import 'package:agora/qag/domain/qas_list_filter.dart';
+import 'package:agora/thematique/domain/thematique.dart';
+import 'package:agora/qag/repository/qag_repository.dart';
 
 class FakeQagSuccessRepository extends QagRepository {
   @override

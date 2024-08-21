@@ -1,10 +1,10 @@
-import 'package:agora/bloc/qag/details/qag_details_bloc.dart';
-import 'package:agora/bloc/qag/details/qag_details_event.dart';
-import 'package:agora/bloc/qag/details/qag_details_state.dart';
-import 'package:agora/bloc/qag/details/qag_details_view_model.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
-import 'package:agora/domain/qag/details/qag_details.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/qag/details/bloc/qag_details_bloc.dart';
+import 'package:agora/qag/details/bloc/qag_details_event.dart';
+import 'package:agora/qag/details/bloc/qag_details_state.dart';
+import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
+import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

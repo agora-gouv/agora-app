@@ -1,11 +1,11 @@
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/storage/secure_storage_client.dart';
-import 'package:agora/infrastructure/header_qag/header_qag_repository.dart';
-import 'package:agora/infrastructure/notification/permission/notification_first_request_permission_storage_client.dart';
-import 'package:agora/infrastructure/onboarding/onboarding_storage_client.dart';
-import 'package:agora/infrastructure/profile/profile_demographic_storage_client.dart';
+import 'package:agora/qag/repository/header_qag_repository.dart';
+import 'package:agora/profil/notification/repository/notification_first_request_permission_storage_client.dart';
+import 'package:agora/profil/onboarding/repository/onboarding_storage_client.dart';
+import 'package:agora/profil/demographic/repository/demographic_storage_client.dart';
 import 'package:agora/login/repository/login_storage_client.dart';
-import 'package:agora/pages/consultation/question/consultation_question_storage_client.dart';
+import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
 import 'package:agora/push_notification/push_notification_storage_client.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -61,7 +61,7 @@ class StorageManager {
     return storage;
   }
 
-  static ProfileDemographicStorageClient getProfileDemographicStorageClient() {
+  static DemographicStorageClient getProfileDemographicStorageClient() {
     if (GetIt.instance.isRegistered<ProfileDemographicSharedPreferencesClient>()) {
       return GetIt.instance.get<ProfileDemographicSharedPreferencesClient>();
     }

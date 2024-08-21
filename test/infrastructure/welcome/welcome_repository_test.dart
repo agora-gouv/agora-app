@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/welcome/domain/welcome_a_la_une.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,6 +10,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   test('when success, should return A la une infos', () async {
     // Given
@@ -34,6 +36,7 @@ void main() {
     // When
     final repository = WelcomeDioRepository(
       httpClient: httpClient,
+      sentryWrapper: sentryWrapper,
     );
     final response = await repository.getWelcomeALaUne();
 
@@ -66,6 +69,7 @@ void main() {
     // When
     final repository = WelcomeDioRepository(
       httpClient: httpClient,
+      sentryWrapper: sentryWrapper,
     );
     final response = await repository.getWelcomeALaUne();
 
@@ -97,6 +101,7 @@ void main() {
     // When
     final repository = WelcomeDioRepository(
       httpClient: httpClient,
+      sentryWrapper: sentryWrapper,
     );
     await repository.getWelcomeALaUne();
     final response = await repository.getWelcomeALaUne();

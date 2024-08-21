@@ -1,11 +1,11 @@
 import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
-import 'package:agora/design/custom_view/agora_rounded_card.dart';
-import 'package:agora/design/custom_view/agora_text_field.dart';
+import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/pages/consultation/dynamic/string_parser.dart';
+import 'package:agora/common/parser/string_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

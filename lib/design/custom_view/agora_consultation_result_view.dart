@@ -1,4 +1,4 @@
-import 'package:agora/bloc/consultation/summary/consultation_summary_view_model.dart';
+import 'package:agora/consultation/dynamic/pages/results/consultation_summary_view_model.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -59,7 +59,7 @@ class AgoraConsultationResultView extends StatelessWidget {
           child: Semantics(
             label: 'Choix ${responses.indexOf(response) + 1} sur ${responses.length}',
             child: AgoraConsultationResultBar(
-              ratio: response.ratio,
+              participantsPercentage: response.ratio,
               response: response.label,
               isUserResponse: response.isUserResponse,
               minusPadding: AgoraSpacings.horizontalPadding * 2,

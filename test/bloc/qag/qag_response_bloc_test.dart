@@ -1,8 +1,8 @@
-import 'package:agora/bloc/qag/response/qag_response_bloc.dart';
-import 'package:agora/bloc/qag/response/qag_response_event.dart';
-import 'package:agora/bloc/qag/response/qag_response_state.dart';
-import 'package:agora/domain/qag/qag_response.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/reponse/bloc/qag_response_bloc.dart';
+import 'package:agora/reponse/bloc/qag_response_event.dart';
+import 'package:agora/reponse/bloc/qag_response_state.dart';
+import 'package:agora/qag/domain/qag_response.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

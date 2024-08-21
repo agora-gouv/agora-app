@@ -1,7 +1,7 @@
-import 'package:agora/bloc/notification/get/notification_bloc.dart';
-import 'package:agora/bloc/notification/get/notification_event.dart';
-import 'package:agora/bloc/notification/get/notification_state.dart';
-import 'package:agora/bloc/notification/get/notification_view_model.dart';
+import 'package:agora/profil/notification/bloc/get/notification_bloc.dart';
+import 'package:agora/profil/notification/bloc/get/notification_event.dart';
+import 'package:agora/profil/notification/bloc/get/notification_state.dart';
+import 'package:agora/profil/notification/bloc/get/notification_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

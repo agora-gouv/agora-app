@@ -1,4 +1,4 @@
-import 'package:agora/design/custom_view/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -18,6 +18,7 @@ class AgoraRoundedButton extends StatelessWidget {
   final AgoraRoundedButtonStyle style;
   final AgoraRoundedButtonPadding contentPadding;
   final EdgeInsetsGeometry? textPadding;
+  final EdgeInsetsGeometry? iconPadding;
   final VoidCallback onPressed;
 
   const AgoraRoundedButton({
@@ -29,6 +30,7 @@ class AgoraRoundedButton extends StatelessWidget {
     this.style = AgoraRoundedButtonStyle.primaryButtonStyle,
     this.contentPadding = AgoraRoundedButtonPadding.normal,
     this.textPadding,
+    this.iconPadding,
     required this.onPressed,
   });
 
@@ -41,21 +43,23 @@ class AgoraRoundedButton extends StatelessWidget {
         button: true,
         child: AgoraRoundedCard(
           focusColor: _buildFocusColor(),
-          borderColor: _buildBorderColor(),
+          borderColor: _buildBorderColor() ?? AgoraColors.transparent,
           cornerRadius: AgoraCorners.rounded50,
           padding: _buildPadding(),
           cardColor: _buildCardColor(),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (icon != null) ...[
-                SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
-                SizedBox(width: AgoraSpacings.x0_5),
-              ],
+              if (icon != null && !isLoading)
+                Padding(
+                  padding: iconPadding ?? EdgeInsets.only(right: AgoraSpacings.x0_5),
+                  child: SvgPicture.asset("assets/$icon", excludeFromSemantics: true),
+                ),
               Flexible(
                 child: Padding(
-                  padding: textPadding ?? EdgeInsets.all(0),
+                  padding: textPadding ?? EdgeInsets.zero,
                   child: Text(
                     label,
                     semanticsLabel: semanticLabel,

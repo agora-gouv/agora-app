@@ -387,6 +387,16 @@ class AgoraTextStyles {
     decoration: TextDecoration.underline,
   );
 
+  static const TextStyle light14UnderlineBlue = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 14.0,
+    color: AgoraColors.primaryBlue,
+    height: height,
+    decoration: TextDecoration.underline,
+    decorationColor: AgoraColors.primaryBlue,
+  );
+
   static const TextStyle light14Italic = TextStyle(
     fontFamily: marianne,
     fontWeight: light,
@@ -400,6 +410,14 @@ class AgoraTextStyles {
     fontFamily: marianne,
     fontWeight: light,
     fontSize: 12.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle light13 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 13.0,
     color: AgoraColors.primaryGrey,
     height: height,
   );

@@ -1,35 +1,34 @@
-import 'package:agora/app_feedback/pages/app_feedback_page.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
+import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
+import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
+import 'package:agora/consultation/question/pages/consultation_question_confirmation_page.dart';
+import 'package:agora/consultation/question/pages/consultation_question_page.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/pages/consultation/consultations_page.dart';
-import 'package:agora/pages/consultation/dynamic/dynamic_consultation_page.dart';
-import 'package:agora/pages/consultation/dynamic/results/dynamic_consultation_results_page.dart';
-import 'package:agora/pages/consultation/dynamic/updates/dynamic_consultation_update_page.dart';
-import 'package:agora/pages/consultation/finished_paginated/consultation_finished_paginated_page.dart';
-import 'package:agora/pages/consultation/question/consultation_question_confirmation_page.dart';
-import 'package:agora/pages/consultation/question/consultation_question_page.dart';
-import 'package:agora/pages/demographic/demographic_confirmation_page.dart';
-import 'package:agora/pages/demographic/demographic_information_page.dart';
-import 'package:agora/pages/demographic/demographic_profil_page.dart';
-import 'package:agora/pages/demographic/demographic_question_page.dart';
-import 'package:agora/pages/loading_page.dart';
-import 'package:agora/pages/main_bottom_navigation_page.dart';
-import 'package:agora/pages/onboarding/onboarding_page.dart';
-import 'package:agora/pages/profile/delete_account_page.dart';
-import 'package:agora/pages/profile/notification_page.dart';
-import 'package:agora/pages/profile/participation_charter_page.dart';
-import 'package:agora/pages/profile/profil_information_page.dart';
-import 'package:agora/pages/profile/profil_page.dart';
-import 'package:agora/pages/qag/ask_question/ask_question_qag_search.dart';
-import 'package:agora/pages/qag/ask_question/qag_ask_question_page.dart';
-import 'package:agora/pages/qag/details/qag_details_delete_confirmation_page.dart';
-import 'package:agora/pages/qag/details/qag_details_page.dart';
-import 'package:agora/pages/qag/moderation/moderation_page.dart';
-import 'package:agora/pages/qag/qags_page.dart';
-import 'package:agora/pages/qag/similar/qag_similar_page.dart';
-import 'package:agora/pages/webview/webview_page.dart';
+import 'package:agora/design/custom_view/bottom_navigation_bar/main_bottom_navigation_bar.dart';
+import 'package:agora/profil/app_feedback/pages/app_feedback_page.dart';
+import 'package:agora/profil/demographic/pages/demographic_confirmation_page.dart';
+import 'package:agora/profil/demographic/pages/demographic_information_page.dart';
+import 'package:agora/profil/demographic/pages/demographic_profil_page.dart';
+import 'package:agora/profil/demographic/pages/demographic_question_page.dart';
+import 'package:agora/profil/notification/pages/notification_page.dart';
+import 'package:agora/profil/onboarding/pages/onboarding_page.dart';
+import 'package:agora/profil/pages/delete_account_page.dart';
+import 'package:agora/profil/pages/profil_information_page.dart';
+import 'package:agora/profil/pages/profil_page.dart';
+import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
+import 'package:agora/qag/ask/pages/ask_question_qag_search.dart';
+import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
+import 'package:agora/qag/details/pages/qag_details_delete_confirmation_page.dart';
+import 'package:agora/qag/details/pages/qag_details_page.dart';
+import 'package:agora/qag/moderation/pages/moderation_page.dart';
+import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
+import 'package:agora/splash_page.dart';
+import 'package:agora/webview/webview_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,19 +43,14 @@ class AgoraAppRouter {
             child: OnboardingPage(),
           ),
       // Consultation
-      ConsultationsPage.routeName: (context) =>
-          MainBottomNavigationPage(startPage: MainBottomNavigationPages.consultation),
+      ConsultationsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.consultation),
       // Question au gouvernement
-      QagsPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.qag),
+      QagsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.qag),
       // Reponse
-      ReponsesPage.routeName: (context) => MainBottomNavigationPage(startPage: MainBottomNavigationPages.reponse),
+      ReponsesPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.reponse),
       QagAskQuestionPage.routeName: (context) => AgoraTracker(
             widgetName: AnalyticsScreenNames.qagAskQuestionPage,
             child: QagAskQuestionPage(),
-          ),
-      QagSimilarPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.qagSimilarPage,
-            child: QagSimilarPage(),
           ),
       // Profile
       ProfilPage.routeName: (context) => AgoraTracker(
@@ -118,8 +112,8 @@ class AgoraAppRouter {
   }) {
     Widget currentRoute;
     switch (settings.name) {
-      case LoadingPage.routeName:
-        currentRoute = LoadingPage(
+      case SplashPage.routeName:
+        currentRoute = SplashPage(
           sharedPref: sharedPref,
           deepLinkHelper: deepLinkHelper,
           onRedirect: onRedirect,
@@ -130,7 +124,7 @@ class AgoraAppRouter {
       case DynamicConsultationPage.routeName:
         final arguments = settings.arguments as DynamicConsultationPageArguments;
         currentRoute = AgoraTracker(
-          widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${arguments.consultationId}",
+          widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${arguments.consultationIdOrSlug}",
           child: DynamicConsultationPage(arguments),
         );
         break;
@@ -161,11 +155,11 @@ class AgoraAppRouter {
           child: AppFeedbackPage(),
         );
         break;
-      case ConsultationPaginatedPage.routeName:
+      case ConsultationFinishedPaginatedPage.routeName:
         final arguments = settings.arguments as ConsultationPaginatedPageType;
         currentRoute = AgoraTracker(
           widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
-          child: ConsultationPaginatedPage(arguments),
+          child: ConsultationFinishedPaginatedPage(arguments),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:

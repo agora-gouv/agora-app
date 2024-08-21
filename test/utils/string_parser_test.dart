@@ -1,4 +1,4 @@
-import 'package:agora/pages/consultation/dynamic/string_parser.dart';
+import 'package:agora/common/parser/string_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

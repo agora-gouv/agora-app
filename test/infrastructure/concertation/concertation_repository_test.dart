@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
-import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,6 +12,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   group("Fetch concertations", () {
     test("when success should return concertations", () async {
@@ -22,6 +24,7 @@ void main() {
           [
             {
               "id": "consultationId1",
+              "slug": "consultationId1",
               "title": "Développer le covoiturage",
               "imageUrl": "coverUrl1",
               "externalLink": "externalLink1",
@@ -40,6 +43,7 @@ void main() {
       // When
       final repository = ConcertationDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getConcertations();
 
@@ -49,6 +53,7 @@ void main() {
         [
           Concertation(
             id: "consultationId1",
+            slug: "consultationId1",
             title: "Développer le covoiturage",
             coverUrl: "coverUrl1",
             externalLink: "externalLink1",
@@ -78,6 +83,7 @@ void main() {
       // When
       final repository = ConcertationDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getConcertations();
 

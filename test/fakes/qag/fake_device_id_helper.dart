@@ -1,5 +1,5 @@
 import 'package:agora/common/helper/device_info_helper.dart';
-import 'package:agora/domain/feedback/device_informations.dart';
+import 'package:agora/profil/app_feedback/domain/device_informations.dart';
 
 class FakeDeviceInfoHelper extends DeviceInfoHelper {
   @override

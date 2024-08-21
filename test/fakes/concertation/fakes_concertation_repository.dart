@@ -1,6 +1,6 @@
 import 'package:agora/concertation/repository/concertation_repository.dart';
-import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/thematique/thematique.dart';
+import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 
 class FakesConcertationRepository extends ConcertationRepository {
   @override
@@ -8,6 +8,7 @@ class FakesConcertationRepository extends ConcertationRepository {
     return [
       Concertation(
         id: "concertationId1",
+        slug: "concertationId1",
         title: "Développer le covoiturage",
         coverUrl: "coverUrl1",
         externalLink: "externalLink1",

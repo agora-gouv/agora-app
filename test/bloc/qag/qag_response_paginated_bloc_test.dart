@@ -1,8 +1,8 @@
-import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_bloc.dart';
-import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_event.dart';
-import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_state.dart';
-import 'package:agora/bloc/qag/response_paginated/qag_response_paginated_view_model.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/reponse/bloc/paginated/qag_response_paginated_bloc.dart';
+import 'package:agora/reponse/bloc/paginated/qag_response_paginated_event.dart';
+import 'package:agora/reponse/bloc/paginated/qag_response_paginated_state.dart';
+import 'package:agora/reponse/bloc/paginated/qag_response_paginated_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

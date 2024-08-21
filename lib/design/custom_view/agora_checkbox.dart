@@ -27,35 +27,38 @@ class AgoraCheckbox extends StatelessWidget {
           onTap: () {
             onChanged(!value);
           },
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ExcludeSemantics(
-                child: Checkbox(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: VisualDensity(
-                    horizontal: VisualDensity.minimumDensity,
-                    vertical: VisualDensity.minimumDensity,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: 48, minHeight: 48),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ExcludeSemantics(
+                  child: Checkbox(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity(
+                      horizontal: VisualDensity.minimumDensity,
+                      vertical: VisualDensity.minimumDensity,
+                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                    side: BorderSide(width: 2, color: AgoraColors.primaryBlue),
+                    fillColor: WidgetStateProperty.all(value ? AgoraColors.primaryBlue : AgoraColors.transparent),
+                    value: value,
+                    onChanged: (newValue) {
+                      if (newValue != null) {
+                        onChanged(newValue);
+                      }
+                    },
                   ),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  side: BorderSide(width: 2, color: AgoraColors.primaryBlue),
-                  fillColor: WidgetStateProperty.all(value ? AgoraColors.primaryBlue : AgoraColors.transparent),
-                  value: value,
-                  onChanged: (newValue) {
-                    if (newValue != null) {
-                      onChanged(newValue);
-                    }
-                  },
                 ),
-              ),
-              SizedBox(width: AgoraSpacings.x0_5),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-                  child: Text(label, style: AgoraTextStyles.medium14),
+                SizedBox(width: AgoraSpacings.x0_5),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
+                    child: Text(label, style: AgoraTextStyles.medium14),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

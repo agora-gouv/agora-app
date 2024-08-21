@@ -1,6 +1,6 @@
 import 'package:agora/common/helper/platform_helper.dart';
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/pages/webview/webview_page.dart';
+import 'package:agora/webview/webview_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,7 +42,7 @@ class LaunchUrlHelper {
     }
   }
 
-  static Future<void> mailtoAgora(String? object) async {
+  static Future<void> mailtoAgora([String? object]) async {
     final objectSuffix = object == '' ? null : '?subject=$object';
     final uri = Uri.parse('mailto:${GenericStrings.mailSupport}$objectSuffix');
     launchUrl(uri);

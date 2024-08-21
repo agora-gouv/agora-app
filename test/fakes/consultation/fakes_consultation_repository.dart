@@ -1,13 +1,13 @@
-import 'package:agora/domain/consultation/consultation.dart';
-import 'package:agora/domain/consultation/consultations_error_type.dart';
-import 'package:agora/domain/consultation/dynamic/dynamic_consultation.dart';
-import 'package:agora/domain/consultation/questions/consultation_question.dart';
-import 'package:agora/domain/consultation/questions/consultation_question_response_choice.dart';
-import 'package:agora/domain/consultation/questions/consultation_questions.dart';
-import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
-import 'package:agora/domain/consultation/summary/consultation_summary_results.dart';
-import 'package:agora/domain/thematique/thematique.dart';
-import 'package:agora/infrastructure/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
+import 'package:agora/consultation/domain/consultations_error_type.dart';
+import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
+import 'package:agora/consultation/question/domain/consultation_question.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response_choice.dart';
+import 'package:agora/consultation/question/domain/consultation_questions.dart';
+import 'package:agora/consultation/repository/consultation_repository.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
   FakeConsultationSuccessRepository([this.dynamicConsultation]);
@@ -20,6 +20,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       ongoingConsultations: [
         ConsultationOngoing(
           id: "consultationId",
+          slug: "consultationId",
           title: "Développer le covoiturage au quotidien",
           coverUrl: "coverUrl1",
           thematique: Thematique(picto: "🚊", label: "Transports"),
@@ -30,6 +31,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       finishedConsultations: [
         ConsultationFinished(
           id: "consultationId2",
+          slug: "consultationId2",
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl2",
           thematique: Thematique(picto: "🩺", label: "Santé"),
@@ -39,6 +41,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       answeredConsultations: [
         ConsultationAnswered(
           id: "consultationId3",
+          slug: "consultationId3",
           title: "Quand commencer ?",
           coverUrl: "coverUrl3",
           thematique: Thematique(picto: "🩺", label: "Santé"),
@@ -57,6 +60,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       consultationsPaginated: [
         ConsultationFinished(
           id: "consultationId",
+          slug: "consultationId",
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
@@ -246,6 +250,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       consultationsPaginated: [
         ConsultationFinished(
           id: "consultationId",
+          slug: "consultationId",
           title: "Quelles solutions pour les déserts médicaux ?",
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
@@ -269,6 +274,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
       ongoingConsultations: [
         ConsultationOngoing(
           id: "consultationId",
+          slug: "consultationId",
           title: "Développer le covoiturage au quotidien",
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🚊", label: "Transports"),

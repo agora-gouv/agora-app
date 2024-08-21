@@ -1,7 +1,9 @@
 import 'dart:io';
 
-import 'package:agora/domain/notification/notification.dart';
-import 'package:agora/infrastructure/notification/notification_repository.dart';
+import 'package:agora/profil/notification/domain/notification.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
+import 'package:agora/profil/notification/domain/notification_information.dart';
+import 'package:agora/profil/notification/repository/notification_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -9,6 +11,7 @@ import '../../utils/dio_utils.dart';
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
+  final sentryWrapper = SentryWrapper();
 
   group("Get notifications", () {
     const pageNumber = 1;
@@ -39,6 +42,7 @@ void main() {
       // When
       final repository = NotificationDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getNotifications(pageNumber: pageNumber);
 
@@ -74,6 +78,7 @@ void main() {
       // When
       final repository = NotificationDioRepository(
         httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
       );
       final response = await repository.getNotifications(pageNumber: pageNumber);
 

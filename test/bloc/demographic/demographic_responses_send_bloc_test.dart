@@ -1,8 +1,8 @@
-import 'package:agora/bloc/demographic/send/demographic_responses_send_bloc.dart';
-import 'package:agora/bloc/demographic/send/demographic_responses_send_event.dart';
-import 'package:agora/bloc/demographic/send/demographic_responses_send_state.dart';
-import 'package:agora/domain/demographic/demographic_question_type.dart';
-import 'package:agora/domain/demographic/demographic_response.dart';
+import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_bloc.dart';
+import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_event.dart';
+import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_state.dart';
+import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
+import 'package:agora/profil/demographic/domain/demographic_response.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -21,10 +21,10 @@ void main() {
       act: (bloc) => bloc.add(
         SendDemographicResponsesEvent(
           demographicResponses: [
-            DemographicResponse(demographicType: DemographicType.gender, response: "M"),
-            DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
-            DemographicResponse(demographicType: DemographicType.cityType, response: "R"),
-            DemographicResponse(demographicType: DemographicType.consultationFrequency, response: "P"),
+            DemographicResponse(demographicType: DemographicQuestionType.gender, response: "M"),
+            DemographicResponse(demographicType: DemographicQuestionType.yearOfBirth, response: "1999"),
+            DemographicResponse(demographicType: DemographicQuestionType.cityType, response: "R"),
+            DemographicResponse(demographicType: DemographicQuestionType.consultationFrequency, response: "P"),
           ],
         ),
       ),
@@ -47,10 +47,10 @@ void main() {
       act: (bloc) => bloc.add(
         SendDemographicResponsesEvent(
           demographicResponses: [
-            DemographicResponse(demographicType: DemographicType.gender, response: "M"),
-            DemographicResponse(demographicType: DemographicType.yearOfBirth, response: "1999"),
-            DemographicResponse(demographicType: DemographicType.cityType, response: "R"),
-            DemographicResponse(demographicType: DemographicType.consultationFrequency, response: "P"),
+            DemographicResponse(demographicType: DemographicQuestionType.gender, response: "M"),
+            DemographicResponse(demographicType: DemographicQuestionType.yearOfBirth, response: "1999"),
+            DemographicResponse(demographicType: DemographicQuestionType.cityType, response: "R"),
+            DemographicResponse(demographicType: DemographicQuestionType.consultationFrequency, response: "P"),
           ],
         ),
       ),

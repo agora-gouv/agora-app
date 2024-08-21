@@ -1,7 +1,7 @@
-import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_bloc.dart';
-import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_event.dart';
-import 'package:agora/bloc/consultation/question/response/stock/consultation_questions_responses_stock_state.dart';
-import 'package:agora/domain/consultation/questions/responses/consultation_question_response.dart';
+import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_event.dart';
+import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_state.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

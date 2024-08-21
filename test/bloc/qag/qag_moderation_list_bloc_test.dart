@@ -1,8 +1,8 @@
-import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_bloc.dart';
-import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_event.dart';
-import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_state.dart';
-import 'package:agora/bloc/qag/moderation/list/qag_moderation_list_view_model.dart';
-import 'package:agora/bloc/thematique/thematique_view_model.dart';
+import 'package:agora/qag/moderation/bloc/list/qag_moderation_list_bloc.dart';
+import 'package:agora/qag/moderation/bloc/list/qag_moderation_list_event.dart';
+import 'package:agora/qag/moderation/bloc/list/qag_moderation_list_state.dart';
+import 'package:agora/qag/moderation/bloc/list/qag_moderation_list_view_model.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';

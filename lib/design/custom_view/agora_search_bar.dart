@@ -1,34 +1,12 @@
 import 'dart:math';
 
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Widget forked from https://github.com/Imgkl/anim_search_bar/
-
 class AnimSearchBar extends StatefulWidget {
-  ///  width - double ,isRequired : Yes
-  ///  textController - TextEditingController  ,isRequired : Yes
-  ///  onSuffixTap - Function, isRequired : Yes
-  ///  onSubmitted - Function, isRequired : Yes
-  ///  rtl - Boolean, isRequired : No
-  ///  autoFocus - Boolean, isRequired : No
-  ///  style - TextStyle, isRequired : No
-  ///  closeSearchOnSuffixTap - bool , isRequired : No
-  ///  suffixIcon - Icon ,isRequired :  No
-  ///  prefixIcon - Icon  ,isRequired : No
-  ///  animationDurationInMilli -  int ,isRequired : No
-  ///  helpText - String ,isRequired :  No
-  ///  inputFormatters - TextInputFormatter, Required - No
-  ///  boxShadow - bool ,isRequired : No
-  ///  textFieldColor - Color ,isRequired : No
-  ///  searchIconColor - Color ,isRequired : No
-  ///  textFieldIconColor - Color ,isRequired : No
-  ///  textInputAction  -TextInputAction, isRequired : No
-
   final double width;
   final double height;
   final TextEditingController textController;
@@ -37,7 +15,6 @@ class AnimSearchBar extends StatefulWidget {
   final String helpText;
   final int animationDurationInMilli;
   final Function() onClose;
-  final bool rtl;
   final bool autoFocus;
   final TextStyle? style;
   final bool closeSearchOnSuffixTap;
@@ -54,55 +31,26 @@ class AnimSearchBar extends StatefulWidget {
 
   const AnimSearchBar({
     super.key,
-
-    /// The width cannot be null
     required this.width,
     required this.searchBarOpen,
-
-    /// The textController cannot be null
     required this.textController,
     this.suffixIcon,
     this.prefixIcon,
     this.helpText = "Search...",
-
-    /// Height of wrapper container
     this.height = 100,
-
-    /// choose your custom color
     this.color = Colors.white,
-
-    /// choose your custom color for the search when it is expanded
     this.textFieldColor = Colors.white,
-
-    /// choose your custom color for the search when it is expanded
     this.searchIconColor = Colors.black,
-
-    /// choose your custom color for the search when it is expanded
     this.textFieldIconColor = Colors.black,
     this.textInputAction = TextInputAction.done,
     required this.onClose,
     required this.onClearText,
     this.animationDurationInMilli = 375,
-
-    /// The onSubmitted cannot be null
     required this.onSubmitted,
-
-    /// make the search bar to open from right to left
-    this.rtl = false,
-
-    /// make the keyboard to show automatically when the searchbar is expanded
     this.autoFocus = false,
-
-    /// TextStyle of the contents inside the searchbar
     this.style,
-
-    /// close the search on suffix tap
     this.closeSearchOnSuffixTap = false,
-
-    /// enable/disable the box shadow decoration
     this.boxShadow = true,
-
-    /// can add list of inputformatters to control the input
     this.inputFormatters,
   });
 
@@ -119,7 +67,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
   String textFieldValue = '';
 
   ///initializing the AnimationController
-  late AnimationController _con;
+  late AnimationController _controller;
   FocusNode focusNode = FocusNode();
 
   @override
@@ -127,7 +75,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
     super.initState();
 
     ///Initializing the animationController which is responsible for the expanding and shrinking of the search bar
-    _con = AnimationController(
+    _controller = AnimationController(
       vsync: this,
 
       /// animationDurationInMilli is optional, the default value is 375
@@ -146,9 +94,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
   Widget build(BuildContext context) {
     return Container(
       height: widget.height,
-
-      ///if the rtl is true, search bar will be from right to left
-      alignment: widget.rtl ? Alignment.centerRight : Alignment(-1.0, 0.0),
+      alignment: Alignment(-1.0, 0.0),
 
       ///Using Animated container to expand and shrink the widget
       child: AnimatedContainer(
@@ -177,76 +123,78 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
             ///Using Animated Positioned widget to expand and shrink the widget
             AnimatedPositioned(
               duration: Duration(milliseconds: widget.animationDurationInMilli),
-              top: 2.0,
               right: 6.0,
               curve: Curves.easeOut,
               child: AnimatedOpacity(
                 opacity: (toggle == 0) ? 0.0 : 1.0,
                 duration: Duration(milliseconds: 200),
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    /// can add custom color or the color will be white
-                    color: widget.color,
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: AnimatedBuilder(
-                    builder: (context, widget) {
-                      ///Using Transform.rotate to rotate the suffix icon when it gets expanded
-                      return Transform.rotate(
-                        angle: _con.value * 2.0 * pi,
-                        child: widget,
-                      );
-                    },
-                    animation: _con,
-                    child: InkWell(
-                      onTap: () {
-                        try {
-                          // * if field empty then the user trying to close bar
-                          if (textFieldValue == '') {
-                            widget.onClose();
-                            unFocusKeyboard();
-                            setState(() {
-                              toggle = 0;
-                            });
-
-                            ///reverse == close
-                            _con.reverse();
-                          } else {
-                            widget.textController.clear();
-                            setState(() {
-                              textFieldValue = '';
-                            });
-                            widget.onClearText();
-                          }
-
-                          ///closeSearchOnSuffixTap will execute if it's true
-                          if (widget.closeSearchOnSuffixTap) {
-                            unFocusKeyboard();
-                            setState(() {
-                              toggle = 0;
-                            });
-                          }
-                        } catch (e) {
-                          ///print the error if the try block fails
-                          if (kDebugMode) {
-                            print(e);
-                          }
-                        }
+                child: Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: widget.color,
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: AnimatedBuilder(
+                      builder: (context, widget) {
+                        ///Using Transform.rotate to rotate the suffix icon when it gets expanded
+                        return Transform.rotate(
+                          angle: _controller.value * 2.0 * pi,
+                          child: widget,
+                        );
                       },
+                      animation: _controller,
+                      child: Material(
+                        color: toggle == 0 ? widget.color : widget.textFieldColor,
+                        child: IconButton(
+                          constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+                          splashRadius: 19.0,
+                          icon: Semantics(
+                            button: true,
+                            label: textFieldValue.isNotEmpty
+                                ? GenericStrings.searchBarDelete
+                                : GenericStrings.searchBarClose,
+                            child: widget.suffixIcon ??
+                                Icon(
+                                  semanticLabel: "",
+                                  Icons.close,
+                                  size: 22.0,
+                                  color: widget.textFieldIconColor,
+                                ),
+                          ),
+                          onPressed: () {
+                            try {
+                              // * if field empty then the user trying to close bar
+                              if (textFieldValue == '') {
+                                widget.onClose();
+                                unFocusKeyboard();
+                                setState(() {
+                                  toggle = 0;
+                                });
 
-                      ///suffixIcon is of type Icon
-                      child: Semantics(
-                        button: true,
-                        label:
-                            textFieldValue.isNotEmpty ? GenericStrings.searchBarDelete : GenericStrings.searchBarClose,
-                        child: widget.suffixIcon ??
-                            Icon(
-                              semanticLabel: "",
-                              Icons.close,
-                              size: 22.0,
-                              color: AgoraColors.primaryBlue,
-                            ),
+                                ///reverse == close
+                                _controller.reverse();
+                              } else {
+                                widget.textController.clear();
+                                setState(() {
+                                  textFieldValue = '';
+                                });
+                                widget.onClearText();
+                              }
+
+                              ///closeSearchOnSuffixTap will execute if it's true
+                              if (widget.closeSearchOnSuffixTap) {
+                                unFocusKeyboard();
+                                setState(() {
+                                  toggle = 0;
+                                });
+                              }
+                            } catch (e) {
+                              if (kDebugMode) {
+                                print(e);
+                              }
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -321,9 +269,10 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
               /// toggle button color based on toggle state
               color: toggle == 0 ? widget.color : widget.textFieldColor,
               child: IconButton(
+                constraints: BoxConstraints(minHeight: 48, minWidth: 48),
                 splashRadius: 19.0,
 
-                ///if toggle is 1, wxhich means it's open. so show the back icon, which will close it.
+                ///if toggle is 1, which means it's open. so show the back icon, which will close it.
                 ///if the toggle is 0, which means it's closed, so tapping on it will expand the widget.
                 ///prefixIcon is of type Icon
                 icon: Semantics(
@@ -357,7 +306,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                         });
 
                         ///forward == expand
-                        _con.forward();
+                        _controller.forward();
                       } else {
                         ///if the search bar is expanded
                         toggle = 0;
@@ -370,7 +319,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                         widget.onClose();
 
                         ///reverse == close
-                        _con.reverse();
+                        _controller.reverse();
                       }
                     },
                   );

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:agora/common/client/agora_http_client.dart';
-import 'package:agora/infrastructure/errors/sentry_wrapper.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/login/domain/login_error_type.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -25,9 +25,9 @@ abstract class LoginRepository {
 
 class LoginDioRepository extends LoginRepository {
   final AgoraDioHttpClient httpClient;
-  final SentryWrapper? sentryWrapper;
+  final SentryWrapper sentryWrapper;
 
-  LoginDioRepository({required this.httpClient, this.sentryWrapper});
+  LoginDioRepository({required this.httpClient, required this.sentryWrapper});
 
   @override
   Future<SignupRepositoryResponse> signup({
@@ -36,9 +36,10 @@ class LoginDioRepository extends LoginRepository {
     required String buildNumber,
     required String platformName,
   }) async {
+    const uri = "/signup";
     try {
       final response = await httpClient.post(
-        "/signup",
+        uri,
         headers: {
           "fcmToken": firebaseMessagingToken,
           "versionName": appVersion,
@@ -53,16 +54,17 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
         jwtExpirationEpochMilli: response.data["jwtExpirationEpochMilli"] as int,
       );
-    } catch (e, s) {
-      if (e is DioException) {
-        final response = e.response;
+    } catch (exception, stacktrace) {
+      if (exception is DioException) {
+        final response = exception.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
           return SignupFailedResponse(errorType: LoginErrorType.updateVersion);
-        } else if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+        } else if (exception.type == DioExceptionType.connectionTimeout ||
+            exception.type == DioExceptionType.receiveTimeout) {
           return SignupFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
-      sentryWrapper?.captureException(e, s);
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return SignupFailedResponse();
     }
   }
@@ -75,9 +77,10 @@ class LoginDioRepository extends LoginRepository {
     required String buildNumber,
     required String platformName,
   }) async {
+    const uri = "/login";
     try {
       final response = await httpClient.post(
-        "/login",
+        uri,
         headers: {
           "fcmToken": firebaseMessagingToken,
           "versionName": appVersion,
@@ -93,16 +96,17 @@ class LoginDioRepository extends LoginRepository {
         isModerator: response.data["isModerator"] as bool,
         jwtExpirationEpochMilli: response.data["jwtExpirationEpochMilli"] as int,
       );
-    } catch (e, s) {
-      if (e is DioException) {
-        final response = e.response;
+    } catch (exception, stacktrace) {
+      if (exception is DioException) {
+        final response = exception.response;
         if (response != null && response.statusCode == HttpStatus.preconditionFailed) {
           return LoginFailedResponse(errorType: LoginErrorType.updateVersion);
-        } else if (e.type == DioExceptionType.connectionTimeout || e.type == DioExceptionType.receiveTimeout) {
+        } else if (exception.type == DioExceptionType.connectionTimeout ||
+            exception.type == DioExceptionType.receiveTimeout) {
           return LoginFailedResponse(errorType: LoginErrorType.timeout);
         }
       }
-      sentryWrapper?.captureException(e, s);
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return LoginFailedResponse();
     }
   }
