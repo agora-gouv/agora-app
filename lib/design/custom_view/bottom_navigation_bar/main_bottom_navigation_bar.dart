@@ -53,7 +53,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
         onTap: (newIndex) => setState(() => _currentIndex = newIndex),
         items: pages.map((page) => _getBottomNavigationBarItem(page)).toList(),
       ),
-      body: SafeArea(child: _Content(pages[_currentIndex])),
+      body: _Content(pages[_currentIndex]),
     );
   }
 
