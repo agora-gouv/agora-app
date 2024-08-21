@@ -340,21 +340,29 @@ class _DescriptionSliver extends StatelessWidget {
             if (viewModel.response == null && viewModel.textResponse == null) ...[
               Text(viewModel.description, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.base),
-              Text(
-                StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
-                style: AgoraTextStyles.medium14,
-              ),
-              SizedBox(height: AgoraSpacings.x3),
-              QagDetailsSupportView(
-                qagId: viewModel.id,
-                canSupport: viewModel.canSupport,
-                isQuestionGagnante: isQuestionGagnante,
-                supportViewModel: viewModel.support,
-                onSupportChange: onSupportChange,
+              Row(
+                children: [
+                  Text(
+                    StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
+                    style: AgoraTextStyles.medium14,
+                  ),
+                  Spacer(),
+                  QagDetailsSupportView(
+                    qagId: viewModel.id,
+                    canSupport: viewModel.canSupport,
+                    isQuestionGagnante: isQuestionGagnante,
+                    supportViewModel: viewModel.support,
+                    onSupportChange: onSupportChange,
+                  ),
+                ],
               ),
               if (viewModel.canDelete) _DeleteQaG(viewModel.id, reload),
             ] else
-              AgoraReadMoreText(viewModel.description, trimLines: 3),
+              AgoraReadMoreText(
+                data: viewModel.description,
+                isTalkbackEnabled: MediaQuery.accessibleNavigationOf(context),
+                trimLines: 3,
+              ),
           ],
         ),
       ),

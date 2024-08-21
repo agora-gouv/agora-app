@@ -84,7 +84,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
                     child: _buildItemWidget(onTapIndex, item),
                   ),
                 );

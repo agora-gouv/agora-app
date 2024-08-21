@@ -27,7 +27,6 @@ import 'package:agora/design/custom_view/agora_collapse_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/fullscreen_animation_view.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';

@@ -156,7 +156,7 @@ class _ModerationPageState extends State<ModerationPage> {
       qagsWidgets.add(
         AgoraRoundedButton(
           label: GenericStrings.displayMore,
-          style: AgoraRoundedButtonStyle.primaryButtonStyle,
+          style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
           onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
         ),
       );

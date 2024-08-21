@@ -12,7 +12,6 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/profil/pages/profil_page.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_bloc.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_event.dart';
@@ -47,9 +46,6 @@ class ReponsesPage extends StatelessWidget {
                   AgoraRichTextItem(text: ReponseStrings.reponsesTitrePart2, style: AgoraRichTextItemStyle.regular),
                 ],
               ),
-              onProfileClick: () {
-                Navigator.pushNamed(context, ProfilPage.routeName);
-              },
             ),
             SizedBox(height: AgoraSpacings.base),
             _ReponsesSection(),
@@ -149,7 +145,7 @@ class _ReponseList extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
             child: AgoraRoundedButton(
               label: GenericStrings.displayMore,
-              style: AgoraRoundedButtonStyle.primaryButtonStyle,
+              style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
               onPressed: () => context
                   .read<QagResponsePaginatedBloc>()
                   .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber + 1)),

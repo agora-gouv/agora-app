@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 
 class AgoraMainToolbar extends StatelessWidget {
   final Widget title;
-  final VoidCallback onProfileClick;
 
-  const AgoraMainToolbar({super.key, required this.title, required this.onProfileClick});
+  const AgoraMainToolbar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

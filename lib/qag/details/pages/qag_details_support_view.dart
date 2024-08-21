@@ -1,10 +1,8 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
-import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_like_animation_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
@@ -46,36 +44,19 @@ class QagDetailsSupportView extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if (canSupport)
-                      Flexible(
-                        child: AgoraRoundedButton(
-                          icon: _buildButtonIcon(isSupported),
-                          label: _buildButtonLabel(isSupported),
-                          isLoading: viewModel.isLoading,
-                          style: _buildButtonStyle(isSupported),
-                          onPressed: () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading),
-                        ),
-                      ),
-                    SizedBox(width: AgoraSpacings.x0_5),
-                    Semantics(
-                      button: canSupport,
-                      child: InkWell(
-                        onTap:
-                            canSupport ? () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading) : null,
-                        child: AgoraLikeView(
-                          isSupported: isSupported,
-                          supportCount: viewModel.supportCount(),
-                          shouldHaveVerticalPadding: true,
-                          likeViewKey: _likeViewKey,
-                          shouldVocaliseSupport: canSupport,
-                          isQuestionGagnante: isQuestionGagnante,
-                        ),
-                      ),
+                Semantics(
+                  button: canSupport,
+                  child: InkWell(
+                    onTap: canSupport ? () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading) : null,
+                    child: AgoraLikeView(
+                      isSupported: isSupported,
+                      supportCount: viewModel.supportCount(),
+                      shouldHaveVerticalPadding: true,
+                      likeViewKey: _likeViewKey,
+                      shouldVocaliseSupport: canSupport,
+                      isQuestionGagnante: isQuestionGagnante,
                     ),
-                  ],
+                  ),
                 ),
                 if (viewModel.hasError) ...[
                   SizedBox(height: AgoraSpacings.base),
@@ -153,30 +134,6 @@ class QagDetailsSupportView extends StatelessWidget {
       return _supportCountWhenUnliked();
     }
     return _initialSupportCount();
-  }
-
-  String _buildButtonIcon(bool isSupported) {
-    if (isSupported) {
-      return "ic_confirmation.svg";
-    } else {
-      return "ic_heart_white.svg";
-    }
-  }
-
-  String _buildButtonLabel(bool isSupported) {
-    if (isSupported) {
-      return QagStrings.questionSupported;
-    } else {
-      return QagStrings.supportQuestion;
-    }
-  }
-
-  AgoraRoundedButtonStyle _buildButtonStyle(bool isSupported) {
-    if (isSupported) {
-      return AgoraRoundedButtonStyle.blueBorderButtonStyle;
-    } else {
-      return AgoraRoundedButtonStyle.primaryButtonStyle;
-    }
   }
 
   void _buildOnPressed(BuildContext context, String qagId, bool isSupported, bool isLoading) {
