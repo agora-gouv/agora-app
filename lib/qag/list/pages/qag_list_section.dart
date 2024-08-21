@@ -115,7 +115,7 @@ class QagListSection extends StatelessWidget {
                     return Center(
                       child: AgoraRoundedButton(
                         label: GenericStrings.displayMore,
-                        style: AgoraRoundedButtonStyle.primaryButtonStyle,
+                        style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                         onPressed: () {
                           context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
                         },

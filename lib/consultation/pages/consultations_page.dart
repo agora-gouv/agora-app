@@ -1,22 +1,21 @@
-import 'package:agora/consultation/bloc/consultation_bloc.dart';
-import 'package:agora/consultation/bloc/consultation_event.dart';
-import 'package:agora/consultation/bloc/consultation_state.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/design/custom_view/error/agora_error_view.dart';
-import 'package:agora/design/custom_view/agora_main_toolbar.dart';
-import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/consultation/bloc/consultation_bloc.dart';
+import 'package:agora/consultation/bloc/consultation_event.dart';
+import 'package:agora/consultation/bloc/consultation_state.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:agora/consultation/pages/widgets/consultations_answered_section.dart';
 import 'package:agora/consultation/pages/widgets/consultations_finished_section.dart';
 import 'package:agora/consultation/pages/widgets/consultations_loading_skeleton.dart';
 import 'package:agora/consultation/pages/widgets/consultations_ongoing_section.dart';
-import 'package:agora/profil/pages/profil_page.dart';
+import 'package:agora/design/custom_view/agora_main_toolbar.dart';
+import 'package:agora/design/custom_view/agora_tracker.dart';
+import 'package:agora/design/custom_view/error/agora_error_view.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
+import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -163,7 +162,6 @@ class _Header extends StatelessWidget {
           ),
         ],
       ),
-      onProfileClick: () => Navigator.pushNamed(context, ProfilPage.routeName),
     );
   }
 }

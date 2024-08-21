@@ -1,20 +1,19 @@
-import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
-import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
-import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
-import 'package:agora/thematique/bloc/thematique_bloc.dart';
-import 'package:agora/thematique/bloc/thematique_event.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
-import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/profil/pages/profil_page.dart';
+import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
+import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
+import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
 import 'package:agora/qag/ask/pages/qags_ask_question_section.dart';
 import 'package:agora/qag/widgets/qags_section.dart';
+import 'package:agora/thematique/bloc/thematique_bloc.dart';
+import 'package:agora/thematique/bloc/thematique_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,9 +75,6 @@ class _QagsPageState extends State<QagsPage> {
                     AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
                   ],
                 ),
-                onProfileClick: () {
-                  Navigator.pushNamed(context, ProfilPage.routeName);
-                },
               ),
               SizedBox(height: AgoraSpacings.base),
               QagsAskQuestionSectionPage(key: onSearchAnchorKey),

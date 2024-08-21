@@ -5,7 +5,6 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_consultation_result_bar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -184,10 +183,9 @@ class _NotAnswered extends StatelessWidget {
     return Row(
       children: [
         if (isHelpfulClicked == null) ...[
-          AgoraRoundedButton(
-            icon: "ic_thumb_white.svg",
+          AgoraButton(
+            prefixIcon: "ic_thumb_white.svg",
             label: QagStrings.utils,
-            contentPadding: AgoraRoundedButtonPadding.short,
             onPressed: () {
               Future.delayed(Duration(milliseconds: 2500)).then((_) => onFeedbackSent());
               if (isHelpfulClicked == null) {
@@ -197,10 +195,9 @@ class _NotAnswered extends StatelessWidget {
             },
           ),
           SizedBox(width: AgoraSpacings.base),
-          AgoraRoundedButton(
-            icon: "ic_thumb_down_white.svg",
+          AgoraButton(
+            prefixIcon: "ic_thumb_down_white.svg",
             label: QagStrings.notUtils,
-            contentPadding: AgoraRoundedButtonPadding.short,
             onPressed: () {
               Future.delayed(Duration(milliseconds: 2500)).then((_) => onFeedbackSent());
               if (isHelpfulClicked == null) {

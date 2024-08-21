@@ -480,33 +480,6 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
   }
 }
 
-class ShowMoreButton extends StatelessWidget {
-  final void Function() onTap;
-  final String label;
-  final double horizontalPadding;
-
-  ShowMoreButton({
-    required this.onTap,
-    this.label = 'Lire la suite',
-    this.horizontalPadding = AgoraSpacings.horizontalPadding,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: horizontalPadding),
-        child: AgoraButton(
-          label: label,
-          buttonStyle: AgoraButtonStyle.blueBorder,
-          onPressed: onTap,
-        ),
-      ),
-    );
-  }
-}
-
 class _RichTextSectionWidget extends StatelessWidget {
   final _RichTextSection section;
 
@@ -914,8 +887,8 @@ class _VideoSectionWidget extends StatelessWidget {
           SizedBox(height: AgoraSpacings.x0_5),
           Semantics(
             container: true,
-            child: AgoraReadMoreV2Text(
-              section.transcription,
+            child: AgoraReadMoreText(
+              data: section.transcription,
               style: AgoraTextStyles.light16,
               isTalkbackEnabled: isTalkbackEnabled,
             ),
@@ -1075,10 +1048,9 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                   if (answer == null)
                     Row(
                       children: [
-                        AgoraRoundedButton(
-                          icon: "ic_thumb_white.svg",
+                        AgoraButton(
+                          prefixIcon: "ic_thumb_white.svg",
                           label: QagStrings.yes,
-                          contentPadding: AgoraRoundedButtonPadding.normal,
                           onPressed: () {
                             context.read<DynamicConsultationFeedbackBloc>().add(
                                   SendConsultationUpdateFeedbackEvent(
@@ -1099,11 +1071,9 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                           },
                         ),
                         SizedBox(width: AgoraSpacings.base),
-                        AgoraRoundedButton(
-                          icon: "ic_thumb_down_white.svg",
+                        AgoraButton(
+                          prefixIcon: "ic_thumb_down_white.svg",
                           label: QagStrings.no,
-                          contentPadding: AgoraRoundedButtonPadding.normal,
-                          iconPadding: EdgeInsets.only(right: AgoraSpacings.x0_5, top: AgoraSpacings.x0_5),
                           onPressed: () {
                             context.read<DynamicConsultationFeedbackBloc>().add(
                                   SendConsultationUpdateFeedbackEvent(

@@ -185,7 +185,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
         widgets.add(
           AgoraRoundedButton(
             label: GenericStrings.displayMore,
-            style: AgoraRoundedButtonStyle.primaryButtonStyle,
+            style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
             onPressed: () => context.read<ConsultationPaginatedBloc>().add(
                   FetchConsultationPaginatedEvent(
                     pageNumber: state.currentPageNumber + 1,

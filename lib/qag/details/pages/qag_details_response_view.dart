@@ -1,14 +1,14 @@
-import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_read_more_text.dart';
-import 'package:agora/design/video/agora_video_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/design/video/agora_video_view.dart';
+import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:flutter/material.dart';
 
 class QagDetailsResponseView extends StatelessWidget {
@@ -26,7 +26,7 @@ class QagDetailsResponseView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Semantics(header: true, child: Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17)),
             SizedBox(height: AgoraSpacings.base),
@@ -108,7 +108,11 @@ class QagDetailsResponseView extends StatelessWidget {
             SizedBox(height: AgoraSpacings.x1_5),
             Semantics(header: true, child: Text(QagStrings.transcription, style: AgoraTextStyles.medium18)),
             SizedBox(height: AgoraSpacings.x0_5),
-            AgoraReadMoreText(response.transcription),
+            AgoraReadMoreText(
+              data: response.transcription,
+              isTalkbackEnabled: MediaQuery.accessibleNavigationOf(context),
+              backgroundColor: AgoraColors.background,
+            ),
             ..._buildAdditionalInfo(),
             SizedBox(height: AgoraSpacings.x2),
           ],
