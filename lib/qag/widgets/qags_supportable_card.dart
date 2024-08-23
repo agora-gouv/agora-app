@@ -16,22 +16,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class QagsSupportableCard extends StatelessWidget {
   final QagDisplayModel qagViewModel;
   final String widgetName;
-  final GlobalKey? likeViewKey;
+  final GlobalKey likeViewKey;
   final Function(QagSupport)? onQagSupportChange;
 
   const QagsSupportableCard({
     super.key,
     required this.qagViewModel,
     required this.widgetName,
-    this.likeViewKey,
+    required this.likeViewKey,
     this.onQagSupportChange,
   });
 
   @override
   Widget build(BuildContext context) {
-    final likeAnimationView =
-        AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey ?? GlobalKey());
-
+    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey);
     return Stack(
       children: [
         BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
@@ -46,6 +44,7 @@ class QagsSupportableCard extends StatelessWidget {
               supportCount: viewModel.supportCount(),
               isSupported: viewModel.isSupported(),
               isAuthor: qagViewModel.isAuthor,
+              likeViewKey: likeViewKey,
               onSupportClick: (bool support) {
                 if (support) {
                   TrackerHelper.trackClick(
@@ -78,7 +77,6 @@ class QagsSupportableCard extends StatelessWidget {
                   }
                 });
               },
-              likeViewKey: likeViewKey,
             );
           },
         ),

@@ -124,7 +124,7 @@ class ShowMoreButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: horizontalPadding),
         child: AgoraButton(
           label: label,
-          buttonStyle: AgoraButtonStyle.blueBorder,
+          buttonStyle: AgoraButtonStyle.secondary,
           onPressed: onTap,
         ),
       ),

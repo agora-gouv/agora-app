@@ -9,7 +9,7 @@ class ConsultationQuestionHelper {
       return AgoraButton(
         label: ConsultationStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
-        buttonStyle: AgoraButtonStyle.blueBorder,
+        buttonStyle: AgoraButtonStyle.secondary,
         onPressed: onBackTap,
       );
     } else {
@@ -33,7 +33,7 @@ class ConsultationQuestionHelper {
     return AgoraButton(
       label: ConsultationStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
-      buttonStyle: AgoraButtonStyle.blueBorder,
+      buttonStyle: AgoraButtonStyle.secondary,
       onPressed: onPressed,
     );
   }

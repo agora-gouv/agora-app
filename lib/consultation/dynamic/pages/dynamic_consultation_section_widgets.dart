@@ -620,7 +620,7 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: AgoraButton(
                               label: section.buttonLabel,
-                              buttonStyle: AgoraButtonStyle.blueBorder,
+                              buttonStyle: AgoraButtonStyle.secondary,
                               onPressed: () {
                                 Navigator.pushNamed(
                                   context,
@@ -947,7 +947,7 @@ class _DownloadSectionWidget extends StatelessWidget {
                       child: AgoraButton(
                         label: 'Télécharger',
                         semanticLabel: 'Télécharger la synthèse complète',
-                        buttonStyle: AgoraButtonStyle.blueBorder,
+                        buttonStyle: AgoraButtonStyle.secondary,
                         onPressed: () {
                           LaunchUrlHelper.launchUrlFromAgora(
                             url: section.url,
@@ -1112,7 +1112,7 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                       alignment: Alignment.centerLeft,
                       child: AgoraButton(
                         label: 'Modifier votre réponse',
-                        buttonStyle: AgoraButtonStyle.blueBorder,
+                        buttonStyle: AgoraButtonStyle.secondary,
                         onPressed: () {
                           context.read<DynamicConsultationFeedbackBloc>().add(
                                 DeleteConsultationUpdateFeedbackEvent(
@@ -1450,7 +1450,7 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                     child: AgoraButton(
                       label: 'Partager',
                       semanticLabel: 'Partager cette consultation',
-                      buttonStyle: AgoraButtonStyle.blueBorder,
+                      buttonStyle: AgoraButtonStyle.secondary,
                       onPressed: () {
                         ShareHelper.sharePreformatted(context: context, data: section.shareText);
                       },

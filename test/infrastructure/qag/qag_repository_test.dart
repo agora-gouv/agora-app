@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/qag/domain/header_qag.dart';
-import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag.dart';
+import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
-import 'package:agora/thematique/domain/thematique.dart';
-import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -228,6 +228,7 @@ void main() {
                 "qagId": "id1",
                 "thematique": {"label": "Transports", "picto": "🚊"},
                 "title": "title1",
+                "description": "description",
                 "username": "username1",
                 "date": "2023-01-01",
                 "support": {
@@ -269,6 +270,7 @@ void main() {
           qags: [
             Qag(
               id: "id1",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
               username: "username1",

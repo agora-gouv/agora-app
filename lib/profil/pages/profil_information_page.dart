@@ -5,8 +5,8 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/text/agora_link_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -227,7 +227,7 @@ class _ChoixBoutons extends StatelessWidget {
         Flexible(
           child: AgoraButton(
             label: DemographicStrings.toNoAnswer,
-            buttonStyle: AgoraButtonStyle.blueBorder,
+            buttonStyle: AgoraButtonStyle.secondary,
             onPressed: () {
               TrackerHelper.trackClick(
                 clickName: AnalyticsEventNames.ignoreDemographic,

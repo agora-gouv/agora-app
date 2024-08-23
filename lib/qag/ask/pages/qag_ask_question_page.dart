@@ -15,7 +15,6 @@ import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
@@ -252,7 +251,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               AgoraButton(
                 label: QagStrings.readNotice,
-                buttonStyle: AgoraButtonStyle.lightGrey,
+                buttonStyle: AgoraButtonStyle.secondary,
                 onPressed: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
               ),
               SizedBox(height: AgoraSpacings.base),
@@ -335,7 +334,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           Text(errorCase, style: AgoraTextStyles.light14),
           SizedBox(height: AgoraSpacings.x1_5, width: double.infinity),
           Center(
-            child: AgoraRoundedButton(
+            child: AgoraButton(
               label: QagStrings.goToAllQuestion,
               onPressed: () {
                 Navigator.pop(context);

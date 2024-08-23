@@ -14,6 +14,7 @@ class AnimSearchBar extends StatefulWidget {
   final int animationDurationInMilli;
   final Function() onClose;
   final bool autoFocus;
+  final bool autoOpen;
   final TextStyle? style;
   final bool closeSearchOnSuffixTap;
   final Color? color;
@@ -44,6 +45,7 @@ class AnimSearchBar extends StatefulWidget {
     this.animationDurationInMilli = 375,
     required this.onSubmitted,
     this.autoFocus = false,
+    this.autoOpen = false,
     this.style,
     this.closeSearchOnSuffixTap = false,
     this.isSearchBarDisplayed = false,
@@ -77,6 +79,12 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
       /// animationDurationInMilli is optional, the default value is 375
       duration: Duration(milliseconds: widget.animationDurationInMilli),
     );
+
+    if (widget.autoOpen) {
+      setState(() {
+        toggle = 1;
+      });
+    }
   }
 
   void unFocusKeyboard() {
@@ -133,7 +141,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                           canRequestFocus: false,
                           descendantsAreFocusable: widget.isSearchBarDisplayed,
                           child: IconButton(
-                            constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+                            constraints: BoxConstraints(minHeight: 44, minWidth: 44),
                             splashRadius: 19.0,
                             icon: Semantics(
                               button: true,
@@ -260,7 +268,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
               /// toggle button color based on toggle state
               color: toggle == 0 ? widget.color : widget.textFieldColor,
               child: IconButton(
-                constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+                constraints: BoxConstraints(minHeight: 44, minWidth: 44),
                 splashRadius: 19.0,
 
                 ///if toggle is 1, which means it's open. so show the back icon, which will close it.

@@ -1,14 +1,18 @@
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
-import 'package:agora/common/extension/string_extension.dart';
-import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/common/analytics/analytics_event_names.dart';
+import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/share_helper.dart';
+import 'package:agora/common/helper/tracker_helper.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/common/strings/string_utils.dart';
-import 'package:agora/design/custom_view/card/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/card/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
 
 class AgoraQuestionCard extends StatelessWidget {
@@ -44,18 +48,31 @@ class AgoraQuestionCard extends StatelessWidget {
       button: true,
       child: Stack(
         children: [
-          _Card(
-            onCardClick,
-            id,
-            thematique,
-            titre,
-            nom,
-            date,
-            supportCount,
-            isSupported,
-            isAuthor,
-            onSupportClick,
-            likeViewKey,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+            child: AgoraRoundedCard(
+              borderColor: AgoraColors.border,
+              padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+              onTap: () => onCardClick(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _Content(
+                    id: id,
+                    thematique: thematique,
+                    titre: titre,
+                    nom: nom,
+                    date: date,
+                    supportCount: supportCount,
+                    isSupported: isSupported,
+                    isAuthor: isAuthor,
+                    onSupportClick: onSupportClick,
+                    likeViewKey: likeViewKey,
+                  ),
+                  _AuteurEtDate(nom: nom, date: date),
+                ],
+              ),
+            ),
           ),
           if (isAuthor)
             Padding(
@@ -68,7 +85,7 @@ class AgoraQuestionCard extends StatelessWidget {
   }
 }
 
-class _Card extends StatelessWidget {
+class _Content extends StatelessWidget {
   final String id;
   final ThematiqueViewModel thematique;
   final String titre;
@@ -77,122 +94,98 @@ class _Card extends StatelessWidget {
   final int supportCount;
   final bool isSupported;
   final bool isAuthor;
-  final Function(bool support) onSupportClick;
-  final void Function() onCardClick;
+  final void Function(bool support) onSupportClick;
   final GlobalKey? likeViewKey;
 
-  const _Card(
-    this.onCardClick,
-    this.id,
-    this.thematique,
-    this.titre,
-    this.nom,
-    this.date,
-    this.supportCount,
-    this.isSupported,
-    this.isAuthor,
-    this.onSupportClick,
-    this.likeViewKey,
-  );
+  const _Content({
+    required this.id,
+    required this.thematique,
+    required this.titre,
+    required this.nom,
+    required this.date,
+    required this.supportCount,
+    required this.isSupported,
+    required this.isAuthor,
+    required this.onSupportClick,
+    required this.likeViewKey,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-      child: AgoraRoundedCard(
-        borderColor: AgoraColors.border,
-        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-        onTap: () => onCardClick(),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(AgoraSpacings.base),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _VotreQuestion(
-                    thematique,
-                    supportCount,
-                    isSupported,
-                    isAuthor,
-                    onSupportClick,
-                    onCardClick,
-                    likeViewKey,
-                  ),
-                  if (isAuthor) ThematiqueHelper.buildCard(context, thematique),
-                  SizedBox(height: AgoraSpacings.x0_25),
-                  Text(titre, style: AgoraTextStyles.regular16),
-                ],
+      padding: const EdgeInsets.all(AgoraSpacings.base),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (!isAuthor)
+            AgoraThematiqueLabel(
+              picto: thematique.picto,
+              label: thematique.label,
+              size: AgoraThematiqueSize.medium,
+            ),
+          SizedBox(height: AgoraSpacings.x0_5),
+          Text(titre, style: AgoraTextStyles.regular16),
+          SizedBox(height: AgoraSpacings.base),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AgoraButton(
+                label: '',
+                semanticLabel: GenericStrings.share,
+                icon: Icon(Icons.ios_share, color: AgoraColors.primaryBlue),
+                buttonStyle: AgoraButtonStyle.secondary,
+                onPressed: () {
+                  TrackerHelper.trackClick(
+                    clickName: "${AnalyticsEventNames.shareQag} $id",
+                    widgetName: AnalyticsScreenNames.qagsPage,
+                  );
+                  ShareHelper.shareQag(context: context, title: titre, id: id);
+                },
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: AgoraRoundedCard(
-                    cardColor: AgoraColors.doctor,
-                    padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-                    roundedCorner: AgoraRoundedCorner.bottomRounded,
-                    child: Text(StringUtils.authorAndDate.format2(nom, date), style: AgoraTextStyles.light12),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              AgoraLikeView(
+                isSupported: isSupported,
+                supportCount: supportCount,
+                shouldHaveVerticalPadding: true,
+                onSupportClick: (support) => onSupportClick(support),
+                likeViewKey: likeViewKey,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
 
-class _VotreQuestion extends StatelessWidget {
-  final ThematiqueViewModel thematique;
-  final int supportCount;
-  final bool isSupported;
-  final bool isAuthor;
-  final Function(bool support) onSupportClick;
-  final void Function() onCardClick;
-  final GlobalKey? likeViewKey;
+class _AuteurEtDate extends StatelessWidget {
+  const _AuteurEtDate({
+    required this.nom,
+    required this.date,
+  });
 
-  const _VotreQuestion(
-    this.thematique,
-    this.supportCount,
-    this.isSupported,
-    this.isAuthor,
-    this.onSupportClick,
-    this.onCardClick,
-    this.likeViewKey,
-  );
+  final String nom;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
-    if (isAuthor) {
-      return Row(
+    return AgoraRoundedCard(
+      cardColor: AgoraColors.doctor,
+      padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+      roundedCorner: AgoraRoundedCorner.bottomRounded,
+      child: Row(
         children: [
-          Expanded(child: Container(height: AgoraSpacings.x2)),
-          SizedBox(width: AgoraSpacings.x0_25),
-          AgoraLikeView(
-            isSupported: isSupported,
-            supportCount: supportCount,
-            shouldHaveVerticalPadding: true,
-            onSupportClick: (support) => onSupportClick(support),
-            likeViewKey: likeViewKey,
+          SizedBox(width: AgoraSpacings.x0_5),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(nom, style: AgoraTextStyles.medium12),
+                Text('le $date', style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
+              ],
+            ),
           ),
         ],
-      );
-    } else {
-      return Row(
-        children: [
-          Expanded(child: ThematiqueHelper.buildCard(context, thematique)),
-          SizedBox(width: AgoraSpacings.x0_25),
-          AgoraLikeView(
-            isSupported: isSupported,
-            supportCount: supportCount,
-            shouldHaveVerticalPadding: true,
-            onSupportClick: (support) => onSupportClick(support),
-            likeViewKey: likeViewKey,
-          ),
-        ],
-      );
-    }
+      ),
+    );
   }
 }

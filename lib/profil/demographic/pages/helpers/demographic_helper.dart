@@ -28,7 +28,7 @@ class DemographicHelper {
       return AgoraButton(
         label: DemographicStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
-        buttonStyle: AgoraButtonStyle.blueBorder,
+        buttonStyle: AgoraButtonStyle.secondary,
         onPressed: onBackTap,
       );
     } else {
@@ -49,7 +49,7 @@ class DemographicHelper {
     return AgoraButton(
       label: DemographicStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
-      buttonStyle: AgoraButtonStyle.blueBorder,
+      buttonStyle: AgoraButtonStyle.secondary,
       onPressed: onPressed,
     );
   }

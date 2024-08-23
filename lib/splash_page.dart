@@ -151,7 +151,7 @@ class _SplashPageState extends State<SplashPage> {
                                   Flexible(
                                     child: AgoraButton(
                                       label: GenericStrings.contactSupport,
-                                      buttonStyle: AgoraButtonStyle.blueBorder,
+                                      buttonStyle: AgoraButtonStyle.secondary,
                                       onPressed: () {
                                         final Uri emailUri = Uri(
                                           scheme: 'mailto',
@@ -292,7 +292,7 @@ class _SplashPageState extends State<SplashPage> {
           children: [
             AgoraButton(
               label: GenericStrings.rejectNotificationPermissionButton,
-              buttonStyle: AgoraButtonStyle.lightGrey,
+              buttonStyle: AgoraButtonStyle.secondary,
               onPressed: () => Navigator.pop(context),
             ),
             SizedBox(height: AgoraSpacings.base),

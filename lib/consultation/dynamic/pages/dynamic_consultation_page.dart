@@ -217,7 +217,7 @@ class _ShareButton extends StatelessWidget {
         prefixIcon: "ic_share.svg",
         label: GenericStrings.share,
         semanticLabel: "Partager la consultation",
-        buttonStyle: AgoraButtonStyle.lightGrey,
+        buttonStyle: AgoraButtonStyle.secondary,
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.shareConsultation,

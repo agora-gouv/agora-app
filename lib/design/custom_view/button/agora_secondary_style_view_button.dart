@@ -1,7 +1,7 @@
 import 'package:agora/design/custom_view/agora_little_separator.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 
@@ -60,12 +60,11 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                   ),
                   if (button != null) ...[
                     SizedBox(width: AgoraSpacings.x0_75),
-                    AgoraRoundedButton(
-                      icon: button!.icon,
+                    AgoraButton(
+                      prefixIcon: button!.icon,
                       label: button!.title,
                       semanticLabel: button!.accessibilityLabel,
-                      style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
-                      contentPadding: AgoraRoundedButtonPadding.short,
+                      buttonStyle: AgoraButtonStyle.tertiary,
                       onPressed: () => button!.onClick(),
                     ),
                   ],

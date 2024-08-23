@@ -131,7 +131,7 @@ class _AnsweredResults extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: AgoraButton(
             label: 'Modifier votre réponse',
-            buttonStyle: AgoraButtonStyle.blueBorder,
+            buttonStyle: AgoraButtonStyle.secondary,
             onPressed: () {
               context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
             },
@@ -156,7 +156,7 @@ class _AnsweredNoResults extends StatelessWidget {
         const SizedBox(height: AgoraSpacings.base),
         AgoraButton(
           label: 'Modifier votre réponse',
-          buttonStyle: AgoraButtonStyle.blueBorder,
+          buttonStyle: AgoraButtonStyle.secondary,
           onPressed: () {
             context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
           },

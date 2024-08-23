@@ -1,13 +1,13 @@
-import 'package:agora/qag/domain/qag_details.dart';
 import 'package:agora/qag/domain/header_qag.dart';
-import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag.dart';
+import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
-import 'package:agora/thematique/domain/thematique.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 
 class FakeQagSuccessRepository extends QagRepository {
   @override
@@ -38,6 +38,7 @@ class FakeQagSuccessRepository extends QagRepository {
           qags: [
             Qag(
               id: "id1",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
               username: "username1",
@@ -59,6 +60,7 @@ class FakeQagSuccessRepository extends QagRepository {
           qags: [
             Qag(
               id: "id1",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
               username: "username1",
@@ -69,6 +71,7 @@ class FakeQagSuccessRepository extends QagRepository {
             ),
             Qag(
               id: "id2",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title1",
               username: "username1",
@@ -245,6 +248,7 @@ class FakeQagSuccessRepository extends QagRepository {
       searchQags: [
         Qag(
           id: "id0",
+          description: "description",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title0",
           username: "username0",
@@ -298,6 +302,7 @@ class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
       searchQags: [
         Qag(
           id: "id",
+          description: "description",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title",
           username: "username",
@@ -339,6 +344,7 @@ class FakeQagDetailsSuccessAndFeedbackFailureRepository extends FakeQagSuccessRe
       searchQags: [
         Qag(
           id: "id",
+          description: "description",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title",
           username: "username",
@@ -401,6 +407,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
       searchQags: [
         Qag(
           id: "id",
+          description: "description",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title",
           username: "username",
@@ -552,6 +559,7 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
       searchQags: [
         Qag(
           id: "id",
+          description: "description",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title",
           username: "username",
@@ -572,6 +580,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
       searchQags: [
         Qag(
           id: "id",
+          description: "description",
           thematique: Thematique(picto: "🚊", label: "Transports"),
           title: "title",
           username: "username",

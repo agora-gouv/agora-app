@@ -84,7 +84,7 @@ class _Step2Screen extends StatelessWidget {
                               AgoraButton(
                                 label: ConsultationStrings.previousQuestion,
                                 semanticLabel: SemanticsStrings.previousQuestion,
-                                buttonStyle: AgoraButtonStyle.blueBorder,
+                                buttonStyle: AgoraButtonStyle.secondary,
                                 onPressed: onPrevious,
                               ),
                               const SizedBox(width: AgoraSpacings.base),
@@ -180,7 +180,7 @@ class _MailQuestionScreen extends StatelessWidget {
                           AgoraButton(
                             label: FeedbackStrings.mailButtonLabel,
                             semanticLabel: FeedbackStrings.mailButtonLabel,
-                            buttonStyle: AgoraButtonStyle.blueBorder,
+                            buttonStyle: AgoraButtonStyle.secondary,
                             onPressed: () {
                               context.read<AppFeedbackBloc>().add(AppFeedbackMailSentEvent());
                             },

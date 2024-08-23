@@ -1,7 +1,7 @@
-import 'package:agora/qag/repository/presenter/qag_display_model.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/qag/domain/qag.dart';
+import 'package:agora/qag/repository/presenter/qag_display_model.dart';
 
 class QagPresenter {
   static List<QagDisplayModel> presentQag(List<Qag> qags) {
@@ -11,6 +11,7 @@ class QagPresenter {
             id: qag.id,
             thematique: qag.thematique.toThematiqueViewModel(),
             title: qag.title,
+            description: qag.description,
             username: qag.username,
             date: qag.date.formatToDayLongMonth(),
             supportCount: qag.supportCount,

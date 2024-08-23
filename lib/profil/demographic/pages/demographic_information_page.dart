@@ -220,7 +220,7 @@ class _NePasRepondreBouton extends StatelessWidget {
       child: AgoraButton(
         label: DemographicStrings.toNoAnswer,
         semanticLabel: DemographicStrings.toNoAnswerSemantic,
-        buttonStyle: AgoraButtonStyle.blueBorder,
+        buttonStyle: AgoraButtonStyle.secondary,
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.ignoreDemographic,

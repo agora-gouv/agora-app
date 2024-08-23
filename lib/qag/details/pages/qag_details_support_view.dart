@@ -13,6 +13,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final likeViewKey = GlobalKey();
+
 class QagDetailsSupportView extends StatelessWidget {
   final String qagId;
   final bool canSupport;
@@ -31,8 +33,7 @@ class QagDetailsSupportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeAnimationView =
-        AgoraLikeAnimationView(animationControllerKey: _animationControllerKey, likeViewKey: _likeViewKey);
+    final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey);
 
     return Stack(
       children: [
@@ -52,7 +53,7 @@ class QagDetailsSupportView extends StatelessWidget {
                       isSupported: isSupported,
                       supportCount: viewModel.supportCount(),
                       shouldHaveVerticalPadding: true,
-                      likeViewKey: _likeViewKey,
+                      likeViewKey: likeViewKey,
                       shouldVocaliseSupport: canSupport,
                       isQuestionGagnante: isQuestionGagnante,
                     ),
@@ -175,6 +176,3 @@ class _ViewModel extends Equatable {
   @override
   List<Object?> get props => [viewModel, isLoading, hasError];
 }
-
-final _animationControllerKey = GlobalKey<AgoraAnimatedLikeViewState>();
-final _likeViewKey = GlobalKey();

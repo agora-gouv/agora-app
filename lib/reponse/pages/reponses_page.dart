@@ -7,7 +7,7 @@ import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/card/agora_qag_response_card.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
@@ -151,9 +151,9 @@ class _ReponseList extends StatelessWidget {
           else if (state.currentPageNumber < state.maxPage)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-              child: AgoraRoundedButton(
+              child: AgoraButton(
                 label: GenericStrings.displayMore,
-                style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+                buttonStyle: AgoraButtonStyle.tertiary,
                 onPressed: () => context
                     .read<QagResponsePaginatedBloc>()
                     .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber + 1)),

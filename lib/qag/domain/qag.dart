@@ -5,6 +5,7 @@ class Qag extends Equatable {
   final String id;
   final Thematique thematique;
   final String title;
+  final String description;
   final String username;
   final DateTime date;
   final int supportCount;
@@ -15,6 +16,7 @@ class Qag extends Equatable {
     required this.id,
     required this.thematique,
     required this.title,
+    required this.description,
     required this.username,
     required this.date,
     required this.supportCount,
@@ -27,6 +29,7 @@ class Qag extends Equatable {
         id,
         thematique,
         title,
+        description,
         username,
         date,
         supportCount,

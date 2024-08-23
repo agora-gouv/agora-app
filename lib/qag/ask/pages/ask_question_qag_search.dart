@@ -1,4 +1,3 @@
-import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -8,6 +7,7 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
 import 'package:agora/qag/ask/pages/qag_search_input_utils.dart';
 import 'package:agora/qag/ask/pages/qags_search.dart';
 import 'package:flutter/material.dart';
@@ -119,7 +119,7 @@ class _ContentState extends State<_Content> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: AgoraSpacings.base),
             child: SingleChildScrollView(
-              child: QagSearch(false),
+              child: QagSearch(fromHome: false),
             ),
           ),
         ),

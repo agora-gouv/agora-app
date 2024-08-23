@@ -1,11 +1,3 @@
-import 'package:agora/design/custom_view/text/agora_link_text.dart';
-import 'package:agora/profil/demographic/bloc/get/demographic_information_bloc.dart';
-import 'package:agora/profil/demographic/bloc/get/demographic_information_event.dart';
-import 'package:agora/profil/demographic/bloc/get/demographic_information_state.dart';
-import 'package:agora/profil/demographic/bloc/get/demographic_information_view_model.dart';
-import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_bloc.dart';
-import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_event.dart';
-import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_state.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
@@ -13,19 +5,27 @@ import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
-import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/agora_little_separator.dart';
-import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
+import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
+import 'package:agora/design/custom_view/text/agora_link_text.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_bloc.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_event.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_state.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_view_model.dart';
+import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_bloc.dart';
+import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_event.dart';
+import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_state.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
-import 'package:agora/profil/demographic/repository/demographic_information_presenter.dart';
 import 'package:agora/profil/demographic/pages/demographic_question_page.dart';
+import 'package:agora/profil/demographic/repository/demographic_information_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -167,7 +167,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
                         Expanded(
                           child: AgoraButton(
                             label: GenericStrings.no,
-                            buttonStyle: AgoraButtonStyle.blueBorder,
+                            buttonStyle: AgoraButtonStyle.secondary,
                             onPressed: () => Navigator.pop(context),
                           ),
                         ),
