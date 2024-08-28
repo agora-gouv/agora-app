@@ -6,10 +6,8 @@ import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/video/agora_video_progress_bar.dart';
-
 // ignore_for_file: implementation_imports
 import 'package:chewie/src/animated_play_pause.dart';
-import 'package:chewie/src/center_play_button.dart';
 import 'package:chewie/src/chewie_player.dart';
 import 'package:chewie/src/cupertino/widgets/cupertino_options_dialog.dart';
 import 'package:chewie/src/helpers/utils.dart';
@@ -56,6 +54,25 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
   double selectedSpeed = 1.0;
   late VideoPlayerController controller;
 
+  // Variables to handle focus of each control to highlight their border when focused for A11Y
+  final expandFocusNode = FocusNode();
+  final muteFocusNode = FocusNode();
+  final playPauseAreaFocusNode = FocusNode();
+  final back15SecondsFocusNode = FocusNode();
+  final playPauseFocusNode = FocusNode();
+  final forward15SecondsFocusNode = FocusNode();
+  final speedFocusNode = FocusNode();
+  final optionsFocusNode = FocusNode();
+
+  bool expandFocus = false;
+  bool muteFocus = false;
+  bool playPauseAreaFocus = false;
+  bool back15SecondsFocus = false;
+  bool playPauseFocus = false;
+  bool forward15SecondsFocus = false;
+  bool speedFocus = false;
+  bool optionsFocus = false;
+
   // We know that _chewieController is set in didChangeDependencies
   ChewieController get chewieController => _chewieController!;
   ChewieController? _chewieController;
@@ -63,11 +80,22 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
   @override
   void initState() {
     super.initState();
+    expandFocusNode.addListener(() => setState(() => expandFocus = expandFocusNode.hasFocus));
+    muteFocusNode.addListener(() => setState(() => muteFocus = muteFocusNode.hasFocus));
+    playPauseAreaFocusNode.addListener(() => setState(() => playPauseAreaFocus = playPauseAreaFocusNode.hasFocus));
+    back15SecondsFocusNode.addListener(() => setState(() => back15SecondsFocus = back15SecondsFocusNode.hasFocus));
+    playPauseFocusNode.addListener(() => setState(() => playPauseFocus = playPauseFocusNode.hasFocus));
+    forward15SecondsFocusNode
+        .addListener(() => setState(() => forward15SecondsFocus = forward15SecondsFocusNode.hasFocus));
+    speedFocusNode.addListener(() => setState(() => speedFocus = speedFocusNode.hasFocus));
+    optionsFocusNode.addListener(() => setState(() => optionsFocus = optionsFocusNode.hasFocus));
+
     notifier = Provider.of<PlayerNotifier>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
+    print('playPauseAreaFocusNode.hasFocus : ${playPauseAreaFocusNode.hasFocus}');
     if (_latestValue.hasError) {
       return chewieController.errorBuilder != null
           ? chewieController.errorBuilder!(
@@ -158,7 +186,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     super.didChangeDependencies();
   }
 
-  InkWell _buildOptionsButton(
+  Widget _buildOptionsButton(
     Color iconColor,
     double barHeight,
   ) {
@@ -168,36 +196,43 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
       options.addAll(chewieController.additionalOptions!(context));
     }
 
-    return InkWell(
-      onTap: () async {
-        _hideTimer?.cancel();
+    return Focus(
+      canRequestFocus: false,
+      focusNode: optionsFocusNode,
+      child: InkWell(
+        onTap: () async {
+          _hideTimer?.cancel();
 
-        if (chewieController.optionsBuilder != null) {
-          await chewieController.optionsBuilder!(context, options);
-        } else {
-          await showCupertinoModalPopup<OptionItem>(
-            context: context,
-            semanticsDismissible: true,
-            useRootNavigator: chewieController.useRootNavigator,
-            builder: (context) => CupertinoOptionsDialog(
-              options: options,
-              cancelButtonText: chewieController.optionsTranslation?.cancelButtonText,
-            ),
-          );
-          if (_latestValue.isPlaying) {
-            _startHideTimer();
+          if (chewieController.optionsBuilder != null) {
+            await chewieController.optionsBuilder!(context, options);
+          } else {
+            await showCupertinoModalPopup<OptionItem>(
+              context: context,
+              semanticsDismissible: true,
+              useRootNavigator: chewieController.useRootNavigator,
+              builder: (context) => CupertinoOptionsDialog(
+                options: options,
+                cancelButtonText: chewieController.optionsTranslation?.cancelButtonText,
+              ),
+            );
+            if (_latestValue.isPlaying) {
+              _startHideTimer();
+            }
           }
-        }
-      },
-      child: Container(
-        height: barHeight,
-        color: Colors.transparent,
-        padding: const EdgeInsets.only(left: 4.0, right: 8.0),
-        margin: const EdgeInsets.only(right: 6.0),
-        child: Icon(
-          Icons.more_vert,
-          color: iconColor,
-          size: 18,
+        },
+        child: Container(
+          height: barHeight,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            border: Border.all(color: optionsFocus ? AgoraColors.white : AgoraColors.transparent),
+          ),
+          padding: const EdgeInsets.only(left: 4.0, right: 8.0),
+          margin: const EdgeInsets.only(right: 6.0),
+          child: Icon(
+            Icons.more_vert,
+            color: iconColor,
+            size: 18,
+          ),
         ),
       ),
     );
@@ -317,29 +352,37 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: chewieController.isFullScreen ? "Quitter le mode plein écran" : "Plein écran",
-      child: InkWell(
-        onTap: _onExpandCollapse,
-        child: AnimatedOpacity(
-          opacity: notifier.hideStuff ? 0.0 : 1.0,
-          duration: const Duration(milliseconds: 300),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0),
-              child: Container(
-                height: barHeight,
-                padding: EdgeInsets.only(
-                  left: buttonPadding,
-                  right: buttonPadding,
-                ),
+      child: Focus(
+        autofocus: true,
+        canRequestFocus: false,
+        focusNode: expandFocusNode,
+        child: InkWell(
+          onTap: _onExpandCollapse,
+          child: AnimatedOpacity(
+            opacity: notifier.hideStuff ? 0.0 : 1.0,
+            duration: const Duration(milliseconds: 300),
+            child: Container(
+              decoration: BoxDecoration(
                 color: backgroundColor,
-                child: Center(
-                  child: Icon(
-                    chewieController.isFullScreen
-                        ? CupertinoIcons.arrow_down_right_arrow_up_left
-                        : CupertinoIcons.arrow_up_left_arrow_down_right,
-                    color: iconColor,
-                    size: 16,
+                border: Border.all(color: expandFocus ? AgoraColors.white : AgoraColors.transparent),
+              ),
+              height: barHeight,
+              padding: EdgeInsets.only(
+                left: buttonPadding,
+                right: buttonPadding,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10.0),
+                  child: Center(
+                    child: Icon(
+                      chewieController.isFullScreen
+                          ? CupertinoIcons.arrow_down_right_arrow_up_left
+                          : CupertinoIcons.arrow_up_left_arrow_down_right,
+                      color: iconColor,
+                      size: 16,
+                    ),
                   ),
                 ),
               ),
@@ -356,22 +399,29 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
 
     return ExcludeSemantics(
       child: InkWell(
-        onTap: _latestValue.isPlaying
-            ? _cancelAndRestartTimer
-            : () {
-                _hideTimer?.cancel();
+        onTap: () => {
+          _latestValue.isPlaying
+              ? _cancelAndRestartTimer
+              : () {
+                  _hideTimer?.cancel();
 
-                setState(() {
-                  notifier.hideStuff = false;
-                });
-              },
-        child: CenterPlayButton(
-          backgroundColor: widget.backgroundColor,
-          iconColor: widget.iconColor,
-          isFinished: isFinished,
-          isPlaying: controller.value.isPlaying,
-          show: showPlayButton,
-          onPressed: _playPause,
+                  setState(() {
+                    notifier.hideStuff = false;
+                  });
+                },
+        },
+        child: Focus(
+          focusNode: playPauseAreaFocusNode,
+          canRequestFocus: false,
+          child: _CenterPlayButton(
+            backgroundColor: widget.backgroundColor,
+            borderColor: playPauseAreaFocus ? AgoraColors.white : AgoraColors.transparent,
+            iconColor: widget.iconColor,
+            isFinished: isFinished,
+            isPlaying: controller.value.isPlaying,
+            show: showPlayButton,
+            onPressed: _playPause,
+          ),
         ),
       ),
     );
@@ -387,38 +437,46 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: _latestValue.volume == 0 ? "Activer le son" : "Désactiver le son",
-      child: InkWell(
-        onTap: () {
-          _cancelAndRestartTimer();
-          final isMuted = _latestValue.volume == 0;
-          SemanticsHelper.announceMuteUnmute(isMuted);
+      child: Focus(
+        canRequestFocus: false,
+        focusNode: muteFocusNode,
+        child: InkWell(
+          onTap: () {
+            _cancelAndRestartTimer();
+            final isMuted = _latestValue.volume == 0;
+            SemanticsHelper.announceMuteUnmute(isMuted);
 
-          if (isMuted) {
-            controller.setVolume(_latestVolume ?? 0.5);
-          } else {
-            _latestVolume = controller.value.volume;
-            controller.setVolume(0.0);
-          }
-        },
-        child: AnimatedOpacity(
-          opacity: notifier.hideStuff ? 0.0 : 1.0,
-          duration: const Duration(milliseconds: 300),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10.0),
-              child: ColoredBox(
+            if (isMuted) {
+              controller.setVolume(_latestVolume ?? 0.5);
+            } else {
+              _latestVolume = controller.value.volume;
+              controller.setVolume(0.0);
+            }
+          },
+          child: AnimatedOpacity(
+            opacity: notifier.hideStuff ? 0.0 : 1.0,
+            duration: const Duration(milliseconds: 300),
+            child: Container(
+              decoration: BoxDecoration(
                 color: backgroundColor,
-                child: Container(
-                  height: barHeight,
-                  padding: EdgeInsets.only(
-                    left: buttonPadding,
-                    right: buttonPadding,
-                  ),
-                  child: Icon(
-                    _latestValue.volume > 0 ? Icons.volume_up : Icons.volume_off,
-                    color: iconColor,
-                    size: 16,
+                border: Border.all(color: muteFocus ? AgoraColors.white : AgoraColors.transparent),
+              ),
+              height: barHeight,
+              padding: EdgeInsets.only(
+                left: buttonPadding,
+                right: buttonPadding,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10.0),
+                  child: ColoredBox(
+                    color: backgroundColor,
+                    child: Icon(
+                      _latestValue.volume > 0 ? Icons.volume_up : Icons.volume_off,
+                      color: iconColor,
+                      size: 16,
+                    ),
                   ),
                 ),
               ),
@@ -437,18 +495,25 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: _latestValue.isPlaying ? "Pause" : "Lecture",
-      child: InkWell(
-        onTap: _playPause,
-        child: Container(
-          height: barHeight,
-          color: Colors.transparent,
-          padding: const EdgeInsets.only(
-            left: 6.0,
-            right: 6.0,
-          ),
-          child: AnimatedPlayPause(
-            color: widget.iconColor,
-            playing: controller.value.isPlaying,
+      child: Focus(
+        canRequestFocus: false,
+        focusNode: playPauseFocusNode,
+        child: InkWell(
+          onTap: _playPause,
+          child: Container(
+            height: barHeight,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: playPauseFocus ? AgoraColors.white : AgoraColors.transparent),
+            ),
+            padding: const EdgeInsets.only(
+              left: 6.0,
+              right: 6.0,
+            ),
+            child: AnimatedPlayPause(
+              color: widget.iconColor,
+              playing: controller.value.isPlaying,
+            ),
           ),
         ),
       ),
@@ -524,20 +589,27 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: "Reculer de 15 secondes",
-      child: InkWell(
-        onTap: _skipBack,
-        child: Container(
-          height: barHeight,
-          color: Colors.transparent,
-          margin: const EdgeInsets.only(left: 10.0),
-          padding: const EdgeInsets.only(
-            left: 6.0,
-            right: 6.0,
-          ),
-          child: Icon(
-            CupertinoIcons.gobackward_15,
-            color: iconColor,
-            size: 18.0,
+      child: Focus(
+        canRequestFocus: false,
+        focusNode: back15SecondsFocusNode,
+        child: InkWell(
+          onTap: _skipBack,
+          child: Container(
+            height: barHeight,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: back15SecondsFocus ? AgoraColors.white : AgoraColors.transparent),
+            ),
+            margin: const EdgeInsets.only(left: 10.0),
+            padding: const EdgeInsets.only(
+              left: 6.0,
+              right: 6.0,
+            ),
+            child: Icon(
+              CupertinoIcons.gobackward_15,
+              color: iconColor,
+              size: 18.0,
+            ),
           ),
         ),
       ),
@@ -548,22 +620,29 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: "Avancer de 15 secondes",
-      child: InkWell(
-        onTap: _skipForward,
-        child: Container(
-          height: barHeight,
-          color: Colors.transparent,
-          padding: const EdgeInsets.only(
-            left: 6.0,
-            right: 8.0,
-          ),
-          margin: const EdgeInsets.only(
-            right: 8.0,
-          ),
-          child: Icon(
-            CupertinoIcons.goforward_15,
-            color: iconColor,
-            size: 18.0,
+      child: Focus(
+        canRequestFocus: false,
+        focusNode: forward15SecondsFocusNode,
+        child: InkWell(
+          onTap: _skipForward,
+          child: Container(
+            height: barHeight,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: forward15SecondsFocus ? AgoraColors.white : AgoraColors.transparent),
+            ),
+            padding: const EdgeInsets.only(
+              left: 6.0,
+              right: 8.0,
+            ),
+            margin: const EdgeInsets.only(
+              right: 8.0,
+            ),
+            child: Icon(
+              CupertinoIcons.goforward_15,
+              color: iconColor,
+              size: 18.0,
+            ),
           ),
         ),
       ),
@@ -578,49 +657,54 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
     return Semantics(
       button: true,
       label: "Vitesse de lecture: $selectedSpeed",
-      child: InkWell(
-        onTap: () async {
-          _hideTimer?.cancel();
+      child: Focus(
+        canRequestFocus: false,
+        focusNode: speedFocusNode,
+        child: InkWell(
+          onTap: () async {
+            _hideTimer?.cancel();
+            final chosenSpeed = await showCupertinoModalPopup<double>(
+              context: context,
+              semanticsDismissible: true,
+              useRootNavigator: chewieController.useRootNavigator,
+              builder: (context) => _PlaybackSpeedDialog(
+                speeds: chewieController.playbackSpeeds,
+                selected: _latestValue.playbackSpeed,
+              ),
+            );
 
-          final chosenSpeed = await showCupertinoModalPopup<double>(
-            context: context,
-            semanticsDismissible: true,
-            useRootNavigator: chewieController.useRootNavigator,
-            builder: (context) => _PlaybackSpeedDialog(
-              speeds: chewieController.playbackSpeeds,
-              selected: _latestValue.playbackSpeed,
+            if (chosenSpeed != null) {
+              controller.setPlaybackSpeed(chosenSpeed);
+              selectedSpeed = chosenSpeed;
+            }
+
+            if (_latestValue.isPlaying) {
+              _startHideTimer();
+            }
+          },
+          child: Container(
+            height: barHeight,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: Border.all(color: speedFocus ? AgoraColors.white : AgoraColors.transparent),
             ),
-          );
-
-          if (chosenSpeed != null) {
-            controller.setPlaybackSpeed(chosenSpeed);
-
-            selectedSpeed = chosenSpeed;
-          }
-
-          if (_latestValue.isPlaying) {
-            _startHideTimer();
-          }
-        },
-        child: Container(
-          height: barHeight,
-          color: Colors.transparent,
-          padding: const EdgeInsets.only(
-            left: 6.0,
-            right: 8.0,
-          ),
-          margin: const EdgeInsets.only(
-            right: 8.0,
-          ),
-          child: Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.skewY(0.0)
-              ..rotateX(pi)
-              ..rotateZ(pi * 0.8),
-            child: Icon(
-              Icons.speed,
-              color: iconColor,
-              size: 18.0,
+            padding: const EdgeInsets.only(
+              left: 6.0,
+              right: 8.0,
+            ),
+            margin: const EdgeInsets.only(
+              right: 8.0,
+            ),
+            child: Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.skewY(0.0)
+                ..rotateX(pi)
+                ..rotateZ(pi * 0.8),
+              child: Icon(
+                Icons.speed,
+                color: iconColor,
+                size: 18.0,
+              ),
             ),
           ),
         ),
@@ -665,6 +749,7 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
   }
 
   void _cancelAndRestartTimer() {
+    print('YAA');
     _hideTimer?.cancel();
 
     setState(() {
@@ -886,6 +971,59 @@ class _PlaybackSpeedDialog extends StatelessWidget {
           Navigator.of(context).pop(_selected);
         },
         child: Text("Annuler"),
+      ),
+    );
+  }
+}
+
+class _CenterPlayButton extends StatelessWidget {
+  final Color backgroundColor;
+  final Color borderColor;
+  final Color? iconColor;
+  final bool show;
+  final bool isPlaying;
+  final bool isFinished;
+  final VoidCallback? onPressed;
+
+  const _CenterPlayButton({
+    required this.backgroundColor,
+    this.borderColor = AgoraColors.transparent,
+    this.iconColor,
+    required this.show,
+    required this.isPlaying,
+    required this.isFinished,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: Colors.transparent,
+      child: Center(
+        child: UnconstrainedBox(
+          child: AnimatedOpacity(
+            opacity: show ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 300),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(color: borderColor),
+                color: backgroundColor,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                iconSize: 32,
+                padding: const EdgeInsets.all(12.0),
+                icon: isFinished
+                    ? Icon(Icons.replay, color: iconColor)
+                    : AnimatedPlayPause(
+                        color: iconColor,
+                        playing: isPlaying,
+                      ),
+                onPressed: onPressed,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

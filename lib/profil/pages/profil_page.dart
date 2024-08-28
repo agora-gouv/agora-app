@@ -32,6 +32,7 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+  final firstElementKey = GlobalKey();
   var shouldReloadQagsPage = false;
 
   @override
@@ -65,20 +66,35 @@ class _ProfilPageState extends State<ProfilPage> {
                       return Container();
                     }
                     final isFirstDisplay = snapshot.data!;
-                    return AgoraMenuItem(
-                      title: ProfileStrings.myInformation,
-                      onClick: () {
-                        _track(AnalyticsEventNames.myInformation);
-                        if (isFirstDisplay) {
-                          StorageManager.getProfileDemographicStorageClient().save(false);
-                          Navigator.pushNamed(context, ProfilInformationsPage.routeName);
-                          setState(() {
-                            // utils to reload isFirstDisplay after saving in storage client
-                          });
-                        } else {
-                          Navigator.pushNamed(context, DemographicProfilPage.routeName);
+                    return Focus(
+                      autofocus: true,
+                      canRequestFocus: false,
+                      onFocusChange: (requestFocus) {
+                        if (requestFocus) {
+                          Scrollable.ensureVisible(
+                            firstElementKey.currentContext!,
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeInOut,
+                            alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+                          );
                         }
                       },
+                      child: AgoraMenuItem(
+                        key: firstElementKey,
+                        title: ProfileStrings.myInformation,
+                        onClick: () {
+                          _track(AnalyticsEventNames.myInformation);
+                          if (isFirstDisplay) {
+                            StorageManager.getProfileDemographicStorageClient().save(false);
+                            Navigator.pushNamed(context, ProfilInformationsPage.routeName);
+                            setState(() {
+                              // utils to reload isFirstDisplay after saving in storage client
+                            });
+                          } else {
+                            Navigator.pushNamed(context, DemographicProfilPage.routeName);
+                          }
+                        },
+                      ),
                     );
                   },
                 ),
