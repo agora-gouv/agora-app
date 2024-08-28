@@ -1,16 +1,15 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
+import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
@@ -77,17 +76,18 @@ class _InfoBouton extends StatelessWidget {
       child: AgoraMoreInformation(
         semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
         onClick: () {
-          showAgoraDialog(
+          showModalBottomSheet(
             context: context,
-            columnChildren: [
-              Text(ReponseStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
-              SizedBox(height: AgoraSpacings.x0_75),
-              AgoraButton(
-                label: GenericStrings.close,
-                buttonStyle: AgoraButtonStyle.primary,
-                onPressed: () => Navigator.pop(context),
+            isScrollControlled: true,
+            backgroundColor: AgoraColors.transparent,
+            builder: (context) => AgoraInformationBottomSheet(
+              title: "Informations",
+              description: Text(
+                ReponseStrings.qagResponseInfoBubble,
+                style: AgoraTextStyles.light16,
+                textAlign: TextAlign.center,
               ),
-            ],
+            ),
           );
         },
       ),
