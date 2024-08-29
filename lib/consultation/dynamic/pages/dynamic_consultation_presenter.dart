@@ -90,9 +90,10 @@ class DynamicConsultationPresenter {
             consultationId: consultation.id,
             userResponse: feedbackQuestion.userResponse,
           ),
-        if (history == null) StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
-        if (history != null) HistorySection(consultation.id, history),
-        if (history != null) NotificationSection(),
+        if (consultation.questionsInfos != null)
+          StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
+        if (consultation.questionsInfos == null) HistorySection(consultation.id, history),
+        if (consultation.questionsInfos == null) NotificationSection(),
       ],
     );
   }
