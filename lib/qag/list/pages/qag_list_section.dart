@@ -1,5 +1,6 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
@@ -51,7 +52,7 @@ class QagListSection extends StatelessWidget {
           if (viewModel is _QagListLoadingViewModel) {
             section = QagsListLoading();
           } else if (viewModel is _QagListWithResultViewModel) {
-            section = _buildQagSearchListView(context, viewModel);
+            section = _buildQagSearchListView(context, viewModel, qagFilter);
           } else if (viewModel is _QagListNoResultViewModel) {
             section = _buildNoResultsWidget(context, viewModel);
           } else {
@@ -80,12 +81,13 @@ class QagListSection extends StatelessWidget {
     );
   }
 
-  Widget _buildQagSearchListView(BuildContext context, _QagListWithResultViewModel viewModel) {
+  Widget _buildQagSearchListView(BuildContext context, _QagListWithResultViewModel viewModel, QagListFilter qagFilter) {
     return Column(
       children: [
         ..._buildHeaderQagWidget(context, viewModel.header),
         Semantics(
-          label: 'Liste des questions au gouvernement',
+          label:
+              'Liste des questions au gouvernement dans la catégorie ${qagFilter.toFilterLabel()}, nombre d\'éléments ${viewModel.qags.length}',
           child: ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.vertical,
