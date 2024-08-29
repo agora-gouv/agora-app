@@ -95,7 +95,6 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    print('playPauseAreaFocusNode.hasFocus : ${playPauseAreaFocusNode.hasFocus}');
     if (_latestValue.hasError) {
       return chewieController.errorBuilder != null
           ? chewieController.errorBuilder!(
@@ -749,7 +748,6 @@ class _AgoraVideoControlsState extends State<AgoraVideoControls> with SingleTick
   }
 
   void _cancelAndRestartTimer() {
-    print('YAA');
     _hideTimer?.cancel();
 
     setState(() {
