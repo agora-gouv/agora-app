@@ -110,6 +110,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: AgoraConsultationOngoingCard(
+                    semanticTooltip: "Élément $index sur ${ongoingViewModels.length}",
                     consultationId: ongoingViewModel1.id,
                     consultationSlug: ongoingViewModel1.slug,
                     imageUrl: ongoingViewModel1.coverUrl,
@@ -123,6 +124,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
                 ongoingViewModel2 != null
                     ? Expanded(
                         child: AgoraConsultationOngoingCard(
+                          semanticTooltip: "Élément ${index + 1} sur ${ongoingViewModels.length}",
                           consultationId: ongoingViewModel2.id,
                           consultationSlug: ongoingViewModel2.slug,
                           imageUrl: ongoingViewModel2.coverUrl,
@@ -141,16 +143,17 @@ class ConsultationsOngoingSection extends StatelessWidget {
         ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
       }
     } else {
-      for (final ongoingViewModel in ongoingViewModels) {
+      for (var index = 0; index < ongoingViewModels.length; index++) {
         ongoingConsultationsWidgets.add(
           AgoraConsultationOngoingCard(
-            consultationId: ongoingViewModel.id,
-            consultationSlug: ongoingViewModel.slug,
-            imageUrl: ongoingViewModel.coverUrl,
-            thematique: ongoingViewModel.thematique,
-            title: ongoingViewModel.title,
-            endDate: ongoingViewModel.endDate,
-            highlightLabel: ongoingViewModel.label,
+            semanticTooltip: "Élément ${index + 1} sur ${ongoingViewModels.length}",
+            consultationId: ongoingViewModels[index].id,
+            consultationSlug: ongoingViewModels[index].slug,
+            imageUrl: ongoingViewModels[index].coverUrl,
+            thematique: ongoingViewModels[index].thematique,
+            title: ongoingViewModels[index].title,
+            endDate: ongoingViewModels[index].endDate,
+            highlightLabel: ongoingViewModels[index].label,
             style: AgoraConsultationOngoingCardStyle.column,
           ),
         );

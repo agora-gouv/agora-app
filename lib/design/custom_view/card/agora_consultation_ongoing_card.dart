@@ -32,6 +32,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   final String endDate;
   final String? highlightLabel;
   final AgoraConsultationOngoingCardStyle style;
+  final String semanticTooltip;
 
   AgoraConsultationOngoingCard({
     required this.consultationId,
@@ -42,11 +43,13 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     required this.endDate,
     required this.highlightLabel,
     required this.style,
+    required this.semanticTooltip,
   });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      tooltip: semanticTooltip,
       button: true,
       label: 'Participer à la consultation',
       child: Stack(
