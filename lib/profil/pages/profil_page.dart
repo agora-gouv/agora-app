@@ -32,7 +32,7 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  final firstElementKey = GlobalKey();
+  final firstFocusableElementKey = GlobalKey();
   var shouldReloadQagsPage = false;
 
   @override
@@ -72,7 +72,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       onFocusChange: (requestFocus) {
                         if (requestFocus) {
                           Scrollable.ensureVisible(
-                            firstElementKey.currentContext!,
+                            firstFocusableElementKey.currentContext!,
                             duration: const Duration(milliseconds: 200),
                             curve: Curves.easeInOut,
                             alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
@@ -80,7 +80,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         }
                       },
                       child: AgoraMenuItem(
-                        key: firstElementKey,
+                        key: firstFocusableElementKey,
                         title: ProfileStrings.myInformation,
                         onClick: () {
                           _track(AnalyticsEventNames.myInformation);

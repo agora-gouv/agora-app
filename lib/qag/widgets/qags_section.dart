@@ -27,12 +27,14 @@ enum QagTab { search, trending, top, latest, supporting }
 class QagsSection extends StatefulWidget {
   final QagTab defaultSelected;
   final String? selectedThematiqueId;
+  final GlobalKey firstThematiqueKey;
   final Function(bool) onSearchBarOpen;
 
   const QagsSection({
     super.key,
     required this.defaultSelected,
     required this.selectedThematiqueId,
+    required this.firstThematiqueKey,
     required this.onSearchBarOpen,
   });
 
@@ -77,6 +79,7 @@ class _QagsSectionState extends State<QagsSection> {
           Visibility(
             visible: isThematiquesVisible,
             child: QagsThematiqueSection(
+              firstThematiqueKey: widget.firstThematiqueKey,
               currentThematiqueId: currentThematiqueId,
               onThematiqueIdSelected: (String? thematiqueId, String? thematicLabel) {
                 if (currentThematiqueId != null || thematiqueId != null) {

@@ -34,14 +34,15 @@ class QagsPage extends StatefulWidget {
 }
 
 class _QagsPageState extends State<QagsPage> {
-  final GlobalKey toolbarTitleKey = GlobalKey();
+  final firstFocusableElementKey = GlobalKey();
+  final toolbarTitleKey = GlobalKey();
+  final onSearchAnchorKey = GlobalKey();
+  final firstThematiqueKey = GlobalKey();
   String? currentThematiqueId;
-  late final GlobalKey onSearchAnchorKey;
 
   @override
   void initState() {
     super.initState();
-    onSearchAnchorKey = GlobalKey();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
     });
@@ -93,7 +94,24 @@ class _QagsPageState extends State<QagsPage> {
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.base),
+                Focus(
+                  autofocus: true,
+                  canRequestFocus: false,
+                  onFocusChange: (requestFocus) {
+                    if (requestFocus) {
+                      Scrollable.ensureVisible(
+                        firstFocusableElementKey.currentContext!,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+                      );
+                    }
+                  },
+                  child: QagsAskQuestionSectionPage(key: firstFocusableElementKey),
+                ),
                 QagsSection(
+                  key: onSearchAnchorKey,
+                  firstThematiqueKey: firstThematiqueKey,
                   defaultSelected: QagTab.trending,
                   selectedThematiqueId: currentThematiqueId,
                   onSearchBarOpen: (bool isSearchOpen) {
@@ -117,30 +135,6 @@ class _QagsPageState extends State<QagsPage> {
       ),
     );
   }
-
-  Widget buildFAB() => AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.linear,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            TrackerHelper.trackClick(
-              clickName: AnalyticsEventNames.askQuestion,
-              widgetName: AnalyticsScreenNames.qagsPage,
-            );
-            Navigator.pushNamed(
-              context,
-              QagAskQuestionPage.routeName,
-            );
-          },
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
-          icon: SvgPicture.asset(
-            "assets/ic_question.svg",
-            colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
-            excludeFromSemantics: true,
-          ),
-          label: SizedBox(),
-        ),
-      );
 }
 
 class _PoserMaQuestionBouton extends StatelessWidget {

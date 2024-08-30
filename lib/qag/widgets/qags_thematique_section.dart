@@ -1,22 +1,23 @@
-import 'package:agora/thematique/bloc/thematique_bloc.dart';
-import 'package:agora/thematique/bloc/thematique_event.dart';
-import 'package:agora/thematique/bloc/thematique_state.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/qag/widgets/qags_thematique_loading.dart';
+import 'package:agora/thematique/bloc/thematique_bloc.dart';
+import 'package:agora/thematique/bloc/thematique_event.dart';
+import 'package:agora/thematique/bloc/thematique_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsThematiqueSection extends StatelessWidget {
   final String? currentThematiqueId;
   final Function(String?, String?) onThematiqueIdSelected;
+  final GlobalKey firstThematiqueKey;
 
   const QagsThematiqueSection({
-    super.key,
     required this.currentThematiqueId,
     required this.onThematiqueIdSelected,
+    required this.firstThematiqueKey,
   });
 
   @override
@@ -32,10 +33,25 @@ class QagsThematiqueSection extends StatelessWidget {
                 color: AgoraColors.doctor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75),
-                  child: ThematiqueHelper.buildThematiques(
-                    thematiques: state.thematiqueViewModels,
-                    selectedThematiqueId: currentThematiqueId,
-                    onThematiqueIdSelected: onThematiqueIdSelected,
+                  child: Focus(
+                    autofocus: true,
+                    canRequestFocus: false,
+                    onFocusChange: (requestFocus) {
+                      if (requestFocus) {
+                        Scrollable.ensureVisible(
+                          firstThematiqueKey.currentContext!,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                          alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+                        );
+                      }
+                    },
+                    child: ThematiqueHelper.buildThematiques(
+                      thematiques: state.thematiqueViewModels,
+                      selectedThematiqueId: currentThematiqueId,
+                      firstThematiqueKey: firstThematiqueKey,
+                      onThematiqueIdSelected: onThematiqueIdSelected,
+                    ),
                   ),
                 ),
               ),
