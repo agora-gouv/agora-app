@@ -38,23 +38,9 @@ class _QagsPageState extends State<QagsPage> {
   String? currentThematiqueId;
   late final GlobalKey onSearchAnchorKey;
 
-  ScrollController scrollController = ScrollController();
-  bool isFAB = false;
-
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      if (scrollController.offset > 50) {
-        setState(() {
-          isFAB = true;
-        });
-      } else {
-        setState(() {
-          isFAB = false;
-        });
-      }
-    });
     onSearchAnchorKey = GlobalKey();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
@@ -62,15 +48,9 @@ class _QagsPageState extends State<QagsPage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    scrollController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isFAB ? buildFAB() : buildExtendedFAB(),
+      floatingActionButton: _PoserMaQuestionBouton(),
       body: AgoraTracker(
         widgetName: AnalyticsScreenNames.qagsPage,
         child: MultiBlocProvider(
@@ -92,7 +72,6 @@ class _QagsPageState extends State<QagsPage> {
             ),
           ],
           child: SingleChildScrollView(
-            controller: scrollController,
             physics: ClampingScrollPhysics(),
             child: Column(
               children: [
@@ -162,33 +141,40 @@ class _QagsPageState extends State<QagsPage> {
           label: SizedBox(),
         ),
       );
+}
 
-  Widget buildExtendedFAB() => AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.linear,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            TrackerHelper.trackClick(
-              clickName: AnalyticsEventNames.askQuestion,
-              widgetName: AnalyticsScreenNames.qagsPage,
-            );
-            Navigator.pushNamed(
-              context,
-              QagAskQuestionPage.routeName,
-            );
-          },
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
-          icon: SvgPicture.asset(
-            "assets/ic_question.svg",
-            colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
-            excludeFromSemantics: true,
-          ),
-          label: Text(
-            QagStrings.askQuestion,
-            style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.white),
-          ),
+class _PoserMaQuestionBouton extends StatelessWidget {
+  const _PoserMaQuestionBouton();
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeIn,
+      child: FloatingActionButton.extended(
+        onPressed: () {
+          TrackerHelper.trackClick(
+            clickName: AnalyticsEventNames.askQuestion,
+            widgetName: AnalyticsScreenNames.qagsPage,
+          );
+          Navigator.pushNamed(
+            context,
+            QagAskQuestionPage.routeName,
+          );
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
+        icon: SvgPicture.asset(
+          "assets/ic_question.svg",
+          colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
+          excludeFromSemantics: true,
         ),
-      );
+        label: Text(
+          QagStrings.askQuestion,
+          style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.white),
+        ),
+      ),
+    );
+  }
 }
 
 class _InfoBouton extends StatelessWidget {
