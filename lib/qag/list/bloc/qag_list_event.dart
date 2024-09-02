@@ -1,4 +1,5 @@
 import 'package:agora/qag/domain/qag_support.dart';
+import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagListEvent extends Equatable {}
@@ -6,14 +7,16 @@ abstract class QagListEvent extends Equatable {}
 class FetchQagsListEvent extends QagListEvent {
   final String? thematiqueId;
   final String? thematiqueLabel;
+  final QagListFilter qagFilter;
 
   FetchQagsListEvent({
     required this.thematiqueId,
     required this.thematiqueLabel,
+    required this.qagFilter,
   });
 
   @override
-  List<Object?> get props => [thematiqueId];
+  List<Object?> get props => [thematiqueId, thematiqueLabel, qagFilter];
 }
 
 class UpdateQagListSupportEvent extends QagListEvent {
@@ -29,13 +32,15 @@ class UpdateQagListSupportEvent extends QagListEvent {
 
 class UpdateQagsListEvent extends QagListEvent {
   final String? thematiqueId;
+  final QagListFilter qagFilter;
 
   UpdateQagsListEvent({
     required this.thematiqueId,
+    required this.qagFilter,
   });
 
   @override
-  List<Object?> get props => [thematiqueId];
+  List<Object?> get props => [thematiqueId, qagFilter];
 }
 
 class CloseHeaderQagListEvent extends QagListEvent {

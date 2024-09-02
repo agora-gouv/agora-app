@@ -2,17 +2,16 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
+import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
@@ -25,6 +24,7 @@ import 'package:agora/thematique/bloc/thematique_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class QagsPage extends StatefulWidget {
   static const routeName = "/qagsPage";
@@ -38,9 +38,23 @@ class _QagsPageState extends State<QagsPage> {
   String? currentThematiqueId;
   late final GlobalKey onSearchAnchorKey;
 
+  ScrollController scrollController = ScrollController();
+  bool isFAB = false;
+
   @override
   void initState() {
     super.initState();
+    scrollController.addListener(() {
+      if (scrollController.offset > 50) {
+        setState(() {
+          isFAB = true;
+        });
+      } else {
+        setState(() {
+          isFAB = false;
+        });
+      }
+    });
     onSearchAnchorKey = GlobalKey();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
@@ -48,22 +62,15 @@ class _QagsPageState extends State<QagsPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.chat),
-        label: Text(QagStrings.askQuestion, style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.white)),
-        onPressed: () {
-          TrackerHelper.trackClick(
-            clickName: AnalyticsEventNames.askQuestion,
-            widgetName: AnalyticsScreenNames.qagsPage,
-          );
-          Navigator.pushNamed(
-            context,
-            QagAskQuestionPage.routeName,
-          );
-        },
-      ),
+      floatingActionButton: isFAB ? buildFAB() : buildExtendedFAB(),
       body: AgoraTracker(
         widgetName: AnalyticsScreenNames.qagsPage,
         child: MultiBlocProvider(
@@ -85,6 +92,7 @@ class _QagsPageState extends State<QagsPage> {
             ),
           ],
           child: SingleChildScrollView(
+            controller: scrollController,
             physics: ClampingScrollPhysics(),
             child: Column(
               children: [
@@ -130,6 +138,57 @@ class _QagsPageState extends State<QagsPage> {
       ),
     );
   }
+
+  Widget buildFAB() => AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            TrackerHelper.trackClick(
+              clickName: AnalyticsEventNames.askQuestion,
+              widgetName: AnalyticsScreenNames.qagsPage,
+            );
+            Navigator.pushNamed(
+              context,
+              QagAskQuestionPage.routeName,
+            );
+          },
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
+          icon: SvgPicture.asset(
+            "assets/ic_question.svg",
+            colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
+            excludeFromSemantics: true,
+          ),
+          label: SizedBox(),
+        ),
+      );
+
+  Widget buildExtendedFAB() => AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            TrackerHelper.trackClick(
+              clickName: AnalyticsEventNames.askQuestion,
+              widgetName: AnalyticsScreenNames.qagsPage,
+            );
+            Navigator.pushNamed(
+              context,
+              QagAskQuestionPage.routeName,
+            );
+          },
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
+          icon: SvgPicture.asset(
+            "assets/ic_question.svg",
+            colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
+            excludeFromSemantics: true,
+          ),
+          label: Text(
+            QagStrings.askQuestion,
+            style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.white),
+          ),
+        ),
+      );
 }
 
 class _InfoBouton extends StatelessWidget {
@@ -142,17 +201,18 @@ class _InfoBouton extends StatelessWidget {
       child: AgoraMoreInformation(
         semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
         onClick: () {
-          showAgoraDialog(
+          showModalBottomSheet(
             context: context,
-            columnChildren: [
-              Text(ReponseStrings.qagResponseInfoBubble, style: AgoraTextStyles.light16),
-              SizedBox(height: AgoraSpacings.x0_75),
-              AgoraButton(
-                label: GenericStrings.close,
-                buttonStyle: AgoraButtonStyle.primary,
-                onPressed: () => Navigator.pop(context),
+            isScrollControlled: true,
+            backgroundColor: AgoraColors.transparent,
+            builder: (context) => AgoraInformationBottomSheet(
+              title: "Informations",
+              description: Text(
+                ReponseStrings.qagResponseInfoBubble,
+                style: AgoraTextStyles.light16,
+                textAlign: TextAlign.center,
               ),
-            ],
+            ),
           );
         },
       ),
