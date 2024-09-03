@@ -89,26 +89,25 @@ class _QagsPageState extends State<QagsPage> {
                         ],
                       ),
                       Spacer(),
-                      _InfoBouton(),
+                      Focus(
+                        autofocus: true,
+                        canRequestFocus: false,
+                        onFocusChange: (requestFocus) {
+                          if (requestFocus) {
+                            Scrollable.ensureVisible(
+                              firstFocusableElementKey.currentContext!,
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeInOut,
+                              alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
+                            );
+                          }
+                        },
+                        child: _InfoBouton(focusKey: firstFocusableElementKey),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.base),
-                Focus(
-                  autofocus: true,
-                  canRequestFocus: false,
-                  onFocusChange: (requestFocus) {
-                    if (requestFocus) {
-                      Scrollable.ensureVisible(
-                        firstFocusableElementKey.currentContext!,
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeInOut,
-                        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
-                      );
-                    }
-                  },
-                  child: QagsAskQuestionSectionPage(key: firstFocusableElementKey),
-                ),
                 QagsSection(
                   key: onSearchAnchorKey,
                   firstThematiqueKey: firstThematiqueKey,
@@ -156,6 +155,8 @@ class _PoserMaQuestionBouton extends StatelessWidget {
             QagAskQuestionPage.routeName,
           );
         },
+        backgroundColor: AgoraColors.primaryBlue,
+        focusColor: AgoraColors.neutral400,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
         icon: SvgPicture.asset(
           "assets/ic_question.svg",
@@ -172,11 +173,14 @@ class _PoserMaQuestionBouton extends StatelessWidget {
 }
 
 class _InfoBouton extends StatelessWidget {
-  const _InfoBouton();
+  final GlobalKey focusKey;
+
+  const _InfoBouton({required this.focusKey});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: focusKey,
       padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
       child: AgoraMoreInformation(
         semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
