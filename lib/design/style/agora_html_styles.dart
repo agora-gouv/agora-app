@@ -22,7 +22,6 @@ class AgoraHtmlStyles {
       "ol": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
       "li": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
       "b": AgoraHtmlStyles._boldStyle(fontSize),
-      "h1": AgoraHtmlStyles._h1Style(fontSize),
       "span": AgoraHtmlStyles._spanStyle(fontSize),
       "a": AgoraHtmlStyles._linkStyle(fontSize),
     };
@@ -65,16 +64,6 @@ class AgoraHtmlStyles {
         fontFamily: marianne,
         fontWeight: medium,
         fontSize: FontSize(fontSize),
-        lineHeight: LineHeight(height),
-        padding: HtmlPaddings.zero,
-        margin: Margins.zero,
-      );
-
-  static Style _h1Style(double fontSize) => Style(
-        fontFamily: marianne,
-        fontWeight: bold,
-        fontSize: FontSize(fontSize),
-        color: AgoraColors.primaryBlue,
         lineHeight: LineHeight(height),
         padding: HtmlPaddings.zero,
         margin: Margins.zero,
