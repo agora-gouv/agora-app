@@ -12,17 +12,17 @@ abstract class QagListState extends Equatable {
   List<Object?> get props => [currentPage];
 }
 
-class QagListInitialState extends QagListState {
-  QagListInitialState() : super(currentPage: 1);
+class QagListLoadingState extends QagListState {
+  QagListLoadingState() : super(currentPage: 1);
 }
 
-class QagListLoadedState extends QagListState {
+class QagListSuccessState extends QagListState {
   final List<Qag> qags;
   final HeaderQag? header;
   final int maxPage;
   final QagListFooterType footerType;
 
-  QagListLoadedState({
+  QagListSuccessState({
     required super.currentPage,
     required this.qags,
     required this.header,
@@ -30,15 +30,15 @@ class QagListLoadedState extends QagListState {
     required this.footerType,
   });
 
-  factory QagListLoadedState.copyWith({
-    required QagListLoadedState state,
+  factory QagListSuccessState.copyWith({
+    required QagListSuccessState state,
     int? currentPage,
     List<Qag>? qags,
     HeaderQag? header,
     int? maxPage,
     QagListFooterType? footerType,
   }) {
-    return QagListLoadedState(
+    return QagListSuccessState(
       currentPage: currentPage != state.currentPage && currentPage != null ? currentPage : state.currentPage,
       qags: qags != state.qags && qags != null ? qags : state.qags,
       header: header != state.header ? header : state.header,

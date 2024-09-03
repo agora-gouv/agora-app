@@ -3,7 +3,6 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_qag_header.dart';
@@ -38,46 +37,40 @@ class QagListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: QagListBloc(
-        qagRepository: RepositoryManager.getQagRepository(),
-        headerQagStorageClient: StorageManager.getHeaderQagStorageClient(),
-        qagFilter: qagFilter,
-      )..add(FetchQagsListEvent(thematiqueId: thematiqueId, thematiqueLabel: thematiqueLabel)),
-      child: BlocSelector<QagListBloc, QagListState, _ViewModel>(
-        selector: _ViewModel.fromState,
-        builder: (context, viewModel) {
-          final Widget section;
+    return BlocSelector<QagListBloc, QagListState, _ViewModel>(
+      selector: _ViewModel.fromState,
+      builder: (context, viewModel) {
+        final Widget section;
 
-          if (viewModel is _QagListLoadingViewModel) {
-            section = QagsListLoading();
-          } else if (viewModel is _QagListWithResultViewModel) {
-            section = _buildQagSearchListView(context, viewModel, qagFilter);
-          } else if (viewModel is _QagListNoResultViewModel) {
-            section = _buildNoResultsWidget(context, viewModel);
-          } else {
-            section = Column(
-              children: [
-                SizedBox(height: AgoraSpacings.base),
-                AgoraErrorView(
-                  onReload: () => context.read<QagListBloc>().add(
-                        FetchQagsListEvent(
-                          thematiqueId: thematiqueId,
-                          thematiqueLabel: thematiqueLabel,
-                        ),
+        if (viewModel is _QagListLoadingViewModel) {
+          section = QagsListLoading();
+        } else if (viewModel is _QagListWithResultViewModel) {
+          section = _buildQagSearchListView(context, viewModel, qagFilter);
+        } else if (viewModel is _QagListNoResultViewModel) {
+          section = _buildNoResultsWidget(context, viewModel);
+        } else {
+          section = Column(
+            children: [
+              SizedBox(height: AgoraSpacings.base),
+              AgoraErrorView(
+                onReload: () => context.read<QagListBloc>().add(
+                      FetchQagsListEvent(
+                        thematiqueId: thematiqueId,
+                        thematiqueLabel: thematiqueLabel,
+                        qagFilter: qagFilter,
                       ),
-                ),
-              ],
-            );
-          }
-          return ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height * 0.70,
-            ),
-            child: section,
+                    ),
+              ),
+            ],
           );
-        },
-      ),
+        }
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height * 0.70,
+          ),
+          child: section,
+        );
+      },
     );
   }
 
@@ -104,6 +97,7 @@ class QagListSection extends StatelessWidget {
                   child: QagsSupportableCard(
                     qagViewModel: item,
                     widgetName: AnalyticsScreenNames.qagsPage,
+                    likeViewKey: GlobalKey(),
                     onQagSupportChange: (qagSupport) {
                       context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
                     },
@@ -119,13 +113,23 @@ class QagListSection extends StatelessWidget {
                         label: GenericStrings.displayMore,
                         style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
                         onPressed: () {
-                          context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId));
+                          context.read<QagListBloc>().add(
+                                UpdateQagsListEvent(
+                                  thematiqueId: thematiqueId,
+                                  qagFilter: qagFilter,
+                                ),
+                              );
                         },
                       ),
                     );
                   case QagListFooterType.error:
                     return AgoraErrorView(
-                      onReload: () => context.read<QagListBloc>().add(UpdateQagsListEvent(thematiqueId: thematiqueId)),
+                      onReload: () => context.read<QagListBloc>().add(
+                            UpdateQagsListEvent(
+                              thematiqueId: thematiqueId,
+                              qagFilter: qagFilter,
+                            ),
+                          ),
                     );
                 }
               }
@@ -195,9 +199,9 @@ class QagListSection extends StatelessWidget {
 
 abstract class _ViewModel extends Equatable {
   static _ViewModel fromState(QagListState state) {
-    if (state is QagListInitialState) {
+    if (state is QagListLoadingState) {
       return _QagListLoadingViewModel();
-    } else if (state is QagListLoadedState) {
+    } else if (state is QagListSuccessState) {
       final header = state.header != null
           ? _QagListHeaderViewModel(
               id: state.header!.id,

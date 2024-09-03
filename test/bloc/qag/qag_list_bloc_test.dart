@@ -1,11 +1,11 @@
-import 'package:agora/qag/list/bloc/qag_list_bloc.dart';
-import 'package:agora/qag/list/bloc/qag_list_event.dart';
-import 'package:agora/qag/list/bloc/qag_list_state.dart';
 import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/qag/domain/header_qag.dart';
 import 'package:agora/qag/domain/qag.dart';
 import 'package:agora/qag/domain/qag_support.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
+import 'package:agora/qag/list/bloc/qag_list_bloc.dart';
+import 'package:agora/qag/list/bloc/qag_list_event.dart';
+import 'package:agora/qag/list/bloc/qag_list_state.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,7 +19,7 @@ void main() {
   Intl.defaultLocale = "fr_FR";
   initializeDateFormatting('fr_FR', null);
 
-  final defaultLoadedState = QagListLoadedState(
+  final defaultLoadedState = QagListSuccessState(
     qags: [
       Qag(
         id: "id1",
@@ -48,13 +48,12 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
-        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null),
+        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null, qagFilter: QagListFilter.top),
       ),
       expect: () => [
-        QagListInitialState(),
+        QagListLoadingState(),
         defaultLoadedState,
       ],
       wait: const Duration(milliseconds: 5),
@@ -65,14 +64,13 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientAllClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
-        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null),
+        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null, qagFilter: QagListFilter.top),
       ),
       expect: () => [
-        QagListInitialState(),
-        QagListLoadedState.copyWith(state: defaultLoadedState, header: null),
+        QagListLoadingState(),
+        QagListSuccessState.copyWith(state: defaultLoadedState, header: null),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -82,13 +80,12 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) => bloc.add(
-        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null),
+        FetchQagsListEvent(thematiqueId: null, thematiqueLabel: null, qagFilter: QagListFilter.top),
       ),
       expect: () => [
-        QagListInitialState(),
+        QagListLoadingState(),
         QagListErrorState(currentPage: 1),
       ],
       wait: const Duration(milliseconds: 5),
@@ -101,19 +98,24 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
         semanticsHelperWrapper: _MockSemanticsHelperWrapper(),
       ),
       act: (bloc) async {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: 'Transports'));
+        bloc.add(
+          FetchQagsListEvent(
+            thematiqueId: 'Transports',
+            thematiqueLabel: 'Transports',
+            qagFilter: QagListFilter.top,
+          ),
+        );
         await Future.delayed(Duration(milliseconds: 5));
-        bloc.add(UpdateQagsListEvent(thematiqueId: 'Transports'));
+        bloc.add(UpdateQagsListEvent(thematiqueId: 'Transports', qagFilter: QagListFilter.top));
       },
       expect: () => [
-        QagListInitialState(),
+        QagListLoadingState(),
         defaultLoadedState,
-        QagListLoadedState.copyWith(state: defaultLoadedState, footerType: QagListFooterType.loading),
-        QagListLoadedState.copyWith(
+        QagListSuccessState.copyWith(state: defaultLoadedState, footerType: QagListFooterType.loading),
+        QagListSuccessState.copyWith(
           state: defaultLoadedState,
           qags: [
             Qag(
@@ -150,14 +152,13 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
-        bloc.add(UpdateQagsListEvent(thematiqueId: 'Transports'));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null, qagFilter: QagListFilter.top));
+        bloc.add(UpdateQagsListEvent(thematiqueId: 'Transports', qagFilter: QagListFilter.top));
       },
       expect: () => [
-        QagListInitialState(),
+        QagListLoadingState(),
         QagListErrorState(currentPage: 1),
       ],
       wait: const Duration(milliseconds: 5),
@@ -181,7 +182,6 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
         bloc.add(UpdateQagListSupportEvent(qagSupport: qagSupportId1));
@@ -195,14 +195,13 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null, qagFilter: QagListFilter.top));
         bloc.add(UpdateQagListSupportEvent(qagSupport: unknownQag));
       },
       expect: () => [
-        QagListInitialState(),
+        QagListLoadingState(),
         defaultLoadedState,
       ],
       wait: const Duration(milliseconds: 5),
@@ -213,17 +212,16 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) async {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null, qagFilter: QagListFilter.top));
         await Future.delayed(Duration(milliseconds: 5));
         bloc.add(UpdateQagListSupportEvent(qagSupport: qagSupportId1));
       },
       expect: () => [
-        QagListInitialState(),
+        QagListLoadingState(),
         defaultLoadedState,
-        QagListLoadedState.copyWith(
+        QagListSuccessState.copyWith(
           state: defaultLoadedState,
           qags: [
             Qag(
@@ -249,7 +247,6 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) {
         bloc.add(CloseHeaderQagListEvent(headerId: "headerId"));
@@ -263,17 +260,16 @@ void main() {
       build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
-        qagFilter: QagListFilter.top,
       ),
       act: (bloc) async {
-        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null));
+        bloc.add(FetchQagsListEvent(thematiqueId: 'Transports', thematiqueLabel: null, qagFilter: QagListFilter.top));
         await Future.delayed(Duration(milliseconds: 5));
         bloc.add(CloseHeaderQagListEvent(headerId: "headerId"));
       },
       expect: () => [
-        QagListInitialState(),
+        QagListLoadingState(),
         defaultLoadedState,
-        QagListLoadedState.copyWith(
+        QagListSuccessState.copyWith(
           state: defaultLoadedState,
           header: null,
         ),
