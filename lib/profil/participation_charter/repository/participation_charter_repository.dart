@@ -18,7 +18,7 @@ class ParticipationCharterDioRepository extends ParticipationCharterRepository {
     try {
       final response = await httpClient.get(uri);
       return GetParticipationCharterSucceedResponse(
-        extraText: response.data["extraText"] as String,
+        extraText: response.data["previewText"] as String,
       );
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
