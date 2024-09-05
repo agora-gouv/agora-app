@@ -35,6 +35,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   final String semanticTooltip;
 
   AgoraConsultationOngoingCard({
+    super.key,
     required this.consultationId,
     required this.consultationSlug,
     required this.imageUrl,

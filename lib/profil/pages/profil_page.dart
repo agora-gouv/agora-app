@@ -5,6 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_menu_item.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -32,7 +33,7 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  final firstElementKey = GlobalKey();
+  final firstFocusableElementKey = GlobalKey();
   var shouldReloadQagsPage = false;
 
   @override
@@ -66,21 +67,10 @@ class _ProfilPageState extends State<ProfilPage> {
                       return Container();
                     }
                     final isFirstDisplay = snapshot.data!;
-                    return Focus(
-                      autofocus: true,
-                      canRequestFocus: false,
-                      onFocusChange: (requestFocus) {
-                        if (requestFocus) {
-                          Scrollable.ensureVisible(
-                            firstElementKey.currentContext!,
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.easeInOut,
-                            alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
-                          );
-                        }
-                      },
+                    return AgoraFocusHelper(
+                      elementKey: firstFocusableElementKey,
                       child: AgoraMenuItem(
-                        key: firstElementKey,
+                        key: firstFocusableElementKey,
                         title: ProfileStrings.myInformation,
                         onClick: () {
                           _track(AnalyticsEventNames.myInformation);

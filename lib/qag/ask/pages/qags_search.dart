@@ -106,7 +106,7 @@ class _EmptyView extends StatelessWidget {
           right: AgoraSpacings.base,
         ),
         child: Text(
-          QagStrings.searchQagEnterSomeCharacteres,
+          QagStrings.searchQagEnterSomeChar,
           style: AgoraTextStyles.regular14,
           textAlign: TextAlign.center,
         ),

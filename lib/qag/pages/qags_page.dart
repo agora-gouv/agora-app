@@ -6,6 +6,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
@@ -34,14 +35,15 @@ class QagsPage extends StatefulWidget {
 }
 
 class _QagsPageState extends State<QagsPage> {
-  final GlobalKey toolbarTitleKey = GlobalKey();
+  final firstFocusableElementKey = GlobalKey();
+  final toolbarTitleKey = GlobalKey();
+  final onSearchAnchorKey = GlobalKey();
+  final firstThematiqueKey = GlobalKey();
   String? currentThematiqueId;
-  late final GlobalKey onSearchAnchorKey;
 
   @override
   void initState() {
     super.initState();
-    onSearchAnchorKey = GlobalKey();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
     });
@@ -88,12 +90,17 @@ class _QagsPageState extends State<QagsPage> {
                         ],
                       ),
                       Spacer(),
-                      _InfoBouton(),
+                      AgoraFocusHelper(
+                        elementKey: firstFocusableElementKey,
+                        child: _InfoBouton(focusKey: firstFocusableElementKey),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.base),
                 QagsSection(
+                  key: onSearchAnchorKey,
+                  firstThematiqueKey: firstThematiqueKey,
                   defaultSelected: QagTab.trending,
                   selectedThematiqueId: currentThematiqueId,
                   onSearchBarOpen: (bool isSearchOpen) {
@@ -117,30 +124,6 @@ class _QagsPageState extends State<QagsPage> {
       ),
     );
   }
-
-  Widget buildFAB() => AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.linear,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            TrackerHelper.trackClick(
-              clickName: AnalyticsEventNames.askQuestion,
-              widgetName: AnalyticsScreenNames.qagsPage,
-            );
-            Navigator.pushNamed(
-              context,
-              QagAskQuestionPage.routeName,
-            );
-          },
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
-          icon: SvgPicture.asset(
-            "assets/ic_question.svg",
-            colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
-            excludeFromSemantics: true,
-          ),
-          label: SizedBox(),
-        ),
-      );
 }
 
 class _PoserMaQuestionBouton extends StatelessWidget {
@@ -162,6 +145,8 @@ class _PoserMaQuestionBouton extends StatelessWidget {
             QagAskQuestionPage.routeName,
           );
         },
+        backgroundColor: AgoraColors.primaryBlue,
+        focusColor: AgoraColors.neutral400,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
         icon: SvgPicture.asset(
           "assets/ic_question.svg",
@@ -178,11 +163,14 @@ class _PoserMaQuestionBouton extends StatelessWidget {
 }
 
 class _InfoBouton extends StatelessWidget {
-  const _InfoBouton();
+  final GlobalKey focusKey;
+
+  const _InfoBouton({required this.focusKey});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key: focusKey,
       padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
       child: AgoraMoreInformation(
         semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
