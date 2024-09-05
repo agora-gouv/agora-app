@@ -24,7 +24,7 @@ dependencies:
   intl: ^0.18.1
   get_it: ^7.6.4
   flutter_html: ^3.0.0-beta.2 # not support for web
-  url_launcher: ^6.1.14
+  url_launcher: ^6.3.0
   logger: ^2.0.2+1
   device_info_plus: ^9.1.1
   permission_handler: ^11.1.0 # not support for web
