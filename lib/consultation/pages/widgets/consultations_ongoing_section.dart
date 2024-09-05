@@ -5,6 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
@@ -17,17 +18,21 @@ class ConsultationsOngoingSection extends StatelessWidget {
   final List<ConsultationOngoingViewModel> ongoingViewModels;
   final bool answeredSectionEmpty;
 
-  const ConsultationsOngoingSection({
-    super.key,
+  ConsultationsOngoingSection({
     required this.ongoingViewModels,
     required this.answeredSectionEmpty,
   });
 
+  final firstFocusableElementKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _buildOngoingConsultations(context),
+    return AgoraFocusHelper(
+      elementKey: firstFocusableElementKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: _buildOngoingConsultations(context),
+      ),
     );
   }
 
@@ -111,7 +116,10 @@ class ConsultationsOngoingSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: AgoraConsultationOngoingCard(
+                    key: index == 0 ? firstFocusableElementKey : null,
+                    semanticTooltip: "Élément $index sur ${ongoingViewModels.length}",
                     consultationId: ongoingViewModel1.id,
+                    consultationSlug: ongoingViewModel1.slug,
                     imageUrl: ongoingViewModel1.coverUrl,
                     thematique: ongoingViewModel1.thematique,
                     title: ongoingViewModel1.title,
@@ -123,7 +131,9 @@ class ConsultationsOngoingSection extends StatelessWidget {
                 ongoingViewModel2 != null
                     ? Expanded(
                         child: AgoraConsultationOngoingCard(
+                          semanticTooltip: "Élément ${index + 1} sur ${ongoingViewModels.length}",
                           consultationId: ongoingViewModel2.id,
+                          consultationSlug: ongoingViewModel2.slug,
                           imageUrl: ongoingViewModel2.coverUrl,
                           thematique: ongoingViewModel2.thematique,
                           title: ongoingViewModel2.title,
@@ -140,15 +150,18 @@ class ConsultationsOngoingSection extends StatelessWidget {
         ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
       }
     } else {
-      for (final ongoingViewModel in ongoingViewModels) {
+      for (var index = 0; index < ongoingViewModels.length; index++) {
         ongoingConsultationsWidgets.add(
           AgoraConsultationOngoingCard(
-            consultationId: ongoingViewModel.id,
-            imageUrl: ongoingViewModel.coverUrl,
-            thematique: ongoingViewModel.thematique,
-            title: ongoingViewModel.title,
-            endDate: ongoingViewModel.endDate,
-            highlightLabel: ongoingViewModel.label,
+            key: index == 0 ? firstFocusableElementKey : null,
+            semanticTooltip: "Élément ${index + 1} sur ${ongoingViewModels.length}",
+            consultationId: ongoingViewModels[index].id,
+            consultationSlug: ongoingViewModels[index].slug,
+            imageUrl: ongoingViewModels[index].coverUrl,
+            thematique: ongoingViewModels[index].thematique,
+            title: ongoingViewModels[index].title,
+            endDate: ongoingViewModels[index].endDate,
+            highlightLabel: ongoingViewModels[index].label,
             style: AgoraConsultationOngoingCardStyle.column,
           ),
         );

@@ -7,9 +7,11 @@ import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_finished_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
@@ -18,6 +20,7 @@ import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intersperse/intersperse.dart';
@@ -26,10 +29,12 @@ class ConsultationsFinishedSection extends StatelessWidget {
   final List<ConsultationViewModel> finishedViewModels;
   final bool shouldDisplayAllButton;
 
-  const ConsultationsFinishedSection({
+  ConsultationsFinishedSection({
     required this.finishedViewModels,
     required this.shouldDisplayAllButton,
   });
+
+  final firstFocusableElementKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AgoraRichText(
+                        semantic: AgoraRichTextSemantic(label: SemanticsStrings.consultationTerminees),
                         items: [
                           AgoraRichTextItem(
                             text: "${ConsultationStrings.finishConsultationPart1}\n",
@@ -91,14 +97,17 @@ class ConsultationsFinishedSection extends StatelessWidget {
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                controller: scrollController,
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(minWidth: constraint.maxWidth),
-                                  child: IntrinsicHeight(
-                                    child: Row(children: _buildFinishedConsultations(context)),
+                              AgoraFocusHelper(
+                                elementKey: firstFocusableElementKey,
+                                child: SingleChildScrollView(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  controller: scrollController,
+                                  child: ConstrainedBox(
+                                    constraints: BoxConstraints(minWidth: constraint.maxWidth),
+                                    child: IntrinsicHeight(
+                                      child: Row(children: _buildFinishedConsultations(context)),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -124,8 +133,9 @@ class ConsultationsFinishedSection extends StatelessWidget {
 
   List<Widget> _buildFinishedConsultations(BuildContext context) {
     return finishedViewModels
-        .map<Widget>((finishedViewModel) {
+        .mapIndexed<Widget>((index, finishedViewModel) {
           return AgoraConsultationFinishedCard(
+            key: index == 0 ? firstFocusableElementKey : null,
             id: finishedViewModel.id,
             title: finishedViewModel.title,
             thematique: finishedViewModel.thematique,
@@ -142,7 +152,8 @@ class ConsultationsFinishedSection extends StatelessWidget {
                   context,
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
-                    consultationId: finishedViewModel.id,
+                    consultationIdOrSlug: finishedViewModel.id,
+                    consultationTitle: finishedViewModel.title,
                     shouldReloadConsultationsWhenPop: false,
                   ),
                 );

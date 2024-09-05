@@ -4,6 +4,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
@@ -12,7 +13,6 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
-import 'package:agora/profil/pages/profil_page.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_bloc.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_event.dart';
@@ -47,9 +47,6 @@ class ReponsesPage extends StatelessWidget {
                   AgoraRichTextItem(text: ReponseStrings.reponsesTitrePart2, style: AgoraRichTextItemStyle.regular),
                 ],
               ),
-              onProfileClick: () {
-                Navigator.pushNamed(context, ProfilPage.routeName);
-              },
             ),
             SizedBox(height: AgoraSpacings.base),
             _ReponsesSection(),
@@ -89,73 +86,81 @@ class _ReponsesSection extends StatelessWidget {
 
 class _ReponseList extends StatelessWidget {
   final QagResponsePaginatedState state;
+  final firstFocusableElementKey = GlobalKey();
 
-  const _ReponseList(this.state);
+  _ReponseList(this.state);
 
   @override
   Widget build(BuildContext context) {
     final qagResponseViewModels = state.qagResponseViewModels;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-          physics: const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          separatorBuilder: (_, index) => SizedBox(height: AgoraSpacings.base),
-          itemCount: qagResponseViewModels.length,
-          itemBuilder: (context, index) {
-            return AgoraQagResponseCard(
-              thematique: ThematiqueViewModel(
-                picto: qagResponseViewModels[index].thematique.picto,
-                label: qagResponseViewModels[index].thematique.label,
-              ),
-              titre: qagResponseViewModels[index].title,
-              auteur: qagResponseViewModels[index].author,
-              auteurImageUrl: qagResponseViewModels[index].authorPortraitUrl,
-              date: qagResponseViewModels[index].responseDate,
-              style: AgoraQagResponseStyle.large,
-              index: index,
-              maxIndex: qagResponseViewModels.length,
-              onClick: () {
-                TrackerHelper.trackClick(
-                  clickName: "${AnalyticsEventNames.answeredQag} ${qagResponseViewModels[index].qagId}",
-                  widgetName: AnalyticsScreenNames.reponsesPage,
-                );
-                Navigator.pushNamed(
-                  context,
-                  QagDetailsPage.routeName,
-                  arguments: QagDetailsArguments(
-                    qagId: qagResponseViewModels[index].qagId,
-                    reload: null,
-                    isQuestionGagnante: true,
-                  ),
-                );
-              },
-            );
-          },
-        ),
-        if (state is QagResponsePaginatedInitialState || state is QagResponsePaginatedLoadingState)
-          _LoadingReponseList()
-        else if (state is QagResponsePaginatedErrorState)
-          AgoraErrorView(
-            onReload: () => context
-                .read<QagResponsePaginatedBloc>()
-                .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
-          )
-        else if (state.currentPageNumber < state.maxPage)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-            child: AgoraRoundedButton(
-              label: GenericStrings.displayMore,
-              style: AgoraRoundedButtonStyle.primaryButtonStyle,
-              onPressed: () => context
-                  .read<QagResponsePaginatedBloc>()
-                  .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber + 1)),
-            ),
+    return AgoraFocusHelper(
+      elementKey: firstFocusableElementKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ListView.separated(
+            padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            separatorBuilder: (_, index) => SizedBox(height: AgoraSpacings.base),
+            itemCount: qagResponseViewModels.length,
+            itemBuilder: (context, index) {
+              return AgoraQagResponseCard(
+                key: index == 0 ? firstFocusableElementKey : null,
+                thematique: ThematiqueViewModel(
+                  picto: qagResponseViewModels[index].thematique.picto,
+                  label: qagResponseViewModels[index].thematique.label,
+                ),
+                titre: qagResponseViewModels[index].title,
+                auteur: qagResponseViewModels[index].author,
+                auteurImageUrl: qagResponseViewModels[index].authorPortraitUrl,
+                date: qagResponseViewModels[index].responseDate,
+                style: AgoraQagResponseStyle.large,
+                index: index,
+                maxIndex: qagResponseViewModels.length,
+                onClick: () {
+                  TrackerHelper.trackClick(
+                    clickName: "${AnalyticsEventNames.answeredQag} ${qagResponseViewModels[index].qagId}",
+                    widgetName: AnalyticsScreenNames.reponsesPage,
+                  );
+                  Navigator.pushNamed(
+                    context,
+                    QagDetailsPage.routeName,
+                    arguments: QagDetailsArguments(
+                      qagId: qagResponseViewModels[index].qagId,
+                      reload: QagReload.qagsPaginatedPage,
+                      isQuestionGagnante: true,
+                    ),
+                  );
+                },
+              );
+            },
           ),
-      ],
+          if (state is QagResponsePaginatedInitialState || state is QagResponsePaginatedLoadingState)
+            Padding(
+              padding: const EdgeInsets.only(top: AgoraSpacings.base),
+              child: _LoadingReponseList(),
+            )
+          else if (state is QagResponsePaginatedErrorState)
+            AgoraErrorView(
+              onReload: () => context
+                  .read<QagResponsePaginatedBloc>()
+                  .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
+            )
+          else if (state.currentPageNumber < state.maxPage)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+              child: AgoraRoundedButton(
+                label: GenericStrings.displayMore,
+                style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
+                onPressed: () => context
+                    .read<QagResponsePaginatedBloc>()
+                    .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber + 1)),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

@@ -10,8 +10,6 @@ class AnimSearchBar extends StatefulWidget {
   final double width;
   final double height;
   final TextEditingController textController;
-  final Icon? suffixIcon;
-  final Icon? prefixIcon;
   final String helpText;
   final int animationDurationInMilli;
   final Function() onClose;
@@ -23,7 +21,7 @@ class AnimSearchBar extends StatefulWidget {
   final Color? searchIconColor;
   final Color? textFieldIconColor;
   final List<TextInputFormatter>? inputFormatters;
-  final bool boxShadow;
+  final bool isSearchBarDisplayed;
   final Function(String) onSubmitted;
   final TextInputAction textInputAction;
   final Function(bool) searchBarOpen;
@@ -34,9 +32,7 @@ class AnimSearchBar extends StatefulWidget {
     required this.width,
     required this.searchBarOpen,
     required this.textController,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.helpText = "Search...",
+    required this.helpText,
     this.height = 100,
     this.color = Colors.white,
     this.textFieldColor = Colors.white,
@@ -50,7 +46,7 @@ class AnimSearchBar extends StatefulWidget {
     this.autoFocus = false,
     this.style,
     this.closeSearchOnSuffixTap = false,
-    this.boxShadow = true,
+    this.isSearchBarDisplayed = false,
     this.inputFormatters,
   });
 
@@ -63,12 +59,12 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
   ///toggle 1 => true or open
   int toggle = 0;
 
-  /// * use this variable to check current text from OnChange
+  ///use this variable to check current text from OnChange
   String textFieldValue = '';
 
   ///initializing the AnimationController
   late AnimationController _controller;
-  FocusNode focusNode = FocusNode();
+  FocusNode keyboardFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -105,18 +101,6 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
         decoration: BoxDecoration(
           /// can add custom  color or the color will be white
           color: toggle == 1 ? widget.textFieldColor : widget.color,
-
-          /// show boxShadow unless false was passed
-          boxShadow: !widget.boxShadow
-              ? null
-              : [
-                  BoxShadow(
-                    color: Colors.black26,
-                    spreadRadius: -10.0,
-                    blurRadius: 10.0,
-                    offset: Offset(0.0, 10.0),
-                  ),
-                ],
         ),
         child: Stack(
           children: [
@@ -145,55 +129,58 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                       animation: _controller,
                       child: Material(
                         color: toggle == 0 ? widget.color : widget.textFieldColor,
-                        child: IconButton(
-                          constraints: BoxConstraints(minHeight: 48, minWidth: 48),
-                          splashRadius: 19.0,
-                          icon: Semantics(
-                            button: true,
-                            label: textFieldValue.isNotEmpty
-                                ? GenericStrings.searchBarDelete
-                                : GenericStrings.searchBarClose,
-                            child: widget.suffixIcon ??
-                                Icon(
-                                  semanticLabel: "",
-                                  Icons.close,
-                                  size: 22.0,
-                                  color: widget.textFieldIconColor,
-                                ),
+                        child: Focus(
+                          canRequestFocus: false,
+                          descendantsAreFocusable: widget.isSearchBarDisplayed,
+                          child: IconButton(
+                            constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+                            splashRadius: 19.0,
+                            icon: Semantics(
+                              button: true,
+                              label: textFieldValue.isNotEmpty
+                                  ? GenericStrings.searchBarDelete
+                                  : GenericStrings.searchBarClose,
+                              child: Icon(
+                                semanticLabel: "",
+                                Icons.close,
+                                size: 22.0,
+                                color: widget.textFieldIconColor,
+                              ),
+                            ),
+                            onPressed: () {
+                              try {
+                                /// if field empty then the user trying to close bar
+                                if (textFieldValue == '') {
+                                  widget.onClose();
+                                  unFocusKeyboard();
+                                  setState(() {
+                                    toggle = 0;
+                                  });
+
+                                  ///reverse == close
+                                  _controller.reverse();
+                                } else {
+                                  widget.textController.clear();
+                                  setState(() {
+                                    textFieldValue = '';
+                                  });
+                                  widget.onClearText();
+                                }
+
+                                ///closeSearchOnSuffixTap will execute if it's true
+                                if (widget.closeSearchOnSuffixTap) {
+                                  unFocusKeyboard();
+                                  setState(() {
+                                    toggle = 0;
+                                  });
+                                }
+                              } catch (e) {
+                                if (kDebugMode) {
+                                  print(e);
+                                }
+                              }
+                            },
                           ),
-                          onPressed: () {
-                            try {
-                              // * if field empty then the user trying to close bar
-                              if (textFieldValue == '') {
-                                widget.onClose();
-                                unFocusKeyboard();
-                                setState(() {
-                                  toggle = 0;
-                                });
-
-                                ///reverse == close
-                                _controller.reverse();
-                              } else {
-                                widget.textController.clear();
-                                setState(() {
-                                  textFieldValue = '';
-                                });
-                                widget.onClearText();
-                              }
-
-                              ///closeSearchOnSuffixTap will execute if it's true
-                              if (widget.closeSearchOnSuffixTap) {
-                                unFocusKeyboard();
-                                setState(() {
-                                  toggle = 0;
-                                });
-                              }
-                            } catch (e) {
-                              if (kDebugMode) {
-                                print(e);
-                              }
-                            }
-                          },
                         ),
                       ),
                     ),
@@ -217,44 +204,48 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                   width: widget.width / 1.7,
                   child: Semantics(
                     label: 'Recherche',
-                    child: TextField(
-                      ///Text Controller. you can manipulate the text inside this textField by calling this controller.
-                      controller: widget.textController,
-                      inputFormatters: widget.inputFormatters,
-                      focusNode: focusNode,
-                      textInputAction: widget.textInputAction,
-                      cursorRadius: Radius.circular(10.0),
-                      cursorWidth: 2.0,
-                      onChanged: (value) {
-                        setState(() {
-                          textFieldValue = value;
-                        });
-                      },
-                      onSubmitted: (value) => {
-                        widget.onSubmitted(value),
-                        setState(() {
-                          textFieldValue = value;
-                        }),
-                        unFocusKeyboard(),
-                      },
-                      onEditingComplete: () {
-                        /// on editing complete the keyboard will be closed and the search bar will be closed
-                        unFocusKeyboard();
-                      },
+                    child: Focus(
+                      canRequestFocus: false,
+                      descendantsAreFocusable: widget.isSearchBarDisplayed,
+                      child: TextField(
+                        ///Text Controller. you can manipulate the text inside this textField by calling this controller.
+                        controller: widget.textController,
+                        inputFormatters: widget.inputFormatters,
+                        focusNode: keyboardFocusNode,
+                        textInputAction: widget.textInputAction,
+                        cursorRadius: Radius.circular(10.0),
+                        cursorWidth: 2.0,
+                        onChanged: (value) {
+                          setState(() {
+                            textFieldValue = value;
+                          });
+                        },
+                        onSubmitted: (value) => {
+                          widget.onSubmitted(value),
+                          setState(() {
+                            textFieldValue = value;
+                          }),
+                          unFocusKeyboard(),
+                        },
+                        onEditingComplete: () {
+                          /// on editing complete the keyboard will be closed and the search bar will be closed
+                          unFocusKeyboard();
+                        },
 
-                      ///style is of type TextStyle, the default is just a color black
-                      style: widget.style ?? TextStyle(color: Colors.black),
-                      cursorColor: Colors.black,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(bottom: 5),
-                        isDense: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        hintText: widget.helpText,
-                        labelStyle: AgoraTextStyles.light14,
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide.none,
+                        ///style is of type TextStyle, the default is just a color black
+                        style: widget.style ?? TextStyle(color: Colors.black),
+                        cursorColor: Colors.black,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(bottom: 5),
+                          isDense: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          hintText: widget.helpText,
+                          labelStyle: AgoraTextStyles.light14,
+                          alignLabelWithHint: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                       ),
                     ),
@@ -278,19 +269,12 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                 icon: Semantics(
                   button: true,
                   label: toggle == 1 ? GenericStrings.searchBarClose : GenericStrings.searchBarOpen,
-                  child: widget.prefixIcon != null
-                      ? toggle == 1
-                          ? Icon(
-                              Icons.arrow_back_ios,
-                              color: widget.textFieldIconColor,
-                            )
-                          : widget.prefixIcon!
-                      : Icon(
-                          toggle == 1 ? Icons.arrow_back_ios : Icons.search,
-                          // search icon color when closed
-                          color: toggle == 0 ? widget.searchIconColor : widget.textFieldIconColor,
-                          size: 22.0,
-                        ),
+                  child: Icon(
+                    toggle == 1 ? Icons.arrow_back_ios : Icons.search,
+                    // search icon color when closed
+                    color: toggle == 0 ? widget.searchIconColor : widget.textFieldIconColor,
+                    size: 22.0,
+                  ),
                 ),
                 onPressed: () {
                   setState(
@@ -301,7 +285,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                         setState(() {
                           ///if the autoFocus is true, the keyboard will pop open, automatically
                           if (widget.autoFocus) {
-                            FocusScope.of(context).requestFocus(focusNode);
+                            FocusScope.of(context).requestFocus(keyboardFocusNode);
                           }
                         });
 

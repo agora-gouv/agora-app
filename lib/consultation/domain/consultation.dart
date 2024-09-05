@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class Consultation extends Equatable {
   final String id;
+  final String slug;
   final String title;
   final String coverUrl;
   final Thematique thematique;
@@ -12,6 +13,7 @@ class Consultation extends Equatable {
 
   Consultation({
     required this.id,
+    required this.slug,
     required this.title,
     required this.coverUrl,
     required this.thematique,
@@ -23,6 +25,7 @@ class Consultation extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        slug,
         title,
         coverUrl,
         thematique,
@@ -35,6 +38,7 @@ class Consultation extends Equatable {
 class ConsultationOngoing extends Consultation {
   ConsultationOngoing({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,
@@ -49,6 +53,7 @@ class ConsultationOngoing extends Consultation {
 class ConsultationFinished extends Consultation {
   ConsultationFinished({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,
@@ -65,6 +70,7 @@ class Concertation extends Consultation {
 
   Concertation({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,
@@ -83,6 +89,7 @@ class Concertation extends Consultation {
 class ConsultationAnswered extends Consultation {
   ConsultationAnswered({
     required super.id,
+    required super.slug,
     required super.title,
     required super.coverUrl,
     required super.thematique,

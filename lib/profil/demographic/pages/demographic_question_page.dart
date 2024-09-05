@@ -74,7 +74,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
               children: [
                 AgoraToolbar(
                   style: AgoraToolbarStyle.close,
-                  pageLabel: 'Modifier mes informations',
+                  semanticPageLabel: 'Modifier mes informations',
                 ),
                 Expanded(
                   child: AgoraSingleScrollView(

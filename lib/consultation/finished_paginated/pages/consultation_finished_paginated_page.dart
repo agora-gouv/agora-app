@@ -6,6 +6,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_bloc.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_event.dart';
@@ -43,7 +44,8 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
       ],
       child: AgoraScaffold(
         child: AgoraSecondaryStyleView(
-          pageLabel: "${ConsultationStrings.finishConsultationPart1} ${ConsultationStrings.finishConsultationPart2}",
+          semanticPageLabel: SemanticsStrings.allConsultationTerminees,
+          isTitleHasSemantic: true,
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
             items: [
@@ -98,7 +100,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                     imageUrl: finishedViewModel1.coverUrl,
                     label: finishedViewModel1.label,
                     style: AgoraConsultationFinishedStyle.grid,
-                    onClick: () => _onCardClick(context, finishedViewModel1.id, finishedViewModel1.externalLink),
+                    onClick: () => _onCardClick(
+                      context,
+                      finishedViewModel1.id,
+                      finishedViewModel1.title,
+                      finishedViewModel1.externalLink,
+                    ),
                     isExternalLink: finishedViewModel1.externalLink != null,
                     index: consultationFinishedViewModels.indexOf(finishedViewModel1),
                     maxIndex: consultationFinishedViewModels.length,
@@ -114,7 +121,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                           imageUrl: finishedViewModel2.coverUrl,
                           label: finishedViewModel2.label,
                           style: AgoraConsultationFinishedStyle.grid,
-                          onClick: () => _onCardClick(context, finishedViewModel2!.id, finishedViewModel2.externalLink),
+                          onClick: () => _onCardClick(
+                            context,
+                            finishedViewModel2!.id,
+                            finishedViewModel2.title,
+                            finishedViewModel2.externalLink,
+                          ),
                           isExternalLink: finishedViewModel2.externalLink != null,
                           index: consultationFinishedViewModels.indexOf(finishedViewModel2),
                           maxIndex: consultationFinishedViewModels.length,
@@ -137,7 +149,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
             imageUrl: finishedViewModel.coverUrl,
             label: finishedViewModel.label,
             style: AgoraConsultationFinishedStyle.column,
-            onClick: () => _onCardClick(context, finishedViewModel.id, finishedViewModel.externalLink),
+            onClick: () => _onCardClick(
+              context,
+              finishedViewModel.id,
+              finishedViewModel.title,
+              finishedViewModel.externalLink,
+            ),
             isExternalLink: finishedViewModel.externalLink != null,
             index: consultationFinishedViewModels.indexOf(finishedViewModel),
             maxIndex: consultationFinishedViewModels.length,
@@ -168,7 +185,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
         widgets.add(
           AgoraRoundedButton(
             label: GenericStrings.displayMore,
-            style: AgoraRoundedButtonStyle.primaryButtonStyle,
+            style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
             onPressed: () => context.read<ConsultationPaginatedBloc>().add(
                   FetchConsultationPaginatedEvent(
                     pageNumber: state.currentPageNumber + 1,
@@ -184,7 +201,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     return widgets;
   }
 
-  void _onCardClick(BuildContext context, String consultationId, String? externalLink) {
+  void _onCardClick(BuildContext context, String consultationId, String consultationTitle, String? externalLink) {
     TrackerHelper.trackClick(
       clickName: "${AnalyticsEventNames.finishedConsultation} $consultationId",
       widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
@@ -196,7 +213,8 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
         context,
         DynamicConsultationPage.routeName,
         arguments: DynamicConsultationPageArguments(
-          consultationId: consultationId,
+          consultationIdOrSlug: consultationId,
+          consultationTitle: consultationTitle,
           shouldReloadConsultationsWhenPop: false,
         ),
       );

@@ -56,7 +56,7 @@ class _ErrorPage extends StatelessWidget {
     return AgoraScaffold(
       child: Column(
         children: [
-          AgoraToolbar(pageLabel: ConsultationStrings.summaryTabResult),
+          AgoraToolbar(semanticPageLabel: ConsultationStrings.summaryTabResult),
           SizedBox(
             height: MediaQuery.of(context).size.height / 10 * 4,
           ),
@@ -74,7 +74,7 @@ class _LoadingPage extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            AgoraToolbar(pageLabel: ConsultationStrings.summaryTabResult),
+            AgoraToolbar(semanticPageLabel: ConsultationStrings.summaryTabResult),
             SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
             CircularProgressIndicator(),
           ],
@@ -96,7 +96,7 @@ class _SuccessPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
         children: [
-          AgoraToolbar(pageLabel: ConsultationStrings.consultationResultsPageTitle),
+          AgoraToolbar(semanticPageLabel: ConsultationStrings.consultationResultsPageTitle),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),

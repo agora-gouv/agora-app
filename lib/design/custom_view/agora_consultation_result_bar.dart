@@ -8,14 +8,13 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AgoraConsultationResultBar extends StatefulWidget {
-  final int ratio;
+  final int participantsPercentage;
   final String response;
   final double? minusPadding;
   final bool isUserResponse;
 
   AgoraConsultationResultBar({
-    super.key,
-    required this.ratio,
+    required this.participantsPercentage,
     required this.response,
     this.minusPadding,
     required this.isUserResponse,
@@ -44,70 +43,87 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
     if (widget.minusPadding != null) {
       totalWidth = totalWidth - widget.minusPadding!;
     }
-    final participantsPercentage = widget.ratio / 100;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Stack(
-          alignment: Alignment.centerLeft,
-          children: [
-            AgoraRoundedCard(
-              cardColor: AgoraColors.white,
-              borderColor: widget.isUserResponse ? AgoraColors.primaryBlue : AgoraColors.border,
-              borderWidth: widget.isUserResponse ? 2 : 1,
-              padding: EdgeInsets.zero,
-              child: SizedBox(
-                height: barHeight,
-                width: totalWidth,
-              ),
-            ),
-            AgoraRoundedCard(
-              cardColor: AgoraColors.primaryBlueOpacity10,
-              padding: EdgeInsets.zero,
-              child: SizedBox(
-                height: barHeight,
-                width: totalWidth * participantsPercentage,
-              ),
-            ),
-            Padding(
-              key: _barChildKey,
-              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base, vertical: AgoraSpacings.x0_5),
-              child: Row(
+    final participantsRatio = widget.participantsPercentage / 100;
+    return MergeSemantics(
+      child: Semantics(
+        label: getSemanticLabel(widget.response, widget.isUserResponse, widget.participantsPercentage),
+        child: ExcludeSemantics(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Stack(
+                alignment: Alignment.centerLeft,
                 children: [
-                  Text(ConsultationStrings.percentage.format(widget.ratio.toString()), style: AgoraTextStyles.medium14),
-                  SizedBox(width: AgoraSpacings.x0_5),
-                  Expanded(child: Text(widget.response, style: AgoraTextStyles.light14)),
+                  AgoraRoundedCard(
+                    cardColor: AgoraColors.white,
+                    borderColor: widget.isUserResponse ? AgoraColors.primaryBlue : AgoraColors.border,
+                    borderWidth: widget.isUserResponse ? 2 : 1,
+                    padding: EdgeInsets.zero,
+                    child: SizedBox(
+                      height: barHeight,
+                      width: totalWidth,
+                    ),
+                  ),
+                  AgoraRoundedCard(
+                    cardColor: AgoraColors.primaryBlueOpacity10,
+                    padding: EdgeInsets.zero,
+                    child: SizedBox(
+                      height: barHeight,
+                      width: totalWidth * participantsRatio,
+                    ),
+                  ),
+                  Padding(
+                    key: _barChildKey,
+                    padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base, vertical: AgoraSpacings.x0_5),
+                    child: Row(
+                      children: [
+                        Text(
+                          ConsultationStrings.percentage.format(widget.participantsPercentage.toString()),
+                          style: AgoraTextStyles.medium14,
+                        ),
+                        SizedBox(width: AgoraSpacings.x0_5),
+                        Expanded(child: Text(widget.response, style: AgoraTextStyles.light14)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
-        if (widget.isUserResponse)
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: AgoraSpacings.base),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AgoraColors.primaryBlue,
-                  borderRadius: BorderRadius.vertical(bottom: AgoraCorners.rounded),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: AgoraSpacings.x0_5,
-                    right: AgoraSpacings.x0_5,
-                    bottom: AgoraSpacings.x0_375,
+              if (widget.isUserResponse)
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: AgoraSpacings.base),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: AgoraColors.primaryBlue,
+                        borderRadius: BorderRadius.vertical(bottom: AgoraCorners.rounded),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: AgoraSpacings.x0_5,
+                          right: AgoraSpacings.x0_5,
+                          bottom: AgoraSpacings.x0_375,
+                        ),
+                        child: Text(
+                          'Votre réponse',
+                          style: AgoraTextStyles.userResponseBox,
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    'Votre réponse',
-                    style: AgoraTextStyles.userResponseBox,
-                  ),
                 ),
-              ),
-            ),
+            ],
           ),
-      ],
+        ),
+      ),
     );
   }
+}
+
+String getSemanticLabel(String response, bool isUserResponse, int participantsPercentage) {
+  if (isUserResponse) {
+    return "Vous avez répondu $response comme $participantsPercentage pourcents des répondants";
+  }
+  return "$participantsPercentage pourcents des répondants ont répondu $response";
 }

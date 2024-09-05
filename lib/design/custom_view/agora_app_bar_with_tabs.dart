@@ -58,7 +58,7 @@ class _AgoraAppBarWithTabsState extends State<AgoraAppBarWithTabs> {
             if (widget.needTopDiagonal) AgoraTopDiagonal(),
             if (widget.needToolbar)
               AgoraToolbar(
-                pageLabel: widget.pageLabel,
+                semanticPageLabel: widget.pageLabel,
                 key: _backBarChildKey,
                 onBackClick: widget.onToolbarBackClick,
                 // semantic focus is in line 101 => first tab get the semantic focus

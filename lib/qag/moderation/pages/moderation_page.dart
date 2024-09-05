@@ -50,7 +50,7 @@ class _ModerationPageState extends State<ModerationPage> {
           return false;
         },
         child: AgoraSecondaryStyleView(
-          pageLabel: ProfileStrings.moderationCapitalize,
+          semanticPageLabel: ProfileStrings.moderationCapitalize,
           onBackClick: () => _onBackClick(context),
           title: AgoraRichText(
             policeStyle: AgoraRichTextPoliceStyle.toolbar,
@@ -156,7 +156,7 @@ class _ModerationPageState extends State<ModerationPage> {
       qagsWidgets.add(
         AgoraRoundedButton(
           label: GenericStrings.displayMore,
-          style: AgoraRoundedButtonStyle.primaryButtonStyle,
+          style: AgoraRoundedButtonStyle.greyBorderButtonStyle,
           onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),
         ),
       );

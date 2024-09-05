@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
 import 'package:agora/thematique/domain/thematique.dart';
-import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -24,6 +24,7 @@ void main() {
           [
             {
               "id": "consultationId1",
+              "slug": "consultationId1",
               "title": "Développer le covoiturage",
               "imageUrl": "coverUrl1",
               "externalLink": "externalLink1",
@@ -52,6 +53,7 @@ void main() {
         [
           Concertation(
             id: "consultationId1",
+            slug: "consultationId1",
             title: "Développer le covoiturage",
             coverUrl: "coverUrl1",
             externalLink: "externalLink1",

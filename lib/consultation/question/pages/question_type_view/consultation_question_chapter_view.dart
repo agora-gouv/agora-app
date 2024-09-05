@@ -32,7 +32,8 @@ class ConsultationQuestionChapterView extends StatelessWidget {
         children: [
           AgoraToolbar(
             style: AgoraToolbarStyle.close,
-            pageLabel: 'Questionnaire consultation',
+            semanticPageLabel:
+                'Information : ${chapter.title.where((el) => !el.isEmoji).map((el) => el.text).join(" ")}',
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -47,7 +48,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.x0_75),
-                _Title(texte: chapter.title),
+                ExcludeSemantics(child: _Title(texte: chapter.title)),
                 SizedBox(height: AgoraSpacings.base),
                 AgoraHtml(data: chapter.description),
                 SizedBox(height: AgoraSpacings.x1_5),
@@ -89,7 +90,6 @@ class _Title extends StatelessWidget {
               (segment) => TextSpan(
                 text: segment.text,
                 style: AgoraTextStyles.medium19,
-                semanticsLabel: segment.isEmoji ? '' : segment.text,
               ),
             )
             .toList(),

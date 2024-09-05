@@ -40,7 +40,7 @@ class QagDetailsArguments {
   final bool isQuestionGagnante;
   final String? notificationTitle;
   final String? notificationDescription;
-  final QagReload? reload;
+  final QagReload reload;
 
   QagDetailsArguments({
     required this.qagId,
@@ -102,7 +102,7 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
       ],
       child: AgoraScaffold(
         popAction: () {
-          _popWithBackResult(context);
+          Navigator.pop(context, backResult);
           return false;
         },
         appBarType: AppBarColorType.primaryColor,
@@ -111,7 +111,18 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
             return Column(
               children: [
                 AgoraTopDiagonal(),
-                _buildState(context, detailsState),
+                _Content(
+                  detailsState,
+                  backResult,
+                  widget.arguments,
+                  (supportCount, isSupported) {
+                    backResult = QagDetailsBackResult(
+                      qagId: widget.arguments.qagId,
+                      supportCount: supportCount,
+                      isSupported: isSupported,
+                    );
+                  },
+                ),
               ],
             );
           },
@@ -119,157 +130,67 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
       ),
     );
   }
+}
 
-  Widget _buildState(BuildContext context, QagDetailsState detailsState) {
-    if (detailsState is QagDetailsFetchedState) {
-      return _buildContent(context, detailsState.viewModel);
-    } else if (detailsState is QagDetailsInitialLoadingState) {
-      return Column(
-        children: [
-          AgoraToolbar(pageLabel: 'Détail question citoyenne'),
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-          Center(child: CircularProgressIndicator()),
-        ],
-      );
-    } else if (detailsState is QagDetailsModerateErrorState) {
-      return QagsModeratedErrorContent();
-    } else {
-      return Column(
-        children: [
-          AgoraToolbar(pageLabel: 'Détail question citoyenne'),
-          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-          Center(child: AgoraErrorText()),
-        ],
-      );
-    }
+class _Content extends StatelessWidget {
+  final QagDetailsState detailsState;
+  final QagDetailsBackResult? backResult;
+  final QagDetailsArguments arguments;
+  final void Function(int, bool) onSupportChange;
+
+  final feedbackKey = GlobalKey();
+
+  _Content(this.detailsState, this.backResult, this.arguments, this.onSupportChange);
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (detailsState) {
+      QagDetailsInitialLoadingState _ => _Loading(),
+      QagDetailsModerateErrorState _ => QagsModeratedErrorContent(),
+      QagDetailsErrorState _ => _Error(),
+      final QagDetailsFetchedState successState =>
+        _Success(successState.viewModel, backResult, arguments, feedbackKey, onSupportChange)
+    };
   }
+}
 
-  Widget _buildContent(BuildContext context, QagDetailsViewModel viewModel) {
-    final support = viewModel.support;
-    final response = viewModel.response;
-    final textResponse = viewModel.textResponse;
-    final scrollController = ScrollController();
+class _Success extends StatelessWidget {
+  final QagDetailsViewModel viewModel;
+  final QagDetailsBackResult? backResult;
+  final QagDetailsArguments arguments;
+  final GlobalKey feedbackKey;
+  final void Function(int, bool) onSupportChange;
+
+  const _Success(this.viewModel, this.backResult, this.arguments, this.feedbackKey, this.onSupportChange);
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: Column(
         children: [
-          viewModel.canShare
-              ? Row(
-                  children: [
-                    Expanded(child: _buildAgoraToolbarWithPopAction(context)),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-                      child: AgoraButton(
-                        prefixIcon: "ic_share.svg",
-                        label: GenericStrings.share,
-                        semanticLabel: "Partager la question",
-                        buttonStyle: AgoraButtonStyle.lightGrey,
-                        onPressed: () {
-                          TrackerHelper.trackClick(
-                            clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
-                            widgetName: AnalyticsScreenNames.qagDetailsPage,
-                          );
-                          if (response == null && textResponse == null) {
-                            ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
-                          } else {
-                            ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(width: AgoraSpacings.horizontalPadding),
-                  ],
-                )
-              : _buildAgoraToolbarWithPopAction(context),
+          _Header(viewModel, backResult),
           Expanded(
             child: CustomScrollView(
-              controller: scrollController,
               slivers: [
-                _buildSliverContainer(
-                  horizontalPadding: AgoraSpacings.base,
-                  bottomSpacing: AgoraSpacings.x0_5,
-                  child: ThematiqueHelper.buildCard(context, viewModel.thematique),
+                _TitleSliver(
+                  viewModel: viewModel,
+                  isQuestionGagnante: arguments.isQuestionGagnante,
                 ),
-                _buildSliverContainer(
-                  horizontalPadding: AgoraSpacings.base,
-                  bottomSpacing: AgoraSpacings.base,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Semantics(
-                          header: true,
-                          child: Text(viewModel.title, style: AgoraTextStyles.medium18),
-                        ),
-                      ),
-                      if ((response != null || textResponse != null) && support.count != 0) ...[
-                        Padding(
-                          padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
-                          child: AgoraLikeView(
-                            isSupported: support.isSupported,
-                            supportCount: support.count,
-                            shouldVocaliseSupport: false,
-                            isQuestionGagnante: widget.arguments.isQuestionGagnante,
-                            style: AgoraLikeStyle.police16,
-                          ),
-                        ),
-                      ],
-                    ],
+                _DescriptionSliver(
+                  viewModel: viewModel,
+                  isQuestionGagnante: arguments.isQuestionGagnante,
+                  reload: arguments.reload,
+                  onSupportChange: onSupportChange,
+                ),
+                if (viewModel.response != null)
+                  SliverToBoxAdapter(
+                    child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                   ),
-                ),
-                _buildSliverContainer(
-                  horizontalPadding: AgoraSpacings.base,
-                  bottomSpacing: AgoraSpacings.base,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (response == null && textResponse == null) ...[
-                        Text(viewModel.description, style: AgoraTextStyles.light14),
-                        SizedBox(height: AgoraSpacings.base),
-                        Text(
-                          StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
-                          style: AgoraTextStyles.medium14,
-                        ),
-                        SizedBox(height: AgoraSpacings.x3),
-                        QagDetailsSupportView(
-                          qagId: viewModel.id,
-                          canSupport: viewModel.canSupport,
-                          isQuestionGagnante: widget.arguments.isQuestionGagnante,
-                          supportViewModel: support,
-                          onSupportChange: (supportCount, isSupported) {
-                            backResult = QagDetailsBackResult(
-                              qagId: viewModel.id,
-                              supportCount: supportCount,
-                              isSupported: isSupported,
-                            );
-                          },
-                        ),
-                        if (viewModel.canDelete) _buildDeleteQag(context, viewModel.id),
-                      ] else
-                        AgoraReadMoreText(viewModel.description, trimLines: 3),
-                    ],
+                if (viewModel.textResponse != null)
+                  SliverToBoxAdapter(
+                    child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                   ),
-                ),
-                response != null
-                    ? _buildSliverContainer(
-                        child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                      )
-                    : SliverToBoxAdapter(),
-                textResponse != null
-                    ? _buildSliverContainer(
-                        child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                      )
-                    : SliverToBoxAdapter(),
-                _buildSliverContainer(
-                  child: QagDetailsFeedbackWidget(
-                    onFeedbackSent: () {
-                      scrollController.animateTo(
-                        MediaQuery.of(context).size.width,
-                        duration: Duration(milliseconds: 200),
-                        curve: Curves.fastOutSlowIn,
-                      );
-                    },
-                  ),
-                ),
+                _FeedbackSliver(feedbackKey: feedbackKey),
               ],
             ),
           ),
@@ -277,19 +198,208 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
       ),
     );
   }
+}
 
-  Widget _buildSliverContainer({
-    double horizontalPadding = 0,
-    double bottomSpacing = 0,
-    required Widget child,
-  }) {
-    return SliverPadding(
-      padding: EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, bottom: bottomSpacing),
-      sliver: SliverToBoxAdapter(child: child),
+class _Header extends StatelessWidget {
+  final QagDetailsViewModel viewModel;
+  final QagDetailsBackResult? backResult;
+
+  const _Header(this.viewModel, this.backResult);
+
+  @override
+  Widget build(BuildContext context) {
+    return viewModel.canShare
+        ? Row(
+            children: [
+              Expanded(
+                child: AgoraToolbar(
+                  onBackClick: () => Navigator.pop(context, backResult),
+                  semanticPageLabel: 'Détail de la question citoyenne ${viewModel.title}',
+                ),
+              ),
+              _ShareButton(viewModel),
+              SizedBox(width: AgoraSpacings.horizontalPadding),
+            ],
+          )
+        : AgoraToolbar(
+            onBackClick: () => Navigator.pop(context, backResult),
+            semanticPageLabel: 'Détail question citoyenne',
+          );
+  }
+}
+
+class _ShareButton extends StatelessWidget {
+  final QagDetailsViewModel viewModel;
+
+  const _ShareButton(this.viewModel);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+      child: AgoraButton(
+        prefixIcon: "ic_share.svg",
+        label: GenericStrings.share,
+        semanticLabel: "Partager la question",
+        buttonStyle: AgoraButtonStyle.lightGrey,
+        onPressed: () {
+          TrackerHelper.trackClick(
+            clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
+            widgetName: AnalyticsScreenNames.qagDetailsPage,
+          );
+          if (viewModel.response == null && viewModel.textResponse == null) {
+            ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
+          } else {
+            ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
+          }
+        },
+      ),
     );
   }
+}
 
-  Column _buildDeleteQag(BuildContext context, String id) {
+class _TitleSliver extends StatelessWidget {
+  final QagDetailsViewModel viewModel;
+  final bool isQuestionGagnante;
+
+  const _TitleSliver({
+    required this.viewModel,
+    required this.isQuestionGagnante,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: EdgeInsets.only(
+        left: AgoraSpacings.base,
+        right: AgoraSpacings.base,
+        bottom: AgoraSpacings.base,
+      ),
+      sliver: SliverToBoxAdapter(
+        child: MergeSemantics(
+          child: Semantics(
+            header: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: AgoraSpacings.x0_5),
+                ThematiqueHelper.buildCard(context, viewModel.thematique),
+                SizedBox(height: AgoraSpacings.x0_5),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
+                    if ((viewModel.response != null || viewModel.textResponse != null) &&
+                        viewModel.support.count != 0) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
+                        child: AgoraLikeView(
+                          isSupported: viewModel.support.isSupported,
+                          supportCount: viewModel.support.count,
+                          shouldVocaliseSupport: false,
+                          isQuestionGagnante: isQuestionGagnante,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DescriptionSliver extends StatelessWidget {
+  final QagDetailsViewModel viewModel;
+  final bool isQuestionGagnante;
+  final QagReload reload;
+  final void Function(int, bool) onSupportChange;
+
+  const _DescriptionSliver({
+    required this.viewModel,
+    required this.isQuestionGagnante,
+    required this.reload,
+    required this.onSupportChange,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: EdgeInsets.only(
+        left: AgoraSpacings.base,
+        right: AgoraSpacings.base,
+        bottom: AgoraSpacings.base,
+      ),
+      sliver: SliverToBoxAdapter(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (viewModel.response == null && viewModel.textResponse == null) ...[
+              Text(viewModel.description, style: AgoraTextStyles.light14),
+              SizedBox(height: AgoraSpacings.base),
+              Row(
+                children: [
+                  Text(
+                    StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
+                    style: AgoraTextStyles.medium14,
+                  ),
+                  Spacer(),
+                  QagDetailsSupportView(
+                    qagId: viewModel.id,
+                    canSupport: viewModel.canSupport,
+                    isQuestionGagnante: isQuestionGagnante,
+                    supportViewModel: viewModel.support,
+                    onSupportChange: onSupportChange,
+                  ),
+                ],
+              ),
+              if (viewModel.canDelete) _DeleteQaG(viewModel.id, reload),
+            ] else
+              AgoraReadMoreText(
+                data: viewModel.description,
+                isTalkbackEnabled: MediaQuery.accessibleNavigationOf(context),
+                trimLines: 3,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FeedbackSliver extends StatelessWidget {
+  final GlobalKey feedbackKey;
+
+  const _FeedbackSliver({required this.feedbackKey});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: QagDetailsFeedbackWidget(
+        key: feedbackKey,
+        onFeedbackSent: () {
+          Scrollable.ensureVisible(
+            feedbackKey.currentContext!,
+            duration: Duration(milliseconds: 200),
+            curve: Curves.fastOutSlowIn,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _DeleteQaG extends StatelessWidget {
+  final String qagId;
+  final QagReload reload;
+
+  const _DeleteQaG(this.qagId, this.reload);
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -307,19 +417,42 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
             context,
             QagDetailsDeleteConfirmationPage.routeName,
             arguments: QagDetailsDeleteConfirmationArguments(
-              qagId: id,
-              reload: widget.arguments.reload!,
+              qagId: qagId,
+              reload: reload,
             ),
           ),
         ),
       ],
     );
   }
+}
 
-  AgoraToolbar _buildAgoraToolbarWithPopAction(BuildContext context) =>
-      AgoraToolbar(onBackClick: () => _popWithBackResult(context), pageLabel: 'Détail question citoyenne');
+class _Error extends StatelessWidget {
+  const _Error();
 
-  void _popWithBackResult(BuildContext context) {
-    Navigator.pop(context, backResult);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AgoraToolbar(semanticPageLabel: 'Détail question citoyenne'),
+        SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+        Center(child: AgoraErrorText()),
+      ],
+    );
+  }
+}
+
+class _Loading extends StatelessWidget {
+  const _Loading();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AgoraToolbar(semanticPageLabel: ""),
+        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+        Center(child: CircularProgressIndicator()),
+      ],
+    );
   }
 }

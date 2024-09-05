@@ -43,11 +43,7 @@ class AgoraCheckbox extends StatelessWidget {
                     side: BorderSide(width: 2, color: AgoraColors.primaryBlue),
                     fillColor: WidgetStateProperty.all(value ? AgoraColors.primaryBlue : AgoraColors.transparent),
                     value: value,
-                    onChanged: (newValue) {
-                      if (newValue != null) {
-                        onChanged(newValue);
-                      }
-                    },
+                    onChanged: null,
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.x0_5),

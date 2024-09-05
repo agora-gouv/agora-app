@@ -1,13 +1,13 @@
+import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_bloc.dart';
 import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_event.dart';
 import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_state.dart';
 import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_bloc.dart';
-import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
-import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/profil/demographic/pages/demographic_profil_page.dart';
 import 'package:agora/profil/pages/profil_page.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,8 @@ class DemographicConfirmationPage extends StatelessWidget {
                   context,
                   DynamicConsultationPage.routeName,
                   arguments: DynamicConsultationPageArguments(
-                    consultationId: consultationId!,
+                    consultationIdOrSlug: consultationId!,
+                    consultationTitle: consultationTitle!,
                     shouldLaunchCongratulationAnimation: true,
                   ),
                 ).then((value) => Navigator.of(context).pop());
@@ -75,7 +76,7 @@ class DemographicConfirmationPage extends StatelessWidget {
             if (state is SendDemographicResponsesFailureState) {
               return Column(
                 children: [
-                  AgoraToolbar(pageLabel: 'Échec de l\'envoi des informations démographiques'),
+                  AgoraToolbar(semanticPageLabel: 'Échec de l\'envoi des informations démographiques'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: AgoraErrorText()),
                 ],
@@ -83,7 +84,7 @@ class DemographicConfirmationPage extends StatelessWidget {
             } else {
               return Column(
                 children: [
-                  AgoraToolbar(pageLabel: 'Envoi en cours'),
+                  AgoraToolbar(semanticPageLabel: 'Envoi en cours'),
                   SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
                   Center(child: CircularProgressIndicator()),
                 ],

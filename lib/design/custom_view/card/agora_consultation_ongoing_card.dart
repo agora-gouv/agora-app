@@ -1,6 +1,3 @@
-import 'package:agora/consultation/bloc/consultation_bloc.dart';
-import 'package:agora/consultation/bloc/consultation_event.dart';
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
@@ -9,15 +6,18 @@ import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/consultation/bloc/consultation_bloc.dart';
+import 'package:agora/consultation/bloc/consultation_event.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/custom_view/card/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,26 +25,32 @@ enum AgoraConsultationOngoingCardStyle { column, gridLeft, gridRight }
 
 class AgoraConsultationOngoingCard extends StatelessWidget {
   final String consultationId;
+  final String consultationSlug;
   final String imageUrl;
   final ThematiqueViewModel thematique;
   final String title;
   final String endDate;
   final String? highlightLabel;
   final AgoraConsultationOngoingCardStyle style;
+  final String semanticTooltip;
 
   AgoraConsultationOngoingCard({
+    super.key,
     required this.consultationId,
+    required this.consultationSlug,
     required this.imageUrl,
     required this.thematique,
     required this.title,
     required this.endDate,
     required this.highlightLabel,
     required this.style,
+    required this.semanticTooltip,
   });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      tooltip: semanticTooltip,
       button: true,
       label: 'Participer à la consultation',
       child: Stack(
@@ -152,7 +158,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                       clickName: "${AnalyticsEventNames.shareConsultation} $consultationId",
                       widgetName: AnalyticsScreenNames.consultationsPage,
                     );
-                    ShareHelper.shareConsultation(context: context, title: title, id: consultationId);
+                    ShareHelper.shareConsultation(context: context, title: title, slug: consultationSlug);
                   },
                 ),
               ],
@@ -189,7 +195,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     Navigator.pushNamed(
       context,
       DynamicConsultationPage.routeName,
-      arguments: DynamicConsultationPageArguments(consultationId: consultationId),
+      arguments: DynamicConsultationPageArguments(consultationIdOrSlug: consultationId, consultationTitle: title),
     ).then((value) => context.read<ConsultationBloc>().add(FetchConsultationsEvent()));
   }
 }

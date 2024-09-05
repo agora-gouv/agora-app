@@ -84,7 +84,7 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
                     child: _buildItemWidget(onTapIndex, item),
                   ),
                 );
@@ -108,13 +108,13 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
   Widget _buildItemWidget(int selectedIndex, AgoraBottomNavigationBarItem item) {
     return Semantics(
       selected: selectedIndex == _currentSelectedIndex,
-      label: 'Onglet ${selectedIndex + 1} sur 3',
+      label: 'Onglet ${selectedIndex + 1} sur ${_items.length}',
       button: true,
       child: SizedBox(
         width: _width / _items.length,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             _setIcon(selectedIndex, item),
             _setLabel(selectedIndex, item),
             if (!kIsWeb && Platform.isIOS) const SizedBox(height: AgoraSpacings.x0_75),
@@ -135,8 +135,8 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
       item.label,
       textAlign: TextAlign.center,
       style: selectedIndex == _currentSelectedIndex
-          ? AgoraTextStyles.medium13.copyWith(color: _activeLabelColor)
-          : AgoraTextStyles.medium13.copyWith(color: _inactiveLabelColor),
+          ? AgoraTextStyles.medium12.copyWith(color: _activeLabelColor)
+          : AgoraTextStyles.light12.copyWith(color: _inactiveLabelColor),
     );
   }
 }

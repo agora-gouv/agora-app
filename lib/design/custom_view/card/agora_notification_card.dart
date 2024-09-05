@@ -32,7 +32,7 @@ class AgoraNotificationCard extends StatelessWidget {
             text: TextSpan(
               style: AgoraTextStyles.medium13.copyWith(color: AgoraColors.primaryGrey),
               children: [
-                TextSpan(text: ProfileStrings.inType),
+                if (type != "Réponse du support") TextSpan(text: ProfileStrings.inType),
                 TextSpan(text: type, style: AgoraTextStyles.medium13.copyWith(color: AgoraColors.primaryBlue)),
                 TextSpan(text: ProfileStrings.byDate),
                 TextSpan(text: date, style: AgoraTextStyles.medium13.copyWith(color: AgoraColors.primaryBlue)),

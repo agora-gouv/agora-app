@@ -114,7 +114,7 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
         children: [
           AgoraToolbar(
             style: AgoraToolbarStyle.close,
-            pageLabel: 'Questionnaire consultation',
+            semanticPageLabel: 'Questionnaire consultation',
           ),
           SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
           Center(child: child),

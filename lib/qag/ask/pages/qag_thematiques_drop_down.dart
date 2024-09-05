@@ -1,10 +1,11 @@
-import 'package:agora/thematique/bloc/thematique_with_id_view_model.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/thematique/bloc/thematique_with_id_view_model.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 class QagThematiquesDropDown<T> extends StatefulWidget {
@@ -54,7 +55,7 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
           });
         },
         itemHeight: null,
-        items: widget.elements.map<DropdownMenuItem<T>>((T value) {
+        items: widget.elements.mapIndexed<DropdownMenuItem<T>>((index, T value) {
           final thematique = value as ThematiqueWithIdViewModel;
           return DropdownMenuItem<T>(
             value: value,
