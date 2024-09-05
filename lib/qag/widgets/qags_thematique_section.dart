@@ -1,4 +1,5 @@
 import 'package:agora/common/helper/thematique_helper.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -33,19 +34,8 @@ class QagsThematiqueSection extends StatelessWidget {
                 color: AgoraColors.doctor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_75),
-                  child: Focus(
-                    autofocus: true,
-                    canRequestFocus: false,
-                    onFocusChange: (requestFocus) {
-                      if (requestFocus) {
-                        Scrollable.ensureVisible(
-                          firstThematiqueKey.currentContext!,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeInOut,
-                          alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
-                        );
-                      }
-                    },
+                  child: AgoraFocusHelper(
+                    elementKey: firstThematiqueKey,
                     child: ThematiqueHelper.buildThematiques(
                       thematiques: state.thematiqueViewModels,
                       selectedThematiqueId: currentThematiqueId,

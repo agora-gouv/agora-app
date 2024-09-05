@@ -173,7 +173,6 @@ class _QagsSectionState extends State<QagsSection> {
                         height: 48,
                         width: MediaQuery.of(context).size.width * 0.95,
                         textController: textController,
-                        boxShadow: false,
                         textFieldColor: AgoraColors.doctor,
                         color: AgoraColors.transparent,
                         onClose: () {
@@ -190,6 +189,7 @@ class _QagsSectionState extends State<QagsSection> {
                         onClearText: () {},
                         onSubmitted: (String e) {},
                         autoFocus: true,
+                        isSearchBarDisplayed: isActiveSearchBar,
                         searchBarOpen: (bool isSearchOpen) => {
                           setState(() {
                             isActiveSearchBar = isSearchOpen;
@@ -211,7 +211,7 @@ class _QagsSectionState extends State<QagsSection> {
                                   button: true,
                                   selected: currentSelected == QagTab.trending,
                                   tooltip: 'Élément 1 sur 4',
-                                  child: _buildTabButton(
+                                  child: _TabButton(
                                     label: QagStrings.trending,
                                     isSelected: currentSelected == QagTab.trending,
                                     onTap: () {
@@ -241,7 +241,7 @@ class _QagsSectionState extends State<QagsSection> {
                                   button: true,
                                   selected: currentSelected == QagTab.top,
                                   tooltip: 'Élément 2 sur 4',
-                                  child: _buildTabButton(
+                                  child: _TabButton(
                                     label: QagStrings.popular,
                                     isSelected: currentSelected == QagTab.top,
                                     onTap: () {
@@ -271,7 +271,7 @@ class _QagsSectionState extends State<QagsSection> {
                                   button: true,
                                   selected: currentSelected == QagTab.latest,
                                   tooltip: 'Élément 3 sur 4',
-                                  child: _buildTabButton(
+                                  child: _TabButton(
                                     label: QagStrings.latest,
                                     isSelected: currentSelected == QagTab.latest,
                                     onTap: () {
@@ -301,7 +301,7 @@ class _QagsSectionState extends State<QagsSection> {
                                   button: true,
                                   selected: currentSelected == QagTab.supporting,
                                   tooltip: 'Élément 4 sur 4',
-                                  child: _buildTabButton(
+                                  child: _TabButton(
                                     label: QagStrings.supporting,
                                     isSelected: currentSelected == QagTab.supporting,
                                     onTap: () {
@@ -341,12 +341,17 @@ class _QagsSectionState extends State<QagsSection> {
       ),
     );
   }
+}
 
-  Widget _buildTabButton({
-    required String label,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
+class _TabButton extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final void Function() onTap;
+
+  const _TabButton({required this.label, required this.isSelected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onTap(),
       child: Column(

@@ -5,6 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
 import 'package:agora/design/custom_view/card/agora_consultation_ongoing_card.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
@@ -17,16 +18,21 @@ class ConsultationsOngoingSection extends StatelessWidget {
   final List<ConsultationOngoingViewModel> ongoingViewModels;
   final bool answeredSectionEmpty;
 
-  const ConsultationsOngoingSection({
+  ConsultationsOngoingSection({
     required this.ongoingViewModels,
     required this.answeredSectionEmpty,
   });
 
+  final firstFocusableElementKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _buildOngoingConsultations(context),
+    return AgoraFocusHelper(
+      elementKey: firstFocusableElementKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: _buildOngoingConsultations(context),
+      ),
     );
   }
 
@@ -110,6 +116,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: AgoraConsultationOngoingCard(
+                    key: index == 0 ? firstFocusableElementKey : null,
                     semanticTooltip: "Élément $index sur ${ongoingViewModels.length}",
                     consultationId: ongoingViewModel1.id,
                     consultationSlug: ongoingViewModel1.slug,
@@ -146,6 +153,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
       for (var index = 0; index < ongoingViewModels.length; index++) {
         ongoingConsultationsWidgets.add(
           AgoraConsultationOngoingCard(
+            key: index == 0 ? firstFocusableElementKey : null,
             semanticTooltip: "Élément ${index + 1} sur ${ongoingViewModels.length}",
             consultationId: ongoingViewModels[index].id,
             consultationSlug: ongoingViewModels[index].slug,

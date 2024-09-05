@@ -6,6 +6,7 @@ import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
@@ -89,19 +90,8 @@ class _QagsPageState extends State<QagsPage> {
                         ],
                       ),
                       Spacer(),
-                      Focus(
-                        autofocus: true,
-                        canRequestFocus: false,
-                        onFocusChange: (requestFocus) {
-                          if (requestFocus) {
-                            Scrollable.ensureVisible(
-                              firstFocusableElementKey.currentContext!,
-                              duration: const Duration(milliseconds: 200),
-                              curve: Curves.easeInOut,
-                              alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtStart,
-                            );
-                          }
-                        },
+                      AgoraFocusHelper(
+                        elementKey: firstFocusableElementKey,
                         child: _InfoBouton(focusKey: firstFocusableElementKey),
                       ),
                     ],
