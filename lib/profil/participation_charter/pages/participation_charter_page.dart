@@ -1,7 +1,6 @@
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/common/strings/participate_charter_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
