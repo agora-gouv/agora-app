@@ -25,7 +25,7 @@ class DemographicHelper {
 
   static Widget buildBackButton({required int step, required VoidCallback onBackTap}) {
     if (step != 1) {
-      return AgoraButton(
+      return AgoraButton.withLabel(
         label: DemographicStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
         buttonStyle: AgoraButtonStyle.secondary,
@@ -37,7 +37,7 @@ class DemographicHelper {
   }
 
   static Widget buildNextButton({required int step, required int totalStep, required VoidCallback onPressed}) {
-    return AgoraButton(
+    return AgoraButton.withLabel(
       label: step == totalStep ? DemographicStrings.send : DemographicStrings.nextQuestion,
       semanticLabel: step == totalStep ? DemographicStrings.send : SemanticsStrings.nextQuestion,
       buttonStyle: AgoraButtonStyle.primary,
@@ -46,7 +46,7 @@ class DemographicHelper {
   }
 
   static Widget buildIgnoreButton({required VoidCallback onPressed}) {
-    return AgoraButton(
+    return AgoraButton.withLabel(
       label: DemographicStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
       buttonStyle: AgoraButtonStyle.secondary,

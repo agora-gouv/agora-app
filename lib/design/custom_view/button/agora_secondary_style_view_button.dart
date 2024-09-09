@@ -60,7 +60,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                   ),
                   if (button != null) ...[
                     SizedBox(width: AgoraSpacings.x0_75),
-                    AgoraButton(
+                    AgoraButton.withLabel(
                       prefixIcon: button!.icon,
                       label: button!.title,
                       semanticLabel: button!.accessibilityLabel,

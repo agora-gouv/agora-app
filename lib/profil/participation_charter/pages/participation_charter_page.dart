@@ -89,7 +89,7 @@ class _Buttons extends StatelessWidget {
     return Row(
       children: [
         Flexible(
-          child: AgoraButton(
+          child: AgoraButton.withLabel(
             label: GenericStrings.readCompleteCharter,
             buttonStyle: AgoraButtonStyle.secondary,
             onPressed: () {
@@ -100,7 +100,7 @@ class _Buttons extends StatelessWidget {
           ),
         ),
         SizedBox(width: AgoraSpacings.base),
-        AgoraButton(
+        AgoraButton.withLabel(
           label: GenericStrings.back,
           buttonStyle: AgoraButtonStyle.primary,
           onPressed: () {

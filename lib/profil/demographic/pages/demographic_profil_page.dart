@@ -139,7 +139,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
                 _modificationError(context);
               }
             },
-            child: AgoraButton(
+            child: AgoraButton.withLabel(
               label: DemographicStrings.suppressMyInformation,
               buttonStyle: AgoraButtonStyle.redBorder,
               onPressed: () {
@@ -152,7 +152,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: AgoraButton(
+                          child: AgoraButton.withLabel(
                             label: GenericStrings.yes,
                             buttonStyle: AgoraButtonStyle.primary,
                             onPressed: () {
@@ -165,7 +165,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
                         ),
                         SizedBox(width: AgoraSpacings.x1_5),
                         Expanded(
-                          child: AgoraButton(
+                          child: AgoraButton.withLabel(
                             label: GenericStrings.no,
                             buttonStyle: AgoraButtonStyle.secondary,
                             onPressed: () => Navigator.pop(context),
@@ -202,7 +202,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
       columnChildren: [
         Text(GenericStrings.errorMessage, style: AgoraTextStyles.medium16),
         SizedBox(height: AgoraSpacings.x0_75),
-        AgoraButton(
+        AgoraButton.withLabel(
           label: GenericStrings.close,
           buttonStyle: AgoraButtonStyle.primary,
           onPressed: () => Navigator.pop(context),
@@ -217,7 +217,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
       columnChildren: [
         Text(GenericStrings.modificationSuccess, style: AgoraTextStyles.medium16),
         SizedBox(height: AgoraSpacings.x0_75),
-        AgoraButton(
+        AgoraButton.withLabel(
           label: GenericStrings.close,
           buttonStyle: AgoraButtonStyle.primary,
           onPressed: () => Navigator.pop(context),

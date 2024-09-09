@@ -129,10 +129,8 @@ class _Content extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AgoraButton(
-                label: '',
+              AgoraButton.withChildren(
                 semanticLabel: GenericStrings.share,
-                icon: Icon(Icons.ios_share, color: AgoraColors.primaryBlue),
                 buttonStyle: AgoraButtonStyle.secondary,
                 onPressed: () {
                   TrackerHelper.trackClick(
@@ -141,6 +139,7 @@ class _Content extends StatelessWidget {
                   );
                   ShareHelper.shareQag(context: context, title: titre, id: id);
                 },
+                children: [Icon(Icons.ios_share, color: AgoraColors.primaryBlue)],
               ),
               AgoraLikeView(
                 isSupported: isSupported,

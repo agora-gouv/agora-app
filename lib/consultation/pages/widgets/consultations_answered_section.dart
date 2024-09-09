@@ -51,7 +51,7 @@ class ConsultationsAnsweredSection extends StatelessWidget {
           ),
           if (answeredViewModels.isNotEmpty) ...[
             SizedBox(width: AgoraSpacings.x0_75),
-            AgoraButton(
+            AgoraButton.withLabel(
               label: GenericStrings.all,
               semanticLabel: "voir toutes les consultations répondues",
               buttonStyle: AgoraButtonStyle.tertiary,

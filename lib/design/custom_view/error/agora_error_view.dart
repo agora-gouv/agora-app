@@ -24,7 +24,7 @@ class AgoraErrorView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AgoraButton(
+            AgoraButton.withLabel(
               label: GenericStrings.retry,
               buttonStyle: AgoraButtonStyle.tertiary,
               onPressed: () => onReload?.call(),

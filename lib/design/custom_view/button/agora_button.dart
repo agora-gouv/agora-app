@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraButton extends StatelessWidget {
   final bool isLoading;
-  final String label;
+  final String? label;
   final String? semanticLabel;
   final String? prefixIcon;
   final ColorFilter? prefixIconColorFilter;
@@ -16,13 +16,14 @@ class AgoraButton extends StatelessWidget {
   final AgoraButtonStyle buttonStyle;
   final bool expanded;
   final bool isDisabled;
-  final Widget? icon;
+  final List<Widget> children;
   final void Function()? onPressed;
 
-  AgoraButton({
+  AgoraButton.withLabel({
     super.key,
     this.isLoading = false,
     required this.label,
+    this.children = const [],
     this.semanticLabel,
     this.prefixIcon,
     this.prefixIconColorFilter,
@@ -31,9 +32,24 @@ class AgoraButton extends StatelessWidget {
     this.buttonStyle = AgoraButtonStyle.primary,
     this.expanded = false,
     this.isDisabled = false,
-    this.icon,
     required this.onPressed,
-  });
+  }) : assert(label != null);
+
+  AgoraButton.withChildren({
+    super.key,
+    this.isLoading = false,
+    this.label,
+    required this.children,
+    this.semanticLabel,
+    this.prefixIcon,
+    this.prefixIconColorFilter,
+    this.suffixIcon,
+    this.suffixIconColorFilter,
+    this.buttonStyle = AgoraButtonStyle.primary,
+    this.expanded = false,
+    this.isDisabled = false,
+    required this.onPressed,
+  }) : assert(children.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
@@ -59,30 +75,14 @@ class AgoraButton extends StatelessWidget {
               ),
               child: Ink(
                 padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    if (icon != null) icon!,
-                    if (prefixIcon != null) ...[
-                      SvgPicture.asset(
-                        "assets/${prefixIcon!}",
-                        excludeFromSemantics: true,
-                        colorFilter: prefixIconColorFilter,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
-                    if (suffixIcon != null) ...[
-                      const SizedBox(width: 8),
-                      SvgPicture.asset(
-                        "assets/${suffixIcon!}",
-                        excludeFromSemantics: true,
-                        colorFilter: suffixIconColorFilter,
-                      ),
-                    ],
-                  ],
+                child: _Content(
+                  label: label,
+                  prefixIcon: prefixIcon,
+                  prefixIconColorFilter: prefixIconColorFilter,
+                  suffixIcon: suffixIcon,
+                  suffixIconColorFilter: suffixIconColorFilter,
+                  buttonStyle: buttonStyle,
+                  children: children,
                 ),
               ),
             ),
@@ -145,4 +145,61 @@ enum AgoraButtonStyle {
   secondary,
   tertiary,
   redBorder,
+}
+
+class _Content extends StatelessWidget {
+  final String? label;
+  final String? prefixIcon;
+  final ColorFilter? prefixIconColorFilter;
+  final String? suffixIcon;
+  final ColorFilter? suffixIconColorFilter;
+  final AgoraButtonStyle buttonStyle;
+  final List<Widget> children;
+
+  const _Content({
+    required this.label,
+    required this.prefixIcon,
+    required this.prefixIconColorFilter,
+    required this.suffixIcon,
+    required this.suffixIconColorFilter,
+    required this.buttonStyle,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (children.isNotEmpty) {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        runAlignment: WrapAlignment.center,
+        alignment: WrapAlignment.center,
+        children: [if (children.isNotEmpty) ...children],
+      );
+    } else {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        runAlignment: WrapAlignment.center,
+        alignment: WrapAlignment.center,
+        children: [
+          if (prefixIcon != null) ...[
+            SvgPicture.asset(
+              "assets/${prefixIcon!}",
+              excludeFromSemantics: true,
+              colorFilter: prefixIconColorFilter,
+            ),
+            const SizedBox(width: 8),
+          ],
+          Text(label!, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
+          if (suffixIcon != null) ...[
+            const SizedBox(width: 8),
+            SvgPicture.asset(
+              "assets/${suffixIcon!}",
+              excludeFromSemantics: true,
+              colorFilter: suffixIconColorFilter,
+            ),
+          ],
+        ],
+      );
+    }
+  }
 }

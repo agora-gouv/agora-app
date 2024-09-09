@@ -183,7 +183,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
     } else {
       if (state.currentPageNumber < state.maxPage) {
         widgets.add(
-          AgoraButton(
+          AgoraButton.withLabel(
             label: GenericStrings.displayMore,
             buttonStyle: AgoraButtonStyle.tertiary,
             onPressed: () => context.read<ConsultationPaginatedBloc>().add(

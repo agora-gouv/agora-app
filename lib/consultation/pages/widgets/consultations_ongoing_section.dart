@@ -83,7 +83,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: AgoraSpacings.base),
-                AgoraButton(
+                AgoraButton.withLabel(
                   label: ConsultationStrings.gotoQags,
                   buttonStyle: AgoraButtonStyle.tertiary,
                   onPressed: () {

@@ -14,7 +14,6 @@ class AnimSearchBar extends StatefulWidget {
   final int animationDurationInMilli;
   final Function() onClose;
   final bool autoFocus;
-  final bool autoOpen;
   final TextStyle? style;
   final bool closeSearchOnSuffixTap;
   final Color? color;
@@ -45,7 +44,6 @@ class AnimSearchBar extends StatefulWidget {
     this.animationDurationInMilli = 375,
     required this.onSubmitted,
     this.autoFocus = false,
-    this.autoOpen = false,
     this.style,
     this.closeSearchOnSuffixTap = false,
     this.isSearchBarDisplayed = false,
@@ -79,12 +77,6 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
       /// animationDurationInMilli is optional, the default value is 375
       duration: Duration(milliseconds: widget.animationDurationInMilli),
     );
-
-    if (widget.autoOpen) {
-      setState(() {
-        toggle = 1;
-      });
-    }
   }
 
   void unFocusKeyboard() {

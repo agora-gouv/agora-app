@@ -120,7 +120,7 @@ class _QagListViewState extends State<_QagListView> {
                     return Center(child: CircularProgressIndicator());
                   case QagListFooterType.loaded:
                     return Center(
-                      child: AgoraButton(
+                      child: AgoraButton.withLabel(
                         label: GenericStrings.displayMore,
                         buttonStyle: AgoraButtonStyle.tertiary,
                         onPressed: () {
@@ -204,7 +204,7 @@ class _NoResult extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: AgoraSpacings.x1_5),
-              AgoraButton(
+              AgoraButton.withLabel(
                 label: QagStrings.askQuestion,
                 onPressed: () {
                   TrackerHelper.trackClick(

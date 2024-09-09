@@ -212,7 +212,7 @@ class _ChoixBoutons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AgoraButton(
+        AgoraButton.withLabel(
           label: DemographicStrings.begin,
           buttonStyle: AgoraButtonStyle.primary,
           onPressed: () {
@@ -225,7 +225,7 @@ class _ChoixBoutons extends StatelessWidget {
         ),
         SizedBox(width: AgoraSpacings.base),
         Flexible(
-          child: AgoraButton(
+          child: AgoraButton.withLabel(
             label: DemographicStrings.toNoAnswer,
             buttonStyle: AgoraButtonStyle.secondary,
             onPressed: () {

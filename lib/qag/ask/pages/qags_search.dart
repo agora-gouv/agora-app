@@ -149,7 +149,7 @@ class _NoResultView extends StatelessWidget {
               style: AgoraTextStyles.regular14,
             ),
             const SizedBox(height: AgoraSpacings.base),
-            AgoraButton(
+            AgoraButton.withLabel(
               label: QagStrings.askQuestion,
               onPressed: () {
                 TrackerHelper.trackClick(

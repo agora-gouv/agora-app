@@ -154,7 +154,7 @@ class _ModerationPageState extends State<ModerationPage> {
     if (viewModel.qagsToModerationViewModels.isEmpty) {
       qagsWidgets.add(SizedBox(height: AgoraSpacings.base));
       qagsWidgets.add(
-        AgoraButton(
+        AgoraButton.withLabel(
           label: GenericStrings.displayMore,
           buttonStyle: AgoraButtonStyle.tertiary,
           onPressed: () => context.read<QagModerationListBloc>().add(FetchQagModerationListEvent()),

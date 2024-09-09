@@ -92,7 +92,7 @@ class AgoraQagModerationCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: AgoraButton(
+                    child: AgoraButton.withLabel(
                       label: QagStrings.refuse,
                       isLoading: refuseLoading,
                       buttonStyle: AgoraButtonStyle.secondary,
@@ -101,7 +101,7 @@ class AgoraQagModerationCard extends StatelessWidget {
                   ),
                   SizedBox(width: AgoraSpacings.base),
                   Expanded(
-                    child: AgoraButton(
+                    child: AgoraButton.withLabel(
                       label: QagStrings.validate,
                       isLoading: validateLoading,
                       buttonStyle: AgoraButtonStyle.primary,

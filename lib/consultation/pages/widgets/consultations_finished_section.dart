@@ -69,7 +69,7 @@ class ConsultationsFinishedSection extends StatelessWidget {
                     ),
                     if (shouldDisplayAllButton) ...[
                       SizedBox(width: AgoraSpacings.x0_75),
-                      AgoraButton(
+                      AgoraButton.withLabel(
                         label: GenericStrings.all,
                         semanticLabel: "voir toutes les consultations terminées",
                         buttonStyle: AgoraButtonStyle.tertiary,

@@ -171,7 +171,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         SizedBox(height: AgoraSpacings.x0_75),
                         Text(ProfileStrings.feedbackTipsDescription, style: AgoraTextStyles.light14),
                         SizedBox(height: AgoraSpacings.x1_25),
-                        AgoraButton(
+                        AgoraButton.withLabel(
                           label: ProfileStrings.feedbackTipsButton,
                           buttonStyle: AgoraButtonStyle.primary,
                           onPressed: () {

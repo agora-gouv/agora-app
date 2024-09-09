@@ -96,7 +96,7 @@ class _NotificationPageState extends State<NotificationPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AgoraButton(
+            AgoraButton.withLabel(
               label: ProfileStrings.retry,
               buttonStyle: AgoraButtonStyle.tertiary,
               onPressed: () =>
@@ -109,7 +109,7 @@ class _NotificationPageState extends State<NotificationPage> {
     } else {
       if (state.hasMoreNotifications) {
         widgets.add(
-          AgoraButton(
+          AgoraButton.withLabel(
             label: ProfileStrings.displayMore,
             buttonStyle: AgoraButtonStyle.tertiary,
             onPressed: () =>

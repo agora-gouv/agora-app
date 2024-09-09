@@ -249,7 +249,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.askQuestionInformation, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.base),
-              AgoraButton(
+              AgoraButton.withLabel(
                 label: QagStrings.readNotice,
                 buttonStyle: AgoraButtonStyle.secondary,
                 onPressed: () => Navigator.pushNamed(context, ParticipationCharterPage.routeName),
@@ -291,7 +291,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                         SizedBox(height: AgoraSpacings.base),
                       ],
                       if (createQagState is CreateQagLoadingState) SizedBox(height: AgoraSpacings.base),
-                      AgoraButton(
+                      AgoraButton.withLabel(
                         label: QagStrings.send,
                         isLoading: createQagState is CreateQagLoadingState,
                         isDisabled: !_couldSend(),
@@ -334,7 +334,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           Text(errorCase, style: AgoraTextStyles.light14),
           SizedBox(height: AgoraSpacings.x1_5, width: double.infinity),
           Center(
-            child: AgoraButton(
+            child: AgoraButton.withLabel(
               label: QagStrings.goToAllQuestion,
               onPressed: () {
                 Navigator.pop(context);
@@ -412,7 +412,7 @@ class _InfoBouton extends StatelessWidget {
                 ),
               ),
               SizedBox(height: AgoraSpacings.x0_75),
-              AgoraButton(
+              AgoraButton.withLabel(
                 label: GenericStrings.close,
                 buttonStyle: AgoraButtonStyle.primary,
                 onPressed: () => Navigator.pop(context),

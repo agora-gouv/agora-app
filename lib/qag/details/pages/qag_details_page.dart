@@ -238,15 +238,7 @@ class _ShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-      child: AgoraButton(
-        icon: Padding(
-          padding: const EdgeInsets.only(right: AgoraSpacings.x0_5),
-          child: Icon(
-            Icons.ios_share,
-            color: AgoraColors.primaryBlue,
-            size: 20,
-          ),
-        ),
+      child: AgoraButton.withLabel(
         label: GenericStrings.share,
         semanticLabel: "Partager la question",
         buttonStyle: AgoraButtonStyle.secondary,
@@ -261,6 +253,16 @@ class _ShareButton extends StatelessWidget {
             ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
           }
         },
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: AgoraSpacings.x0_5),
+            child: Icon(
+              Icons.ios_share,
+              color: AgoraColors.primaryBlue,
+              size: 20,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -437,7 +439,7 @@ class _DeleteQaG extends StatelessWidget {
         SizedBox(height: AgoraSpacings.base),
         Text(QagStrings.deleteQagDetails, style: AgoraTextStyles.light14),
         SizedBox(height: AgoraSpacings.base),
-        AgoraButton(
+        AgoraButton.withLabel(
           label: GenericStrings.delete,
           buttonStyle: AgoraButtonStyle.redBorder,
           onPressed: () => Navigator.pushNamed(

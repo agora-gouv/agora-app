@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ConsultationQuestionHelper {
   static Widget buildBackButton({required int order, required VoidCallback onBackTap}) {
     if (order != 1) {
-      return AgoraButton(
+      return AgoraButton.withLabel(
         label: ConsultationStrings.previousQuestion,
         semanticLabel: SemanticsStrings.previousQuestion,
         buttonStyle: AgoraButtonStyle.secondary,
@@ -21,7 +21,7 @@ class ConsultationQuestionHelper {
     required bool isLastQuestion,
     required VoidCallback? onPressed,
   }) {
-    return AgoraButton(
+    return AgoraButton.withLabel(
       label: isLastQuestion ? ConsultationStrings.validate : ConsultationStrings.nextQuestion,
       semanticLabel: isLastQuestion ? ConsultationStrings.validate : SemanticsStrings.nextQuestion,
       buttonStyle: AgoraButtonStyle.primary,
@@ -30,7 +30,7 @@ class ConsultationQuestionHelper {
   }
 
   static Widget buildIgnoreButton({required VoidCallback onPressed}) {
-    return AgoraButton(
+    return AgoraButton.withLabel(
       label: ConsultationStrings.ignoreQuestion,
       semanticLabel: SemanticsStrings.ignoreQuestion,
       buttonStyle: AgoraButtonStyle.secondary,

@@ -115,7 +115,7 @@ class _Success extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: AgoraSpacings.x1_5),
-                AgoraButton(
+                AgoraButton.withLabel(
                   label: FeedbackStrings.otherReturnButtonLabel,
                   buttonStyle: AgoraButtonStyle.primary,
                   onPressed: () {
@@ -123,7 +123,7 @@ class _Success extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: AgoraSpacings.base),
-                AgoraButton(
+                AgoraButton.withLabel(
                   label: ConsultationStrings.returnToHome,
                   buttonStyle: AgoraButtonStyle.secondary,
                   onPressed: () {

@@ -151,7 +151,7 @@ class _ReponseList extends StatelessWidget {
           else if (state.currentPageNumber < state.maxPage)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-              child: AgoraButton(
+              child: AgoraButton.withLabel(
                 label: GenericStrings.displayMore,
                 buttonStyle: AgoraButtonStyle.tertiary,
                 onPressed: () => context
