@@ -238,8 +238,7 @@ class _ShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-      child: AgoraButton.withLabel(
-        label: GenericStrings.share,
+      child: AgoraButton.withChildren(
         semanticLabel: "Partager la question",
         buttonStyle: AgoraButtonStyle.secondary,
         onPressed: () {
@@ -254,14 +253,9 @@ class _ShareButton extends StatelessWidget {
           }
         },
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: AgoraSpacings.x0_5),
-            child: Icon(
-              Icons.ios_share,
-              color: AgoraColors.primaryBlue,
-              size: 20,
-            ),
-          ),
+          Icon(Icons.ios_share, color: AgoraColors.primaryBlue, size: 20),
+          SizedBox(width: AgoraSpacings.x0_5),
+          Text(GenericStrings.share, style: AgoraTextStyles.secondaryButton, textAlign: TextAlign.center),
         ],
       ),
     );
