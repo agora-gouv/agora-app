@@ -6,7 +6,6 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-	    <string>applinks:agora.beta.gouv.fr</string>
 		<string>applinks:www.agora.gouv.fr</string>
 	</array>
 </dict>
