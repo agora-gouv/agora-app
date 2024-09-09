@@ -10,9 +10,9 @@ import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
@@ -39,20 +39,40 @@ class _QagsPageState extends State<QagsPage> {
   final toolbarTitleKey = GlobalKey();
   final onSearchAnchorKey = GlobalKey();
   final firstThematiqueKey = GlobalKey();
+  final scrollController = ScrollController();
   String? currentThematiqueId;
+  ValueNotifier<bool> showLabelFloatingButton = ValueNotifier(true);
 
   @override
   void initState() {
     super.initState();
+    scrollController.addListener(() {
+      if (scrollController.offset > 50 && showLabelFloatingButton.value) {
+        showLabelFloatingButton.value = false;
+      } else if (scrollController.offset < 50 && !showLabelFloatingButton.value) {
+        showLabelFloatingButton.value = true;
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       toolbarTitleKey.currentContext?.findRenderObject()?.sendSemanticsEvent(FocusSemanticEvent());
     });
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: _PoserMaQuestionBouton(),
+      floatingActionButton: ListenableBuilder(
+        listenable: showLabelFloatingButton,
+        builder: (_, __) {
+          return _PoserMaQuestionBouton(showLabelFloatingButton: showLabelFloatingButton.value);
+        },
+      ),
       body: AgoraTracker(
         widgetName: AnalyticsScreenNames.qagsPage,
         child: MultiBlocProvider(
@@ -74,6 +94,7 @@ class _QagsPageState extends State<QagsPage> {
             ),
           ],
           child: SingleChildScrollView(
+            controller: scrollController,
             physics: ClampingScrollPhysics(),
             child: Column(
               children: [
@@ -127,37 +148,53 @@ class _QagsPageState extends State<QagsPage> {
 }
 
 class _PoserMaQuestionBouton extends StatelessWidget {
-  const _PoserMaQuestionBouton();
+  const _PoserMaQuestionBouton({required this.showLabelFloatingButton});
+
+  final bool showLabelFloatingButton;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 200),
-      curve: Curves.easeIn,
-      child: FloatingActionButton.extended(
-        onPressed: () {
-          TrackerHelper.trackClick(
-            clickName: AnalyticsEventNames.askQuestion,
-            widgetName: AnalyticsScreenNames.qagsPage,
-          );
-          Navigator.pushNamed(
-            context,
-            QagAskQuestionPage.routeName,
-          );
-        },
-        backgroundColor: AgoraColors.primaryBlue,
-        focusColor: AgoraColors.neutral400,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded)),
-        icon: SvgPicture.asset(
+    return AgoraButton.withChildren(
+      buttonStyle: AgoraButtonStyle.primary,
+      semanticLabel: QagStrings.askQuestion,
+      onPressed: () {
+        TrackerHelper.trackClick(
+          clickName: AnalyticsEventNames.askQuestion,
+          widgetName: AnalyticsScreenNames.qagsPage,
+        );
+        Navigator.pushNamed(
+          context,
+          QagAskQuestionPage.routeName,
+        );
+      },
+      children: [
+        SvgPicture.asset(
           "assets/ic_question.svg",
           colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
           excludeFromSemantics: true,
         ),
-        label: Text(
-          QagStrings.askQuestion,
-          style: AgoraTextStyles.medium14.copyWith(color: AgoraColors.white),
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 300),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return SizeTransition(
+              axis: Axis.horizontal,
+              axisAlignment: 1.0,
+              sizeFactor: animation,
+              child: child,
+            );
+          },
+          child: showLabelFloatingButton
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(
+                    QagStrings.askQuestion,
+                    key: ValueKey(1),
+                    style: AgoraTextStyles.primaryButton,
+                  ),
+                )
+              : SizedBox(key: ValueKey(2)),
         ),
-      ),
+      ],
     );
   }
 }

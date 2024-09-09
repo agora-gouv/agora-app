@@ -28,7 +28,7 @@ class AgoraInformationBottomSheet extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: AgoraButton(
+                child: AgoraButton.withLabel(
                   label: 'J’ai compris',
                   onPressed: () {
                     Navigator.pop(context);

@@ -134,7 +134,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
               children: [
                 Flexible(
                   child: ExcludeSemantics(
-                    child: AgoraButton(
+                    child: AgoraButton.withLabel(
                       prefixIcon: "ic_question_confirmation.svg",
                       label: ConsultationStrings.participate,
                       buttonStyle: AgoraButtonStyle.primary,

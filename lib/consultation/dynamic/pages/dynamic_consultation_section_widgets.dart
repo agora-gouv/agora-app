@@ -618,9 +618,9 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
                           const SizedBox(height: AgoraSpacings.base),
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: AgoraButton(
+                            child: AgoraButton.withLabel(
                               label: section.buttonLabel,
-                              buttonStyle: AgoraButtonStyle.blueBorder,
+                              buttonStyle: AgoraButtonStyle.secondary,
                               onPressed: () {
                                 Navigator.pushNamed(
                                   context,
@@ -944,10 +944,10 @@ class _DownloadSectionWidget extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Semantics(
                       container: true,
-                      child: AgoraButton(
+                      child: AgoraButton.withLabel(
                         label: 'Télécharger',
                         semanticLabel: 'Télécharger la synthèse complète',
-                        buttonStyle: AgoraButtonStyle.blueBorder,
+                        buttonStyle: AgoraButtonStyle.secondary,
                         onPressed: () {
                           LaunchUrlHelper.launchUrlFromAgora(
                             url: section.url,
@@ -1048,7 +1048,7 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                   if (answer == null)
                     Row(
                       children: [
-                        AgoraButton(
+                        AgoraButton.withLabel(
                           prefixIcon: "ic_thumb_white.svg",
                           label: QagStrings.yes,
                           onPressed: () {
@@ -1071,7 +1071,7 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                           },
                         ),
                         SizedBox(width: AgoraSpacings.base),
-                        AgoraButton(
+                        AgoraButton.withLabel(
                           prefixIcon: "ic_thumb_down_white.svg",
                           label: QagStrings.no,
                           onPressed: () {
@@ -1110,9 +1110,9 @@ class _ConsultationFeedbackQuestionSectionWidgetState extends State<_Consultatio
                   else if (answer != null) ...[
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: AgoraButton(
+                      child: AgoraButton.withLabel(
                         label: 'Modifier votre réponse',
-                        buttonStyle: AgoraButtonStyle.blueBorder,
+                        buttonStyle: AgoraButtonStyle.secondary,
                         onPressed: () {
                           context.read<DynamicConsultationFeedbackBloc>().add(
                                 DeleteConsultationUpdateFeedbackEvent(
@@ -1447,10 +1447,10 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                   const SizedBox(height: AgoraSpacings.base),
                   Align(
                     alignment: Alignment.topLeft,
-                    child: AgoraButton(
+                    child: AgoraButton.withLabel(
                       label: 'Partager',
                       semanticLabel: 'Partager cette consultation',
-                      buttonStyle: AgoraButtonStyle.blueBorder,
+                      buttonStyle: AgoraButtonStyle.secondary,
                       onPressed: () {
                         ShareHelper.sharePreformatted(context: context, data: section.shareText);
                       },

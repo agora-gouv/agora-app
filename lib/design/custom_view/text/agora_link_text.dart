@@ -46,7 +46,7 @@ class AgoraLinkText extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 onTap: onTap,
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+                  constraints: BoxConstraints(minHeight: 44, minWidth: 44),
                   child: _TextContent(
                     textItems: textItems,
                     label: label,

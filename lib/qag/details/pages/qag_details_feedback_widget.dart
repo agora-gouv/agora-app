@@ -129,9 +129,9 @@ class _AnsweredResults extends StatelessWidget {
         const SizedBox(height: AgoraSpacings.base),
         Align(
           alignment: Alignment.centerLeft,
-          child: AgoraButton(
+          child: AgoraButton.withLabel(
             label: 'Modifier votre réponse',
-            buttonStyle: AgoraButtonStyle.blueBorder,
+            buttonStyle: AgoraButtonStyle.secondary,
             onPressed: () {
               context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
             },
@@ -154,9 +154,9 @@ class _AnsweredNoResults extends StatelessWidget {
       children: [
         const Text(QagStrings.feedback, style: AgoraTextStyles.regular14),
         const SizedBox(height: AgoraSpacings.base),
-        AgoraButton(
+        AgoraButton.withLabel(
           label: 'Modifier votre réponse',
-          buttonStyle: AgoraButtonStyle.blueBorder,
+          buttonStyle: AgoraButtonStyle.secondary,
           onPressed: () {
             context.read<QagDetailsBloc>().add(EditFeedbackQagDetailsEvent());
           },
@@ -183,7 +183,7 @@ class _NotAnswered extends StatelessWidget {
     return Row(
       children: [
         if (isHelpfulClicked == null) ...[
-          AgoraButton(
+          AgoraButton.withLabel(
             prefixIcon: "ic_thumb_white.svg",
             label: QagStrings.utils,
             onPressed: () {
@@ -195,7 +195,7 @@ class _NotAnswered extends StatelessWidget {
             },
           ),
           SizedBox(width: AgoraSpacings.base),
-          AgoraButton(
+          AgoraButton.withLabel(
             prefixIcon: "ic_thumb_down_white.svg",
             label: QagStrings.notUtils,
             onPressed: () {

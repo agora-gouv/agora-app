@@ -217,10 +217,10 @@ class _NePasRepondreBouton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: AgoraButton(
+      child: AgoraButton.withLabel(
         label: DemographicStrings.toNoAnswer,
         semanticLabel: DemographicStrings.toNoAnswerSemantic,
-        buttonStyle: AgoraButtonStyle.blueBorder,
+        buttonStyle: AgoraButtonStyle.secondary,
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.ignoreDemographic,
@@ -248,7 +248,7 @@ class _CommencerBouton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AgoraButton(
+    return AgoraButton.withLabel(
       label: DemographicStrings.begin,
       semanticLabel: DemographicStrings.beginSemantic,
       buttonStyle: AgoraButtonStyle.primary,

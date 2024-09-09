@@ -24,6 +24,7 @@ import 'package:agora/qag/details/bloc/qag_details_event.dart';
 import 'package:agora/qag/details/bloc/qag_details_state.dart';
 import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:agora/qag/details/bloc/support/qag_support_bloc.dart';
+import 'package:agora/qag/details/bloc/support/qag_support_event.dart';
 import 'package:agora/qag/details/pages/qag_details_delete_confirmation_page.dart';
 import 'package:agora/qag/details/pages/qag_details_feedback_widget.dart';
 import 'package:agora/qag/details/pages/qag_details_response_view.dart';
@@ -172,7 +173,7 @@ class _Success extends StatelessWidget {
           Expanded(
             child: CustomScrollView(
               slivers: [
-                _TitleSliver(
+                _TitreSliver(
                   viewModel: viewModel,
                   isQuestionGagnante: arguments.isQuestionGagnante,
                 ),
@@ -237,11 +238,9 @@ class _ShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-      child: AgoraButton(
-        prefixIcon: "ic_share.svg",
-        label: GenericStrings.share,
+      child: AgoraButton.withChildren(
         semanticLabel: "Partager la question",
-        buttonStyle: AgoraButtonStyle.lightGrey,
+        buttonStyle: AgoraButtonStyle.secondary,
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
@@ -253,16 +252,21 @@ class _ShareButton extends StatelessWidget {
             ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
           }
         },
+        children: [
+          Icon(Icons.ios_share, color: AgoraColors.primaryBlue, size: 20),
+          SizedBox(width: AgoraSpacings.x0_5),
+          Text(GenericStrings.share, style: AgoraTextStyles.secondaryButton, textAlign: TextAlign.center),
+        ],
       ),
     );
   }
 }
 
-class _TitleSliver extends StatelessWidget {
+class _TitreSliver extends StatelessWidget {
   final QagDetailsViewModel viewModel;
   final bool isQuestionGagnante;
 
-  const _TitleSliver({
+  const _TitreSliver({
     required this.viewModel,
     required this.isQuestionGagnante,
   });
@@ -298,6 +302,21 @@ class _TitleSliver extends StatelessWidget {
                           supportCount: viewModel.support.count,
                           shouldVocaliseSupport: false,
                           isQuestionGagnante: isQuestionGagnante,
+                          onSupportClick: (bool support) {
+                            if (support) {
+                              TrackerHelper.trackClick(
+                                clickName: AnalyticsEventNames.likeQag,
+                                widgetName: AnalyticsScreenNames.qagDetailsPage,
+                              );
+                              context.read<QagSupportBloc>().add(SupportQagEvent(qagId: viewModel.id));
+                            } else {
+                              TrackerHelper.trackClick(
+                                clickName: AnalyticsEventNames.unlikeQag,
+                                widgetName: AnalyticsScreenNames.qagDetailsPage,
+                              );
+                              context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: viewModel.id));
+                            }
+                          },
                         ),
                       ),
                     ],
@@ -338,15 +357,19 @@ class _DescriptionSliver extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (viewModel.response == null && viewModel.textResponse == null) ...[
-              Text(viewModel.description, style: AgoraTextStyles.light14),
-              SizedBox(height: AgoraSpacings.base),
+              if (viewModel.description.isNotEmpty) ...[
+                Text(viewModel.description, style: AgoraTextStyles.light14),
+                SizedBox(height: AgoraSpacings.base),
+              ],
               Row(
                 children: [
-                  Text(
-                    StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
-                    style: AgoraTextStyles.medium14,
+                  Expanded(
+                    child: Text(
+                      StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
+                      style: AgoraTextStyles.medium14,
+                    ),
                   ),
-                  Spacer(),
+                  SizedBox(width: AgoraSpacings.base),
                   QagDetailsSupportView(
                     qagId: viewModel.id,
                     canSupport: viewModel.canSupport,
@@ -410,7 +433,7 @@ class _DeleteQaG extends StatelessWidget {
         SizedBox(height: AgoraSpacings.base),
         Text(QagStrings.deleteQagDetails, style: AgoraTextStyles.light14),
         SizedBox(height: AgoraSpacings.base),
-        AgoraButton(
+        AgoraButton.withLabel(
           label: GenericStrings.delete,
           buttonStyle: AgoraButtonStyle.redBorder,
           onPressed: () => Navigator.pushNamed(

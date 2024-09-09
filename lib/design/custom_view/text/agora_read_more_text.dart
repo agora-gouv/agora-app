@@ -122,9 +122,9 @@ class ShowMoreButton extends StatelessWidget {
       alignment: Alignment.bottomLeft,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: horizontalPadding),
-        child: AgoraButton(
+        child: AgoraButton.withLabel(
           label: label,
-          buttonStyle: AgoraButtonStyle.blueBorder,
+          buttonStyle: AgoraButtonStyle.secondary,
           onPressed: onTap,
         ),
       ),

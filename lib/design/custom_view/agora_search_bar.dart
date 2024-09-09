@@ -133,7 +133,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
                           canRequestFocus: false,
                           descendantsAreFocusable: widget.isSearchBarDisplayed,
                           child: IconButton(
-                            constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+                            constraints: BoxConstraints(minHeight: 44, minWidth: 44),
                             splashRadius: 19.0,
                             icon: Semantics(
                               button: true,
@@ -260,7 +260,7 @@ class AnimSearchBarState extends State<AnimSearchBar> with SingleTickerProviderS
               /// toggle button color based on toggle state
               color: toggle == 0 ? widget.color : widget.textFieldColor,
               child: IconButton(
-                constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+                constraints: BoxConstraints(minHeight: 44, minWidth: 44),
                 splashRadius: 19.0,
 
                 ///if toggle is 1, which means it's open. so show the back icon, which will close it.

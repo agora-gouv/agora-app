@@ -149,9 +149,9 @@ class _SplashPageState extends State<SplashPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Flexible(
-                                    child: AgoraButton(
+                                    child: AgoraButton.withLabel(
                                       label: GenericStrings.contactSupport,
-                                      buttonStyle: AgoraButtonStyle.blueBorder,
+                                      buttonStyle: AgoraButtonStyle.secondary,
                                       onPressed: () {
                                         final Uri emailUri = Uri(
                                           scheme: 'mailto',
@@ -163,7 +163,7 @@ class _SplashPageState extends State<SplashPage> {
                                     ),
                                   ),
                                   SizedBox(width: AgoraSpacings.base),
-                                  AgoraButton(
+                                  AgoraButton.withLabel(
                                     label: GenericStrings.retry,
                                     buttonStyle: AgoraButtonStyle.primary,
                                     onPressed: () => context.read<LoginBloc>().add(CheckLoginEvent()),
@@ -174,7 +174,7 @@ class _SplashPageState extends State<SplashPage> {
                             if (loginState.errorType == LoginErrorType.updateVersion &&
                                 (PlatformStaticHelper.isAndroid() || PlatformStaticHelper.isIOS())) ...[
                               SizedBox(height: AgoraSpacings.x1_25),
-                              AgoraButton(
+                              AgoraButton.withLabel(
                                 label: GenericStrings.updateApp,
                                 buttonStyle: AgoraButtonStyle.primary,
                                 expanded: true,
@@ -290,13 +290,13 @@ class _SplashPageState extends State<SplashPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            AgoraButton(
+            AgoraButton.withLabel(
               label: GenericStrings.rejectNotificationPermissionButton,
-              buttonStyle: AgoraButtonStyle.lightGrey,
+              buttonStyle: AgoraButtonStyle.secondary,
               onPressed: () => Navigator.pop(context),
             ),
             SizedBox(height: AgoraSpacings.base),
-            AgoraButton(
+            AgoraButton.withLabel(
               label: GenericStrings.acceptNotificationPermissionButton,
               buttonStyle: AgoraButtonStyle.primary,
               onPressed: () {

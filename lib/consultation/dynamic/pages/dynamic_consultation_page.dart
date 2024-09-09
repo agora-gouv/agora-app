@@ -213,11 +213,11 @@ class _ShareButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
-      child: AgoraButton(
+      child: AgoraButton.withLabel(
         prefixIcon: "ic_share.svg",
         label: GenericStrings.share,
         semanticLabel: "Partager la consultation",
-        buttonStyle: AgoraButtonStyle.lightGrey,
+        buttonStyle: AgoraButtonStyle.secondary,
         onPressed: () {
           TrackerHelper.trackClick(
             clickName: AnalyticsEventNames.shareConsultation,

@@ -10,6 +10,7 @@ extension QagListExtension on List<Qag> {
             id: qag.id,
             thematique: qag.thematique,
             title: qag.title,
+            description: qag.description,
             username: qag.username,
             date: qag.date,
             supportCount: qagSupport.supportCount,

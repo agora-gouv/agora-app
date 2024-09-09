@@ -28,7 +28,7 @@ class AgoraCheckbox extends StatelessWidget {
             onChanged(!value);
           },
           child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 48, minHeight: 48),
+            constraints: BoxConstraints(minWidth: 44, minHeight: 44),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
