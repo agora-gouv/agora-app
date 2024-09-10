@@ -1,10 +1,9 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/design/custom_view/agora_like_animation_view.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
-import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:agora/qag/details/bloc/support/qag_support_bloc.dart';
 import 'package:agora/qag/details/bloc/support/qag_support_event.dart';
@@ -20,6 +19,7 @@ class QagDetailsSupportView extends StatelessWidget {
   final bool canSupport;
   final bool isQuestionGagnante;
   final QagDetailsSupportViewModel supportViewModel;
+  final QagSupportBloc? qagSupportBloc;
   final Function(int supportCount, bool isSupported) onSupportChange;
 
   const QagDetailsSupportView({
@@ -28,6 +28,7 @@ class QagDetailsSupportView extends StatelessWidget {
     required this.canSupport,
     this.isQuestionGagnante = false,
     required this.supportViewModel,
+    this.qagSupportBloc,
     required this.onSupportChange,
   });
 
@@ -35,60 +36,58 @@ class QagDetailsSupportView extends StatelessWidget {
   Widget build(BuildContext context) {
     final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey);
 
-    return Stack(
-      children: [
-        BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
-          selector: (supportState) => _toViewModel(supportState),
-          builder: (context, viewModel) {
-            final isSupported = viewModel.isSupported();
-            onSupportChange(viewModel.supportCount(), isSupported);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Semantics(
-                  button: canSupport,
-                  child: InkWell(
-                    onTap: canSupport ? () => _buildOnPressed(context, qagId, isSupported, viewModel.isLoading) : null,
-                    child: AgoraLikeView(
-                      isSupported: isSupported,
-                      supportCount: viewModel.supportCount(),
-                      shouldHaveVerticalPadding: true,
-                      likeViewKey: likeViewKey,
-                      shouldVocaliseSupport: canSupport,
-                      isQuestionGagnante: isQuestionGagnante,
+    return BlocProvider.value(
+      value: qagSupportBloc ?? QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
+      child: Stack(
+        children: [
+          BlocSelector<QagSupportBloc, QagSupportState, _ViewModel>(
+            selector: (supportState) => _toViewModel(supportState),
+            builder: (context, viewModel) {
+              onSupportChange(viewModel.supportCount, viewModel.isSupported);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Semantics(
+                    button: canSupport,
+                    child: InkWell(
+                      onTap: canSupport ? () => _buildOnPressed(context, qagId, viewModel) : null,
+                      child: AgoraLikeView(
+                        isSupported: viewModel.isSupported,
+                        supportCount: viewModel.supportCount,
+                        shouldHaveVerticalPadding: true,
+                        likeViewKey: likeViewKey,
+                        shouldVocaliseSupport: canSupport,
+                        isQuestionGagnante: isQuestionGagnante,
+                      ),
                     ),
                   ),
-                ),
-                if (viewModel.hasError) ...[
-                  SizedBox(height: AgoraSpacings.base),
-                  AgoraErrorText(),
                 ],
-              ],
-            );
-          },
-        ),
-        BlocListener<QagSupportBloc, QagSupportState>(
-          listenWhen: (previousState, currentState) {
-            if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
-              likeAnimationView.animate();
-            }
-            if (_toLikeViewModel(previousState).isSupported && !_toLikeViewModel(currentState).isSupported) {
-              likeAnimationView.reverseAnimate();
-            }
-            return false;
-          },
-          listener: (context, state) => {},
-          child: likeAnimationView,
-        ),
-      ],
+              );
+            },
+          ),
+          BlocListener<QagSupportBloc, QagSupportState>(
+            listenWhen: (previousState, currentState) {
+              if (!_toLikeViewModel(previousState).isSupported && _toLikeViewModel(currentState).isSupported) {
+                likeAnimationView.animate();
+              }
+              if (_toLikeViewModel(previousState).isSupported && !_toLikeViewModel(currentState).isSupported) {
+                likeAnimationView.reverseAnimate();
+              }
+              return false;
+            },
+            listener: (context, state) => {},
+            child: likeAnimationView,
+          ),
+        ],
+      ),
     );
   }
 
   _ViewModel _toViewModel(QagSupportState supportState) {
     return _ViewModel(
-      isLoading: supportState is QagSupportLoadingState || supportState is QagDeleteSupportLoadingState,
-      hasError: supportState is QagSupportErrorState || supportState is QagDeleteSupportErrorState,
-      viewModel: _toLikeViewModel(supportState),
+      isLoading: supportState is QagSupportLoadingState,
+      isSupported: _buildIsSupported(supportState),
+      supportCount: _buildCount(supportState),
     );
   }
 
@@ -107,19 +106,15 @@ class QagDetailsSupportView extends StatelessWidget {
     return supportViewModel.count;
   }
 
-  int _supportCountWhenUnliked() {
-    return _initialSupportCount() - (_isInitiallySupported() ? 1 : 0);
-  }
-
   bool _buildIsSupported(QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       return _isInitiallySupported();
     } else if (supportState is QagSupportLoadingState) {
       return !_isInitiallySupported();
     } else {
-      if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-        return true;
-      } else if (supportState is QagSupportErrorState || supportState is QagDeleteSupportSuccessState) {
+      if (supportState is QagSupportSuccessState) {
+        return supportState.isSupported;
+      } else if (supportState is QagSupportErrorState) {
         return false;
       }
     }
@@ -129,23 +124,33 @@ class QagDetailsSupportView extends StatelessWidget {
   int _buildCount(QagSupportState supportState) {
     if (supportState is QagSupportInitialState) {
       return _initialSupportCount();
-    } else if (supportState is QagSupportSuccessState || supportState is QagDeleteSupportErrorState) {
-      return _supportCountWhenUnliked() + 1;
-    } else if (supportState is QagDeleteSupportSuccessState || supportState is QagDeleteSupportSuccessState) {
-      return _supportCountWhenUnliked();
+    } else if (supportState is QagSupportSuccessState) {
+      return supportState.supportCount;
     }
     return _initialSupportCount();
   }
 
-  void _buildOnPressed(BuildContext context, String qagId, bool isSupported, bool isLoading) {
-    if (!isLoading) {
+  void _buildOnPressed(BuildContext context, String qagId, _ViewModel viewModel) {
+    if (!viewModel.isLoading) {
       final qagSupportBloc = context.read<QagSupportBloc>();
-      if (isSupported) {
+      if (viewModel.isSupported) {
         _track(AnalyticsEventNames.unlikeQagDetails);
-        qagSupportBloc.add(DeleteSupportQagEvent(qagId: qagId));
+        qagSupportBloc.add(
+          DeleteSupportQagEvent(
+            qagId: qagId,
+            supportCount: viewModel.supportCount,
+            isSupported: viewModel.isSupported,
+          ),
+        );
       } else {
         _track(AnalyticsEventNames.likeQagDetails);
-        qagSupportBloc.add(SupportQagEvent(qagId: qagId));
+        qagSupportBloc.add(
+          SupportQagEvent(
+            qagId: qagId,
+            supportCount: viewModel.supportCount,
+            isSupported: viewModel.isSupported,
+          ),
+        );
       }
     }
   }
@@ -160,19 +165,11 @@ class QagDetailsSupportView extends StatelessWidget {
 
 class _ViewModel extends Equatable {
   final bool isLoading;
-  final bool hasError;
-  final AgoraLikeViewModel viewModel;
+  final bool isSupported;
+  final int supportCount;
 
-  _ViewModel({required this.isLoading, required this.hasError, required this.viewModel});
-
-  bool isSupported() {
-    return viewModel.isSupported;
-  }
-
-  int supportCount() {
-    return viewModel.supportCount;
-  }
+  _ViewModel({required this.isLoading, required this.isSupported, required this.supportCount});
 
   @override
-  List<Object?> get props => [viewModel, isLoading, hasError];
+  List<Object?> get props => [isLoading, isSupported, supportCount];
 }

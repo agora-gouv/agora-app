@@ -1,11 +1,5 @@
-import 'package:agora/common/analytics/analytics_event_names.dart';
-import 'package:agora/common/analytics/analytics_screen_names.dart';
-import 'package:agora/common/helper/share_helper.dart';
-import 'package:agora/common/helper/tracker_helper.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/card/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
@@ -118,38 +112,25 @@ class _Content extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isAuthor)
-            AgoraThematiqueLabel(
-              picto: thematique.picto,
-              label: thematique.label,
-              size: AgoraThematiqueSize.medium,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AgoraThematiqueLabel(
+                  picto: thematique.picto,
+                  label: thematique.label,
+                  size: AgoraThematiqueSize.medium,
+                ),
+                AgoraLikeView(
+                  isSupported: isSupported,
+                  supportCount: supportCount,
+                  shouldHaveVerticalPadding: true,
+                  onSupportClick: (support) => onSupportClick(support),
+                  likeViewKey: likeViewKey,
+                ),
+              ],
             ),
           SizedBox(height: AgoraSpacings.x0_5),
           Text(titre, style: AgoraTextStyles.regular16),
-          SizedBox(height: AgoraSpacings.base),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AgoraButton.withChildren(
-                semanticLabel: GenericStrings.share,
-                buttonStyle: AgoraButtonStyle.secondary,
-                onPressed: () {
-                  TrackerHelper.trackClick(
-                    clickName: "${AnalyticsEventNames.shareQag} $id",
-                    widgetName: AnalyticsScreenNames.qagsPage,
-                  );
-                  ShareHelper.shareQag(context: context, title: titre, id: id);
-                },
-                children: [Icon(Icons.ios_share, color: AgoraColors.primaryBlue)],
-              ),
-              AgoraLikeView(
-                isSupported: isSupported,
-                supportCount: supportCount,
-                shouldHaveVerticalPadding: true,
-                onSupportClick: (support) => onSupportClick(support),
-                likeViewKey: likeViewKey,
-              ),
-            ],
-          ),
         ],
       ),
     );

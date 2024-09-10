@@ -2,7 +2,6 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
-import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_qag_header.dart';
@@ -11,7 +10,6 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
-import 'package:agora/qag/details/bloc/support/qag_support_bloc.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/list/bloc/qag_list_bloc.dart';
 import 'package:agora/qag/list/bloc/qag_list_event.dart';
@@ -102,17 +100,14 @@ class _QagListViewState extends State<_QagListView> {
             itemBuilder: (context, index) {
               if (index < widget.viewModel.qags.length) {
                 final item = widget.viewModel.qags[index];
-                return BlocProvider.value(
-                  value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-                  child: QagsSupportableCard(
-                    key: Key(item.id),
-                    qagViewModel: item,
-                    widgetName: AnalyticsScreenNames.qagsPage,
-                    onQagSupportChange: (qagSupport) {
-                      context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
-                    },
-                    likeViewKey: likeViewKeys[index],
-                  ),
+                return QagsSupportableCard(
+                  key: Key(item.id),
+                  qagViewModel: item,
+                  widgetName: AnalyticsScreenNames.qagsPage,
+                  onQagSupportChange: (qagSupport) {
+                    context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
+                  },
+                  likeViewKey: likeViewKeys[index],
                 );
               } else if (widget.viewModel.hasFooter) {
                 switch (widget.viewModel.footerType) {

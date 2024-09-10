@@ -89,43 +89,40 @@ class _AgoraLikeViewCliquable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: onSupportClick != null,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minWidth: 44, minHeight: 44),
-        child: InkWell(
-          borderRadius: BorderRadius.all(AgoraCorners.rounded12),
-          onTap: onSupportClick != null ? () => onSupportClick!(!isSupported) : null,
-          child: Ink(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(AgoraCorners.rounded12),
-              border: Border.all(color: AgoraColors.lightRedOpacity19),
-              color: AgoraColors.lightRedOpacity4,
+      child: InkWell(
+        borderRadius: BorderRadius.all(AgoraCorners.rounded42),
+        onTap: onSupportClick != null ? () => onSupportClick!(!isSupported) : null,
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(AgoraCorners.rounded42),
+            border: Border.all(color: AgoraColors.lightRedOpacity19),
+            color: AgoraColors.lightRedOpacity4,
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : AgoraSpacings.x0_375,
+              vertical: shouldHaveVerticalPadding ? 2 : 0,
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : AgoraSpacings.x0_375,
-                vertical: shouldHaveVerticalPadding ? 2 : 0,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    key: likeViewKey,
-                    _getIcon(isSupported),
-                    width: _buildIconSize(style),
-                    excludeFromSemantics: true,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  key: likeViewKey,
+                  _getIcon(isSupported),
+                  width: _buildIconSize(style),
+                  excludeFromSemantics: true,
+                ),
+                SizedBox(width: AgoraSpacings.x0_25),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
+                  child: Text(
+                    supportCount.toString(),
+                    style: _buildTextStyle(style),
+                    semanticsLabel:
+                        "${shouldVocaliseSupport ? isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport : ''}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
                   ),
-                  SizedBox(width: AgoraSpacings.x0_25),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
-                    child: Text(
-                      supportCount.toString(),
-                      style: _buildTextStyle(style),
-                      semanticsLabel:
-                          "${shouldVocaliseSupport ? isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport : ''}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

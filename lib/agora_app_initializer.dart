@@ -1,5 +1,4 @@
 import 'package:agora/agora_app.dart';
-import 'package:agora/consultation/question/bloc/response/stock/consultation_question_response_hive.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/helper_manager.dart';
@@ -7,6 +6,7 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/observer/event_observer.dart';
+import 'package:agora/consultation/question/bloc/response/stock/consultation_question_response_hive.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -57,7 +57,7 @@ class AgoraInitializer {
   }
 
   static Future<Uint8List> _readCertificate() async {
-    return (await rootBundle.load("assets/certificates/certignaservicesrootca.cer")).buffer.asUint8List();
+    return (await rootBundle.load("assets/certificates/certificate.cer")).buffer.asUint8List();
   }
 
   static Future<void> _setupNotification() async {

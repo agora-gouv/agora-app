@@ -42,6 +42,7 @@ class QagDetailsArguments {
   final String? notificationTitle;
   final String? notificationDescription;
   final QagReload reload;
+  final QagSupportBloc? qagSupportBloc;
 
   QagDetailsArguments({
     required this.qagId,
@@ -49,6 +50,7 @@ class QagDetailsArguments {
     this.notificationTitle,
     this.notificationDescription,
     required this.reload,
+    this.qagSupportBloc,
   });
 }
 
@@ -90,17 +92,10 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (BuildContext context) => QagDetailsBloc(
-            qagRepository: RepositoryManager.getQagRepository(),
-          )..add(FetchQagDetailsEvent(qagId: widget.arguments.qagId)),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
-        ),
-      ],
+    return BlocProvider(
+      create: (BuildContext context) => QagDetailsBloc(
+        qagRepository: RepositoryManager.getQagRepository(),
+      )..add(FetchQagDetailsEvent(qagId: widget.arguments.qagId)),
       child: AgoraScaffold(
         popAction: () {
           Navigator.pop(context, backResult);
@@ -181,6 +176,7 @@ class _Success extends StatelessWidget {
                   viewModel: viewModel,
                   isQuestionGagnante: arguments.isQuestionGagnante,
                   reload: arguments.reload,
+                  qagSupportBloc: arguments.qagSupportBloc,
                   onSupportChange: onSupportChange,
                 ),
                 if (viewModel.response != null)
@@ -308,13 +304,25 @@ class _TitreSliver extends StatelessWidget {
                                 clickName: AnalyticsEventNames.likeQag,
                                 widgetName: AnalyticsScreenNames.qagDetailsPage,
                               );
-                              context.read<QagSupportBloc>().add(SupportQagEvent(qagId: viewModel.id));
+                              context.read<QagSupportBloc>().add(
+                                    SupportQagEvent(
+                                      qagId: viewModel.id,
+                                      supportCount: viewModel.support.count,
+                                      isSupported: viewModel.support.isSupported,
+                                    ),
+                                  );
                             } else {
                               TrackerHelper.trackClick(
                                 clickName: AnalyticsEventNames.unlikeQag,
                                 widgetName: AnalyticsScreenNames.qagDetailsPage,
                               );
-                              context.read<QagSupportBloc>().add(DeleteSupportQagEvent(qagId: viewModel.id));
+                              context.read<QagSupportBloc>().add(
+                                    DeleteSupportQagEvent(
+                                      qagId: viewModel.id,
+                                      supportCount: viewModel.support.count,
+                                      isSupported: viewModel.support.isSupported,
+                                    ),
+                                  );
                             }
                           },
                         ),
@@ -335,12 +343,14 @@ class _DescriptionSliver extends StatelessWidget {
   final QagDetailsViewModel viewModel;
   final bool isQuestionGagnante;
   final QagReload reload;
+  final QagSupportBloc? qagSupportBloc;
   final void Function(int, bool) onSupportChange;
 
   const _DescriptionSliver({
     required this.viewModel,
     required this.isQuestionGagnante,
     required this.reload,
+    this.qagSupportBloc,
     required this.onSupportChange,
   });
 
@@ -375,6 +385,7 @@ class _DescriptionSliver extends StatelessWidget {
                     canSupport: viewModel.canSupport,
                     isQuestionGagnante: isQuestionGagnante,
                     supportViewModel: viewModel.support,
+                    qagSupportBloc: qagSupportBloc,
                     onSupportChange: onSupportChange,
                   ),
                 ],
