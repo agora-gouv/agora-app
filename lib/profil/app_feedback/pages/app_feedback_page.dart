@@ -1,26 +1,26 @@
-import 'package:agora/profil/app_feedback/bloc/app_feedback_bloc.dart';
-import 'package:agora/profil/app_feedback/bloc/app_feedback_event.dart';
-import 'package:agora/profil/app_feedback/bloc/app_feedback_state.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/parser/string_parser.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/feedback_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/design/custom_view/agora_question_response_choice_view.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
-import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
+import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/profil/app_feedback/bloc/app_feedback_bloc.dart';
+import 'package:agora/profil/app_feedback/bloc/app_feedback_event.dart';
+import 'package:agora/profil/app_feedback/bloc/app_feedback_state.dart';
 import 'package:agora/profil/app_feedback/domain/app_feedback.dart';
-import 'package:agora/consultation/pages/consultations_page.dart';
-import 'package:agora/common/parser/string_parser.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,7 +115,7 @@ class _Success extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: AgoraSpacings.x1_5),
-                AgoraButton(
+                AgoraButton.withLabel(
                   label: FeedbackStrings.otherReturnButtonLabel,
                   buttonStyle: AgoraButtonStyle.primary,
                   onPressed: () {
@@ -123,9 +123,9 @@ class _Success extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: AgoraSpacings.base),
-                AgoraButton(
+                AgoraButton.withLabel(
                   label: ConsultationStrings.returnToHome,
-                  buttonStyle: AgoraButtonStyle.blueBorder,
+                  buttonStyle: AgoraButtonStyle.secondary,
                   onPressed: () {
                     Navigator.popUntil(
                       context,

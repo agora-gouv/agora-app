@@ -120,12 +120,11 @@ ConsultationFeedbackResults? toFeedbackResults(dynamic data) {
   }
 }
 
-List<ConsultationHistoryStep>? toHistory(dynamic data, String id) {
-  if (data == null) return null;
+List<ConsultationHistoryStep> toHistory(dynamic data, String id) {
   if (data is List) {
     return data.map((e) => toHistoryStep(e, id)).nonNulls.toList();
   } else {
-    return null;
+    return [];
   }
 }
 

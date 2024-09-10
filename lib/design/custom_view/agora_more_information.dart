@@ -18,7 +18,7 @@ class AgoraMoreInformation extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0),
         onTap: () => onClick(),
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 48, minWidth: 48),
+          constraints: BoxConstraints(minHeight: 44, minWidth: 44),
           child: Padding(
             padding: const EdgeInsets.all(AgoraSpacings.x0_75),
             child: SvgPicture.asset("assets/ic_info.svg", excludeFromSemantics: true),

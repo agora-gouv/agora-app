@@ -133,7 +133,6 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         AgoraApp.matomoRouteObserver,
         AgoraApp.navigationObserver,
       ],
-      routes: AgoraAppRouter.handleAgoraRoutes(),
       onGenerateRoute: (RouteSettings settings) => AgoraAppRouter.handleAgoraGenerateRoute(
         settings: settings,
         sharedPref: widget.sharedPref,

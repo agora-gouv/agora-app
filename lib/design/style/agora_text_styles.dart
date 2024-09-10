@@ -445,7 +445,7 @@ class AgoraTextStyles {
     foreground: Paint()..color = AgoraColors.invertedBlueFrance,
   );
 
-  static TextStyle primaryBlueTextButton = TextStyle(
+  static TextStyle secondaryButton = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
     fontSize: 16.0,
@@ -459,7 +459,7 @@ class AgoraTextStyles {
     foreground: Paint()..color = AgoraColors.red,
   );
 
-  static TextStyle lightGreyButton = TextStyle(
+  static TextStyle tertiaryButton = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,
     fontSize: 16.0,

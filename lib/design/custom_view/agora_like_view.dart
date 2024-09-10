@@ -162,7 +162,6 @@ class _AgoraLikeViewNonCliquable extends StatelessWidget {
             key: likeViewKey,
             _getIcon(true),
             width: _buildIconSize(style),
-            colorFilter: ColorFilter.mode(AgoraColors.gold, BlendMode.srcIn),
             excludeFromSemantics: true,
           ),
           SizedBox(width: AgoraSpacings.x0_25),

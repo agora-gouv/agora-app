@@ -35,74 +35,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AgoraAppRouter {
-  static Map<String, WidgetBuilder> handleAgoraRoutes() {
-    return {
-      // Onboarding
-      OnboardingPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.onboardingPage,
-            child: OnboardingPage(),
-          ),
-      // Consultation
-      ConsultationsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.consultation),
-      // Question au gouvernement
-      QagsPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.qag),
-      // Reponse
-      ReponsesPage.routeName: (context) => MainBottomNavigationBar(startPage: NavigationPage.reponse),
-      QagAskQuestionPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.qagAskQuestionPage,
-            child: QagAskQuestionPage(),
-          ),
-      // Profile
-      ProfilPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.profilePage,
-            child: ProfilPage(),
-          ),
-      ModerationPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.moderationPage,
-            child: ModerationPage(),
-          ),
-      NotificationPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.notificationPage,
-            child: NotificationPage(),
-          ),
-      DeleteAccountPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.deleteAccountPage,
-            child: DeleteAccountPage(),
-          ),
-      ParticipationCharterPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.participationCharterPage,
-            child: ParticipationCharterPage(),
-          ),
-      ProfilInformationsPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.profileDemographicInformationPage,
-            child: ProfilInformationsPage(),
-          ),
-      // Demographique
-      DemographicInformationPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.demographicInformationPage,
-            child: DemographicInformationPage(),
-          ),
-      DemographicQuestionPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.demographicQuestionPage,
-            child: DemographicQuestionPage(),
-          ),
-      DemographicProfilPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.demographicProfilePage,
-            child: DemographicProfilPage(),
-          ),
-      // Webview
-      WebviewPage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.webviewPage,
-            child: WebviewPage(),
-          ),
-      // Welcome Page
-      WelcomePage.routeName: (context) => AgoraTracker(
-            widgetName: AnalyticsScreenNames.welcomePage,
-            child: WelcomePage(),
-          ),
-    };
-  }
-
   static MaterialPageRoute<dynamic> handleAgoraGenerateRoute({
     required RouteSettings settings,
     required SharedPreferences sharedPref,
@@ -110,61 +42,70 @@ class AgoraAppRouter {
     required DeeplinkHelper deepLinkHelper,
     required String agoraAppIcon,
   }) {
-    Widget currentRoute;
+    Widget currentPage;
     switch (settings.name) {
       case SplashPage.routeName:
-        currentRoute = SplashPage(
+        currentPage = SplashPage(
           sharedPref: sharedPref,
           deepLinkHelper: deepLinkHelper,
           onRedirect: onRedirect,
           agoraAppIcon: agoraAppIcon,
         );
         break;
+      case OnboardingPage.routeName:
+        currentPage = AgoraTracker(widgetName: AnalyticsScreenNames.onboardingPage, child: OnboardingPage());
+        break;
       // Consultation
+      case ConsultationsPage.routeName:
+        currentPage = MainBottomNavigationBar(startPage: NavigationPage.consultation);
+        break;
       case DynamicConsultationPage.routeName:
         final arguments = settings.arguments as DynamicConsultationPageArguments;
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${arguments.consultationIdOrSlug}",
           child: DynamicConsultationPage(arguments),
         );
         break;
       case DynamicConsultationResultsPage.routeName:
         final id = settings.arguments as String;
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationDetailsPage} $id",
           child: DynamicConsultationResultsPage(id),
         );
         break;
+      case QagsPage.routeName:
+        currentPage = MainBottomNavigationBar(startPage: NavigationPage.qag);
+        break;
       case DynamicConsultationUpdatePage.routeName:
         final argument = settings.arguments as DynamicConsultationUpdateArguments;
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationDetailsPage} ${argument.updateId}",
           child: DynamicConsultationUpdatePage(argument),
         );
         break;
       case ConsultationQuestionPage.routeName:
         final arguments = settings.arguments as ConsultationQuestionArguments;
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: "${AnalyticsScreenNames.consultationQuestionPage} ${arguments.consultationId}",
           child: ConsultationQuestionPage(arguments: arguments),
         );
         break;
       case AppFeedbackPage.routeName:
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: AnalyticsScreenNames.appFeedbackPage,
           child: AppFeedbackPage(),
         );
         break;
       case ConsultationFinishedPaginatedPage.routeName:
         final arguments = settings.arguments as ConsultationPaginatedPageType;
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: AnalyticsScreenNames.consultationsFinishedPaginatedPage,
           child: ConsultationFinishedPaginatedPage(arguments),
         );
         break;
       case ConsultationQuestionConfirmationPage.routeName:
         final arguments = settings.arguments as ConsultationQuestionConfirmationArguments;
-        currentRoute = BlocProvider.value(
+        currentPage = BlocProvider.value(
           value: arguments.consultationQuestionsResponsesBloc,
           child: AgoraTracker(
             widgetName: AnalyticsScreenNames.consultationQuestionConfirmationPage,
@@ -175,30 +116,34 @@ class AgoraAppRouter {
           ),
         );
         break;
-
       // Qag
       case QagDetailsPage.routeName:
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagDetailsPage,
           child: QagDetailsPage(arguments: settings.arguments as QagDetailsArguments),
         );
         break;
       case QagDetailsDeleteConfirmationPage.routeName:
         final arguments = settings.arguments as QagDetailsDeleteConfirmationArguments;
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagDetailsDeletePage,
           child: QagDetailsDeleteConfirmationPage(arguments: arguments),
         );
         break;
+      case QagAskQuestionPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.qagAskQuestionPage,
+          child: QagAskQuestionPage(),
+        );
       case SearchPageFromAskQuestionPage.routeName:
-        currentRoute = AgoraTracker(
+        currentPage = AgoraTracker(
           widgetName: AnalyticsScreenNames.qagsSearchFromAskPage,
           child: SearchPageFromAskQuestionPage(),
         );
         break;
       case DemographicConfirmationPage.routeName:
         final arguments = settings.arguments as DemographicConfirmationArguments;
-        currentRoute = BlocProvider.value(
+        currentPage = BlocProvider.value(
           value: arguments.demographicResponsesStockBloc,
           child: AgoraTracker(
             widgetName: AnalyticsScreenNames.demographicConfirmationPage,
@@ -209,12 +154,78 @@ class AgoraAppRouter {
           ),
         );
         break;
+      case ReponsesPage.routeName:
+        currentPage = MainBottomNavigationBar(startPage: NavigationPage.reponse);
+        break;
+      case ProfilPage.routeName:
+        currentPage = MainBottomNavigationBar(startPage: NavigationPage.profil);
+        break;
+      case ModerationPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.moderationPage,
+          child: ModerationPage(),
+        );
+        break;
+      case NotificationPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.notificationPage,
+          child: NotificationPage(),
+        );
+        break;
+      case DeleteAccountPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.deleteAccountPage,
+          child: DeleteAccountPage(),
+        );
+        break;
+      case ParticipationCharterPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.participationCharterPage,
+          child: ParticipationCharterPage(),
+        );
+        break;
+      case ProfilInformationsPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.profileDemographicInformationPage,
+          child: ProfilInformationsPage(),
+        );
+        break;
+      case DemographicInformationPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.demographicInformationPage,
+          child: DemographicInformationPage(),
+        );
+        break;
+      case DemographicQuestionPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.demographicQuestionPage,
+          child: DemographicQuestionPage(),
+        );
+        break;
+      case DemographicProfilPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.demographicProfilePage,
+          child: DemographicProfilPage(),
+        );
+        break;
+      case WebviewPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.webviewPage,
+          child: WebviewPage(),
+        );
+        break;
+      case WelcomePage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.welcomePage,
+          child: WelcomePage(),
+        );
+        break;
       default:
         throw Exception("Route doesn't exist: ${settings.name}");
     }
     return MaterialPageRoute(
       settings: RouteSettings(name: settings.name),
-      builder: (_) => currentRoute,
+      builder: (_) => currentPage,
     );
   }
 }

@@ -13,4 +13,17 @@ extension QagPaginatedFilterExtension on QagListFilter {
         return "supporting";
     }
   }
+
+  String toFilterLabel() {
+    switch (this) {
+      case QagListFilter.trending:
+        return "Tendances";
+      case QagListFilter.top:
+        return "Le top";
+      case QagListFilter.latest:
+        return "Récentes";
+      case QagListFilter.supporting:
+        return "Suivies";
+    }
+  }
 }

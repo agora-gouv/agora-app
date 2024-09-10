@@ -4,16 +4,16 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/qag_list_filter_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
-import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/qag/domain/header_qag.dart';
-import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag.dart';
+import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
-import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -504,6 +504,7 @@ class QagDioRepository extends QagRepository {
         id: qag["qagId"] as String,
         thematique: (qag["thematique"] as Map).toThematique(),
         title: qag["title"] as String,
+        description: qag["description"] as String? ?? "",
         username: qag["username"] as String,
         date: (qag["date"] as String).parseToDateTime(),
         supportCount: support["count"] as int,

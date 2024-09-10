@@ -28,7 +28,7 @@ class AgoraCheckbox extends StatelessWidget {
             onChanged(!value);
           },
           child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 48, minHeight: 48),
+            constraints: BoxConstraints(minWidth: 44, minHeight: 44),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -43,11 +43,7 @@ class AgoraCheckbox extends StatelessWidget {
                     side: BorderSide(width: 2, color: AgoraColors.primaryBlue),
                     fillColor: WidgetStateProperty.all(value ? AgoraColors.primaryBlue : AgoraColors.transparent),
                     value: value,
-                    onChanged: (newValue) {
-                      if (newValue != null) {
-                        onChanged(newValue);
-                      }
-                    },
+                    onChanged: null,
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.x0_5),

@@ -18,7 +18,7 @@ class DynamicConsultation extends Equatable {
   final ConsultationDownloadInfo? downloadInfo;
   final ConsultationFeedbackQuestion? feedbackQuestion;
   final ConsultationFeedbackResults? feedbackResult;
-  final List<ConsultationHistoryStep>? history;
+  final List<ConsultationHistoryStep> history;
   final ConsultationFooter? footer;
   final List<ConsultationGoal>? goals;
 

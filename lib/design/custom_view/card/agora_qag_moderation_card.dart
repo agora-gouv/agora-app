@@ -1,15 +1,15 @@
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/string_utils.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
 
 class AgoraQagModerationCard extends StatelessWidget {
@@ -92,16 +92,16 @@ class AgoraQagModerationCard extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: AgoraButton(
+                    child: AgoraButton.withLabel(
                       label: QagStrings.refuse,
                       isLoading: refuseLoading,
-                      buttonStyle: AgoraButtonStyle.blueBorder,
+                      buttonStyle: AgoraButtonStyle.secondary,
                       onPressed: () => onRefuse(),
                     ),
                   ),
                   SizedBox(width: AgoraSpacings.base),
                   Expanded(
-                    child: AgoraButton(
+                    child: AgoraButton.withLabel(
                       label: QagStrings.validate,
                       isLoading: validateLoading,
                       buttonStyle: AgoraButtonStyle.primary,

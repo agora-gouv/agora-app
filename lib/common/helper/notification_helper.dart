@@ -23,7 +23,7 @@ class NotificationHelper {
               Text(notificationDescription, style: AgoraTextStyles.light16),
               SizedBox(height: AgoraSpacings.x0_75),
             ],
-            AgoraButton(
+            AgoraButton.withLabel(
               label: GenericStrings.close,
               buttonStyle: AgoraButtonStyle.primary,
               onPressed: () => Navigator.pop(context),

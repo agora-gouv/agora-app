@@ -5,6 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
+import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_menu_item.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -32,6 +33,7 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+  final firstFocusableElementKey = GlobalKey();
   var shouldReloadQagsPage = false;
 
   @override
@@ -65,20 +67,24 @@ class _ProfilPageState extends State<ProfilPage> {
                       return Container();
                     }
                     final isFirstDisplay = snapshot.data!;
-                    return AgoraMenuItem(
-                      title: ProfileStrings.myInformation,
-                      onClick: () {
-                        _track(AnalyticsEventNames.myInformation);
-                        if (isFirstDisplay) {
-                          StorageManager.getProfileDemographicStorageClient().save(false);
-                          Navigator.pushNamed(context, ProfilInformationsPage.routeName);
-                          setState(() {
-                            // utils to reload isFirstDisplay after saving in storage client
-                          });
-                        } else {
-                          Navigator.pushNamed(context, DemographicProfilPage.routeName);
-                        }
-                      },
+                    return AgoraFocusHelper(
+                      elementKey: firstFocusableElementKey,
+                      child: AgoraMenuItem(
+                        key: firstFocusableElementKey,
+                        title: ProfileStrings.myInformation,
+                        onClick: () {
+                          _track(AnalyticsEventNames.myInformation);
+                          if (isFirstDisplay) {
+                            StorageManager.getProfileDemographicStorageClient().save(false);
+                            Navigator.pushNamed(context, ProfilInformationsPage.routeName);
+                            setState(() {
+                              // utils to reload isFirstDisplay after saving in storage client
+                            });
+                          } else {
+                            Navigator.pushNamed(context, DemographicProfilPage.routeName);
+                          }
+                        },
+                      ),
                     );
                   },
                 ),
@@ -165,7 +171,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         SizedBox(height: AgoraSpacings.x0_75),
                         Text(ProfileStrings.feedbackTipsDescription, style: AgoraTextStyles.light14),
                         SizedBox(height: AgoraSpacings.x1_25),
-                        AgoraButton(
+                        AgoraButton.withLabel(
                           label: ProfileStrings.feedbackTipsButton,
                           buttonStyle: AgoraButtonStyle.primary,
                           onPressed: () {

@@ -51,9 +51,9 @@ class QagsModeratedErrorContent extends StatelessWidget {
                   onTap: () => LaunchUrlHelper.mailtoAgora(),
                 ),
                 SizedBox(height: AgoraSpacings.x2),
-                AgoraButton(
+                AgoraButton.withLabel(
                   label: QagStrings.qagModerateSeeOther,
-                  buttonStyle: AgoraButtonStyle.blueBorder,
+                  buttonStyle: AgoraButtonStyle.secondary,
                   onPressed: () => Navigator.pop(context),
                 ),
               ],

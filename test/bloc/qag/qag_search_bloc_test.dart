@@ -28,6 +28,7 @@ void main() {
           qags: [
             Qag(
               id: "id0",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title0",
               username: "username0",
@@ -81,6 +82,7 @@ void main() {
           qags: [
             Qag(
               id: "id0",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title0",
               username: "username0",
@@ -108,6 +110,7 @@ void main() {
           qags: [
             Qag(
               id: "id0",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title0",
               username: "username0",
@@ -122,6 +125,7 @@ void main() {
           qags: [
             Qag(
               id: "id0",
+              description: "description",
               thematique: Thematique(picto: "🚊", label: "Transports"),
               title: "title0",
               username: "username0",

@@ -45,43 +45,63 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Stack(
-          children: [
-            Text(
-              widget.data,
-              style: widget.style,
-              textAlign: widget.textAlign,
-              maxLines: _isExpanded ? null : widget.trimLines,
-            ),
-            if (!_isExpanded)
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: AgoraSpacings.x2,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [widget.backgroundColor.withOpacity(0), widget.backgroundColor],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+    final text = TextSpan(style: widget.style, text: widget.data);
+    final TextPainter textPainter = TextPainter(
+      text: text,
+      textAlign: widget.textAlign,
+      locale: Localizations.localeOf(context),
+      textDirection: TextDirection.ltr,
+    );
+    const double minWidth = 0;
+    final double maxWidth = MediaQuery.of(context).size.width - AgoraSpacings.horizontalPadding * 2;
+    textPainter.layout(maxWidth: maxWidth, minWidth: minWidth);
+    final lines = textPainter.computeLineMetrics().length;
+    if (lines > widget.trimLines) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
+            children: [
+              Text(
+                widget.data,
+                style: widget.style,
+                textAlign: widget.textAlign,
+                maxLines: _isExpanded ? null : widget.trimLines,
+              ),
+              if (!_isExpanded)
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: AgoraSpacings.x2,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [widget.backgroundColor.withOpacity(0), widget.backgroundColor],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
-        ),
-        const SizedBox(height: AgoraSpacings.x0_5),
-        ShowMoreButton(
-          onTap: _onReadMoreLink,
-          label: _isExpanded ? 'Lire moins' : 'Lire la suite',
-          horizontalPadding: 0,
-        ),
-      ],
-    );
+            ],
+          ),
+          const SizedBox(height: AgoraSpacings.x0_5),
+          ShowMoreButton(
+            onTap: _onReadMoreLink,
+            label: _isExpanded ? 'Lire moins' : 'Lire la suite',
+            horizontalPadding: 0,
+          ),
+        ],
+      );
+    } else {
+      return Text(
+        widget.data,
+        style: widget.style,
+        textAlign: widget.textAlign,
+        maxLines: _isExpanded ? null : widget.trimLines,
+      );
+    }
   }
 }
 
@@ -102,9 +122,9 @@ class ShowMoreButton extends StatelessWidget {
       alignment: Alignment.bottomLeft,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: horizontalPadding),
-        child: AgoraButton(
+        child: AgoraButton.withLabel(
           label: label,
-          buttonStyle: AgoraButtonStyle.blueBorder,
+          buttonStyle: AgoraButtonStyle.secondary,
           onPressed: onTap,
         ),
       ),

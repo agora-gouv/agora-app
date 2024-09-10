@@ -48,12 +48,10 @@ class _AgoraVideoViewState extends State<AgoraVideoView> {
       allowedScreenSleep: false,
       allowFullScreen: true,
       aspectRatio: videoAspectRatio,
-      customControls: widget.isTalkbackEnabled
-          ? AgoraVideoControls(
-              backgroundColor: Colors.black,
-              iconColor: Colors.white,
-            )
-          : null,
+      customControls: AgoraVideoControls(
+        backgroundColor: Colors.black,
+        iconColor: Colors.white,
+      ),
       hideControlsTimer: widget.isTalkbackEnabled ? Duration(days: 1) : Duration(seconds: 3),
       showControls: true,
     );

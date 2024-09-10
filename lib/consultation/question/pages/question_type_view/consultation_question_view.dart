@@ -83,12 +83,14 @@ class ConsultationQuestionView extends StatelessWidget {
                             SizedBox(width: AgoraSpacings.x0_25),
                             AgoraMoreInformation(
                               onClick: () {
-                                showAgoraBottomSheet(
+                                showModalBottomSheet(
                                   context: context,
-                                  columnChildren: [
-                                    AgoraHtml(data: popupDescription!),
-                                    SizedBox(height: AgoraSpacings.x0_75),
-                                  ],
+                                  isScrollControlled: true,
+                                  backgroundColor: AgoraColors.transparent,
+                                  builder: (context) => AgoraInformationBottomSheet(
+                                    title: "Informations",
+                                    description: AgoraHtml(data: popupDescription!, textAlign: TextAlign.center),
+                                  ),
                                 );
                               },
                             ),

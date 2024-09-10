@@ -81,14 +81,14 @@ class _Step2Screen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              AgoraButton(
+                              AgoraButton.withLabel(
                                 label: ConsultationStrings.previousQuestion,
                                 semanticLabel: SemanticsStrings.previousQuestion,
-                                buttonStyle: AgoraButtonStyle.blueBorder,
+                                buttonStyle: AgoraButtonStyle.secondary,
                                 onPressed: onPrevious,
                               ),
                               const SizedBox(width: AgoraSpacings.base),
-                              AgoraButton(
+                              AgoraButton.withLabel(
                                 label: ConsultationStrings.validate,
                                 semanticLabel: ConsultationStrings.validate,
                                 buttonStyle: AgoraButtonStyle.primary,
@@ -168,7 +168,7 @@ class _MailQuestionScreen extends StatelessWidget {
                         children: [
                           Text(FeedbackStrings.mailSubTitle, style: AgoraTextStyles.medium14),
                           SizedBox(height: AgoraSpacings.x3),
-                          AgoraButton(
+                          AgoraButton.withLabel(
                             label: FeedbackStrings.mailHint,
                             semanticLabel: FeedbackStrings.mailHint,
                             buttonStyle: AgoraButtonStyle.primary,
@@ -177,10 +177,10 @@ class _MailQuestionScreen extends StatelessWidget {
                             },
                           ),
                           SizedBox(height: AgoraSpacings.base),
-                          AgoraButton(
+                          AgoraButton.withLabel(
                             label: FeedbackStrings.mailButtonLabel,
                             semanticLabel: FeedbackStrings.mailButtonLabel,
-                            buttonStyle: AgoraButtonStyle.blueBorder,
+                            buttonStyle: AgoraButtonStyle.secondary,
                             onPressed: () {
                               context.read<AppFeedbackBloc>().add(AppFeedbackMailSentEvent());
                             },

@@ -15,10 +15,10 @@ void main() {
       build: () => QagSupportBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
-      act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId)),
+      act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId, supportCount: 1, isSupported: true)),
       expect: () => [
         QagSupportLoadingState(),
-        QagSupportSuccessState(qagId: qagId),
+        QagSupportSuccessState(qagId: qagId, supportCount: 2, isSupported: false),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -28,7 +28,7 @@ void main() {
       build: () => QagSupportBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
-      act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId)),
+      act: (bloc) => bloc.add(SupportQagEvent(qagId: qagId, supportCount: 1, isSupported: true)),
       expect: () => [
         QagSupportLoadingState(),
         QagSupportErrorState(qagId: qagId),
@@ -43,10 +43,10 @@ void main() {
       build: () => QagSupportBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
-      act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId)),
+      act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId, supportCount: 1, isSupported: true)),
       expect: () => [
-        QagDeleteSupportLoadingState(),
-        QagDeleteSupportSuccessState(qagId: qagId),
+        QagSupportLoadingState(),
+        QagSupportSuccessState(qagId: qagId, supportCount: 0, isSupported: false),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -56,10 +56,10 @@ void main() {
       build: () => QagSupportBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
-      act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId)),
+      act: (bloc) => bloc.add(DeleteSupportQagEvent(qagId: qagId, supportCount: 0, isSupported: false)),
       expect: () => [
-        QagDeleteSupportLoadingState(),
-        QagDeleteSupportErrorState(qagId: qagId),
+        QagSupportLoadingState(),
+        QagSupportErrorState(qagId: qagId),
       ],
       wait: const Duration(milliseconds: 5),
     );

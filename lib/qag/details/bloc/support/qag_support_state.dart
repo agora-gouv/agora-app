@@ -11,37 +11,23 @@ class QagSupportLoadingState extends QagSupportState {}
 
 class QagSupportSuccessState extends QagSupportState {
   final String qagId;
+  final bool isSupported;
+  final int supportCount;
 
-  QagSupportSuccessState({required this.qagId});
+  QagSupportSuccessState({
+    required this.qagId,
+    required this.isSupported,
+    required this.supportCount,
+  });
 
   @override
-  List<Object> get props => [qagId];
+  List<Object> get props => [qagId, isSupported, supportCount];
 }
 
 class QagSupportErrorState extends QagSupportState {
   final String qagId;
 
   QagSupportErrorState({required this.qagId});
-
-  @override
-  List<Object> get props => [qagId];
-}
-
-class QagDeleteSupportLoadingState extends QagSupportState {}
-
-class QagDeleteSupportSuccessState extends QagSupportState {
-  final String qagId;
-
-  QagDeleteSupportSuccessState({required this.qagId});
-
-  @override
-  List<Object> get props => [qagId];
-}
-
-class QagDeleteSupportErrorState extends QagSupportState {
-  final String qagId;
-
-  QagDeleteSupportErrorState({required this.qagId});
 
   @override
   List<Object> get props => [qagId];

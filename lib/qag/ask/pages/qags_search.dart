@@ -4,7 +4,7 @@ import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/button/agora_rounded_button.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -23,7 +23,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class QagSearch extends StatelessWidget {
   final bool fromHome;
 
-  QagSearch([this.fromHome = true]);
+  QagSearch({this.fromHome = true});
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +42,23 @@ class QagSearch extends StatelessWidget {
   }
 }
 
-class _QagSearchListView extends StatelessWidget {
+class _QagSearchListView extends StatefulWidget {
   final List<QagDisplayModel> viewModel;
 
-  const _QagSearchListView({required this.viewModel});
+  _QagSearchListView({required this.viewModel});
+
+  @override
+  State<_QagSearchListView> createState() => _QagSearchListViewState();
+}
+
+class _QagSearchListViewState extends State<_QagSearchListView> {
+  List<GlobalKey> likeViewKeys = [];
+
+  @override
+  void initState() {
+    likeViewKeys = List.generate(widget.viewModel.length, (index) => GlobalKey());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +71,15 @@ class _QagSearchListView extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: viewModel.length,
+        itemCount: widget.viewModel.length,
         itemBuilder: (context, index) {
-          final item = viewModel[index];
+          final item = widget.viewModel[index];
           return BlocProvider.value(
             value: QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
             child: Column(
               children: [
                 QagsSupportableCard(
+                  likeViewKey: likeViewKeys[index],
                   qagViewModel: item,
                   widgetName: AnalyticsScreenNames.qagsPage,
                   onQagSupportChange: (qagSupport) {
@@ -106,7 +120,7 @@ class _EmptyView extends StatelessWidget {
           right: AgoraSpacings.base,
         ),
         child: Text(
-          QagStrings.searchQagEnterSomeCharacteres,
+          QagStrings.searchQagEnterSomeChar,
           style: AgoraTextStyles.regular14,
           textAlign: TextAlign.center,
         ),
@@ -135,7 +149,7 @@ class _NoResultView extends StatelessWidget {
               style: AgoraTextStyles.regular14,
             ),
             const SizedBox(height: AgoraSpacings.base),
-            AgoraRoundedButton(
+            AgoraButton.withLabel(
               label: QagStrings.askQuestion,
               onPressed: () {
                 TrackerHelper.trackClick(

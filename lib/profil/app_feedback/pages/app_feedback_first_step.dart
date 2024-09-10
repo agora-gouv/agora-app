@@ -130,7 +130,7 @@ class _FirstStepScreenState extends State<_FirstStepScreen> {
                           if (choice != null)
                             Align(
                               alignment: Alignment.bottomRight,
-                              child: AgoraButton(
+                              child: AgoraButton.withLabel(
                                 label: ConsultationStrings.nextQuestion,
                                 semanticLabel: SemanticsStrings.nextQuestion,
                                 buttonStyle: AgoraButtonStyle.primary,

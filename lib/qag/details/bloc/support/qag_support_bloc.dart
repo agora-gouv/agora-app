@@ -18,7 +18,13 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     emit(QagSupportLoadingState());
     final response = await qagRepository.supportQag(qagId: event.qagId);
     if (response is SupportQagSucceedResponse) {
-      emit(QagSupportSuccessState(qagId: event.qagId));
+      emit(
+        QagSupportSuccessState(
+          qagId: event.qagId,
+          supportCount: event.supportCount + 1,
+          isSupported: !event.isSupported,
+        ),
+      );
     } else {
       emit(QagSupportErrorState(qagId: event.qagId));
     }
@@ -28,12 +34,18 @@ class QagSupportBloc extends Bloc<QagSupportEvent, QagSupportState> {
     DeleteSupportQagEvent event,
     Emitter<QagSupportState> emit,
   ) async {
-    emit(QagDeleteSupportLoadingState());
+    emit(QagSupportLoadingState());
     final response = await qagRepository.deleteSupportQag(qagId: event.qagId);
     if (response is DeleteSupportQagSucceedResponse) {
-      emit(QagDeleteSupportSuccessState(qagId: event.qagId));
+      emit(
+        QagSupportSuccessState(
+          qagId: event.qagId,
+          supportCount: event.supportCount - 1,
+          isSupported: !event.isSupported,
+        ),
+      );
     } else {
-      emit(QagDeleteSupportErrorState(qagId: event.qagId));
+      emit(QagSupportErrorState(qagId: event.qagId));
     }
   }
 }

@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraButton extends StatelessWidget {
   final bool isLoading;
-  final String label;
+  final String? label;
   final String? semanticLabel;
   final String? prefixIcon;
   final ColorFilter? prefixIconColorFilter;
@@ -16,11 +16,14 @@ class AgoraButton extends StatelessWidget {
   final AgoraButtonStyle buttonStyle;
   final bool expanded;
   final bool isDisabled;
+  final List<Widget> children;
   final void Function()? onPressed;
 
-  AgoraButton({
+  AgoraButton.withLabel({
+    super.key,
     this.isLoading = false,
     required this.label,
+    this.children = const [],
     this.semanticLabel,
     this.prefixIcon,
     this.prefixIconColorFilter,
@@ -30,12 +33,28 @@ class AgoraButton extends StatelessWidget {
     this.expanded = false,
     this.isDisabled = false,
     required this.onPressed,
-  });
+  }) : assert(label != null);
+
+  AgoraButton.withChildren({
+    super.key,
+    this.isLoading = false,
+    this.label,
+    required this.children,
+    this.semanticLabel,
+    this.prefixIcon,
+    this.prefixIconColorFilter,
+    this.suffixIcon,
+    this.suffixIconColorFilter,
+    this.buttonStyle = AgoraButtonStyle.primary,
+    this.expanded = false,
+    this.isDisabled = false,
+    required this.onPressed,
+  }) : assert(children.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
     final borderShape =
-        RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded), side: _getBorder(buttonStyle));
+        RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded12), side: _getBorder(buttonStyle));
     Widget child;
     if (isLoading) {
       child = Center(child: CircularProgressIndicator());
@@ -51,34 +70,19 @@ class AgoraButton extends StatelessWidget {
             customBorder: borderShape,
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: 48,
-                minWidth: 48,
+                minHeight: 44,
+                minWidth: 44,
               ),
               child: Ink(
                 padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-                child: Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    if (prefixIcon != null) ...[
-                      SvgPicture.asset(
-                        "assets/${prefixIcon!}",
-                        excludeFromSemantics: true,
-                        colorFilter: prefixIconColorFilter,
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                    Text(label, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
-                    if (suffixIcon != null) ...[
-                      const SizedBox(width: 8),
-                      SvgPicture.asset(
-                        "assets/${suffixIcon!}",
-                        excludeFromSemantics: true,
-                        colorFilter: suffixIconColorFilter,
-                      ),
-                    ],
-                  ],
+                child: _Content(
+                  label: label,
+                  prefixIcon: prefixIcon,
+                  prefixIconColorFilter: prefixIconColorFilter,
+                  suffixIcon: suffixIcon,
+                  suffixIconColorFilter: suffixIconColorFilter,
+                  buttonStyle: buttonStyle,
+                  children: children,
                 ),
               ),
             ),
@@ -112,9 +116,8 @@ Color _getBackgroundColor(AgoraButtonStyle style, bool isDisabled) {
   } else {
     return switch (style) {
       AgoraButtonStyle.primary => AgoraColors.primaryBlue,
-      AgoraButtonStyle.blueBorder || AgoraButtonStyle.redBorder => AgoraColors.transparent,
-      AgoraButtonStyle.grey || AgoraButtonStyle.lightGreyWithBorder => AgoraColors.steam,
-      AgoraButtonStyle.lightGrey => AgoraColors.cascadingWhite,
+      AgoraButtonStyle.secondary || AgoraButtonStyle.redBorder => AgoraColors.transparent,
+      AgoraButtonStyle.tertiary => AgoraColors.transparent,
     };
   }
 }
@@ -122,29 +125,81 @@ Color _getBackgroundColor(AgoraButtonStyle style, bool isDisabled) {
 TextStyle _getTextStyle(AgoraButtonStyle style) {
   return switch (style) {
     AgoraButtonStyle.primary => AgoraTextStyles.primaryButton,
-    AgoraButtonStyle.blueBorder => AgoraTextStyles.primaryBlueTextButton,
+    AgoraButtonStyle.secondary => AgoraTextStyles.secondaryButton,
+    AgoraButtonStyle.tertiary => AgoraTextStyles.tertiaryButton,
     AgoraButtonStyle.redBorder => AgoraTextStyles.redTextButton,
-    AgoraButtonStyle.grey ||
-    AgoraButtonStyle.lightGrey ||
-    AgoraButtonStyle.lightGreyWithBorder =>
-      AgoraTextStyles.lightGreyButton,
   };
 }
 
 BorderSide _getBorder(AgoraButtonStyle style) {
   return switch (style) {
-    AgoraButtonStyle.primary || AgoraButtonStyle.grey || AgoraButtonStyle.lightGrey => BorderSide.none,
-    AgoraButtonStyle.blueBorder => BorderSide(color: AgoraColors.primaryBlue, width: 1.0, style: BorderStyle.solid),
+    AgoraButtonStyle.primary => BorderSide.none,
+    AgoraButtonStyle.secondary => BorderSide(color: AgoraColors.primaryBlue, width: 1.0, style: BorderStyle.solid),
+    AgoraButtonStyle.tertiary => BorderSide(color: AgoraColors.border, width: 1, style: BorderStyle.solid),
     AgoraButtonStyle.redBorder => BorderSide(color: AgoraColors.red, width: 1.0, style: BorderStyle.solid),
-    AgoraButtonStyle.lightGreyWithBorder => BorderSide(color: AgoraColors.border, width: 1, style: BorderStyle.solid),
   };
 }
 
 enum AgoraButtonStyle {
   primary,
-  blueBorder,
+  secondary,
+  tertiary,
   redBorder,
-  grey,
-  lightGrey,
-  lightGreyWithBorder,
+}
+
+class _Content extends StatelessWidget {
+  final String? label;
+  final String? prefixIcon;
+  final ColorFilter? prefixIconColorFilter;
+  final String? suffixIcon;
+  final ColorFilter? suffixIconColorFilter;
+  final AgoraButtonStyle buttonStyle;
+  final List<Widget> children;
+
+  const _Content({
+    required this.label,
+    required this.prefixIcon,
+    required this.prefixIconColorFilter,
+    required this.suffixIcon,
+    required this.suffixIconColorFilter,
+    required this.buttonStyle,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (children.isNotEmpty) {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        runAlignment: WrapAlignment.center,
+        alignment: WrapAlignment.center,
+        children: [if (children.isNotEmpty) ...children],
+      );
+    } else {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        runAlignment: WrapAlignment.center,
+        alignment: WrapAlignment.center,
+        children: [
+          if (prefixIcon != null) ...[
+            SvgPicture.asset(
+              "assets/${prefixIcon!}",
+              excludeFromSemantics: true,
+              colorFilter: prefixIconColorFilter,
+            ),
+            const SizedBox(width: 8),
+          ],
+          Text(label!, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
+          if (suffixIcon != null) ...[
+            const SizedBox(width: 8),
+            SvgPicture.asset(
+              "assets/${suffixIcon!}",
+              excludeFromSemantics: true,
+              colorFilter: suffixIconColorFilter,
+            ),
+          ],
+        ],
+      );
+    }
+  }
 }
