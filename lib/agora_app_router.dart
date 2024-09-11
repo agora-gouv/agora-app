@@ -224,7 +224,7 @@ class AgoraAppRouter {
         throw Exception("Route doesn't exist: ${settings.name}");
     }
     return MaterialPageRoute(
-      settings: RouteSettings(name: settings.name),
+      settings: settings,
       builder: (_) => currentPage,
     );
   }
