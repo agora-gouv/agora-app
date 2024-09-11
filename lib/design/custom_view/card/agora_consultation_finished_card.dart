@@ -41,32 +41,32 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double carrouselWidth;
+    double cardWidth;
     switch (style) {
       case AgoraConsultationFinishedStyle.carrousel:
-        carrouselWidth = max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth);
+        cardWidth = max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth);
         break;
       case AgoraConsultationFinishedStyle.column:
-        carrouselWidth = MediaQuery.of(context).size.width;
+        cardWidth = MediaQuery.of(context).size.width;
         break;
       case AgoraConsultationFinishedStyle.grid:
-        carrouselWidth = MediaQuery.of(context).size.width * 0.5;
+        cardWidth = MediaQuery.of(context).size.width * 0.5;
         break;
     }
 
-    Widget currentChild = _buildFinishedConsultationCard(context, carrouselWidth, true);
+    Widget currentChild = _buildFinishedConsultationCard(context, cardWidth, true);
     if (style == AgoraConsultationFinishedStyle.carrousel) {
-      currentChild = SizedBox(width: carrouselWidth, child: currentChild);
+      currentChild = SizedBox(width: cardWidth, child: currentChild);
     }
     return currentChild;
   }
 
   Widget _buildFinishedConsultationCard(
     BuildContext context,
-    double carrouselWidth,
+    double cardWidth,
     bool isButton,
   ) {
-    final image = _buildImage(context, carrouselWidth);
+    final image = _buildImage(context, cardWidth);
     return Semantics(
       tooltip: "Élément $index sur $maxIndex",
       button: isButton,
@@ -117,20 +117,20 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     );
   }
 
-  Image _buildImage(BuildContext context, double carrouselWidth) {
+  Image _buildImage(BuildContext context, double cardWidth) {
     return Image.network(
       imageUrl,
       fit: BoxFit.fitWidth,
-      width: carrouselWidth,
-      height: carrouselWidth * 0.55,
+      width: cardWidth,
+      height: cardWidth * 0.4,
       excludeFromSemantics: true,
       loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
         return Center(
           child: loadingProgress == null
               ? child
               : SizedBox(
-                  width: carrouselWidth,
-                  height: carrouselWidth * 0.55,
+                  width: cardWidth,
+                  height: cardWidth * 0.4,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
