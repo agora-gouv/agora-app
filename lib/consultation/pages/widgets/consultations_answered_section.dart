@@ -85,10 +85,10 @@ class ConsultationsAnsweredSection extends StatelessWidget {
       answeredConsultationsWidgets.add(
         AgoraConsultationAnsweredCard(
           id: answeredViewModel.id,
-          title: answeredViewModel.title,
+          titre: answeredViewModel.title,
           thematique: answeredViewModel.thematique,
           imageUrl: answeredViewModel.coverUrl,
-          label: answeredViewModel.label,
+          flammeLabel: answeredViewModel.label,
         ),
       );
       answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));
