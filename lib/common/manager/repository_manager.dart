@@ -1,5 +1,3 @@
-import 'package:agora/profil/app_feedback/repository/app_feedback_repository.dart';
-import 'package:agora/profil/app_feedback/repository/mocks_app_feedback_repository.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/client/agora_http_client_adapter.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
@@ -11,6 +9,10 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/mock_consultation_repository.dart';
+import 'package:agora/login/repository/login_repository.dart';
+import 'package:agora/login/repository/mocks_login_repository.dart';
+import 'package:agora/profil/app_feedback/repository/app_feedback_repository.dart';
+import 'package:agora/profil/app_feedback/repository/mocks_app_feedback_repository.dart';
 import 'package:agora/profil/demographic/repository/demographic_repository.dart';
 import 'package:agora/profil/demographic/repository/mocks_demographic_repository.dart';
 import 'package:agora/profil/notification/repository/mocks_notification_repository.dart';
@@ -19,8 +21,6 @@ import 'package:agora/profil/participation_charter/repository/mocks_participatio
 import 'package:agora/qag/repository/mocks_qag_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/thematique/repository/thematique_repository.dart';
-import 'package:agora/login/repository/login_repository.dart';
-import 'package:agora/login/repository/mocks_login_repository.dart';
 import 'package:agora/welcome/repository/mocks_welcome_repository.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';
 import 'package:dio/dio.dart';
@@ -32,7 +32,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class RepositoryManager {
   static const String _baseUrl = "baseUrl";
-  static const String _rootCertificate = "rootCertificate";
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
   static const String _noAuthenticationDio = "noAuthenticationDio";
@@ -43,9 +42,8 @@ class RepositoryManager {
     deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
   );
 
-  static void initRepositoryManager({required String baseUrl, required Uint8List rootCertificate}) {
+  static void initRepositoryManager({required String baseUrl}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
-    GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
   }
 
   static Dio _getDio({SharedPreferences? sharedPref}) {
@@ -67,10 +65,7 @@ class RepositoryManager {
       ),
     );
     if (!kIsWeb && FlavorHelper.getFlavor() == AgoraFlavor.prod) {
-      dio.httpClientAdapter = AgoraHttpClientAdapter(
-        baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
-        rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),
-      );
+      dio.httpClientAdapter = AgoraHttpClientAdapter(baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl));
     }
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
     return dio;
