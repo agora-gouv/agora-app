@@ -1,8 +1,9 @@
 import 'dart:math';
 
-import 'package:agora/common/helper/thematique_helper.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
+import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
@@ -13,80 +14,102 @@ enum AgoraConsultationFinishedStyle { carrousel, column, grid }
 
 class AgoraConsultationFinishedCard extends StatelessWidget {
   final String id;
-  final String title;
+  final String titre;
   final String imageUrl;
   final ThematiqueViewModel thematique;
-  final String? label;
+  final String? flammeLabel;
   final AgoraConsultationFinishedStyle style;
-  final VoidCallback onClick;
   final bool isExternalLink;
   final int index;
   final int maxIndex;
   final bool fixedSize;
+  final void Function() onTap;
 
   AgoraConsultationFinishedCard({
     super.key,
     required this.id,
-    required this.title,
+    required this.titre,
     required this.imageUrl,
     required this.thematique,
-    required this.label,
+    required this.flammeLabel,
     required this.style,
-    required this.onClick,
     this.isExternalLink = false,
     required this.index,
     required this.maxIndex,
     this.fixedSize = true,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    double carrouselWidth;
+    double cardWidth;
+    double cardHeight;
     switch (style) {
       case AgoraConsultationFinishedStyle.carrousel:
-        carrouselWidth = max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth);
+        cardWidth = max(MediaQuery.of(context).size.width * 0.5, AgoraSpacings.carrouselMinWidth);
+        cardHeight = cardWidth * 0.55;
         break;
       case AgoraConsultationFinishedStyle.column:
-        carrouselWidth = MediaQuery.of(context).size.width;
+        cardWidth = MediaQuery.of(context).size.width;
+        cardHeight = cardWidth * 0.4;
         break;
       case AgoraConsultationFinishedStyle.grid:
-        carrouselWidth = MediaQuery.of(context).size.width * 0.5;
+        cardWidth = MediaQuery.of(context).size.width * 0.5;
+        cardHeight = cardWidth * 0.55;
         break;
     }
 
-    Widget currentChild = _buildFinishedConsultationCard(context, carrouselWidth, true);
+    Widget currentChild = _buildFinishedConsultationCard(context, cardWidth, cardHeight, true);
     if (style == AgoraConsultationFinishedStyle.carrousel) {
-      currentChild = SizedBox(width: carrouselWidth, child: currentChild);
+      currentChild = SizedBox(width: cardWidth, child: currentChild);
     }
     return currentChild;
   }
 
   Widget _buildFinishedConsultationCard(
     BuildContext context,
-    double carrouselWidth,
+    double cardWidth,
+    double cardHeight,
     bool isButton,
   ) {
-    final image = _buildImage(context, carrouselWidth);
+    final padding = style == AgoraConsultationFinishedStyle.carrousel
+        ? EdgeInsets.only(left: AgoraSpacings.x0_75, right: AgoraSpacings.x0_75, bottom: AgoraSpacings.x0_5)
+        : EdgeInsets.only(left: AgoraSpacings.base, right: AgoraSpacings.base, bottom: AgoraSpacings.x0_5);
     return Semantics(
       tooltip: "Élément $index sur $maxIndex",
       button: isButton,
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
         cardColor: AgoraColors.white,
-        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
-        onTap: () => onClick(),
+        padding: EdgeInsets.all(1),
+        onTap: () => onTap(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: fixedSize ? MainAxisSize.max : MainAxisSize.min,
           children: [
-            style == AgoraConsultationFinishedStyle.carrousel
-                ? Column(children: [image, SizedBox(height: AgoraSpacings.x0_5)])
-                : Padding(padding: const EdgeInsets.all(AgoraSpacings.base), child: image),
-            _buildPadding(child: ThematiqueHelper.buildCard(context, thematique)),
-            style == AgoraConsultationFinishedStyle.column
-                ? _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink))
-                : _buildPadding(child: _Title(title: title, isExternalLink: isExternalLink)),
-            if (label != null) ...[
+            Padding(
+              padding: style == AgoraConsultationFinishedStyle.carrousel
+                  ? const EdgeInsets.only(bottom: AgoraSpacings.x0_5)
+                  : const EdgeInsets.all(AgoraSpacings.base),
+              child: _Image(
+                imageUrl: imageUrl,
+                cardWidth: cardWidth,
+                cardHeight: cardHeight,
+              ),
+            ),
+            Padding(
+              padding: padding,
+              child: AgoraThematiqueLabel(
+                picto: thematique.picto,
+                label: thematique.label,
+                size: AgoraThematiqueSize.medium,
+              ),
+            ),
+            Padding(
+              padding: padding,
+              child: _Titre(title: titre, isExternalLink: isExternalLink),
+            ),
+            if (flammeLabel != null) ...[
               if (fixedSize) Spacer(),
               AgoraRoundedCard(
                 cardColor: AgoraColors.consultationLabelRed,
@@ -97,7 +120,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                   children: [
                     ExcludeSemantics(child: Text('🔥', style: AgoraTextStyles.regular16)),
                     SizedBox(width: AgoraSpacings.x0_25),
-                    Expanded(child: Text(label!, style: AgoraTextStyles.regular12)),
+                    Expanded(child: Text(flammeLabel!, style: AgoraTextStyles.regular12)),
                   ],
                 ),
               ),
@@ -107,54 +130,64 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildPadding({required Widget child}) {
-    return Padding(
-      padding: style == AgoraConsultationFinishedStyle.carrousel
-          ? EdgeInsets.only(left: AgoraSpacings.x0_75, right: AgoraSpacings.x0_75, bottom: AgoraSpacings.x0_5)
-          : EdgeInsets.only(left: AgoraSpacings.base, right: AgoraSpacings.base, bottom: AgoraSpacings.x0_5),
-      child: child,
-    );
-  }
+class _Image extends StatelessWidget {
+  final String imageUrl;
+  final double cardWidth;
+  final double cardHeight;
 
-  Image _buildImage(BuildContext context, double carrouselWidth) {
-    return Image.network(
-      imageUrl,
-      fit: BoxFit.fitWidth,
-      width: carrouselWidth,
-      height: carrouselWidth * 0.55,
-      excludeFromSemantics: true,
-      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-        return Center(
-          child: loadingProgress == null
-              ? child
-              : SizedBox(
-                  width: carrouselWidth,
-                  height: carrouselWidth * 0.55,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Spacer(),
-                      CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                      Spacer(),
-                    ],
+  const _Image({
+    required this.imageUrl,
+    required this.cardWidth,
+    required this.cardHeight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: AgoraCorners.rounded,
+        topRight: AgoraCorners.rounded,
+      ),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.fitWidth,
+        width: cardWidth,
+        height: cardHeight,
+        excludeFromSemantics: true,
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+          return Center(
+            child: loadingProgress == null
+                ? child
+                : SizedBox(
+                    width: cardWidth,
+                    height: cardHeight,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Spacer(),
+                        CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
                   ),
-                ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
 
-class _Title extends StatelessWidget {
+class _Titre extends StatelessWidget {
   final String title;
   final bool isExternalLink;
 
-  const _Title({required this.title, this.isExternalLink = false});
+  const _Titre({required this.title, this.isExternalLink = false});
 
   @override
   Widget build(BuildContext context) {

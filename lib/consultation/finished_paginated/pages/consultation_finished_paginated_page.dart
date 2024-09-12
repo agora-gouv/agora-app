@@ -95,12 +95,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                 Expanded(
                   child: AgoraConsultationFinishedCard(
                     id: finishedViewModel1.id,
-                    title: finishedViewModel1.title,
+                    titre: finishedViewModel1.title,
                     thematique: finishedViewModel1.thematique,
                     imageUrl: finishedViewModel1.coverUrl,
-                    label: finishedViewModel1.label,
+                    flammeLabel: finishedViewModel1.label,
                     style: AgoraConsultationFinishedStyle.grid,
-                    onClick: () => _onCardClick(
+                    onTap: () => _onCardClick(
                       context,
                       finishedViewModel1.id,
                       finishedViewModel1.title,
@@ -116,12 +116,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                     ? Expanded(
                         child: AgoraConsultationFinishedCard(
                           id: finishedViewModel2.id,
-                          title: finishedViewModel2.title,
+                          titre: finishedViewModel2.title,
                           thematique: finishedViewModel2.thematique,
                           imageUrl: finishedViewModel2.coverUrl,
-                          label: finishedViewModel2.label,
+                          flammeLabel: finishedViewModel2.label,
                           style: AgoraConsultationFinishedStyle.grid,
-                          onClick: () => _onCardClick(
+                          onTap: () => _onCardClick(
                             context,
                             finishedViewModel2!.id,
                             finishedViewModel2.title,
@@ -144,12 +144,12 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
         widgets.add(
           AgoraConsultationFinishedCard(
             id: finishedViewModel.id,
-            title: finishedViewModel.title,
+            titre: finishedViewModel.title,
             thematique: finishedViewModel.thematique,
             imageUrl: finishedViewModel.coverUrl,
-            label: finishedViewModel.label,
+            flammeLabel: finishedViewModel.label,
             style: AgoraConsultationFinishedStyle.column,
-            onClick: () => _onCardClick(
+            onTap: () => _onCardClick(
               context,
               finishedViewModel.id,
               finishedViewModel.title,
