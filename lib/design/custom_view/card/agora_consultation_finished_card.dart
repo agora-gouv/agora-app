@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
@@ -80,31 +81,22 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
       child: AgoraRoundedCard(
         borderColor: AgoraColors.border,
         cardColor: AgoraColors.white,
-        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 1),
+        padding: EdgeInsets.all(1),
         onTap: () => onTap(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: fixedSize ? MainAxisSize.max : MainAxisSize.min,
           children: [
-            style == AgoraConsultationFinishedStyle.carrousel
-                ? Column(
-                    children: [
-                      _Image(
-                        imageUrl: imageUrl,
-                        cardWidth: cardWidth,
-                        cardHeight: cardHeight,
-                      ),
-                      SizedBox(height: AgoraSpacings.x0_5),
-                    ],
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(AgoraSpacings.base),
-                    child: _Image(
-                      imageUrl: imageUrl,
-                      cardWidth: cardWidth,
-                      cardHeight: cardHeight,
-                    ),
-                  ),
+            Padding(
+              padding: style == AgoraConsultationFinishedStyle.carrousel
+                  ? const EdgeInsets.only(bottom: AgoraSpacings.x0_5)
+                  : const EdgeInsets.all(AgoraSpacings.base),
+              child: _Image(
+                imageUrl: imageUrl,
+                cardWidth: cardWidth,
+                cardHeight: cardHeight,
+              ),
+            ),
             Padding(
               padding: padding,
               child: AgoraThematiqueLabel(
@@ -153,34 +145,40 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      imageUrl,
-      fit: BoxFit.fitWidth,
-      width: cardWidth,
-      height: cardHeight,
-      excludeFromSemantics: true,
-      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-        return Center(
-          child: loadingProgress == null
-              ? child
-              : SizedBox(
-                  width: cardWidth,
-                  height: cardHeight,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Spacer(),
-                      CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                      Spacer(),
-                    ],
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: AgoraCorners.rounded,
+        topRight: AgoraCorners.rounded,
+      ),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.fitWidth,
+        width: cardWidth,
+        height: cardHeight,
+        excludeFromSemantics: true,
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+          return Center(
+            child: loadingProgress == null
+                ? child
+                : SizedBox(
+                    width: cardWidth,
+                    height: cardHeight,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Spacer(),
+                        CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
                   ),
-                ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
