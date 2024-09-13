@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:agora/common/helper/feature_flipping_helper.dart';
+import 'package:agora/design/custom_view/agora_badge.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -106,7 +108,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
             if (isTerritorialisationEnabled())
               Padding(
                 padding: padding,
-                child: AgoraBadge(),
+                child: AgoraBadge(label: badgeLabel, backgroundColor: badgeColor, textColor: badgeTextColor),
               ),
             Padding(
               padding: padding,
