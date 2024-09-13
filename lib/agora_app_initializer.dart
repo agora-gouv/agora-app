@@ -8,6 +8,7 @@ import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/observer/event_observer.dart';
 import 'package:agora/consultation/question/bloc/response/stock/consultation_question_response_hive.dart';
 import 'package:equatable/equatable.dart';
+import 'package:error_stack/error_stack.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,9 @@ class AgoraInitializer {
 
     final sharedPref = await SharedPreferences.getInstance();
     final isFirstConnection = await StorageManager.getOnboardingStorageClient().isFirstTime();
+
+    await ErrorStack.init();
+
     await SentryFlutter.init(
       (options) => options
         ..dsn = appConfig.sentryDsn

@@ -168,6 +168,7 @@ class _Image extends StatelessWidget {
         fit: BoxFit.fitWidth,
         width: cardWidth,
         height: cardHeight,
+        cacheWidth: 800,
         excludeFromSemantics: true,
         loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
           return Center(
