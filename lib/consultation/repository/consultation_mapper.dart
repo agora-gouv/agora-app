@@ -1,8 +1,14 @@
-import 'package:agora/consultation/question/domain/consultation_question_response.dart';
-import 'package:agora/consultation/domain/consultation_summary_results.dart';
+import 'dart:math';
 
-class ConsultationResponsesMapper {
-  static List<ConsultationSummaryResults> toConsultationSummaryResults({
+import 'package:agora/consultation/domain/consultation_summary_results.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
+import 'package:agora/territorialisation/departement.dart';
+import 'package:agora/territorialisation/pays.dart';
+import 'package:agora/territorialisation/region.dart';
+import 'package:agora/territorialisation/territoire.dart';
+
+class ConsultationMapper {
+  List<ConsultationSummaryResults> toConsultationSummaryResults({
     required List<dynamic> uniqueChoiceResults,
     required List<dynamic> multipleChoicesResults,
     required List<ConsultationQuestionResponses> userResponses,
@@ -16,7 +22,7 @@ class ConsultationResponsesMapper {
           questionTitle: uniqueChoiceResult["questionTitle"] as String,
           order: uniqueChoiceResult["order"] as int,
           seenRatio: uniqueChoiceResult["seenRatio"] as int,
-          responses: _buildSummaryResponses(uniqueChoiceResult, userResponses, questionId),
+          responses: _toConsultationSummaryResponses(uniqueChoiceResult, userResponses, questionId),
         ),
       );
     }
@@ -29,7 +35,7 @@ class ConsultationResponsesMapper {
           questionTitle: multipleChoicesResult["questionTitle"] as String,
           order: multipleChoicesResult["order"] as int,
           seenRatio: multipleChoicesResult["seenRatio"] as int,
-          responses: _buildSummaryResponses(multipleChoicesResult, userResponses, questionId),
+          responses: _toConsultationSummaryResponses(multipleChoicesResult, userResponses, questionId),
         ),
       );
     }
@@ -48,7 +54,7 @@ class ConsultationResponsesMapper {
     return summaryResults;
   }
 
-  static List<ConsultationSummaryResponse> _buildSummaryResponses(
+  List<ConsultationSummaryResponse> _toConsultationSummaryResponses(
     multipleChoicesResult,
     List<ConsultationQuestionResponses> userResponses,
     String questionId,
@@ -64,5 +70,19 @@ class ConsultationResponsesMapper {
         );
       },
     ).toList();
+  }
+
+  Territoire toTerritoire(String territoire) {
+    // Check Référentiel et créer une instance du bon type avec les bon paramètres
+    final random = Random().nextInt(3);
+    if (random == 0) {
+      return Departement(label: "Paris");
+    } else if (random == 1) {
+      return Region(label: "Ile-de-France", departements: []);
+    } else if (random == 2) {
+      return Pays(label: "National");
+    } else {
+      throw UnimplementedError();
+    }
   }
 }

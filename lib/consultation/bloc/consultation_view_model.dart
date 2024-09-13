@@ -1,5 +1,6 @@
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 class ConsultationViewModel extends Equatable {
   final String id;
@@ -8,6 +9,9 @@ class ConsultationViewModel extends Equatable {
   final String coverUrl;
   final ThematiqueViewModel thematique;
   final String? label;
+  final String badgeLabel;
+  final Color badgeColor;
+  final Color badgeTextColor;
 
   ConsultationViewModel({
     required this.id,
@@ -16,6 +20,9 @@ class ConsultationViewModel extends Equatable {
     required this.coverUrl,
     required this.thematique,
     required this.label,
+    required this.badgeLabel,
+    required this.badgeColor,
+    required this.badgeTextColor,
   });
 
   @override
@@ -26,6 +33,9 @@ class ConsultationViewModel extends Equatable {
         coverUrl,
         thematique,
         label,
+        badgeLabel,
+        badgeColor,
+        badgeTextColor,
       ];
 }
 
@@ -39,6 +49,9 @@ class ConsultationOngoingViewModel extends ConsultationViewModel {
     required super.coverUrl,
     required super.thematique,
     required super.label,
+    required super.badgeLabel,
+    required super.badgeColor,
+    required super.badgeTextColor,
     required this.endDate,
   });
 
@@ -54,6 +67,9 @@ class ConsultationFinishedViewModel extends ConsultationViewModel {
     required super.coverUrl,
     required super.thematique,
     required super.label,
+    required super.badgeLabel,
+    required super.badgeColor,
+    required super.badgeTextColor,
   });
 
   @override
@@ -68,6 +84,9 @@ class ConsultationAnsweredViewModel extends ConsultationViewModel {
     required super.coverUrl,
     required super.thematique,
     required super.label,
+    required super.badgeLabel,
+    required super.badgeColor,
+    required super.badgeTextColor,
   });
 
   @override
@@ -84,6 +103,9 @@ class ConcertationViewModel extends ConsultationViewModel {
     required super.coverUrl,
     required super.thematique,
     required super.label,
+    required super.badgeLabel,
+    required super.badgeColor,
+    required super.badgeTextColor,
     required this.externalLink,
   });
 

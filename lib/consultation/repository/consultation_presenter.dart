@@ -2,6 +2,7 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/territorialisation/terriotire_helper.dart';
 
 class ConsultationPresenter {
   static List<ConsultationOngoingViewModel> presentOngoingConsultations(
@@ -16,6 +17,9 @@ class ConsultationPresenter {
         thematique: consultation.thematique.toThematiqueViewModel(),
         endDate: consultation.endDate!.formatToDayLongMonth(),
         label: consultation.label,
+        badgeLabel: consultation.territoire.label.toUpperCase(),
+        badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
+        badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
       );
     }).toList();
   }
@@ -44,6 +48,9 @@ class ConsultationPresenter {
               thematique: consultation.thematique.toThematiqueViewModel(),
               label: consultation.label,
               externalLink: consultation.externalLink,
+              badgeLabel: consultation.territoire.label.toUpperCase(),
+              badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
+              badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
             ),
           );
         } else if (consultation is ConsultationFinished) {
@@ -55,6 +62,9 @@ class ConsultationPresenter {
               coverUrl: consultation.coverUrl,
               thematique: consultation.thematique.toThematiqueViewModel(),
               label: consultation.label,
+              badgeLabel: consultation.territoire.label.toUpperCase(),
+              badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
+              badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
             ),
           );
         }
@@ -69,6 +79,9 @@ class ConsultationPresenter {
           coverUrl: consultation.coverUrl,
           thematique: consultation.thematique.toThematiqueViewModel(),
           label: null,
+          badgeLabel: consultation.territoire.label.toUpperCase(),
+          badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
+          badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
         );
       }).toList();
     }
@@ -85,6 +98,9 @@ class ConsultationPresenter {
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),
         label: consultation.label,
+        badgeLabel: consultation.territoire.label.toUpperCase(),
+        badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
+        badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
       );
     }).toList();
   }

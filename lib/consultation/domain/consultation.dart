@@ -1,3 +1,4 @@
+import 'package:agora/territorialisation/territoire.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:equatable/equatable.dart';
 
@@ -7,6 +8,7 @@ class Consultation extends Equatable {
   final String title;
   final String coverUrl;
   final Thematique thematique;
+  final Territoire territoire;
   final String? label;
   final DateTime? updateDate;
   final DateTime? endDate;
@@ -17,6 +19,7 @@ class Consultation extends Equatable {
     required this.title,
     required this.coverUrl,
     required this.thematique,
+    required this.territoire,
     this.label,
     this.updateDate,
     this.endDate,
@@ -29,6 +32,7 @@ class Consultation extends Equatable {
         title,
         coverUrl,
         thematique,
+        territoire,
         label,
         updateDate,
         endDate,
@@ -42,6 +46,7 @@ class ConsultationOngoing extends Consultation {
     required super.title,
     required super.coverUrl,
     required super.thematique,
+    required super.territoire,
     super.label,
     super.endDate,
   });
@@ -57,6 +62,7 @@ class ConsultationFinished extends Consultation {
     required super.title,
     required super.coverUrl,
     required super.thematique,
+    required super.territoire,
     super.label,
     super.updateDate,
   });
@@ -74,6 +80,7 @@ class Concertation extends Consultation {
     required super.title,
     required super.coverUrl,
     required super.thematique,
+    required super.territoire,
     super.label,
     super.updateDate,
     required this.externalLink,
@@ -93,6 +100,7 @@ class ConsultationAnswered extends Consultation {
     required super.title,
     required super.coverUrl,
     required super.thematique,
+    required super.territoire,
     super.label,
   });
 

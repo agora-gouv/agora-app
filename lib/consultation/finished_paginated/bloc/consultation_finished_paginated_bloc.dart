@@ -1,10 +1,11 @@
-import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_event.dart';
-import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_state.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_event.dart';
+import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_state.dart';
+import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
 import 'package:agora/consultation/repository/consultation_finished_paginated_presenter.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
-import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
+import 'package:agora/consultation/repository/consultation_responses.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, ConsultationPaginatedState> {

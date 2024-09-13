@@ -3,6 +3,7 @@ import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/bloc/consultation_state.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,6 +37,9 @@ void main() {
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
               label: "Plus que 3 jours",
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           finishedViewModels: [
@@ -46,6 +50,9 @@ void main() {
               coverUrl: "coverUrl2",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
             ConcertationViewModel(
               id: "concertationId1",
@@ -55,6 +62,9 @@ void main() {
               externalLink: "externalLink1",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               label: 'Plus que 3 jours',
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           answeredViewModels: [
@@ -65,6 +75,9 @@ void main() {
               coverUrl: "coverUrl3",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           shouldDisplayFinishedAllButton: true,
@@ -92,6 +105,9 @@ void main() {
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
               label: null,
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           finishedViewModels: [
@@ -102,6 +118,9 @@ void main() {
               coverUrl: "coverUrl",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               label: null,
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           answeredViewModels: [],

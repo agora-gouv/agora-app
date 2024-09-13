@@ -1,6 +1,7 @@
 import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_events.dart';
 import 'package:agora/consultation/dynamic/bloc/responses/dynamic_consultation_results_state.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/repository/consultation_responses.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DynamicConsultationResultsBloc

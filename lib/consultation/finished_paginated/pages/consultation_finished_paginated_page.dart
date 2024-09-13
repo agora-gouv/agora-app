@@ -109,6 +109,9 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                     isExternalLink: finishedViewModel1.externalLink != null,
                     index: consultationFinishedViewModels.indexOf(finishedViewModel1),
                     maxIndex: consultationFinishedViewModels.length,
+                    badgeLabel: finishedViewModel1.badgeLabel,
+                    badgeColor: finishedViewModel1.badgeColor,
+                    badgeTextColor: finishedViewModel1.badgeTextColor,
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.horizontalPadding),
@@ -130,6 +133,9 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
                           isExternalLink: finishedViewModel2.externalLink != null,
                           index: consultationFinishedViewModels.indexOf(finishedViewModel2),
                           maxIndex: consultationFinishedViewModels.length,
+                          badgeLabel: finishedViewModel2.badgeLabel,
+                          badgeColor: finishedViewModel2.badgeColor,
+                          badgeTextColor: finishedViewModel2.badgeTextColor,
                         ),
                       )
                     : Expanded(child: Container()),
@@ -159,6 +165,9 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
             index: consultationFinishedViewModels.indexOf(finishedViewModel),
             maxIndex: consultationFinishedViewModels.length,
             fixedSize: false,
+            badgeLabel: finishedViewModel.badgeLabel,
+            badgeColor: finishedViewModel.badgeColor,
+            badgeTextColor: finishedViewModel.badgeTextColor,
           ),
         );
         widgets.add(SizedBox(height: AgoraSpacings.base));

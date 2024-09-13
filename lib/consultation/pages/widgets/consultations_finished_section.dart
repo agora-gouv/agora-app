@@ -164,6 +164,9 @@ class ConsultationsFinishedSection extends StatelessWidget {
             isExternalLink: finishedViewModel is ConcertationViewModel,
             index: finishedViewModels.indexOf(finishedViewModel) + 1,
             maxIndex: finishedViewModels.length + 1,
+            badgeLabel: finishedViewModel.badgeLabel,
+            badgeColor: finishedViewModel.badgeColor,
+            badgeTextColor: finishedViewModel.badgeTextColor,
           );
         })
         .plus(_ViewAllCard(finishedViewModels.length + 1))

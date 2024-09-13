@@ -1,8 +1,9 @@
+import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/bloc/consultation_state.dart';
-import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/repository/consultation_presenter.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/repository/consultation_responses.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> {

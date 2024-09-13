@@ -1,5 +1,6 @@
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 class ConsultationPaginatedViewModel extends Equatable {
   final String id;
@@ -8,6 +9,9 @@ class ConsultationPaginatedViewModel extends Equatable {
   final ThematiqueViewModel thematique;
   final String? label;
   final String? externalLink;
+  final String badgeLabel;
+  final Color badgeColor;
+  final Color badgeTextColor;
 
   ConsultationPaginatedViewModel({
     required this.id,
@@ -16,6 +20,9 @@ class ConsultationPaginatedViewModel extends Equatable {
     required this.thematique,
     required this.label,
     this.externalLink,
+    required this.badgeLabel,
+    required this.badgeColor,
+    required this.badgeTextColor,
   });
 
   @override
@@ -26,5 +33,8 @@ class ConsultationPaginatedViewModel extends Equatable {
         thematique,
         label,
         externalLink,
+        badgeLabel,
+        badgeColor,
+        badgeTextColor,
       ];
 }
