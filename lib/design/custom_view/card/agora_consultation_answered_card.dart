@@ -19,6 +19,9 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
   final String imageUrl;
   final ThematiqueViewModel thematique;
   final String? flammeLabel;
+  final String badgeLabel;
+  final Color badgeColor;
+  final Color badgeTextColor;
 
   AgoraConsultationAnsweredCard({
     required this.id,
@@ -26,6 +29,9 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
     required this.imageUrl,
     required this.thematique,
     required this.flammeLabel,
+    required this.badgeLabel,
+    required this.badgeColor,
+    required this.badgeTextColor,
   });
 
   @override
@@ -64,7 +70,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (isTerritorialisationEnabled()) ...[
-                          AgoraBadge(),
+                          AgoraBadge(label: badgeLabel, backgroundColor: badgeColor, textColor: badgeTextColor),
                           SizedBox(height: AgoraSpacings.x0_25),
                         ],
                         AgoraThematiqueLabel(

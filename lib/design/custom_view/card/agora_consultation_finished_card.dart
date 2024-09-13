@@ -23,6 +23,9 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
   final int index;
   final int maxIndex;
   final bool fixedSize;
+  final String badgeLabel;
+  final Color badgeColor;
+  final Color badgeTextColor;
   final void Function() onTap;
 
   AgoraConsultationFinishedCard({
@@ -37,6 +40,9 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
     required this.index,
     required this.maxIndex,
     this.fixedSize = true,
+    required this.badgeLabel,
+    required this.badgeColor,
+    required this.badgeTextColor,
     required this.onTap,
   });
 
@@ -97,6 +103,11 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                 cardHeight: cardHeight,
               ),
             ),
+            if (isTerritorialisationEnabled())
+              Padding(
+                padding: padding,
+                child: AgoraBadge(),
+              ),
             Padding(
               padding: padding,
               child: AgoraThematiqueLabel(

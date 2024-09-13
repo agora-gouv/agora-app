@@ -44,8 +44,16 @@ class AgoraColors {
   static const Color lightBrun = Color(0xFFFEECC2);
   static const Color blur = Color(0x123D3C49);
   static const Color gold = Color(0xFFFFD700);
-  static const Color badgeRegion = Color(0xFFBAFAEE);
-  static const Color badgeTexte = Color(0xFF364B47);
+
+  // couleur de badge
+  static const Color badgeDepartemental = Color(0xFFFEE7FC);
+  static const Color badgeDepartementalTexte = Color(0xFF6E445A);
+
+  static const Color badgeRegional = Color(0xFFBAFAEE);
+  static const Color badgeRegionalTexte = Color(0xFF364B47);
+
+  static const Color badgeNational = Color(0xFFE8EDFF);
+  static const Color badgeNationalTexte = Color(0xFF0063CB);
 
   // couleur de pastille
   static const Color mintZest = Color(0xFFCFFCD9);

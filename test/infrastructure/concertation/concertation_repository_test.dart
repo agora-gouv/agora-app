@@ -3,11 +3,16 @@ import 'dart:io';
 import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/repository/consultation_mapper.dart';
+import 'package:agora/territorialisation/departement.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../utils/dio_utils.dart';
+
+class MockConsultationMapper extends Mock implements ConsultationMapper {}
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
@@ -31,6 +36,7 @@ void main() {
               "thematique": {"label": "Transports", "picto": "🚊"},
               "updateDate": "2023-03-21",
               "updateLabel": "Plus que 3 jours",
+              "territory": "Paris",
             }
           ],
         ),
@@ -40,10 +46,14 @@ void main() {
         },
       );
 
+      final consultationMapper = MockConsultationMapper();
+      when(() => consultationMapper.toTerritoire("Paris")).thenReturn(Departement(label: "Paris"));
+
       // When
       final repository = ConcertationDioRepository(
         httpClient: httpClient,
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.getConcertations();
 
@@ -60,6 +70,7 @@ void main() {
             thematique: Thematique(label: "Transports", picto: "🚊"),
             updateDate: DateTime(2023, 3, 21),
             label: "Plus que 3 jours",
+            territoire: Departement(label: "Paris"),
           ),
         ],
       );
@@ -84,6 +95,7 @@ void main() {
       final repository = ConcertationDioRepository(
         httpClient: httpClient,
         sentryWrapper: sentryWrapper,
+        mapper: ConsultationMapper(),
       );
       final response = await repository.getConcertations();
 

@@ -34,6 +34,9 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
   final String? highlightLabel;
   final AgoraConsultationOngoingCardStyle style;
   final String semanticTooltip;
+  final String badgeLabel;
+  final Color badgeColor;
+  final Color badgeTextColor;
 
   AgoraConsultationOngoingCard({
     super.key,
@@ -46,6 +49,9 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
     required this.highlightLabel,
     required this.style,
     required this.semanticTooltip,
+    required this.badgeLabel,
+    required this.badgeColor,
+    required this.badgeTextColor,
   });
 
   @override
@@ -75,7 +81,12 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                 children: [
                   _Image(imageUrl: imageUrl, screenWidth: screenWidth, screenHeight: screenHeight),
                   SizedBox(height: AgoraSpacings.x0_5),
-                  if (isTerritorialisationEnabled()) AgoraBadge(),
+                  if (isTerritorialisationEnabled())
+                    AgoraBadge(
+                      label: badgeLabel,
+                      backgroundColor: badgeColor,
+                      textColor: badgeTextColor,
+                    ),
                   SizedBox(height: AgoraSpacings.x0_5),
                   AgoraThematiqueLabel(
                     picto: thematique.picto,

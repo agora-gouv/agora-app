@@ -1,6 +1,7 @@
-import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
+import 'package:agora/territorialisation/terriotire_helper.dart';
 
 class ConsultationFinishedPaginatedPresenter {
   static List<ConsultationPaginatedViewModel> presentPaginatedConsultations(
@@ -21,6 +22,9 @@ class ConsultationFinishedPaginatedPresenter {
           thematique: consultation.thematique.toThematiqueViewModel(),
           label: consultation.label,
           externalLink: consultation is Concertation ? consultation.externalLink : null,
+          badgeLabel: consultation.territoire.label.toUpperCase(),
+          badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
+          badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
         );
       },
     ).toList();

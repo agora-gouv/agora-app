@@ -89,6 +89,9 @@ class ConsultationsAnsweredSection extends StatelessWidget {
           thematique: answeredViewModel.thematique,
           imageUrl: answeredViewModel.coverUrl,
           flammeLabel: answeredViewModel.label,
+          badgeLabel: answeredViewModel.badgeLabel,
+          badgeColor: answeredViewModel.badgeColor,
+          badgeTextColor: answeredViewModel.badgeTextColor,
         ),
       );
       answeredConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));

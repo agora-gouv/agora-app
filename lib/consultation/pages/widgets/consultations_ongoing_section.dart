@@ -126,6 +126,9 @@ class ConsultationsOngoingSection extends StatelessWidget {
                     endDate: ongoingViewModel1.endDate,
                     highlightLabel: ongoingViewModel1.label,
                     style: AgoraConsultationOngoingCardStyle.gridLeft,
+                    badgeLabel: ongoingViewModel1.badgeLabel,
+                    badgeColor: ongoingViewModel1.badgeColor,
+                    badgeTextColor: ongoingViewModel1.badgeTextColor,
                   ),
                 ),
                 ongoingViewModel2 != null
@@ -140,6 +143,9 @@ class ConsultationsOngoingSection extends StatelessWidget {
                           endDate: ongoingViewModel2.endDate,
                           highlightLabel: ongoingViewModel2.label,
                           style: AgoraConsultationOngoingCardStyle.gridRight,
+                          badgeLabel: ongoingViewModel2.badgeLabel,
+                          badgeColor: ongoingViewModel2.badgeColor,
+                          badgeTextColor: ongoingViewModel2.badgeTextColor,
                         ),
                       )
                     : Expanded(child: Container()),
@@ -151,18 +157,22 @@ class ConsultationsOngoingSection extends StatelessWidget {
       }
     } else {
       for (var index = 0; index < ongoingViewModels.length; index++) {
+        final ongoingViewModel = ongoingViewModels[index];
         ongoingConsultationsWidgets.add(
           AgoraConsultationOngoingCard(
             key: index == 0 ? firstFocusableElementKey : null,
             semanticTooltip: "Élément ${index + 1} sur ${ongoingViewModels.length}",
-            consultationId: ongoingViewModels[index].id,
-            consultationSlug: ongoingViewModels[index].slug,
-            imageUrl: ongoingViewModels[index].coverUrl,
-            thematique: ongoingViewModels[index].thematique,
-            title: ongoingViewModels[index].title,
-            endDate: ongoingViewModels[index].endDate,
-            highlightLabel: ongoingViewModels[index].label,
+            consultationId: ongoingViewModel.id,
+            consultationSlug: ongoingViewModel.slug,
+            imageUrl: ongoingViewModel.coverUrl,
+            thematique: ongoingViewModel.thematique,
+            title: ongoingViewModel.title,
+            endDate: ongoingViewModel.endDate,
+            highlightLabel: ongoingViewModel.label,
             style: AgoraConsultationOngoingCardStyle.column,
+            badgeLabel: ongoingViewModel.badgeLabel,
+            badgeColor: ongoingViewModel.badgeColor,
+            badgeTextColor: ongoingViewModel.badgeTextColor,
           ),
         );
         ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));

@@ -61,6 +61,7 @@ dev_dependencies:
   http_mock_adapter: ^0.6.0
   flutter_launcher_icons: ^0.13.1
   build_runner: ^2.4.6
+  mocktail: ^1.0.4
 
 flutter:
   uses-material-design: true

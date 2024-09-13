@@ -5,25 +5,27 @@ import 'package:flutter/material.dart';
 
 class AgoraBadge extends StatelessWidget {
   final String label;
-  final Color color;
+  final Color backgroundColor;
+  final Color textColor;
 
   const AgoraBadge({
     this.label = "ILE-DE-FRANCE",
-    this.color = AgoraColors.badgeRegion,
+    this.backgroundColor = AgoraColors.badgeRegional,
+    this.textColor = AgoraColors.badgeRegionalTexte,
   });
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: color,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(AgoraSpacings.x0_25),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_25),
         child: Text(
           label,
-          style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.badgeTexte),
+          style: AgoraTextStyles.medium12.copyWith(color: textColor),
         ),
       ),
     );

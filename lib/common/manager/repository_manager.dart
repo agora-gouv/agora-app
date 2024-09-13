@@ -1,5 +1,3 @@
-import 'package:agora/profil/app_feedback/repository/app_feedback_repository.dart';
-import 'package:agora/profil/app_feedback/repository/mocks_app_feedback_repository.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/client/agora_http_client_adapter.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
@@ -9,8 +7,13 @@ import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
+import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/mock_consultation_repository.dart';
+import 'package:agora/login/repository/login_repository.dart';
+import 'package:agora/login/repository/mocks_login_repository.dart';
+import 'package:agora/profil/app_feedback/repository/app_feedback_repository.dart';
+import 'package:agora/profil/app_feedback/repository/mocks_app_feedback_repository.dart';
 import 'package:agora/profil/demographic/repository/demographic_repository.dart';
 import 'package:agora/profil/demographic/repository/mocks_demographic_repository.dart';
 import 'package:agora/profil/notification/repository/mocks_notification_repository.dart';
@@ -19,8 +22,6 @@ import 'package:agora/profil/participation_charter/repository/mocks_participatio
 import 'package:agora/qag/repository/mocks_qag_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/thematique/repository/thematique_repository.dart';
-import 'package:agora/login/repository/login_repository.dart';
-import 'package:agora/login/repository/mocks_login_repository.dart';
 import 'package:agora/welcome/repository/mocks_welcome_repository.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';
 import 'package:dio/dio.dart';
@@ -160,6 +161,7 @@ class RepositoryManager {
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
       storageClient: StorageManager.getConsultationQuestionStorageClient(),
+      mapper: ConsultationMapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
@@ -256,6 +258,7 @@ class RepositoryManager {
     final repository = ConcertationDioRepository(
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
+      mapper: ConsultationMapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;
