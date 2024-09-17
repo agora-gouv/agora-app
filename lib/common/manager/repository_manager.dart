@@ -33,7 +33,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class RepositoryManager {
   static const String _baseUrl = "baseUrl";
-  static const String _rootCertificate = "rootCertificate";
   static const String _noAuthenticationHttpClient = "noAuthenticationHttpClient";
   static const String _authenticatedHttpClient = "authenticatedHttpClient";
   static const String _noAuthenticationDio = "noAuthenticationDio";
@@ -44,9 +43,8 @@ class RepositoryManager {
     deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
   );
 
-  static void initRepositoryManager({required String baseUrl, required Uint8List rootCertificate}) {
+  static void initRepositoryManager({required String baseUrl}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
-    GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
   }
 
   static Dio _getDio({SharedPreferences? sharedPref}) {
@@ -68,10 +66,7 @@ class RepositoryManager {
       ),
     );
     if (!kIsWeb && FlavorHelper.getFlavor() == AgoraFlavor.prod) {
-      dio.httpClientAdapter = AgoraHttpClientAdapter(
-        baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
-        rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),
-      );
+      dio.httpClientAdapter = AgoraHttpClientAdapter(baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl));
     }
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
     return dio;

@@ -12,7 +12,6 @@ import 'package:error_stack/error_stack.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -29,10 +28,7 @@ class AgoraInitializer {
 
     await _setupNotification();
     await _setupMatomo();
-    RepositoryManager.initRepositoryManager(
-      baseUrl: appConfig.baseUrl,
-      rootCertificate: await _readCertificate(),
-    );
+    RepositoryManager.initRepositoryManager(baseUrl: appConfig.baseUrl);
 
     await Hive.initFlutter();
     Hive.registerAdapter(ConsultationQuestionResponsesHiveAdapter());
@@ -58,10 +54,6 @@ class AgoraInitializer {
         ),
       ),
     );
-  }
-
-  static Future<Uint8List> _readCertificate() async {
-    return (await rootBundle.load("assets/certificates/certificate.cer")).buffer.asUint8List();
   }
 
   static Future<void> _setupNotification() async {
