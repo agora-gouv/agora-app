@@ -62,7 +62,6 @@ class AgoraInitializer {
   }
 
   static Future<List<X509CertificateData>> _readCertificate() async {
-    // TODO pour tester on peut pinguer des sites qui utilisent Certigna ou LetsEncrypt
     final certignaCertificate =
         X509Utils.crlDerToPem((await rootBundle.load("assets/certificates/certigna-rootca.cer")).buffer.asUint8List());
     final letsEncryptCertificates = [
