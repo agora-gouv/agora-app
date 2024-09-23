@@ -129,8 +129,8 @@ class _Content extends StatelessWidget {
                 ),
               ],
             ),
-          SizedBox(height: AgoraSpacings.x0_5),
-          Text(titre, style: AgoraTextStyles.regular16),
+          SizedBox(height: isAuthor ? AgoraSpacings.x2 : AgoraSpacings.x0_5),
+          Text(titre.trim(), style: AgoraTextStyles.regular16),
         ],
       ),
     );
