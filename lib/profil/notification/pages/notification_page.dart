@@ -50,10 +50,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                child: Column(children: _buildContent(context, state)),
-              ),
+              child: _Content(state),
             ),
           );
         },
@@ -61,75 +58,177 @@ class _NotificationPageState extends State<NotificationPage> {
     );
   }
 
-  List<Widget> _buildContent(BuildContext context, NotificationState state) {
-    final List<Widget> widgets = [];
+  // List<Widget> _buildContent(BuildContext context, NotificationState state) {
+  //   final List<Widget> widgets = [];
+  //
+  //   final notificationViewModels = state.notificationViewModels;
+  //   for (final notificationViewModel in notificationViewModels) {
+  //     widgets.add(
+  //       AgoraNotificationCard(
+  //         title: notificationViewModel.title,
+  //         type: notificationViewModel.type,
+  //         date: notificationViewModel.date,
+  //       ),
+  //     );
+  //     widgets.add(SizedBox(height: AgoraSpacings.base));
+  //   }
+  //
+  //   if (state is NotificationInitialState || state is NotificationLoadingState) {
+  //     widgets.add(
+  //       Column(
+  //         crossAxisAlignment: CrossAxisAlignment.stretch,
+  //         children: [
+  //           SizedBox(height: AgoraSpacings.base),
+  //           SkeletonBox(height: 80),
+  //           SizedBox(height: AgoraSpacings.base),
+  //           SkeletonBox(height: 80),
+  //         ],
+  //       ),
+  //     );
+  //     widgets.add(SizedBox(height: AgoraSpacings.base));
+  //   } else if (state is NotificationErrorState) {
+  //     widgets.add(AgoraErrorText());
+  //     widgets.add(SizedBox(height: AgoraSpacings.base));
+  //     widgets.add(
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           AgoraButton.withLabel(
+  //             label: ProfileStrings.retry,
+  //             buttonStyle: AgoraButtonStyle.tertiary,
+  //             onPressed: () =>
+  //                 context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: state.currentPageNumber)),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //     widgets.add(SizedBox(height: AgoraSpacings.base));
+  //   } else {
+  //     if (state.hasMoreNotifications) {
+  //       widgets.add(
+  //         AgoraButton.withLabel(
+  //           label: ProfileStrings.displayMore,
+  //           buttonStyle: AgoraButtonStyle.tertiary,
+  //           onPressed: () =>
+  //               context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: state.currentPageNumber + 1)),
+  //         ),
+  //       );
+  //       widgets.add(SizedBox(height: AgoraSpacings.base));
+  //     }
+  //     if (notificationViewModels.isEmpty) {
+  //       widgets.add(SizedBox(height: AgoraSpacings.x0_5));
+  //       widgets.add(
+  //         Text(
+  //           GenericStrings.notificationEmpty,
+  //           style: AgoraTextStyles.medium14,
+  //           textAlign: TextAlign.center,
+  //         ),
+  //       );
+  //     }
+  //   }
+  //   widgets.add(SizedBox(height: AgoraSpacings.x0_5));
+  //   return widgets;
+  // }
+}
 
-    final notificationViewModels = state.notificationViewModels;
-    for (final notificationViewModel in notificationViewModels) {
-      widgets.add(
-        AgoraNotificationCard(
-          title: notificationViewModel.title,
-          type: notificationViewModel.type,
-          date: notificationViewModel.date,
-        ),
-      );
-      widgets.add(SizedBox(height: AgoraSpacings.base));
-    }
+class _Content extends StatelessWidget {
+  final NotificationState state;
 
-    if (state is NotificationInitialState || state is NotificationLoadingState) {
-      widgets.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+  const _Content(this.state);
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (state) {
+      NotificationInitialState _ || NotificationLoadingState _ => _Loading(),
+      NotificationFetchedState _ => _Success(state: state),
+      NotificationErrorState _ => _Error(),
+    };
+  }
+}
+
+class _Success extends StatelessWidget {
+  const _Success({
+    required this.state,
+  });
+
+  final NotificationState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+      child: Column(
+        children: [
+          ...state.notificationViewModels.map(
+            (vm) => AgoraNotificationCard(
+              title: vm.title,
+              type: vm.type,
+              date: vm.date,
+            ),
+          ),
+          SizedBox(height: AgoraSpacings.base),
+          if (state.hasMoreNotifications) ...[
+            AgoraButton.withLabel(
+              label: ProfileStrings.displayMore,
+              buttonStyle: AgoraButtonStyle.tertiary,
+              onPressed: () =>
+                  context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: state.currentPageNumber + 1)),
+            ),
             SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 80),
-            SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 80),
           ],
-        ),
-      );
-      widgets.add(SizedBox(height: AgoraSpacings.base));
-    } else if (state is NotificationErrorState) {
-      widgets.add(AgoraErrorText());
-      widgets.add(SizedBox(height: AgoraSpacings.base));
-      widgets.add(
+          if (state.notificationViewModels.isEmpty) ...[
+            Text(
+              GenericStrings.notificationEmpty,
+              style: AgoraTextStyles.medium14,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: AgoraSpacings.base),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _Error extends StatelessWidget {
+  const _Error();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        AgoraErrorText(),
+        SizedBox(height: AgoraSpacings.base),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AgoraButton.withLabel(
               label: ProfileStrings.retry,
               buttonStyle: AgoraButtonStyle.tertiary,
-              onPressed: () =>
-                  context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: state.currentPageNumber)),
+              onPressed: () => context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: 1)),
             ),
           ],
         ),
-      );
-      widgets.add(SizedBox(height: AgoraSpacings.base));
-    } else {
-      if (state.hasMoreNotifications) {
-        widgets.add(
-          AgoraButton.withLabel(
-            label: ProfileStrings.displayMore,
-            buttonStyle: AgoraButtonStyle.tertiary,
-            onPressed: () =>
-                context.read<NotificationBloc>().add(GetNotificationEvent(pageNumber: state.currentPageNumber + 1)),
-          ),
-        );
-        widgets.add(SizedBox(height: AgoraSpacings.base));
-      }
-      if (notificationViewModels.isEmpty) {
-        widgets.add(SizedBox(height: AgoraSpacings.x0_5));
-        widgets.add(
-          Text(
-            GenericStrings.notificationEmpty,
-            style: AgoraTextStyles.medium14,
-            textAlign: TextAlign.center,
-          ),
-        );
-      }
-    }
-    widgets.add(SizedBox(height: AgoraSpacings.x0_5));
-    return widgets;
+        SizedBox(height: AgoraSpacings.base),
+      ],
+    );
+  }
+}
+
+class _Loading extends StatelessWidget {
+  const _Loading();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: AgoraSpacings.base),
+        SkeletonBox(height: 80),
+        SizedBox(height: AgoraSpacings.base),
+        SkeletonBox(height: 80),
+        SizedBox(height: AgoraSpacings.base),
+      ],
+    );
   }
 }
