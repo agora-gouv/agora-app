@@ -24,6 +24,7 @@ import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/thematique/repository/thematique_repository.dart';
 import 'package:agora/welcome/repository/mocks_welcome_repository.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
@@ -44,7 +45,7 @@ class RepositoryManager {
     deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
   );
 
-  static void initRepositoryManager({required String baseUrl, required Uint8List rootCertificate}) {
+  static void initRepositoryManager({required String baseUrl, required List<X509CertificateData> rootCertificate}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
     GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
   }
@@ -70,7 +71,7 @@ class RepositoryManager {
     if (!kIsWeb && FlavorHelper.getFlavor() == AgoraFlavor.prod) {
       dio.httpClientAdapter = AgoraHttpClientAdapter(
         baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
-        rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),
+        rootCertificate: GetIt.instance.get<List<X509CertificateData>>(instanceName: _rootCertificate),
       );
     }
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
