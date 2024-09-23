@@ -1,7 +1,7 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
-import 'package:agora/profil/notification/domain/notification.dart';
 import 'package:agora/common/log/sentry_wrapper.dart';
+import 'package:agora/profil/notification/domain/notification.dart';
 import 'package:agora/profil/notification/domain/notification_information.dart';
 import 'package:equatable/equatable.dart';
 
@@ -30,6 +30,7 @@ class NotificationDioRepository extends NotificationRepository {
           notifications: (response.data["notifications"] as List).map((notification) {
             return Notification(
               title: notification["title"] as String,
+              description: notification["description"] as String? ?? "",
               type: notification["type"] as String,
               date: (notification["date"] as String).parseToDateTime(),
             );
