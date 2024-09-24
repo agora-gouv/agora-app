@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -215,6 +215,7 @@
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				2065150E08245FA62747ED0B /* [CP] Embed Pods Frameworks */,
 				87A4F8AE2A32316300B781FA /* GoogleService-Info for environment */,
+				754D0E942A3026218C7EDA93 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -307,6 +308,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
+		};
+		754D0E942A3026218C7EDA93 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		87A4F8AE2A32316300B781FA /* GoogleService-Info for environment */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -455,6 +473,7 @@
 			baseConfigurationReference = 335B094107BD37DFECF3A20E /* Pods-Runner.profile-dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -542,6 +561,7 @@
 			baseConfigurationReference = E1FC3E750F1BD9D44D7C625C /* Pods-Runner.debug-sandbox.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -625,6 +645,7 @@
 			baseConfigurationReference = 7E72359137D16C12D728D1FF /* Pods-Runner.profile-sandbox.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -709,6 +730,7 @@
 			baseConfigurationReference = A356CDD1EF02077E48023488 /* Pods-Runner.release-sandbox.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-sandbox";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Octo Technology Mobile (8PN3J7J93H)";
@@ -798,6 +820,7 @@
 			baseConfigurationReference = 773E2CEEA10770DA5B1F1018 /* Pods-Runner.debug-prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-prod";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-PROD.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -883,6 +906,7 @@
 			baseConfigurationReference = 2B915A401C1F9739F0CFBA59 /* Pods-Runner.release-prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-prod";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-PROD.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -965,6 +989,7 @@
 			baseConfigurationReference = EFD8EBF3FB8DF4A5F4F939F8 /* Pods-Runner.profile-prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-prod";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-PROD.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1108,6 +1133,7 @@
 			baseConfigurationReference = F917269136B377A57DFC96C1 /* Pods-Runner.debug-dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1138,6 +1164,7 @@
 			baseConfigurationReference = 92916D16B89C2FAC61827AB6 /* Pods-Runner.release-dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/Runner-DEV.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";

@@ -44,6 +44,7 @@ class QagsSupportableCard extends StatelessWidget {
                 titre: qagViewModel.title,
                 nom: qagViewModel.username,
                 date: qagViewModel.date,
+                displayVoirPlus: qagViewModel.description.isNotEmpty,
                 supportCount: viewModel.supportCount,
                 isSupported: viewModel.isSupported,
                 isAuthor: qagViewModel.isAuthor,

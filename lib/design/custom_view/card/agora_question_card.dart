@@ -17,6 +17,7 @@ class AgoraQuestionCard extends StatelessWidget {
   final String titre;
   final String nom;
   final String date;
+  final bool displayVoirPlus;
   final int supportCount;
   final bool isSupported;
   final bool isAuthor;
@@ -30,6 +31,7 @@ class AgoraQuestionCard extends StatelessWidget {
     required this.titre,
     required this.nom,
     required this.date,
+    required this.displayVoirPlus,
     required this.supportCount,
     required this.isSupported,
     required this.isAuthor,
@@ -57,6 +59,7 @@ class AgoraQuestionCard extends StatelessWidget {
                     id: id,
                     thematique: thematique,
                     titre: titre,
+                    displayVoirPlus: displayVoirPlus,
                     nom: nom,
                     date: date,
                     isAuthor: isAuthor,
@@ -88,6 +91,7 @@ class _Content extends StatelessWidget {
   final String id;
   final ThematiqueViewModel thematique;
   final String titre;
+  final bool displayVoirPlus;
   final String nom;
   final String date;
   final bool isAuthor;
@@ -96,6 +100,7 @@ class _Content extends StatelessWidget {
     required this.id,
     required this.thematique,
     required this.titre,
+    required this.displayVoirPlus,
     required this.nom,
     required this.date,
     required this.isAuthor,
@@ -121,14 +126,16 @@ class _Content extends StatelessWidget {
             ),
           SizedBox(height: isAuthor ? AgoraSpacings.x2 : AgoraSpacings.x0_5),
           Text(titre.trim(), style: AgoraTextStyles.regular15),
-          SizedBox(height: AgoraSpacings.x0_25),
-          Text(
-            "Voir plus",
-            style: AgoraTextStyles.regular15Underline.copyWith(
-              color: AgoraColors.greySeeMore,
-              decorationColor: AgoraColors.greySeeMore,
+          if (displayVoirPlus) ...[
+            SizedBox(height: AgoraSpacings.x0_25),
+            Text(
+              "Voir plus",
+              style: AgoraTextStyles.regular15Underline.copyWith(
+                color: AgoraColors.greySeeMore,
+                decorationColor: AgoraColors.greySeeMore,
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );
