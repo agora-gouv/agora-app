@@ -85,7 +85,7 @@ class ConsultationsOngoingSection extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.base),
                 AgoraButton.withLabel(
                   label: ConsultationStrings.gotoQags,
-                  buttonStyle: AgoraButtonStyle.tertiary,
+                  buttonStyle: AgoraButtonStyle.primary,
                   onPressed: () {
                     TrackerHelper.trackClick(
                       clickName: AnalyticsEventNames.gotoQagsFromConsultations,

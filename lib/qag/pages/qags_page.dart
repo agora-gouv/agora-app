@@ -91,7 +91,7 @@ class _QagsPageState extends State<QagsPage> {
         child: Scaffold(
           floatingActionButton: ListenableBuilder(
             listenable: showLabelFloatingButton,
-            builder: (_, __) => _PoserMaQuestionBouton(
+            builder: (context, __) => _PoserMaQuestionBouton(
               showLabelFloatingButton: showLabelFloatingButton.value,
               onTap: () {
                 final askQagStatusState = BlocProvider.of<AskQagStatusBloc>(context).state;
