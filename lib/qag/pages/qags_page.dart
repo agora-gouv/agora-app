@@ -111,72 +111,52 @@ class _QagsPageState extends State<QagsPage> {
               },
             ),
           ),
-          body: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                lazy: false,
-                create: (BuildContext context) => AskQagStatusBloc(
-                  qagRepository: RepositoryManager.getQagRepository(),
-                )..add(FetchAskQagStatusEvent()),
-              ),
-              BlocProvider(
-                create: (context) => ThematiqueBloc(
-                  repository: RepositoryManager.getThematiqueRepository(),
-                )..add(FetchFilterThematiqueEvent()),
-              ),
-              BlocProvider(
-                create: (context) => QagSearchBloc(
-                  qagRepository: RepositoryManager.getQagRepository(),
+          body: SingleChildScrollView(
+            controller: scrollController,
+            physics: ClampingScrollPhysics(),
+            child: Column(
+              children: [
+                AgoraMainToolbar(
+                  title: Row(
+                    children: [
+                      AgoraRichText(
+                        key: toolbarTitleKey,
+                        policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                        semantic: AgoraRichTextSemantic(focused: true),
+                        items: [
+                          AgoraRichTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
+                          AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
+                        ],
+                      ),
+                      Spacer(),
+                      AgoraFocusHelper(
+                        elementKey: firstFocusableElementKey,
+                        child: _InfoBouton(focusKey: firstFocusableElementKey),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-            child: SingleChildScrollView(
-              controller: scrollController,
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  AgoraMainToolbar(
-                    title: Row(
-                      children: [
-                        AgoraRichText(
-                          key: toolbarTitleKey,
-                          policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                          semantic: AgoraRichTextSemantic(focused: true),
-                          items: [
-                            AgoraRichTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
-                            AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
-                          ],
-                        ),
-                        Spacer(),
-                        AgoraFocusHelper(
-                          elementKey: firstFocusableElementKey,
-                          child: _InfoBouton(focusKey: firstFocusableElementKey),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: AgoraSpacings.base),
-                  QagsSection(
-                    key: onSearchAnchorKey,
-                    firstThematiqueKey: firstThematiqueKey,
-                    defaultSelected: QagTab.trending,
-                    selectedThematiqueId: currentThematiqueId,
-                    onSearchBarOpen: (bool isSearchOpen) {
-                      if (isSearchOpen) {
-                        TrackerHelper.trackEvent(
-                          widgetName: AnalyticsScreenNames.qagsPage,
-                          eventName: AnalyticsEventNames.qagsSearch,
-                        );
-                        Scrollable.ensureVisible(
-                          onSearchAnchorKey.currentContext!,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
+                SizedBox(height: AgoraSpacings.base),
+                QagsSection(
+                  key: onSearchAnchorKey,
+                  firstThematiqueKey: firstThematiqueKey,
+                  defaultSelected: QagTab.trending,
+                  selectedThematiqueId: currentThematiqueId,
+                  onSearchBarOpen: (bool isSearchOpen) {
+                    if (isSearchOpen) {
+                      TrackerHelper.trackEvent(
+                        widgetName: AnalyticsScreenNames.qagsPage,
+                        eventName: AnalyticsEventNames.qagsSearch,
+                      );
+                      Scrollable.ensureVisible(
+                        onSearchAnchorKey.currentContext!,
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
           ),
         ),

@@ -1,5 +1,7 @@
+import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
+import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/custom_view/card/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
@@ -57,13 +59,16 @@ class AgoraQuestionCard extends StatelessWidget {
                     titre: titre,
                     nom: nom,
                     date: date,
+                    isAuthor: isAuthor,
+                  ),
+                  _AuteurEtDate(
+                    nom: nom,
+                    date: date,
                     supportCount: supportCount,
                     isSupported: isSupported,
-                    isAuthor: isAuthor,
                     onSupportClick: onSupportClick,
                     likeViewKey: likeViewKey,
                   ),
-                  _AuteurEtDate(nom: nom, date: date),
                 ],
               ),
             ),
@@ -85,11 +90,7 @@ class _Content extends StatelessWidget {
   final String titre;
   final String nom;
   final String date;
-  final int supportCount;
-  final bool isSupported;
   final bool isAuthor;
-  final void Function(bool support) onSupportClick;
-  final GlobalKey? likeViewKey;
 
   const _Content({
     required this.id,
@@ -97,11 +98,7 @@ class _Content extends StatelessWidget {
     required this.titre,
     required this.nom,
     required this.date,
-    required this.supportCount,
-    required this.isSupported,
     required this.isAuthor,
-    required this.onSupportClick,
-    required this.likeViewKey,
   });
 
   @override
@@ -120,17 +117,18 @@ class _Content extends StatelessWidget {
                   label: thematique.label,
                   size: AgoraThematiqueSize.medium,
                 ),
-                AgoraLikeView(
-                  isSupported: isSupported,
-                  supportCount: supportCount,
-                  shouldHaveVerticalPadding: true,
-                  onSupportClick: (support) => onSupportClick(support),
-                  likeViewKey: likeViewKey,
-                ),
               ],
             ),
           SizedBox(height: isAuthor ? AgoraSpacings.x2 : AgoraSpacings.x0_5),
-          Text(titre.trim(), style: AgoraTextStyles.regular16),
+          Text(titre.trim(), style: AgoraTextStyles.regular15),
+          SizedBox(height: AgoraSpacings.x0_25),
+          Text(
+            "Voir plus",
+            style: AgoraTextStyles.regular15Underline.copyWith(
+              color: AgoraColors.greySeeMore,
+              decorationColor: AgoraColors.greySeeMore,
+            ),
+          ),
         ],
       ),
     );
@@ -138,19 +136,27 @@ class _Content extends StatelessWidget {
 }
 
 class _AuteurEtDate extends StatelessWidget {
+  final String nom;
+  final String date;
+  final int supportCount;
+  final bool isSupported;
+  final void Function(bool support) onSupportClick;
+  final GlobalKey? likeViewKey;
+
   const _AuteurEtDate({
     required this.nom,
     required this.date,
+    required this.supportCount,
+    required this.isSupported,
+    required this.onSupportClick,
+    required this.likeViewKey,
   });
-
-  final String nom;
-  final String date;
 
   @override
   Widget build(BuildContext context) {
     return AgoraRoundedCard(
       cardColor: AgoraColors.doctor,
-      padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
+      padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_25, horizontal: AgoraSpacings.x0_75),
       roundedCorner: AgoraRoundedCorner.bottomRounded,
       child: Row(
         children: [
@@ -163,6 +169,22 @@ class _AuteurEtDate extends StatelessWidget {
                 Text('le $date', style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
               ],
             ),
+          ),
+          AgoraLikeView(
+            shouldHaveHorizontalPadding: false,
+            style: AgoraLikeStyle.police16,
+            isSupported: isSupported,
+            supportCount: supportCount,
+            shouldHaveVerticalPadding: true,
+            onSupportClick: (support) => onSupportClick(support),
+            likeViewKey: likeViewKey,
+            withContour: false,
+          ),
+          AgoraIconButton(
+            icon: "ic_share.svg",
+            semanticLabel: 'Partager',
+            borderColor: AgoraColors.transparent,
+            onClick: () => ShareHelper.shareQag(context: context, title: "title", id: "id"),
           ),
         ],
       ),

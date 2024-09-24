@@ -24,6 +24,7 @@ class AgoraLikeView extends StatelessWidget {
   final GlobalKey? likeViewKey;
   final bool shouldVocaliseSupport;
   final bool isQuestionGagnante;
+  final bool withContour;
 
   const AgoraLikeView({
     super.key,
@@ -36,6 +37,7 @@ class AgoraLikeView extends StatelessWidget {
     this.likeViewKey,
     this.shouldVocaliseSupport = true,
     this.isQuestionGagnante = false,
+    this.withContour = true,
   });
 
   @override
@@ -59,6 +61,7 @@ class AgoraLikeView extends StatelessWidget {
         onSupportClick,
         likeViewKey,
         shouldVocaliseSupport,
+        withContour,
       );
     }
   }
@@ -73,6 +76,7 @@ class _AgoraLikeViewCliquable extends StatelessWidget {
   final Function(bool support)? onSupportClick;
   final GlobalKey? likeViewKey;
   final bool shouldVocaliseSupport;
+  final bool withContour;
 
   const _AgoraLikeViewCliquable(
     this.isSupported,
@@ -83,46 +87,50 @@ class _AgoraLikeViewCliquable extends StatelessWidget {
     this.onSupportClick,
     this.likeViewKey,
     this.shouldVocaliseSupport,
+    this.withContour,
   );
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       button: onSupportClick != null,
-      child: InkWell(
-        borderRadius: BorderRadius.all(AgoraCorners.rounded42),
-        onTap: onSupportClick != null ? () => onSupportClick!(!isSupported) : null,
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(AgoraCorners.rounded42),
-            border: Border.all(color: AgoraColors.lightRedOpacity19),
-            color: AgoraColors.lightRedOpacity4,
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : AgoraSpacings.x0_375,
-              vertical: shouldHaveVerticalPadding ? 2 : 0,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: 44, minWidth: 44),
+        child: InkWell(
+          borderRadius: BorderRadius.all(withContour ? AgoraCorners.rounded42 : AgoraCorners.rounded),
+          onTap: onSupportClick != null ? () => onSupportClick!(!isSupported) : null,
+          child: Ink(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(AgoraCorners.rounded42),
+              border: Border.all(color: withContour ? AgoraColors.lightRedOpacity19 : AgoraColors.transparent),
+              color: withContour ? AgoraColors.lightRedOpacity4 : AgoraColors.transparent,
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  key: likeViewKey,
-                  _getIcon(isSupported),
-                  width: _buildIconSize(style),
-                  excludeFromSemantics: true,
-                ),
-                SizedBox(width: AgoraSpacings.x0_25),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
-                  child: Text(
-                    supportCount.toString(),
-                    style: _buildTextStyle(style),
-                    semanticsLabel:
-                        "${shouldVocaliseSupport ? isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport : ''}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: shouldHaveHorizontalPadding ? AgoraSpacings.x0_75 : AgoraSpacings.x0_375,
+                vertical: shouldHaveVerticalPadding ? 2 : 0,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    key: likeViewKey,
+                    _getIcon(isSupported),
+                    width: _buildIconSize(style),
+                    excludeFromSemantics: true,
                   ),
-                ),
-              ],
+                  SizedBox(width: AgoraSpacings.x0_25),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_25),
+                    child: Text(
+                      supportCount.toString(),
+                      style: _buildTextStyle(style, withContour),
+                      semanticsLabel:
+                          "${shouldVocaliseSupport ? isSupported ? SemanticsStrings.support : SemanticsStrings.notSupport : ''}\n${SemanticsStrings.supportNumber.format(supportCount.toString())}",
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -266,11 +274,14 @@ double _buildIconSize(AgoraLikeStyle style) {
   };
 }
 
-TextStyle _buildTextStyle(AgoraLikeStyle style) {
+TextStyle _buildTextStyle(AgoraLikeStyle style, [bool withContour = true]) {
   return switch (style) {
-    AgoraLikeStyle.police12 => AgoraTextStyles.medium12,
-    AgoraLikeStyle.police14 => AgoraTextStyles.medium14,
-    AgoraLikeStyle.police16 => AgoraTextStyles.medium16,
+    AgoraLikeStyle.police12 =>
+      withContour ? AgoraTextStyles.medium12 : AgoraTextStyles.medium12.copyWith(color: AgoraColors.red),
+    AgoraLikeStyle.police14 =>
+      withContour ? AgoraTextStyles.medium14 : AgoraTextStyles.medium14.copyWith(color: AgoraColors.red),
+    AgoraLikeStyle.police16 =>
+      withContour ? AgoraTextStyles.medium16 : AgoraTextStyles.medium16.copyWith(color: AgoraColors.red),
   };
 }
 

@@ -246,6 +246,24 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle regular15 = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 15.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+  );
+
+  static const TextStyle regular15Underline = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 15.0,
+    color: AgoraColors.primaryGrey,
+    height: height,
+    decoration: TextDecoration.underline,
+    decorationColor: AgoraColors.primaryGrey,
+  );
+
   static const TextStyle regular14 = TextStyle(
     fontFamily: marianne,
     fontWeight: regular,

@@ -8,69 +8,69 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraQagHeader extends StatelessWidget {
-  final String id;
-  final String title;
+  final String titre;
   final String message;
-  final void Function(String) onCloseHeader;
+  final void Function() onClose;
 
   const AgoraQagHeader({
-    super.key,
-    required this.id,
-    required this.title,
+    required this.titre,
     required this.message,
-    required this.onCloseHeader,
+    required this.onClose,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(AgoraCorners.rounded),
-            color: AgoraColors.blue525opacity06,
-          ),
-          padding: const EdgeInsets.all(AgoraSpacings.base),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                semanticsLabel: EmojiHelper.clean(title),
-                textAlign: TextAlign.start,
-                style: AgoraTextStyles.medium14,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: AgoraSpacings.base),
-                child: Text(
-                  message,
-                  style: AgoraTextStyles.regular14,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AgoraSpacings.x1_25, 0, AgoraSpacings.x1_25, AgoraSpacings.base),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.all(AgoraCorners.rounded),
+              color: AgoraColors.blue525opacity06,
+            ),
+            padding: const EdgeInsets.all(AgoraSpacings.base),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  titre,
+                  semanticsLabel: EmojiHelper.clean(titre),
+                  textAlign: TextAlign.start,
+                  style: AgoraTextStyles.medium14,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: AgoraSpacings.base),
+                  child: Text(
+                    message,
+                    style: AgoraTextStyles.regular14,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: InkWell(
-            onTap: () => {onCloseHeader(id)},
-            borderRadius: BorderRadius.all(AgoraCorners.rounded42),
-            child: Semantics(
-              button: true,
-              label: SemanticsStrings.close,
-              child: Material(
-                color: AgoraColors.transparent,
-                child: Padding(
-                  padding: const EdgeInsets.all(AgoraSpacings.x0_75),
-                  child: SvgPicture.asset("assets/ic_close.svg", excludeFromSemantics: true),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: InkWell(
+              onTap: () => onClose,
+              borderRadius: BorderRadius.all(AgoraCorners.rounded42),
+              child: Semantics(
+                button: true,
+                label: SemanticsStrings.close,
+                child: Material(
+                  color: AgoraColors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.all(AgoraSpacings.x0_75),
+                    child: SvgPicture.asset("assets/ic_close.svg", excludeFromSemantics: true),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
