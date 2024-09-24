@@ -61,7 +61,7 @@ class AgoraQuestionCard extends StatelessWidget {
                     date: date,
                     isAuthor: isAuthor,
                   ),
-                  _AuteurEtDate(
+                  _Footer(
                     nom: nom,
                     date: date,
                     supportCount: supportCount,
@@ -135,7 +135,7 @@ class _Content extends StatelessWidget {
   }
 }
 
-class _AuteurEtDate extends StatelessWidget {
+class _Footer extends StatelessWidget {
   final String nom;
   final String date;
   final int supportCount;
@@ -143,7 +143,7 @@ class _AuteurEtDate extends StatelessWidget {
   final void Function(bool support) onSupportClick;
   final GlobalKey? likeViewKey;
 
-  const _AuteurEtDate({
+  const _Footer({
     required this.nom,
     required this.date,
     required this.supportCount,
