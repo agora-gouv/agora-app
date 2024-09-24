@@ -10,6 +10,7 @@ class AgoraColors {
   static const Color border = Color(0x30000000);
   static const Color rhineCastle = Color(0xFF5F5F5F);
   static const Color overlay = Color(0x80D6D6D6);
+  static const Color greySeeMore = Color(0xFF7B7B7B);
   static const Color stoicWhite = Color(0x80DFE6FF);
   static const Color brilliantWhite = Color(0xFFE8EDFF);
   static const Color gravelFint = Color(0xFFBBBBBB);

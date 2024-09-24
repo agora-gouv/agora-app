@@ -85,7 +85,7 @@ class _QagListViewState extends State<_QagListView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _HeaderQag(widget.viewModel.header),
+        if (widget.viewModel.header != null) _HeaderQag(widget.viewModel.header!),
         Semantics(
           label:
               'Liste des questions au gouvernement dans la catégorie ${widget.qagFilter.toFilterLabel()}, nombre d\'éléments ${widget.viewModel.qags.length}',
@@ -188,7 +188,7 @@ class _NoResult extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _HeaderQag(viewModel.header),
+        if (viewModel.header != null) _HeaderQag(viewModel.header!),
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -219,34 +219,17 @@ class _NoResult extends StatelessWidget {
 }
 
 class _HeaderQag extends StatelessWidget {
-  final _QagListHeaderViewModel? viewModel;
+  final _QagListHeaderViewModel viewModel;
 
   const _HeaderQag(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
-    if (viewModel != null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AgoraSpacings.horizontalPadding,
-          0,
-          AgoraSpacings.horizontalPadding,
-          AgoraSpacings.base,
-        ),
-        child: Center(
-          child: AgoraQagHeader(
-            id: viewModel!.id,
-            title: viewModel!.title,
-            message: viewModel!.message,
-            onCloseHeader: (headerId) {
-              context.read<QagListBloc>().add(CloseHeaderQagListEvent(headerId: headerId));
-            },
-          ),
-        ),
-      );
-    } else {
-      return SizedBox();
-    }
+    return AgoraQagHeader(
+      titre: viewModel.title,
+      message: viewModel.message,
+      onClose: () => context.read<QagListBloc>().add(CloseHeaderQagListEvent(headerId: viewModel.id)),
+    );
   }
 }
 

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 enum AgoraQagResponseStyle { small, large }
 
-class AgoraQagResponseCard extends StatelessWidget {
+class AgoraQagReponseCard extends StatelessWidget {
   final ThematiqueViewModel thematique;
   final String titre;
   final String auteurImageUrl;
@@ -22,7 +22,7 @@ class AgoraQagResponseCard extends StatelessWidget {
   final int index;
   final int maxIndex;
 
-  AgoraQagResponseCard({
+  AgoraQagReponseCard({
     super.key,
     required this.thematique,
     required this.titre,
@@ -73,7 +73,7 @@ class AgoraQagResponseCard extends StatelessWidget {
               roundedCorner: AgoraRoundedCorner.bottomRounded,
               child: Row(
                 children: [
-                  AgoraRoundedImage(imageUrl: auteurImageUrl, size: 27),
+                  AgoraRoundedImage(imageUrl: auteurImageUrl, size: 30),
                   SizedBox(width: AgoraSpacings.x0_5),
                   Expanded(
                     child: Column(

@@ -106,7 +106,7 @@ class _ReponseList extends StatelessWidget {
             separatorBuilder: (_, index) => SizedBox(height: AgoraSpacings.base),
             itemCount: qagResponseViewModels.length,
             itemBuilder: (context, index) {
-              return AgoraQagResponseCard(
+              return AgoraQagReponseCard(
                 key: index == 0 ? firstFocusableElementKey : null,
                 thematique: ThematiqueViewModel(
                   picto: qagResponseViewModels[index].thematique.picto,

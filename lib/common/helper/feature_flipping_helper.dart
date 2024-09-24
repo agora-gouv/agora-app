@@ -1,3 +1,3 @@
 bool isTerritorialisationEnabled() {
-  return true;
+  return false;
 }
