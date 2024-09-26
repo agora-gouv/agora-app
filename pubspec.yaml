@@ -1,9 +1,9 @@
 name: agora
 description: Agora project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
-version: 3.2.0+70
+version: 3.2.1+80
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
