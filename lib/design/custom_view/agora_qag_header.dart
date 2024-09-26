@@ -54,7 +54,7 @@ class AgoraQagHeader extends StatelessWidget {
             top: 0,
             right: 0,
             child: InkWell(
-              onTap: () => onClose,
+              onTap: onClose,
               borderRadius: BorderRadius.all(AgoraCorners.rounded42),
               child: Semantics(
                 button: true,

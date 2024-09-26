@@ -105,7 +105,11 @@ class AgoraButton extends StatelessWidget {
         child: ExcludeSemantics(child: child),
       );
     } else {
-      return child;
+      return Semantics(
+        button: true,
+        enabled: onPressed != null,
+        child: child,
+      );
     }
   }
 }

@@ -119,14 +119,16 @@ class _QagsPageState extends State<QagsPage> {
                 AgoraMainToolbar(
                   title: Row(
                     children: [
-                      AgoraRichText(
-                        key: toolbarTitleKey,
-                        policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                        semantic: AgoraRichTextSemantic(focused: true),
-                        items: [
-                          AgoraRichTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
-                          AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
-                        ],
+                      Expanded(
+                        child: AgoraRichText(
+                          key: toolbarTitleKey,
+                          policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                          semantic: AgoraRichTextSemantic(focused: true),
+                          items: [
+                            AgoraRichTextItem(text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
+                            AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
+                          ],
+                        ),
                       ),
                       Spacer(),
                       AgoraFocusHelper(
