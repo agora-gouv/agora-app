@@ -117,10 +117,12 @@ class _Content extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AgoraThematiqueLabel(
-                  picto: thematique.picto,
-                  label: thematique.label,
-                  size: AgoraThematiqueSize.medium,
+                Expanded(
+                  child: AgoraThematiqueLabel(
+                    picto: thematique.picto,
+                    label: thematique.label,
+                    size: AgoraThematiqueSize.medium,
+                  ),
                 ),
               ],
             ),
@@ -172,7 +174,7 @@ class _Footer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(nom, style: AgoraTextStyles.medium12),
+                Text(semanticsLabel: "question posée par $nom", nom, style: AgoraTextStyles.medium12),
                 Text('le $date', style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
               ],
             ),

@@ -17,8 +17,6 @@ import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_bloc.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_event.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_state.dart';
-import 'package:agora/reponse/bloc/qag_response_bloc.dart';
-import 'package:agora/reponse/bloc/qag_response_event.dart';
 import 'package:agora/reponse/widgets/qag_reponse_a_venir_section.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
@@ -51,12 +49,7 @@ class ReponsesPage extends StatelessWidget {
             SizedBox(height: AgoraSpacings.base),
             _ReponsesSection(),
             SizedBox(height: AgoraSpacings.x2),
-            BlocProvider(
-              create: (BuildContext context) => QagResponseBloc(
-                qagRepository: RepositoryManager.getQagRepository(),
-              )..add(FetchQagsResponseEvent()),
-              child: QagReponsesAVenirSection(),
-            ),
+            QagReponsesAVenirSection(),
           ],
         ),
       ),
@@ -77,7 +70,15 @@ class _ReponsesSection extends StatelessWidget {
       )..add(FetchQagsResponsePaginatedEvent(pageNumber: initialPage)),
       child: BlocBuilder<QagResponsePaginatedBloc, QagResponsePaginatedState>(
         builder: (context, state) {
-          return _ReponseList(state);
+          return switch (state) {
+            QagResponsePaginatedInitialState _ || QagResponsePaginatedLoadingState _ => _LoadingReponseList(),
+            QagResponsePaginatedErrorState _ => AgoraErrorView(
+                onReload: () => context
+                    .read<QagResponsePaginatedBloc>()
+                    .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
+              ),
+            QagResponsePaginatedFetchedState _ => _ReponseList(state),
+          };
         },
       ),
     );
@@ -93,17 +94,17 @@ class _ReponseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final qagResponseViewModels = state.qagResponseViewModels;
-    return AgoraFocusHelper(
-      elementKey: firstFocusableElementKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ListView.separated(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AgoraFocusHelper(
+          elementKey: firstFocusableElementKey,
+          child: ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            separatorBuilder: (_, index) => SizedBox(height: AgoraSpacings.base),
+            separatorBuilder: (_, __) => SizedBox(height: AgoraSpacings.base),
             itemCount: qagResponseViewModels.length,
             itemBuilder: (context, index) {
               return AgoraQagReponseCard(
@@ -137,30 +138,19 @@ class _ReponseList extends StatelessWidget {
               );
             },
           ),
-          if (state is QagResponsePaginatedInitialState || state is QagResponsePaginatedLoadingState)
-            Padding(
-              padding: const EdgeInsets.only(top: AgoraSpacings.base),
-              child: _LoadingReponseList(),
-            )
-          else if (state is QagResponsePaginatedErrorState)
-            AgoraErrorView(
-              onReload: () => context
+        ),
+        if (state.currentPageNumber < state.maxPage)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+            child: AgoraButton.withLabel(
+              label: GenericStrings.displayMore,
+              buttonStyle: AgoraButtonStyle.tertiary,
+              onPressed: () => context
                   .read<QagResponsePaginatedBloc>()
-                  .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
-            )
-          else if (state.currentPageNumber < state.maxPage)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
-              child: AgoraButton.withLabel(
-                label: GenericStrings.displayMore,
-                buttonStyle: AgoraButtonStyle.tertiary,
-                onPressed: () => context
-                    .read<QagResponsePaginatedBloc>()
-                    .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber + 1)),
-              ),
+                  .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber + 1)),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }
@@ -170,18 +160,21 @@ class _LoadingReponseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      separatorBuilder: (_, index) => SizedBox(height: AgoraSpacings.base),
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return SkeletonBox(
-          height: 120,
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.only(top: AgoraSpacings.base),
+      child: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        separatorBuilder: (_, index) => SizedBox(height: AgoraSpacings.base),
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return SkeletonBox(
+            height: 120,
+          );
+        },
+      ),
     );
   }
 }

@@ -35,24 +35,19 @@ class QagListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minHeight: MediaQuery.of(context).size.height * 0.70,
-      ),
-      child: BlocSelector<QagListBloc, QagListState, _ViewModel>(
-        selector: _ViewModel.fromState,
-        builder: (context, viewModel) {
-          if (viewModel is _QagListLoadingViewModel) {
-            return QagsListLoading();
-          } else if (viewModel is _QagListWithResultViewModel) {
-            return _QagListView(viewModel: viewModel, qagFilter: qagFilter, thematiqueId: thematiqueId);
-          } else if (viewModel is _QagListNoResultViewModel) {
-            return _NoResult(viewModel);
-          } else {
-            return _Error(thematiqueId: thematiqueId, thematiqueLabel: thematiqueLabel, qagFilter: qagFilter);
-          }
-        },
-      ),
+    return BlocSelector<QagListBloc, QagListState, _ViewModel>(
+      selector: _ViewModel.fromState,
+      builder: (context, viewModel) {
+        if (viewModel is _QagListLoadingViewModel) {
+          return QagsListLoading();
+        } else if (viewModel is _QagListWithResultViewModel) {
+          return _QagListView(viewModel: viewModel, qagFilter: qagFilter, thematiqueId: thematiqueId);
+        } else if (viewModel is _QagListNoResultViewModel) {
+          return _NoResult(viewModel);
+        } else {
+          return _Error(thematiqueId: thematiqueId, thematiqueLabel: thematiqueLabel, qagFilter: qagFilter);
+        }
+      },
     );
   }
 }
@@ -93,58 +88,77 @@ class _QagListViewState extends State<_QagListView> {
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(height: AgoraSpacings.base);
-            },
-            itemCount: widget.viewModel.hasFooter ? widget.viewModel.qags.length + 1 : widget.viewModel.qags.length,
+            separatorBuilder: (_, __) => SizedBox(height: AgoraSpacings.base),
+            itemCount: widget.viewModel.qags.length,
             itemBuilder: (context, index) {
-              if (index < widget.viewModel.qags.length) {
-                final item = widget.viewModel.qags[index];
-                return QagsSupportableCard(
-                  key: Key(item.id),
-                  qagViewModel: item,
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                  onQagSupportChange: (qagSupport) {
-                    context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
-                  },
-                  likeViewKey: likeViewKeys[index],
-                );
-              } else if (widget.viewModel.hasFooter) {
-                switch (widget.viewModel.footerType) {
-                  case QagListFooterType.loading:
-                    return Center(child: CircularProgressIndicator());
-                  case QagListFooterType.loaded:
-                    return Center(
-                      child: AgoraButton.withLabel(
-                        label: GenericStrings.displayMore,
-                        buttonStyle: AgoraButtonStyle.tertiary,
-                        onPressed: () {
-                          context.read<QagListBloc>().add(
-                                UpdateQagsListEvent(
-                                  thematiqueId: widget.thematiqueId,
-                                  qagFilter: widget.qagFilter,
-                                ),
-                              );
-                        },
-                      ),
-                    );
-                  case QagListFooterType.error:
-                    return AgoraErrorView(
-                      onReload: () => context.read<QagListBloc>().add(
-                            UpdateQagsListEvent(
-                              thematiqueId: widget.thematiqueId,
-                              qagFilter: widget.qagFilter,
-                            ),
-                          ),
-                    );
-                }
-              }
-              return null;
+              final item = widget.viewModel.qags[index];
+              return QagsSupportableCard(
+                key: Key(item.id),
+                qagViewModel: item,
+                widgetName: AnalyticsScreenNames.qagsPage,
+                onQagSupportChange: (qagSupport) {
+                  context.read<QagListBloc>().add(UpdateQagListSupportEvent(qagSupport: qagSupport));
+                },
+                likeViewKey: likeViewKeys[index],
+              );
             },
           ),
         ),
+        if (widget.viewModel.hasFooter) ...[
+          SizedBox(height: AgoraSpacings.base),
+          _Footer(
+            footerType: widget.viewModel.footerType,
+            hasFooter: widget.viewModel.hasFooter,
+            thematiqueId: widget.thematiqueId,
+            qagFilter: widget.qagFilter,
+          ),
+          SizedBox(height: AgoraSpacings.x3),
+        ],
       ],
     );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  final QagListFooterType footerType;
+  final bool hasFooter;
+  final String? thematiqueId;
+  final QagListFilter qagFilter;
+
+  const _Footer({
+    required this.footerType,
+    required this.hasFooter,
+    required this.thematiqueId,
+    required this.qagFilter,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (footerType) {
+      QagListFooterType.loading => Center(child: CircularProgressIndicator()),
+      QagListFooterType.loaded => Center(
+          child: AgoraButton.withLabel(
+            label: GenericStrings.displayMore,
+            buttonStyle: AgoraButtonStyle.tertiary,
+            onPressed: () {
+              context.read<QagListBloc>().add(
+                    UpdateQagsListEvent(
+                      thematiqueId: thematiqueId,
+                      qagFilter: qagFilter,
+                    ),
+                  );
+            },
+          ),
+        ),
+      QagListFooterType.error => AgoraErrorView(
+          onReload: () => context.read<QagListBloc>().add(
+                UpdateQagsListEvent(
+                  thematiqueId: thematiqueId,
+                  qagFilter: qagFilter,
+                ),
+              ),
+        ),
+    };
   }
 }
 
