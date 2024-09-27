@@ -41,7 +41,13 @@ class QagListSection extends StatelessWidget {
         if (viewModel is _QagListLoadingViewModel) {
           return QagsListLoading();
         } else if (viewModel is _QagListWithResultViewModel) {
-          return _QagListView(viewModel: viewModel, qagFilter: qagFilter, thematiqueId: thematiqueId);
+          final likeViewKeys = List.generate(viewModel.qags.length, (index) => GlobalKey());
+          return _QagListView(
+            viewModel: viewModel,
+            qagFilter: qagFilter,
+            thematiqueId: thematiqueId,
+            likeViewKeys: likeViewKeys,
+          );
         } else if (viewModel is _QagListNoResultViewModel) {
           return _NoResult(viewModel);
         } else {
@@ -52,46 +58,35 @@ class QagListSection extends StatelessWidget {
   }
 }
 
-class _QagListView extends StatefulWidget {
+class _QagListView extends StatelessWidget {
   final _QagListWithResultViewModel viewModel;
   final QagListFilter qagFilter;
   final String? thematiqueId;
+  final List<GlobalKey> likeViewKeys;
 
   const _QagListView({
     required this.viewModel,
     required this.qagFilter,
     required this.thematiqueId,
+    required this.likeViewKeys,
   });
-
-  @override
-  State<_QagListView> createState() => _QagListViewState();
-}
-
-class _QagListViewState extends State<_QagListView> {
-  List<GlobalKey> likeViewKeys = [];
-
-  @override
-  void initState() {
-    likeViewKeys = List.generate(widget.viewModel.qags.length, (index) => GlobalKey());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (widget.viewModel.header != null) _HeaderQag(widget.viewModel.header!),
+        if (viewModel.header != null) _HeaderQag(viewModel.header!),
         Semantics(
           label:
-              'Liste des questions au gouvernement dans la catégorie ${widget.qagFilter.toFilterLabel()}, nombre d\'éléments ${widget.viewModel.qags.length}',
+              'Liste des questions au gouvernement dans la catégorie ${qagFilter.toFilterLabel()}, nombre d\'éléments ${viewModel.qags.length}',
           child: ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             separatorBuilder: (_, __) => SizedBox(height: AgoraSpacings.base),
-            itemCount: widget.viewModel.qags.length,
+            itemCount: viewModel.qags.length,
             itemBuilder: (context, index) {
-              final item = widget.viewModel.qags[index];
+              final item = viewModel.qags[index];
               return QagsSupportableCard(
                 key: Key(item.id),
                 qagViewModel: item,
@@ -104,13 +99,13 @@ class _QagListViewState extends State<_QagListView> {
             },
           ),
         ),
-        if (widget.viewModel.hasFooter) ...[
+        if (viewModel.hasFooter) ...[
           SizedBox(height: AgoraSpacings.base),
           _Footer(
-            footerType: widget.viewModel.footerType,
-            hasFooter: widget.viewModel.hasFooter,
-            thematiqueId: widget.thematiqueId,
-            qagFilter: widget.qagFilter,
+            footerType: viewModel.footerType,
+            hasFooter: viewModel.hasFooter,
+            thematiqueId: thematiqueId,
+            qagFilter: qagFilter,
           ),
           SizedBox(height: AgoraSpacings.x3),
         ],
