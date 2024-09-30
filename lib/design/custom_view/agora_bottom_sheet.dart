@@ -6,33 +6,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AgoraInformationBottomSheet extends StatelessWidget {
-  final String title;
-  final Widget description;
+  final String titre;
+  final Widget? description;
+  final String boutonLabel;
+  final void Function()? onBoutonTap;
 
   const AgoraInformationBottomSheet({
-    required this.title,
-    required this.description,
+    required this.titre,
+    this.description,
+    this.boutonLabel = "J’ai compris",
+    this.onBoutonTap,
   });
 
   @override
   Widget build(BuildContext context) => AgoraBottomSheet(
         content: [
           Text(
-            title,
+            titre,
             style: AgoraTextStyles.medium22,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-          description,
-          const SizedBox(height: 36),
+          if (description != null) ...[
+            description!,
+            const SizedBox(height: 36),
+          ],
           Row(
             children: [
               Expanded(
                 child: AgoraButton.withLabel(
-                  label: 'J’ai compris',
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  label: boutonLabel,
+                  onPressed: () => onBoutonTap == null ? Navigator.pop(context) : onBoutonTap!(),
                 ),
               ),
             ],

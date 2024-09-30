@@ -96,7 +96,7 @@ class _ReponsesAVenirHeader extends StatelessWidget {
                         isScrollControlled: true,
                         backgroundColor: AgoraColors.transparent,
                         builder: (context) => AgoraInformationBottomSheet(
-                          title: "Informations",
+                          titre: "Informations",
                           description: Text(
                             ReponseStrings.qagResponseInfoBubble,
                             style: AgoraTextStyles.light16,

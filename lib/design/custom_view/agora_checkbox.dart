@@ -33,24 +33,26 @@ class AgoraCheckbox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ExcludeSemantics(
-                  child: Checkbox(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    visualDensity: VisualDensity(
-                      horizontal: VisualDensity.minimumDensity,
-                      vertical: VisualDensity.minimumDensity,
+                  child: Transform.scale(
+                    scale: 1.2,
+                    child: Checkbox(
+                      visualDensity: VisualDensity(
+                        horizontal: VisualDensity.minimumDensity,
+                        vertical: VisualDensity.minimumDensity,
+                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                      side: BorderSide(width: 2, color: AgoraColors.primaryBlue),
+                      fillColor: WidgetStateProperty.all(value ? AgoraColors.primaryBlue : AgoraColors.transparent),
+                      value: value,
+                      onChanged: null,
                     ),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    side: BorderSide(width: 2, color: AgoraColors.primaryBlue),
-                    fillColor: WidgetStateProperty.all(value ? AgoraColors.primaryBlue : AgoraColors.transparent),
-                    value: value,
-                    onChanged: null,
                   ),
                 ),
                 SizedBox(width: AgoraSpacings.x0_5),
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-                    child: Text(label, style: AgoraTextStyles.medium14),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 2),
+                    child: Text(label, style: AgoraTextStyles.medium15),
                   ),
                 ),
               ],

@@ -26,6 +26,7 @@ import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_st
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/pages/demographic_question_page.dart';
 import 'package:agora/profil/demographic/repository/demographic_information_presenter.dart';
+import 'package:agora/profil/pages/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -70,6 +71,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
             return AgoraSecondaryStyleView(
               semanticPageLabel: DemographicStrings.my + DemographicStrings.information,
               title: _Title(),
+              onBackClick: () => Navigator.pushReplacementNamed(context, ProfilPage.routeName),
               button: state is GetDemographicInformationSuccessState
                   ? AgoraSecondaryStyleViewButton(
                       icon: null,

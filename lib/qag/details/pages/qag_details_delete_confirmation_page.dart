@@ -1,12 +1,13 @@
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
+import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/details/bloc/delete/qag_delete_bloc.dart';
@@ -51,23 +52,21 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
         child: BlocConsumer<QagDeleteBloc, QagDeleteState>(
           listener: (context, state) {
             if (state is QagDeleteSuccessState) {
-              showAgoraDialog(
+              showModalBottomSheet(
                 context: context,
-                columnChildren: [
-                  Text(QagStrings.suppressSucceed, style: AgoraTextStyles.medium14),
-                  SizedBox(height: AgoraSpacings.x0_75),
-                  AgoraButton.withLabel(
-                    label: GenericStrings.close,
-                    buttonStyle: AgoraButtonStyle.primary,
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        QagsPage.routeName,
-                        ModalRoute.withName(SplashPage.routeName),
-                      );
-                    },
-                  ),
-                ],
+                isScrollControlled: true,
+                backgroundColor: AgoraColors.transparent,
+                builder: (context) => AgoraInformationBottomSheet(
+                  titre: QagStrings.suppressSucceed,
+                  boutonLabel: GenericStrings.close,
+                  onBoutonTap: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      QagsPage.routeName,
+                      ModalRoute.withName(SplashPage.routeName),
+                    );
+                  },
+                ),
               );
             }
           },

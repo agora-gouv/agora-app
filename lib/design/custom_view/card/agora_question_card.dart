@@ -174,7 +174,7 @@ class _Footer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(semanticsLabel: "question posée par $nom", nom, style: AgoraTextStyles.medium12),
+                Text(semanticsLabel: "question posée par $nom", nom.trim(), style: AgoraTextStyles.medium12),
                 Text('le $date', style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
               ],
             ),

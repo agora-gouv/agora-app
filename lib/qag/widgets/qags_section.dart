@@ -25,14 +25,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 enum QagTab { search, trending, top, latest, supporting }
 
 class QagsSection extends StatefulWidget {
-  final QagTab defaultSelected;
   final String? selectedThematiqueId;
   final GlobalKey firstThematiqueKey;
   final Function(bool) onSearchBarOpen;
 
   const QagsSection({
     super.key,
-    required this.defaultSelected,
     required this.selectedThematiqueId,
     required this.firstThematiqueKey,
     required this.onSearchBarOpen,
@@ -43,7 +41,7 @@ class QagsSection extends StatefulWidget {
 }
 
 class _QagsSectionState extends State<QagsSection> {
-  late QagTab currentSelected;
+  QagTab currentSelected = QagTab.trending;
   String? currentThematiqueId;
   String? currentThematiqueLabel;
   String previousSearchKeywords = '';
@@ -56,7 +54,6 @@ class _QagsSectionState extends State<QagsSection> {
   @override
   void initState() {
     super.initState();
-    currentSelected = widget.defaultSelected;
   }
 
   @override
@@ -83,19 +80,21 @@ class _QagsSectionState extends State<QagsSection> {
               currentThematiqueId: currentThematiqueId,
               onThematiqueIdSelected: (String? thematiqueId, String? thematicLabel) {
                 if (currentThematiqueId != null || thematiqueId != null) {
-                  setState(() {
-                    if (thematiqueId == currentThematiqueId) {
+                  if (thematiqueId == currentThematiqueId) {
+                    setState(() {
                       currentThematiqueId = null;
                       currentThematiqueLabel = null;
-                    } else {
+                    });
+                  } else {
+                    setState(() {
                       currentThematiqueId = thematiqueId;
                       currentThematiqueLabel = thematicLabel;
-                    }
+                    });
                     TrackerHelper.trackClick(
                       clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
                       widgetName: AnalyticsScreenNames.qagsPage,
                     );
-                  });
+                  }
                 }
               },
             ),
@@ -104,42 +103,11 @@ class _QagsSectionState extends State<QagsSection> {
             padding: isThematiquesVisible
                 ? const EdgeInsets.symmetric(vertical: AgoraSpacings.base)
                 : const EdgeInsets.only(bottom: AgoraSpacings.base),
-            child: _buildQags(context),
+            child: _Qags(currentSelected, currentThematiqueId, currentThematiqueLabel),
           ),
         ],
       ),
     );
-  }
-
-  Widget _buildQags(BuildContext context) {
-    switch (currentSelected) {
-      case QagTab.search:
-        return QagSearch();
-      case QagTab.trending:
-        return QagListSection(
-          qagFilter: QagListFilter.trending,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-      case QagTab.top:
-        return QagListSection(
-          qagFilter: QagListFilter.top,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-      case QagTab.latest:
-        return QagListSection(
-          qagFilter: QagListFilter.latest,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-      case QagTab.supporting:
-        return QagListSection(
-          qagFilter: QagListFilter.supporting,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-    }
   }
 
   Widget _buildTabBar() {
@@ -370,5 +338,46 @@ class _TabButton extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _Qags extends StatelessWidget {
+  final QagTab currentSelected;
+  final String? currentThematiqueId;
+  final String? currentThematiqueLabel;
+
+  const _Qags(this.currentSelected, this.currentThematiqueId, this.currentThematiqueLabel);
+
+  @override
+  Widget build(BuildContext context) {
+    print('currentSelected: $currentSelected');
+    switch (currentSelected) {
+      case QagTab.search:
+        return QagSearch();
+      case QagTab.trending:
+        return QagListSection(
+          qagFilter: QagListFilter.trending,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+      case QagTab.top:
+        return QagListSection(
+          qagFilter: QagListFilter.top,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+      case QagTab.latest:
+        return QagListSection(
+          qagFilter: QagListFilter.latest,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+      case QagTab.supporting:
+        return QagListSection(
+          qagFilter: QagListFilter.supporting,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+    }
   }
 }

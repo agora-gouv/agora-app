@@ -88,7 +88,7 @@ class ConsultationQuestionView extends StatelessWidget {
                                   isScrollControlled: true,
                                   backgroundColor: AgoraColors.transparent,
                                   builder: (context) => AgoraInformationBottomSheet(
-                                    title: "Informations",
+                                    titre: "Informations",
                                     description: AgoraHtml(data: popupDescription!, textAlign: TextAlign.center),
                                   ),
                                 );
