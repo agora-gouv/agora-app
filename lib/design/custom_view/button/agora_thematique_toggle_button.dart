@@ -7,20 +7,20 @@ import 'package:flutter/material.dart';
 class AgoraToggleButton extends StatelessWidget {
   final bool isSelected;
   final String text;
-  final VoidCallback? onClicked;
+  final void Function()? onPressed;
 
   const AgoraToggleButton({
     super.key,
     required this.isSelected,
     required this.text,
-    this.onClicked,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
       isSelected: [isSelected],
-      onPressed: (_) => onClicked?.call(),
+      onPressed: (_) => onPressed?.call(),
       color: AgoraColors.white,
       borderColor: AgoraColors.border,
       selectedBorderColor: AgoraColors.primaryBlue,

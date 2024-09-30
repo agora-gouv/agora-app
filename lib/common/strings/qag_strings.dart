@@ -8,7 +8,7 @@ class QagStrings {
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
   static const String trending = "Tendances";
-  static const String popular = "Le top";
+  static const String top = "Le top";
   static const String latest = "Récentes";
   static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";

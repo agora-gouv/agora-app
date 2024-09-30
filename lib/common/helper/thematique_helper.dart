@@ -20,7 +20,7 @@ class ThematiqueHelper {
     required List<ThematiqueWithIdViewModel> thematiques,
     required String? selectedThematiqueId,
     required GlobalKey firstThematiqueKey,
-    required Function(String?, String?) onThematiqueIdSelected,
+    required Function(String?, String?) onThematiqueSelected,
     bool needHorizontalSpacing = true,
   }) {
     List<Widget> thematiqueWidgets = thematiques.mapIndexed(
@@ -36,7 +36,7 @@ class ThematiqueHelper {
                 AgoraToggleButton(
                   isSelected: thematique.id == selectedThematiqueId,
                   text: thematique.picto,
-                  onClicked: () => onThematiqueIdSelected(thematique.id, thematique.label),
+                  onPressed: () => onThematiqueSelected(thematique.id, thematique.label),
                 ),
                 SizedBox(height: AgoraSpacings.x0_5),
                 SizedBox(
