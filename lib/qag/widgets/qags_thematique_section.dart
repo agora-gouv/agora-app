@@ -12,12 +12,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsThematiqueSection extends StatelessWidget {
   final String? currentThematiqueId;
-  final Function(String?, String?) onThematiqueIdSelected;
+  final Function(String?, String?) onThematiqueSelected;
   final GlobalKey firstThematiqueKey;
 
   const QagsThematiqueSection({
     required this.currentThematiqueId,
-    required this.onThematiqueIdSelected,
+    required this.onThematiqueSelected,
     required this.firstThematiqueKey,
   });
 
@@ -40,7 +40,7 @@ class QagsThematiqueSection extends StatelessWidget {
                       thematiques: state.thematiqueViewModels,
                       selectedThematiqueId: currentThematiqueId,
                       firstThematiqueKey: firstThematiqueKey,
-                      onThematiqueIdSelected: onThematiqueIdSelected,
+                      onThematiqueSelected: onThematiqueSelected,
                     ),
                   ),
                 ),

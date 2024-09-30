@@ -130,7 +130,7 @@ class _QagsPageState extends State<QagsPage> {
                           ],
                         ),
                       ),
-                      Spacer(),
+                      SizedBox(width: AgoraSpacings.base),
                       AgoraFocusHelper(
                         elementKey: firstFocusableElementKey,
                         child: _InfoBouton(focusKey: firstFocusableElementKey),
@@ -142,7 +142,6 @@ class _QagsPageState extends State<QagsPage> {
                 QagsSection(
                   key: onSearchAnchorKey,
                   firstThematiqueKey: firstThematiqueKey,
-                  defaultSelected: QagTab.trending,
                   selectedThematiqueId: currentThematiqueId,
                   onSearchBarOpen: (bool isSearchOpen) {
                     if (isSearchOpen) {
@@ -229,7 +228,7 @@ class _InfoBouton extends StatelessWidget {
             isScrollControlled: true,
             backgroundColor: AgoraColors.transparent,
             builder: (context) => AgoraInformationBottomSheet(
-              title: "Informations",
+              titre: "Informations",
               description: Text(
                 ReponseStrings.qagResponseInfoBubble,
                 style: AgoraTextStyles.light16,

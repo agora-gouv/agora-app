@@ -24,7 +24,7 @@ class AgoraSecondaryStyleViewButton {
 class AgoraSecondaryStyleView extends StatelessWidget {
   final Widget title;
   final AgoraSecondaryStyleViewButton? button;
-  final VoidCallback? onBackClick;
+  final void Function()? onBackClick;
   final Widget child;
   final AgoraSecondaryScrollType scrollType;
   final String semanticPageLabel;
