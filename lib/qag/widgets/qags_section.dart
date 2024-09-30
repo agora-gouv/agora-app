@@ -167,6 +167,7 @@ class _QagsSectionState extends State<QagsSection> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 _QagFilterTabButton(
+                                  tabLabel: QagStrings.trending,
                                   isSelectedTab: currentSelectedTab == QagTab.trending,
                                   semanticTooltip: 'Élément 1 sur 4',
                                   onSelectedTab: () {
@@ -183,6 +184,7 @@ class _QagsSectionState extends State<QagsSection> {
                                   },
                                 ),
                                 _QagFilterTabButton(
+                                  tabLabel: QagStrings.top,
                                   isSelectedTab: currentSelectedTab == QagTab.top,
                                   semanticTooltip: 'Élément 2 sur 4',
                                   onSelectedTab: () {
@@ -199,6 +201,7 @@ class _QagsSectionState extends State<QagsSection> {
                                   },
                                 ),
                                 _QagFilterTabButton(
+                                  tabLabel: QagStrings.latest,
                                   isSelectedTab: currentSelectedTab == QagTab.latest,
                                   semanticTooltip: 'Élément 3 sur 4',
                                   onSelectedTab: () {
@@ -215,6 +218,7 @@ class _QagsSectionState extends State<QagsSection> {
                                   },
                                 ),
                                 _QagFilterTabButton(
+                                  tabLabel: QagStrings.supporting,
                                   isSelectedTab: currentSelectedTab == QagTab.supporting,
                                   semanticTooltip: 'Élément 4 sur 4',
                                   onSelectedTab: () {
@@ -289,11 +293,17 @@ class _ThematiqueFilter extends StatelessWidget {
 }
 
 class _QagFilterTabButton extends StatelessWidget {
+  final String tabLabel;
   final bool isSelectedTab;
   final String semanticTooltip;
   final void Function() onSelectedTab;
 
-  const _QagFilterTabButton({required this.isSelectedTab, required this.semanticTooltip, required this.onSelectedTab});
+  const _QagFilterTabButton({
+    required this.tabLabel,
+    required this.isSelectedTab,
+    required this.semanticTooltip,
+    required this.onSelectedTab,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +313,7 @@ class _QagFilterTabButton extends StatelessWidget {
       selected: isSelectedTab,
       tooltip: semanticTooltip,
       child: _TabButton(
-        label: QagStrings.supporting,
+        label: tabLabel,
         isSelected: isSelectedTab,
         onTap: () {
           TrackerHelper.trackClick(
