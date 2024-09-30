@@ -92,7 +92,7 @@ class _Success extends StatelessWidget {
     return Column(
       children: [
         ConsultationsOngoingSection(
-          ongoingViewModels: [],
+          ongoingViewModels: successState.ongoingViewModels,
           answeredSectionEmpty: successState.answeredViewModels.isEmpty,
         ),
         ConsultationsFinishedSection(
