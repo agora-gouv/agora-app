@@ -61,7 +61,7 @@ dev_dependencies:
   bloc_test: ^9.1.4
   http_mock_adapter: ^0.6.0
   flutter_launcher_icons: ^0.13.1
-  build_runner: ^2.4.6
+  build_runner: ^2.4.13
   mocktail: ^1.0.4
 
 flutter:
