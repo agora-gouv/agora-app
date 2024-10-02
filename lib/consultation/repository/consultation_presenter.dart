@@ -2,13 +2,13 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultation.dart';
-import 'package:agora/territorialisation/region.dart';
+import 'package:agora/territorialisation/territoire.dart';
 import 'package:agora/territorialisation/territoire_helper.dart';
 
 class ConsultationPresenter {
   static List<ConsultationOngoingViewModel> presentOngoingConsultations(
     List<ConsultationOngoing> ongoingConsultations,
-    List<Region> referentiel,
+    List<Territoire> referentiel,
   ) {
     return ongoingConsultations.map((consultation) {
       final territoire = getTerritoireFromReferentiel(referentiel, consultation.territoire);
@@ -31,7 +31,7 @@ class ConsultationPresenter {
     required List<ConsultationOngoing> ongoingConsultations,
     required List<Consultation> finishedConsultations,
     required List<Consultation> concertations,
-    required List<Region> referentiel,
+    required List<Territoire> referentiel,
   }) {
     final allConsultations = [...finishedConsultations, ...concertations];
     allConsultations.sort((a, b) {
@@ -95,7 +95,7 @@ class ConsultationPresenter {
 
   static List<ConsultationAnsweredViewModel> presentAnsweredConsultations(
     List<ConsultationAnswered> answeredConsultations,
-    List<Region> referentiel,
+    List<Territoire> referentiel,
   ) {
     return answeredConsultations.map((consultation) {
       final territoire = getTerritoireFromReferentiel(referentiel, consultation.territoire);

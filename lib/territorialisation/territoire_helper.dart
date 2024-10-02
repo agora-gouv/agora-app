@@ -26,12 +26,12 @@ Color getTerritoireBadgeTexteColor(TerritoireType type) {
   }
 }
 
-Territoire getTerritoireFromReferentiel(List<Region> referentiel, String territoire) {
+Territoire getTerritoireFromReferentiel(List<Territoire> referentiel, String territoire) {
   for (var territoireFromReferentiel in referentiel) {
     if (territoireFromReferentiel.label == territoire) {
       return territoireFromReferentiel;
     }
-    if (territoireFromReferentiel.departements.isNotEmpty) {
+    if (territoireFromReferentiel is Region && territoireFromReferentiel.departements.isNotEmpty) {
       for (var departement in territoireFromReferentiel.departements) {
         if (departement.label == territoire) {
           return departement;

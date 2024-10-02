@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/territorialisation/departement.dart';
+import 'package:agora/territorialisation/pays.dart';
 import 'package:agora/territorialisation/region.dart';
 import 'package:agora/territorialisation/repository/referentiel_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,58 +19,64 @@ void main() {
       // Given
       dioAdapter.onGet(
         '/referentiels/regions-et-departements',
-        (request) => request.reply(HttpStatus.ok, [
-          {
-            "region": "Auvergne-Rhône-Alpes",
-            "departements": [
-              "Ain",
-              "Allier",
-              "Ardèche",
-              "Cantal",
-              "Drôme",
-              "Isère",
-              "Loire",
-              "Haute-Loire",
-              "Puy-de-Dôme",
-              "Rhône",
-              "Savoie",
-              "Haute-Savoie",
-            ],
-          },
-          {
-            "region": "Bourgogne-Franche-Comté",
-            "departements": [
-              "Côte-d’Or",
-              "Doubs",
-              "Jura",
-              "Nièvre",
-              "Haute-Saône",
-              "Saône-et-Loire",
-              "Yonne",
-              "Territoire de Belfort",
-            ],
-          },
-          {
-            "region": "Bretagne",
-            "departements": [
-              "Côtes-d’Armor",
-              "Finistère",
-              "Ille-et-Vilaine",
-              "Morbihan",
-            ],
-          },
-          {
-            "region": "Centre-Val de Loire",
-            "departements": [
-              "Cher",
-              "Eure-et-Loir",
-              "Indre",
-              "Indre-et-Loire",
-              "Loir-et-Cher",
-              "Loiret",
-            ],
-          },
-        ]),
+        (request) => request.reply(HttpStatus.ok, {
+          "regions": [
+            {
+              "region": "Auvergne-Rhône-Alpes",
+              "departements": [
+                "Ain",
+                "Allier",
+                "Ardèche",
+                "Cantal",
+                "Drôme",
+                "Isère",
+                "Loire",
+                "Haute-Loire",
+                "Puy-de-Dôme",
+                "Rhône",
+                "Savoie",
+                "Haute-Savoie",
+              ],
+            },
+            {
+              "region": "Bourgogne-Franche-Comté",
+              "departements": [
+                "Côte-d’Or",
+                "Doubs",
+                "Jura",
+                "Nièvre",
+                "Haute-Saône",
+                "Saône-et-Loire",
+                "Yonne",
+                "Territoire de Belfort",
+              ],
+            },
+            {
+              "region": "Bretagne",
+              "departements": [
+                "Côtes-d’Armor",
+                "Finistère",
+                "Ille-et-Vilaine",
+                "Morbihan",
+              ],
+            },
+            {
+              "region": "Centre-Val de Loire",
+              "departements": [
+                "Cher",
+                "Eure-et-Loir",
+                "Indre",
+                "Indre-et-Loire",
+                "Loir-et-Cher",
+                "Loiret",
+              ],
+            },
+          ],
+          "pays": [
+            "National",
+            "Français de l'étranger",
+          ],
+        }),
         headers: {
           "accept": "application/json",
           "Authorization": "Bearer jwtToken",
@@ -132,6 +139,8 @@ void main() {
             Departement(label: "Loiret"),
           ],
         ),
+        Pays(label: "National"),
+        Pays(label: "Français de l'étranger"),
       ]);
     });
   });
