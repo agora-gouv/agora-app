@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 
 import '../../fakes/concertation/fakes_concertation_repository.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
+import '../../fakes/referentiel/fakes_referentiel_repository.dart';
 
 void main() {
   Intl.defaultLocale = "fr_FR";
@@ -23,6 +24,7 @@ void main() {
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -91,6 +93,7 @@ void main() {
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -135,6 +138,7 @@ void main() {
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationTimeoutFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -149,6 +153,7 @@ void main() {
       build: () => ConsultationBloc(
         consultationRepository: FakeConsultationFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [

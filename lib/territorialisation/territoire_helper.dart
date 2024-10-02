@@ -1,4 +1,6 @@
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/territorialisation/departement.dart';
+import 'package:agora/territorialisation/region.dart';
 import 'package:agora/territorialisation/territoire.dart';
 import 'package:flutter/material.dart';
 
@@ -22,4 +24,20 @@ Color getTerritoireBadgeTexteColor(TerritoireType type) {
     case TerritoireType.departemental:
       return AgoraColors.badgeDepartementalTexte;
   }
+}
+
+Territoire getTerritoireFromReferentiel(List<Territoire> referentiel, String territoire) {
+  for (var territoireFromReferentiel in referentiel) {
+    if (territoireFromReferentiel.label == territoire) {
+      return territoireFromReferentiel;
+    }
+    if (territoireFromReferentiel is Region && territoireFromReferentiel.departements.isNotEmpty) {
+      for (var departement in territoireFromReferentiel.departements) {
+        if (departement.label == territoire) {
+          return departement;
+        }
+      }
+    }
+  }
+  return Departement(label: '');
 }

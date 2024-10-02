@@ -39,6 +39,7 @@ class ConsultationFinishedPaginatedPage extends StatelessWidget {
           create: (BuildContext context) => ConsultationPaginatedBloc(
             consultationRepository: RepositoryManager.getConsultationRepository(),
             concertationRepository: RepositoryManager.getConcertationRepository(),
+            referentielRepository: RepositoryManager.getReferentielRepository(),
           )..add(FetchConsultationPaginatedEvent(pageNumber: initialPage, type: type)),
         ),
       ],

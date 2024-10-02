@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../fakes/concertation/fakes_concertation_repository.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
+import '../../fakes/referentiel/fakes_referentiel_repository.dart';
 
 void main() {
   group("FetchConsultationFinishedPaginatedEvent", () {
@@ -18,6 +19,7 @@ void main() {
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       act: (bloc) =>
           bloc.add(FetchConsultationPaginatedEvent(pageNumber: 1, type: ConsultationPaginatedPageType.finished)),
@@ -63,6 +65,7 @@ void main() {
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       act: (bloc) =>
           bloc.add(FetchConsultationPaginatedEvent(pageNumber: 1, type: ConsultationPaginatedPageType.answered)),
@@ -97,6 +100,7 @@ void main() {
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       seed: () => ConsultationPaginatedFetchedState(
         maxPage: 3,
@@ -183,6 +187,7 @@ void main() {
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationSuccessRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       seed: () => ConsultationPaginatedFetchedState(
         maxPage: 3,
@@ -258,6 +263,7 @@ void main() {
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       act: (bloc) => bloc.add(
         FetchConsultationPaginatedEvent(
@@ -285,6 +291,7 @@ void main() {
       build: () => ConsultationPaginatedBloc(
         consultationRepository: FakeConsultationFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
+        referentielRepository: FakesReferentielRepository(),
       ),
       seed: () => ConsultationPaginatedFetchedState(
         maxPage: 3,

@@ -6,15 +6,18 @@ import 'package:agora/consultation/finished_paginated/pages/consultation_finishe
 import 'package:agora/consultation/repository/consultation_finished_paginated_presenter.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
+import 'package:agora/territorialisation/repository/referentiel_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, ConsultationPaginatedState> {
   final ConsultationRepository consultationRepository;
   final ConcertationRepository concertationRepository;
+  final ReferentielRepository referentielRepository;
 
   ConsultationPaginatedBloc({
     required this.consultationRepository,
     required this.concertationRepository,
+    required this.referentielRepository,
   }) : super(ConsultationFinishedPaginatedInitialState()) {
     on<FetchConsultationPaginatedEvent>(_handleFetchConsultationPaginated);
   }
@@ -33,10 +36,11 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
     GetConsultationsFinishedPaginatedRepositoryResponse consultationResponse;
     List<Concertation> concertations = [];
 
+    final referentielReponse = await referentielRepository.fetchReferentielRegionsEtDepartements();
     if (event.type == ConsultationPaginatedPageType.finished) {
       consultationResponse =
           await consultationRepository.fetchConsultationsFinishedPaginated(pageNumber: event.pageNumber);
-      concertations = await concertationRepository.getConcertations();
+      concertations = await concertationRepository.fetchConcertations();
     } else {
       consultationResponse =
           await consultationRepository.fetchConsultationsAnsweredPaginated(pageNumber: event.pageNumber);
@@ -45,6 +49,7 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
       final viewModels = ConsultationFinishedPaginatedPresenter.presentPaginatedConsultations(
         consultationResponse.consultationsPaginated,
         concertations,
+        referentielReponse,
       );
       emit(
         ConsultationPaginatedFetchedState(

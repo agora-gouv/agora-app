@@ -83,7 +83,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             thematique: (ongoingConsultation["thematique"] as Map).toThematique(),
             endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
             label: ongoingConsultation["highlightLabel"] as String?,
-            territoire: mapper.toTerritoire(ongoingConsultation["territory"] as String? ?? ""),
+            territoire: ongoingConsultation["territory"] as String? ?? "",
           );
         }).toList(),
         finishedConsultations: finishedConsultations.map((finishedConsultation) {
@@ -95,7 +95,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
             updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
-            territoire: mapper.toTerritoire(finishedConsultation["territory"] as String? ?? ""),
+            territoire: finishedConsultation["territory"] as String? ?? "",
           );
         }).toList(),
         answeredConsultations: answeredConsultations.map((answeredConsultation) {
@@ -106,7 +106,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: answeredConsultation["coverUrl"] as String,
             thematique: (answeredConsultation["thematique"] as Map).toThematique(),
             label: answeredConsultation["updateLabel"] as String?,
-            territoire: mapper.toTerritoire(answeredConsultation["territory"] as String? ?? ""),
+            territoire: answeredConsultation["territory"] as String? ?? "",
           );
         }).toList(),
       );
@@ -138,7 +138,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: consultation["coverUrl"] as String,
             thematique: (consultation["thematique"] as Map).toThematique(),
             label: consultation["label"] as String?,
-            territoire: mapper.toTerritoire(consultation["territory"] as String? ?? ""),
+            territoire: consultation["territory"] as String? ?? "",
           );
         }).toList(),
       );
@@ -166,7 +166,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
             updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
-            territoire: mapper.toTerritoire(finishedConsultation["territory"] as String? ?? ""),
+            territoire: finishedConsultation["territory"] as String? ?? "",
           );
         }).toList(),
       );

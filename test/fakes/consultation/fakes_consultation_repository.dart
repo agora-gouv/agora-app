@@ -8,7 +8,6 @@ import 'package:agora/consultation/question/domain/consultation_question_respons
 import 'package:agora/consultation/question/domain/consultation_questions.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
-import 'package:agora/territorialisation/departement.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
@@ -28,7 +27,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
           label: "Plus que 3 jours",
-          territoire: Departement(label: "Paris"),
+          territoire: "Paris",
         ),
       ],
       finishedConsultations: [
@@ -39,7 +38,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl2",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
-          territoire: Departement(label: "Paris"),
+          territoire: "Paris",
         ),
       ],
       answeredConsultations: [
@@ -50,7 +49,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl3",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
-          territoire: Departement(label: "Paris"),
+          territoire: "Paris",
         ),
       ],
     );
@@ -70,7 +69,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
-          territoire: Departement(label: "Paris"),
+          territoire: "Paris",
         ),
       ],
     );
@@ -261,7 +260,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
-          territoire: Departement(label: "Paris"),
+          territoire: "Paris",
         ),
       ],
     );
@@ -287,7 +286,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
           label: null,
-          territoire: Departement(label: "Paris"),
+          territoire: "Paris",
         ),
       ],
       finishedConsultations: [],

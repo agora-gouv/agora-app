@@ -81,7 +81,7 @@ class AgoraConsultationOngoingCard extends StatelessWidget {
                 children: [
                   _Image(imageUrl: imageUrl, screenWidth: screenWidth, screenHeight: screenHeight),
                   SizedBox(height: AgoraSpacings.x0_5),
-                  if (isTerritorialisationEnabled())
+                  if (isTerritorialisationEnabled() && badgeLabel.isNotEmpty)
                     AgoraBadge(
                       label: badgeLabel,
                       backgroundColor: badgeColor,

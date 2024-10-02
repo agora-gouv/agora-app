@@ -47,6 +47,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
           return ConsultationBloc(
             consultationRepository: RepositoryManager.getConsultationRepository(),
             concertationRepository: RepositoryManager.getConcertationRepository(),
+            referentielRepository: RepositoryManager.getReferentielRepository(),
           )..add(FetchConsultationsEvent());
         },
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
