@@ -14,7 +14,6 @@ import 'package:agora/consultation/question/repository/consultation_question_sto
 import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
-import 'package:agora/territorialisation/departement.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,8 +29,6 @@ void main() {
   final sentryWrapper = SentryWrapper();
 
   final consultationMapper = MockConsultationMapper();
-  when(() => consultationMapper.toTerritoire("Paris")).thenReturn(Departement(label: "Paris"));
-
   const consultationId = "consultationId";
 
   group("Fetch consultations", () {
@@ -108,7 +105,7 @@ void main() {
               thematique: Thematique(picto: "🚊", label: "Transports"),
               endDate: DateTime(2023, 3, 21),
               label: "Plus que 3 jours",
-              territoire: Departement(label: "Paris"),
+              territoire: "Paris",
             ),
           ],
           finishedConsultations: [
@@ -120,7 +117,7 @@ void main() {
               thematique: Thematique(picto: "🩺", label: "Santé"),
               label: 'label',
               updateDate: DateTime(2023, 3, 21),
-              territoire: Departement(label: "Paris"),
+              territoire: "Paris",
             ),
           ],
           answeredConsultations: [
@@ -131,7 +128,7 @@ void main() {
               coverUrl: "coverUrl3",
               thematique: Thematique(picto: "🩺", label: "Santé"),
               label: 'label',
-              territoire: Departement(label: "Paris"),
+              territoire: "Paris",
             ),
           ],
         ),
@@ -188,7 +185,7 @@ void main() {
               thematique: Thematique(picto: "🚊", label: "Transports"),
               endDate: DateTime(2023, 3, 21),
               label: null,
-              territoire: Departement(label: "Paris"),
+              territoire: "Paris",
             ),
           ],
           finishedConsultations: [],
@@ -334,7 +331,7 @@ void main() {
               thematique: Thematique(picto: "🩺", label: "Santé"),
               label: 'label',
               updateDate: DateTime(2023, 3, 21),
-              territoire: Departement(label: "Paris"),
+              territoire: "Paris",
             ),
           ],
         ),

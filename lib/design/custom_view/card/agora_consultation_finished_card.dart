@@ -105,7 +105,7 @@ class AgoraConsultationFinishedCard extends StatelessWidget {
                 cardHeight: cardHeight,
               ),
             ),
-            if (isTerritorialisationEnabled())
+            if (isTerritorialisationEnabled() && badgeLabel.isNotEmpty)
               Padding(
                 padding: padding,
                 child: AgoraBadge(label: badgeLabel, backgroundColor: badgeColor, textColor: badgeTextColor),

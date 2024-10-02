@@ -1,11 +1,5 @@
-import 'dart:math';
-
 import 'package:agora/consultation/domain/consultation_summary_results.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/pays.dart';
-import 'package:agora/territorialisation/region.dart';
-import 'package:agora/territorialisation/territoire.dart';
 
 class ConsultationMapper {
   List<ConsultationSummaryResults> toConsultationSummaryResults({
@@ -70,19 +64,5 @@ class ConsultationMapper {
         );
       },
     ).toList();
-  }
-
-  Territoire toTerritoire(String territoire) {
-    // Check Référentiel et créer une instance du bon type avec les bon paramètres
-    final random = Random().nextInt(3);
-    if (random == 0) {
-      return Departement(label: "Paris");
-    } else if (random == 1) {
-      return Region(label: "Ile-de-France", departements: []);
-    } else if (random == 2) {
-      return Pays(label: "National");
-    } else {
-      throw UnimplementedError();
-    }
   }
 }

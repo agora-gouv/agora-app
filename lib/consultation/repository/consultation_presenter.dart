@@ -2,13 +2,16 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultation.dart';
-import 'package:agora/territorialisation/terriotire_helper.dart';
+import 'package:agora/territorialisation/region.dart';
+import 'package:agora/territorialisation/territoire_helper.dart';
 
 class ConsultationPresenter {
   static List<ConsultationOngoingViewModel> presentOngoingConsultations(
     List<ConsultationOngoing> ongoingConsultations,
+    List<Region> referentiel,
   ) {
     return ongoingConsultations.map((consultation) {
+      final territoire = getTerritoireFromReferentiel(referentiel, consultation.territoire);
       return ConsultationOngoingViewModel(
         id: consultation.id,
         slug: consultation.slug,
@@ -17,9 +20,9 @@ class ConsultationPresenter {
         thematique: consultation.thematique.toThematiqueViewModel(),
         endDate: consultation.endDate!.formatToDayLongMonth(),
         label: consultation.label,
-        badgeLabel: consultation.territoire.label.toUpperCase(),
-        badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
-        badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
+        badgeLabel: territoire.label.toUpperCase(),
+        badgeColor: getTerritoireBadgeColor(territoire.type),
+        badgeTextColor: getTerritoireBadgeTexteColor(territoire.type),
       );
     }).toList();
   }
@@ -28,6 +31,7 @@ class ConsultationPresenter {
     required List<ConsultationOngoing> ongoingConsultations,
     required List<Consultation> finishedConsultations,
     required List<Consultation> concertations,
+    required List<Region> referentiel,
   }) {
     final allConsultations = [...finishedConsultations, ...concertations];
     allConsultations.sort((a, b) {
@@ -38,6 +42,7 @@ class ConsultationPresenter {
       final List<ConsultationViewModel> finishedViewModels = [];
       final limitedConsultations = allConsultations.take(8);
       for (var consultation in limitedConsultations) {
+        final territoire = getTerritoireFromReferentiel(referentiel, consultation.territoire);
         if (consultation is Concertation) {
           finishedViewModels.add(
             ConcertationViewModel(
@@ -48,9 +53,9 @@ class ConsultationPresenter {
               thematique: consultation.thematique.toThematiqueViewModel(),
               label: consultation.label,
               externalLink: consultation.externalLink,
-              badgeLabel: consultation.territoire.label.toUpperCase(),
-              badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
-              badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
+              badgeLabel: territoire.label.toUpperCase(),
+              badgeColor: getTerritoireBadgeColor(territoire.type),
+              badgeTextColor: getTerritoireBadgeTexteColor(territoire.type),
             ),
           );
         } else if (consultation is ConsultationFinished) {
@@ -62,9 +67,9 @@ class ConsultationPresenter {
               coverUrl: consultation.coverUrl,
               thematique: consultation.thematique.toThematiqueViewModel(),
               label: consultation.label,
-              badgeLabel: consultation.territoire.label.toUpperCase(),
-              badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
-              badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
+              badgeLabel: territoire.label.toUpperCase(),
+              badgeColor: getTerritoireBadgeColor(territoire.type),
+              badgeTextColor: getTerritoireBadgeTexteColor(territoire.type),
             ),
           );
         }
@@ -72,6 +77,7 @@ class ConsultationPresenter {
       return finishedViewModels;
     } else {
       return ongoingConsultations.map((consultation) {
+        final territoire = getTerritoireFromReferentiel(referentiel, consultation.territoire);
         return ConsultationFinishedViewModel(
           id: consultation.id,
           slug: consultation.slug,
@@ -79,9 +85,9 @@ class ConsultationPresenter {
           coverUrl: consultation.coverUrl,
           thematique: consultation.thematique.toThematiqueViewModel(),
           label: null,
-          badgeLabel: consultation.territoire.label.toUpperCase(),
-          badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
-          badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
+          badgeLabel: territoire.label.toUpperCase(),
+          badgeColor: getTerritoireBadgeColor(territoire.type),
+          badgeTextColor: getTerritoireBadgeTexteColor(territoire.type),
         );
       }).toList();
     }
@@ -89,8 +95,10 @@ class ConsultationPresenter {
 
   static List<ConsultationAnsweredViewModel> presentAnsweredConsultations(
     List<ConsultationAnswered> answeredConsultations,
+    List<Region> referentiel,
   ) {
     return answeredConsultations.map((consultation) {
+      final territoire = getTerritoireFromReferentiel(referentiel, consultation.territoire);
       return ConsultationAnsweredViewModel(
         id: consultation.id,
         slug: consultation.slug,
@@ -98,9 +106,9 @@ class ConsultationPresenter {
         coverUrl: consultation.coverUrl,
         thematique: consultation.thematique.toThematiqueViewModel(),
         label: consultation.label,
-        badgeLabel: consultation.territoire.label.toUpperCase(),
-        badgeColor: getTerritoireBadgeColor(consultation.territoire.type),
-        badgeTextColor: getTerritoireBadgeTexteColor(consultation.territoire.type),
+        badgeLabel: territoire.label.toUpperCase(),
+        badgeColor: getTerritoireBadgeColor(territoire.type),
+        badgeTextColor: getTerritoireBadgeTexteColor(territoire.type),
       );
     }).toList();
   }

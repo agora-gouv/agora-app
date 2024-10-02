@@ -4,7 +4,6 @@ import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
 import 'package:agora/consultation/repository/consultation_mapper.dart';
-import 'package:agora/territorialisation/departement.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -47,7 +46,6 @@ void main() {
       );
 
       final consultationMapper = MockConsultationMapper();
-      when(() => consultationMapper.toTerritoire("Paris")).thenReturn(Departement(label: "Paris"));
 
       // When
       final repository = ConcertationDioRepository(
@@ -55,7 +53,7 @@ void main() {
         sentryWrapper: sentryWrapper,
         mapper: consultationMapper,
       );
-      final response = await repository.getConcertations();
+      final response = await repository.fetchConcertations();
 
       // Then
       expect(
@@ -70,7 +68,7 @@ void main() {
             thematique: Thematique(label: "Transports", picto: "🚊"),
             updateDate: DateTime(2023, 3, 21),
             label: "Plus que 3 jours",
-            territoire: Departement(label: "Paris"),
+            territoire: "Paris",
           ),
         ],
       );
@@ -97,7 +95,7 @@ void main() {
         sentryWrapper: sentryWrapper,
         mapper: ConsultationMapper(),
       );
-      final response = await repository.getConcertations();
+      final response = await repository.fetchConcertations();
 
       // Then
       expect(response, []);

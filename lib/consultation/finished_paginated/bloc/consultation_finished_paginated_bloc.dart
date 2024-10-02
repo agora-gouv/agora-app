@@ -36,7 +36,7 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
     if (event.type == ConsultationPaginatedPageType.finished) {
       consultationResponse =
           await consultationRepository.fetchConsultationsFinishedPaginated(pageNumber: event.pageNumber);
-      concertations = await concertationRepository.getConcertations();
+      concertations = await concertationRepository.fetchConcertations();
     } else {
       consultationResponse =
           await consultationRepository.fetchConsultationsAnsweredPaginated(pageNumber: event.pageNumber);

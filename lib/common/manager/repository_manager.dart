@@ -21,6 +21,7 @@ import 'package:agora/profil/notification/repository/notification_repository.dar
 import 'package:agora/profil/participation_charter/repository/mocks_participation_charter_repository.dart';
 import 'package:agora/qag/repository/mocks_qag_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
+import 'package:agora/territorialisation/repository/referentiel_repository.dart';
 import 'package:agora/thematique/repository/thematique_repository.dart';
 import 'package:agora/welcome/repository/mocks_welcome_repository.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';
@@ -260,6 +261,18 @@ class RepositoryManager {
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
       mapper: ConsultationMapper(),
+    );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static ReferentielDioRepository getReferentielRepository() {
+    if (GetIt.instance.isRegistered<ReferentielDioRepository>()) {
+      return GetIt.instance.get<ReferentielDioRepository>();
+    }
+    final repository = ReferentielDioRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      sentryWrapper: HelperManager.getSentryWrapper(),
     );
     GetIt.instance.registerSingleton(repository);
     return repository;

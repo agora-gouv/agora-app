@@ -69,7 +69,7 @@ class AgoraConsultationAnsweredCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (isTerritorialisationEnabled()) ...[
+                        if (isTerritorialisationEnabled() && badgeLabel.isNotEmpty) ...[
                           AgoraBadge(label: badgeLabel, backgroundColor: badgeColor, textColor: badgeTextColor),
                           SizedBox(height: AgoraSpacings.x0_25),
                         ],

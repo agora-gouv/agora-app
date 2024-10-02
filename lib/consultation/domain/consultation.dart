@@ -1,4 +1,3 @@
-import 'package:agora/territorialisation/territoire.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,7 +7,7 @@ class Consultation extends Equatable {
   final String title;
   final String coverUrl;
   final Thematique thematique;
-  final Territoire territoire;
+  final String territoire;
   final String? label;
   final DateTime? updateDate;
   final DateTime? endDate;
