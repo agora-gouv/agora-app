@@ -87,15 +87,15 @@ class HeaderSectionUpdateWidget extends StatelessWidget {
               section.coverUrl,
               excludeFromSemantics: true,
               fit: BoxFit.fitHeight,
-              height: 50,
-              width: 50,
+              height: 75,
+              width: 75,
             ),
           ),
           const SizedBox(width: AgoraSpacings.base),
           Expanded(
             child: Text(
               section.title,
-              style: AgoraTextStyles.medium16,
+              style: AgoraTextStyles.medium22,
             ),
           ),
         ],
@@ -284,7 +284,7 @@ class _ConsultationDatesInfosSectionWidget extends StatelessWidget {
               header: true,
               child: Text(
                 'Lancement de la consultation',
-                style: AgoraTextStyles.medium22.copyWith(
+                style: AgoraTextStyles.medium20.copyWith(
                   color: AgoraColors.primaryBlue,
                 ),
               ),

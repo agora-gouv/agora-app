@@ -28,65 +28,65 @@ class AgoraHtmlStyles {
   }
 
   static Style _bodyStyle(double fontSize, TextAlign textAlign) => Style(
-    fontFamily: marianne,
-    fontWeight: light,
-    fontSize: FontSize(fontSize),
-    color: AgoraColors.primaryGrey,
-    textDecorationColor: AgoraColors.primaryBlue,
-    textAlign: textAlign,
-    lineHeight: LineHeight(height),
-    padding: HtmlPaddings.zero,
-    margin: Margins.zero,
-  );
+        fontFamily: marianne,
+        fontWeight: light,
+        fontSize: FontSize(fontSize),
+        color: AgoraColors.primaryGrey,
+        textDecorationColor: AgoraColors.primaryBlue,
+        textAlign: textAlign,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings.zero,
+        margin: Margins.zero,
+      );
 
   static Style _orderListStyle(double fontSize) => Style(
-    fontFamily: marianne,
-    fontWeight: light,
-    fontSize: FontSize(fontSize),
-    color: AgoraColors.primaryGrey,
-    textDecorationColor: AgoraColors.primaryBlue,
-    lineHeight: LineHeight(height),
-    padding: HtmlPaddings(left: HtmlPadding(AgoraSpacings.base)),
-    margin: Margins.zero,
-  );
+        fontFamily: marianne,
+        fontWeight: light,
+        fontSize: FontSize(fontSize),
+        color: AgoraColors.primaryGrey,
+        textDecorationColor: AgoraColors.primaryBlue,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings(left: HtmlPadding(AgoraSpacings.x1_5)),
+        margin: Margins.zero,
+      );
 
   static Style _unOrderListStyle(double fontSize) => Style(
-    fontFamily: marianne,
-    fontWeight: light,
-    fontSize: FontSize(fontSize),
-    color: AgoraColors.primaryGrey,
-    textDecorationColor: AgoraColors.primaryBlue,
-    lineHeight: LineHeight(height),
-    padding: HtmlPaddings(left: HtmlPadding(AgoraSpacings.x0_75)),
-    margin: Margins.zero,
-  );
+        fontFamily: marianne,
+        fontWeight: light,
+        fontSize: FontSize(fontSize),
+        color: AgoraColors.primaryGrey,
+        textDecorationColor: AgoraColors.primaryBlue,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings(left: HtmlPadding(AgoraSpacings.x0_75)),
+        margin: Margins.zero,
+      );
 
   static Style _linkStyle(double fontSize) => Style(
-    fontFamily: marianne,
-    fontWeight: light,
-    fontSize: FontSize(fontSize),
-    color: AgoraColors.primaryBlue,
-    lineHeight: LineHeight(height),
-    padding: HtmlPaddings.zero,
-    margin: Margins.zero,
-  );
+        fontFamily: marianne,
+        fontWeight: light,
+        fontSize: FontSize(fontSize),
+        color: AgoraColors.primaryBlue,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings.zero,
+        margin: Margins.zero,
+      );
 
   static Style _boldStyle(double fontSize) => Style(
-    fontFamily: marianne,
-    fontWeight: medium,
-    fontSize: FontSize(fontSize),
-    lineHeight: LineHeight(height),
-    padding: HtmlPaddings.zero,
-    margin: Margins.zero,
-  );
+        fontFamily: marianne,
+        fontWeight: medium,
+        fontSize: FontSize(fontSize),
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings.zero,
+        margin: Margins.zero,
+      );
 
   static Style _spanStyle(double fontSize) => Style(
-    fontFamily: marianne,
-    fontWeight: bold,
-    fontSize: FontSize(fontSize),
-    color: AgoraColors.primaryBlue,
-    lineHeight: LineHeight(height),
-    padding: HtmlPaddings.zero,
-    margin: Margins.zero,
-  );
+        fontFamily: marianne,
+        fontWeight: bold,
+        fontSize: FontSize(fontSize),
+        color: AgoraColors.primaryBlue,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings.zero,
+        margin: Margins.zero,
+      );
 }
