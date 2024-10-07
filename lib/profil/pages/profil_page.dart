@@ -23,6 +23,7 @@ import 'package:agora/profil/pages/delete_account_page.dart';
 import 'package:agora/profil/pages/profil_information_page.dart';
 import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
 import 'package:agora/qag/moderation/pages/moderation_page.dart';
+import 'package:agora/territorialisation/pages/territoire_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -86,6 +87,13 @@ class _ProfilPageState extends State<ProfilPage> {
                         },
                       ),
                     );
+                  },
+                ),
+                AgoraMenuItem(
+                  title: "Mes territoires",
+                  onClick: () {
+                    _track("Mes territoires");
+                    Navigator.pushNamed(context, TerritoirePage.routeName);
                   },
                 ),
                 AgoraMenuItem(

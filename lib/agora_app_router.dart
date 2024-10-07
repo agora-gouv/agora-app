@@ -28,6 +28,7 @@ import 'package:agora/qag/moderation/pages/moderation_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:agora/splash_page.dart';
+import 'package:agora/territorialisation/pages/territoire_page.dart';
 import 'package:agora/webview/webview_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
@@ -164,6 +165,12 @@ class AgoraAppRouter {
         currentPage = AgoraTracker(
           widgetName: AnalyticsScreenNames.moderationPage,
           child: ModerationPage(),
+        );
+        break;
+      case TerritoirePage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.territoirePage,
+          child: TerritoirePage(),
         );
         break;
       case NotificationPage.routeName:
