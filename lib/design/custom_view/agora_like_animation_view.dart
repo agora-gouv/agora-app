@@ -104,7 +104,7 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
 
   Rect _buildTargetRect() {
     final currentDisplayRect = _buildRect(context);
-    final likeDisplayRect = _buildRect(widget.likeViewKey.currentContext);
+    final likeDisplayRect = _buildRect(widget.likeViewKey.currentContext!);
 
     final likeWidth = likeDisplayRect.right - likeDisplayRect.left;
     final likeHeight = likeDisplayRect.bottom - likeDisplayRect.top;

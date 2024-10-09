@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_event.dart';
@@ -13,7 +14,6 @@ import 'package:agora/territorialisation/pays.dart';
 import 'package:agora/territorialisation/repository/referentiel_repository.dart';
 import 'package:agora/territorialisation/territoire.dart';
 import 'package:agora/territorialisation/territoire_helper.dart';
-import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optional/optional.dart';
 

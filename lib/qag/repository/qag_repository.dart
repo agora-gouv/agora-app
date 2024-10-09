@@ -78,6 +78,8 @@ abstract class QagRepository {
   Future<QagSimilarRepositoryResponse> getSimilarQags({
     required String title,
   });
+
+  Future<int?> getQagsCount();
 }
 
 class QagDioRepository extends QagRepository {
@@ -525,6 +527,18 @@ class QagDioRepository extends QagRepository {
         responseDate: (qagResponse["responseDate"] as String).parseToDateTime(),
       );
     }).toList();
+  }
+
+  @override
+  Future<int?> getQagsCount() async {
+    const uri = "/qags/count";
+    try {
+      final response = await httpClient.get(uri);
+      return response.statusCode == HttpStatus.ok ? response.data as int : null;
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
+      return null;
+    }
   }
 }
 
