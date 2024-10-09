@@ -7,7 +7,7 @@ import 'package:agora/territorialisation/region.dart';
 import 'package:agora/territorialisation/repository/referentiel_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../utils/dio_utils.dart';
+import '../../utils/dio_utils.dart';
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();

@@ -1224,4 +1224,52 @@ void main() {
       expect(response, QagSimilarFailedResponse());
     });
   });
+
+  group("Fetch qag count", () {
+    test("when success should return qag count", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/count",
+        (server) => server.reply(HttpStatus.ok, 1),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getQagsCount();
+
+      // Then
+      expect(response, 1);
+    });
+
+    test("when failure should return null", () async {
+      // Given
+      dioAdapter.onGet(
+        "/qags/count",
+        (server) => server.reply(HttpStatus.notFound, null),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getQagsCount();
+
+      // Then
+      expect(response, null);
+    });
+  });
 }

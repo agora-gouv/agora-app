@@ -260,6 +260,11 @@ class FakeQagSuccessRepository extends QagRepository {
       ],
     );
   }
+
+  @override
+  Future<int?> getQagsCount() {
+    return Future.value(1);
+  }
 }
 
 class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
@@ -691,6 +696,11 @@ class FakeQagFailureRepository extends QagRepository {
   @override
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
     return GetSearchQagsFailedResponse();
+  }
+
+  @override
+  Future<int?> getQagsCount() {
+    return Future.value(null);
   }
 }
 

@@ -11,6 +11,7 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -20,9 +21,13 @@ import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_state.dart';
 import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
 import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
+import 'package:agora/qag/count/bloc/qags_count_bloc.dart';
+import 'package:agora/qag/count/bloc/qags_count_event.dart';
+import 'package:agora/qag/count/bloc/qags_count_state.dart';
 import 'package:agora/qag/widgets/qags_section.dart';
 import 'package:agora/thematique/bloc/thematique_bloc.dart';
 import 'package:agora/thematique/bloc/thematique_event.dart';
+import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,6 +92,11 @@ class _QagsPageState extends State<QagsPage> {
               qagRepository: RepositoryManager.getQagRepository(),
             ),
           ),
+          BlocProvider(
+            create: (context) => QagsCountBloc(
+              qagRepository: RepositoryManager.getQagRepository(),
+            )..add(FetchQagsCountEvent()),
+          ),
         ],
         child: Scaffold(
           floatingActionButton: ListenableBuilder(
@@ -115,6 +125,7 @@ class _QagsPageState extends State<QagsPage> {
             controller: scrollController,
             physics: ClampingScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 AgoraMainToolbar(
                   title: Row(
@@ -139,6 +150,33 @@ class _QagsPageState extends State<QagsPage> {
                   ),
                 ),
                 SizedBox(height: AgoraSpacings.base),
+                BlocBuilder<QagsCountBloc, QagsCountState>(
+                  builder: (context, state) {
+                    return switch (state.status) {
+                      AllPurposeStatus.error => SizedBox(),
+                      AllPurposeStatus.loading => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SkeletonBox(height: 12, width: 300, radius: 15),
+                              SizedBox(height: 4),
+                              SkeletonBox(height: 12, width: 200, radius: 15),
+                              SizedBox(height: 4),
+                              SkeletonBox(height: 12, width: 220, radius: 15),
+                            ],
+                          ),
+                        ),
+                      AllPurposeStatus.success => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+                          child: Text(
+                            "Il y a actuellement ${state.count} questions posées au Gouvernement. Votez pour celles que vous trouvez les plus intéressantes en cliquant sur les coeurs.",
+                            style: AgoraTextStyles.light14,
+                          ),
+                        ),
+                    };
+                  },
+                ),
                 QagsSection(
                   key: onSearchAnchorKey,
                   firstThematiqueKey: firstThematiqueKey,
