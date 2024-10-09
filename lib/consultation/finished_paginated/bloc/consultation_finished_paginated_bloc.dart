@@ -113,12 +113,10 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
     List<Departement> departements = [];
     if (profilResponse is GetDemographicInformationSucceedResponse) {
       final premierDepartement = profilResponse.demographicInformations
-          .where((info) => info.demographicType == DemographicQuestionType.primaryDepartment)
-          .first
+          .firstWhere((info) => info.demographicType == DemographicQuestionType.primaryDepartment)
           .data;
       final secondDepartement = profilResponse.demographicInformations
-          .where((info) => info.demographicType == DemographicQuestionType.secondaryDepartment)
-          .first
+          .firstWhere((info) => info.demographicType == DemographicQuestionType.secondaryDepartment)
           .data;
       departements = [premierDepartement, secondDepartement]
           .map((label) => label != null ? Departement(label: label) : null)
