@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_bloc.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_event.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_state.dart';
@@ -22,12 +23,14 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
       expect: () => [
-        QagResponsePaginatedLoadingState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.loading,
           maxPage: -1,
           currentPageNumber: 1,
           qagResponseViewModels: [],
         ),
-        QagResponsePaginatedFetchedState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.success,
           maxPage: 3,
           currentPageNumber: 1,
           qagResponseViewModels: [
@@ -50,7 +53,8 @@ void main() {
       build: () => QagResponsePaginatedBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
-      seed: () => QagResponsePaginatedFetchedState(
+      seed: () => QagResponsePaginatedState(
+        status: AllPurposeStatus.success,
         maxPage: 3,
         currentPageNumber: 1,
         qagResponseViewModels: [
@@ -66,7 +70,8 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 2)),
       expect: () => [
-        QagResponsePaginatedLoadingState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.loading,
           maxPage: 3,
           currentPageNumber: 2,
           qagResponseViewModels: [
@@ -80,7 +85,8 @@ void main() {
             ),
           ],
         ),
-        QagResponsePaginatedFetchedState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.success,
           maxPage: 3,
           currentPageNumber: 2,
           qagResponseViewModels: [
@@ -111,7 +117,8 @@ void main() {
       build: () => QagResponsePaginatedBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
-      seed: () => QagResponsePaginatedFetchedState(
+      seed: () => QagResponsePaginatedState(
+        status: AllPurposeStatus.success,
         maxPage: 3,
         currentPageNumber: 2,
         qagResponseViewModels: [
@@ -135,12 +142,14 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
       expect: () => [
-        QagResponsePaginatedLoadingState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.loading,
           maxPage: -1,
           currentPageNumber: 1,
           qagResponseViewModels: [],
         ),
-        QagResponsePaginatedFetchedState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.success,
           maxPage: 3,
           currentPageNumber: 1,
           qagResponseViewModels: [
@@ -165,12 +174,14 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
       expect: () => [
-        QagResponsePaginatedLoadingState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.loading,
           maxPage: -1,
           currentPageNumber: 1,
           qagResponseViewModels: [],
         ),
-        QagResponsePaginatedErrorState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.error,
           maxPage: -1,
           currentPageNumber: 1,
           qagResponseViewModels: [],
@@ -184,7 +195,8 @@ void main() {
       build: () => QagResponsePaginatedBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
-      seed: () => QagResponsePaginatedFetchedState(
+      seed: () => QagResponsePaginatedState(
+        status: AllPurposeStatus.success,
         maxPage: 3,
         currentPageNumber: 1,
         qagResponseViewModels: [
@@ -200,7 +212,8 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 2)),
       expect: () => [
-        QagResponsePaginatedLoadingState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.success,
           maxPage: 3,
           currentPageNumber: 2,
           qagResponseViewModels: [
@@ -214,7 +227,8 @@ void main() {
             ),
           ],
         ),
-        QagResponsePaginatedErrorState(
+        QagResponsePaginatedState(
+          status: AllPurposeStatus.error,
           maxPage: 3,
           currentPageNumber: 2,
           qagResponseViewModels: [
