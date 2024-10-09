@@ -32,6 +32,7 @@ class AgoraTextField extends StatefulWidget {
   final FocusNode? focusNode;
 
   AgoraTextField({
+    super.key,
     this.hintText,
     this.textInputAction,
     this.controller,
