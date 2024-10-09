@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/welcome/bloc/welcome_event.dart';
 import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';

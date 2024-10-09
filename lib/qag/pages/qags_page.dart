@@ -1,5 +1,6 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
@@ -27,7 +28,6 @@ import 'package:agora/qag/count/bloc/qags_count_state.dart';
 import 'package:agora/qag/widgets/qags_section.dart';
 import 'package:agora/thematique/bloc/thematique_bloc.dart';
 import 'package:agora/thematique/bloc/thematique_event.dart';
-import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -154,7 +154,7 @@ class _QagsPageState extends State<QagsPage> {
                   builder: (context, state) {
                     return switch (state.status) {
                       AllPurposeStatus.error => SizedBox(),
-                      AllPurposeStatus.loading => Padding(
+                      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

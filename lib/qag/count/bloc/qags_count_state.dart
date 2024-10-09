@@ -1,4 +1,4 @@
-import 'package:agora/welcome/bloc/welcome_state.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:equatable/equatable.dart';
 
 class QagsCountState extends Equatable {

@@ -1,7 +1,7 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/qag/count/bloc/qags_count_event.dart';
 import 'package:agora/qag/count/bloc/qags_count_state.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
-import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagsCountBloc extends Bloc<QagsCountEvent, QagsCountState> {

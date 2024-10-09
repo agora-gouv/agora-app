@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_bloc.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_event.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_state.dart';
@@ -7,7 +8,6 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/territorialisation/departement.dart';
 import 'package:agora/territorialisation/region.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
-import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,6 +1,6 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
 import 'package:agora/territorialisation/territoire.dart';
-import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:optional/optional.dart';
 
