@@ -63,7 +63,11 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                     consultationId: consultationId,
                     consultationTitle: consultationTitle,
                   ),
-                ).then((value) => Navigator.of(context).pop());
+                ).then((value) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                });
               } else {
                 Navigator.pushNamed(
                   context,
@@ -73,7 +77,11 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                     consultationTitle: consultationTitle,
                     shouldLaunchCongratulationAnimation: true,
                   ),
-                ).then((value) => Navigator.of(context).pop());
+                ).then((value) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                });
               }
             } else if (state is SendConsultationQuestionsResponsesFailureState) {
               context

@@ -535,7 +535,11 @@ class _StartButtonWidget extends StatelessWidget {
                 consultationId: section.consultationId,
                 consultationTitle: section.title,
               ),
-            ).then((value) => Navigator.of(context).pop());
+            ).then((value) {
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            });
           },
         ),
       ),

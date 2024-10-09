@@ -1,19 +1,16 @@
-import 'package:agora/consultation/question/bloc/consultation_questions_bloc.dart';
-import 'package:agora/consultation/question/bloc/consultation_questions_event.dart';
-import 'package:agora/consultation/bloc/consultation_questions_state.dart';
-import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
-import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_bloc.dart';
-import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_event.dart';
-import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/design/custom_view/error/agora_error_text.dart';
-import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/consultation/bloc/consultation_questions_state.dart';
+import 'package:agora/consultation/question/bloc/consultation_questions_bloc.dart';
+import 'package:agora/consultation/question/bloc/consultation_questions_event.dart';
+import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
+import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_bloc.dart';
+import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_event.dart';
+import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_state.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 import 'package:agora/consultation/question/pages/consultation_question_confirmation_page.dart';
 import 'package:agora/consultation/question/pages/question_type_view/consultation_question_chapter_view.dart';
@@ -21,6 +18,9 @@ import 'package:agora/consultation/question/pages/question_type_view/consultatio
 import 'package:agora/consultation/question/pages/question_type_view/consultation_question_opened_view.dart';
 import 'package:agora/consultation/question/pages/question_type_view/consultation_question_unique_choice_view.dart';
 import 'package:agora/consultation/question/pages/question_type_view/consultation_question_with_conditions_view.dart';
+import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,7 +76,11 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
                 consultationTitle: widget.arguments.consultationTitle,
                 consultationQuestionsResponsesBloc: context.read<ConsultationQuestionsResponsesStockBloc>(),
               ),
-            ).then((value) => Navigator.of(context).pop());
+            ).then((value) {
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            });
           }
         },
         buildWhen: (_, responsesStockState) {

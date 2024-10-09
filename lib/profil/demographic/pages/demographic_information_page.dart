@@ -234,7 +234,11 @@ class _NePasRepondreBouton extends StatelessWidget {
               consultationTitle: arguments.consultationTitle,
               shouldLaunchCongratulationAnimation: true,
             ),
-          ).then((value) => Navigator.of(context).pop());
+          ).then((value) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          });
         },
       ),
     );
@@ -264,7 +268,11 @@ class _CommencerBouton extends StatelessWidget {
             consultationId: arguments.consultationId,
             consultationTitle: arguments.consultationTitle,
           ),
-        ).then((value) => Navigator.of(context).pop());
+        ).then((value) {
+          if (context.mounted) {
+            Navigator.of(context).pop();
+          }
+        });
       },
     );
   }
