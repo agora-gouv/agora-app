@@ -16,6 +16,8 @@ class FakeDemographicSuccessRepository extends DemographicRepository {
         DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: "J"),
         DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: "S"),
         DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: "P"),
+        DemographicInformation(demographicType: DemographicQuestionType.primaryDepartment, data: "Paris"),
+        DemographicInformation(demographicType: DemographicQuestionType.secondaryDepartment, data: null),
       ],
     );
   }

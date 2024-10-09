@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:agora/profil/demographic/domain/demographic_response.dart';
 import 'package:agora/profil/demographic/repository/demographic_repository.dart';
-import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';
@@ -30,6 +30,8 @@ void main() {
             "voteFrequency": null,
             "publicMeetingFrequency": null,
             "consultationFrequency": "P",
+            "primaryDepartment": "Paris",
+            "secondaryDepartment": null,
           },
         ),
         headers: {
@@ -58,6 +60,8 @@ void main() {
             DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: null),
             DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: null),
             DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: "P"),
+            DemographicInformation(demographicType: DemographicQuestionType.primaryDepartment, data: "Paris"),
+            DemographicInformation(demographicType: DemographicQuestionType.secondaryDepartment, data: null),
           ],
         ),
       );
