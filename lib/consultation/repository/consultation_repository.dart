@@ -12,6 +12,7 @@ import 'package:agora/consultation/question/repository/consultation_question_sto
 import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/consultation/repository/consultation_questions_builder.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
+import 'package:agora/territorialisation/territoire.dart';
 import 'package:dio/dio.dart';
 
 abstract class ConsultationRepository {
@@ -19,6 +20,7 @@ abstract class ConsultationRepository {
 
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
+    Territoire? territoire,
   });
 
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
@@ -151,8 +153,12 @@ class ConsultationDioRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
+    Territoire? territoire,
   }) async {
-    final uri = "/consultations/finished/$pageNumber";
+    String uri = "/consultations/finished/$pageNumber";
+    if (territoire != null) {
+      uri = "$uri?territory=${territoire.label}";
+    }
     try {
       final response = await httpClient.get(uri);
       return GetConsultationsPaginatedSucceedResponse(

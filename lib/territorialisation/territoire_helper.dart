@@ -41,3 +41,16 @@ Territoire getTerritoireFromReferentiel(List<Territoire> referentiel, String ter
   }
   return Departement(label: '');
 }
+
+Region getRegionFromDepartement(Departement departement, List<Territoire> referentiel) {
+  for (var territoireFromReferentiel in referentiel) {
+    if (territoireFromReferentiel is Region && territoireFromReferentiel.departements.isNotEmpty) {
+      for (var departementFromRegion in territoireFromReferentiel.departements) {
+        if (departementFromRegion.label == departement.label) {
+          return territoireFromReferentiel;
+        }
+      }
+    }
+  }
+  return Region(label: '', departements: []);
+}

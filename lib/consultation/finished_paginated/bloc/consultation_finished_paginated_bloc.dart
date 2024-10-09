@@ -6,19 +6,29 @@ import 'package:agora/consultation/finished_paginated/pages/consultation_finishe
 import 'package:agora/consultation/repository/consultation_finished_paginated_presenter.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
+import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
+import 'package:agora/profil/demographic/repository/demographic_repository.dart';
+import 'package:agora/territorialisation/departement.dart';
+import 'package:agora/territorialisation/pays.dart';
 import 'package:agora/territorialisation/repository/referentiel_repository.dart';
+import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/territorialisation/territoire_helper.dart';
+import 'package:agora/welcome/bloc/welcome_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:optional/optional.dart';
 
 class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, ConsultationPaginatedState> {
   final ConsultationRepository consultationRepository;
   final ConcertationRepository concertationRepository;
   final ReferentielRepository referentielRepository;
+  final DemographicRepository demographicRepository;
 
   ConsultationPaginatedBloc({
     required this.consultationRepository,
     required this.concertationRepository,
     required this.referentielRepository,
-  }) : super(ConsultationFinishedPaginatedInitialState()) {
+    required this.demographicRepository,
+  }) : super(ConsultationPaginatedState.init()) {
     on<FetchConsultationPaginatedEvent>(_handleFetchConsultationPaginated);
   }
 
@@ -27,10 +37,16 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
     Emitter<ConsultationPaginatedState> emit,
   ) async {
     emit(
-      ConsultationFinishedPaginatedLoadingState(
+      state.clone(
         maxPage: event.pageNumber == 1 ? -1 : state.maxPage,
         currentPageNumber: event.pageNumber,
-        consultationPaginatedViewModels: event.pageNumber == 1 ? [] : state.consultationPaginatedViewModels,
+        consultationsListState: ConsultationsListState(
+          status: AllPurposeStatus.loading,
+          consultationViewModels: event.pageNumber == 1 ? [] : state.consultationsListState.consultationViewModels,
+        ),
+        territoireState: state.territoireState.clone(
+          status: state.territoireState.territoires.isEmpty ? AllPurposeStatus.loading : state.territoireState.status,
+        ),
       ),
     );
     GetConsultationsFinishedPaginatedRepositoryResponse consultationResponse;
@@ -38,9 +54,13 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
 
     final referentielReponse = await referentielRepository.fetchReferentielRegionsEtDepartements();
     if (event.type == ConsultationPaginatedPageType.finished) {
-      consultationResponse =
-          await consultationRepository.fetchConsultationsFinishedPaginated(pageNumber: event.pageNumber);
-      concertations = await concertationRepository.fetchConcertations();
+      consultationResponse = await consultationRepository.fetchConsultationsFinishedPaginated(
+        pageNumber: event.pageNumber,
+        territoire: event.filtreTerritoire,
+      );
+      if (event.filtreTerritoire == null || event.filtreTerritoire == Pays(label: "National")) {
+        concertations = await concertationRepository.fetchConcertations();
+      }
     } else {
       consultationResponse =
           await consultationRepository.fetchConsultationsAnsweredPaginated(pageNumber: event.pageNumber);
@@ -51,22 +71,62 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
         concertations,
         referentielReponse,
       );
+
+      final profilResponse = await demographicRepository.getDemographicResponses();
       emit(
-        ConsultationPaginatedFetchedState(
+        state.clone(
           maxPage: consultationResponse.maxPage,
           currentPageNumber: event.pageNumber,
-          consultationPaginatedViewModels:
-              event.pageNumber == 1 ? viewModels : state.consultationPaginatedViewModels + viewModels,
+          consultationsListState: ConsultationsListState(
+            status: AllPurposeStatus.success,
+            consultationViewModels:
+                event.pageNumber == 1 ? viewModels : state.consultationsListState.consultationViewModels + viewModels,
+          ),
+          territoireState: TerritoireState(
+            status: AllPurposeStatus.success,
+            territoires: _getTerritoiresFromProfil(profilResponse, referentielReponse),
+          ),
+          filtreTerritoireOptional: Optional.ofNullable(event.filtreTerritoire),
         ),
       );
     } else {
       emit(
-        ConsultationPaginatedErrorState(
-          maxPage: state.maxPage,
+        state.clone(
           currentPageNumber: event.pageNumber,
-          consultationPaginatedViewModels: state.consultationPaginatedViewModels,
+          consultationsListState: ConsultationsListState(
+            status: AllPurposeStatus.error,
+            consultationViewModels: state.consultationsListState.consultationViewModels,
+          ),
+          territoireState: TerritoireState(
+            status: AllPurposeStatus.error,
+            territoires: state.territoireState.territoires,
+          ),
         ),
       );
     }
+  }
+
+  List<Territoire> _getTerritoiresFromProfil(
+    GetDemographicInformationRepositoryResponse profilResponse,
+    List<Territoire> referentiel,
+  ) {
+    List<Departement> departements = [];
+    if (profilResponse is GetDemographicInformationSucceedResponse) {
+      final premierDepartement = profilResponse.demographicInformations
+          .where((info) => info.demographicType == DemographicQuestionType.primaryDepartment)
+          .first
+          .data;
+      final secondDepartement = profilResponse.demographicInformations
+          .where((info) => info.demographicType == DemographicQuestionType.secondaryDepartment)
+          .first
+          .data;
+      departements = [premierDepartement, secondDepartement]
+          .map((label) => label != null ? Departement(label: label) : null)
+          .nonNulls
+          .toList();
+    }
+    final regions =
+        departements.map((departement) => getRegionFromDepartement(departement, referentiel)).toSet().toList();
+    return [...regions, ...departements];
   }
 }

@@ -53,6 +53,7 @@ dependencies:
   dotted_border: ^2.1.0
   app_links: ^6.3.1
   error_stack: ^1.9.0
+  optional: ^6.1.0
 
 dev_dependencies:
   flutter_test:

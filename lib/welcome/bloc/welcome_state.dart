@@ -2,6 +2,7 @@ import 'package:agora/welcome/domain/welcome_a_la_une.dart';
 import 'package:equatable/equatable.dart';
 
 enum AllPurposeStatus {
+  notLoaded,
   error,
   loading,
   success;

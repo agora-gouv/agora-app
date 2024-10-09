@@ -7,4 +7,6 @@ enum DemographicQuestionType {
   voteFrequency,
   publicMeetingFrequency,
   consultationFrequency,
+  primaryDepartment,
+  secondaryDepartment,
 }
