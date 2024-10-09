@@ -12,7 +12,7 @@ class AgoraResponsiveView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaxWidthBox(
       maxWidth: ResponsiveHelper.maxScreenSize,
-      background: Container(color: AgoraColors.background),
+      backgroundColor: AgoraColors.background,
       child: ResponsiveScaledBox(
         width: ResponsiveValue<double?>(
           context,

@@ -21,16 +21,16 @@ dependencies:
   dio_cache_interceptor: ^3.4.2
   dio_http2_adapter: ^2.4.0
   basic_utils: ^5.7.0
-  intl: ^0.18.1
-  get_it: ^7.6.4
+  intl: ^0.19.0
+  get_it: ^8.0.0
   flutter_html: ^3.0.0-beta.2 # not support for web
   url_launcher: ^6.3.0
   logger: ^2.0.2+1
-  device_info_plus: ^9.1.1
+  device_info_plus: ^10.1.2
   permission_handler: ^11.1.0 # not support for web
   video_player: ^2.7.1
   chewie: ^1.5.0
-  share_plus: ^7.2.2
+  share_plus: ^10.0.3
   firebase_core: ^3.5.0
   firebase_messaging: ^15.1.2
   flutter_local_notifications: ^17.2.2 # not support for web
@@ -38,7 +38,7 @@ dependencies:
   matomo_tracker: ^5.1.0
   percent_indicator: ^4.2.3
   webview_flutter: ^4.2.4 # not support for web
-  flutter_widget_from_html: ^0.14.9 # only support web
+  flutter_widget_from_html: ^0.15.2 # only support web
   responsive_framework: ^1.1.0
   package_info_plus: ^8.0.2
   hive: ^2.2.3
@@ -58,10 +58,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.1
+  flutter_lints: ^5.0.0
   bloc_test: ^9.1.4
   http_mock_adapter: ^0.6.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.1
   build_runner: ^2.4.6
   mocktail: ^1.0.4
 

@@ -245,5 +245,9 @@ void _participate(BuildContext context, String consultationId, String title) {
     context,
     DynamicConsultationPage.routeName,
     arguments: DynamicConsultationPageArguments(consultationIdOrSlug: consultationId, consultationTitle: title),
-  ).then((value) => context.read<ConsultationBloc>().add(FetchConsultationsEvent()));
+  ).then((value) {
+    if (context.mounted) {
+      context.read<ConsultationBloc>().add(FetchConsultationsEvent());
+    }
+  });
 }

@@ -40,7 +40,7 @@ class AgoraScaffold extends StatelessWidget {
         final navigator = Navigator.of(context);
         return PopScope(
           canPop: _willPop,
-          onPopInvoked: (didPop) {
+          onPopInvokedWithResult: (didPop, _) {
             if (didPop) {
               return;
             }

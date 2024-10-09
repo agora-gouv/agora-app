@@ -1,6 +1,3 @@
-import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_bloc.dart';
-import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_event.dart';
-import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
@@ -9,11 +6,14 @@ import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_bloc.dart';
+import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_event.dart';
+import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_state.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:agora/profil/demographic/domain/demographic_response.dart';
@@ -318,7 +318,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
         ),
       ).then((value) {
-        if (consultationId != null) {
+        if (consultationId != null && context.mounted) {
           Navigator.pop(context);
         }
       });

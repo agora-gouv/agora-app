@@ -66,7 +66,11 @@ class DemographicConfirmationPage extends StatelessWidget {
                     consultationTitle: consultationTitle!,
                     shouldLaunchCongratulationAnimation: true,
                   ),
-                ).then((value) => Navigator.of(context).pop());
+                ).then((value) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                });
               }
             }
           },
