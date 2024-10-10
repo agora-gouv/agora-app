@@ -10,14 +10,14 @@ class FakesReferentielRepository extends ReferentielRepository {
       Region(
         label: 'Ile-de-France',
         departements: [
-          Departement(label: 'Paris'),
+          Departement(label: 'Paris', codePostal: "75"),
         ],
       ),
       Region(
         label: 'Normandie',
         departements: [
-          Departement(label: 'Calvados'),
-          Departement(label: 'Eure'),
+          Departement(label: 'Calvados', codePostal: "14"),
+          Departement(label: 'Eure', codePostal: "27"),
         ],
       ),
     ]);

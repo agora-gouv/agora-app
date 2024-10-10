@@ -39,7 +39,7 @@ Territoire getTerritoireFromReferentiel(List<Territoire> referentiel, String ter
       }
     }
   }
-  return Departement(label: '');
+  return Departement(label: '', codePostal: '');
 }
 
 Region getRegionFromDepartement(Departement departement, List<Territoire> referentiel) {
@@ -53,4 +53,29 @@ Region getRegionFromDepartement(Departement departement, List<Territoire> refere
     }
   }
   return Region(label: '', departements: []);
+}
+
+String getCodePostalFromDepartementLabel(String departementLabel, List<Territoire> referentiel) {
+  for (var territoireFromReferentiel in referentiel) {
+    if (territoireFromReferentiel is Region && territoireFromReferentiel.departements.isNotEmpty) {
+      for (var departement in territoireFromReferentiel.departements) {
+        if (departement.label == departementLabel) {
+          return departement.codePostal;
+        }
+      }
+    }
+  }
+  return '';
+}
+
+List<Departement> getDepartementFromReferentiel(List<Territoire> referentiel) {
+  final List<Departement> departements = [];
+  for (var territoireFromReferentiel in referentiel) {
+    if (territoireFromReferentiel is Region && territoireFromReferentiel.departements.isNotEmpty) {
+      for (var departement in territoireFromReferentiel.departements) {
+        departements.add(departement);
+      }
+    }
+  }
+  return departements;
 }

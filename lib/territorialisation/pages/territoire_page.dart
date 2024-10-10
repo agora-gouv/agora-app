@@ -1,4 +1,6 @@
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
@@ -9,9 +11,14 @@ import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/profil/demographic/domain/department.dart';
+import 'package:agora/territorialisation/bloc/referentiel_bloc.dart';
+import 'package:agora/territorialisation/bloc/referentiel_event.dart';
+import 'package:agora/territorialisation/bloc/referentiel_state.dart';
+import 'package:agora/territorialisation/departement.dart';
+import 'package:agora/territorialisation/territoire_helper.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TerritoirePage extends StatefulWidget {
   static const routeName = "/territoirePage";
@@ -21,8 +28,8 @@ class TerritoirePage extends StatefulWidget {
 }
 
 class _TerritoirePageState extends State<TerritoirePage> {
-  List<Department> findDepartements = [];
-  List<Department> selectedDepartements = [];
+  List<Departement> findDepartements = [];
+  List<Departement> selectedDepartements = [];
   bool hasError = false;
   final _shakeKey = GlobalKey<ShakeWidgetState>();
   final firstElementKey = GlobalKey();
@@ -58,26 +65,41 @@ class _TerritoirePageState extends State<TerritoirePage> {
                   AgoraErrorText(errorMessage: "Vous ne pouvez sélectionner que 2 territoire !"),
                   SizedBox(height: AgoraSpacings.x0_5),
                 ],
-                AgoraTextField(
-                  hintText: DemographicStrings.departmentHint,
-                  rightIcon: TextFieldIcon.search,
-                  onChanged: (String input) {
-                    setState(() {
-                      if (input.isNotBlank()) {
-                        findDepartements = DepartmentHelper.getDepartment()
-                            .where(
-                              (department) => department.displayedName
-                                  .toLowerCase()
-                                  .removeDiacritics()
-                                  .removePunctuationMark()
-                                  .contains(input.toLowerCase().removeDiacritics().removePunctuationMark()),
-                            )
-                            .toList();
+                BlocProvider(
+                  create: (context) => ReferentielBloc(
+                    referentielRepository: RepositoryManager.getReferentielRepository(),
+                  )..add(FetchReferentielEvent()),
+                  child: BlocBuilder<ReferentielBloc, ReferentielState>(
+                    builder: (context, state) {
+                      if (state.status == AllPurposeStatus.loading) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state.status == AllPurposeStatus.error) {
+                        return Center(child: AgoraErrorText(errorMessage: "Erreur lors du chargement des territoires"));
                       } else {
-                        findDepartements = [];
+                        return AgoraTextField(
+                          hintText: DemographicStrings.departmentHint,
+                          rightIcon: TextFieldIcon.search,
+                          onChanged: (String input) {
+                            setState(() {
+                              if (input.isNotBlank()) {
+                                findDepartements = getDepartementFromReferentiel(state.referentiel)
+                                    .where(
+                                      (department) => department.displayLabel
+                                          .toLowerCase()
+                                          .removeDiacritics()
+                                          .removePunctuationMark()
+                                          .contains(input.toLowerCase().removeDiacritics().removePunctuationMark()),
+                                    )
+                                    .toList();
+                              } else {
+                                findDepartements = [];
+                              }
+                            });
+                          },
+                        );
                       }
-                    });
-                  },
+                    },
+                  ),
                 ),
                 SizedBox(height: AgoraSpacings.base),
                 _Resultats(
@@ -115,10 +137,10 @@ class _TerritoirePageState extends State<TerritoirePage> {
 }
 
 class _Resultats extends StatelessWidget {
-  final List<Department> findDepartements;
-  final List<Department> selectedDepartements;
-  final Function(Department) onDepartementSelected;
-  final Function(Department) onDepartementUnselected;
+  final List<Departement> findDepartements;
+  final List<Departement> selectedDepartements;
+  final Function(Departement) onDepartementSelected;
+  final Function(Departement) onDepartementUnselected;
 
   const _Resultats({
     required this.findDepartements,
@@ -136,7 +158,7 @@ class _Resultats extends StatelessWidget {
       children: [
         ...findDepartements.mapIndexed(
           (index, departement) => AgoraDemographicResponseCard(
-            responseLabel: departement.displayedName,
+            responseLabel: departement.displayLabel,
             isSelected: selectedDepartements.contains(departement),
             onTap: () => onDepartementSelected(departement),
             semantic: DemographicResponseCardSemantic(
@@ -149,7 +171,7 @@ class _Resultats extends StatelessWidget {
           (selectedDepartements) {
             if (!findDepartements.contains((selectedDepartements))) {
               return AgoraDemographicResponseCard(
-                responseLabel: selectedDepartements.displayedName,
+                responseLabel: selectedDepartements.displayLabel,
                 isSelected: true,
                 onTap: () => onDepartementUnselected(selectedDepartements),
                 semantic: DemographicResponseCardSemantic(
