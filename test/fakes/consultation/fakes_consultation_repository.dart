@@ -178,6 +178,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             order: 3,
             description: "description du chapitre",
             nextQuestionId: "questionIdB",
+            imageUrl: "https://url.com/image.jpg",
           ),
         ],
       ),

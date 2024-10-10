@@ -121,6 +121,7 @@ class ConsultationQuestionsBuilder {
           order: chapter["order"] as int,
           description: chapter["description"] as String,
           nextQuestionId: chapter["nextQuestionId"] as String?,
+          imageUrl: chapter["imageUrl"] as String?,
         ),
       );
     }

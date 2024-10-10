@@ -94,6 +94,7 @@ class ConsultationQuestionOpened extends ConsultationQuestion {
 class ConsultationQuestionChapter extends ConsultationQuestion {
   final String description;
   final String? nextQuestionId;
+  final String? imageUrl;
 
   ConsultationQuestionChapter({
     required super.id,
@@ -101,10 +102,11 @@ class ConsultationQuestionChapter extends ConsultationQuestion {
     required super.order,
     required this.description,
     required this.nextQuestionId,
+    required this.imageUrl,
   });
 
   @override
-  List<Object?> get props => [id, title, order, description, nextQuestionId];
+  List<Object?> get props => [id, title, order, description, nextQuestionId, imageUrl];
 }
 
 class ConsultationQuestionWithCondition extends ConsultationQuestion {
