@@ -213,7 +213,7 @@ void main() {
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 2)),
       expect: () => [
         QagResponsePaginatedState(
-          status: AllPurposeStatus.success,
+          status: AllPurposeStatus.loading,
           maxPage: 3,
           currentPageNumber: 2,
           qagResponseViewModels: [
