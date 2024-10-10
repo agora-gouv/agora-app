@@ -238,6 +238,9 @@ class _ALaUne extends StatelessWidget {
               return SizedBox();
             } else {
               final aLaUne = vm.welcomeALaUne!;
+              final isSmallDevice = MediaQuery.of(context).size.height < 600;
+              final isTextTooLong = aLaUne.description.length > 200;
+              final hasToReduceText = isSmallDevice || isTextTooLong;
               return DecoratedBox(
                 decoration: BoxDecoration(
                   color: AgoraColors.white,
@@ -272,8 +275,10 @@ class _ALaUne extends StatelessWidget {
                             ),
                             SizedBox(height: AgoraSpacings.x0_75),
                             AgoraRichText(
-                              policeStyle: AgoraRichTextPoliceStyle.police16Interligne140,
-                              textAlign: TextAlign.end,
+                              policeStyle: hasToReduceText
+                                  ? AgoraRichTextPoliceStyle.police14Interligne140
+                                  : AgoraRichTextPoliceStyle.police16Interligne140,
+                              textAlign: hasToReduceText ? TextAlign.start : TextAlign.end,
                               items: [
                                 ...parseSimpleHtml(aLaUne.description)
                                     .map((data) => AgoraRichTextItem(text: data.text, style: data.style)),
@@ -297,9 +302,9 @@ class _ALaUne extends StatelessWidget {
 }
 
 class _ALaUneBouton extends StatelessWidget {
-  const _ALaUneBouton({required this.aLaUne});
-
   final WelcomeALaUne aLaUne;
+
+  const _ALaUneBouton({required this.aLaUne});
 
   @override
   Widget build(BuildContext context) {
