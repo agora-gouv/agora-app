@@ -1,5 +1,6 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
@@ -70,15 +71,20 @@ class _ReponsesSection extends StatelessWidget {
       )..add(FetchQagsResponsePaginatedEvent(pageNumber: initialPage)),
       child: BlocBuilder<QagResponsePaginatedBloc, QagResponsePaginatedState>(
         builder: (context, state) {
-          return switch (state) {
-            QagResponsePaginatedInitialState _ || QagResponsePaginatedLoadingState _ => _LoadingReponseList(),
-            QagResponsePaginatedErrorState _ => AgoraErrorView(
-                onReload: () => context
-                    .read<QagResponsePaginatedBloc>()
-                    .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
-              ),
-            QagResponsePaginatedFetchedState _ => _ReponseList(state),
-          };
+          if (state.status == AllPurposeStatus.error) {
+            return AgoraErrorView(
+              onReload: () => context
+                  .read<QagResponsePaginatedBloc>()
+                  .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
+            );
+          } else if (state.status == AllPurposeStatus.success || state.qagResponseViewModels.isNotEmpty) {
+            return _ReponseList(state);
+          } else if ((state.status == AllPurposeStatus.loading || state.status == AllPurposeStatus.notLoaded) &&
+              state.qagResponseViewModels.isEmpty) {
+            return _LoadingReponseList();
+          } else {
+            return SizedBox();
+          }
         },
       ),
     );
@@ -139,6 +145,11 @@ class _ReponseList extends StatelessWidget {
             },
           ),
         ),
+        if (state.status == AllPurposeStatus.loading)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
+            child: CircularProgressIndicator(),
+          ),
         if (state.currentPageNumber < state.maxPage)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.base),
