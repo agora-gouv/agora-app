@@ -24,6 +24,7 @@ class AgoraThematiqueLabel extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (size == AgoraThematiqueSize.large) ...[
             ExcludeSemantics(child: Text(picto, style: AgoraTextStyles.medium23)),
@@ -36,7 +37,11 @@ class AgoraThematiqueLabel extends StatelessWidget {
               ),
             ),
           ] else if (size == AgoraThematiqueSize.medium) ...[
-            ExcludeSemantics(child: Text(picto, style: AgoraTextStyles.light12)),
+            ExcludeSemantics(
+                child: Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: Text(picto, style: AgoraTextStyles.light12),
+            )),
             SizedBox(width: AgoraSpacings.x0_25),
             Flexible(
               child: Text(
