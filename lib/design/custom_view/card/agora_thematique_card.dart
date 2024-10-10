@@ -30,18 +30,22 @@ class AgoraThematiqueLabel extends StatelessWidget {
             ExcludeSemantics(child: Text(picto, style: AgoraTextStyles.medium23)),
             SizedBox(width: AgoraSpacings.x0_25),
             Flexible(
-              child: Text(
-                label,
-                style: AgoraTextStyles.light18.copyWith(color: AgoraColors.potBlack),
-                semanticsLabel: "Thématique : $label",
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(
+                  label,
+                  style: AgoraTextStyles.light18.copyWith(color: AgoraColors.potBlack),
+                  semanticsLabel: "Thématique : $label",
+                ),
               ),
             ),
           ] else if (size == AgoraThematiqueSize.medium) ...[
             ExcludeSemantics(
-                child: Padding(
-              padding: const EdgeInsets.only(top: 3),
-              child: Text(picto, style: AgoraTextStyles.light12),
-            )),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 3),
+                child: Text(picto, style: AgoraTextStyles.light12),
+              ),
+            ),
             SizedBox(width: AgoraSpacings.x0_25),
             Flexible(
               child: Text(
