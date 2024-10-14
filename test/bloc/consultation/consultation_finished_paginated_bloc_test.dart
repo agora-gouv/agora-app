@@ -73,8 +73,8 @@ void main() {
           territoireState: TerritoireState(
             status: AllPurposeStatus.success,
             territoires: [
-              Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-              Departement(label: "Paris"),
+              Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+              Departement(label: "Paris", codePostal: "75"),
             ],
           ),
         ),
@@ -126,8 +126,8 @@ void main() {
           territoireState: TerritoireState(
             status: AllPurposeStatus.success,
             territoires: [
-              Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-              Departement(label: "Paris"),
+              Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+              Departement(label: "Paris", codePostal: "75"),
             ],
           ),
         ),
@@ -164,8 +164,8 @@ void main() {
         territoireState: TerritoireState(
           status: AllPurposeStatus.success,
           territoires: [
-            Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-            Departement(label: "Paris"),
+            Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+            Departement(label: "Paris", codePostal: "75"),
           ],
         ),
       ),
@@ -195,8 +195,8 @@ void main() {
           territoireState: TerritoireState(
             status: AllPurposeStatus.success,
             territoires: [
-              Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-              Departement(label: "Paris"),
+              Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+              Departement(label: "Paris", codePostal: "75"),
             ],
           ),
           maxPage: 3,
@@ -244,8 +244,8 @@ void main() {
           territoireState: TerritoireState(
             status: AllPurposeStatus.success,
             territoires: [
-              Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-              Departement(label: "Paris"),
+              Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+              Departement(label: "Paris", codePostal: "75"),
             ],
           ),
         ),
@@ -292,8 +292,8 @@ void main() {
         territoireState: TerritoireState(
           status: AllPurposeStatus.success,
           territoires: [
-            Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-            Departement(label: "Paris"),
+            Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+            Departement(label: "Paris", codePostal: "75"),
           ],
         ),
       ),
@@ -312,8 +312,8 @@ void main() {
           territoireState: TerritoireState(
             status: AllPurposeStatus.success,
             territoires: [
-              Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-              Departement(label: "Paris"),
+              Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+              Departement(label: "Paris", codePostal: "75"),
             ],
           ),
           maxPage: -1,
@@ -351,8 +351,8 @@ void main() {
           territoireState: TerritoireState(
             status: AllPurposeStatus.success,
             territoires: [
-              Region(label: "Ile-de-France", departements: [Departement(label: "Paris")]),
-              Departement(label: "Paris"),
+              Region(label: "Ile-de-France", departements: [Departement(label: "Paris", codePostal: "75")]),
+              Departement(label: "Paris", codePostal: "75"),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
@@ -56,6 +57,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
         BlocProvider<DemographicInformationBloc>(
           create: (BuildContext context) => DemographicInformationBloc(
             demographicRepository: RepositoryManager.getDemographicRepository(),
+            referentielRepository: RepositoryManager.getReferentielRepository(),
           )..add(GetDemographicInformationEvent()),
         ),
         BlocProvider(
@@ -72,7 +74,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
               semanticPageLabel: DemographicStrings.my + DemographicStrings.information,
               title: _Title(),
               onBackClick: () => Navigator.pushReplacementNamed(context, ProfilPage.routeName),
-              button: state is GetDemographicInformationSuccessState
+              button: state.status == AllPurposeStatus.success
                   ? AgoraSecondaryStyleViewButton(
                       icon: null,
                       title: GenericStrings.modify,
@@ -95,14 +97,15 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
   }
 
   Widget _build(BuildContext context, DemographicInformationState state) {
-    if (state is GetDemographicInformationSuccessState) {
-      final viewModels = DemographicInformationPresenter.present(state.demographicInformationResponse);
-      return _buildContent(context, viewModels, state.demographicInformationResponse);
-    } else if (state is GetDemographicInformationInitialLoadingState) {
-      return _LoadingView();
-    } else {
-      return _ErrorView();
-    }
+    return switch (state.status) {
+      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => _LoadingView(),
+      AllPurposeStatus.error => _ErrorView(),
+      AllPurposeStatus.success => _buildContent(
+          context,
+          DemographicInformationPresenter.present(state.demographicInformationResponse, state.referentiel),
+          state.demographicInformationResponse,
+        ),
+    };
   }
 
   Widget _buildContent(
@@ -231,22 +234,24 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
   List<Widget> _buildDemographicInformation(List<DemographicInformationViewModel> demographicInformationViewModels) {
     final List<Widget> widgets = [];
     for (final viewModel in demographicInformationViewModels) {
-      widgets.add(
-        MergeSemantics(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                viewModel.demographicType,
-                style: AgoraTextStyles.regular16.copyWith(color: AgoraColors.blue525),
-              ),
-              SizedBox(height: AgoraSpacings.x0_25),
-              Text(viewModel.data, style: AgoraTextStyles.medium18),
-            ],
+      if (viewModel.data.isNotEmpty) {
+        widgets.add(
+          MergeSemantics(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  viewModel.demographicType,
+                  style: AgoraTextStyles.regular16.copyWith(color: AgoraColors.blue525),
+                ),
+                SizedBox(height: AgoraSpacings.x0_25),
+                Text(viewModel.data, style: AgoraTextStyles.medium18),
+              ],
+            ),
           ),
-        ),
-      );
-      widgets.add(SizedBox(height: AgoraSpacings.base));
+        );
+        widgets.add(SizedBox(height: AgoraSpacings.base));
+      }
     }
     return widgets;
   }

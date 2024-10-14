@@ -119,7 +119,11 @@ class ConsultationPaginatedBloc extends Bloc<FetchConsultationPaginatedEvent, Co
           .firstWhere((info) => info.demographicType == DemographicQuestionType.secondaryDepartment)
           .data;
       departements = [premierDepartement, secondDepartement]
-          .map((label) => label != null ? Departement(label: label) : null)
+          .map(
+            (label) => label != null
+                ? Departement(label: label, codePostal: getCodePostalFromDepartementLabel(label, referentiel))
+                : null,
+          )
           .nonNulls
           .toList();
     }

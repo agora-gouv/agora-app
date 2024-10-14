@@ -33,8 +33,9 @@ class ReferentielDioRepository extends ReferentielRepository {
             label: item['region'] as String,
             departements: (item['departements'] as List<dynamic>)
                 .map(
-                  (departementLabel) => Departement(
-                    label: departementLabel as String,
+                  (departement) => Departement(
+                    codePostal: departement["codePostal"] as String,
+                    label: departement["label"] as String,
                   ),
                 )
                 .toList(),
