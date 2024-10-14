@@ -48,8 +48,11 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
     if (oldCode != null) {
       final oldDepartment = getDepartementByCodePostal(oldCode, widget.territoires);
       if (oldDepartment != null) {
-        selectedDepartment = oldDepartment;
-        // findDepartments = [oldDepartment];
+        if (oldDepartment.codePostal == "99") {
+          isFrancaisDeLEtranger = true;
+        } else {
+          selectedDepartment = oldDepartment;
+        }
       }
     }
   }
