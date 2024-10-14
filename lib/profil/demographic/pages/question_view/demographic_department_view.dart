@@ -5,8 +5,11 @@ import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/profil/demographic/domain/demographic_response.dart';
-import 'package:agora/profil/demographic/domain/department.dart';
 import 'package:agora/profil/demographic/pages/helpers/demographic_helper.dart';
+import 'package:agora/territorialisation/departement.dart';
+import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/territorialisation/territoire_helper.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 class DemographicDepartmentView extends StatefulWidget {
@@ -16,6 +19,7 @@ class DemographicDepartmentView extends StatefulWidget {
   final VoidCallback onIgnorePressed;
   final VoidCallback onBackPressed;
   final DemographicResponse? oldResponse;
+  final List<Territoire> territoires;
 
   const DemographicDepartmentView({
     super.key,
@@ -25,6 +29,7 @@ class DemographicDepartmentView extends StatefulWidget {
     required this.onIgnorePressed,
     required this.onBackPressed,
     required this.oldResponse,
+    required this.territoires,
   });
 
   @override
@@ -32,19 +37,19 @@ class DemographicDepartmentView extends StatefulWidget {
 }
 
 class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
-  List<Department> findDepartments = [];
-  Department? selectedDepartment;
+  List<Departement> findDepartments = [];
+  Departement? selectedDepartment;
+  bool isFrancaisDeLEtranger = false;
 
   @override
   void initState() {
     super.initState();
     final oldCode = widget.oldResponse?.response;
     if (oldCode != null) {
-      final oldDepartment =
-          DepartmentHelper.getDepartment().where((department) => department.code == oldCode).firstOrNull;
+      final oldDepartment = getDepartementByCodePostal(oldCode, widget.territoires);
       if (oldDepartment != null) {
         selectedDepartment = oldDepartment;
-        findDepartments = [oldDepartment];
+        // findDepartments = [oldDepartment];
       }
     }
   }
@@ -53,98 +58,79 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: _handleResponse(context),
-    );
-  }
-
-  List<Widget> _handleResponse(BuildContext context) {
-    final List<Widget> widgets = [
-      AgoraTextField(
-        hintText: DemographicStrings.departmentHint,
-        rightIcon: TextFieldIcon.search,
-        onChanged: (String input) {
-          setState(() {
-            if (input.isNotBlank()) {
-              findDepartments = DepartmentHelper.getDepartment()
-                  .where(
-                    (department) => department.displayedName
-                        .toLowerCase()
-                        .removeDiacritics()
-                        .removePunctuationMark()
-                        .contains(input.toLowerCase().removeDiacritics().removePunctuationMark()),
-                  )
-                  .toList();
-            } else {
-              findDepartments = [];
-            }
-          });
-        },
-      ),
-      SizedBox(height: AgoraSpacings.base),
-    ];
-
-    final totalLength = findDepartments.length;
-    for (var index = 0; index < totalLength; index++) {
-      final findDepartment = findDepartments[index];
-      widgets.add(
-        AgoraDemographicResponseCard(
-          responseLabel: findDepartment.displayedName,
-          isSelected: selectedDepartment == findDepartment,
-          onTap: () {
+      children: [
+        AgoraTextField(
+          hintText: DemographicStrings.departmentHint,
+          rightIcon: TextFieldIcon.search,
+          onChanged: (String input) {
             setState(() {
-              if (selectedDepartment != findDepartment) {
-                selectedDepartment = findDepartment;
+              if (input.isNotBlank()) {
+                findDepartments = getDepartementFromReferentiel(widget.territoires)
+                    .where(
+                      (departement) => departement.displayLabel
+                          .toLowerCase()
+                          .removeDiacritics()
+                          .removePunctuationMark()
+                          .contains(input.toLowerCase().removeDiacritics().removePunctuationMark()),
+                    )
+                    .toList();
               } else {
-                selectedDepartment = null;
+                findDepartments = [];
               }
             });
           },
-          semantic: DemographicResponseCardSemantic(
-            currentIndex: index + 1,
-            totalIndex: totalLength,
+        ),
+        SizedBox(height: AgoraSpacings.base),
+        ...findDepartments.mapIndexed(
+          (index, departement) => AgoraDemographicResponseCard(
+            responseLabel: departement.displayLabel,
+            isSelected: selectedDepartment == departement,
+            onTap: () {
+              setState(() {
+                if (selectedDepartment != departement) {
+                  isFrancaisDeLEtranger = false;
+                  selectedDepartment = departement;
+                } else {
+                  selectedDepartment = null;
+                }
+              });
+            },
+            semantic: DemographicResponseCardSemantic(
+              currentIndex: index + 1,
+              totalIndex: findDepartments.length,
+            ),
           ),
         ),
-      );
-      widgets.add(SizedBox(height: AgoraSpacings.x0_25));
-    }
-
-    if (selectedDepartment != null && !findDepartments.contains(selectedDepartment)) {
-      widgets.add(
-        AgoraDemographicResponseCard(
-          responseLabel: selectedDepartment!.displayedName,
-          isSelected: true,
-          onTap: () {
-            setState(() {
-              selectedDepartment = null;
-            });
+        if (selectedDepartment != null && !findDepartments.contains(selectedDepartment)) ...[
+          AgoraDemographicResponseCard(
+            responseLabel: selectedDepartment!.displayLabel,
+            isSelected: true,
+            onTap: () {
+              setState(() {
+                selectedDepartment = null;
+              });
+            },
+            semantic: DemographicResponseCardSemantic(
+              currentIndex: 1,
+              totalIndex: findDepartments.length,
+            ),
+          ),
+        ],
+        _EtrangerCheckbox(
+          isCheck: isFrancaisDeLEtranger,
+          onCheckChanged: (checked) {
+            if (checked) {
+              setState(() {
+                selectedDepartment = null;
+                isFrancaisDeLEtranger = true;
+              });
+            } else {
+              setState(() {
+                isFrancaisDeLEtranger = false;
+              });
+            }
           },
-          semantic: DemographicResponseCardSemantic(
-            currentIndex: 1,
-            totalIndex: totalLength,
-          ),
         ),
-      );
-    }
-
-    widgets.add(
-      _EtrangerCheckbox(
-        isCheck: selectedDepartment?.code == '99',
-        onCheckChanged: (checked) {
-          if (checked) {
-            setState(() {
-              selectedDepartment = DepartmentHelper.getHorsDeFranceDepartment();
-            });
-          } else {
-            setState(() {
-              selectedDepartment = null;
-            });
-          }
-        },
-      ),
-    );
-
-    widgets.addAll(
-      [
         SizedBox(height: AgoraSpacings.x1_25),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,11 +138,11 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
             DemographicHelper.buildBackButton(step: widget.step, onBackTap: widget.onBackPressed),
             const SizedBox(width: AgoraSpacings.base),
             Flexible(
-              child: selectedDepartment != null
+              child: selectedDepartment != null || isFrancaisDeLEtranger
                   ? DemographicHelper.buildNextButton(
                       step: widget.step,
                       totalStep: widget.totalStep,
-                      onPressed: () => setState(() => widget.onContinuePressed(selectedDepartment!.code)),
+                      onPressed: () => setState(() => widget.onContinuePressed(selectedDepartment?.codePostal ?? "99")),
                     )
                   : DemographicHelper.buildIgnoreButton(onPressed: widget.onIgnorePressed),
             ),
@@ -164,7 +150,6 @@ class _DemographicDepartmentViewState extends State<DemographicDepartmentView> {
         ),
       ],
     );
-    return widgets;
   }
 }
 

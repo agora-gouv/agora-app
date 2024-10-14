@@ -1,7 +1,9 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
@@ -24,6 +26,9 @@ import 'package:agora/profil/demographic/pages/question_view/demographic_birth_v
 import 'package:agora/profil/demographic/pages/question_view/demographic_common_view.dart';
 import 'package:agora/profil/demographic/pages/question_view/demographic_department_view.dart';
 import 'package:agora/profil/demographic/pages/question_view/demographic_vote_view.dart';
+import 'package:agora/territorialisation/bloc/referentiel_bloc.dart';
+import 'package:agora/territorialisation/bloc/referentiel_event.dart';
+import 'package:agora/territorialisation/bloc/referentiel_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -181,21 +186,35 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           controller: oldResponse != null ? TextEditingController(text: oldResponse.response) : null,
         );
       case 3:
-        return DemographicDepartmentView(
-          step: currentStep,
-          totalStep: totalStep,
-          oldResponse: _getOldResponse(DemographicQuestionType.department, oldResponses),
-          onContinuePressed: (departmentCode) => setState(() {
-            _trackContinueClick(step);
-            _stockResponse(context, DemographicQuestionType.department, departmentCode);
-            _nextStep(context);
-          }),
-          onIgnorePressed: () => setState(() {
-            _trackIgnoreClick(step);
-            _deleteResponse(context, DemographicQuestionType.department);
-            _nextStep(context);
-          }),
-          onBackPressed: _onBackClick,
+        return BlocProvider(
+          create: (context) => ReferentielBloc(
+            referentielRepository: RepositoryManager.getReferentielRepository(),
+          )..add(FetchReferentielEvent()),
+          child: BlocBuilder<ReferentielBloc, ReferentielState>(
+            builder: (context, state) {
+              if (state.status == AllPurposeStatus.success) {
+                return DemographicDepartmentView(
+                  step: currentStep,
+                  totalStep: totalStep,
+                  oldResponse: _getOldResponse(DemographicQuestionType.department, oldResponses),
+                  onContinuePressed: (departmentCode) => setState(() {
+                    _trackContinueClick(step);
+                    _stockResponse(context, DemographicQuestionType.department, departmentCode);
+                    _nextStep(context);
+                  }),
+                  onIgnorePressed: () => setState(() {
+                    _trackIgnoreClick(step);
+                    _deleteResponse(context, DemographicQuestionType.department);
+                    _nextStep(context);
+                  }),
+                  onBackPressed: _onBackClick,
+                  territoires: state.referentiel,
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         );
       case 4:
         return DemographicCommonView(

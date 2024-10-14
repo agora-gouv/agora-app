@@ -79,3 +79,19 @@ List<Departement> getDepartementFromReferentiel(List<Territoire> referentiel) {
   }
   return departements;
 }
+
+Departement? getDepartementByCodePostal(String code, List<Territoire> referentiel) {
+  if (code == "99") {
+    return Departement(label: "Hors-de-France", codePostal: "99");
+  }
+  for (var territoireFromReferentiel in referentiel) {
+    if (territoireFromReferentiel is Region && territoireFromReferentiel.departements.isNotEmpty) {
+      for (var departement in territoireFromReferentiel.departements) {
+        if (departement.codePostal == code) {
+          return departement;
+        }
+      }
+    }
+  }
+  return null;
+}
