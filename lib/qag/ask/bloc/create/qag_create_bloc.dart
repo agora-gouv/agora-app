@@ -3,7 +3,7 @@ import 'package:agora/qag/ask/bloc/create/qag_create_state.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CreateQagBloc extends Bloc<CreateQagEvent, CreateQagState> {
+class CreateQagBloc extends Bloc<AskQagEvent, CreateQagState> {
   final QagRepository qagRepository;
 
   CreateQagBloc({required this.qagRepository}) : super(CreateQagInitialState()) {

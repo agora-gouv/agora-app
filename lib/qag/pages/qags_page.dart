@@ -4,7 +4,6 @@ import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
@@ -12,6 +11,7 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -25,6 +25,9 @@ import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
 import 'package:agora/qag/count/bloc/qags_count_bloc.dart';
 import 'package:agora/qag/count/bloc/qags_count_event.dart';
 import 'package:agora/qag/count/bloc/qags_count_state.dart';
+import 'package:agora/qag/info/bloc/qags_info_bloc.dart';
+import 'package:agora/qag/info/bloc/qags_info_event.dart';
+import 'package:agora/qag/info/bloc/qags_info_state.dart';
 import 'package:agora/qag/widgets/qags_section.dart';
 import 'package:agora/thematique/bloc/thematique_bloc.dart';
 import 'package:agora/thematique/bloc/thematique_event.dart';
@@ -155,7 +158,7 @@ class _QagsPageState extends State<QagsPage> {
                     return switch (state.status) {
                       AllPurposeStatus.error => SizedBox(),
                       AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+                          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -168,7 +171,7 @@ class _QagsPageState extends State<QagsPage> {
                           ),
                         ),
                       AllPurposeStatus.success => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.base),
+                          padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
                           child: Text(
                             "Il y a actuellement ${state.count} questions posées au Gouvernement. Votez pour celles que vous trouvez les plus intéressantes en cliquant sur les coeurs.",
                             style: AgoraTextStyles.light14,
@@ -265,17 +268,52 @@ class _InfoBouton extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             backgroundColor: AgoraColors.transparent,
-            builder: (context) => AgoraInformationBottomSheet(
-              titre: "Informations",
-              description: Text(
-                ReponseStrings.qagResponseInfoBubble,
-                style: AgoraTextStyles.light16,
-                textAlign: TextAlign.center,
+            builder: (context) => BlocProvider(
+              create: (context) => QagsInfoBloc(
+                qagRepository: RepositoryManager.getQagRepository(),
+              )..add(FetchQagsInfoEvent()),
+              child: BlocBuilder<QagsInfoBloc, QagsInfoState>(
+                builder: (context, state) => AgoraInformationBottomSheet(
+                  titre: "Informations",
+                  description: _InfoBottomSheetContent(state: state),
+                ),
               ),
             ),
           );
         },
       ),
     );
+  }
+}
+
+class _InfoBottomSheetContent extends StatelessWidget {
+  final QagsInfoState state;
+
+  const _InfoBottomSheetContent({required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (state.status) {
+      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: AgoraSpacings.x2),
+            SkeletonBox(height: 15, width: 200, radius: 15),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 15, width: 200, radius: 15),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 15, width: 200, radius: 15),
+            SizedBox(height: AgoraSpacings.x2),
+          ],
+        ),
+      AllPurposeStatus.error => AgoraErrorView(
+          onReload: () => context.read<QagsInfoBloc>().add(FetchQagsInfoEvent()),
+        ),
+      AllPurposeStatus.success => Text(
+          state.infoText,
+          style: AgoraTextStyles.light16,
+          textAlign: TextAlign.center,
+        ),
+    };
   }
 }

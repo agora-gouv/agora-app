@@ -1,6 +1,6 @@
-import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
+import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
 import 'package:agora/qag/domain/qag_details.dart';
 
 class QagDetailsPresenter {
@@ -35,6 +35,7 @@ class QagDetailsPresenter {
             author: response.author,
             authorDescription: response.authorDescription,
             responseDate: response.responseDate.formatToDayMonthYear(),
+            videoTitle: response.videoTitle,
             videoUrl: response.videoUrl,
             videoWidth: response.videoWidth,
             videoHeight: response.videoHeight,
