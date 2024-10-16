@@ -265,6 +265,21 @@ class FakeQagSuccessRepository extends QagRepository {
   Future<int?> getQagsCount() {
     return Future.value(1);
   }
+
+  @override
+  Future<String?> getContentQag() {
+    return Future.value("qagInfoText");
+  }
+
+  @override
+  Future<String?> getContentReponseQag() {
+    return Future.value("reponseInfoText");
+  }
+
+  @override
+  Future<String?> getContentAskQag() {
+    return Future.value("askQagInfoText");
+  }
 }
 
 class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
@@ -385,6 +400,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
           author: "Olivier Véran",
           authorDescription: "Ministre délégué auprès de...",
           responseDate: DateTime(2024, 2, 20),
+          videoTitle: "Réponse du Gouvernement",
           videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
           videoWidth: 1080,
           videoHeight: 1920,
@@ -448,6 +464,7 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
           author: "Olivier Véran",
           authorDescription: "Ministre délégué auprès de...",
           responseDate: DateTime(2024, 2, 20),
+          videoTitle: "Réponse du Gouvernement",
           videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
           videoWidth: 1080,
           videoHeight: 1920,
@@ -527,6 +544,7 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
           author: "Olivier Véran",
           authorDescription: "Ministre délégué auprès de...",
           responseDate: DateTime(2024, 2, 20),
+          videoTitle: "Réponse du Gouvernement",
           videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
           videoWidth: 1080,
           videoHeight: 1920,
@@ -699,9 +717,15 @@ class FakeQagFailureRepository extends QagRepository {
   }
 
   @override
-  Future<int?> getQagsCount() {
-    return Future.value(null);
-  }
+  Future<int?> getQagsCount() => Future.value(null);
+
+  @override
+  Future<String?> getContentQag() => Future.value(null);
+
+  @override
+  Future<String?> getContentReponseQag() => Future.value(null);
+  @override
+  Future<String?> getContentAskQag() => Future.value(null);
 }
 
 class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {

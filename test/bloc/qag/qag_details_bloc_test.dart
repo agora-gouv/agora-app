@@ -2,8 +2,8 @@ import 'package:agora/qag/details/bloc/qag_details_bloc.dart';
 import 'package:agora/qag/details/bloc/qag_details_event.dart';
 import 'package:agora/qag/details/bloc/qag_details_state.dart';
 import 'package:agora/qag/details/bloc/qag_details_view_model.dart';
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,6 +34,7 @@ void main() {
       author: "Olivier Véran",
       authorDescription: "Ministre délégué auprès de...",
       responseDate: DateTime(2024, 2, 20),
+      videoTitle: "Réponse du Gouvernement",
       videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
       videoWidth: 1080,
       videoHeight: 1920,
@@ -79,6 +80,7 @@ void main() {
       author: "Olivier Véran",
       authorDescription: "Ministre délégué auprès de...",
       responseDate: "20 février 2024",
+      videoTitle: "Réponse du Gouvernement",
       videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
       videoWidth: 1080,
       videoHeight: 1920,
@@ -154,6 +156,7 @@ void main() {
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",
               responseDate: "20 février 2024",
+              videoTitle: "Réponse du Gouvernement",
               videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
               videoWidth: 1080,
               videoHeight: 1920,
@@ -243,6 +246,7 @@ void main() {
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",
               responseDate: "20 février 2024",
+              videoTitle: "Réponse du Gouvernement",
               videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
               videoWidth: 1080,
               videoHeight: 1920,

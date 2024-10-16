@@ -5,14 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SkeletonItem extends StatelessWidget {
+  final EdgeInsetsGeometry padding;
+
+  const SkeletonItem({this.padding = const EdgeInsets.symmetric(horizontal: AgoraSpacings.base)});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 24, bottom: 24),
+      padding: padding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          SizedBox(height: 32),
+          SizedBox(height: 12),
           SkeletonBox(width: 92.0, height: 8.0),
           SizedBox(height: 12),
           SkeletonBox(width: 208.0),

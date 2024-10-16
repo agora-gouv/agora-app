@@ -1,6 +1,7 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/emoji_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/semantics_helper.dart';
@@ -18,6 +19,7 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
@@ -29,6 +31,9 @@ import 'package:agora/profil/participation_charter/pages/participation_charter_p
 import 'package:agora/qag/ask/bloc/create/qag_create_bloc.dart';
 import 'package:agora/qag/ask/bloc/create/qag_create_event.dart';
 import 'package:agora/qag/ask/bloc/create/qag_create_state.dart';
+import 'package:agora/qag/ask/bloc/info/ask_qag_info_bloc.dart';
+import 'package:agora/qag/ask/bloc/info/ask_qag_info_event.dart';
+import 'package:agora/qag/ask/bloc/info/ask_qag_info_state.dart';
 import 'package:agora/qag/ask/pages/ask_question_qag_search.dart';
 import 'package:agora/qag/ask/pages/qag_thematiques_drop_down.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
@@ -158,25 +163,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AgoraRichText(
-                policeStyle: AgoraRichTextPoliceStyle.police14,
-                semantic: AgoraRichTextSemantic(header: false),
-                items: [
-                  AgoraRichTextItem(
-                    text: QagStrings.askQuestionDescription1,
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                  AgoraRichTextItem(
-                    text: QagStrings.askQuestionDescription2,
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                ],
-              ),
-              AgoraHtml(
-                data: QagStrings.askQuestionDescription3,
-                fontSize: 14.0,
-                textAlign: TextAlign.start,
-              ),
+              _AskQagInfo(),
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.askQagObligatoireSaufContraire, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.base),
@@ -368,6 +355,37 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         isQuestionLengthError = hasErrorNow;
       }
     });
+  }
+}
+
+class _AskQagInfo extends StatelessWidget {
+  const _AskQagInfo();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          AskQagInfoBloc(qagRepository: RepositoryManager.getQagRepository())..add(FetchInfoAskQagEvent()),
+      child: BlocBuilder<AskQagInfoBloc, AskQagInfoState>(
+        builder: (context, state) {
+          return switch (AllPurposeStatus.error) {
+            AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Column(
+                children: [
+                  SkeletonItem(padding: EdgeInsets.zero),
+                  SkeletonItem(padding: EdgeInsets.zero),
+                  SkeletonItem(padding: EdgeInsets.zero),
+                ],
+              ),
+            AllPurposeStatus.error => AgoraErrorView(),
+            AllPurposeStatus.success => AgoraHtml(
+                data: state.regles,
+                fontSize: 14.0,
+                textAlign: TextAlign.start,
+              ),
+          };
+        },
+      ),
+    );
   }
 }
 

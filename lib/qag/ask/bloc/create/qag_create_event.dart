@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class CreateQagEvent extends Equatable {
+abstract class AskQagEvent extends Equatable {
+  const AskQagEvent();
+}
+
+class CreateQagEvent extends AskQagEvent {
   final String title;
   final String description;
   final String author;

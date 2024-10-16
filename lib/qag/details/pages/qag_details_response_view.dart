@@ -28,7 +28,7 @@ class QagDetailsResponseView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Semantics(header: true, child: Text(QagStrings.governmentResponseTitle, style: AgoraTextStyles.medium17)),
+            Semantics(header: true, child: Text(response.videoTitle, style: AgoraTextStyles.medium17)),
             SizedBox(height: AgoraSpacings.base),
             AgoraVideoView(
               videoUrl: response.videoUrl,

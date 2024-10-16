@@ -579,6 +579,7 @@ void main() {
               "author": "Olivier Véran",
               "authorDescription": "Ministre délégué auprès de...",
               "responseDate": "2024-02-20",
+              "videoTitle": "Réponse du Gouvernement",
               "videoUrl": "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
               "videoWidth": 1080,
               "videoHeight": 1920,
@@ -631,6 +632,7 @@ void main() {
               author: "Olivier Véran",
               authorDescription: "Ministre délégué auprès de...",
               responseDate: DateTime(2024, 2, 20),
+              videoTitle: "Réponse du Gouvernement",
               videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
               videoWidth: 1080,
               videoHeight: 1920,
@@ -1267,6 +1269,106 @@ void main() {
         sentryWrapper: sentryWrapper,
       );
       final response = await repository.getQagsCount();
+
+      // Then
+      expect(response, null);
+    });
+  });
+
+  group("Fetch qag info Text", () {
+    test("when success should return qag info text", () async {
+      // Given
+      dioAdapter.onGet(
+        "/content/page-questions-au-gouvernement",
+        (server) => server.reply(HttpStatus.ok, {
+          "info": "qagsInfoText",
+        }),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getContentQag();
+
+      // Then
+      expect(response, "qagsInfoText");
+    });
+
+    test("when failure should return null", () async {
+      // Given
+      dioAdapter.onGet(
+        "/content/page-questions-au-gouvernement",
+        (server) => server.reply(HttpStatus.notFound, null),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getContentQag();
+
+      // Then
+      expect(response, null);
+    });
+  });
+
+  group("Fetch reponse info Text", () {
+    test("when success should return reponse info text", () async {
+      // Given
+      dioAdapter.onGet(
+        "/content/page-reponses-aux-qags",
+        (server) => server.reply(HttpStatus.ok, {
+          "infoReponsesAVenir": "reponseInfoText",
+        }),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getContentReponseQag();
+
+      // Then
+      expect(response, "reponseInfoText");
+    });
+
+    test("when failure should return null", () async {
+      // Given
+      dioAdapter.onGet(
+        "/content/page-reponses-aux-qags",
+        (server) => server.reply(HttpStatus.notFound, null),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getContentReponseQag();
 
       // Then
       expect(response, null);
