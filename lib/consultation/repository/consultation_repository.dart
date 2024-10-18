@@ -50,6 +50,8 @@ abstract class ConsultationRepository {
   Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive);
 
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId);
+
+  bool get isFetchConsultationDataCached;
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -67,6 +69,11 @@ class ConsultationDioRepository extends ConsultationRepository {
     required this.mapper,
   });
 
+  static GetConsultationsRepositoryResponse getConsultationsResponse = GetConsultationsFailedResponse();
+
+  @override
+  bool get isFetchConsultationDataCached => getConsultationsResponse is GetConsultationsSucceedResponse;
+
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     const uri = "/consultations";
@@ -75,7 +82,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       final ongoingConsultations = response.data["ongoing"] as List;
       final finishedConsultations = response.data["finished"] as List;
       final answeredConsultations = response.data["answered"] as List;
-      return GetConsultationsSucceedResponse(
+      getConsultationsResponse = GetConsultationsSucceedResponse(
         ongoingConsultations: ongoingConsultations.map((ongoingConsultation) {
           return ConsultationOngoing(
             id: ongoingConsultation["id"] as String,
@@ -112,6 +119,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
+      return getConsultationsResponse;
     } catch (exception, stacktrace) {
       if (exception is DioException) {
         if (exception.type == DioExceptionType.connectionTimeout || exception.type == DioExceptionType.receiveTimeout) {
