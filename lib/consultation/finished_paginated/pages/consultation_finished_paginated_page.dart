@@ -118,7 +118,7 @@ class _Success extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final territoires = [Pays(label: "Tous"), Pays(label: "National"), ...state.territoireState.territoires];
+    final territoires = [Pays(label: "Tous"), Pays(label: "France"), ...state.territoireState.territoires];
     final filtreItems = territoires.map(
       (territoire) {
         return AgoraFiltreItem(

@@ -6,6 +6,8 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
+import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
@@ -107,13 +109,15 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                                 ),
                               ),
                               SizedBox(height: AgoraSpacings.base),
-                              Semantics(
-                                header: true,
-                                child: Text(
-                                  DemographicHelper.getQuestionTitle(currentStep),
-                                  style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
-                                ),
-                              ),
+                              currentStep == 3
+                                  ? Row(
+                                      children: [
+                                        Expanded(child: _QuestionTitle(currentStep: currentStep)),
+                                        SizedBox(width: AgoraSpacings.x0_25),
+                                        _InfoBouton(),
+                                      ],
+                                    )
+                                  : _QuestionTitle(currentStep: currentStep),
                               SizedBox(height: AgoraSpacings.x0_75),
                             ],
                           ),
@@ -372,5 +376,48 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
     } catch (e) {
       return null;
     }
+  }
+}
+
+class _InfoBouton extends StatelessWidget {
+  const _InfoBouton();
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraMoreInformation(
+      semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
+      onClick: () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: AgoraColors.transparent,
+          builder: (context) => AgoraInformationBottomSheet(
+            titre: "Précision",
+            description: Text(
+              "Votre réponse n'a pas impact sur votre choix de suivre tel ou tel département dans Agora (le choix des départements que vous souhaitez suivre dans Agora s'effectue dans la section \"Mes territoires\" de votre profil)",
+              style: AgoraTextStyles.light16,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _QuestionTitle extends StatelessWidget {
+  final int currentStep;
+
+  const _QuestionTitle({required this.currentStep});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      header: true,
+      child: Text(
+        DemographicHelper.getQuestionTitle(currentStep),
+        style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+      ),
+    );
   }
 }
