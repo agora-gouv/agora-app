@@ -24,7 +24,7 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
-        QagResponseState.init(),
+        QagResponseState(status: AllPurposeStatus.loading, incomingQagResponses: [], qagResponses: []),
         QagResponseState(
           status: AllPurposeStatus.success,
           incomingQagResponses: [
@@ -63,7 +63,7 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
-        QagResponseState.init(),
+        QagResponseState(status: AllPurposeStatus.loading, incomingQagResponses: [], qagResponses: []),
         QagResponseState(status: AllPurposeStatus.error, incomingQagResponses: [], qagResponses: []),
       ],
       wait: const Duration(milliseconds: 5),
