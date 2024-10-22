@@ -9,11 +9,11 @@ import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:agora/profil/demographic/repository/demographic_repository.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/pays.dart';
-import 'package:agora/territorialisation/repository/referentiel_repository.dart';
-import 'package:agora/territorialisation/territoire.dart';
-import 'package:agora/territorialisation/territoire_helper.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/pays.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optional/optional.dart';
 

@@ -2,8 +2,8 @@ import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/profil/demographic/bloc/get/demographic_information_view_model.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
-import 'package:agora/territorialisation/territoire.dart';
-import 'package:agora/territorialisation/territoire_helper.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 
 class DemographicInformationPresenter {
   static List<DemographicInformationViewModel> present(

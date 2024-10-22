@@ -1,7 +1,8 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/reponse/bloc/qag_response_bloc.dart';
 import 'package:agora/reponse/bloc/qag_response_event.dart';
 import 'package:agora/reponse/bloc/qag_response_state.dart';
-import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -18,12 +19,14 @@ void main() {
     blocTest(
       "when repository succeed - should emit loading then success state",
       build: () => QagResponseBloc(
+        previousState: QagResponseState.init(),
         qagRepository: FakeQagSuccessRepository(),
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
-        QagResponseInitialLoadingState(),
-        QagResponseFetchedState(
+        QagResponseState(status: AllPurposeStatus.loading, incomingQagResponses: [], qagResponses: []),
+        QagResponseState(
+          status: AllPurposeStatus.success,
           incomingQagResponses: [
             QagResponseIncoming(
               qagId: "qagId2",
@@ -55,12 +58,13 @@ void main() {
     blocTest(
       "when repository failed - should emit loading then failure state",
       build: () => QagResponseBloc(
+        previousState: QagResponseState.init(),
         qagRepository: FakeQagFailureRepository(),
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
-        QagResponseInitialLoadingState(),
-        QagResponseErrorState(),
+        QagResponseState(status: AllPurposeStatus.loading, incomingQagResponses: [], qagResponses: []),
+        QagResponseState(status: AllPurposeStatus.error, incomingQagResponses: [], qagResponses: []),
       ],
       wait: const Duration(milliseconds: 5),
     );

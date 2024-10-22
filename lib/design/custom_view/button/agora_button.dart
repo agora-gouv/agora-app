@@ -5,6 +5,8 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+enum AgoraButtonSize { small, medium }
+
 class AgoraButton extends StatelessWidget {
   final bool isLoading;
   final String? label;
@@ -17,6 +19,7 @@ class AgoraButton extends StatelessWidget {
   final bool expanded;
   final bool isDisabled;
   final List<Widget> children;
+  final AgoraButtonSize size;
   final void Function()? onPressed;
 
   AgoraButton.withLabel({
@@ -32,6 +35,7 @@ class AgoraButton extends StatelessWidget {
     this.buttonStyle = AgoraButtonStyle.primary,
     this.expanded = false,
     this.isDisabled = false,
+    this.size = AgoraButtonSize.small,
     required this.onPressed,
   }) : assert(label != null);
 
@@ -49,6 +53,7 @@ class AgoraButton extends StatelessWidget {
     this.expanded = false,
     this.isDisabled = false,
     required this.onPressed,
+    this.size = AgoraButtonSize.small,
   }) : assert(children.isNotEmpty);
 
   @override
@@ -75,14 +80,18 @@ class AgoraButton extends StatelessWidget {
               ),
               child: Ink(
                 padding: EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5, horizontal: AgoraSpacings.x0_75),
-                child: _Content(
-                  label: label,
-                  prefixIcon: prefixIcon,
-                  prefixIconColorFilter: prefixIconColorFilter,
-                  suffixIcon: suffixIcon,
-                  suffixIconColorFilter: suffixIconColorFilter,
-                  buttonStyle: buttonStyle,
-                  children: children,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5),
+                  child: _Content(
+                    label: label,
+                    prefixIcon: prefixIcon,
+                    prefixIconColorFilter: prefixIconColorFilter,
+                    suffixIcon: suffixIcon,
+                    suffixIconColorFilter: suffixIconColorFilter,
+                    buttonStyle: buttonStyle,
+                    size: size,
+                    children: children,
+                  ),
                 ),
               ),
             ),
@@ -126,12 +135,13 @@ Color _getBackgroundColor(AgoraButtonStyle style, bool isDisabled) {
   }
 }
 
-TextStyle _getTextStyle(AgoraButtonStyle style) {
+TextStyle _getTextStyle(AgoraButtonStyle style, AgoraButtonSize size) {
+  final fontSize = size == AgoraButtonSize.small ? 16.0 : 18.0;
   return switch (style) {
-    AgoraButtonStyle.primary => AgoraTextStyles.primaryButton,
-    AgoraButtonStyle.secondary => AgoraTextStyles.secondaryButton,
-    AgoraButtonStyle.tertiary => AgoraTextStyles.tertiaryButton,
-    AgoraButtonStyle.redBorder => AgoraTextStyles.redTextButton,
+    AgoraButtonStyle.primary => AgoraTextStyles.primaryButton.copyWith(fontSize: fontSize),
+    AgoraButtonStyle.secondary => AgoraTextStyles.secondaryButton.copyWith(fontSize: fontSize),
+    AgoraButtonStyle.tertiary => AgoraTextStyles.tertiaryButton.copyWith(fontSize: fontSize),
+    AgoraButtonStyle.redBorder => AgoraTextStyles.redTextButton.copyWith(fontSize: fontSize),
   };
 }
 
@@ -159,6 +169,7 @@ class _Content extends StatelessWidget {
   final ColorFilter? suffixIconColorFilter;
   final AgoraButtonStyle buttonStyle;
   final List<Widget> children;
+  final AgoraButtonSize size;
 
   const _Content({
     required this.label,
@@ -168,6 +179,7 @@ class _Content extends StatelessWidget {
     required this.suffixIconColorFilter,
     required this.buttonStyle,
     required this.children,
+    required this.size,
   });
 
   @override
@@ -193,7 +205,7 @@ class _Content extends StatelessWidget {
             ),
             const SizedBox(width: 8),
           ],
-          Text(label!, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle)),
+          Text(label!, textAlign: TextAlign.center, style: _getTextStyle(buttonStyle, size)),
           if (suffixIcon != null) ...[
             const SizedBox(width: 8),
             SvgPicture.asset(

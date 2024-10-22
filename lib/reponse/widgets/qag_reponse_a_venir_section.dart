@@ -35,7 +35,7 @@ class QagReponsesAVenirSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => QagResponseBloc(
+      create: (BuildContext context) => QagResponseBloc.fromRepository(
         qagRepository: RepositoryManager.getQagRepository(),
       )..add(FetchQagsResponseEvent()),
       child: Column(
@@ -269,14 +269,14 @@ class _ReponseAVenirCard extends StatelessWidget {
 
 sealed class _ViewModel extends Equatable {
   static _ViewModel fromState(QagResponseState state) {
-    return switch (state) {
-      QagResponseInitialLoadingState _ => _LoadingViewModel(),
-      QagResponseErrorState _ => _ErrorViewModel(),
-      final QagResponseFetchedState state => _ViewModel._fromFetchedState(state),
+    return switch (state.status) {
+      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => _LoadingViewModel(),
+      AllPurposeStatus.error => _ErrorViewModel(),
+      AllPurposeStatus.success => _ViewModel._fromFetchedState(state),
     };
   }
 
-  static _ViewModel _fromFetchedState(QagResponseFetchedState state) {
+  static _ViewModel _fromFetchedState(QagResponseState state) {
     final qagResponseViewModels = QagResponsePresenter.presentQagResponse(
       incomingQagResponses: state.incomingQagResponses,
       qagResponses: state.qagResponses,

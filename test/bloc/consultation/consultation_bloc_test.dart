@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/consultation/bloc/consultation_bloc.dart';
 import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/bloc/consultation_state.dart';
@@ -28,8 +29,9 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationsFetchedState(
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.success,
           ongoingViewModels: [
             ConsultationOngoingViewModel(
               id: "consultationId",
@@ -97,8 +99,9 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationsFetchedState(
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.success,
           ongoingViewModels: [
             ConsultationOngoingViewModel(
               id: "consultationId",
@@ -142,8 +145,15 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationErrorState(errorType: ConsultationsErrorType.timeout),
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.error,
+          ongoingViewModels: [],
+          finishedViewModels: [],
+          answeredViewModels: [],
+          shouldDisplayFinishedAllButton: false,
+          errorType: ConsultationsErrorType.timeout,
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );
@@ -157,8 +167,15 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationErrorState(errorType: ConsultationsErrorType.generic),
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.error,
+          ongoingViewModels: [],
+          finishedViewModels: [],
+          answeredViewModels: [],
+          shouldDisplayFinishedAllButton: false,
+          errorType: ConsultationsErrorType.generic,
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );

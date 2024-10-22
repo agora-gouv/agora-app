@@ -2,32 +2,47 @@ import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
+import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/shake_widget.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/territorialisation/bloc/referentiel_bloc.dart';
-import 'package:agora/territorialisation/bloc/referentiel_event.dart';
-import 'package:agora/territorialisation/bloc/referentiel_state.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/territoire_helper.dart';
+import 'package:agora/profil/territoire/bloc/territoire_info_bloc.dart';
+import 'package:agora/profil/territoire/bloc/territoire_info_event.dart';
+import 'package:agora/profil/territoire/bloc/territoire_info_state.dart';
+import 'package:agora/profil/territoire/pages/territoire_info_page.dart';
+import 'package:agora/referentiel/bloc/referentiel_bloc.dart';
+import 'package:agora/referentiel/bloc/referentiel_event.dart';
+import 'package:agora/referentiel/bloc/referentiel_state.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TerritoirePage extends StatefulWidget {
-  static const routeName = "/territoirePage";
+class TerritoireEditingPageArguments {
+  final List<Territoire> departementsSuivis;
 
-  @override
-  State<TerritoirePage> createState() => _TerritoirePageState();
+  TerritoireEditingPageArguments({required this.departementsSuivis});
 }
 
-class _TerritoirePageState extends State<TerritoirePage> {
+class TerritoireEditingPage extends StatefulWidget {
+  static const routeName = "/territoireEditingPage";
+
+  @override
+  State<TerritoireEditingPage> createState() => _TerritoireEditingPageState();
+}
+
+class _TerritoireEditingPageState extends State<TerritoireEditingPage> {
   List<Departement> findDepartements = [];
   List<Departement> selectedDepartements = [];
   bool hasError = false;
@@ -35,20 +50,23 @@ class _TerritoirePageState extends State<TerritoirePage> {
   final firstElementKey = GlobalKey();
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)!.settings.arguments as TerritoireEditingPageArguments;
+      setState(() {
+        selectedDepartements = args.departementsSuivis.map((territoire) => territoire as Departement).toList();
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AgoraScaffold(
       child: AgoraSecondaryStyleView(
         semanticPageLabel: "Mes territoires",
-        title: AgoraRichText(
-          key: firstElementKey,
-          policeStyle: AgoraRichTextPoliceStyle.toolbar,
-          items: [
-            AgoraRichTextItem(
-              text: "Mes territoires",
-              style: AgoraRichTextItemStyle.bold,
-            ),
-          ],
-        ),
+        title: _Title(firstElementKey),
+        button: _InfoBouton(),
         child: ShakeWidget(
           shakeCount: 4,
           key: _shakeKey,
@@ -57,12 +75,22 @@ class _TerritoirePageState extends State<TerritoirePage> {
             child: Column(
               children: [
                 Text(
-                  "Choisissez les deux territoires qui vous intéressent :",
+                  "Choisissez un ou deux départements que vous souhaitez suivre sur Agora.",
                   style: AgoraTextStyles.light16,
                 ),
-                SizedBox(height: AgoraSpacings.x2),
+                SizedBox(height: AgoraSpacings.base),
+                if (!hasError && selectedDepartements.length == 2) ...[
+                  Text(
+                    "Vous avez choisi le maximum de départements.",
+                    style: AgoraTextStyles.light14.copyWith(color: Colors.green),
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                ],
                 if (hasError) ...[
-                  AgoraErrorText(errorMessage: "Vous ne pouvez sélectionner que 2 territoire !"),
+                  AgoraErrorText(
+                    errorMessage: "Maximum atteint. Désélectionnez un département pour en choisir un autre.",
+                  ),
                   SizedBox(height: AgoraSpacings.x0_5),
                 ],
                 BlocProvider(
@@ -124,8 +152,38 @@ class _TerritoirePageState extends State<TerritoirePage> {
                         selectedDepartements.add(departement);
                       }
                     }
+                    findDepartements = [];
                   }),
-                  onDepartementUnselected: (departement) => setState(() => selectedDepartements.remove(departement)),
+                  onDepartementUnselected: (departement) => setState(() {
+                    selectedDepartements.remove(departement);
+                    hasError = false;
+                  }),
+                ),
+                SizedBox(height: AgoraSpacings.base),
+                BlocProvider(
+                  create: (context) => TerritoireInfoBloc(
+                    referentielRepository: RepositoryManager.getReferentielRepository(),
+                    demographicRepository: RepositoryManager.getDemographicRepository(),
+                  ),
+                  child: BlocBuilder<TerritoireInfoBloc, TerritoireInfoState>(
+                    builder: (context, _) => Align(
+                      alignment: Alignment.centerRight,
+                      child: AgoraButton.withLabel(
+                        label: "Valider",
+                        buttonStyle: AgoraButtonStyle.primary,
+                        size: AgoraButtonSize.medium,
+                        onPressed: () {
+                          context.read<TerritoireInfoBloc>().add(
+                                SendTerritoireInfoEvent(
+                                  departementsSuivis: selectedDepartements,
+                                  regionsSuivies: [],
+                                ),
+                              );
+                          Navigator.pushReplacementNamed(context, TerritoireInfoPage.routeName);
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -185,6 +243,59 @@ class _Resultats extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  final GlobalKey firstElementKey;
+
+  const _Title(this.firstElementKey);
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraRichText(
+      key: firstElementKey,
+      policeStyle: AgoraRichTextPoliceStyle.toolbar,
+      items: [
+        AgoraRichTextItem(
+          text: 'Mes ',
+          style: AgoraRichTextItemStyle.regular,
+        ),
+        AgoraRichTextItem(
+          text: "territoires",
+          style: AgoraRichTextItemStyle.bold,
+        ),
+      ],
+    );
+  }
+}
+
+class _InfoBouton extends StatelessWidget {
+  const _InfoBouton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
+      child: AgoraMoreInformation(
+        semanticsLabel: "En savoir plus sur le fonctionnement des territoires",
+        onClick: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: AgoraColors.transparent,
+            builder: (context) => AgoraInformationBottomSheet(
+              titre: "Précisions",
+              description: Text(
+                "Votre réponse n'a aucun impact sur le département d'habitation que vous avez peut-être renseigné dans la section \"Mes informations\". En choisissant de suivre un département, vous suivrez également la région de ce département.",
+                style: AgoraTextStyles.light16,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

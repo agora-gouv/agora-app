@@ -2,8 +2,8 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultation.dart';
-import 'package:agora/territorialisation/territoire.dart';
-import 'package:agora/territorialisation/territoire_helper.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 
 class ConsultationPresenter {
   static List<ConsultationOngoingViewModel> presentOngoingConsultations(

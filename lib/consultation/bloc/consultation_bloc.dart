@@ -1,11 +1,13 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/bloc/consultation_state.dart';
 import 'package:agora/consultation/repository/consultation_presenter.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
-import 'package:agora/territorialisation/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:optional/optional.dart';
 
 class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> {
   final ConsultationRepository consultationRepository;
@@ -16,7 +18,7 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     required this.consultationRepository,
     required this.concertationRepository,
     required this.referentielRepository,
-  }) : super(ConsultationInitialLoadingState()) {
+  }) : super(ConsultationState.init(AllPurposeStatus.notLoaded)) {
     on<FetchConsultationsEvent>(_handleConsultations);
   }
 
@@ -24,7 +26,7 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     FetchConsultationsEvent event,
     Emitter<ConsultationState> emit,
   ) async {
-    emit(ConsultationInitialLoadingState());
+    emit(state.clone(status: AllPurposeStatus.loading));
     final referentielResponse = await referentielRepository.fetchReferentielRegionsEtDepartements();
     final consultationsResponse = await consultationRepository.fetchConsultations();
 
@@ -45,7 +47,8 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
         referentielResponse,
       );
       emit(
-        ConsultationsFetchedState(
+        state.clone(
+          status: AllPurposeStatus.success,
           ongoingViewModels: ongoingViewModels,
           finishedViewModels: finishedConsultations,
           answeredViewModels: answeredViewModels,
@@ -53,7 +56,14 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
         ),
       );
     } else if (consultationsResponse is GetConsultationsFailedResponse) {
-      emit(ConsultationErrorState(errorType: consultationsResponse.errorType));
+      emit(
+        state.clone(
+          status: AllPurposeStatus.error,
+          errorTypeOptional: Optional.ofNullable(
+            consultationsResponse.errorType,
+          ),
+        ),
+      );
     }
   }
 }

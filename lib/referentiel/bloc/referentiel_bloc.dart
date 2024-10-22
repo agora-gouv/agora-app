@@ -1,7 +1,7 @@
 import 'package:agora/common/helper/all_purpose_status.dart';
-import 'package:agora/territorialisation/bloc/referentiel_event.dart';
-import 'package:agora/territorialisation/bloc/referentiel_state.dart';
-import 'package:agora/territorialisation/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/bloc/referentiel_event.dart';
+import 'package:agora/referentiel/bloc/referentiel_state.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ReferentielBloc extends Bloc<ReferentielEvent, ReferentielState> {

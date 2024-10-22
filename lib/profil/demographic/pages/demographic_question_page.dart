@@ -26,9 +26,9 @@ import 'package:agora/profil/demographic/pages/question_view/demographic_birth_v
 import 'package:agora/profil/demographic/pages/question_view/demographic_common_view.dart';
 import 'package:agora/profil/demographic/pages/question_view/demographic_department_view.dart';
 import 'package:agora/profil/demographic/pages/question_view/demographic_vote_view.dart';
-import 'package:agora/territorialisation/bloc/referentiel_bloc.dart';
-import 'package:agora/territorialisation/bloc/referentiel_event.dart';
-import 'package:agora/territorialisation/bloc/referentiel_state.dart';
+import 'package:agora/referentiel/bloc/referentiel_bloc.dart';
+import 'package:agora/referentiel/bloc/referentiel_event.dart';
+import 'package:agora/referentiel/bloc/referentiel_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

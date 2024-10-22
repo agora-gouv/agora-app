@@ -1,9 +1,9 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/demographic_question_type_extension.dart';
+import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:agora/profil/demographic/domain/demographic_response.dart';
-import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class DemographicRepository {
@@ -12,6 +12,8 @@ abstract class DemographicRepository {
   Future<SendDemographicResponsesRepositoryResponse> sendDemographicResponses({
     required List<DemographicResponse> demographicResponses,
   });
+
+  Future<SendTerritoireInfoRepositoryResponse> sendTerritoireInfo({required List<String> departementsSuivis});
 }
 
 class DemographicDioRepository extends DemographicRepository {
@@ -66,6 +68,23 @@ class DemographicDioRepository extends DemographicRepository {
       return null;
     }
   }
+
+  @override
+  Future<SendTerritoireInfoRepositoryResponse> sendTerritoireInfo({required List<String> departementsSuivis}) async {
+    const uri = "/profile/departments";
+    try {
+      await httpClient.post(
+        uri,
+        data: {
+          "departments": departementsSuivis,
+        },
+      );
+      return SendTerritoireInfoRepositoryResponseSuccess();
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
+      return SendTerritoireInfoRepositoryResponseError();
+    }
+  }
 }
 
 abstract class GetDemographicInformationRepositoryResponse extends Equatable {
@@ -92,3 +111,12 @@ abstract class SendDemographicResponsesRepositoryResponse extends Equatable {
 class SendDemographicResponsesSucceedResponse extends SendDemographicResponsesRepositoryResponse {}
 
 class SendDemographicResponsesFailureResponse extends SendDemographicResponsesRepositoryResponse {}
+
+abstract class SendTerritoireInfoRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class SendTerritoireInfoRepositoryResponseSuccess extends SendTerritoireInfoRepositoryResponse {}
+
+class SendTerritoireInfoRepositoryResponseError extends SendTerritoireInfoRepositoryResponse {}

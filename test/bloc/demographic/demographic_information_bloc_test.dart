@@ -4,8 +4,8 @@ import 'package:agora/profil/demographic/bloc/get/demographic_information_event.
 import 'package:agora/profil/demographic/bloc/get/demographic_information_state.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/region.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/region.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 

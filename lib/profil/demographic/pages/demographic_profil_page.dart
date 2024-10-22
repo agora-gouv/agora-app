@@ -75,11 +75,11 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
               title: _Title(),
               onBackClick: () => Navigator.pushReplacementNamed(context, ProfilPage.routeName),
               button: state.status == AllPurposeStatus.success
-                  ? AgoraSecondaryStyleViewButton(
-                      icon: null,
-                      title: GenericStrings.modify,
-                      accessibilityLabel: "Modifier mes informations",
-                      onClick: () {
+                  ? AgoraButton.withLabel(
+                      label: GenericStrings.modify,
+                      buttonStyle: AgoraButtonStyle.tertiary,
+                      semanticLabel: "Modifier mes informations",
+                      onPressed: () {
                         Navigator.pushNamed(
                           context,
                           DemographicQuestionPage.routeName,

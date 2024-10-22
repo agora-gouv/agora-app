@@ -1,9 +1,9 @@
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/log/sentry_wrapper.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/pays.dart';
-import 'package:agora/territorialisation/region.dart';
-import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/pays.dart';
+import 'package:agora/referentiel/region.dart';
+import 'package:agora/referentiel/territoire.dart';
 
 abstract class ReferentielRepository {
   Future<List<Territoire>> fetchReferentielRegionsEtDepartements();

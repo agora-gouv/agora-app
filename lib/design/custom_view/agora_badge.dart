@@ -9,9 +9,9 @@ class AgoraBadge extends StatelessWidget {
   final Color textColor;
 
   const AgoraBadge({
-    this.label = "ILE-DE-FRANCE",
-    this.backgroundColor = AgoraColors.badgeRegional,
-    this.textColor = AgoraColors.badgeRegionalTexte,
+    this.label = "PARIS",
+    this.backgroundColor = AgoraColors.badgeDepartemental,
+    this.textColor = AgoraColors.badgeDepartementalTexte,
   });
 
   @override

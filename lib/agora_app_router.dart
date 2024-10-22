@@ -20,6 +20,8 @@ import 'package:agora/profil/pages/delete_account_page.dart';
 import 'package:agora/profil/pages/profil_information_page.dart';
 import 'package:agora/profil/pages/profil_page.dart';
 import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
+import 'package:agora/profil/territoire/pages/territoire_editing_page.dart';
+import 'package:agora/profil/territoire/pages/territoire_info_page.dart';
 import 'package:agora/qag/ask/pages/ask_question_qag_search.dart';
 import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
 import 'package:agora/qag/details/pages/qag_details_delete_confirmation_page.dart';
@@ -28,7 +30,6 @@ import 'package:agora/qag/moderation/pages/moderation_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:agora/splash_page.dart';
-import 'package:agora/territorialisation/pages/territoire_page.dart';
 import 'package:agora/webview/webview_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
@@ -167,10 +168,16 @@ class AgoraAppRouter {
           child: ModerationPage(),
         );
         break;
-      case TerritoirePage.routeName:
+      case TerritoireInfoPage.routeName:
         currentPage = AgoraTracker(
-          widgetName: AnalyticsScreenNames.territoirePage,
-          child: TerritoirePage(),
+          widgetName: AnalyticsScreenNames.territoireInfoPage,
+          child: TerritoireInfoPage(),
+        );
+        break;
+      case TerritoireEditingPage.routeName:
+        currentPage = AgoraTracker(
+          widgetName: AnalyticsScreenNames.territoireEditingPage,
+          child: TerritoireEditingPage(),
         );
         break;
       case NotificationPage.routeName:

@@ -1,5 +1,5 @@
 import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
-import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:equatable/equatable.dart';
 
 class FetchConsultationPaginatedEvent extends Equatable {

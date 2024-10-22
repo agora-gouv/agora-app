@@ -1,6 +1,6 @@
 import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
-import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:equatable/equatable.dart';
 
 class DemographicInformationState extends Equatable {

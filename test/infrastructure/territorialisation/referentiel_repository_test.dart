@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:agora/common/log/sentry_wrapper.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/pays.dart';
-import 'package:agora/territorialisation/region.dart';
-import 'package:agora/territorialisation/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/pays.dart';
+import 'package:agora/referentiel/region.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../utils/dio_utils.dart';

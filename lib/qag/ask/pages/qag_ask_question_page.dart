@@ -368,7 +368,7 @@ class _AskQagInfo extends StatelessWidget {
           AskQagInfoBloc(qagRepository: RepositoryManager.getQagRepository())..add(FetchInfoAskQagEvent()),
       child: BlocBuilder<AskQagInfoBloc, AskQagInfoState>(
         builder: (context, state) {
-          return switch (AllPurposeStatus.error) {
+          return switch (state.status) {
             AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Column(
                 children: [
                   SkeletonItem(padding: EdgeInsets.zero),

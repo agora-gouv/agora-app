@@ -22,7 +22,7 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:agora/territorialisation/pays.dart';
+import 'package:agora/referentiel/pays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
