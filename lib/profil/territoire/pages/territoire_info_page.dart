@@ -95,7 +95,7 @@ class _SuccessView extends StatelessWidget {
           Text("Vous suivez actuellement :", style: AgoraTextStyles.regular16),
           SizedBox(height: AgoraSpacings.base),
           Text(
-            "Département 1 : ",
+            "Premier département",
             style: AgoraTextStyles.regular16,
           ),
           SizedBox(height: AgoraSpacings.x0_25),
@@ -119,7 +119,7 @@ class _SuccessView extends StatelessWidget {
                 ),
           SizedBox(height: AgoraSpacings.base),
           Text(
-            "Département 2 : ",
+            "Second département",
             style: AgoraTextStyles.regular16,
           ),
           SizedBox(height: AgoraSpacings.x0_25),
