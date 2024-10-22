@@ -54,8 +54,8 @@ class TerritoireInfoPage extends StatelessWidget {
                         context,
                         TerritoireEditingPage.routeName,
                         arguments: TerritoireEditingPageArguments(
-                            departementsSuivis:
-                                state.status == AllPurposeStatus.success ? state.departementsSuivis : []),
+                          departementsSuivis: state.status == AllPurposeStatus.success ? state.departementsSuivis : [],
+                        ),
                       ),
                     )
                   : null,
