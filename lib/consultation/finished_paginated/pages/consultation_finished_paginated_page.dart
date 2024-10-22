@@ -293,18 +293,35 @@ class _ListSuccess extends StatelessWidget {
         children.add(SizedBox(height: AgoraSpacings.base));
       }
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ...children,
-        if (consultationFinishedViewModels.isEmpty)
+    if (consultationFinishedViewModels.isEmpty) {
+      return Column(
+        children: [
+          Image.asset(
+            "assets/ic_consultation_ongoing_empty.png",
+            width: MediaQuery.of(context).size.width * 0.4,
+          ),
+          SizedBox(height: AgoraSpacings.x1_5),
           Text(
-            ConsultationStrings.noFinishedConsultation,
+            "Il n’y a pas encore eu de consultation sur Agora dans ce territoire.",
             style: AgoraTextStyles.medium14,
             textAlign: TextAlign.center,
           ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ...children,
+          if (consultationFinishedViewModels.isEmpty)
+            Text(
+              ConsultationStrings.noFinishedConsultation,
+              style: AgoraTextStyles.medium14,
+              textAlign: TextAlign.center,
+            ),
+        ],
+      );
+    }
   }
 
   void _onCardClick(BuildContext context, String consultationId, String consultationTitle, String? externalLink) {
