@@ -5,8 +5,8 @@ import 'package:agora/consultation/finished_paginated/bloc/consultation_finished
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
 import 'package:agora/consultation/finished_paginated/pages/consultation_finished_paginated_page.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/region.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/region.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';

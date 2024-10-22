@@ -1,8 +1,10 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
@@ -16,15 +18,22 @@ import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/app_feedback/pages/app_feedback_page.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_bloc.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_event.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_state.dart';
+import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:agora/profil/demographic/pages/demographic_profil_page.dart';
 import 'package:agora/profil/notification/pages/notification_page.dart';
 import 'package:agora/profil/onboarding/pages/onboarding_page.dart';
 import 'package:agora/profil/pages/delete_account_page.dart';
 import 'package:agora/profil/pages/profil_information_page.dart';
 import 'package:agora/profil/participation_charter/pages/participation_charter_page.dart';
+import 'package:agora/profil/territoire/pages/territoire_editing_page.dart';
+import 'package:agora/profil/territoire/pages/territoire_info_page.dart';
 import 'package:agora/qag/moderation/pages/moderation_page.dart';
-import 'package:agora/territorialisation/pages/territoire_page.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilPage extends StatefulWidget {
   static const routeName = "/profilPage";
@@ -89,12 +98,31 @@ class _ProfilPageState extends State<ProfilPage> {
                     );
                   },
                 ),
-                AgoraMenuItem(
-                  title: "Mes territoires",
-                  onClick: () {
-                    _track("Mes territoires");
-                    Navigator.pushNamed(context, TerritoirePage.routeName);
-                  },
+                BlocProvider(
+                  create: (BuildContext context) => DemographicInformationBloc(
+                    demographicRepository: RepositoryManager.getDemographicRepository(),
+                    referentielRepository: RepositoryManager.getReferentielRepository(),
+                  )..add(GetDemographicInformationEvent()),
+                  child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
+                    builder: (context, state) {
+                      final premierDepartement = state.demographicInformationResponse.firstWhereOrNull(
+                        (info) => info.demographicType == DemographicQuestionType.primaryDepartment,
+                      );
+                      return AgoraMenuItem(
+                        title: "Mes territoires",
+                        onClick: () {
+                          _track("Mes territoires");
+                          state.status == AllPurposeStatus.success && premierDepartement?.data != null
+                              ? Navigator.pushNamed(context, TerritoireInfoPage.routeName)
+                              : Navigator.pushNamed(
+                                  context,
+                                  TerritoireEditingPage.routeName,
+                                  arguments: TerritoireEditingPageArguments(departementsSuivis: []),
+                                );
+                        },
+                      );
+                    },
+                  ),
                 ),
                 AgoraMenuItem(
                   title: ProfileStrings.notification,

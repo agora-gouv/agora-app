@@ -12,7 +12,7 @@ import 'package:agora/consultation/question/repository/consultation_question_sto
 import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/consultation/repository/consultation_questions_builder.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
-import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:dio/dio.dart';
 
 abstract class ConsultationRepository {

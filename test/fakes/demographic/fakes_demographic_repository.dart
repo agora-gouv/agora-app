@@ -28,6 +28,11 @@ class FakeDemographicSuccessRepository extends DemographicRepository {
   }) async {
     return SendDemographicResponsesSucceedResponse();
   }
+
+  @override
+  Future<SendTerritoireInfoRepositoryResponse> sendTerritoireInfo({required List<String> departementsSuivis}) async {
+    return SendTerritoireInfoRepositoryResponseSuccess();
+  }
 }
 
 class FakeDemographicFailureRepository extends DemographicRepository {
@@ -41,5 +46,10 @@ class FakeDemographicFailureRepository extends DemographicRepository {
     required List<DemographicResponse> demographicResponses,
   }) async {
     return SendDemographicResponsesFailureResponse();
+  }
+
+  @override
+  Future<SendTerritoireInfoRepositoryResponse> sendTerritoireInfo({required List<String> departementsSuivis}) async {
+    return SendTerritoireInfoRepositoryResponseError();
   }
 }

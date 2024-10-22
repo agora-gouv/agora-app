@@ -3,7 +3,7 @@ import 'package:agora/profil/demographic/bloc/get/demographic_information_event.
 import 'package:agora/profil/demographic/bloc/get/demographic_information_state.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/repository/demographic_repository.dart';
-import 'package:agora/territorialisation/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DemographicInformationBloc extends Bloc<DemographicInformationEvent, DemographicInformationState> {

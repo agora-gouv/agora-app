@@ -1,5 +1,5 @@
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:equatable/equatable.dart';
 
 class Region<T extends Territoire> extends Equatable implements Territoire {

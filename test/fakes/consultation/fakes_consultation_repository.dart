@@ -8,7 +8,7 @@ import 'package:agora/consultation/question/domain/consultation_question_respons
 import 'package:agora/consultation/question/domain/consultation_questions.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
-import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {

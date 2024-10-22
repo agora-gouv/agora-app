@@ -1,7 +1,7 @@
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/region.dart';
-import 'package:agora/territorialisation/repository/referentiel_repository.dart';
-import 'package:agora/territorialisation/territoire.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/region.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/territoire.dart';
 
 class FakesReferentielRepository extends ReferentielRepository {
   @override

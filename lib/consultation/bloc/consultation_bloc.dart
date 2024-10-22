@@ -5,46 +5,22 @@ import 'package:agora/consultation/bloc/consultation_state.dart';
 import 'package:agora/consultation/repository/consultation_presenter.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
-import 'package:agora/territorialisation/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optional/optional.dart';
 
 class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> {
-  // final ConsultationState previousState;
   final ConsultationRepository consultationRepository;
   final ConcertationRepository concertationRepository;
   final ReferentielRepository referentielRepository;
 
   ConsultationBloc({
-    // required this.previousState,
     required this.consultationRepository,
     required this.concertationRepository,
     required this.referentielRepository,
   }) : super(ConsultationState.init(AllPurposeStatus.notLoaded)) {
     on<FetchConsultationsEvent>(_handleConsultations);
   }
-
-  // factory ConsultationBloc.fromRepositories({
-  //   required ConsultationRepository consultationRepository,
-  //   required ConcertationRepository concertationRepository,
-  //   required ReferentielRepository referentielRepository,
-  // }) {
-  //   if (consultationRepository.isFetchConsultationDataCached) {
-  //     final previousState = ConsultationState(
-  //       status: AllPurposeStatus.success,
-  //       ongoingViewModels: ongoingViewModels,
-  //       finishedViewModels: finishedViewModels,
-  //       answeredViewModels: answeredViewModels,
-  //       shouldDisplayFinishedAllButton: shouldDisplayFinishedAllButton,
-  //     );
-  //     return ConsultationBloc(
-  //       previousState: previousState,
-  //       consultationRepository: consultationRepository,
-  //       concertationRepository: concertationRepository,
-  //       referentielRepository: referentielRepository,
-  //     );
-  //   }
-  // }
 
   Future<void> _handleConsultations(
     FetchConsultationsEvent event,

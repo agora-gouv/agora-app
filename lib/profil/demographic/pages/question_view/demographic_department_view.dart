@@ -6,9 +6,9 @@ import 'package:agora/design/custom_view/text/agora_text_field.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/profil/demographic/domain/demographic_response.dart';
 import 'package:agora/profil/demographic/pages/helpers/demographic_helper.dart';
-import 'package:agora/territorialisation/departement.dart';
-import 'package:agora/territorialisation/territoire.dart';
-import 'package:agora/territorialisation/territoire_helper.dart';
+import 'package:agora/referentiel/departement.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
