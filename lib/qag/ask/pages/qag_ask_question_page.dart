@@ -47,6 +47,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class QagAskQuestionPage extends StatefulWidget {
   static const routeName = "/qagAskQuestionPage";
@@ -249,7 +250,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               SizedBox(height: AgoraSpacings.x1_5),
               BlocConsumer<CreateQagBloc, CreateQagState>(
-                listener: (context, createQagState) {
+                listener: (context, createQagState) async {
                   if (createQagState is CreateQagSuccessState) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
@@ -261,6 +262,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       QagDetailsPage.routeName,
                       arguments: QagDetailsArguments(qagId: createQagState.qagId, reload: QagReload.qagsPage),
                     );
+                    final InAppReview inAppReview = InAppReview.instance;
+                    if (await inAppReview.isAvailable()) {
+                      inAppReview.requestReview();
+                    }
                   }
                 },
                 builder: (context, createQagState) {

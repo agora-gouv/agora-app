@@ -5,7 +5,7 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/card/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
