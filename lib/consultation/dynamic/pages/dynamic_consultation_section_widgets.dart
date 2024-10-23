@@ -173,15 +173,17 @@ class _HeaderSectionWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
             child: Text(section.title, style: AgoraTextStyles.medium20),
           ),
-          const SizedBox(height: AgoraSpacings.base),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-            child: AgoraBadge(
-              label: section.territoire.label.toUpperCase(),
-              backgroundColor: getTerritoireBadgeColor(section.territoire.type),
-              textColor: getTerritoireBadgeTexteColor(section.territoire.type),
+          if (isTerritorialisationEnabled()) ...[
+            const SizedBox(height: AgoraSpacings.base),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+              child: AgoraBadge(
+                label: section.territoire.label.toUpperCase(),
+                backgroundColor: getTerritoireBadgeColor(section.territoire.type),
+                textColor: getTerritoireBadgeTexteColor(section.territoire.type),
+              ),
             ),
-          ),
+          ]
         ],
       ),
     );
