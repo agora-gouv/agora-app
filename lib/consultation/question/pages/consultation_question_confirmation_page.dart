@@ -13,6 +13,7 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/pages/demographic_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:lottie/lottie.dart';
 
 class ConsultationQuestionConfirmationArguments {
@@ -53,9 +54,13 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
         shouldPop: false,
         appBarType: AppBarColorType.primaryColor,
         child: BlocConsumer<ConsultationQuestionsResponsesBloc, SendConsultationQuestionsResponsesState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is SendConsultationQuestionsResponsesSuccessState) {
-              if (state.shouldDisplayDemographicInformation) {
+              final InAppReview inAppReview = InAppReview.instance;
+              if (await inAppReview.isAvailable()) {
+                inAppReview.requestReview();
+              }
+              if (state.shouldDisplayDemographicInformation && context.mounted) {
                 Navigator.pushNamed(
                   context,
                   DemographicInformationPage.routeName,
@@ -68,7 +73,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                     Navigator.of(context).pop();
                   }
                 });
-              } else {
+              } else if (context.mounted) {
                 Navigator.pushNamed(
                   context,
                   DynamicConsultationPage.routeName,
