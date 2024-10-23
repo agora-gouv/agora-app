@@ -12,7 +12,6 @@ import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart'
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/profil/onboarding/pages/onboarding_page.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
-import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/splash_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/foundation.dart';
@@ -52,7 +51,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
 
     if (widget.shouldShowOnboarding) {
       onRedirect = (context) {
-        Navigator.pushReplacementNamed(context, QagsPage.routeName);
+        Navigator.pushReplacementNamed(context, WelcomePage.routeName);
         Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
           StorageManager.getOnboardingStorageClient().save(false);
         });
