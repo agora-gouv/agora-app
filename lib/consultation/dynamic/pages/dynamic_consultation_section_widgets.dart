@@ -11,9 +11,9 @@ class DynamicConsultationSectionWidget extends StatelessWidget {
     final isTalkbackEnabled = MediaQuery.accessibleNavigationOf(context);
 
     return switch (sectionToDisplay) {
+      _HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
       _TitleSection() => _TitleSectionWidget(sectionToDisplay),
-      HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
-      QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
+      _QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
       ConsultationDatesInfosSection() => _ConsultationDatesInfosSectionWidget(sectionToDisplay),
       ResponseInfoSection() => _ResponseInfoSectionWidget(sectionToDisplay),
       ExpandableSection() => _ExpandableSectionWidget(sectionToDisplay, isTalkbackEnabled: isTalkbackEnabled),
@@ -105,7 +105,7 @@ class HeaderSectionUpdateWidget extends StatelessWidget {
 }
 
 class _HeaderSectionWidget extends StatelessWidget {
-  final HeaderSection section;
+  final _HeaderSection section;
 
   _HeaderSectionWidget(this.section);
 
@@ -115,7 +115,7 @@ class _HeaderSectionWidget extends StatelessWidget {
       header: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
@@ -174,6 +174,14 @@ class _HeaderSectionWidget extends StatelessWidget {
             child: Text(section.title, style: AgoraTextStyles.medium20),
           ),
           const SizedBox(height: AgoraSpacings.base),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+            child: AgoraBadge(
+              label: section.territoire.label.toUpperCase(),
+              backgroundColor: getTerritoireBadgeColor(section.territoire.type),
+              textColor: getTerritoireBadgeTexteColor(section.territoire.type),
+            ),
+          ),
         ],
       ),
     );
@@ -181,7 +189,7 @@ class _HeaderSectionWidget extends StatelessWidget {
 }
 
 class _QuestionsInfoWidget extends StatelessWidget {
-  final QuestionsInfoSection section;
+  final _QuestionsInfoSection section;
 
   _QuestionsInfoWidget(this.section);
 

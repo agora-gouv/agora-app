@@ -5,11 +5,11 @@ class DynamicConsultationPresenter {
     return switch (state) {
       DynamicConsultationLoadingState() => _LoadingViewModel(),
       DynamicConsultationErrorState() => _ErrorViewModel(),
-      DynamicConsultationSuccessState() => _presentSuccess(state.consultation),
+      DynamicConsultationSuccessState() => _presentSuccess(state.consultation, state.referentiel),
     };
   }
 
-  static _SuccessViewModel _presentSuccess(DynamicConsultation consultation) {
+  static _SuccessViewModel _presentSuccess(DynamicConsultation consultation, List<Territoire> referentiel) {
     final questionsInfos = consultation.questionsInfos;
     final responsesInfos = consultation.responseInfos;
     final consultationHeaderInfo = consultation.infoHeader;
@@ -19,17 +19,18 @@ class DynamicConsultationPresenter {
     final history = consultation.history;
     final participationInfo = consultation.participationInfo;
     return _SuccessViewModel(
-      consultationId: consultation.id,
       shareText: consultation.shareText,
+      consultationId: consultation.id,
       sections: [
-        HeaderSection(
+        _HeaderSection(
           coverUrl: consultation.coverUrl,
           thematicLabel: consultation.thematicLabel,
           thematicLogo: consultation.thematicLogo,
           title: consultation.title,
+          territoire: getTerritoireFromReferentiel(referentiel, consultation.territoire),
         ),
         if (questionsInfos != null)
-          QuestionsInfoSection(
+          _QuestionsInfoSection(
             endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayLongMonth()),
             questionCount: questionsInfos.questionCount,
             estimatedTime: questionsInfos.estimatedTime,

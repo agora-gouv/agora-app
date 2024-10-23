@@ -23,6 +23,7 @@ import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.d
 import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
 import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
 import 'package:agora/consultation/question/pages/consultation_question_page.dart';
+import 'package:agora/design/custom_view/agora_badge.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
@@ -37,6 +38,8 @@ import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/design/video/agora_video_view.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 import 'package:collection/collection.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:equatable/equatable.dart';
@@ -80,8 +83,9 @@ class DynamicConsultationPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) {
         return DynamicConsultationBloc(
-          RepositoryManager.getConsultationRepository(),
-          StorageManager.getConsultationQuestionStorageClient(),
+          consultationRepository: RepositoryManager.getConsultationRepository(),
+          referentielRepository: RepositoryManager.getReferentielRepository(),
+          storageClient: StorageManager.getConsultationQuestionStorageClient(),
         )..add(FetchDynamicConsultationEvent(arguments.consultationIdOrSlug));
       },
       child: BlocSelector<DynamicConsultationBloc, DynamicConsultationState, DynamicConsultationViewModel>(

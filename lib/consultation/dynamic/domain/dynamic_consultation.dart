@@ -21,6 +21,7 @@ class DynamicConsultation extends Equatable {
   final List<ConsultationHistoryStep> history;
   final ConsultationFooter? footer;
   final List<ConsultationGoal>? goals;
+  final String territoire;
 
   DynamicConsultation({
     required this.id,
@@ -42,6 +43,7 @@ class DynamicConsultation extends Equatable {
     required this.history,
     required this.footer,
     required this.goals,
+    required this.territoire,
   });
 
   @override
@@ -64,6 +66,7 @@ class DynamicConsultation extends Equatable {
         footer,
         headerSections,
         goals,
+        territoire,
       ];
 }
 

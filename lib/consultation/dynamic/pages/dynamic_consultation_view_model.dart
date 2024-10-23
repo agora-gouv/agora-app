@@ -18,8 +18,8 @@ class _SuccessViewModel extends DynamicConsultationViewModel {
   final List<DynamicViewModelSection> sections;
 
   _SuccessViewModel({
-    required this.consultationId,
     required this.shareText,
+    required this.consultationId,
     required this.sections,
   });
 
@@ -29,21 +29,23 @@ class _SuccessViewModel extends DynamicConsultationViewModel {
 
 sealed class DynamicViewModelSection extends Equatable {}
 
-class HeaderSection extends DynamicViewModelSection {
+class _HeaderSection extends DynamicViewModelSection {
   final String coverUrl;
   final String title;
   final String thematicLogo;
   final String thematicLabel;
+  final Territoire territoire;
 
-  HeaderSection({
+  _HeaderSection({
     required this.coverUrl,
     required this.title,
     required this.thematicLogo,
     required this.thematicLabel,
+    required this.territoire,
   });
 
   @override
-  List<Object?> get props => [coverUrl, title, thematicLogo, thematicLabel];
+  List<Object?> get props => [coverUrl, title, thematicLogo, thematicLabel, territoire];
 }
 
 class HeaderSectionUpdate extends DynamicViewModelSection {
@@ -59,7 +61,7 @@ class HeaderSectionUpdate extends DynamicViewModelSection {
   List<Object?> get props => [coverUrl, title];
 }
 
-class QuestionsInfoSection extends DynamicViewModelSection {
+class _QuestionsInfoSection extends DynamicViewModelSection {
   final String endDate;
   final String questionCount;
   final String estimatedTime;
@@ -67,7 +69,7 @@ class QuestionsInfoSection extends DynamicViewModelSection {
   final int participantCountGoal;
   final double goalProgress;
 
-  QuestionsInfoSection({
+  _QuestionsInfoSection({
     required this.endDate,
     required this.questionCount,
     required this.estimatedTime,
