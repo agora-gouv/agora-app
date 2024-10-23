@@ -183,7 +183,7 @@ class _HeaderSectionWidget extends StatelessWidget {
                 textColor: getTerritoireBadgeTexteColor(section.territoire.type),
               ),
             ),
-          ]
+          ],
         ],
       ),
     );
