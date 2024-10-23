@@ -842,6 +842,7 @@ void main() {
               "description": "description",
             }
           ],
+          "territory": "National",
         }),
         headers: {
           "accept": "application/json",
@@ -870,6 +871,7 @@ void main() {
             shareText: 'A définir ¯\\_(ツ)_/¯',
             thematicLogo: '🚊',
             thematicLabel: 'Transports',
+            territoire: "National",
             questionsInfos: ConsultationQuestionsInfos(
               endDate: DateTime(2023, 12, 30),
               questionCount: '5 à 10 questions',

@@ -2,6 +2,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
@@ -109,7 +110,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                                 ),
                               ),
                               SizedBox(height: AgoraSpacings.base),
-                              currentStep == 3
+                              currentStep == 3 && isTerritorialisationEnabled()
                                   ? Row(
                                       children: [
                                         Expanded(child: _QuestionTitle(currentStep: currentStep)),

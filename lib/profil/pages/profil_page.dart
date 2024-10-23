@@ -1,6 +1,7 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
@@ -98,32 +99,33 @@ class _ProfilPageState extends State<ProfilPage> {
                     );
                   },
                 ),
-                BlocProvider(
-                  create: (BuildContext context) => DemographicInformationBloc(
-                    demographicRepository: RepositoryManager.getDemographicRepository(),
-                    referentielRepository: RepositoryManager.getReferentielRepository(),
-                  )..add(GetDemographicInformationEvent()),
-                  child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
-                    builder: (context, state) {
-                      final premierDepartement = state.demographicInformationResponse.firstWhereOrNull(
-                        (info) => info.demographicType == DemographicQuestionType.primaryDepartment,
-                      );
-                      return AgoraMenuItem(
-                        title: "Mes territoires",
-                        onClick: () {
-                          _track("Mes territoires");
-                          state.status == AllPurposeStatus.success && premierDepartement?.data != null
-                              ? Navigator.pushNamed(context, TerritoireInfoPage.routeName)
-                              : Navigator.pushNamed(
-                                  context,
-                                  TerritoireEditingPage.routeName,
-                                  arguments: TerritoireEditingPageArguments(departementsSuivis: []),
-                                );
-                        },
-                      );
-                    },
+                if (isTerritorialisationEnabled())
+                  BlocProvider(
+                    create: (BuildContext context) => DemographicInformationBloc(
+                      demographicRepository: RepositoryManager.getDemographicRepository(),
+                      referentielRepository: RepositoryManager.getReferentielRepository(),
+                    )..add(GetDemographicInformationEvent()),
+                    child: BlocBuilder<DemographicInformationBloc, DemographicInformationState>(
+                      builder: (context, state) {
+                        final premierDepartement = state.demographicInformationResponse.firstWhereOrNull(
+                          (info) => info.demographicType == DemographicQuestionType.primaryDepartment,
+                        );
+                        return AgoraMenuItem(
+                          title: "Mes territoires",
+                          onClick: () {
+                            _track("Mes territoires");
+                            state.status == AllPurposeStatus.success && premierDepartement?.data != null
+                                ? Navigator.pushNamed(context, TerritoireInfoPage.routeName)
+                                : Navigator.pushNamed(
+                                    context,
+                                    TerritoireEditingPage.routeName,
+                                    arguments: TerritoireEditingPageArguments(departementsSuivis: []),
+                                  );
+                          },
+                        );
+                      },
+                    ),
                   ),
-                ),
                 AgoraMenuItem(
                   title: ProfileStrings.notification,
                   onClick: () {

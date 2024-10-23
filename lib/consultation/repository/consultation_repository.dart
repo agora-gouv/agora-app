@@ -300,6 +300,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         history: toHistory(data["history"], consultationId),
         footer: toFooter(data["footer"]),
         goals: toGoals(data["goals"]),
+        territoire: data["territory"] as String,
       );
       return DynamicConsultationSuccessResponse(consultation);
     } catch (exception, stacktrace) {
