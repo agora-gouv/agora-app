@@ -138,7 +138,9 @@ class _QagsPageState extends State<QagsPage> {
                             semantic: AgoraRichTextSemantic(focused: true),
                             items: [
                               AgoraRichTextItem(
-                                  text: "${QagStrings.toolbarPart1}\n", style: AgoraRichTextItemStyle.bold),
+                                text: "${QagStrings.toolbarPart1}\n",
+                                style: AgoraRichTextItemStyle.bold,
+                              ),
                               AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
                             ],
                           ),
