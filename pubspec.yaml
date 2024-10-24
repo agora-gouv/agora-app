@@ -30,7 +30,7 @@ dependencies:
   permission_handler: ^11.1.0 # not support for web
   video_player: ^2.7.1
   chewie: ^1.5.0
-  share_plus: ^10.0.3
+  share_plus: ^10.1.1
   firebase_core: ^3.5.0
   firebase_messaging: ^15.1.2
   flutter_local_notifications: ^17.2.2 # not support for web
