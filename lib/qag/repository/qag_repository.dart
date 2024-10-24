@@ -14,6 +14,7 @@ import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
+import 'package:agora/qag/repository/dto/qag_content_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
@@ -79,9 +80,7 @@ abstract class QagRepository {
     required String title,
   });
 
-  Future<int?> getQagsCount();
-
-  Future<String?> getContentQag();
+  Future<QagContentDto?> getContentQag();
 
   Future<String?> getContentReponseQag();
 
@@ -545,23 +544,15 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
-  Future<int?> getQagsCount() async {
-    const uri = "/qags/count";
-    try {
-      final response = await httpClient.get(uri);
-      return response.statusCode == HttpStatus.ok ? response.data as int : null;
-    } catch (exception, stacktrace) {
-      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
-      return null;
-    }
-  }
-
-  @override
-  Future<String?> getContentQag() async {
+  Future<QagContentDto?> getContentQag() async {
     const uri = "/content/page-questions-au-gouvernement";
     try {
       final response = await httpClient.get(uri);
-      return response.statusCode == HttpStatus.ok ? response.data["info"] as String : null;
+      if (response.statusCode != HttpStatus.ok) return null;
+      return QagContentDto(
+        info: response.data["info"] as String,
+        texteTotalQuestions: response.data["texteTotalQuestions"] as String,
+      );
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return null;

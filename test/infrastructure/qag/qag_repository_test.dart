@@ -10,6 +10,7 @@ import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
+import 'package:agora/qag/repository/dto/qag_content_dto.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
@@ -1227,54 +1228,6 @@ void main() {
     });
   });
 
-  group("Fetch qag count", () {
-    test("when success should return qag count", () async {
-      // Given
-      dioAdapter.onGet(
-        "/qags/count",
-        (server) => server.reply(HttpStatus.ok, 1),
-        headers: {
-          "accept": "application/json",
-          "Authorization": "Bearer jwtToken",
-        },
-        data: null,
-      );
-
-      // When
-      final repository = QagDioRepository(
-        httpClient: httpClient,
-        sentryWrapper: sentryWrapper,
-      );
-      final response = await repository.getQagsCount();
-
-      // Then
-      expect(response, 1);
-    });
-
-    test("when failure should return null", () async {
-      // Given
-      dioAdapter.onGet(
-        "/qags/count",
-        (server) => server.reply(HttpStatus.notFound, null),
-        headers: {
-          "accept": "application/json",
-          "Authorization": "Bearer jwtToken",
-        },
-        data: null,
-      );
-
-      // When
-      final repository = QagDioRepository(
-        httpClient: httpClient,
-        sentryWrapper: sentryWrapper,
-      );
-      final response = await repository.getQagsCount();
-
-      // Then
-      expect(response, null);
-    });
-  });
-
   group("Fetch qag info Text", () {
     test("when success should return qag info text", () async {
       // Given
@@ -1282,6 +1235,7 @@ void main() {
         "/content/page-questions-au-gouvernement",
         (server) => server.reply(HttpStatus.ok, {
           "info": "qagsInfoText",
+          "texteTotalQuestions": "Cette semaine, vous avez posé 22 questions.",
         }),
         headers: {
           "accept": "application/json",
@@ -1298,7 +1252,13 @@ void main() {
       final response = await repository.getContentQag();
 
       // Then
-      expect(response, "qagsInfoText");
+      expect(
+        response,
+        QagContentDto(
+          info: "qagsInfoText",
+          texteTotalQuestions: "Cette semaine, vous avez posé 22 questions.",
+        ),
+      );
     });
 
     test("when failure should return null", () async {

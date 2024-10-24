@@ -6,6 +6,7 @@ import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
+import 'package:agora/qag/repository/dto/qag_content_dto.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 
@@ -262,13 +263,8 @@ class FakeQagSuccessRepository extends QagRepository {
   }
 
   @override
-  Future<int?> getQagsCount() {
-    return Future.value(1);
-  }
-
-  @override
-  Future<String?> getContentQag() {
-    return Future.value("qagInfoText");
+  Future<QagContentDto?> getContentQag() {
+    return Future.value(QagContentDto(info: "qagInfoText", texteTotalQuestions: "totalQuestionsText"));
   }
 
   @override
@@ -717,13 +713,11 @@ class FakeQagFailureRepository extends QagRepository {
   }
 
   @override
-  Future<int?> getQagsCount() => Future.value(null);
-
-  @override
-  Future<String?> getContentQag() => Future.value(null);
+  Future<QagContentDto?> getContentQag() => Future.value(null);
 
   @override
   Future<String?> getContentReponseQag() => Future.value(null);
+
   @override
   Future<String?> getContentAskQag() => Future.value(null);
 }
