@@ -7,6 +7,8 @@ import 'package:agora/thematique/domain/thematique.dart';
 
 abstract class ConcertationRepository {
   Future<List<Concertation>> fetchConcertations();
+
+  List<Concertation> get concertationsResponse;
 }
 
 class ConcertationDioRepository extends ConcertationRepository {
@@ -21,11 +23,14 @@ class ConcertationDioRepository extends ConcertationRepository {
   });
 
   @override
+  List<Concertation> concertationsResponse = [];
+
+  @override
   Future<List<Concertation>> fetchConcertations() async {
     const uri = '/concertations';
     try {
       final response = await httpClient.get(uri);
-      return (response.data as List).map(
+      final concertations = (response.data as List).map(
         (concertation) {
           final thematiqueJson = concertation['thematique'] as Map<String, dynamic>;
           return Concertation(
@@ -44,9 +49,12 @@ class ConcertationDioRepository extends ConcertationRepository {
           );
         },
       ).toList();
+      concertationsResponse = concertations;
+      return concertations;
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
     }
+    concertationsResponse = [];
     return [];
   }
 }

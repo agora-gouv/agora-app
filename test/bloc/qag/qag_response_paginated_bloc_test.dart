@@ -19,6 +19,7 @@ void main() {
     blocTest(
       "when repository succeed and page number to load is 1 - should emit success state",
       build: () => QagResponsePaginatedBloc(
+        previousState: QagResponsePaginatedState.init(),
         qagRepository: FakeQagSuccessRepository(),
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
@@ -51,6 +52,7 @@ void main() {
     blocTest<QagResponsePaginatedBloc, QagResponsePaginatedState>(
       "when repository succeed and page number to load is other than 1 - should emit success state",
       build: () => QagResponsePaginatedBloc(
+        previousState: QagResponsePaginatedState.init(),
         qagRepository: FakeQagSuccessRepository(),
       ),
       seed: () => QagResponsePaginatedState(
@@ -115,6 +117,7 @@ void main() {
     blocTest<QagResponsePaginatedBloc, QagResponsePaginatedState>(
       "when repository succeed and page number reset to 1 - should emit success state",
       build: () => QagResponsePaginatedBloc(
+        previousState: QagResponsePaginatedState.init(),
         qagRepository: FakeQagSuccessRepository(),
       ),
       seed: () => QagResponsePaginatedState(
@@ -170,6 +173,7 @@ void main() {
     blocTest(
       "when repository failed and page number to load is 1 - should emit failure state",
       build: () => QagResponsePaginatedBloc(
+        previousState: QagResponsePaginatedState.init(),
         qagRepository: FakeQagFailureRepository(),
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
@@ -193,6 +197,7 @@ void main() {
     blocTest<QagResponsePaginatedBloc, QagResponsePaginatedState>(
       "when repository failed and page number to load is other than 1 - should emit failure state",
       build: () => QagResponsePaginatedBloc(
+        previousState: QagResponsePaginatedState.init(),
         qagRepository: FakeQagFailureRepository(),
       ),
       seed: () => QagResponsePaginatedState(

@@ -8,13 +8,16 @@ class QagResponseBloc extends Bloc<FetchQagsResponseEvent, QagResponseState> {
   final QagResponseState previousState;
   final QagRepository qagRepository;
 
-  QagResponseBloc({required this.previousState, required this.qagRepository}) : super(previousState) {
+  QagResponseBloc({
+    required this.previousState,
+    required this.qagRepository,
+  }) : super(previousState) {
     on<FetchQagsResponseEvent>(_handleFetchQagsResponse);
   }
 
   factory QagResponseBloc.fromRepository({required QagRepository qagRepository}) {
-    if (qagRepository.getQagsResponseRepositoryResponse is GetQagsResponseSucceedResponse) {
-      final qagRepositoryResponse = qagRepository.getQagsResponseRepositoryResponse as GetQagsResponseSucceedResponse;
+    if (qagRepository.qagsResponseRepositoryData is GetQagsResponseSucceedResponse) {
+      final qagRepositoryResponse = qagRepository.qagsResponseRepositoryData as GetQagsResponseSucceedResponse;
       return QagResponseBloc(
         previousState: QagResponseState(
           status: AllPurposeStatus.success,
@@ -34,7 +37,7 @@ class QagResponseBloc extends Bloc<FetchQagsResponseEvent, QagResponseState> {
     FetchQagsResponseEvent event,
     Emitter<QagResponseState> emit,
   ) async {
-    if (state.status != AllPurposeStatus.success) {
+    if (previousState.status != AllPurposeStatus.success) {
       emit(state.clone(status: AllPurposeStatus.loading));
       final response = await qagRepository.fetchQagsResponse();
       if (response is GetQagsResponseSucceedResponse) {

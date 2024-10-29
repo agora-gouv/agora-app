@@ -51,7 +51,7 @@ abstract class ConsultationRepository {
 
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId);
 
-  bool get isFetchConsultationDataCached;
+  GetConsultationsRepositoryResponse? get consultationsResponse;
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -69,10 +69,8 @@ class ConsultationDioRepository extends ConsultationRepository {
     required this.mapper,
   });
 
-  static GetConsultationsRepositoryResponse getConsultationsResponse = GetConsultationsFailedResponse();
-
   @override
-  bool get isFetchConsultationDataCached => getConsultationsResponse is GetConsultationsSucceedResponse;
+  GetConsultationsRepositoryResponse? consultationsResponse;
 
   @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
@@ -82,7 +80,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       final ongoingConsultations = response.data["ongoing"] as List;
       final finishedConsultations = response.data["finished"] as List;
       final answeredConsultations = response.data["answered"] as List;
-      getConsultationsResponse = GetConsultationsSucceedResponse(
+      final getConsultationsResponse = GetConsultationsSucceedResponse(
         ongoingConsultations: ongoingConsultations.map((ongoingConsultation) {
           return ConsultationOngoing(
             id: ongoingConsultation["id"] as String,
@@ -119,6 +117,7 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
+      consultationsResponse = getConsultationsResponse;
       return getConsultationsResponse;
     } catch (exception, stacktrace) {
       if (exception is DioException) {
@@ -127,7 +126,9 @@ class ConsultationDioRepository extends ConsultationRepository {
         }
       }
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
-      return GetConsultationsFailedResponse();
+      final getConsultationsResponse = GetConsultationsFailedResponse();
+      consultationsResponse = getConsultationsResponse;
+      return getConsultationsResponse;
     }
   }
 

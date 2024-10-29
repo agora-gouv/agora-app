@@ -1,27 +1,32 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:equatable/equatable.dart';
+import 'package:optional/optional.dart';
 
-sealed class AskQagStatusState extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
-
-class AskQagInitialLoadingState extends AskQagStatusState {}
-
-class AskQagStatusFetchedState extends AskQagStatusState {
+class AskQagStatusState extends Equatable {
+  final AllPurposeStatus status;
   final String? askQagError;
-
-  AskQagStatusFetchedState({required this.askQagError});
-
-  @override
-  List<Object?> get props => [askQagError];
-}
-
-class AskQagErrorState extends AskQagStatusState {
   final QagsErrorType errorType;
 
-  AskQagErrorState({this.errorType = QagsErrorType.generic});
+  AskQagStatusState({required this.status, required this.askQagError, required this.errorType});
+
+  AskQagStatusState.init()
+      : status = AllPurposeStatus.notLoaded,
+        askQagError = null,
+        errorType = QagsErrorType.generic;
+
+  AskQagStatusState clone({
+    AllPurposeStatus? status,
+    Optional<String>? askQagErrorOptional,
+    QagsErrorType? errorType,
+  }) {
+    return AskQagStatusState(
+      status: status ?? this.status,
+      askQagError: askQagErrorOptional != null ? askQagErrorOptional.orElseNullable(null) : askQagError,
+      errorType: errorType ?? this.errorType,
+    );
+  }
 
   @override
-  List<Object> get props => [errorType];
+  List<Object?> get props => [status, askQagError, errorType];
 }

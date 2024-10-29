@@ -66,7 +66,7 @@ class _ReponsesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => QagResponsePaginatedBloc(
+      create: (BuildContext context) => QagResponsePaginatedBloc.fromRepository(
         qagRepository: RepositoryManager.getQagRepository(),
       )..add(FetchQagsResponsePaginatedEvent(pageNumber: initialPage)),
       child: BlocBuilder<QagResponsePaginatedBloc, QagResponsePaginatedState>(

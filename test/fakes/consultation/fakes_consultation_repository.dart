@@ -276,7 +276,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {}
 
   @override
-  bool get isFetchConsultationDataCached => false;
+  GetConsultationsRepositoryResponse? get consultationsResponse => null;
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -362,7 +362,7 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {}
 
   @override
-  bool get isFetchConsultationDataCached => false;
+  GetConsultationsRepositoryResponse? get consultationsResponse => null;
 }
 
 class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRepository {

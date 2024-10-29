@@ -22,7 +22,7 @@ void main() {
   group("fetchConsultationsEvent", () {
     blocTest(
       "when repository succeed - should emit loading then success state",
-      build: () => ConsultationBloc(
+      build: () => ConsultationBloc.fromRepositories(
         consultationRepository: FakeConsultationSuccessRepository(),
         concertationRepository: FakesConcertationRepository(),
         referentielRepository: FakesReferentielRepository(),
@@ -92,7 +92,7 @@ void main() {
 
     blocTest(
       "when repository succeed and finished consultation is empty - should emit loading then success state",
-      build: () => ConsultationBloc(
+      build: () => ConsultationBloc.fromRepositories(
         consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
         concertationRepository: FakesConcertationRepository(),
         referentielRepository: FakesReferentielRepository(),
@@ -138,7 +138,7 @@ void main() {
 
     blocTest(
       "when repository failed with timeout - should emit loading then failure state",
-      build: () => ConsultationBloc(
+      build: () => ConsultationBloc.fromRepositories(
         consultationRepository: FakeConsultationTimeoutFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
         referentielRepository: FakesReferentielRepository(),
@@ -160,7 +160,7 @@ void main() {
 
     blocTest(
       "when repository failed - should emit loading then failure state",
-      build: () => ConsultationBloc(
+      build: () => ConsultationBloc.fromRepositories(
         consultationRepository: FakeConsultationFailureRepository(),
         concertationRepository: FakesConcertationRepository(),
         referentielRepository: FakesReferentielRepository(),

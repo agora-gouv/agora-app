@@ -20,7 +20,6 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
-import 'package:agora/qag/ask/bloc/ask_qag_status_state.dart';
 import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
 import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
 import 'package:agora/qag/info/bloc/qags_info_bloc.dart';
@@ -79,7 +78,7 @@ class _QagsPageState extends State<QagsPage> {
         providers: [
           BlocProvider(
             lazy: false,
-            create: (BuildContext context) => AskQagStatusBloc(
+            create: (BuildContext context) => AskQagStatusBloc.fromRepositories(
               qagRepository: RepositoryManager.getQagRepository(),
             )..add(FetchAskQagStatusEvent()),
           ),
@@ -107,7 +106,7 @@ class _QagsPageState extends State<QagsPage> {
               onTap: () {
                 final askQagStatusState = BlocProvider.of<AskQagStatusBloc>(context).state;
                 String? errorLabel;
-                if (askQagStatusState is AskQagStatusFetchedState) {
+                if (askQagStatusState.status == AllPurposeStatus.success) {
                   errorLabel = askQagStatusState.askQagError;
                 }
                 TrackerHelper.trackClick(

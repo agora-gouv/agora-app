@@ -22,4 +22,7 @@ class FakesReferentielRepository extends ReferentielRepository {
       ),
     ]);
   }
+
+  @override
+  List<Territoire> get referentielResponse => [];
 }

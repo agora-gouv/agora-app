@@ -7,6 +7,8 @@ import 'package:agora/referentiel/territoire.dart';
 
 abstract class ReferentielRepository {
   Future<List<Territoire>> fetchReferentielRegionsEtDepartements();
+
+  List<Territoire> get referentielResponse;
 }
 
 class ReferentielDioRepository extends ReferentielRepository {
@@ -14,6 +16,9 @@ class ReferentielDioRepository extends ReferentielRepository {
   final SentryWrapper sentryWrapper;
 
   ReferentielDioRepository({required this.httpClient, required this.sentryWrapper});
+
+  @override
+  List<Territoire> referentielResponse = [];
 
   @override
   Future<List<Territoire>> fetchReferentielRegionsEtDepartements() async {
@@ -45,10 +50,11 @@ class ReferentielDioRepository extends ReferentielRepository {
       for (var item in paysJson) {
         territoires.add(Pays(label: item as String));
       }
-
+      referentielResponse = territoires;
       return territoires;
     } catch (exception, stackTrace) {
       sentryWrapper.captureException(exception, stackTrace, message: "Erreur lors de l'appel : $uri");
+      referentielResponse = [];
       return [];
     }
   }

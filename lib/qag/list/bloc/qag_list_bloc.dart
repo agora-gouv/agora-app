@@ -1,3 +1,4 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/qag/domain/header_qag.dart';
 import 'package:agora/qag/domain/qag.dart';
@@ -7,28 +8,60 @@ import 'package:agora/qag/list/bloc/qag_list_state.dart';
 import 'package:agora/qag/repository/header_qag_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:optional/optional.dart';
 
 class QagListBloc extends Bloc<QagListEvent, QagListState> {
+  final QagListState previousState;
   final QagRepository qagRepository;
   final HeaderQagStorageClient headerQagStorageClient;
   final SemanticsHelperWrapper semanticsHelperWrapper;
 
   QagListBloc({
+    required this.previousState,
     required this.qagRepository,
     required this.headerQagStorageClient,
     this.semanticsHelperWrapper = const SemanticsHelperWrapper(),
-  }) : super(QagListLoadingState()) {
+  }) : super(previousState) {
     on<FetchQagsListEvent>(_handleFetchQags);
     on<UpdateQagsListEvent>(_handleUpdateQags);
     on<UpdateQagListSupportEvent>(_handleUpdateQagSupport);
     on<CloseHeaderQagListEvent>(_handleCloseHeaderQag);
   }
 
+  factory QagListBloc.fromRepositories({
+    required QagRepository qagRepository,
+    required HeaderQagStorageClient headerQagStorageClient,
+    SemanticsHelperWrapper semanticsHelperWrapper = const SemanticsHelperWrapper(),
+  }) {
+    if (qagRepository.qagsListData is GetQagListSucceedResponse) {
+      final qagsListData = qagRepository.qagsListData as GetQagListSucceedResponse;
+      return QagListBloc(
+        previousState: QagListState(
+          status: AllPurposeStatus.success,
+          qags: qagsListData.qags,
+          header: null,
+          currentPage: 1,
+          maxPage: qagsListData.maxPage,
+          footerType: QagListFooterType.loaded,
+        ),
+        qagRepository: qagRepository,
+        headerQagStorageClient: headerQagStorageClient,
+        semanticsHelperWrapper: semanticsHelperWrapper,
+      );
+    }
+    return QagListBloc(
+      previousState: QagListState.init(),
+      qagRepository: qagRepository,
+      headerQagStorageClient: headerQagStorageClient,
+      semanticsHelperWrapper: semanticsHelperWrapper,
+    );
+  }
+
   Future<void> _handleFetchQags(
     FetchQagsListEvent event,
     Emitter<QagListState> emit,
   ) async {
-    emit(QagListLoadingState());
+    emit(state.clone(status: AllPurposeStatus.loading));
 
     final response = await qagRepository.fetchQagList(
       pageNumber: state.currentPage,
@@ -38,7 +71,8 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
 
     if (response is GetQagListSucceedResponse) {
       emit(
-        QagListSuccessState(
+        QagListState(
+          status: AllPurposeStatus.success,
           qags: response.qags,
           header: await _getHeaderOrNullIfClosed(response.header),
           currentPage: state.currentPage,
@@ -50,7 +84,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
         semanticsHelperWrapper.announceThematicChosen(event.thematiqueLabel, response.qags.length);
       }
     } else {
-      emit(QagListErrorState(currentPage: state.currentPage));
+      emit(state.clone(status: AllPurposeStatus.error, currentPage: state.currentPage));
     }
   }
 
@@ -58,10 +92,8 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
     UpdateQagsListEvent event,
     Emitter<QagListState> emit,
   ) async {
-    if (state is QagListSuccessState) {
-      final loadedState = state as QagListSuccessState;
-
-      emit(QagListSuccessState.copyWith(state: loadedState, footerType: QagListFooterType.loading));
+    if (state.status == AllPurposeStatus.success) {
+      emit(state.clone(footerType: QagListFooterType.loading));
 
       final response = await qagRepository.fetchQagList(
         pageNumber: state.currentPage + 1,
@@ -71,16 +103,16 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
 
       if (response is GetQagListSucceedResponse) {
         emit(
-          QagListSuccessState.copyWith(
-            state: loadedState,
-            qags: addQagsToList(loadedState.qags, response.qags),
+          state.clone(
+            status: AllPurposeStatus.success,
+            qags: addQagsToList(state.qags, response.qags),
             currentPage: state.currentPage + 1,
             maxPage: response.maxPage,
             footerType: QagListFooterType.loaded,
           ),
         );
       } else {
-        emit(QagListSuccessState.copyWith(state: loadedState, footerType: QagListFooterType.error));
+        emit(state.clone(status: state.status, footerType: QagListFooterType.error));
       }
     }
   }
@@ -89,12 +121,11 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
     UpdateQagListSupportEvent event,
     Emitter<QagListState> emit,
   ) async {
-    if (state is QagListSuccessState) {
-      final loadedState = state as QagListSuccessState;
-      final newQagList = loadedState.qags.updateQagSupportOrNull(event.qagSupport);
+    if (state.status == AllPurposeStatus.success) {
+      final newQagList = state.qags.updateQagSupportOrNull(event.qagSupport);
 
       if (newQagList != null) {
-        emit(QagListSuccessState.copyWith(state: loadedState, qags: newQagList));
+        emit(state.clone(status: AllPurposeStatus.success, qags: newQagList));
       }
     }
   }
@@ -103,10 +134,9 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
     CloseHeaderQagListEvent event,
     Emitter<QagListState> emit,
   ) async {
-    if (state is QagListSuccessState) {
-      final loadedState = state as QagListSuccessState;
+    if (state.status == AllPurposeStatus.success) {
       headerQagStorageClient.closeHeader(headerId: event.headerId);
-      emit(QagListSuccessState.copyWith(state: loadedState, header: null));
+      emit(state.clone(status: AllPurposeStatus.success, headerOptional: Optional.ofNullable(null)));
     }
   }
 

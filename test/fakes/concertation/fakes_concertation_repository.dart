@@ -19,4 +19,7 @@ class FakesConcertationRepository extends ConcertationRepository {
       ),
     ];
   }
+
+  @override
+  List<Concertation> get concertationsResponse => [];
 }

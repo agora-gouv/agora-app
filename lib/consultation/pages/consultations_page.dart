@@ -45,7 +45,7 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
       widgetName: AnalyticsScreenNames.consultationsPage,
       child: BlocProvider(
         create: (BuildContext context) {
-          return ConsultationBloc(
+          return ConsultationBloc.fromRepositories(
             consultationRepository: RepositoryManager.getConsultationRepository(),
             concertationRepository: RepositoryManager.getConcertationRepository(),
             referentielRepository: RepositoryManager.getReferentielRepository(),
