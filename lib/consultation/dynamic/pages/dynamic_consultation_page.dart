@@ -56,7 +56,7 @@ part 'dynamic_consultation_view_model.dart';
 
 class DynamicConsultationPageArguments {
   final String consultationIdOrSlug;
-  final String consultationTitle;
+  final String? consultationTitle;
   final bool shouldReloadConsultationsWhenPop;
   final String? notificationTitle;
   final String? notificationDescription;
@@ -64,7 +64,7 @@ class DynamicConsultationPageArguments {
 
   DynamicConsultationPageArguments({
     required this.consultationIdOrSlug,
-    required this.consultationTitle,
+    this.consultationTitle,
     this.shouldReloadConsultationsWhenPop = true,
     this.notificationTitle,
     this.notificationDescription,
@@ -94,10 +94,13 @@ class DynamicConsultationPage extends StatelessWidget {
         builder: (BuildContext context, DynamicConsultationViewModel viewModel) {
           return switch (viewModel) {
             _LoadingViewModel() => _LoadingPage(),
-            _ErrorViewModel() => _ErrorPage(consultationTitle: arguments.consultationTitle),
+            _ErrorViewModel() => _ErrorPage(
+                consultationTitle: arguments.consultationTitle != null
+                    ? "Consultation : ${arguments.consultationTitle}"
+                    : "Détail de la consultation",
+              ),
             _SuccessViewModel() => _SuccessPage(
                 viewModel,
-                arguments.consultationTitle,
                 arguments.notificationTitle,
                 arguments.notificationDescription,
                 arguments.shouldLaunchCongratulationAnimation,
@@ -111,14 +114,12 @@ class DynamicConsultationPage extends StatelessWidget {
 
 class _SuccessPage extends StatelessWidget {
   final _SuccessViewModel viewModel;
-  final String consultationTitle;
   final String? notificationTitle;
   final String? notificationDescription;
   final bool shouldLaunchCongratulationAnimation;
 
   _SuccessPage(
     this.viewModel,
-    this.consultationTitle,
     this.notificationTitle,
     this.notificationDescription,
     this.shouldLaunchCongratulationAnimation,
@@ -138,7 +139,11 @@ class _SuccessPage extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Expanded(child: AgoraToolbar(semanticPageLabel: "Consultation : $consultationTitle")),
+            Expanded(
+              child: AgoraToolbar(
+                semanticPageLabel: "Consultation : ${viewModel.sections.whereType<_HeaderSection>().first.title}",
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
               child: _ShareButton(viewModel.shareText),
