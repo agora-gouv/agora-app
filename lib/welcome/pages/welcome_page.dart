@@ -4,6 +4,7 @@ import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/parser/simple_html_parser.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
@@ -259,7 +260,13 @@ class _ALaUne extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         Navigator.pushReplacementNamed(context, QagsPage.routeName);
-                        Navigator.pushNamed(context, aLaUne.routeName, arguments: aLaUne.routeArgument);
+                        Navigator.pushNamed(
+                          context,
+                          aLaUne.routeName,
+                          arguments: aLaUne.routeName == DynamicConsultationPage.routeName
+                              ? DynamicConsultationPageArguments(consultationIdOrSlug: aLaUne.routeArgument!)
+                              : aLaUne.routeArgument,
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
