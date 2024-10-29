@@ -1,6 +1,7 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
@@ -144,8 +145,10 @@ class _Success extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          AgoraFiltre(filtreItems),
-          SizedBox(height: AgoraSpacings.base),
+          if (isTerritorialisationEnabled()) ...[
+            AgoraFiltre(filtreItems),
+            SizedBox(height: AgoraSpacings.base),
+          ],
           _ListCard(state.currentPageNumber, type, state.consultationsListState),
           SizedBox(height: AgoraSpacings.base),
           if (state.currentPageNumber < state.maxPage) ...[
