@@ -11,10 +11,10 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
@@ -403,10 +403,13 @@ class _InfoBouton extends StatelessWidget {
       padding: const EdgeInsets.only(top: 4),
       child: AgoraMoreInformation(
         onClick: () {
-          showAgoraDialog(
+          showModalBottomSheet(
             context: context,
-            columnChildren: [
-              RichText(
+            isScrollControlled: true,
+            backgroundColor: AgoraColors.transparent,
+            builder: (context) => AgoraInformationBottomSheet(
+              titre: "Informations",
+              description: RichText(
                 textScaler: MediaQuery.textScalerOf(context),
                 text: TextSpan(
                   style: AgoraTextStyles.light16,
@@ -434,13 +437,7 @@ class _InfoBouton extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: AgoraSpacings.x0_75),
-              AgoraButton.withLabel(
-                label: GenericStrings.close,
-                buttonStyle: AgoraButtonStyle.primary,
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
+            ),
           );
         },
       ),
