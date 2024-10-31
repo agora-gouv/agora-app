@@ -42,7 +42,7 @@ class QagResponsePaginatedBloc extends Bloc<FetchQagsResponsePaginatedEvent, Qag
     FetchQagsResponsePaginatedEvent event,
     Emitter<QagResponsePaginatedState> emit,
   ) async {
-    if (previousState.status != AllPurposeStatus.success) {
+    if (previousState.status != AllPurposeStatus.success || event.forceRefresh) {
       emit(
         state.clone(
           status: AllPurposeStatus.loading,

@@ -5,8 +5,8 @@ import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/card/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/scroll/agora_horizontal_scroll_helper.dart';
@@ -34,35 +34,29 @@ class QagReponsesAVenirSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => QagResponseBloc.fromRepository(
-        qagRepository: RepositoryManager.getQagRepository(),
-      )..add(FetchQagsResponseEvent()),
-      child: Column(
-        children: [
-          _ReponsesAVenirHeader(),
-          BlocSelector<QagResponseBloc, QagResponseState, _ViewModel>(
-            selector: _ViewModel.fromState,
-            builder: (context, viewModel) => Padding(
-              padding: const EdgeInsets.only(
-                left: AgoraSpacings.horizontalPadding,
-                top: AgoraSpacings.base,
-                bottom: AgoraSpacings.x2,
-              ),
-              child: switch (viewModel) {
-                _LoadingViewModel _ => QagsResponseLoading(),
-                _EmptyViewModel _ => SizedBox(),
-                _ErrorViewModel _ => Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child:
-                        AgoraErrorView(onReload: () => context.read<QagResponseBloc>().add(FetchQagsResponseEvent())),
-                  ),
-                final _ResponseListViewModel viewModel => _ReponseAVenirListWidget(viewModel.viewModels),
-              },
+    return Column(
+      children: [
+        _ReponsesAVenirHeader(),
+        BlocSelector<QagResponseBloc, QagResponseState, _ViewModel>(
+          selector: _ViewModel.fromState,
+          builder: (context, viewModel) => Padding(
+            padding: const EdgeInsets.only(
+              left: AgoraSpacings.horizontalPadding,
+              top: AgoraSpacings.base,
+              bottom: AgoraSpacings.x2,
             ),
+            child: switch (viewModel) {
+              _LoadingViewModel _ => QagsResponseLoading(),
+              _EmptyViewModel _ => SizedBox(),
+              _ErrorViewModel _ => Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: AgoraErrorView(onReload: () => context.read<QagResponseBloc>().add(FetchQagsResponseEvent())),
+                ),
+              final _ResponseListViewModel viewModel => _ReponseAVenirListWidget(viewModel.viewModels),
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

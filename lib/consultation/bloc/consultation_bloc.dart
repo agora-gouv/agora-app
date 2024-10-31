@@ -72,7 +72,7 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
     FetchConsultationsEvent event,
     Emitter<ConsultationState> emit,
   ) async {
-    if (previousState.status != AllPurposeStatus.success) {
+    if (previousState.status != AllPurposeStatus.success || event.forceRefresh) {
       emit(state.clone(status: AllPurposeStatus.loading));
       final referentielResponse = await referentielRepository.fetchReferentielRegionsEtDepartements();
       final consultationsResponse = await consultationRepository.fetchConsultations();

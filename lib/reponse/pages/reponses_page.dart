@@ -7,6 +7,7 @@ import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
+import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/card/agora_qag_response_card.dart';
@@ -18,6 +19,8 @@ import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_bloc.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_event.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_state.dart';
+import 'package:agora/reponse/bloc/qag_response_bloc.dart';
+import 'package:agora/reponse/bloc/qag_response_event.dart';
 import 'package:agora/reponse/widgets/qag_reponse_a_venir_section.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +35,39 @@ class ReponsesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AgoraTracker(
       widgetName: AnalyticsScreenNames.reponsesPage,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<QagResponsePaginatedBloc>(
+            lazy: false,
+            create: (BuildContext context) => QagResponsePaginatedBloc.fromRepository(
+              qagRepository: RepositoryManager.getQagRepository(),
+            )..add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
+          ),
+          BlocProvider<QagResponseBloc>(
+            lazy: false,
+            create: (BuildContext context) => QagResponseBloc.fromRepository(
+              qagRepository: RepositoryManager.getQagRepository(),
+            )..add(FetchQagsResponseEvent()),
+          ),
+        ],
+        child: _Content(),
+      ),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content();
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraPullToRefresh(
+      onRefresh: () async {
+        context.read<QagResponsePaginatedBloc>().add(
+              FetchQagsResponsePaginatedEvent(pageNumber: 1, forceRefresh: true),
+            );
+        context.read<QagResponseBloc>().add(FetchQagsResponseEvent(forceRefresh: true));
+      },
       child: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
         child: Column(
@@ -42,7 +78,10 @@ class ReponsesPage extends StatelessWidget {
                 policeStyle: AgoraRichTextPoliceStyle.toolbar,
                 semantic: AgoraRichTextSemantic(focused: true),
                 items: [
-                  AgoraRichTextItem(text: "${ReponseStrings.reponsesTitrePart1}\n", style: AgoraRichTextItemStyle.bold),
+                  AgoraRichTextItem(
+                    text: "${ReponseStrings.reponsesTitrePart1}\n",
+                    style: AgoraRichTextItemStyle.bold,
+                  ),
                   AgoraRichTextItem(text: ReponseStrings.reponsesTitrePart2, style: AgoraRichTextItemStyle.regular),
                 ],
               ),
@@ -65,28 +104,23 @@ class _ReponsesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => QagResponsePaginatedBloc.fromRepository(
-        qagRepository: RepositoryManager.getQagRepository(),
-      )..add(FetchQagsResponsePaginatedEvent(pageNumber: initialPage)),
-      child: BlocBuilder<QagResponsePaginatedBloc, QagResponsePaginatedState>(
-        builder: (context, state) {
-          if (state.status == AllPurposeStatus.error) {
-            return AgoraErrorView(
-              onReload: () => context
-                  .read<QagResponsePaginatedBloc>()
-                  .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
-            );
-          } else if (state.status == AllPurposeStatus.success || state.qagResponseViewModels.isNotEmpty) {
-            return _ReponseList(state);
-          } else if ((state.status == AllPurposeStatus.loading || state.status == AllPurposeStatus.notLoaded) &&
-              state.qagResponseViewModels.isEmpty) {
-            return _LoadingReponseList();
-          } else {
-            return SizedBox();
-          }
-        },
-      ),
+    return BlocBuilder<QagResponsePaginatedBloc, QagResponsePaginatedState>(
+      builder: (context, state) {
+        if (state.status == AllPurposeStatus.error) {
+          return AgoraErrorView(
+            onReload: () => context
+                .read<QagResponsePaginatedBloc>()
+                .add(FetchQagsResponsePaginatedEvent(pageNumber: state.currentPageNumber)),
+          );
+        } else if (state.status == AllPurposeStatus.success || state.qagResponseViewModels.isNotEmpty) {
+          return _ReponseList(state);
+        } else if ((state.status == AllPurposeStatus.loading || state.status == AllPurposeStatus.notLoaded) &&
+            state.qagResponseViewModels.isEmpty) {
+          return _LoadingReponseList();
+        } else {
+          return SizedBox();
+        }
+      },
     );
   }
 }

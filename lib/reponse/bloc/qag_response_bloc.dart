@@ -37,7 +37,7 @@ class QagResponseBloc extends Bloc<FetchQagsResponseEvent, QagResponseState> {
     FetchQagsResponseEvent event,
     Emitter<QagResponseState> emit,
   ) async {
-    if (previousState.status != AllPurposeStatus.success) {
+    if (previousState.status != AllPurposeStatus.success || event.forceRefresh) {
       emit(state.clone(status: AllPurposeStatus.loading));
       final response = await qagRepository.fetchQagsResponse();
       if (response is GetQagsResponseSucceedResponse) {

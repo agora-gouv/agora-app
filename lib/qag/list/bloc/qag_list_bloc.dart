@@ -61,30 +61,32 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
     FetchQagsListEvent event,
     Emitter<QagListState> emit,
   ) async {
-    emit(state.clone(status: AllPurposeStatus.loading));
+    if (state.status != AllPurposeStatus.success) {
+      emit(state.clone(status: AllPurposeStatus.loading));
 
-    final response = await qagRepository.fetchQagList(
-      pageNumber: state.currentPage,
-      thematiqueId: event.thematiqueId,
-      filter: event.qagFilter,
-    );
-
-    if (response is GetQagListSucceedResponse) {
-      emit(
-        QagListState(
-          status: AllPurposeStatus.success,
-          qags: response.qags,
-          header: await _getHeaderOrNullIfClosed(response.header),
-          currentPage: state.currentPage,
-          maxPage: response.maxPage,
-          footerType: QagListFooterType.loaded,
-        ),
+      final response = await qagRepository.fetchQagList(
+        pageNumber: state.currentPage,
+        thematiqueId: event.thematiqueId,
+        filter: event.qagFilter,
       );
-      if (event.thematiqueLabel != null) {
-        semanticsHelperWrapper.announceThematicChosen(event.thematiqueLabel, response.qags.length);
+
+      if (response is GetQagListSucceedResponse) {
+        emit(
+          QagListState(
+            status: AllPurposeStatus.success,
+            qags: response.qags,
+            header: await _getHeaderOrNullIfClosed(response.header),
+            currentPage: state.currentPage,
+            maxPage: response.maxPage,
+            footerType: QagListFooterType.loaded,
+          ),
+        );
+        if (event.thematiqueLabel != null) {
+          semanticsHelperWrapper.announceThematicChosen(event.thematiqueLabel, response.qags.length);
+        }
+      } else {
+        emit(state.clone(status: AllPurposeStatus.error, currentPage: state.currentPage));
       }
-    } else {
-      emit(state.clone(status: AllPurposeStatus.error, currentPage: state.currentPage));
     }
   }
 

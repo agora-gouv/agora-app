@@ -104,7 +104,7 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
 
   Rect _buildTargetRect() {
     final currentDisplayRect = _buildRect(context);
-    final likeDisplayRect = _buildRect(widget.likeViewKey.currentContext!);
+    final likeDisplayRect = _buildRect(widget.likeViewKey.currentContext ?? context);
 
     final likeWidth = likeDisplayRect.right - likeDisplayRect.left;
     final likeHeight = likeDisplayRect.bottom - likeDisplayRect.top;
@@ -120,8 +120,8 @@ class AgoraAnimatedLikeViewState extends State<_AgoraAnimatedLikeView> with Sing
     );
   }
 
-  Rect _buildRect(BuildContext? context) {
-    if (context != null && context.findRenderObject() != null) {
+  Rect _buildRect(BuildContext context) {
+    if (context.mounted && context.findRenderObject() != null) {
       final RenderBox renderBox = context.findRenderObject() as RenderBox;
       final position = renderBox.localToGlobal(Offset.zero);
       return Rect.fromLTWH(

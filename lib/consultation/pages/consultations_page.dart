@@ -12,6 +12,7 @@ import 'package:agora/consultation/pages/widgets/consultations_finished_section.
 import 'package:agora/consultation/pages/widgets/consultations_loading_skeleton.dart';
 import 'package:agora/consultation/pages/widgets/consultations_ongoing_section.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
+import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
@@ -53,13 +54,16 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
         },
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
           builder: (context, state) {
-            return SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  _Header(toolbarTitleKey: toolbarTitleKey),
-                  _Content(state: state),
-                ],
+            return AgoraPullToRefresh(
+              onRefresh: () async => context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
+              child: SingleChildScrollView(
+                physics: ClampingScrollPhysics(),
+                child: Column(
+                  children: [
+                    _Header(toolbarTitleKey: toolbarTitleKey),
+                    _Content(state: state),
+                  ],
+                ),
               ),
             );
           },
