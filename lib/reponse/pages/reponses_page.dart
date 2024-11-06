@@ -69,7 +69,6 @@ class _Content extends StatelessWidget {
         context.read<QagResponseBloc>().add(FetchQagsResponseEvent(forceRefresh: true));
       },
       child: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

@@ -127,7 +127,7 @@ haut de l'écran vers le bas.
 Ainsi, sur les écrans où vous avez mis des données en cache, vous pouvez mettre ce composant pour permettre à vos
 utilisateurs d'avoir les données les plus récentes.
 
-Pour l'implémentation, il suffit d'ajouter un boolean `forceRefresh` dans l'événement qui est propagé pour récupérer les
+Pour l'implémentation   , il suffit d'ajouter un boolean `forceRefresh` dans l'événement qui est propagé pour récupérer les
 données. Puis dans la méthode de callback du Bloc qui est déclenché par l'événement on ajoute une condition sur ce
 boolean pour refaire l'appel auprès du serveur sans passer par le cache.
 

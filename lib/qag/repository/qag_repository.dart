@@ -16,6 +16,7 @@ import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/repository/dto/qag_content_dto.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class QagRepository {
@@ -36,6 +37,7 @@ abstract class QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagListFilter filter,
+    bool forceRefresh = false,
   });
 
   Future<GetQagsResponseRepositoryResponse> fetchQagsResponse();
@@ -171,6 +173,7 @@ class QagDioRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagListFilter filter,
+    bool forceRefresh = false,
   }) async {
     const uri = "/v2/qags";
     try {
@@ -181,6 +184,10 @@ class QagDioRepository extends QagRepository {
           "thematiqueId": thematiqueId,
           "filterType": filter.toFilterString(),
         },
+        headers: {
+          "cache-control": forceRefresh ? "no-cache" : "",
+        },
+        policy: forceRefresh ? CachePolicy.noCache : CachePolicy.request,
       );
       final headerQag = response.data["header"];
 

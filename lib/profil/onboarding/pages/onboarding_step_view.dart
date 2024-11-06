@@ -1,9 +1,8 @@
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/strings/tutoriel_strings.dart';
-import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_step_circle.dart';
-import 'package:agora/design/custom_view/agora_top_diagonal.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
+import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -20,11 +19,8 @@ class OnboardingStepView extends StatelessWidget {
   Widget build(BuildContext context) {
     final largerThanMobile = ResponsiveHelper.isLargerThanMobile(context);
     return AgoraSingleScrollView(
-      physics: ClampingScrollPhysics(),
       child: Column(
         children: [
-          AgoraTopDiagonal(),
-          Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: AgoraSpacings.horizontalPadding,

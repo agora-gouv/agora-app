@@ -7,7 +7,6 @@ import 'package:agora/consultation/question/bloc/response/stock/consultation_que
 import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_event.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/pages/demographic_information_page.dart';
@@ -96,13 +95,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
           },
           builder: (context, state) {
             return SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  AgoraTopDiagonal(),
-                  _buildState(context, state),
-                ],
-              ),
+              child: _buildState(context, state),
             );
           },
         ),

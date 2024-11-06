@@ -36,6 +36,7 @@ class QagListBloc extends Bloc<QagListEvent, QagListState> {
       pageNumber: state.currentPage,
       thematiqueId: event.thematiqueId,
       filter: event.qagFilter,
+      forceRefresh: event.forceRefresh,
     );
 
     if (response is GetQagListSucceedResponse) {

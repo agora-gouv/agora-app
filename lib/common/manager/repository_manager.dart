@@ -50,6 +50,12 @@ class RepositoryManager {
     deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
   );
 
+  static final CacheOptions cacheOptions = CacheOptions(
+    store: MemCacheStore(),
+    policy: CachePolicy.request,
+    maxStale: const Duration(hours: 1),
+  );
+
   static void initRepositoryManager({required String baseUrl, required List<X509CertificateData> rootCertificate}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
     GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
@@ -109,13 +115,7 @@ class RepositoryManager {
       responseHeader: true,
       responseBody: true,
     );
-    final dioCacheInterceptor = DioCacheInterceptor(
-      options: CacheOptions(
-        store: MemCacheStore(),
-        policy: CachePolicy.request,
-        maxStale: const Duration(days: 14),
-      ),
-    );
+    final dioCacheInterceptor = DioCacheInterceptor(options: cacheOptions);
     dio.interceptors
       ..add(dioLoggerInterceptor)
       ..add(dioCacheInterceptor);
@@ -129,6 +129,7 @@ class RepositoryManager {
     final agoraDioHttpClient = AgoraDioHttpClient(
       dio: _getDioWithoutAuth(),
       userAgentBuilder: userAgentBuilder,
+      cacheOptions: cacheOptions,
     );
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _noAuthenticationHttpClient);
     return agoraDioHttpClient;
@@ -142,6 +143,7 @@ class RepositoryManager {
       dio: _getDio(sharedPref: sharedPref),
       jwtHelper: HelperManager.getJwtHelper(),
       userAgentBuilder: userAgentBuilder,
+      cacheOptions: cacheOptions,
     );
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _authenticatedHttpClient);
     return agoraDioHttpClient;

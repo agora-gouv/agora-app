@@ -72,6 +72,8 @@ class _QagListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.max,
       children: [
         if (viewModel.header != null) _HeaderQag(viewModel.header!),
         Semantics(
@@ -127,8 +129,6 @@ class _Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("YAAA");
-    print(footerType);
     return switch (footerType) {
       QagListFooterType.loading => Center(child: CircularProgressIndicator()),
       QagListFooterType.loaded => Center(
@@ -170,7 +170,6 @@ class _Error extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("YOOO");
     return Column(
       children: [
         SizedBox(height: AgoraSpacings.base),
