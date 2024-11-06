@@ -60,7 +60,7 @@ class _QagsSectionState extends State<QagsSection> {
   Widget build(BuildContext context) {
     final isThematiquesVisible = !isActiveSearchBar && currentSelectedTab != QagTab.trending;
     return BlocProvider(
-      create: (context) => QagListBloc.fromRepositories(
+      create: (context) => QagListBloc(
         qagRepository: RepositoryManager.getQagRepository(),
         headerQagStorageClient: StorageManager.getHeaderQagStorageClient(),
       )..add(

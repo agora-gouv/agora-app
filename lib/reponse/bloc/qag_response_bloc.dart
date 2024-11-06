@@ -1,4 +1,5 @@
 import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/qag/repository/qag_cache_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/reponse/bloc/qag_response_event.dart';
 import 'package:agora/reponse/bloc/qag_response_state.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagResponseBloc extends Bloc<FetchQagsResponseEvent, QagResponseState> {
   final QagResponseState previousState;
-  final QagRepository qagRepository;
+  final QagCacheRepository qagRepository;
 
   QagResponseBloc({
     required this.previousState,
@@ -15,9 +16,9 @@ class QagResponseBloc extends Bloc<FetchQagsResponseEvent, QagResponseState> {
     on<FetchQagsResponseEvent>(_handleFetchQagsResponse);
   }
 
-  factory QagResponseBloc.fromRepository({required QagRepository qagRepository}) {
-    if (qagRepository.qagsResponseRepositoryData is GetQagsResponseSucceedResponse) {
-      final qagRepositoryResponse = qagRepository.qagsResponseRepositoryData as GetQagsResponseSucceedResponse;
+  factory QagResponseBloc.fromRepository({required QagCacheRepository qagRepository}) {
+    if (qagRepository.qagResponseData is GetQagsResponseSucceedResponse) {
+      final qagRepositoryResponse = qagRepository.qagResponseData as GetQagsResponseSucceedResponse;
       return QagResponseBloc(
         previousState: QagResponseState(
           status: AllPurposeStatus.success,

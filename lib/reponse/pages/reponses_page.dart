@@ -40,13 +40,13 @@ class ReponsesPage extends StatelessWidget {
           BlocProvider<QagResponsePaginatedBloc>(
             lazy: false,
             create: (BuildContext context) => QagResponsePaginatedBloc.fromRepository(
-              qagRepository: RepositoryManager.getQagRepository(),
+              qagRepository: RepositoryManager.getQagCacheRepository(),
             )..add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
           ),
           BlocProvider<QagResponseBloc>(
             lazy: false,
             create: (BuildContext context) => QagResponseBloc.fromRepository(
-              qagRepository: RepositoryManager.getQagRepository(),
+              qagRepository: RepositoryManager.getQagCacheRepository(),
             )..add(FetchQagsResponseEvent()),
           ),
         ],

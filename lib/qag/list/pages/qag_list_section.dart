@@ -127,6 +127,8 @@ class _Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("YAAA");
+    print(footerType);
     return switch (footerType) {
       QagListFooterType.loading => Center(child: CircularProgressIndicator()),
       QagListFooterType.loaded => Center(
@@ -168,6 +170,7 @@ class _Error extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("YOOO");
     return Column(
       children: [
         SizedBox(height: AgoraSpacings.base),
@@ -226,7 +229,7 @@ class _HeaderQag extends StatelessWidget {
 
 abstract class _ViewModel extends Equatable {
   static _ViewModel fromState(QagListState state) {
-    if (state.status == AllPurposeStatus.loading) {
+    if (state.status == AllPurposeStatus.notLoaded || state.status == AllPurposeStatus.loading) {
       return _QagListLoadingViewModel();
     } else if (state.status == AllPurposeStatus.success) {
       final header = state.header != null

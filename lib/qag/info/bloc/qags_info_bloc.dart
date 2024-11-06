@@ -19,6 +19,7 @@ class QagsInfoBloc extends Bloc<QagsInfoEvent, QagsInfoState> {
   ) async {
     emit(state.clone(status: AllPurposeStatus.loading));
     final response = await qagRepository.getContentQag();
+    print(response);
     if (response != null) {
       emit(
         state.clone(
@@ -28,6 +29,7 @@ class QagsInfoBloc extends Bloc<QagsInfoEvent, QagsInfoState> {
         ),
       );
     } else {
+      print("YOOO");
       emit(state.clone(status: AllPurposeStatus.error));
     }
   }

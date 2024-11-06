@@ -1,19 +1,21 @@
 import 'package:agora/common/helper/all_purpose_status.dart';
-import 'package:agora/concertation/repository/concertation_repository.dart';
+import 'package:agora/concertation/repository/concertation_cache_repository.dart';
 import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/bloc/consultation_state.dart';
+import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/repository/consultation_cache_repository.dart';
 import 'package:agora/consultation/repository/consultation_presenter.dart';
-import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/consultation_responses.dart';
-import 'package:agora/referentiel/repository/referentiel_repository.dart';
+import 'package:agora/referentiel/repository/referentiel_cache_repository.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optional/optional.dart';
 
 class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> {
   final ConsultationState previousState;
-  final ConsultationRepository consultationRepository;
-  final ConcertationRepository concertationRepository;
-  final ReferentielRepository referentielRepository;
+  final ConsultationCacheRepository consultationRepository;
+  final ConcertationCacheRepository concertationRepository;
+  final ReferentielCacheRepository referentielRepository;
 
   ConsultationBloc({
     required this.previousState,
@@ -25,36 +27,20 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
   }
 
   factory ConsultationBloc.fromRepositories({
-    required ConsultationRepository consultationRepository,
-    required ConcertationRepository concertationRepository,
-    required ReferentielRepository referentielRepository,
+    required ConsultationCacheRepository consultationRepository,
+    required ConcertationCacheRepository concertationRepository,
+    required ReferentielCacheRepository referentielRepository,
   }) {
-    if (consultationRepository.consultationsResponse is GetConsultationsSucceedResponse &&
-        concertationRepository.concertationsResponse.isNotEmpty) {
-      final consultationsResponse = consultationRepository.consultationsResponse as GetConsultationsSucceedResponse;
-      final ongoingViewModels = ConsultationPresenter.presentOngoingConsultations(
-        consultationsResponse.ongoingConsultations,
-        referentielRepository.referentielResponse,
-      );
-      final concertationResponse = concertationRepository.concertationsResponse;
-      final finishedViewModels = ConsultationPresenter.presentFinishedConsultations(
-        ongoingConsultations: consultationsResponse.ongoingConsultations,
-        finishedConsultations: consultationsResponse.finishedConsultations,
-        concertations: concertationResponse,
-        referentiel: referentielRepository.referentielResponse,
-      );
-      final answeredViewModels = ConsultationPresenter.presentAnsweredConsultations(
-        consultationsResponse.answeredConsultations,
-        referentielRepository.referentielResponse,
+    if (consultationRepository.isCacheSuccess &&
+        concertationRepository.isCacheSuccess &&
+        referentielRepository.isCacheSuccess) {
+      final successState = _getSuccessState(
+        consultationRepository.consultationsData as GetConsultationsSucceedResponse,
+        concertationRepository.concertationData,
+        referentielRepository.referentielData,
       );
       return ConsultationBloc(
-        previousState: ConsultationState(
-          status: AllPurposeStatus.success,
-          ongoingViewModels: ongoingViewModels,
-          finishedViewModels: finishedViewModels,
-          answeredViewModels: answeredViewModels,
-          shouldDisplayFinishedAllButton: consultationsResponse.finishedConsultations.isNotEmpty,
-        ),
+        previousState: successState,
         consultationRepository: consultationRepository,
         concertationRepository: concertationRepository,
         referentielRepository: referentielRepository,
@@ -78,27 +64,14 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
       final consultationsResponse = await consultationRepository.fetchConsultations();
 
       if (consultationsResponse is GetConsultationsSucceedResponse) {
-        final ongoingViewModels = ConsultationPresenter.presentOngoingConsultations(
-          consultationsResponse.ongoingConsultations,
-          referentielResponse,
-        );
         final concertationResponse = await concertationRepository.fetchConcertations();
-        final finishedConsultations = ConsultationPresenter.presentFinishedConsultations(
-          ongoingConsultations: consultationsResponse.ongoingConsultations,
-          finishedConsultations: consultationsResponse.finishedConsultations,
-          concertations: concertationResponse,
-          referentiel: referentielResponse,
-        );
-        final answeredViewModels = ConsultationPresenter.presentAnsweredConsultations(
-          consultationsResponse.answeredConsultations,
-          referentielResponse,
-        );
+        final successState = _getSuccessState(consultationsResponse, concertationResponse, referentielResponse);
         emit(
           state.clone(
             status: AllPurposeStatus.success,
-            ongoingViewModels: ongoingViewModels,
-            finishedViewModels: finishedConsultations,
-            answeredViewModels: answeredViewModels,
+            ongoingViewModels: successState.ongoingViewModels,
+            finishedViewModels: successState.finishedViewModels,
+            answeredViewModels: successState.answeredViewModels,
             shouldDisplayFinishedAllButton: consultationsResponse.finishedConsultations.isNotEmpty,
           ),
         );
@@ -114,4 +87,32 @@ class ConsultationBloc extends Bloc<FetchConsultationsEvent, ConsultationState> 
       }
     }
   }
+}
+
+ConsultationState _getSuccessState(
+  GetConsultationsSucceedResponse consultationsResponse,
+  List<Concertation> concertationResponse,
+  List<Territoire> referentielResponse,
+) {
+  final ongoingViewModels = ConsultationPresenter.presentOngoingConsultations(
+    consultationsResponse.ongoingConsultations,
+    referentielResponse,
+  );
+  final finishedConsultations = ConsultationPresenter.presentFinishedConsultations(
+    ongoingConsultations: consultationsResponse.ongoingConsultations,
+    finishedConsultations: consultationsResponse.finishedConsultations,
+    concertations: concertationResponse,
+    referentiel: referentielResponse,
+  );
+  final answeredViewModels = ConsultationPresenter.presentAnsweredConsultations(
+    consultationsResponse.answeredConsultations,
+    referentielResponse,
+  );
+  return ConsultationState(
+    status: AllPurposeStatus.success,
+    ongoingViewModels: ongoingViewModels,
+    finishedViewModels: finishedConsultations,
+    answeredViewModels: answeredViewModels,
+    shouldDisplayFinishedAllButton: consultationsResponse.finishedConsultations.isNotEmpty,
+  );
 }

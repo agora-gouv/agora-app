@@ -78,7 +78,7 @@ class _QagsPageState extends State<QagsPage> {
         providers: [
           BlocProvider(
             lazy: false,
-            create: (BuildContext context) => AskQagStatusBloc.fromRepositories(
+            create: (BuildContext context) => AskQagStatusBloc(
               qagRepository: RepositoryManager.getQagRepository(),
             )..add(FetchAskQagStatusEvent()),
           ),

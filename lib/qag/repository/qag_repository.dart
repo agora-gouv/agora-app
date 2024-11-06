@@ -30,11 +30,7 @@ abstract class QagRepository {
     required String? keywords,
   });
 
-  AskQagStatusRepositoryResponse? get askQagStatusData;
-
   Future<AskQagStatusRepositoryResponse> fetchAskQagStatus();
-
-  GetQagsListRepositoryResponse? get qagsListData;
 
   Future<GetQagsListRepositoryResponse> fetchQagList({
     required int pageNumber,
@@ -42,11 +38,7 @@ abstract class QagRepository {
     required QagListFilter filter,
   });
 
-  GetQagsResponseRepositoryResponse? get qagsResponseRepositoryData;
-
   Future<GetQagsResponseRepositoryResponse> fetchQagsResponse();
-
-  GetQagsResponsePaginatedRepositoryResponse? get qagsResponsePaginatedRepositoryData;
 
   Future<GetQagsResponsePaginatedRepositoryResponse> fetchQagsResponsePaginated({
     required int pageNumber,
@@ -154,20 +146,15 @@ class QagDioRepository extends QagRepository {
   }
 
   @override
-  AskQagStatusRepositoryResponse? askQagStatusData;
-
-  @override
   Future<AskQagStatusRepositoryResponse> fetchAskQagStatus() async {
     const uri = "/qags/ask_status";
     try {
       final response = await httpClient.get(
         uri,
       );
-      final askQagStatusResponse = AskQagStatusSucceedResponse(
+      return AskQagStatusSucceedResponse(
         askQagError: response.data["askQagErrorText"] as String?,
       );
-      askQagStatusData = askQagStatusResponse;
-      return askQagStatusResponse;
     } catch (exception, stacktrace) {
       if (exception is DioException) {
         if (exception.type == DioExceptionType.connectionTimeout || exception.type == DioExceptionType.receiveTimeout) {
@@ -175,14 +162,9 @@ class QagDioRepository extends QagRepository {
         }
       }
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
-      final askQagStatusResponse = AskQagStatusFailedResponse();
-      askQagStatusData = askQagStatusResponse;
-      return askQagStatusResponse;
+      return AskQagStatusFailedResponse();
     }
   }
-
-  @override
-  GetQagsListRepositoryResponse? qagsListData;
 
   @override
   Future<GetQagsListRepositoryResponse> fetchQagList({
@@ -213,18 +195,13 @@ class QagDioRepository extends QagRepository {
               )
             : null,
       );
-      qagsListData = getQaqListResponse;
       return getQaqListResponse;
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       final getQaqListResponse = GetQagListFailedResponse();
-      qagsListData = getQaqListResponse;
       return getQaqListResponse;
     }
   }
-
-  @override
-  GetQagsResponseRepositoryResponse? qagsResponseRepositoryData;
 
   @override
   Future<GetQagsResponseRepositoryResponse> fetchQagsResponse() async {
@@ -233,7 +210,7 @@ class QagDioRepository extends QagRepository {
       final response = await httpClient.get(uri);
       final qagResponsesIncoming = response.data["incomingResponses"] as List;
       final qagResponses = response.data["responses"] as List;
-      final getQagsResponseRepositoryResponse = GetQagsResponseSucceedResponse(
+      return GetQagsResponseSucceedResponse(
         qagResponsesIncoming: qagResponsesIncoming.map((qagResponseIncoming) {
           return QagResponseIncoming(
             qagId: qagResponseIncoming["qagId"] as String,
@@ -258,18 +235,11 @@ class QagDioRepository extends QagRepository {
           );
         }).toList(),
       );
-      qagsResponseRepositoryData = getQagsResponseRepositoryResponse;
-      return getQagsResponseRepositoryResponse;
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
-      final getQagsResponseRepositoryResponse = GetQagsResponseFailedResponse();
-      qagsResponseRepositoryData = getQagsResponseRepositoryResponse;
-      return getQagsResponseRepositoryResponse;
+      return GetQagsResponseFailedResponse();
     }
   }
-
-  @override
-  GetQagsResponsePaginatedRepositoryResponse? qagsResponsePaginatedRepositoryData;
 
   @override
   Future<GetQagsResponsePaginatedRepositoryResponse> fetchQagsResponsePaginated({
@@ -278,17 +248,13 @@ class QagDioRepository extends QagRepository {
     final uri = "/qags/responses/$pageNumber";
     try {
       final response = await httpClient.get(uri);
-      final getQagsResponsePaginatedRepositoryResponse = GetQagsResponsePaginatedSucceedResponse(
+      return GetQagsResponsePaginatedSucceedResponse(
         maxPage: response.data["maxPageNumber"] as int,
         paginatedQagsResponse: _transformToQagResponsePaginatedList(response.data["responses"] as List),
       );
-      qagsResponsePaginatedRepositoryData = getQagsResponsePaginatedRepositoryResponse;
-      return getQagsResponsePaginatedRepositoryResponse;
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
-      final getQagsResponsePaginatedRepositoryResponse = GetQagsResponsePaginatedFailedResponse();
-      qagsResponsePaginatedRepositoryData = getQagsResponsePaginatedRepositoryResponse;
-      return getQagsResponsePaginatedRepositoryResponse;
+      return GetQagsResponsePaginatedFailedResponse();
     }
   }
 
@@ -576,7 +542,7 @@ class QagDioRepository extends QagRepository {
     const uri = "/content/page-questions-au-gouvernement";
     try {
       final response = await httpClient.get(uri);
-      if (response.statusCode != HttpStatus.ok) return null;
+      if (isHttpFailed(response.statusCode)) return null;
       return QagContentDto(
         info: response.data["info"] as String,
         texteTotalQuestions: response.data["texteTotalQuestions"] as String,
@@ -592,7 +558,7 @@ class QagDioRepository extends QagRepository {
     const uri = "/content/page-reponses-aux-qags";
     try {
       final response = await httpClient.get(uri);
-      return response.statusCode == HttpStatus.ok ? response.data["infoReponsesAVenir"] as String : null;
+      return isHttpFailed(response.statusCode) ? null : response.data["infoReponsesAVenir"] as String;
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return null;
@@ -604,7 +570,7 @@ class QagDioRepository extends QagRepository {
     const uri = "/content/page-poser-ma-question";
     try {
       final response = await httpClient.get(uri);
-      return response.statusCode == HttpStatus.ok ? response.data["regles"] as String : null;
+      return isHttpFailed(response.statusCode) ? null : response.data["regles"] as String;
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
       return null;

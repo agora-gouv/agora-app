@@ -276,18 +276,6 @@ class FakeQagSuccessRepository extends QagRepository {
   Future<String?> getContentAskQag() {
     return Future.value("askQagInfoText");
   }
-
-  @override
-  GetQagsResponseRepositoryResponse? get qagsResponseRepositoryData => null;
-
-  @override
-  GetQagsResponsePaginatedRepositoryResponse? get qagsResponsePaginatedRepositoryData => null;
-
-  @override
-  GetQagsListRepositoryResponse? get qagsListData => null;
-
-  @override
-  AskQagStatusRepositoryResponse? get askQagStatusData => null;
 }
 
 class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
@@ -732,18 +720,6 @@ class FakeQagFailureRepository extends QagRepository {
 
   @override
   Future<String?> getContentAskQag() => Future.value(null);
-
-  @override
-  GetQagsResponseRepositoryResponse? get qagsResponseRepositoryData => null;
-
-  @override
-  GetQagsResponsePaginatedRepositoryResponse? get qagsResponsePaginatedRepositoryData => null;
-
-  @override
-  GetQagsListRepositoryResponse? get qagsListData => null;
-
-  @override
-  AskQagStatusRepositoryResponse? get askQagStatusData => null;
 }
 
 class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {

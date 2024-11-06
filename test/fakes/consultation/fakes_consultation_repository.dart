@@ -274,9 +274,6 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
 
   @override
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {}
-
-  @override
-  GetConsultationsRepositoryResponse? get consultationsResponse => null;
 }
 
 class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends FakeConsultationSuccessRepository {
@@ -360,9 +357,6 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
 
   @override
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId) async {}
-
-  @override
-  GetConsultationsRepositoryResponse? get consultationsResponse => null;
 }
 
 class FakeConsultationTimeoutFailureRepository extends FakeConsultationFailureRepository {

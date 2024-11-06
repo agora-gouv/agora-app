@@ -1,4 +1,4 @@
-# Hive 
+# Generate App Logo 
 
 ## Package
 

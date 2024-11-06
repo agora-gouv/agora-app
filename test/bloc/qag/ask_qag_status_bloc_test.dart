@@ -17,7 +17,7 @@ void main() {
   group("FetchAskQagStatusEvent", () {
     blocTest(
       "when repository succeed - should emit success state",
-      build: () => AskQagStatusBloc.fromRepositories(
+      build: () => AskQagStatusBloc(
         qagRepository: FakeQagSuccessRepository(),
       ),
       act: (bloc) => bloc.add(FetchAskQagStatusEvent()),
@@ -32,7 +32,7 @@ void main() {
 
     blocTest(
       "when repository fails - should emit error state",
-      build: () => AskQagStatusBloc.fromRepositories(
+      build: () => AskQagStatusBloc(
         qagRepository: FakeQagFailureRepository(),
       ),
       act: (bloc) => bloc.add(FetchAskQagStatusEvent()),

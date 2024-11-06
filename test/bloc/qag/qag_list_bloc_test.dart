@@ -49,7 +49,7 @@ void main() {
   group("FetchQagsListEvent", () {
     blocTest<QagListBloc, QagListState>(
       "when fetch qags list with success - should emit loaded state",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),
@@ -72,7 +72,7 @@ void main() {
 
     blocTest<QagListBloc, QagListState>(
       "when fetch qags list with success and closed header closed - should emit loaded state without header",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientAllClosedStub(),
       ),
@@ -95,7 +95,7 @@ void main() {
 
     blocTest<QagListBloc, QagListState>(
       "when fetch qags list with failure - should emit failure state",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),
@@ -127,7 +127,7 @@ void main() {
   group("UpdateQagsListEvent", () {
     blocTest<QagListBloc, QagListState>(
       "when update qags list with success - should emit loaded state",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
         semanticsHelperWrapper: _MockSemanticsHelperWrapper(),
@@ -189,7 +189,7 @@ void main() {
 
     blocTest<QagListBloc, QagListState>(
       "when update qags list with failure - should emit failure state",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagFailureRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),
@@ -233,7 +233,7 @@ void main() {
 
     blocTest<QagListBloc, QagListState>(
       "when qag support is in non loaded state - should emit nothing",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),
@@ -246,7 +246,7 @@ void main() {
 
     blocTest<QagListBloc, QagListState>(
       "when qag support is in loaded state but could not find qag to update - should emit nothing more than first loaded state",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),
@@ -270,7 +270,7 @@ void main() {
 
     blocTest<QagListBloc, QagListState>(
       "when qag support is in loaded state and find qag to update - should emit updated loaded state",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),
@@ -312,7 +312,7 @@ void main() {
   group("CloseHeaderQagListEvent", () {
     blocTest<QagListBloc, QagListState>(
       "when is in non loaded state - should emit nothing",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),
@@ -325,7 +325,7 @@ void main() {
 
     blocTest<QagListBloc, QagListState>(
       "when is in loaded state - should emit loaded state without header",
-      build: () => QagListBloc.fromRepositories(
+      build: () => QagListBloc(
         qagRepository: FakeQagSuccessRepository(),
         headerQagStorageClient: HeaderQagStorageClientNoClosedStub(),
       ),

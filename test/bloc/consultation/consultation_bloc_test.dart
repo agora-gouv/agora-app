@@ -12,6 +12,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../../fakes/concertation/fakes_concertation_repository.dart';
+import '../../fakes/consultation/fake_consultation_cache_repository.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
 import '../../fakes/referentiel/fakes_referentiel_repository.dart';
 
@@ -23,9 +24,11 @@ void main() {
     blocTest(
       "when repository succeed - should emit loading then success state",
       build: () => ConsultationBloc.fromRepositories(
-        consultationRepository: FakeConsultationSuccessRepository(),
-        concertationRepository: FakesConcertationRepository(),
-        referentielRepository: FakesReferentielRepository(),
+        consultationRepository: FakeConsultationCacheSuccessRepository(
+          consultationRepository: FakeConsultationSuccessRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -93,9 +96,11 @@ void main() {
     blocTest(
       "when repository succeed and finished consultation is empty - should emit loading then success state",
       build: () => ConsultationBloc.fromRepositories(
-        consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
-        concertationRepository: FakesConcertationRepository(),
-        referentielRepository: FakesReferentielRepository(),
+        consultationRepository: FakeConsultationCacheSuccessWithFinishedConsultationEmptyRepository(
+          consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -139,9 +144,11 @@ void main() {
     blocTest(
       "when repository failed with timeout - should emit loading then failure state",
       build: () => ConsultationBloc.fromRepositories(
-        consultationRepository: FakeConsultationTimeoutFailureRepository(),
-        concertationRepository: FakesConcertationRepository(),
-        referentielRepository: FakesReferentielRepository(),
+        consultationRepository: FakeConsultationCacheTimeoutFailureRepository(
+          consultationRepository: FakeConsultationTimeoutFailureRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
@@ -161,9 +168,11 @@ void main() {
     blocTest(
       "when repository failed - should emit loading then failure state",
       build: () => ConsultationBloc.fromRepositories(
-        consultationRepository: FakeConsultationFailureRepository(),
-        concertationRepository: FakesConcertationRepository(),
-        referentielRepository: FakesReferentielRepository(),
+        consultationRepository: FakeConsultationCacheFailureRepository(
+          consultationRepository: FakeConsultationFailureRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [

@@ -123,3 +123,5 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     }
   }
 }
+
+bool isHttpFailed(int? statusCode) => statusCode != null && 400 < statusCode && statusCode < 499;

@@ -11,82 +11,49 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optional/optional.dart';
 
 class QagListBloc extends Bloc<QagListEvent, QagListState> {
-  final QagListState previousState;
   final QagRepository qagRepository;
   final HeaderQagStorageClient headerQagStorageClient;
   final SemanticsHelperWrapper semanticsHelperWrapper;
 
   QagListBloc({
-    required this.previousState,
     required this.qagRepository,
     required this.headerQagStorageClient,
     this.semanticsHelperWrapper = const SemanticsHelperWrapper(),
-  }) : super(previousState) {
+  }) : super(QagListState.init()) {
     on<FetchQagsListEvent>(_handleFetchQags);
     on<UpdateQagsListEvent>(_handleUpdateQags);
     on<UpdateQagListSupportEvent>(_handleUpdateQagSupport);
     on<CloseHeaderQagListEvent>(_handleCloseHeaderQag);
   }
 
-  factory QagListBloc.fromRepositories({
-    required QagRepository qagRepository,
-    required HeaderQagStorageClient headerQagStorageClient,
-    SemanticsHelperWrapper semanticsHelperWrapper = const SemanticsHelperWrapper(),
-  }) {
-    if (qagRepository.qagsListData is GetQagListSucceedResponse) {
-      final qagsListData = qagRepository.qagsListData as GetQagListSucceedResponse;
-      return QagListBloc(
-        previousState: QagListState(
-          status: AllPurposeStatus.success,
-          qags: qagsListData.qags,
-          header: null,
-          currentPage: 1,
-          maxPage: qagsListData.maxPage,
-          footerType: QagListFooterType.loaded,
-        ),
-        qagRepository: qagRepository,
-        headerQagStorageClient: headerQagStorageClient,
-        semanticsHelperWrapper: semanticsHelperWrapper,
-      );
-    }
-    return QagListBloc(
-      previousState: QagListState.init(),
-      qagRepository: qagRepository,
-      headerQagStorageClient: headerQagStorageClient,
-      semanticsHelperWrapper: semanticsHelperWrapper,
-    );
-  }
-
   Future<void> _handleFetchQags(
     FetchQagsListEvent event,
     Emitter<QagListState> emit,
   ) async {
-    if (state.status != AllPurposeStatus.success) {
-      emit(state.clone(status: AllPurposeStatus.loading));
+    emit(state.clone(status: AllPurposeStatus.loading));
 
-      final response = await qagRepository.fetchQagList(
-        pageNumber: state.currentPage,
-        thematiqueId: event.thematiqueId,
-        filter: event.qagFilter,
+    final response = await qagRepository.fetchQagList(
+      pageNumber: state.currentPage,
+      thematiqueId: event.thematiqueId,
+      filter: event.qagFilter,
+    );
+
+    if (response is GetQagListSucceedResponse) {
+      emit(
+        QagListState(
+          status: AllPurposeStatus.success,
+          qags: response.qags,
+          header: await _getHeaderOrNullIfClosed(response.header),
+          currentPage: state.currentPage,
+          maxPage: response.maxPage,
+          footerType: QagListFooterType.loaded,
+        ),
       );
-
-      if (response is GetQagListSucceedResponse) {
-        emit(
-          QagListState(
-            status: AllPurposeStatus.success,
-            qags: response.qags,
-            header: await _getHeaderOrNullIfClosed(response.header),
-            currentPage: state.currentPage,
-            maxPage: response.maxPage,
-            footerType: QagListFooterType.loaded,
-          ),
-        );
-        if (event.thematiqueLabel != null) {
-          semanticsHelperWrapper.announceThematicChosen(event.thematiqueLabel, response.qags.length);
-        }
-      } else {
-        emit(state.clone(status: AllPurposeStatus.error, currentPage: state.currentPage));
+      if (event.thematiqueLabel != null) {
+        semanticsHelperWrapper.announceThematicChosen(event.thematiqueLabel, response.qags.length);
       }
+    } else {
+      emit(state.clone(status: AllPurposeStatus.error, currentPage: state.currentPage));
     }
   }
 

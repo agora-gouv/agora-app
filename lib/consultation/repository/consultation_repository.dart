@@ -50,8 +50,6 @@ abstract class ConsultationRepository {
   Future<void> sendConsultationUpdateFeedback(String updateId, String consultationId, bool isPositive);
 
   Future<void> deleteConsultationUpdateFeedback(String updateId, String consultationId);
-
-  GetConsultationsRepositoryResponse? get consultationsResponse;
 }
 
 class ConsultationDioRepository extends ConsultationRepository {
@@ -70,9 +68,6 @@ class ConsultationDioRepository extends ConsultationRepository {
   });
 
   @override
-  GetConsultationsRepositoryResponse? consultationsResponse;
-
-  @override
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
     const uri = "/consultations";
     try {
@@ -80,7 +75,7 @@ class ConsultationDioRepository extends ConsultationRepository {
       final ongoingConsultations = response.data["ongoing"] as List;
       final finishedConsultations = response.data["finished"] as List;
       final answeredConsultations = response.data["answered"] as List;
-      final getConsultationsResponse = GetConsultationsSucceedResponse(
+      return GetConsultationsSucceedResponse(
         ongoingConsultations: ongoingConsultations.map((ongoingConsultation) {
           return ConsultationOngoing(
             id: ongoingConsultation["id"] as String,
@@ -117,8 +112,6 @@ class ConsultationDioRepository extends ConsultationRepository {
           );
         }).toList(),
       );
-      consultationsResponse = getConsultationsResponse;
-      return getConsultationsResponse;
     } catch (exception, stacktrace) {
       if (exception is DioException) {
         if (exception.type == DioExceptionType.connectionTimeout || exception.type == DioExceptionType.receiveTimeout) {
@@ -126,9 +119,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         }
       }
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
-      final getConsultationsResponse = GetConsultationsFailedResponse();
-      consultationsResponse = getConsultationsResponse;
-      return getConsultationsResponse;
+      return GetConsultationsFailedResponse();
     }
   }
 

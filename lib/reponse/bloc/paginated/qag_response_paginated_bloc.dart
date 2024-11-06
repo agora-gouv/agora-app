@@ -1,5 +1,6 @@
 import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/qag/repository/presenter/qag_response_paginated_presenter.dart';
+import 'package:agora/qag/repository/qag_cache_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_event.dart';
 import 'package:agora/reponse/bloc/paginated/qag_response_paginated_state.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class QagResponsePaginatedBloc extends Bloc<FetchQagsResponsePaginatedEvent, QagResponsePaginatedState> {
   final QagResponsePaginatedState previousState;
-  final QagRepository qagRepository;
+  final QagCacheRepository qagRepository;
 
   QagResponsePaginatedBloc({
     required this.previousState,
@@ -16,10 +17,9 @@ class QagResponsePaginatedBloc extends Bloc<FetchQagsResponsePaginatedEvent, Qag
     on<FetchQagsResponsePaginatedEvent>(_handleFetchQagResponsePaginated);
   }
 
-  factory QagResponsePaginatedBloc.fromRepository({required QagRepository qagRepository}) {
-    if (qagRepository.qagsResponsePaginatedRepositoryData is GetQagsResponsePaginatedSucceedResponse) {
-      final qagRepositoryResponse =
-          qagRepository.qagsResponsePaginatedRepositoryData as GetQagsResponsePaginatedSucceedResponse;
+  factory QagResponsePaginatedBloc.fromRepository({required QagCacheRepository qagRepository}) {
+    if (qagRepository.qagResponsePaginatedData is GetQagsResponsePaginatedSucceedResponse) {
+      final qagRepositoryResponse = qagRepository.qagResponsePaginatedData as GetQagsResponsePaginatedSucceedResponse;
       return QagResponsePaginatedBloc(
         previousState: QagResponsePaginatedState(
           status: AllPurposeStatus.success,
