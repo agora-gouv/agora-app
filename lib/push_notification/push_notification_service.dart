@@ -17,6 +17,7 @@ import 'package:agora/profil/notification/pages/notification_page.dart';
 import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
+import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -160,7 +161,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     final messageType = (message.data["type"] as String?).toNotificationMessageType();
     switch (messageType) {
       case NotificationMessageType.qagDetails:
-        final qagId = message.data["qagId"] as String?;
+        final qagId = message.data["pageArgument"] as String?;
         if (qagId == null) return;
         navigatorKey.currentState?.pushNamed(
           QagDetailsPage.routeName,
@@ -176,7 +177,7 @@ class FirebasePushNotificationService extends PushNotificationService {
         navigatorKey.currentState?.pushNamed(
           DynamicConsultationPage.routeName,
           arguments: DynamicConsultationPageArguments(
-            consultationIdOrSlug: message.data["consultationId"] as String,
+            consultationIdOrSlug: message.data["pageArgument"] as String,
             consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
             shouldReloadConsultationsWhenPop: false,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
@@ -197,6 +198,8 @@ class FirebasePushNotificationService extends PushNotificationService {
           navigatorKey.currentState?.pushNamed(NotificationPage.routeName);
         }
         break;
+      case NotificationMessageType.qagReponses:
+        navigatorKey.currentState?.pushReplacementNamed(ReponsesPage.routeName);
       default:
         break;
     }
