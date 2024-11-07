@@ -1,5 +1,6 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
@@ -153,7 +154,6 @@ class _QagsPageState extends State<QagsPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: AgoraSpacings.base),
                   switch (qagInfoState.status) {
                     AllPurposeStatus.error => SizedBox(),
                     AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Padding(
@@ -161,6 +161,7 @@ class _QagsPageState extends State<QagsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: AgoraSpacings.base),
                             SkeletonBox(height: 12, width: 300, radius: 15),
                             SizedBox(height: 4),
                             SkeletonBox(height: 12, width: 200, radius: 15),
@@ -169,10 +170,17 @@ class _QagsPageState extends State<QagsPage> {
                           ],
                         ),
                       ),
-                    AllPurposeStatus.success => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                        child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
-                      ),
+                    AllPurposeStatus.success => qagInfoState.texteTotalQuestions.isNotBlank()
+                        ? Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                              AgoraSpacings.horizontalPadding,
+                              AgoraSpacings.base,
+                              AgoraSpacings.horizontalPadding,
+                              0,
+                            ),
+                            child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
+                          )
+                        : SizedBox(),
                   },
                   QagsSection(
                     key: onSearchAnchorKey,

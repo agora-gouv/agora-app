@@ -30,7 +30,7 @@ class GenericStrings {
   static const String searchBarDelete = "Effacer la saisie";
   static const String searchBarClose = "Quitter la recherche";
   static const String searchBarOpen = "Commencer une recherche";
-  static const String readCompleteCharter = "Lire la charte complète";
+  static const String readCompleteCharter = "Lire la charte\ncomplète";
   static const String modificationSuccess = "La modification a été prise en compte.";
 
   static const String yes = "Oui";
