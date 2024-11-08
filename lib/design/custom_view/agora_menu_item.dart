@@ -1,3 +1,5 @@
+import 'package:agora/common/helper/feature_flipping_helper.dart';
+import 'package:agora/design/custom_view/unread_check.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -7,12 +9,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AgoraMenuItem extends StatelessWidget {
   final String title;
   final bool isExternalRedirect;
+  final bool hasUnreadCheck;
   final VoidCallback onClick;
 
   const AgoraMenuItem({
     super.key,
     required this.title,
     this.isExternalRedirect = false,
+    this.hasUnreadCheck = false,
     required this.onClick,
   });
 
@@ -56,7 +60,24 @@ class AgoraMenuItem extends StatelessWidget {
                 ),
                 SvgPicture.asset("assets/ic_next.svg", excludeFromSemantics: true),
               ] else ...[
-                Expanded(child: Text(title, style: AgoraTextStyles.regular18)),
+                Expanded(
+                  child: RichText(
+                    textScaler: MediaQuery.textScalerOf(context),
+                    text: TextSpan(
+                      children: [
+                        TextSpan(text: title, style: AgoraTextStyles.regular18),
+                        if (hasUnreadCheck && isTerritorialisationEnabled())
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.top,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 4),
+                              child: UnreadCheck(),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
                 SvgPicture.asset("assets/ic_next.svg", excludeFromSemantics: true),
               ],
             ],

@@ -82,6 +82,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
           activateIcon: "ic_profil.svg",
           inactivateIcon: "ic_profil_inactivate.svg",
           label: "Profil",
+          hasUnreadCheck: true,
         );
     }
   }
