@@ -1,4 +1,4 @@
-import 'package:agora/qag/widgets/qags_section.dart';
+import 'package:agora/qag/pages/qags_page.dart';
 
 enum QagListFilter { trending, top, latest, supporting }
 

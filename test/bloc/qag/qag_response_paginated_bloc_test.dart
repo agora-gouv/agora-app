@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import '../../fakes/qag/fake_qag_repository.dart';
 import '../../fakes/qag/fakes_qag_repository.dart';
 
 void main() {
@@ -19,7 +20,8 @@ void main() {
     blocTest(
       "when repository succeed and page number to load is 1 - should emit success state",
       build: () => QagResponsePaginatedBloc(
-        qagRepository: FakeQagSuccessRepository(),
+        previousState: QagResponsePaginatedState.init(),
+        qagRepository: FakeQagCacheSuccessRepository(qagRepository: FakeQagSuccessRepository()),
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
       expect: () => [
@@ -51,7 +53,8 @@ void main() {
     blocTest<QagResponsePaginatedBloc, QagResponsePaginatedState>(
       "when repository succeed and page number to load is other than 1 - should emit success state",
       build: () => QagResponsePaginatedBloc(
-        qagRepository: FakeQagSuccessRepository(),
+        previousState: QagResponsePaginatedState.init(),
+        qagRepository: FakeQagCacheSuccessRepository(qagRepository: FakeQagSuccessRepository()),
       ),
       seed: () => QagResponsePaginatedState(
         status: AllPurposeStatus.success,
@@ -115,7 +118,8 @@ void main() {
     blocTest<QagResponsePaginatedBloc, QagResponsePaginatedState>(
       "when repository succeed and page number reset to 1 - should emit success state",
       build: () => QagResponsePaginatedBloc(
-        qagRepository: FakeQagSuccessRepository(),
+        previousState: QagResponsePaginatedState.init(),
+        qagRepository: FakeQagCacheSuccessRepository(qagRepository: FakeQagSuccessRepository()),
       ),
       seed: () => QagResponsePaginatedState(
         status: AllPurposeStatus.success,
@@ -170,7 +174,8 @@ void main() {
     blocTest(
       "when repository failed and page number to load is 1 - should emit failure state",
       build: () => QagResponsePaginatedBloc(
-        qagRepository: FakeQagFailureRepository(),
+        previousState: QagResponsePaginatedState.init(),
+        qagRepository: FakeQagCacheFailureRepository(qagRepository: FakeQagFailureRepository()),
       ),
       act: (bloc) => bloc.add(FetchQagsResponsePaginatedEvent(pageNumber: 1)),
       expect: () => [
@@ -193,7 +198,8 @@ void main() {
     blocTest<QagResponsePaginatedBloc, QagResponsePaginatedState>(
       "when repository failed and page number to load is other than 1 - should emit failure state",
       build: () => QagResponsePaginatedBloc(
-        qagRepository: FakeQagFailureRepository(),
+        previousState: QagResponsePaginatedState.init(),
+        qagRepository: FakeQagCacheFailureRepository(qagRepository: FakeQagFailureRepository()),
       ),
       seed: () => QagResponsePaginatedState(
         status: AllPurposeStatus.success,

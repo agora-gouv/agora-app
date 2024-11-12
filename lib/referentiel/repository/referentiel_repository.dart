@@ -45,7 +45,6 @@ class ReferentielDioRepository extends ReferentielRepository {
       for (var item in paysJson) {
         territoires.add(Pays(label: item as String));
       }
-
       return territoires;
     } catch (exception, stackTrace) {
       sentryWrapper.captureException(exception, stackTrace, message: "Erreur lors de l'appel : $uri");

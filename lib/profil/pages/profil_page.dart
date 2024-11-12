@@ -51,8 +51,8 @@ class _ProfilPageState extends State<ProfilPage> {
   Widget build(BuildContext context) {
     return AgoraScaffold(
       child: SingleChildScrollView(
-        physics: ClampingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AgoraMainToolbar(
               title: AgoraRichText(

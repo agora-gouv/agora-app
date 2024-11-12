@@ -12,6 +12,7 @@ import 'package:agora/consultation/pages/widgets/consultations_finished_section.
 import 'package:agora/consultation/pages/widgets/consultations_loading_skeleton.dart';
 import 'package:agora/consultation/pages/widgets/consultations_ongoing_section.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
+import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
@@ -45,21 +46,24 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
       widgetName: AnalyticsScreenNames.consultationsPage,
       child: BlocProvider(
         create: (BuildContext context) {
-          return ConsultationBloc(
-            consultationRepository: RepositoryManager.getConsultationRepository(),
-            concertationRepository: RepositoryManager.getConcertationRepository(),
-            referentielRepository: RepositoryManager.getReferentielRepository(),
+          return ConsultationBloc.fromRepositories(
+            consultationRepository: RepositoryManager.getConsultationCacheRepository(),
+            concertationRepository: RepositoryManager.getConcertationCacheRepository(),
+            referentielRepository: RepositoryManager.getReferentielCacheRepository(),
           )..add(FetchConsultationsEvent());
         },
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
           builder: (context, state) {
-            return SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  _Header(toolbarTitleKey: toolbarTitleKey),
-                  _Content(state: state),
-                ],
+            return AgoraPullToRefresh(
+              onRefresh: () async => context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _Header(toolbarTitleKey: toolbarTitleKey),
+                    _Content(state: state),
+                  ],
+                ),
               ),
             );
           },

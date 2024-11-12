@@ -1,5 +1,6 @@
 import 'package:agora/referentiel/departement.dart';
 import 'package:agora/referentiel/region.dart';
+import 'package:agora/referentiel/repository/referentiel_cache_repository.dart';
 import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:agora/referentiel/territoire.dart';
 
@@ -22,4 +23,11 @@ class FakesReferentielRepository extends ReferentielRepository {
       ),
     ]);
   }
+}
+
+class FakesReferentielCacheRepository extends ReferentielCacheRepository {
+  FakesReferentielCacheRepository({required super.referentielRepository});
+
+  @override
+  bool get isCacheSuccess => false;
 }

@@ -1,6 +1,8 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_state.dart';
+import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -20,7 +22,11 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchAskQagStatusEvent()),
       expect: () => [
-        AskQagStatusFetchedState(askQagError: "askQagError"),
+        AskQagStatusState(
+          status: AllPurposeStatus.success,
+          askQagError: "askQagError",
+          errorType: QagsErrorType.generic,
+        ),
       ],
     );
 
@@ -31,7 +37,11 @@ void main() {
       ),
       act: (bloc) => bloc.add(FetchAskQagStatusEvent()),
       expect: () => [
-        AskQagErrorState(),
+        AskQagStatusState(
+          status: AllPurposeStatus.error,
+          askQagError: null,
+          errorType: QagsErrorType.generic,
+        ),
       ],
     );
   });

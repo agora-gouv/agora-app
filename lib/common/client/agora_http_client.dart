@@ -1,6 +1,7 @@
 import 'package:agora/common/client/user_agent_builder.dart';
 import 'package:agora/common/helper/jwt_helper.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 
 abstract class AgoraHttpClient {
   Future<Response<T>> get<T>(
@@ -19,10 +20,11 @@ abstract class AgoraHttpClient {
 
 class AgoraDioHttpClient extends AgoraHttpClient {
   final Dio dio;
+  final CacheOptions cacheOptions;
   final JwtHelper? jwtHelper;
   final UserAgentBuilder userAgentBuilder;
 
-  AgoraDioHttpClient({required this.dio, this.jwtHelper, required this.userAgentBuilder});
+  AgoraDioHttpClient({required this.dio, required this.cacheOptions, this.jwtHelper, required this.userAgentBuilder});
 
   @override
   Future<Response<T>> get<T>(
@@ -30,14 +32,19 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     data,
     Map<String, dynamic> queryParameters = const {},
     Map<String, dynamic> headers = const {},
+    CachePolicy? policy = CachePolicy.request,
   }) async {
+    Options options = Options(
+      headers: await buildInitialHeaders()
+        ..addAll(headers),
+    );
+    options = cacheOptions.copyWith(policy: policy).toOptions();
+    options.headers = await buildInitialHeaders()
+      ..addAll(headers);
     return dio.get<T>(
       path,
       queryParameters: queryParameters,
-      options: Options(
-        headers: await buildInitialHeaders()
-          ..addAll(headers),
-      ),
+      options: options,
       data: data,
     );
   }
@@ -123,3 +130,5 @@ class AgoraDioHttpClient extends AgoraHttpClient {
     }
   }
 }
+
+bool isHttpFailed(int? statusCode) => statusCode != null && 400 < statusCode && statusCode < 499;

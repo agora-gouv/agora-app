@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import '../../fakes/qag/fake_qag_repository.dart';
 import '../../fakes/qag/fakes_qag_repository.dart';
 
 void main() {
@@ -20,7 +21,7 @@ void main() {
       "when repository succeed - should emit loading then success state",
       build: () => QagResponseBloc(
         previousState: QagResponseState.init(),
-        qagRepository: FakeQagSuccessRepository(),
+        qagRepository: FakeQagCacheSuccessRepository(qagRepository: FakeQagSuccessRepository()),
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [
@@ -59,7 +60,7 @@ void main() {
       "when repository failed - should emit loading then failure state",
       build: () => QagResponseBloc(
         previousState: QagResponseState.init(),
-        qagRepository: FakeQagFailureRepository(),
+        qagRepository: FakeQagCacheFailureRepository(qagRepository: FakeQagFailureRepository()),
       ),
       act: (bloc) => bloc.add(FetchQagsResponseEvent()),
       expect: () => [

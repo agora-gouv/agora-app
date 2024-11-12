@@ -31,6 +31,7 @@ class FakeQagSuccessRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagListFilter filter,
+    bool forceRefresh = false,
   }) async {
     switch (pageNumber) {
       case 1:
@@ -634,6 +635,7 @@ class FakeQagFailureRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagListFilter filter,
+    bool forceRefresh = false,
   }) async {
     return GetQagListFailedResponse();
   }

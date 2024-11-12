@@ -1,5 +1,6 @@
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/qag_list_filter_extension.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_qag_header.dart';
@@ -71,6 +72,8 @@ class _QagListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.max,
       children: [
         if (viewModel.header != null) _HeaderQag(viewModel.header!),
         Semantics(
@@ -225,9 +228,9 @@ class _HeaderQag extends StatelessWidget {
 
 abstract class _ViewModel extends Equatable {
   static _ViewModel fromState(QagListState state) {
-    if (state is QagListLoadingState) {
+    if (state.status == AllPurposeStatus.notLoaded || state.status == AllPurposeStatus.loading) {
       return _QagListLoadingViewModel();
-    } else if (state is QagListSuccessState) {
+    } else if (state.status == AllPurposeStatus.success) {
       final header = state.header != null
           ? _QagListHeaderViewModel(
               id: state.header!.id,

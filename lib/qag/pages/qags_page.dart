@@ -4,11 +4,13 @@ import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
+import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
@@ -20,12 +22,14 @@ import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
-import 'package:agora/qag/ask/bloc/ask_qag_status_state.dart';
 import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
 import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
+import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/info/bloc/qags_info_bloc.dart';
 import 'package:agora/qag/info/bloc/qags_info_event.dart';
 import 'package:agora/qag/info/bloc/qags_info_state.dart';
+import 'package:agora/qag/list/bloc/qag_list_bloc.dart';
+import 'package:agora/qag/list/bloc/qag_list_event.dart';
 import 'package:agora/qag/widgets/qags_section.dart';
 import 'package:agora/thematique/bloc/thematique_bloc.dart';
 import 'package:agora/thematique/bloc/thematique_event.dart';
@@ -33,6 +37,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+enum QagTab { search, trending, top, latest, supporting }
 
 class QagsPage extends StatefulWidget {
   static const routeName = "/qagsPage";
@@ -47,8 +53,11 @@ class _QagsPageState extends State<QagsPage> {
   final onSearchAnchorKey = GlobalKey();
   final firstThematiqueKey = GlobalKey();
   final scrollController = ScrollController();
-  String? currentThematiqueId;
   ValueNotifier<bool> showLabelFloatingButton = ValueNotifier(true);
+
+  String? currentThematiqueId;
+  String? currentThematiqueLabel;
+  QagTab currentSelectedTab = QagTab.trending;
 
   @override
   void initState() {
@@ -98,6 +107,19 @@ class _QagsPageState extends State<QagsPage> {
               qagRepository: RepositoryManager.getQagRepository(),
             )..add(FetchQagsInfoEvent()),
           ),
+          BlocProvider(
+            lazy: false,
+            create: (context) => QagListBloc(
+              qagRepository: RepositoryManager.getQagRepository(),
+              headerQagStorageClient: StorageManager.getHeaderQagStorageClient(),
+            )..add(
+                FetchQagsListEvent(
+                  thematiqueId: currentThematiqueId,
+                  thematiqueLabel: currentThematiqueLabel,
+                  qagFilter: toQagListFilter(currentSelectedTab),
+                ),
+              ),
+          ),
         ],
         child: Scaffold(
           floatingActionButton: ListenableBuilder(
@@ -107,7 +129,7 @@ class _QagsPageState extends State<QagsPage> {
               onTap: () {
                 final askQagStatusState = BlocProvider.of<AskQagStatusBloc>(context).state;
                 String? errorLabel;
-                if (askQagStatusState is AskQagStatusFetchedState) {
+                if (askQagStatusState.status == AllPurposeStatus.success) {
                   errorLabel = askQagStatusState.askQagError;
                 }
                 TrackerHelper.trackClick(
@@ -122,85 +144,113 @@ class _QagsPageState extends State<QagsPage> {
               },
             ),
           ),
-          body: SingleChildScrollView(
-            controller: scrollController,
-            physics: ClampingScrollPhysics(),
-            child: BlocBuilder<QagsInfoBloc, QagsInfoState>(
-              builder: (context, qagInfoState) => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  AgoraMainToolbar(
-                    title: Row(
-                      children: [
-                        Expanded(
-                          child: AgoraRichText(
-                            key: toolbarTitleKey,
-                            policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                            semantic: AgoraRichTextSemantic(focused: true),
-                            items: [
-                              AgoraRichTextItem(
-                                text: "${QagStrings.toolbarPart1}\n",
-                                style: AgoraRichTextItemStyle.bold,
-                              ),
-                              AgoraRichTextItem(text: QagStrings.toolbarPart2, style: AgoraRichTextItemStyle.regular),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: AgoraSpacings.base),
-                        AgoraFocusHelper(
-                          elementKey: firstFocusableElementKey,
-                          child: _InfoBouton(focusKey: firstFocusableElementKey, state: qagInfoState),
-                        ),
-                      ],
-                    ),
-                  ),
-                  switch (qagInfoState.status) {
-                    AllPurposeStatus.error => SizedBox(),
-                    AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          body: BlocBuilder<QagsInfoBloc, QagsInfoState>(
+            builder: (context, qagInfoState) => AgoraPullToRefresh(
+              onRefresh: () async {
+                context.read<QagListBloc>().add(
+                      FetchQagsListEvent(
+                        thematiqueId: currentThematiqueId,
+                        thematiqueLabel: currentThematiqueLabel,
+                        qagFilter: toQagListFilter(currentSelectedTab),
+                        forceRefresh: true,
+                      ),
+                    );
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                controller: scrollController,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height - 100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AgoraMainToolbar(
+                        title: Row(
                           children: [
-                            SizedBox(height: AgoraSpacings.base),
-                            SkeletonBox(height: 12, width: 300, radius: 15),
-                            SizedBox(height: 4),
-                            SkeletonBox(height: 12, width: 200, radius: 15),
-                            SizedBox(height: 4),
-                            SkeletonBox(height: 12, width: 220, radius: 15),
+                            Expanded(
+                              child: AgoraRichText(
+                                key: toolbarTitleKey,
+                                policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                                semantic: AgoraRichTextSemantic(focused: true),
+                                items: [
+                                  AgoraRichTextItem(
+                                    text: "${QagStrings.toolbarPart1}\n",
+                                    style: AgoraRichTextItemStyle.bold,
+                                  ),
+                                  AgoraRichTextItem(
+                                    text: QagStrings.toolbarPart2,
+                                    style: AgoraRichTextItemStyle.regular,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: AgoraSpacings.base),
+                            AgoraFocusHelper(
+                              elementKey: firstFocusableElementKey,
+                              child: _InfoBouton(focusKey: firstFocusableElementKey, state: qagInfoState),
+                            ),
                           ],
                         ),
                       ),
-                    AllPurposeStatus.success => qagInfoState.texteTotalQuestions.isNotBlank()
-                        ? Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              AgoraSpacings.horizontalPadding,
-                              AgoraSpacings.base,
-                              AgoraSpacings.horizontalPadding,
-                              0,
+                      switch (qagInfoState.status) {
+                        AllPurposeStatus.error => SizedBox(),
+                        AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: AgoraSpacings.base),
+                                SkeletonBox(height: 12, width: 300, radius: 15),
+                                SizedBox(height: 4),
+                                SkeletonBox(height: 12, width: 200, radius: 15),
+                                SizedBox(height: 4),
+                                SkeletonBox(height: 12, width: 220, radius: 15),
+                              ],
                             ),
-                            child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
-                          )
-                        : SizedBox(),
-                  },
-                  QagsSection(
-                    key: onSearchAnchorKey,
-                    firstThematiqueKey: firstThematiqueKey,
-                    selectedThematiqueId: currentThematiqueId,
-                    onSearchBarOpen: (bool isSearchOpen) {
-                      if (isSearchOpen) {
-                        TrackerHelper.trackEvent(
-                          widgetName: AnalyticsScreenNames.qagsPage,
-                          eventName: AnalyticsEventNames.qagsSearch,
-                        );
-                        Scrollable.ensureVisible(
-                          onSearchAnchorKey.currentContext!,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
+                          ),
+                        AllPurposeStatus.success => qagInfoState.texteTotalQuestions.isNotBlank()
+                            ? Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  AgoraSpacings.horizontalPadding,
+                                  AgoraSpacings.base,
+                                  AgoraSpacings.horizontalPadding,
+                                  0,
+                                ),
+                                child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
+                              )
+                            : SizedBox(),
+                      },
+                      QagsSection(
+                        key: onSearchAnchorKey,
+                        firstThematiqueKey: firstThematiqueKey,
+                        currentThematiqueId: currentThematiqueId,
+                        currentThematiqueLabel: currentThematiqueLabel,
+                        currentSelectedTab: currentSelectedTab,
+                        onSelectedTab: (QagTab tab) => setState(() => currentSelectedTab = tab),
+                        onThematiqueSelected: (String? thematiqueId, String? thematiqueLabel) {
+                          setState(() {
+                            currentThematiqueId = thematiqueId;
+                            currentThematiqueLabel = thematiqueLabel;
+                          });
+                        },
+                        onSearchBarOpen: (bool isSearchOpen) {
+                          if (isSearchOpen) {
+                            TrackerHelper.trackEvent(
+                              widgetName: AnalyticsScreenNames.qagsPage,
+                              eventName: AnalyticsEventNames.qagsSearch,
+                            );
+                            Scrollable.ensureVisible(
+                              onSearchAnchorKey.currentContext!,
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
