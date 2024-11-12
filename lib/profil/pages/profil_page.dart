@@ -52,6 +52,7 @@ class _ProfilPageState extends State<ProfilPage> {
     return AgoraScaffold(
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AgoraMainToolbar(
               title: AgoraRichText(

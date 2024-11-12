@@ -155,38 +155,36 @@ class _Success extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          _Header(viewModel, backResult),
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                _TitreSliver(
-                  viewModel: viewModel,
-                  isQuestionGagnante: arguments.isQuestionGagnante,
+    return Column(
+      children: [
+        _Header(viewModel, backResult),
+        Expanded(
+          child: CustomScrollView(
+            slivers: [
+              _TitreSliver(
+                viewModel: viewModel,
+                isQuestionGagnante: arguments.isQuestionGagnante,
+              ),
+              _DescriptionSliver(
+                viewModel: viewModel,
+                isQuestionGagnante: arguments.isQuestionGagnante,
+                reload: arguments.reload,
+                qagSupportBloc: arguments.qagSupportBloc,
+                onSupportChange: onSupportChange,
+              ),
+              if (viewModel.response != null)
+                SliverToBoxAdapter(
+                  child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                 ),
-                _DescriptionSliver(
-                  viewModel: viewModel,
-                  isQuestionGagnante: arguments.isQuestionGagnante,
-                  reload: arguments.reload,
-                  qagSupportBloc: arguments.qagSupportBloc,
-                  onSupportChange: onSupportChange,
+              if (viewModel.textResponse != null)
+                SliverToBoxAdapter(
+                  child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                 ),
-                if (viewModel.response != null)
-                  SliverToBoxAdapter(
-                    child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                  ),
-                if (viewModel.textResponse != null)
-                  SliverToBoxAdapter(
-                    child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                  ),
-                _FeedbackSliver(feedbackKey: feedbackKey),
-              ],
-            ),
+              _FeedbackSliver(feedbackKey: feedbackKey),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -227,7 +225,7 @@ class _ShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+      padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
       child: AgoraButton.withChildren(
         semanticLabel: "Partager la question",
         buttonStyle: AgoraButtonStyle.secondary,
