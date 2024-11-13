@@ -122,7 +122,7 @@ class _ProfilPageState extends State<ProfilPage> {
                                     arguments: TerritoireEditingPageArguments(departementsSuivis: []),
                                   );
                           },
-                          hasUnreadCheck: true,
+                          hasUnreadCheck: state.status == AllPurposeStatus.success && premierDepartement?.data == null,
                         );
                       },
                     ),
