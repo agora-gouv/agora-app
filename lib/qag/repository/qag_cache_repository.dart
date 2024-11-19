@@ -28,11 +28,6 @@ class QagCacheRepository {
   }
 
   Future<GetQagsResponsePaginatedRepositoryResponse> fetchQagsResponsePaginated({required int pageNumber}) async {
-    if (isCacheSuccess) {
-      return qagResponsePaginatedData!;
-    }
-    qagResponsePaginatedData = await qagRepository.fetchQagsResponsePaginated(pageNumber: pageNumber);
-    lastUpdate = DateTime.now();
-    return qagResponsePaginatedData!;
+    return await qagRepository.fetchQagsResponsePaginated(pageNumber: pageNumber);
   }
 }
