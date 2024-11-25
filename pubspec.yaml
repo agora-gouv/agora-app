@@ -3,7 +3,7 @@ description: Agora project.
 
 publish_to: 'none'
 
-version: 3.4.0+100
+version: 3.4.0+101
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

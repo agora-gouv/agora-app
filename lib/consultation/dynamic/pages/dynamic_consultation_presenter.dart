@@ -29,7 +29,7 @@ class DynamicConsultationPresenter {
           title: consultation.title,
           territoire: getTerritoireFromReferentiel(referentiel, consultation.territoire),
         ),
-        if (questionsInfos != null)
+        if (consultation.isOnGoing())
           _QuestionsInfoSection(
             endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayLongMonth()),
             questionCount: questionsInfos.questionCount,
@@ -59,7 +59,7 @@ class DynamicConsultationPresenter {
               consultation.expandedSections.map((section) => presentSection(consultation.id, section)).toList(),
         ),
         if (download != null) DownloadSection(url: download.url),
-        if (participationInfo != null)
+        if (consultation.isOnGoing())
           ParticipantInfoSection(
             participantCountGoal: participationInfo.participantCountGoal,
             participantCount: participationInfo.participantCount,
@@ -91,10 +91,10 @@ class DynamicConsultationPresenter {
             consultationId: consultation.id,
             userResponse: feedbackQuestion.userResponse,
           ),
-        if (consultation.questionsInfos != null)
+        if (consultation.isOnGoing())
           StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
-        if (consultation.questionsInfos == null) HistorySection(consultation.id, history),
-        if (consultation.questionsInfos == null) NotificationSection(),
+        if (!consultation.isOnGoing()) HistorySection(consultation.id, history),
+        if (!consultation.isOnGoing()) NotificationSection(),
       ],
     );
   }

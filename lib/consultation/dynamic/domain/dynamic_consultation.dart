@@ -8,13 +8,13 @@ class DynamicConsultation extends Equatable {
   final String coverUrl;
   final String thematicLogo;
   final String thematicLabel;
-  final ConsultationQuestionsInfos? questionsInfos;
+  final ConsultationQuestionsInfos questionsInfos;
   final ConsultationResponseInfos? responseInfos;
   final ConsultationInfoHeader? infoHeader;
   final List<DynamicConsultationSection> headerSections;
   final List<DynamicConsultationSection> collapsedSections;
   final List<DynamicConsultationSection> expandedSections;
-  final ConsultationParticipationInfo? participationInfo;
+  final ConsultationParticipationInfo participationInfo;
   final ConsultationDownloadInfo? downloadInfo;
   final ConsultationFeedbackQuestion? feedbackQuestion;
   final ConsultationFeedbackResults? feedbackResult;
@@ -22,6 +22,10 @@ class DynamicConsultation extends Equatable {
   final ConsultationFooter? footer;
   final List<ConsultationGoal>? goals;
   final String territoire;
+
+  bool isOnGoing() {
+    return DateTime.now().isBefore(questionsInfos.endDate);
+  }
 
   DynamicConsultation({
     required this.id,
@@ -289,18 +293,22 @@ class DynamicConsultationUpdate extends Equatable {
   final String shareText;
   final String thematicLogo;
   final String thematicLabel;
-  final ConsultationDatesInfos? consultationDatesInfos;
+  final ConsultationDatesInfos consultationDatesInfos;
   final ConsultationResponseInfos? responseInfos;
   final ConsultationInfoHeader? infoHeader;
   final List<DynamicConsultationSection> headerSections;
   final List<DynamicConsultationSection> previewSections;
   final List<DynamicConsultationSection> expandedSections;
-  final ConsultationParticipationInfo? participationInfo;
+  final ConsultationParticipationInfo participationInfo;
   final ConsultationDownloadInfo? downloadInfo;
   final ConsultationFeedbackQuestion? feedbackQuestion;
   final ConsultationFeedbackResults? feedbackResult;
   final ConsultationFooter? footer;
   final List<ConsultationGoal>? goals;
+
+  bool isOnGoing() {
+    return DateTime.now().isBefore(consultationDatesInfos.endDate);
+  }
 
   DynamicConsultationUpdate({
     required this.id,
