@@ -233,12 +233,14 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       infoHeader: null,
       previewSections: [],
       expandedSections: [],
-      participationInfo: null,
+      participationInfo:
+          ConsultationParticipationInfo(participantCount: 2, participantCountGoal: 3, shareText: "share text"),
       downloadInfo: null,
       feedbackQuestion: null,
       feedbackResult: null,
       footer: null,
-      consultationDatesInfos: null,
+      consultationDatesInfos:
+          ConsultationDatesInfos(endDate: DateTime(2023, 12, 30), startDate: DateTime(2022, 12, 30)),
       title: 'title',
       coverUrl: 'coverUrl',
       thematicLogo: 'logo',

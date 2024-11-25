@@ -8,10 +8,9 @@ class DynamicConsultation extends Equatable {
   final String coverUrl;
   final String thematicLogo;
   final String thematicLabel;
-  final ConsultationQuestionsInfos? questionsInfos;
+  final ConsultationQuestionsInfos questionsInfos;
   final ConsultationResponseInfos? responseInfos;
   final ConsultationInfoHeader? infoHeader;
-  final ConsultationDatesInfos consultationDatesInfos;
   final List<DynamicConsultationSection> headerSections;
   final List<DynamicConsultationSection> collapsedSections;
   final List<DynamicConsultationSection> expandedSections;
@@ -25,7 +24,7 @@ class DynamicConsultation extends Equatable {
   final String territoire;
 
   bool isOnGoing() {
-    return DateTime.now().isBefore(consultationDatesInfos.endDate);
+    return DateTime.now().isBefore(questionsInfos.endDate);
   }
 
   DynamicConsultation({
@@ -38,7 +37,6 @@ class DynamicConsultation extends Equatable {
     required this.questionsInfos,
     required this.responseInfos,
     required this.infoHeader,
-    required this.consultationDatesInfos,
     required this.headerSections,
     required this.collapsedSections,
     required this.expandedSections,
@@ -62,7 +60,6 @@ class DynamicConsultation extends Equatable {
         questionsInfos,
         responseInfos,
         infoHeader,
-        consultationDatesInfos,
         collapsedSections,
         expandedSections,
         participationInfo,

@@ -2,18 +2,14 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.dart';
 
-ConsultationQuestionsInfos? toQuestionsInfo(dynamic data) {
-  if (data is Map<String, dynamic>) {
-    return ConsultationQuestionsInfos(
-      endDate: (data["endDate"] as String).parseToDateTime(),
-      questionCount: data["questionCount"] as String,
-      estimatedTime: data["estimatedTime"] as String,
-      participantCount: data["participantCount"] as int,
-      participantCountGoal: data["participantCountGoal"] as int,
-    );
-  } else {
-    return null;
-  }
+ConsultationQuestionsInfos toQuestionsInfo(dynamic data) {
+  return ConsultationQuestionsInfos(
+    endDate: (data["endDate"] as String).parseToDateTime(),
+    questionCount: data["questionCount"] as String,
+    estimatedTime: data["estimatedTime"] as String,
+    participantCount: data["participantCount"] as int,
+    participantCountGoal: data["participantCountGoal"] as int,
+  );
 }
 
 ConsultationResponseInfos? toResponseInfo(dynamic data, String id) {
