@@ -281,6 +281,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         thematicLabel: data["thematique"]["label"] as String,
         questionsInfos: toQuestionsInfo(data["questionsInfo"]),
         responseInfos: toResponseInfo(data["responsesInfo"], consultationId),
+        consultationDatesInfos: toConsultationDateInfo(data["consultationDates"]),
         infoHeader: toInfoHeader(data["infoHeader"]),
         headerSections: ((data["body"]["headerSections"] ?? []) as List).map((e) => toSection(e)).nonNulls.toList(),
         collapsedSections: (data["body"]["sectionsPreview"] as List).map((e) => toSection(e)).nonNulls.toList(),

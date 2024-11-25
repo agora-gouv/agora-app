@@ -66,27 +66,19 @@ List<ConsultationGoal>? toGoals(dynamic data) {
   }
 }
 
-ConsultationParticipationInfo? toParticipationInfo(dynamic data, String shareText) {
-  if (data is Map<String, dynamic>) {
-    return ConsultationParticipationInfo(
-      shareText: shareText,
-      participantCountGoal: data["participantCountGoal"] as int,
-      participantCount: data["participantCount"] as int,
-    );
-  } else {
-    return null;
-  }
+ConsultationParticipationInfo toParticipationInfo(dynamic data, String shareText) {
+  return ConsultationParticipationInfo(
+    shareText: shareText,
+    participantCountGoal: data["participantCountGoal"] as int,
+    participantCount: data["participantCount"] as int,
+  );
 }
 
-ConsultationDatesInfos? toConsultationDateInfo(dynamic data) {
-  if (data is Map<String, dynamic>) {
-    return ConsultationDatesInfos(
-      endDate: (data["endDate"] as String).parseToDateTime(),
-      startDate: (data["startDate"] as String).parseToDateTime(),
-    );
-  } else {
-    return null;
-  }
+ConsultationDatesInfos toConsultationDateInfo(dynamic data) {
+  return ConsultationDatesInfos(
+    endDate: (data["endDate"] as String).parseToDateTime(),
+    startDate: (data["startDate"] as String).parseToDateTime(),
+  );
 }
 
 ConsultationFeedbackQuestion? toFeedbackQuestion(dynamic data) {
