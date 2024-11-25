@@ -29,7 +29,7 @@ class DynamicConsultationPresenter {
           title: consultation.title,
           territoire: getTerritoireFromReferentiel(referentiel, consultation.territoire),
         ),
-        if (consultation.isOnGoing() && questionsInfos != null)
+        if (consultation.isOnGoing())
           _QuestionsInfoSection(
             endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayLongMonth()),
             questionCount: questionsInfos.questionCount,
