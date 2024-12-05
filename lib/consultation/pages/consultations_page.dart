@@ -162,19 +162,24 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraMainToolbar(
-      title: AgoraRichText(
-        key: toolbarTitleKey,
-        policeStyle: AgoraRichTextPoliceStyle.toolbar,
-        semantic: AgoraRichTextSemantic(focused: true),
-        items: [
-          AgoraRichTextItem(
-            text: "${ConsultationStrings.toolbarPart1}\n",
-            style: AgoraRichTextItemStyle.bold,
-          ),
-          AgoraRichTextItem(
-            text: ConsultationStrings.toolbarPart2,
-            style: AgoraRichTextItemStyle.regular,
-          ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AgoraRichText(
+            key: toolbarTitleKey,
+            policeStyle: AgoraRichTextPoliceStyle.toolbar,
+            semantic: AgoraRichTextSemantic(focused: true),
+            items: [
+              AgoraRichTextItem(
+                text: "${ConsultationStrings.toolbarPart1}\n",
+                style: AgoraRichTextItemStyle.bold,
+              ),
+              AgoraRichTextItem(
+                text: ConsultationStrings.toolbarPart2,
+                style: AgoraRichTextItemStyle.regular,
+              ),
+            ],
+          )
         ],
       ),
     );
