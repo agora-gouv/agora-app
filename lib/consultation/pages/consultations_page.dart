@@ -54,17 +54,27 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
         },
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
           builder: (context, state) {
-            return AgoraPullToRefresh(
-              onRefresh: () async => context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _Header(toolbarTitleKey: toolbarTitleKey),
-                    _Content(state: state),
-                  ],
+            return Column(
+              children: [
+                _Header(toolbarTitleKey: toolbarTitleKey),
+                Expanded(
+                  child: AgoraPullToRefresh(
+                    onRefresh: () async =>
+                        context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
+                    child: Expanded(
+                      child: SingleChildScrollView(
+                        physics: ClampingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _Content(state: state),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             );
           },
         ),
