@@ -179,7 +179,7 @@ class _Header extends StatelessWidget {
                 style: AgoraRichTextItemStyle.regular,
               ),
             ],
-          )
+          ),
         ],
       ),
     );

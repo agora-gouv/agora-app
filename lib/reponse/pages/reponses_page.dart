@@ -99,7 +99,7 @@ class _Content extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
