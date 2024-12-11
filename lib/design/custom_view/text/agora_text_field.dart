@@ -101,6 +101,7 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
                       minLines: widget.minLines ?? 1,
                       maxLines: widget.textInputType == TextFieldInputType.multiline ? widget.maxLines : 1,
                       scrollPadding: const EdgeInsets.only(bottom: AgoraSpacings.x3 * 3),
+                      textCapitalization: TextCapitalization.sentences,
                       maxLength: widget.blockToMaxLength || widget.textInputType == TextFieldInputType.number
                           ? widget.maxLength
                           : widget.maxLength * 2,

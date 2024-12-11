@@ -54,17 +54,27 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
         },
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
           builder: (context, state) {
-            return AgoraPullToRefresh(
-              onRefresh: () async => context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _Header(toolbarTitleKey: toolbarTitleKey),
-                    _Content(state: state),
-                  ],
+            return Column(
+              children: [
+                _Header(toolbarTitleKey: toolbarTitleKey),
+                Expanded(
+                  child: AgoraPullToRefresh(
+                    onRefresh: () async =>
+                        context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
+                    child: Expanded(
+                      child: SingleChildScrollView(
+                        physics: ClampingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _Content(state: state),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             );
           },
         ),
@@ -152,18 +162,23 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraMainToolbar(
-      title: AgoraRichText(
-        key: toolbarTitleKey,
-        policeStyle: AgoraRichTextPoliceStyle.toolbar,
-        semantic: AgoraRichTextSemantic(focused: true),
-        items: [
-          AgoraRichTextItem(
-            text: "${ConsultationStrings.toolbarPart1}\n",
-            style: AgoraRichTextItemStyle.bold,
-          ),
-          AgoraRichTextItem(
-            text: ConsultationStrings.toolbarPart2,
-            style: AgoraRichTextItemStyle.regular,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AgoraRichText(
+            key: toolbarTitleKey,
+            policeStyle: AgoraRichTextPoliceStyle.toolbar,
+            semantic: AgoraRichTextSemantic(focused: true),
+            items: [
+              AgoraRichTextItem(
+                text: "${ConsultationStrings.toolbarPart1}\n",
+                style: AgoraRichTextItemStyle.bold,
+              ),
+              AgoraRichTextItem(
+                text: ConsultationStrings.toolbarPart2,
+                style: AgoraRichTextItemStyle.regular,
+              ),
+            ],
           ),
         ],
       ),
