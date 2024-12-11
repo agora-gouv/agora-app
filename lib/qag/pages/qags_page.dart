@@ -145,113 +145,119 @@ class _QagsPageState extends State<QagsPage> {
             ),
           ),
           body: BlocBuilder<QagsInfoBloc, QagsInfoState>(
-            builder: (context, qagInfoState) => AgoraPullToRefresh(
-              onRefresh: () async {
-                context.read<QagListBloc>().add(
-                      FetchQagsListEvent(
-                        thematiqueId: currentThematiqueId,
-                        thematiqueLabel: currentThematiqueLabel,
-                        qagFilter: toQagListFilter(currentSelectedTab),
-                        forceRefresh: true,
-                      ),
-                    );
-              },
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                controller: scrollController,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height - 100),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
+            builder: (context, qagInfoState) => Column(
+              children: [
+                AgoraMainToolbar(
+                  title: Row(
                     children: [
-                      AgoraMainToolbar(
-                        title: Row(
-                          children: [
-                            Expanded(
-                              child: AgoraRichText(
-                                key: toolbarTitleKey,
-                                policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                                semantic: AgoraRichTextSemantic(focused: true),
-                                items: [
-                                  AgoraRichTextItem(
-                                    text: "${QagStrings.toolbarPart1}\n",
-                                    style: AgoraRichTextItemStyle.bold,
-                                  ),
-                                  AgoraRichTextItem(
-                                    text: QagStrings.toolbarPart2,
-                                    style: AgoraRichTextItemStyle.regular,
-                                  ),
-                                ],
-                              ),
+                      Expanded(
+                        child: AgoraRichText(
+                          key: toolbarTitleKey,
+                          policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                          semantic: AgoraRichTextSemantic(focused: true),
+                          items: [
+                            AgoraRichTextItem(
+                              text: "${QagStrings.toolbarPart1}\n",
+                              style: AgoraRichTextItemStyle.bold,
                             ),
-                            SizedBox(width: AgoraSpacings.base),
-                            AgoraFocusHelper(
-                              elementKey: firstFocusableElementKey,
-                              child: _InfoBouton(focusKey: firstFocusableElementKey, state: qagInfoState),
+                            AgoraRichTextItem(
+                              text: QagStrings.toolbarPart2,
+                              style: AgoraRichTextItemStyle.regular,
                             ),
                           ],
                         ),
                       ),
-                      switch (qagInfoState.status) {
-                        AllPurposeStatus.error => SizedBox(),
-                        AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: AgoraSpacings.base),
-                                SkeletonBox(height: 12, width: 300, radius: 15),
-                                SizedBox(height: 4),
-                                SkeletonBox(height: 12, width: 200, radius: 15),
-                                SizedBox(height: 4),
-                                SkeletonBox(height: 12, width: 220, radius: 15),
-                              ],
-                            ),
-                          ),
-                        AllPurposeStatus.success => qagInfoState.texteTotalQuestions.isNotBlank()
-                            ? Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                  AgoraSpacings.horizontalPadding,
-                                  AgoraSpacings.base,
-                                  AgoraSpacings.horizontalPadding,
-                                  0,
-                                ),
-                                child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
-                              )
-                            : SizedBox(),
-                      },
-                      QagsSection(
-                        key: onSearchAnchorKey,
-                        firstThematiqueKey: firstThematiqueKey,
-                        currentThematiqueId: currentThematiqueId,
-                        currentThematiqueLabel: currentThematiqueLabel,
-                        currentSelectedTab: currentSelectedTab,
-                        onSelectedTab: (QagTab tab) => setState(() => currentSelectedTab = tab),
-                        onThematiqueSelected: (String? thematiqueId, String? thematiqueLabel) {
-                          setState(() {
-                            currentThematiqueId = thematiqueId;
-                            currentThematiqueLabel = thematiqueLabel;
-                          });
-                        },
-                        onSearchBarOpen: (bool isSearchOpen) {
-                          if (isSearchOpen) {
-                            TrackerHelper.trackEvent(
-                              widgetName: AnalyticsScreenNames.qagsPage,
-                              eventName: AnalyticsEventNames.qagsSearch,
-                            );
-                            Scrollable.ensureVisible(
-                              onSearchAnchorKey.currentContext!,
-                              duration: const Duration(milliseconds: 400),
-                              curve: Curves.easeInOut,
-                            );
-                          }
-                        },
+                      SizedBox(width: AgoraSpacings.base),
+                      AgoraFocusHelper(
+                        elementKey: firstFocusableElementKey,
+                        child: _InfoBouton(focusKey: firstFocusableElementKey, state: qagInfoState),
                       ),
                     ],
                   ),
                 ),
-              ),
+                Expanded(
+                  child: AgoraPullToRefresh(
+                    onRefresh: () async {
+                      context.read<QagListBloc>().add(
+                            FetchQagsListEvent(
+                              thematiqueId: currentThematiqueId,
+                              thematiqueLabel: currentThematiqueLabel,
+                              qagFilter: toQagListFilter(currentSelectedTab),
+                              forceRefresh: true,
+                            ),
+                          );
+                    },
+                    child: SingleChildScrollView(
+                      physics: ClampingScrollPhysics(),
+                      controller: scrollController,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height - 100),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            switch (qagInfoState.status) {
+                              AllPurposeStatus.error => SizedBox(),
+                              AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: AgoraSpacings.base),
+                                      SkeletonBox(height: 12, width: 300, radius: 15),
+                                      SizedBox(height: 4),
+                                      SkeletonBox(height: 12, width: 200, radius: 15),
+                                      SizedBox(height: 4),
+                                      SkeletonBox(height: 12, width: 220, radius: 15),
+                                    ],
+                                  ),
+                                ),
+                              AllPurposeStatus.success => qagInfoState.texteTotalQuestions.isNotBlank()
+                                  ? Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        AgoraSpacings.horizontalPadding,
+                                        AgoraSpacings.base,
+                                        AgoraSpacings.horizontalPadding,
+                                        0,
+                                      ),
+                                      child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
+                                    )
+                                  : SizedBox(),
+                            },
+                            QagsSection(
+                              key: onSearchAnchorKey,
+                              firstThematiqueKey: firstThematiqueKey,
+                              currentThematiqueId: currentThematiqueId,
+                              currentThematiqueLabel: currentThematiqueLabel,
+                              currentSelectedTab: currentSelectedTab,
+                              onSelectedTab: (QagTab tab) => setState(() => currentSelectedTab = tab),
+                              onThematiqueSelected: (String? thematiqueId, String? thematiqueLabel) {
+                                setState(() {
+                                  currentThematiqueId = thematiqueId;
+                                  currentThematiqueLabel = thematiqueLabel;
+                                });
+                              },
+                              onSearchBarOpen: (bool isSearchOpen) {
+                                if (isSearchOpen) {
+                                  TrackerHelper.trackEvent(
+                                    widgetName: AnalyticsScreenNames.qagsPage,
+                                    eventName: AnalyticsEventNames.qagsSearch,
+                                  );
+                                  Scrollable.ensureVisible(
+                                    onSearchAnchorKey.currentContext!,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.easeInOut,
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

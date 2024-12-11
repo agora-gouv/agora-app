@@ -16,6 +16,7 @@ import 'package:agora/splash_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -128,6 +129,15 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         ],
       ),
       navigatorKey: navigatorKey,
+      locale: const Locale("fr", "FR"),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr', 'FR'),
+        Locale('en', 'US'),
+      ],
       navigatorObservers: [
         AgoraApp.matomoRouteObserver,
         AgoraApp.navigationObserver,
