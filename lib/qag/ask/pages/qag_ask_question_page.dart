@@ -62,7 +62,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   String firstname = "";
   ThematiqueWithIdViewModel? thematique;
   bool isCheck = false;
-  bool shouldReloadQags = false;
 
   static const _questionMinLength = 10;
   static const _questionMaxLength = 200;
@@ -86,7 +85,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       ],
       child: AgoraScaffold(
         popAction: () {
-          _backAction(context);
+          Navigator.pop(context);
           return false;
         },
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
@@ -107,7 +106,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 ],
               ),
               onBackClick: () {
-                _backAction(context);
+                Navigator.pop(context);
               },
               child: errorCase == null ? _buildState(context, state) : _buildErrorCase(context, errorCase),
             );
@@ -115,18 +114,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         ),
       ),
     );
-  }
-
-  void _backAction(BuildContext context) {
-    if (shouldReloadQags) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        QagsPage.routeName,
-        ModalRoute.withName(SplashPage.routeName),
-      );
-    } else {
-      Navigator.pop(context);
-    }
   }
 
   Widget _buildState(BuildContext context, ThematiqueState state) {

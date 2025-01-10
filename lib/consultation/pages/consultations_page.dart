@@ -61,15 +61,13 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
                   child: AgoraPullToRefresh(
                     onRefresh: () async =>
                         context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
-                    child: Expanded(
-                      child: SingleChildScrollView(
-                        physics: ClampingScrollPhysics(),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _Content(state: state),
-                          ],
-                        ),
+                    child: SingleChildScrollView(
+                      physics: ClampingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _Content(state: state),
+                        ],
                       ),
                     ),
                   ),
