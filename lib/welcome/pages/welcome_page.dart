@@ -247,7 +247,7 @@ class _ALaUne extends StatelessWidget {
                   color: AgoraColors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withValues(alpha: 0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
                     ),

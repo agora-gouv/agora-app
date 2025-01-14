@@ -77,7 +77,7 @@ class AgoraReadMoreTextState extends State<AgoraReadMoreText> {
                     height: AgoraSpacings.x2,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [widget.backgroundColor.withOpacity(0), widget.backgroundColor],
+                        colors: [widget.backgroundColor.withValues(alpha: 0), widget.backgroundColor],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),

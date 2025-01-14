@@ -137,7 +137,7 @@ class _HeaderSectionWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(AgoraCorners.defaultRadius)),
                       gradient: LinearGradient(
-                        colors: [Colors.white.withOpacity(0.9), Colors.white],
+                        colors: [Colors.white.withValues(alpha: 0.9), Colors.white],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -466,7 +466,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
                   height: AgoraSpacings.x2,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.white.withOpacity(0), Colors.white],
+                      colors: [Colors.white.withValues(alpha: 0), Colors.white],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
