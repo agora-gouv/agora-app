@@ -107,8 +107,6 @@ class OnboardingStepView extends StatelessWidget {
             style: AgoraRichTextItemStyle.regular,
           ),
         ];
-      default:
-        throw Exception("onboarding : step $step not exists error ");
     }
   }
 

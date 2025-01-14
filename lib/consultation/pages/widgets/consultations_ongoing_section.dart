@@ -12,6 +12,7 @@ import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/pages/qags_page.dart';
+import 'package:agora/splash_page.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsOngoingSection extends StatelessWidget {
@@ -91,7 +92,11 @@ class ConsultationsOngoingSection extends StatelessWidget {
                       clickName: AnalyticsEventNames.gotoQagsFromConsultations,
                       widgetName: AnalyticsScreenNames.consultationsPage,
                     );
-                    Navigator.pushNamed(context, QagsPage.routeName);
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      QagsPage.routeName,
+                      ModalRoute.withName(SplashPage.routeName),
+                    );
                   },
                 ),
               ],

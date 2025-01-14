@@ -35,9 +35,9 @@ class TerritoireInfoBloc extends Bloc<TerritoireInfoEvent, TerritoireInfoState> 
         (info) => info.demographicType == DemographicQuestionType.secondaryDepartment,
       );
       final departementsSuivis = [premierDepartement?.data, secondDepartement?.data]
-          .whereNotNull()
+          .nonNulls
           .map((departementLabel) => getTerritoireFromReferentiel(referentielResponse, departementLabel))
-          .whereNotNull()
+          .nonNulls
           .toList();
       final regionsSuivies = departementsSuivis
           .map((departement) => getRegionFromDepartement(departement as Departement, referentielResponse))

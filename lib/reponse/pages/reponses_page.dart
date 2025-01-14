@@ -61,47 +61,45 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AgoraMainToolbar(
-            title: AgoraRichText(
-              policeStyle: AgoraRichTextPoliceStyle.toolbar,
-              semantic: AgoraRichTextSemantic(focused: true),
-              items: [
-                AgoraRichTextItem(
-                  text: "${ReponseStrings.reponsesTitrePart1}\n",
-                  style: AgoraRichTextItemStyle.bold,
-                ),
-                AgoraRichTextItem(text: ReponseStrings.reponsesTitrePart2, style: AgoraRichTextItemStyle.regular),
-              ],
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        AgoraMainToolbar(
+          title: AgoraRichText(
+            policeStyle: AgoraRichTextPoliceStyle.toolbar,
+            semantic: AgoraRichTextSemantic(focused: true),
+            items: [
+              AgoraRichTextItem(
+                text: "${ReponseStrings.reponsesTitrePart1}\n",
+                style: AgoraRichTextItemStyle.bold,
+              ),
+              AgoraRichTextItem(text: ReponseStrings.reponsesTitrePart2, style: AgoraRichTextItemStyle.regular),
+            ],
           ),
-          Expanded(
-            child: AgoraPullToRefresh(
-              onRefresh: () async {
-                context.read<QagResponsePaginatedBloc>().add(
-                      FetchQagsResponsePaginatedEvent(pageNumber: 1, forceRefresh: true),
-                    );
-                context.read<QagResponseBloc>().add(FetchQagsResponseEvent(forceRefresh: true));
-              },
-              child: SingleChildScrollView(
-                physics: ClampingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(height: AgoraSpacings.base),
-                    _ReponsesSection(),
-                    SizedBox(height: AgoraSpacings.x2),
-                    QagReponsesAVenirSection(),
-                  ],
-                ),
+        ),
+        Expanded(
+          child: AgoraPullToRefresh(
+            onRefresh: () async {
+              context.read<QagResponsePaginatedBloc>().add(
+                    FetchQagsResponsePaginatedEvent(pageNumber: 1, forceRefresh: true),
+                  );
+              context.read<QagResponseBloc>().add(FetchQagsResponseEvent(forceRefresh: true));
+            },
+            child: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: AgoraSpacings.base),
+                  _ReponsesSection(),
+                  SizedBox(height: AgoraSpacings.x2),
+                  QagReponsesAVenirSection(),
+                ],
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
