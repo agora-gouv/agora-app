@@ -843,6 +843,7 @@ void main() {
             }
           ],
           "territory": "National",
+          "isAnsweredByUser": true,
         }),
         headers: {
           "accept": "application/json",
@@ -966,6 +967,7 @@ void main() {
               ),
             ],
             goals: [ConsultationGoal(picto: 'picto', description: 'description')],
+            isAnsweredByUser: true,
           ),
         ),
       );

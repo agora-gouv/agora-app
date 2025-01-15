@@ -293,6 +293,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         footer: toFooter(data["footer"]),
         goals: toGoals(data["goals"]),
         territoire: data["territory"] as String,
+        isAnsweredByUser: data["isAnsweredByUser"] as bool,
       );
       return DynamicConsultationSuccessResponse(consultation);
     } catch (exception, stacktrace) {
