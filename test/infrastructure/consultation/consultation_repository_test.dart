@@ -966,6 +966,7 @@ void main() {
               ),
             ],
             goals: [ConsultationGoal(picto: 'picto', description: 'description')],
+            isAnsweredByUser: true,
           ),
         ),
       );

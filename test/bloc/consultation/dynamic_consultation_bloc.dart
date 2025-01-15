@@ -111,6 +111,7 @@ void main() {
         description: 'description',
       ),
     ],
+    isAnsweredByUser: true,
   );
 
   blocTest(

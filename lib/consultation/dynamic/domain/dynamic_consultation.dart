@@ -22,9 +22,18 @@ class DynamicConsultation extends Equatable {
   final ConsultationFooter? footer;
   final List<ConsultationGoal>? goals;
   final String territoire;
+  final bool isAnsweredByUser;
 
   bool isOnGoing() {
     return DateTime.now().isBefore(questionsInfos.endDate);
+  }
+
+  bool isOnGoingAndNotAnsweredByUser() {
+    return isOnGoing() && !isAnsweredByUser;
+  }
+
+  bool isOnGoingAndAnsweredByUser() {
+    return isOnGoing() && isAnsweredByUser;
   }
 
   DynamicConsultation({
@@ -48,6 +57,7 @@ class DynamicConsultation extends Equatable {
     required this.footer,
     required this.goals,
     required this.territoire,
+    required this.isAnsweredByUser,
   });
 
   @override

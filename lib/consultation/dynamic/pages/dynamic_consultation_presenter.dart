@@ -18,6 +18,7 @@ class DynamicConsultationPresenter {
     final download = consultation.downloadInfo;
     final history = consultation.history;
     final participationInfo = consultation.participationInfo;
+
     return _SuccessViewModel(
       shareText: consultation.shareText,
       consultationId: consultation.id,
@@ -29,7 +30,7 @@ class DynamicConsultationPresenter {
           title: consultation.title,
           territoire: getTerritoireFromReferentiel(referentiel, consultation.territoire),
         ),
-        if (consultation.isOnGoing())
+        if (consultation.isOnGoingAndNotAnsweredByUser())
           _QuestionsInfoSection(
             endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayLongMonth()),
             questionCount: questionsInfos.questionCount,
@@ -59,7 +60,7 @@ class DynamicConsultationPresenter {
               consultation.expandedSections.map((section) => presentSection(consultation.id, section)).toList(),
         ),
         if (download != null) DownloadSection(url: download.url),
-        if (consultation.isOnGoing())
+        if (consultation.isOnGoingAndAnsweredByUser())
           ParticipantInfoSection(
             participantCountGoal: participationInfo.participantCountGoal,
             participantCount: participationInfo.participantCount,
@@ -91,10 +92,10 @@ class DynamicConsultationPresenter {
             consultationId: consultation.id,
             userResponse: feedbackQuestion.userResponse,
           ),
-        if (consultation.isOnGoing())
+        if (consultation.isOnGoingAndNotAnsweredByUser())
           StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
-        if (!consultation.isOnGoing()) HistorySection(consultation.id, history),
-        if (!consultation.isOnGoing()) NotificationSection(),
+        if (!consultation.isOnGoingAndNotAnsweredByUser()) HistorySection(consultation.id, history),
+        if (!consultation.isOnGoingAndNotAnsweredByUser()) NotificationSection(),
       ],
     );
   }
