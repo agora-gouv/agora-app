@@ -843,6 +843,7 @@ void main() {
             }
           ],
           "territory": "National",
+          "isAnsweredByUser": true,
         }),
         headers: {
           "accept": "application/json",
