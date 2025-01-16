@@ -42,7 +42,9 @@ void main() {
 
     final expected = [
       SimpleHtmlData(
-          style: AgoraRichTextItemStyle.regular, text: 'Je contiens une balise inconnue du bold dans mon HTML')
+        style: AgoraRichTextItemStyle.regular,
+        text: 'Je contiens une balise inconnue du bold dans mon HTML',
+      ),
     ];
 
     expect(parseSimpleHtml(toParse), expected);
