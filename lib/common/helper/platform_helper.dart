@@ -52,7 +52,7 @@ class PlatformStaticHelper {
     try {
       return Platform.isAndroid;
     } catch (e) {
-      Log.e("not Android platform", e);
+      Log.error("not Android platform", e);
       return false;
     }
   }
@@ -61,7 +61,7 @@ class PlatformStaticHelper {
     try {
       return Platform.isIOS;
     } catch (e) {
-      Log.e("not IOS platform", e);
+      Log.error("not IOS platform", e);
       return false;
     }
   }

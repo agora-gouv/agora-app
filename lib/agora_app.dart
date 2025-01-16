@@ -84,7 +84,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
     if (!kIsWeb) {
       if (state == AppLifecycleState.resumed) {
         // work only when app is already open
-        Log.d("notification : resume");
+        Log.debug("notification : resume");
         await Future.delayed(Duration(milliseconds: 200));
         ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
       }

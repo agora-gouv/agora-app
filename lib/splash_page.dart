@@ -260,7 +260,7 @@ class _SplashPageState extends State<SplashPage> {
       },
     );
     if (!kIsWeb) {
-      Log.d("notification : start app");
+      Log.debug("notification : start app");
       ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
     }
   }

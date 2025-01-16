@@ -28,14 +28,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
 
-  Log.d("notification : handling a background message ${message.messageId}");
+  Log.debug("notification : handling a background message ${message.messageId}");
   final pushNotificationService = ServiceManager.getPushNotificationService();
   await pushNotificationService.setupNotifications();
   saveNotificationMessage(message);
 }
 
 void saveNotificationMessage(RemoteMessage message) async {
-  Log.d("notification : save ${jsonEncode(message.toMap())}");
+  Log.debug("notification : save ${jsonEncode(message.toMap())}");
   StorageManager.getPushNotificationStorageClient().saveMessage(jsonEncode(message.toMap()));
 }
 
@@ -67,7 +67,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      Log.d(
+      Log.debug(
         "FirebaseMessaging - New notification while app is in foreground: ${message.notification?.title} ${message.notification?.body}",
       );
       TrackerHelper.trackScreen(screenName: AnalyticsScreenNames.notificationInApp);
@@ -75,7 +75,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Log.d(
+      Log.debug(
         "FirebaseMessaging - New notification while app is in background: ${message.notification?.title} ${message.notification?.body}",
       );
       saveNotificationMessage(message);
@@ -83,7 +83,7 @@ class FirebasePushNotificationService extends PushNotificationService {
 
     FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        Log.d(
+        Log.debug(
           "FirebaseMessaging - New notification while app is terminated: ${message.notification?.title} ${message.notification?.body}",
         );
         saveNotificationMessage(message);
@@ -123,7 +123,7 @@ class FirebasePushNotificationService extends PushNotificationService {
 
   Future<String?> _redirect(String logMessage) async {
     final String? savedNotificationMessage = await StorageManager.getPushNotificationStorageClient().getMessage();
-    Log.d("$logMessage $savedNotificationMessage");
+    Log.debug("$logMessage $savedNotificationMessage");
     if (savedNotificationMessage != null) {
       TrackerHelper.trackClick(
         widgetName: AnalyticsScreenNames.notificationSystemWidget,
@@ -217,7 +217,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     if (token == null) {
       throw Exception("No firebase messaging token found error");
     }
-    Log.d("\nFirebase messaging token : $token\n");
+    Log.debug("\nFirebase messaging token : $token\n");
     return token;
   }
 

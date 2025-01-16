@@ -10,7 +10,7 @@ class TrackerHelper {
   static const matomoSearchedKeywordsTrackerDimension = "dimension3";
 
   static void trackClick({required String widgetName, required String clickName}) {
-    Log.d("AGORA MATOMO TRACK CLICK - $widgetName - $clickName");
+    Log.debug("AGORA MATOMO TRACK CLICK - $widgetName - $clickName");
     MatomoTracker.instance.trackEvent(
       eventInfo: EventInfo(
         category: widgetName,
@@ -28,17 +28,17 @@ class TrackerHelper {
       matomoVersionTrackerDimension: await version.getVersion(),
     };
 
-    Log.d("AGORA MATOMO TRACK DIMENSION - $dimension");
+    Log.debug("AGORA MATOMO TRACK DIMENSION - $dimension");
     MatomoTracker.instance.trackDimensions(dimensions: dimension);
   }
 
   static void trackScreen({required String screenName}) {
-    Log.d("AGORA MATOMO TRACK SCREEN - $screenName");
+    Log.debug("AGORA MATOMO TRACK SCREEN - $screenName");
     MatomoTracker.instance.trackPageViewWithName(actionName: screenName);
   }
 
   static void trackEvent({required String widgetName, required String eventName}) {
-    Log.d("AGORA MATOMO TRACK EVENT - $widgetName - $eventName");
+    Log.debug("AGORA MATOMO TRACK EVENT - $widgetName - $eventName");
     MatomoTracker.instance.trackEvent(
       eventInfo: EventInfo(
         category: widgetName,
@@ -49,7 +49,7 @@ class TrackerHelper {
   }
 
   static void trackSearch({required String widgetName, required String searchName, required String searchedKeywords}) {
-    Log.d("AGORA MATOMO TRACK EVENT - $widgetName - $searchName");
+    Log.debug("AGORA MATOMO TRACK EVENT - $widgetName - $searchName");
 
     MatomoTracker.instance.trackEvent(
       eventInfo: EventInfo(

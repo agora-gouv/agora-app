@@ -1,3 +1,4 @@
+import 'package:agora/common/log/log.dart';
 import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:equatable/equatable.dart';
@@ -34,7 +35,8 @@ List<SimpleHtmlData> parseSimpleHtml(String data) {
         ...parseSimpleHtml(data.substringAfter('</b>', includePattern: false)),
       ];
     } else {
-      throw Exception('Simple html mal formated : $data');
+      Log.warning("Erreur dans le HTML : $data");
+      return [SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: data.replaceAll(RegExp(r'<.*?>'), ""))];
     }
   } else if (data.contains('<')) {
     return [
