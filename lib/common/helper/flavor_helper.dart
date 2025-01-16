@@ -6,16 +6,16 @@ class FlavorHelper {
   static AgoraFlavor getFlavor() {
     switch (const String.fromEnvironment('app.flavor')) {
       case "Local":
-        Log.d("Flavor : Local");
+        Log.debug("Flavor : Local");
         return AgoraFlavor.local;
       case "Dev":
-        Log.d("Flavor : Dev");
+        Log.debug("Flavor : Dev");
         return AgoraFlavor.dev;
       case "Sandbox":
-        Log.d("Flavor : Sandbox");
+        Log.debug("Flavor : Sandbox");
         return AgoraFlavor.sandbox;
       case "Prod":
-        Log.d("Flavor : Prod");
+        Log.debug("Flavor : Prod");
         return AgoraFlavor.prod;
       default:
         throw Exception(

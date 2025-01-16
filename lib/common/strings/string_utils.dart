@@ -11,12 +11,12 @@ class StringUtils {
 }
 
 extension StringExtensionUtils on String {
-  String substringBefore(String pattern) {
+  String substringBefore(Pattern pattern) {
     return substring(0, indexOf(pattern));
   }
 
-  String substringAfter(String pattern, {bool includePattern = false}) {
+  String substringAfter(Pattern pattern, {bool includePattern = false}) {
     final indexOf2 = indexOf(pattern);
-    return substring(includePattern ? indexOf2 : indexOf2 + pattern.length);
+    return substring(includePattern ? indexOf2 : indexOf2 + pattern.toString().length);
   }
 }

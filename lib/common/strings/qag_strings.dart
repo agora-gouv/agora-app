@@ -51,7 +51,6 @@ class QagStrings {
   static const String supportQuestion = "Soutenir cette question";
   static const String questionSupported = "Question soutenue";
 
-  static const String governmentResponseTitle = "Réponse du Gouvernement";
   static const String answerTo = "En réponse à";
   static const String transcription = "Transcription";
   static const String utils = "Oui\u{00A0}!";
