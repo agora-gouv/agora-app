@@ -16,11 +16,11 @@ class ConsultationCacheRepository {
   bool get isCacheFresh => lastUpdate != null && DateTime.now().isBefore(lastUpdate!.add(CACHE_MAX_AGE));
 
   Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
-    if (isCacheSuccess) {
-      return consultationsData!;
-    }
+    //if (isCacheSuccess) {
+    //  return consultationsData!;
+    //}
     consultationsData = await consultationRepository.fetchConsultations();
-    lastUpdate = DateTime.now();
+    //lastUpdate = DateTime.now();
     return consultationsData!;
   }
 }
