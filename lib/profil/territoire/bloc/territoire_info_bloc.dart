@@ -24,6 +24,8 @@ class TerritoireInfoBloc extends Bloc<TerritoireInfoEvent, TerritoireInfoState> 
   }
 
   Future<void> _handleGetTerritoireInfo(GetTerritoireInfoEvent event, Emitter<TerritoireInfoState> emit) async {
+    if (state.status == AllPurposeStatus.loading) return;
+
     emit(state.clone(status: AllPurposeStatus.loading));
     final referentielResponse = await referentielRepository.fetchReferentielRegionsEtDepartements();
     final response = await demographicRepository.getDemographicResponses();
