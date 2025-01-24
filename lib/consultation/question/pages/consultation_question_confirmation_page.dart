@@ -45,8 +45,8 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
           create: (BuildContext context) {
             final questionsResponsesStockState = context.read<ConsultationQuestionsResponsesStockBloc>().state;
             return ConsultationQuestionsResponsesBloc(
-                consultationRepository: RepositoryManager.getConsultationRepository())
-              ..add(
+              consultationRepository: RepositoryManager.getConsultationRepository(),
+            )..add(
                 SendConsultationQuestionsResponsesEvent(
                   consultationId: consultationId,
                   questionIdStack: questionsResponsesStockState.questionIdStack,
