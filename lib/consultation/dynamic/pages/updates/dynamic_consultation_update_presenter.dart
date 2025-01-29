@@ -30,7 +30,7 @@ class _Presenter {
             description: consultationHeaderInfo.description,
             logo: consultationHeaderInfo.logo,
           ),
-        if (consultationDatesInfos != null)
+        if (consultation.isOnGoing())
           ConsultationDatesInfosSection(
             label:
                 'Du ${consultationDatesInfos.startDate.formatToDayMonthYear()} au ${consultationDatesInfos.endDate.formatToDayMonthYear()}',
@@ -54,7 +54,7 @@ class _Presenter {
               .toList(),
         ),
         if (download != null) DownloadSection(url: download.url),
-        if (participationInfo != null)
+        if (consultation.isOnGoing())
           ParticipantInfoSection(
             participantCountGoal: participationInfo.participantCountGoal,
             participantCount: participationInfo.participantCount,

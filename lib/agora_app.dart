@@ -12,11 +12,11 @@ import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart'
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/profil/onboarding/pages/onboarding_page.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
-import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/splash_page.dart';
 import 'package:agora/welcome/pages/welcome_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,7 +52,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
 
     if (widget.shouldShowOnboarding) {
       onRedirect = (context) {
-        Navigator.pushReplacementNamed(context, QagsPage.routeName);
+        Navigator.pushReplacementNamed(context, WelcomePage.routeName);
         Navigator.pushNamed(context, OnboardingPage.routeName).then((value) {
           StorageManager.getOnboardingStorageClient().save(false);
         });
@@ -84,7 +84,7 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
     if (!kIsWeb) {
       if (state == AppLifecycleState.resumed) {
         // work only when app is already open
-        Log.d("notification : resume");
+        Log.debug("notification : resume");
         await Future.delayed(Duration(milliseconds: 200));
         ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
       }
@@ -129,6 +129,15 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         ],
       ),
       navigatorKey: navigatorKey,
+      locale: const Locale("fr", "FR"),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr', 'FR'),
+        Locale('en', 'US'),
+      ],
       navigatorObservers: [
         AgoraApp.matomoRouteObserver,
         AgoraApp.navigationObserver,
@@ -145,8 +154,8 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
           primary: AgoraColors.primaryBlue,
           secondary: AgoraColors.primaryBlue,
         ),
-        hoverColor: AgoraColors.neutral400,
-        highlightColor: AgoraColors.neutral400,
+        hoverColor: AgoraColors.neutral200,
+        highlightColor: AgoraColors.neutral200,
         focusColor: AgoraColors.neutral200,
       ),
       debugShowCheckedModeBanner: false,

@@ -6,6 +6,7 @@ import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
+import 'package:agora/qag/repository/dto/qag_content_dto.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 
@@ -30,6 +31,7 @@ class FakeQagSuccessRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagListFilter filter,
+    bool forceRefresh = false,
   }) async {
     switch (pageNumber) {
       case 1:
@@ -260,6 +262,21 @@ class FakeQagSuccessRepository extends QagRepository {
       ],
     );
   }
+
+  @override
+  Future<QagContentDto?> getContentQag() {
+    return Future.value(QagContentDto(info: "qagInfoText", texteTotalQuestions: "totalQuestionsText"));
+  }
+
+  @override
+  Future<String?> getContentReponseQag() {
+    return Future.value("reponseInfoText");
+  }
+
+  @override
+  Future<String?> getContentAskQag() {
+    return Future.value("askQagInfoText");
+  }
 }
 
 class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
@@ -380,6 +397,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
           author: "Olivier Véran",
           authorDescription: "Ministre délégué auprès de...",
           responseDate: DateTime(2024, 2, 20),
+          videoTitle: "Réponse du Gouvernement",
           videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
           videoWidth: 1080,
           videoHeight: 1920,
@@ -443,6 +461,7 @@ class FakeQagSuccessWithResponseAndFeedbackNotGivenRepository extends FakeQagSuc
           author: "Olivier Véran",
           authorDescription: "Ministre délégué auprès de...",
           responseDate: DateTime(2024, 2, 20),
+          videoTitle: "Réponse du Gouvernement",
           videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
           videoWidth: 1080,
           videoHeight: 1920,
@@ -522,6 +541,7 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
           author: "Olivier Véran",
           authorDescription: "Ministre délégué auprès de...",
           responseDate: DateTime(2024, 2, 20),
+          videoTitle: "Réponse du Gouvernement",
           videoUrl: "https://betagouv.github.io/agora-content/QaG-Stormtrooper-Response.mp4",
           videoWidth: 1080,
           videoHeight: 1920,
@@ -615,6 +635,7 @@ class FakeQagFailureRepository extends QagRepository {
     required int pageNumber,
     required String? thematiqueId,
     required QagListFilter filter,
+    bool forceRefresh = false,
   }) async {
     return GetQagListFailedResponse();
   }
@@ -692,6 +713,15 @@ class FakeQagFailureRepository extends QagRepository {
   Future<GetSearchQagsRepositoryResponse> fetchSearchQags({required String? keywords}) async {
     return GetSearchQagsFailedResponse();
   }
+
+  @override
+  Future<QagContentDto?> getContentQag() => Future.value(null);
+
+  @override
+  Future<String?> getContentReponseQag() => Future.value(null);
+
+  @override
+  Future<String?> getContentAskQag() => Future.value(null);
 }
 
 class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {

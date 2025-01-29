@@ -18,7 +18,7 @@ class DeeplinkHelper {
     final appLinks = AppLinks();
     final uri = await appLinks.getInitialLink();
     if (uri != null) {
-      Log.d("deeplink initiate uri : $uri");
+      Log.debug("deeplink initiate uri : $uri");
       final featurePath = uri.pathSegments.first;
       final idOrSlug = uri.pathSegments.last;
       switch (featurePath) {
@@ -29,15 +29,15 @@ class DeeplinkHelper {
           _handleDeeplink(
             id: idOrSlug,
             onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
-            onMatchFailedCallback: () => Log.e("deeplink initiate uri : no qag id match error"),
+            onMatchFailedCallback: () => Log.error("deeplink initiate uri : no qag id match error"),
           );
           break;
         default:
-          Log.e("deeplink initiate uri : unknown path error: ${uri.path}");
+          Log.error("deeplink initiate uri : unknown path error: ${uri.path}");
           break;
       }
     } else {
-      Log.d("deeplink initiate uri : null uri error");
+      Log.debug("deeplink initiate uri : null uri error");
     }
   }
 
@@ -59,16 +59,16 @@ class DeeplinkHelper {
             _handleDeeplink(
               id: idOrSlug,
               onMatchSuccessCallback: (id) => onQagSuccessCallback(id),
-              onMatchFailedCallback: () => Log.e("deeplink listen uri : no qag id match error"),
+              onMatchFailedCallback: () => Log.error("deeplink listen uri : no qag id match error"),
             );
             break;
           default:
-            Log.e("deeplink listen uri : unknown path error: ${uri.path}");
+            Log.error("deeplink listen uri : unknown path error: ${uri.path}");
             break;
         }
       },
       onError: (Object err) {
-        Log.d("link error: $err");
+        Log.debug("link error: $err");
       },
     );
   }

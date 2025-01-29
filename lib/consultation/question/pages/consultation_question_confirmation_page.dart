@@ -1,4 +1,6 @@
 import 'package:agora/common/manager/repository_manager.dart';
+import 'package:agora/consultation/bloc/consultation_bloc.dart';
+import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/question/bloc/response/send/consultation_questions_responses_bloc.dart';
 import 'package:agora/consultation/question/bloc/response/send/consultation_questions_responses_event.dart';
@@ -7,12 +9,12 @@ import 'package:agora/consultation/question/bloc/response/stock/consultation_que
 import 'package:agora/consultation/question/bloc/response/stock/consultation_questions_responses_stock_event.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/pages/demographic_information_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:lottie/lottie.dart';
 
 class ConsultationQuestionConfirmationArguments {
@@ -37,25 +39,48 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) {
-        final questionsResponsesStockState = context.read<ConsultationQuestionsResponsesStockBloc>().state;
-        return ConsultationQuestionsResponsesBloc(consultationRepository: RepositoryManager.getConsultationRepository())
-          ..add(
-            SendConsultationQuestionsResponsesEvent(
-              consultationId: consultationId,
-              questionIdStack: questionsResponsesStockState.questionIdStack,
-              questionsResponses: questionsResponsesStockState.questionsResponses,
-            ),
-          );
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) {
+            final questionsResponsesStockState = context.read<ConsultationQuestionsResponsesStockBloc>().state;
+            return ConsultationQuestionsResponsesBloc(
+              consultationRepository: RepositoryManager.getConsultationRepository(),
+            )..add(
+                SendConsultationQuestionsResponsesEvent(
+                  consultationId: consultationId,
+                  questionIdStack: questionsResponsesStockState.questionIdStack,
+                  questionsResponses: questionsResponsesStockState.questionsResponses,
+                ),
+              );
+          },
+        ),
+        BlocProvider(
+          create: (BuildContext context) {
+            return ConsultationBloc.fromRepositories(
+              consultationRepository: RepositoryManager.getConsultationCacheRepository(),
+              concertationRepository: RepositoryManager.getConcertationCacheRepository(),
+              referentielRepository: RepositoryManager.getReferentielCacheRepository(),
+            )..add(FetchConsultationsEvent());
+          },
+        ),
+      ],
       child: AgoraScaffold(
         shouldPop: false,
         appBarType: AppBarColorType.primaryColor,
         child: BlocConsumer<ConsultationQuestionsResponsesBloc, SendConsultationQuestionsResponsesState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             if (state is SendConsultationQuestionsResponsesSuccessState) {
-              if (state.shouldDisplayDemographicInformation) {
+              final InAppReview inAppReview = InAppReview.instance;
+              if (await inAppReview.isAvailable()) {
+                inAppReview.requestReview();
+              }
+
+              if (context.mounted) {
+                context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true));
+              }
+
+              if (state.shouldDisplayDemographicInformation && context.mounted) {
                 Navigator.pushNamed(
                   context,
                   DemographicInformationPage.routeName,
@@ -63,8 +88,12 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                     consultationId: consultationId,
                     consultationTitle: consultationTitle,
                   ),
-                ).then((value) => Navigator.of(context).pop());
-              } else {
+                ).then((value) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                });
+              } else if (context.mounted) {
                 Navigator.pushNamed(
                   context,
                   DynamicConsultationPage.routeName,
@@ -73,7 +102,11 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
                     consultationTitle: consultationTitle,
                     shouldLaunchCongratulationAnimation: true,
                   ),
-                ).then((value) => Navigator.of(context).pop());
+                ).then((value) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                });
               }
             } else if (state is SendConsultationQuestionsResponsesFailureState) {
               context
@@ -83,13 +116,7 @@ class ConsultationQuestionConfirmationPage extends StatelessWidget {
           },
           builder: (context, state) {
             return SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  AgoraTopDiagonal(),
-                  _buildState(context, state),
-                ],
-              ),
+              child: _buildState(context, state),
             );
           },
         ),

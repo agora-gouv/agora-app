@@ -1,11 +1,14 @@
-import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 
 class ConsultationFinishedPaginatedPresenter {
   static List<ConsultationPaginatedViewModel> presentPaginatedConsultations(
     List<Consultation> finishedConsultations,
     List<Consultation> concertations,
+    List<Territoire> referentiel,
   ) {
     final allConsultationPaginated = [...finishedConsultations, ...concertations];
     allConsultationPaginated.sort((a, b) {
@@ -14,6 +17,7 @@ class ConsultationFinishedPaginatedPresenter {
     });
     return allConsultationPaginated.map(
       (consultation) {
+        final territoire = getTerritoireFromReferentiel(referentiel, consultation.territoire);
         return ConsultationPaginatedViewModel(
           id: consultation.id,
           title: consultation.title,
@@ -21,6 +25,9 @@ class ConsultationFinishedPaginatedPresenter {
           thematique: consultation.thematique.toThematiqueViewModel(),
           label: consultation.label,
           externalLink: consultation is Concertation ? consultation.externalLink : null,
+          badgeLabel: territoire.label.toUpperCase(),
+          badgeColor: getTerritoireBadgeColor(territoire.type),
+          badgeTextColor: getTerritoireBadgeTexteColor(territoire.type),
         );
       },
     ).toList();

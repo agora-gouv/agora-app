@@ -1,8 +1,8 @@
 import 'package:agora/common/parser/string_parser.dart';
-import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -88,7 +88,7 @@ class ConsultationQuestionView extends StatelessWidget {
                                   isScrollControlled: true,
                                   backgroundColor: AgoraColors.transparent,
                                   builder: (context) => AgoraInformationBottomSheet(
-                                    title: "Informations",
+                                    titre: "Informations",
                                     description: AgoraHtml(data: popupDescription!, textAlign: TextAlign.center),
                                   ),
                                 );

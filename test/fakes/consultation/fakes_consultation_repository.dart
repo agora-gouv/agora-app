@@ -7,6 +7,8 @@ import 'package:agora/consultation/question/domain/consultation_question_respons
 import 'package:agora/consultation/question/domain/consultation_question_response_choice.dart';
 import 'package:agora/consultation/question/domain/consultation_questions.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/repository/consultation_responses.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 
 class FakeConsultationSuccessRepository extends ConsultationRepository {
@@ -26,6 +28,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
           label: "Plus que 3 jours",
+          territoire: "Paris",
         ),
       ],
       finishedConsultations: [
@@ -36,6 +39,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl2",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
+          territoire: "Paris",
         ),
       ],
       answeredConsultations: [
@@ -46,6 +50,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl3",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
+          territoire: "Paris",
         ),
       ],
     );
@@ -54,6 +59,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
+    Territoire? territoire,
   }) async {
     return GetConsultationsPaginatedSucceedResponse(
       maxPage: 3,
@@ -65,6 +71,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
+          territoire: "Paris",
         ),
       ],
     );
@@ -171,6 +178,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             order: 3,
             description: "description du chapitre",
             nextQuestionId: "questionIdB",
+            imageUrl: "https://url.com/image.jpg",
           ),
         ],
       ),
@@ -225,12 +233,14 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
       infoHeader: null,
       previewSections: [],
       expandedSections: [],
-      participationInfo: null,
+      participationInfo:
+          ConsultationParticipationInfo(participantCount: 2, participantCountGoal: 3, shareText: "share text"),
       downloadInfo: null,
       feedbackQuestion: null,
       feedbackResult: null,
       footer: null,
-      consultationDatesInfos: null,
+      consultationDatesInfos:
+          ConsultationDatesInfos(endDate: DateTime(2023, 12, 30), startDate: DateTime(2022, 12, 30)),
       title: 'title',
       coverUrl: 'coverUrl',
       thematicLogo: 'logo',
@@ -255,6 +265,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
           coverUrl: "coverUrl",
           thematique: Thematique(picto: "🩺", label: "Santé"),
           label: 'label',
+          territoire: "Paris",
         ),
       ],
     );
@@ -280,6 +291,7 @@ class FakeConsultationSuccessWithFinishedConsultationEmptyRepository extends Fak
           thematique: Thematique(picto: "🚊", label: "Transports"),
           endDate: DateTime(2024, 1, 23),
           label: null,
+          territoire: "Paris",
         ),
       ],
       finishedConsultations: [],
@@ -297,6 +309,7 @@ class FakeConsultationFailureRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
+    Territoire? territoire,
   }) async {
     return GetConsultationsFinishedPaginatedFailedResponse();
   }

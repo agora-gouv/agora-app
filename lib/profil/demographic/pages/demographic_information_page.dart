@@ -7,7 +7,6 @@ import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/text/agora_link_text.dart';
@@ -46,7 +45,6 @@ class _DemographicInformationPageState extends State<DemographicInformationPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AgoraTopDiagonal(),
             SizedBox(height: AgoraSpacings.x1_5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -234,7 +232,11 @@ class _NePasRepondreBouton extends StatelessWidget {
               consultationTitle: arguments.consultationTitle,
               shouldLaunchCongratulationAnimation: true,
             ),
-          ).then((value) => Navigator.of(context).pop());
+          ).then((value) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+            }
+          });
         },
       ),
     );
@@ -264,7 +266,11 @@ class _CommencerBouton extends StatelessWidget {
             consultationId: arguments.consultationId,
             consultationTitle: arguments.consultationTitle,
           ),
-        ).then((value) => Navigator.of(context).pop());
+        ).then((value) {
+          if (context.mounted) {
+            Navigator.of(context).pop();
+          }
+        });
       },
     );
   }

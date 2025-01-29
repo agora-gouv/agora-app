@@ -7,6 +7,7 @@ import 'package:bloc_test/bloc_test.dart';
 
 import '../../fakes/consultation/fake_consultation_question_storage_client.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
+import '../../fakes/referentiel/fakes_referentiel_repository.dart';
 
 void main() {
   final consultation = DynamicConsultation(
@@ -16,6 +17,7 @@ void main() {
     shareText: 'A définir ¯\\_(ツ)_/¯',
     thematicLogo: '🚊',
     thematicLabel: 'Transports',
+    territoire: "National",
     questionsInfos: ConsultationQuestionsInfos(
       endDate: DateTime(2023, 12, 30),
       questionCount: '5 à 10 questions',
@@ -109,25 +111,28 @@ void main() {
         description: 'description',
       ),
     ],
+    isAnsweredByUser: true,
   );
 
   blocTest(
     "when repository succeed - should emit success state",
     build: () => DynamicConsultationBloc(
-      FakeConsultationSuccessRepository(consultation),
-      FakeConsultationQuestionStorageClient(),
+      consultationRepository: FakeConsultationSuccessRepository(consultation),
+      referentielRepository: FakesReferentielRepository(),
+      storageClient: FakeConsultationQuestionStorageClient(),
     ),
     act: (bloc) => bloc.add(FetchDynamicConsultationEvent('id')),
     expect: () => [
-      DynamicConsultationSuccessState(consultation),
+      DynamicConsultationSuccessState(consultation, []),
     ],
   );
 
   blocTest(
     "when repository fails - should emit error state",
     build: () => DynamicConsultationBloc(
-      FakeConsultationFailureRepository(),
-      FakeConsultationQuestionStorageClient(),
+      consultationRepository: FakeConsultationFailureRepository(),
+      referentielRepository: FakesReferentielRepository(),
+      storageClient: FakeConsultationQuestionStorageClient(),
     ),
     act: (bloc) => bloc.add(FetchDynamicConsultationEvent('id')),
     expect: () => [

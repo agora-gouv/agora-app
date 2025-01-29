@@ -13,7 +13,6 @@ import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart'
 import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_corners.dart';
@@ -124,7 +123,6 @@ class _SplashPageState extends State<SplashPage> {
               if (loginState is LoginErrorState) {
                 return Column(
                   children: [
-                    AgoraTopDiagonal(),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -262,7 +260,7 @@ class _SplashPageState extends State<SplashPage> {
       },
     );
     if (!kIsWeb) {
-      Log.d("notification : start app");
+      Log.debug("notification : start app");
       ServiceManager.getPushNotificationService().redirectionFromSavedNotificationMessage();
     }
   }

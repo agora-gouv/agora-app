@@ -1,10 +1,11 @@
+import 'package:agora/concertation/repository/concertation_cache_repository.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
 import 'package:agora/consultation/domain/consultation.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 
 class FakesConcertationRepository extends ConcertationRepository {
   @override
-  Future<List<Concertation>> getConcertations() async {
+  Future<List<Concertation>> fetchConcertations() async {
     return [
       Concertation(
         id: "concertationId1",
@@ -15,7 +16,12 @@ class FakesConcertationRepository extends ConcertationRepository {
         thematique: Thematique(label: "Transports", picto: "🚊"),
         updateDate: DateTime(2023, 3, 21),
         label: "Plus que 3 jours",
+        territoire: "Paris",
       ),
     ];
   }
+}
+
+class FakesConcertationCacheRepository extends ConcertationCacheRepository {
+  FakesConcertationCacheRepository({required super.concertationRepository});
 }

@@ -18,8 +18,8 @@ class AgoraHtmlStyles {
     return {
       "html": Style(textAlign: textAlign),
       "body": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
-      "ul": AgoraHtmlStyles._listStyle(fontSize),
-      "ol": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
+      "ul": AgoraHtmlStyles._unOrderListStyle(fontSize),
+      "ol": AgoraHtmlStyles._orderListStyle(fontSize),
       "li": AgoraHtmlStyles._bodyStyle(fontSize, textAlign),
       "b": AgoraHtmlStyles._boldStyle(fontSize),
       "span": AgoraHtmlStyles._spanStyle(fontSize),
@@ -39,7 +39,18 @@ class AgoraHtmlStyles {
         margin: Margins.zero,
       );
 
-  static Style _listStyle(double fontSize) => Style(
+  static Style _orderListStyle(double fontSize) => Style(
+        fontFamily: marianne,
+        fontWeight: light,
+        fontSize: FontSize(fontSize),
+        color: AgoraColors.primaryGrey,
+        textDecorationColor: AgoraColors.primaryBlue,
+        lineHeight: LineHeight(height),
+        padding: HtmlPaddings(left: HtmlPadding(AgoraSpacings.x1_5)),
+        margin: Margins.zero,
+      );
+
+  static Style _unOrderListStyle(double fontSize) => Style(
         fontFamily: marianne,
         fontWeight: light,
         fontSize: FontSize(fontSize),

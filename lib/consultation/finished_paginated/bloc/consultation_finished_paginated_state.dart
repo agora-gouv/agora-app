@@ -1,46 +1,85 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/consultation/finished_paginated/bloc/consultation_finished_paginated_view_model.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:equatable/equatable.dart';
+import 'package:optional/optional.dart';
 
-abstract class ConsultationPaginatedState extends Equatable {
-  final List<ConsultationPaginatedViewModel> consultationPaginatedViewModels;
+class ConsultationPaginatedState extends Equatable {
+  final ConsultationsListState consultationsListState;
+  final TerritoireState territoireState;
   final int currentPageNumber;
   final int maxPage;
+  final Territoire? filtreTerritoire;
 
   ConsultationPaginatedState({
-    required this.consultationPaginatedViewModels,
+    required this.consultationsListState,
+    required this.territoireState,
     required this.currentPageNumber,
     required this.maxPage,
+    this.filtreTerritoire,
+  });
+
+  ConsultationPaginatedState.init({
+    this.consultationsListState =
+        const ConsultationsListState(status: AllPurposeStatus.notLoaded, consultationViewModels: []),
+    this.territoireState = const TerritoireState(status: AllPurposeStatus.notLoaded, territoires: []),
+    this.currentPageNumber = -1,
+    this.maxPage = -1,
+    this.filtreTerritoire,
+  });
+
+  ConsultationPaginatedState clone({
+    ConsultationsListState? consultationsListState,
+    TerritoireState? territoireState,
+    int? currentPageNumber,
+    int? maxPage,
+    Optional<Territoire>? filtreTerritoireOptional,
+  }) =>
+      ConsultationPaginatedState(
+        consultationsListState: consultationsListState ?? this.consultationsListState,
+        territoireState: territoireState ?? this.territoireState,
+        currentPageNumber: currentPageNumber ?? this.currentPageNumber,
+        maxPage: maxPage ?? this.maxPage,
+        filtreTerritoire:
+            filtreTerritoireOptional != null ? filtreTerritoireOptional.orElseNullable(null) : filtreTerritoire,
+      );
+
+  @override
+  List<Object> get props => [consultationsListState, territoireState, currentPageNumber, maxPage];
+}
+
+class ConsultationsListState extends Equatable {
+  final AllPurposeStatus status;
+  final List<ConsultationPaginatedViewModel> consultationViewModels;
+
+  const ConsultationsListState({
+    required this.status,
+    required this.consultationViewModels,
   });
 
   @override
-  List<Object> get props => [consultationPaginatedViewModels, currentPageNumber, maxPage];
+  List<Object?> get props => [status, consultationViewModels];
 }
 
-class ConsultationFinishedPaginatedInitialState extends ConsultationPaginatedState {
-  ConsultationFinishedPaginatedInitialState()
-      : super(consultationPaginatedViewModels: [], currentPageNumber: -1, maxPage: -1);
-}
+class TerritoireState extends Equatable {
+  final AllPurposeStatus status;
+  final List<Territoire> territoires;
 
-class ConsultationFinishedPaginatedLoadingState extends ConsultationPaginatedState {
-  ConsultationFinishedPaginatedLoadingState({
-    required super.consultationPaginatedViewModels,
-    required super.currentPageNumber,
-    required super.maxPage,
+  const TerritoireState({
+    required this.status,
+    required this.territoires,
   });
-}
 
-class ConsultationPaginatedFetchedState extends ConsultationPaginatedState {
-  ConsultationPaginatedFetchedState({
-    required super.consultationPaginatedViewModels,
-    required super.currentPageNumber,
-    required super.maxPage,
-  });
-}
+  TerritoireState clone({
+    List<Territoire>? territoires,
+    AllPurposeStatus? status,
+  }) {
+    return TerritoireState(
+      territoires: territoires ?? this.territoires,
+      status: status ?? this.status,
+    );
+  }
 
-class ConsultationPaginatedErrorState extends ConsultationPaginatedState {
-  ConsultationPaginatedErrorState({
-    required super.consultationPaginatedViewModels,
-    required super.currentPageNumber,
-    required super.maxPage,
-  });
+  @override
+  List<Object?> get props => [status, territoires];
 }

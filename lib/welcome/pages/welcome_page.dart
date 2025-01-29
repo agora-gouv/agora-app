@@ -1,8 +1,10 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/emoji_helper.dart';
 import 'package:agora/common/helper/responsive_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/parser/simple_html_parser.dart';
 import 'package:agora/common/strings/generic_strings.dart';
+import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
@@ -237,12 +239,15 @@ class _ALaUne extends StatelessWidget {
               return SizedBox();
             } else {
               final aLaUne = vm.welcomeALaUne!;
+              final isSmallDevice = MediaQuery.of(context).size.height < 600;
+              final isTextTooLong = aLaUne.description.length > 200;
+              final hasToReduceText = isSmallDevice || isTextTooLong;
               return DecoratedBox(
                 decoration: BoxDecoration(
                   color: AgoraColors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withValues(alpha: 0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
                     ),
@@ -255,7 +260,13 @@ class _ALaUne extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         Navigator.pushReplacementNamed(context, QagsPage.routeName);
-                        Navigator.pushNamed(context, aLaUne.routeName, arguments: aLaUne.routeArgument);
+                        Navigator.pushNamed(
+                          context,
+                          aLaUne.routeName,
+                          arguments: aLaUne.routeName == DynamicConsultationPage.routeName
+                              ? DynamicConsultationPageArguments(consultationIdOrSlug: aLaUne.routeArgument!)
+                              : aLaUne.routeArgument,
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
@@ -271,8 +282,10 @@ class _ALaUne extends StatelessWidget {
                             ),
                             SizedBox(height: AgoraSpacings.x0_75),
                             AgoraRichText(
-                              policeStyle: AgoraRichTextPoliceStyle.police16Interligne140,
-                              textAlign: TextAlign.end,
+                              policeStyle: hasToReduceText
+                                  ? AgoraRichTextPoliceStyle.police14Interligne140
+                                  : AgoraRichTextPoliceStyle.police16Interligne140,
+                              textAlign: hasToReduceText ? TextAlign.start : TextAlign.end,
                               items: [
                                 ...parseSimpleHtml(aLaUne.description)
                                     .map((data) => AgoraRichTextItem(text: data.text, style: data.style)),
@@ -296,9 +309,9 @@ class _ALaUne extends StatelessWidget {
 }
 
 class _ALaUneBouton extends StatelessWidget {
-  const _ALaUneBouton({required this.aLaUne});
-
   final WelcomeALaUne aLaUne;
+
+  const _ALaUneBouton({required this.aLaUne});
 
   @override
   Widget build(BuildContext context) {

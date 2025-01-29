@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:agora/profil/notification/domain/notification.dart';
 import 'package:agora/common/log/sentry_wrapper.dart';
+import 'package:agora/profil/notification/domain/notification.dart';
 import 'package:agora/profil/notification/domain/notification_information.dart';
 import 'package:agora/profil/notification/repository/notification_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,6 +27,7 @@ void main() {
             "notifications": [
               {
                 "title": "Titre de la notification",
+                "description": "Description de la notification",
                 "type": "Consultations",
                 "date": "2023-07-27",
               }
@@ -55,6 +56,7 @@ void main() {
             notifications: [
               Notification(
                 title: "Titre de la notification",
+                description: "Description de la notification",
                 type: "Consultations",
                 date: DateTime(2023, 7, 27),
               ),

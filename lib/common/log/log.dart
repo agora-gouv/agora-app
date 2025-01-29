@@ -8,16 +8,23 @@ class Log {
   static final _prettyLogger = Logger(filter: CustomLogFilter(), printer: PrettyPrinter(methodCount: 8));
 
   /// Log a message at level [Level.debug].
-  static void d(String message, [dynamic error, StackTrace? stackTrace]) {
+  static void debug(String message, [dynamic error, StackTrace? stackTrace]) {
     if (!kIsWeb) {
       _simpleLogger.d(message, error: error, stackTrace: stackTrace);
     }
   }
 
   /// Log a message at level [Level.error].
-  static void e(String message, [dynamic error, StackTrace? stackTrace]) {
+  static void error(String message, [dynamic error, StackTrace? stackTrace]) {
     if (!kIsWeb) {
       _prettyLogger.e(message, error: error, stackTrace: stackTrace);
+    }
+  }
+
+  /// Log a message at level [Level.warning].
+  static void warning(String message, [dynamic error, StackTrace? stackTrace]) {
+    if (!kIsWeb) {
+      _prettyLogger.w(message, error: error, stackTrace: stackTrace);
     }
   }
 }

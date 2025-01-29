@@ -1,8 +1,10 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/consultation/bloc/consultation_bloc.dart';
 import 'package:agora/consultation/bloc/consultation_event.dart';
 import 'package:agora/consultation/bloc/consultation_state.dart';
 import 'package:agora/consultation/bloc/consultation_view_model.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +12,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import '../../fakes/concertation/fakes_concertation_repository.dart';
+import '../../fakes/consultation/fake_consultation_cache_repository.dart';
 import '../../fakes/consultation/fakes_consultation_repository.dart';
+import '../../fakes/referentiel/fakes_referentiel_repository.dart';
 
 void main() {
   Intl.defaultLocale = "fr_FR";
@@ -19,14 +23,18 @@ void main() {
   group("fetchConsultationsEvent", () {
     blocTest(
       "when repository succeed - should emit loading then success state",
-      build: () => ConsultationBloc(
-        consultationRepository: FakeConsultationSuccessRepository(),
-        concertationRepository: FakesConcertationRepository(),
+      build: () => ConsultationBloc.fromRepositories(
+        consultationRepository: FakeConsultationCacheSuccessRepository(
+          consultationRepository: FakeConsultationSuccessRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationsFetchedState(
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.success,
           ongoingViewModels: [
             ConsultationOngoingViewModel(
               id: "consultationId",
@@ -36,6 +44,9 @@ void main() {
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
               label: "Plus que 3 jours",
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           finishedViewModels: [
@@ -46,6 +57,9 @@ void main() {
               coverUrl: "coverUrl2",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
             ConcertationViewModel(
               id: "concertationId1",
@@ -55,6 +69,9 @@ void main() {
               externalLink: "externalLink1",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               label: 'Plus que 3 jours',
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           answeredViewModels: [
@@ -65,6 +82,9 @@ void main() {
               coverUrl: "coverUrl3",
               thematique: ThematiqueViewModel(picto: "🩺", label: "Santé"),
               label: 'label',
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           shouldDisplayFinishedAllButton: true,
@@ -75,14 +95,18 @@ void main() {
 
     blocTest(
       "when repository succeed and finished consultation is empty - should emit loading then success state",
-      build: () => ConsultationBloc(
-        consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
-        concertationRepository: FakesConcertationRepository(),
+      build: () => ConsultationBloc.fromRepositories(
+        consultationRepository: FakeConsultationCacheSuccessWithFinishedConsultationEmptyRepository(
+          consultationRepository: FakeConsultationSuccessWithFinishedConsultationEmptyRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationsFetchedState(
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.success,
           ongoingViewModels: [
             ConsultationOngoingViewModel(
               id: "consultationId",
@@ -92,6 +116,9 @@ void main() {
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               endDate: "23 janvier",
               label: null,
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           finishedViewModels: [
@@ -102,6 +129,9 @@ void main() {
               coverUrl: "coverUrl",
               thematique: ThematiqueViewModel(picto: "🚊", label: "Transports"),
               label: null,
+              badgeLabel: 'PARIS',
+              badgeColor: AgoraColors.badgeDepartemental,
+              badgeTextColor: AgoraColors.badgeDepartementalTexte,
             ),
           ],
           answeredViewModels: [],
@@ -113,28 +143,48 @@ void main() {
 
     blocTest(
       "when repository failed with timeout - should emit loading then failure state",
-      build: () => ConsultationBloc(
-        consultationRepository: FakeConsultationTimeoutFailureRepository(),
-        concertationRepository: FakesConcertationRepository(),
+      build: () => ConsultationBloc.fromRepositories(
+        consultationRepository: FakeConsultationCacheTimeoutFailureRepository(
+          consultationRepository: FakeConsultationTimeoutFailureRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationErrorState(errorType: ConsultationsErrorType.timeout),
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.error,
+          ongoingViewModels: [],
+          finishedViewModels: [],
+          answeredViewModels: [],
+          shouldDisplayFinishedAllButton: false,
+          errorType: ConsultationsErrorType.timeout,
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );
 
     blocTest(
       "when repository failed - should emit loading then failure state",
-      build: () => ConsultationBloc(
-        consultationRepository: FakeConsultationFailureRepository(),
-        concertationRepository: FakesConcertationRepository(),
+      build: () => ConsultationBloc.fromRepositories(
+        consultationRepository: FakeConsultationCacheFailureRepository(
+          consultationRepository: FakeConsultationFailureRepository(),
+        ),
+        concertationRepository: FakesConcertationCacheRepository(concertationRepository: FakesConcertationRepository()),
+        referentielRepository: FakesReferentielCacheRepository(referentielRepository: FakesReferentielRepository()),
       ),
       act: (bloc) => bloc.add(FetchConsultationsEvent()),
       expect: () => [
-        ConsultationInitialLoadingState(),
-        ConsultationErrorState(errorType: ConsultationsErrorType.generic),
+        ConsultationState.init(AllPurposeStatus.loading),
+        ConsultationState(
+          status: AllPurposeStatus.error,
+          ongoingViewModels: [],
+          finishedViewModels: [],
+          answeredViewModels: [],
+          shouldDisplayFinishedAllButton: false,
+          errorType: ConsultationsErrorType.generic,
+        ),
       ],
       wait: const Duration(milliseconds: 5),
     );

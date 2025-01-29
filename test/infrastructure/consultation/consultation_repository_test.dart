@@ -11,18 +11,24 @@ import 'package:agora/consultation/question/domain/consultation_question_respons
 import 'package:agora/consultation/question/domain/consultation_question_response_choice.dart';
 import 'package:agora/consultation/question/domain/consultation_questions.dart';
 import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
+import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/repository/consultation_responses.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../utils/dio_utils.dart';
+
+class MockConsultationMapper extends Mock implements ConsultationMapper {}
 
 void main() {
   final dioAdapter = DioUtils.dioAdapter();
   final httpClient = DioUtils.agoraDioHttpClient();
   final sentryWrapper = SentryWrapper();
 
+  final consultationMapper = MockConsultationMapper();
   const consultationId = "consultationId";
 
   group("Fetch consultations", () {
@@ -41,6 +47,7 @@ void main() {
               "endDate": "2023-03-21",
               "hasAnswered": false,
               "highlightLabel": "Plus que 3 jours",
+              "territory": "Paris",
             }
           ],
           "finished": [
@@ -53,6 +60,7 @@ void main() {
               "step": 2,
               "updateLabel": "label",
               "updateDate": "2023-03-21",
+              "territory": "Paris",
             },
           ],
           "answered": [
@@ -64,6 +72,7 @@ void main() {
               "thematique": {"label": "Santé", "picto": "🩺"},
               "step": 3,
               "updateLabel": "label",
+              "territory": "Paris",
             },
           ],
         }),
@@ -79,6 +88,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -95,6 +105,7 @@ void main() {
               thematique: Thematique(picto: "🚊", label: "Transports"),
               endDate: DateTime(2023, 3, 21),
               label: "Plus que 3 jours",
+              territoire: "Paris",
             ),
           ],
           finishedConsultations: [
@@ -106,6 +117,7 @@ void main() {
               thematique: Thematique(picto: "🩺", label: "Santé"),
               label: 'label',
               updateDate: DateTime(2023, 3, 21),
+              territoire: "Paris",
             ),
           ],
           answeredConsultations: [
@@ -116,6 +128,7 @@ void main() {
               coverUrl: "coverUrl3",
               thematique: Thematique(picto: "🩺", label: "Santé"),
               label: 'label',
+              territoire: "Paris",
             ),
           ],
         ),
@@ -137,6 +150,7 @@ void main() {
               "endDate": "2023-03-21",
               "hasAnswered": false,
               "highlightLabel": null,
+              "territory": "Paris",
             }
           ],
           "finished": [],
@@ -154,6 +168,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -170,6 +185,7 @@ void main() {
               thematique: Thematique(picto: "🚊", label: "Transports"),
               endDate: DateTime(2023, 3, 21),
               label: null,
+              territoire: "Paris",
             ),
           ],
           finishedConsultations: [],
@@ -199,6 +215,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -227,6 +244,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -251,6 +269,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultations();
 
@@ -278,6 +297,7 @@ void main() {
               "step": 2,
               "updateLabel": "label",
               "updateDate": "2023-03-21",
+              "territory": "Paris",
             },
           ],
         }),
@@ -293,6 +313,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
 
@@ -310,6 +331,7 @@ void main() {
               thematique: Thematique(picto: "🩺", label: "Santé"),
               label: 'label',
               updateDate: DateTime(2023, 3, 21),
+              territoire: "Paris",
             ),
           ],
         ),
@@ -333,6 +355,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultationsFinishedPaginated(pageNumber: pageNumber);
 
@@ -451,6 +474,7 @@ void main() {
                 "order": 3,
                 "description": "texte riche",
                 "nextQuestionId": "question2",
+                "imageUrl": "https://url.com/image.jpg",
               },
             ],
           },
@@ -467,6 +491,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
@@ -551,6 +576,7 @@ void main() {
                 order: 3,
                 description: "texte riche",
                 nextQuestionId: "question2",
+                imageUrl: "https://url.com/image.jpg",
               ),
             ],
           ),
@@ -575,6 +601,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchConsultationQuestions(consultationId: consultationId);
 
@@ -626,6 +653,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
@@ -677,6 +705,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.sendConsultationResponses(
         consultationId: consultationId,
@@ -813,6 +842,8 @@ void main() {
               "description": "description",
             }
           ],
+          "territory": "National",
+          "isAnsweredByUser": true,
         }),
         headers: {
           "accept": "application/json",
@@ -826,6 +857,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.getDynamicConsultation('consultationId');
 
@@ -840,6 +872,7 @@ void main() {
             shareText: 'A définir ¯\\_(ツ)_/¯',
             thematicLogo: '🚊',
             thematicLabel: 'Transports',
+            territoire: "National",
             questionsInfos: ConsultationQuestionsInfos(
               endDate: DateTime(2023, 12, 30),
               questionCount: '5 à 10 questions',
@@ -934,6 +967,7 @@ void main() {
               ),
             ],
             goals: [ConsultationGoal(picto: 'picto', description: 'description')],
+            isAnsweredByUser: true,
           ),
         ),
       );
@@ -960,6 +994,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.getDynamicConsultation('consultationId');
 
@@ -1045,6 +1080,7 @@ void main() {
           ),
         ]),
         sentryWrapper: sentryWrapper,
+        mapper: ConsultationMapper(),
       );
       final response = await repository.fetchDynamicConsultationResults(consultationId: consultationId);
 
@@ -1100,6 +1136,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchDynamicConsultationResults(consultationId: consultationId);
 
@@ -1211,6 +1248,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchDynamicConsultationUpdate(
         consultationId: 'consultationId',
@@ -1324,6 +1362,7 @@ void main() {
         httpClient: httpClient,
         storageClient: MockConsultationQuestionHiveStorageClient([]),
         sentryWrapper: sentryWrapper,
+        mapper: consultationMapper,
       );
       final response = await repository.fetchDynamicConsultationUpdate(
         consultationId: 'consultationId',

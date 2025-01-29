@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:ui' show lerpDouble;
 
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
+import 'package:agora/design/custom_view/unread_check.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
@@ -83,9 +85,20 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
                       widget.onTap(_currentSelectedIndex);
                     });
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    child: _buildItemWidget(onTapIndex, item),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        child: _buildItemWidget(onTapIndex, item),
+                      ),
+                      if (item.hasUnreadCheck && isTerritorialisationEnabled())
+                        UnreadCheck(
+                          isPositioned: true,
+                          rightPosition: 30,
+                          topPosition: 15,
+                        ),
+                    ],
                   ),
                 );
               }).toList(),
@@ -115,28 +128,23 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _setIcon(selectedIndex, item),
-            _setLabel(selectedIndex, item),
+            SvgPicture.asset(
+              height: 20,
+              width: 20,
+              selectedIndex == _currentSelectedIndex ? "assets/${item.activateIcon}" : "assets/${item.inactivateIcon}",
+              excludeFromSemantics: true,
+            ),
+            Text(
+              item.label,
+              textAlign: TextAlign.center,
+              style: selectedIndex == _currentSelectedIndex
+                  ? AgoraTextStyles.medium12.copyWith(color: _activeLabelColor)
+                  : AgoraTextStyles.light12.copyWith(color: _inactiveLabelColor),
+            ),
             if (!kIsWeb && Platform.isIOS) const SizedBox(height: AgoraSpacings.x0_75),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _setIcon(int selectedIndex, AgoraBottomNavigationBarItem item) {
-    return selectedIndex == _currentSelectedIndex
-        ? SvgPicture.asset(height: 20, width: 20, "assets/${item.activateIcon}", excludeFromSemantics: true)
-        : SvgPicture.asset(height: 20, width: 20, "assets/${item.inactivateIcon}", excludeFromSemantics: true);
-  }
-
-  Widget _setLabel(int selectedIndex, AgoraBottomNavigationBarItem item) {
-    return Text(
-      item.label,
-      textAlign: TextAlign.center,
-      style: selectedIndex == _currentSelectedIndex
-          ? AgoraTextStyles.medium12.copyWith(color: _activeLabelColor)
-          : AgoraTextStyles.light12.copyWith(color: _inactiveLabelColor),
     );
   }
 }

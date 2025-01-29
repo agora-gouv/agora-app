@@ -1,62 +1,53 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/qag/domain/header_qag.dart';
 import 'package:agora/qag/domain/qag.dart';
 import 'package:agora/qag/list/bloc/qag_list_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:optional/optional.dart';
 
-abstract class QagListState extends Equatable {
-  final int currentPage;
-
-  QagListState({required this.currentPage});
-
-  @override
-  List<Object?> get props => [currentPage];
-}
-
-class QagListLoadingState extends QagListState {
-  QagListLoadingState() : super(currentPage: 1);
-}
-
-class QagListSuccessState extends QagListState {
+class QagListState extends Equatable {
+  final AllPurposeStatus status;
   final List<Qag> qags;
   final HeaderQag? header;
   final int maxPage;
   final QagListFooterType footerType;
+  final int currentPage;
 
-  QagListSuccessState({
-    required super.currentPage,
+  QagListState({
+    required this.status,
     required this.qags,
     required this.header,
     required this.maxPage,
     required this.footerType,
+    required this.currentPage,
   });
 
-  factory QagListSuccessState.copyWith({
-    required QagListSuccessState state,
-    int? currentPage,
+  QagListState.init()
+      : status = AllPurposeStatus.notLoaded,
+        qags = [],
+        header = null,
+        maxPage = 0,
+        footerType = QagListFooterType.loading,
+        currentPage = 1;
+
+  QagListState clone({
+    AllPurposeStatus? status,
     List<Qag>? qags,
-    HeaderQag? header,
+    Optional<HeaderQag>? headerOptional,
     int? maxPage,
     QagListFooterType? footerType,
+    int? currentPage,
   }) {
-    return QagListSuccessState(
-      currentPage: currentPage != state.currentPage && currentPage != null ? currentPage : state.currentPage,
-      qags: qags != state.qags && qags != null ? qags : state.qags,
-      header: header != state.header ? header : state.header,
-      maxPage: maxPage != state.maxPage && maxPage != null ? maxPage : state.maxPage,
-      footerType: footerType != state.footerType && footerType != null ? footerType : state.footerType,
+    return QagListState(
+      status: status ?? this.status,
+      qags: qags ?? this.qags,
+      header: headerOptional != null ? headerOptional.orElseNullable(null) : header,
+      maxPage: maxPage ?? this.maxPage,
+      footerType: footerType ?? this.footerType,
+      currentPage: currentPage ?? this.currentPage,
     );
   }
 
   @override
-  List<Object?> get props => [
-        currentPage,
-        qags,
-        header,
-        maxPage,
-        footerType,
-      ];
-}
-
-class QagListErrorState extends QagListState {
-  QagListErrorState({required super.currentPage});
+  List<Object?> get props => [status, qags, header, maxPage, footerType, currentPage];
 }

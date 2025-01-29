@@ -12,7 +12,7 @@ class ProfileStrings {
   static const String legalNotice = "Mentions légales";
   static const String feedbackTipsTitle = "Inventez avec nous le futur de l'appli\u{00A0}!";
   static const String feedbackTipsDescription =
-      "Faites-nous remonter les éventuels bugs que vous repérez sur cette première version mais aussi vos retours, critiques et idées pour nous aider à améliorer l'application.";
+      "Faites-nous remonter les éventuels bugs que vous repérez, mais aussi vos retours, critiques et idées pour faire vivre et améliorer l’application.";
   static const String feedbackTipsButton = "Donner mes retours";
   static const String charter = "Charte de ";
   static const String participation = "participation";

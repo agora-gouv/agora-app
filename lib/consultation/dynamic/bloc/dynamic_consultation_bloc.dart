@@ -1,14 +1,21 @@
 import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_events.dart';
 import 'package:agora/consultation/dynamic/bloc/dynamic_consultation_state.dart';
-import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
+import 'package:agora/consultation/repository/consultation_repository.dart';
+import 'package:agora/consultation/repository/consultation_responses.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DynamicConsultationBloc extends Bloc<DynamicConsultationEvent, DynamicConsultationState> {
   final ConsultationRepository consultationRepository;
+  final ReferentielRepository referentielRepository;
   final ConsultationQuestionStorageClient storageClient;
 
-  DynamicConsultationBloc(this.consultationRepository, this.storageClient) : super(DynamicConsultationLoadingState()) {
+  DynamicConsultationBloc({
+    required this.consultationRepository,
+    required this.referentielRepository,
+    required this.storageClient,
+  }) : super(DynamicConsultationLoadingState()) {
     on<FetchDynamicConsultationEvent>(_handleFetchDynamicConsultationEvent);
     on<DeleteConsultationResponsesEvent>(_handleDeleteConsultationResponsesEvent);
   }
@@ -18,8 +25,9 @@ class DynamicConsultationBloc extends Bloc<DynamicConsultationEvent, DynamicCons
     Emitter<DynamicConsultationState> emit,
   ) async {
     final response = await consultationRepository.getDynamicConsultation(event.id);
-    if (response is DynamicConsultationSuccessResponse) {
-      emit(DynamicConsultationSuccessState(response.consultation));
+    final referentiel = await referentielRepository.fetchReferentielRegionsEtDepartements();
+    if (response is DynamicConsultationSuccessResponse && referentiel.isNotEmpty) {
+      emit(DynamicConsultationSuccessState(response.consultation, referentiel));
     } else {
       emit(DynamicConsultationErrorState());
     }

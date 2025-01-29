@@ -1,4 +1,5 @@
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/common/strings/generic_strings.dart';
@@ -11,6 +12,7 @@ import 'package:agora/consultation/pages/widgets/consultations_finished_section.
 import 'package:agora/consultation/pages/widgets/consultations_loading_skeleton.dart';
 import 'package:agora/consultation/pages/widgets/consultations_ongoing_section.dart';
 import 'package:agora/design/custom_view/agora_main_toolbar.dart';
+import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
@@ -44,21 +46,33 @@ class _ConsultationsPageState extends State<ConsultationsPage> {
       widgetName: AnalyticsScreenNames.consultationsPage,
       child: BlocProvider(
         create: (BuildContext context) {
-          return ConsultationBloc(
-            consultationRepository: RepositoryManager.getConsultationRepository(),
-            concertationRepository: RepositoryManager.getConcertationRepository(),
+          return ConsultationBloc.fromRepositories(
+            consultationRepository: RepositoryManager.getConsultationCacheRepository(),
+            concertationRepository: RepositoryManager.getConcertationCacheRepository(),
+            referentielRepository: RepositoryManager.getReferentielCacheRepository(),
           )..add(FetchConsultationsEvent());
         },
         child: BlocBuilder<ConsultationBloc, ConsultationState>(
           builder: (context, state) {
-            return SingleChildScrollView(
-              physics: ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  _Header(toolbarTitleKey: toolbarTitleKey),
-                  _Content(state: state),
-                ],
-              ),
+            return Column(
+              children: [
+                _Header(toolbarTitleKey: toolbarTitleKey),
+                Expanded(
+                  child: AgoraPullToRefresh(
+                    onRefresh: () async =>
+                        context.read<ConsultationBloc>().add(FetchConsultationsEvent(forceRefresh: true)),
+                    child: SingleChildScrollView(
+                      physics: ClampingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _Content(state: state),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             );
           },
         ),
@@ -74,16 +88,16 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return switch (state) {
-      ConsultationInitialLoadingState _ => ConsultationsLoadingSkeleton(),
-      final ConsultationsFetchedState successState => _Success(successState: successState),
-      final ConsultationErrorState errorState => _ErrorWidget(errorState: errorState),
+    return switch (state.status) {
+      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => ConsultationsLoadingSkeleton(),
+      AllPurposeStatus.error => _ErrorWidget(errorType: state.errorType),
+      AllPurposeStatus.success => _Success(successState: state),
     };
   }
 }
 
 class _Success extends StatelessWidget {
-  final ConsultationsFetchedState successState;
+  final ConsultationState successState;
 
   const _Success({required this.successState});
 
@@ -107,15 +121,14 @@ class _Success extends StatelessWidget {
 }
 
 class _ErrorWidget extends StatelessWidget {
-  final ConsultationErrorState errorState;
+  final ConsultationsErrorType? errorType;
 
-  const _ErrorWidget({required this.errorState});
+  const _ErrorWidget({required this.errorType});
 
   @override
   Widget build(BuildContext context) {
-    final errorMessage = errorState.errorType == ConsultationsErrorType.timeout
-        ? GenericStrings.timeoutErrorMessage
-        : GenericStrings.errorMessage;
+    final errorMessage =
+        errorType == ConsultationsErrorType.timeout ? GenericStrings.timeoutErrorMessage : GenericStrings.errorMessage;
     return Column(
       children: [
         Padding(
@@ -147,18 +160,23 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AgoraMainToolbar(
-      title: AgoraRichText(
-        key: toolbarTitleKey,
-        policeStyle: AgoraRichTextPoliceStyle.toolbar,
-        semantic: AgoraRichTextSemantic(focused: true),
-        items: [
-          AgoraRichTextItem(
-            text: "${ConsultationStrings.toolbarPart1}\n",
-            style: AgoraRichTextItemStyle.bold,
-          ),
-          AgoraRichTextItem(
-            text: ConsultationStrings.toolbarPart2,
-            style: AgoraRichTextItemStyle.regular,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AgoraRichText(
+            key: toolbarTitleKey,
+            policeStyle: AgoraRichTextPoliceStyle.toolbar,
+            semantic: AgoraRichTextSemantic(focused: true),
+            items: [
+              AgoraRichTextItem(
+                text: "${ConsultationStrings.toolbarPart1}\n",
+                style: AgoraRichTextItemStyle.bold,
+              ),
+              AgoraRichTextItem(
+                text: ConsultationStrings.toolbarPart2,
+                style: AgoraRichTextItemStyle.regular,
+              ),
+            ],
           ),
         ],
       ),

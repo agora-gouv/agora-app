@@ -1,8 +1,8 @@
+import 'package:agora/common/parser/string_parser.dart';
 import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:agora/consultation/question/domain/consultation_question.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response_choice.dart';
 import 'package:agora/consultation/question/domain/consultation_questions.dart';
-import 'package:agora/common/parser/string_parser.dart';
 
 class ConsultationQuestionsPresenter {
   static ConsultationQuestionsViewModel present(ConsultationQuestions consultationQuestions) {
@@ -50,6 +50,7 @@ class ConsultationQuestionsPresenter {
             order: consultationQuestion.order,
             description: consultationQuestion.description,
             nextQuestionId: consultationQuestion.nextQuestionId,
+            imageUrl: consultationQuestion.imageUrl,
           );
         } else {
           throw Exception(

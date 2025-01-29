@@ -11,9 +11,9 @@ class DynamicConsultationSectionWidget extends StatelessWidget {
     final isTalkbackEnabled = MediaQuery.accessibleNavigationOf(context);
 
     return switch (sectionToDisplay) {
+      _HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
       _TitleSection() => _TitleSectionWidget(sectionToDisplay),
-      HeaderSection() => _HeaderSectionWidget(sectionToDisplay),
-      QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
+      _QuestionsInfoSection() => _QuestionsInfoWidget(sectionToDisplay),
       ConsultationDatesInfosSection() => _ConsultationDatesInfosSectionWidget(sectionToDisplay),
       ResponseInfoSection() => _ResponseInfoSectionWidget(sectionToDisplay),
       ExpandableSection() => _ExpandableSectionWidget(sectionToDisplay, isTalkbackEnabled: isTalkbackEnabled),
@@ -87,15 +87,15 @@ class HeaderSectionUpdateWidget extends StatelessWidget {
               section.coverUrl,
               excludeFromSemantics: true,
               fit: BoxFit.fitHeight,
-              height: 50,
-              width: 50,
+              height: 75,
+              width: 75,
             ),
           ),
           const SizedBox(width: AgoraSpacings.base),
           Expanded(
             child: Text(
               section.title,
-              style: AgoraTextStyles.medium16,
+              style: AgoraTextStyles.medium22,
             ),
           ),
         ],
@@ -105,7 +105,7 @@ class HeaderSectionUpdateWidget extends StatelessWidget {
 }
 
 class _HeaderSectionWidget extends StatelessWidget {
-  final HeaderSection section;
+  final _HeaderSection section;
 
   _HeaderSectionWidget(this.section);
 
@@ -115,7 +115,7 @@ class _HeaderSectionWidget extends StatelessWidget {
       header: true,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
@@ -137,7 +137,7 @@ class _HeaderSectionWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(AgoraCorners.defaultRadius)),
                       gradient: LinearGradient(
-                        colors: [Colors.white.withOpacity(0.9), Colors.white],
+                        colors: [Colors.white.withValues(alpha: 0.9), Colors.white],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -173,7 +173,17 @@ class _HeaderSectionWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
             child: Text(section.title, style: AgoraTextStyles.medium20),
           ),
-          const SizedBox(height: AgoraSpacings.base),
+          if (isTerritorialisationEnabled()) ...[
+            const SizedBox(height: AgoraSpacings.base),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.horizontalPadding),
+              child: AgoraBadge(
+                label: section.territoire.label.toUpperCase(),
+                backgroundColor: getTerritoireBadgeColor(section.territoire.type),
+                textColor: getTerritoireBadgeTexteColor(section.territoire.type),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -181,7 +191,7 @@ class _HeaderSectionWidget extends StatelessWidget {
 }
 
 class _QuestionsInfoWidget extends StatelessWidget {
-  final QuestionsInfoSection section;
+  final _QuestionsInfoSection section;
 
   _QuestionsInfoWidget(this.section);
 
@@ -284,7 +294,7 @@ class _ConsultationDatesInfosSectionWidget extends StatelessWidget {
               header: true,
               child: Text(
                 'Lancement de la consultation',
-                style: AgoraTextStyles.medium22.copyWith(
+                style: AgoraTextStyles.medium20.copyWith(
                   color: AgoraColors.primaryBlue,
                 ),
               ),
@@ -456,7 +466,7 @@ class _ExpandableSectionWidgetState extends State<_ExpandableSectionWidget> {
                   height: AgoraSpacings.x2,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.white.withOpacity(0), Colors.white],
+                      colors: [Colors.white.withValues(alpha: 0), Colors.white],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -535,7 +545,11 @@ class _StartButtonWidget extends StatelessWidget {
                 consultationId: section.consultationId,
                 consultationTitle: section.title,
               ),
-            ).then((value) => Navigator.of(context).pop());
+            ).then((value) {
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            });
           },
         ),
       ),

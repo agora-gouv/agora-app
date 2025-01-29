@@ -9,7 +9,7 @@ linter:
     prefer_final_locals: true
     sort_child_properties_last: true
     avoid_print: true
-    constant_identifier_names: true
+    constant_identifier_names: false
     prefer_const_constructors: false
     prefer_const_literals_to_create_immutables: false
     prefer_const_constructors_in_immutables: false

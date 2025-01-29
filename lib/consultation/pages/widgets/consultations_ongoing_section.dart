@@ -12,6 +12,7 @@ import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/pages/qags_page.dart';
+import 'package:agora/splash_page.dart';
 import 'package:flutter/material.dart';
 
 class ConsultationsOngoingSection extends StatelessWidget {
@@ -85,13 +86,17 @@ class ConsultationsOngoingSection extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.base),
                 AgoraButton.withLabel(
                   label: ConsultationStrings.gotoQags,
-                  buttonStyle: AgoraButtonStyle.tertiary,
+                  buttonStyle: AgoraButtonStyle.primary,
                   onPressed: () {
                     TrackerHelper.trackClick(
                       clickName: AnalyticsEventNames.gotoQagsFromConsultations,
                       widgetName: AnalyticsScreenNames.consultationsPage,
                     );
-                    Navigator.pushNamed(context, QagsPage.routeName);
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      QagsPage.routeName,
+                      ModalRoute.withName(SplashPage.routeName),
+                    );
                   },
                 ),
               ],
@@ -126,6 +131,9 @@ class ConsultationsOngoingSection extends StatelessWidget {
                     endDate: ongoingViewModel1.endDate,
                     highlightLabel: ongoingViewModel1.label,
                     style: AgoraConsultationOngoingCardStyle.gridLeft,
+                    badgeLabel: ongoingViewModel1.badgeLabel,
+                    badgeColor: ongoingViewModel1.badgeColor,
+                    badgeTextColor: ongoingViewModel1.badgeTextColor,
                   ),
                 ),
                 ongoingViewModel2 != null
@@ -140,6 +148,9 @@ class ConsultationsOngoingSection extends StatelessWidget {
                           endDate: ongoingViewModel2.endDate,
                           highlightLabel: ongoingViewModel2.label,
                           style: AgoraConsultationOngoingCardStyle.gridRight,
+                          badgeLabel: ongoingViewModel2.badgeLabel,
+                          badgeColor: ongoingViewModel2.badgeColor,
+                          badgeTextColor: ongoingViewModel2.badgeTextColor,
                         ),
                       )
                     : Expanded(child: Container()),
@@ -151,18 +162,22 @@ class ConsultationsOngoingSection extends StatelessWidget {
       }
     } else {
       for (var index = 0; index < ongoingViewModels.length; index++) {
+        final ongoingViewModel = ongoingViewModels[index];
         ongoingConsultationsWidgets.add(
           AgoraConsultationOngoingCard(
             key: index == 0 ? firstFocusableElementKey : null,
             semanticTooltip: "Élément ${index + 1} sur ${ongoingViewModels.length}",
-            consultationId: ongoingViewModels[index].id,
-            consultationSlug: ongoingViewModels[index].slug,
-            imageUrl: ongoingViewModels[index].coverUrl,
-            thematique: ongoingViewModels[index].thematique,
-            title: ongoingViewModels[index].title,
-            endDate: ongoingViewModels[index].endDate,
-            highlightLabel: ongoingViewModels[index].label,
+            consultationId: ongoingViewModel.id,
+            consultationSlug: ongoingViewModel.slug,
+            imageUrl: ongoingViewModel.coverUrl,
+            thematique: ongoingViewModel.thematique,
+            title: ongoingViewModel.title,
+            endDate: ongoingViewModel.endDate,
+            highlightLabel: ongoingViewModel.label,
             style: AgoraConsultationOngoingCardStyle.column,
+            badgeLabel: ongoingViewModel.badgeLabel,
+            badgeColor: ongoingViewModel.badgeColor,
+            badgeTextColor: ongoingViewModel.badgeTextColor,
           ),
         );
         ongoingConsultationsWidgets.add(SizedBox(height: AgoraSpacings.base));

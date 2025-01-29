@@ -88,6 +88,7 @@ class QagDetailsResponse extends Equatable {
   final String author;
   final String authorDescription;
   final DateTime responseDate;
+  final String videoTitle;
   final String videoUrl;
   final int videoWidth;
   final int videoHeight;
@@ -101,6 +102,7 @@ class QagDetailsResponse extends Equatable {
     required this.author,
     required this.authorDescription,
     required this.responseDate,
+    required this.videoTitle,
     required this.videoUrl,
     required this.videoWidth,
     required this.videoHeight,
@@ -120,6 +122,7 @@ class QagDetailsResponse extends Equatable {
       author: response.author,
       authorDescription: response.authorDescription,
       responseDate: response.responseDate,
+      videoTitle: response.videoTitle,
       videoUrl: response.videoUrl,
       videoWidth: response.videoWidth,
       videoHeight: response.videoHeight,
@@ -136,6 +139,7 @@ class QagDetailsResponse extends Equatable {
         author,
         authorDescription,
         responseDate,
+        videoTitle,
         videoUrl,
         videoWidth,
         videoHeight,

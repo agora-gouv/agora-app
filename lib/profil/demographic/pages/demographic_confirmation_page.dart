@@ -9,7 +9,6 @@ import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_ev
 import 'package:agora/profil/demographic/bloc/send/demographic_responses_send_state.dart';
 import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_bloc.dart';
 import 'package:agora/profil/demographic/pages/demographic_profil_page.dart';
-import 'package:agora/profil/pages/profil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,10 +50,9 @@ class DemographicConfirmationPage extends StatelessWidget {
           listener: (context, state) {
             if (_areResponsesSent(state)) {
               if (_isProfileJourney()) {
-                Navigator.pushNamedAndRemoveUntil(
+                Navigator.pushReplacementNamed(
                   context,
                   DemographicProfilPage.routeName,
-                  ModalRoute.withName(ProfilPage.routeName),
                   arguments: DemographicProfileArguments(
                     modificationSuccess: state is SendDemographicResponsesSuccessState,
                   ),
@@ -68,7 +66,11 @@ class DemographicConfirmationPage extends StatelessWidget {
                     consultationTitle: consultationTitle!,
                     shouldLaunchCongratulationAnimation: true,
                   ),
-                ).then((value) => Navigator.of(context).pop());
+                ).then((value) {
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                });
               }
             }
           },

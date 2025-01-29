@@ -24,6 +24,8 @@ class AnalyticsScreenNames {
   static const String profilePage = "Profil";
   static const String moderationPage = "Modération";
   static const String notificationPage = "Liste des notifications";
+  static const String territoireInfoPage = "Mes territoires";
+  static const String territoireEditingPage = "Modifier mes territoires";
   static const String notificationInApp = "Notification in-app";
   static const String notificationSystem = "Notification système";
   static const String notificationSystemWidget = "Système";

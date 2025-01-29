@@ -11,11 +11,13 @@ import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
+import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/participation_charter/bloc/participation_charter_bloc.dart';
 import 'package:agora/profil/participation_charter/bloc/participation_charter_event.dart';
 import 'package:agora/profil/participation_charter/bloc/participation_charter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ParticipationCharterPage extends StatelessWidget {
   static const routeName = "/participationCharterPage";
@@ -89,14 +91,33 @@ class _Buttons extends StatelessWidget {
     return Row(
       children: [
         Flexible(
-          child: AgoraButton.withLabel(
-            label: GenericStrings.readCompleteCharter,
+          child: AgoraButton.withChildren(
             buttonStyle: AgoraButtonStyle.secondary,
             onPressed: () {
               LaunchUrlHelper.webview(context, ProfileStrings.participateCharterLink);
             },
-            suffixIcon: "ic_external_link.svg",
-            suffixIconColorFilter: ColorFilter.mode(AgoraColors.primaryBlue, BlendMode.srcIn),
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: GenericStrings.readCompleteCharter,
+                      style: AgoraTextStyles.secondaryButton,
+                    ),
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 2, 0, 0),
+                        child: SvgPicture.asset(
+                          "assets/ic_external_link.svg",
+                          excludeFromSemantics: true,
+                          colorFilter: ColorFilter.mode(AgoraColors.primaryBlue, BlendMode.srcIn),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
         SizedBox(width: AgoraSpacings.base),

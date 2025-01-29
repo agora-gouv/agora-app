@@ -12,7 +12,6 @@ import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/agora_like_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/agora_top_diagonal.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/text/agora_read_more_text.dart';
@@ -104,22 +103,17 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
         appBarType: AppBarColorType.primaryColor,
         child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
           builder: (context, detailsState) {
-            return Column(
-              children: [
-                AgoraTopDiagonal(),
-                _Content(
-                  detailsState,
-                  backResult,
-                  widget.arguments,
-                  (supportCount, isSupported) {
-                    backResult = QagDetailsBackResult(
-                      qagId: widget.arguments.qagId,
-                      supportCount: supportCount,
-                      isSupported: isSupported,
-                    );
-                  },
-                ),
-              ],
+            return _Content(
+              detailsState,
+              backResult,
+              widget.arguments,
+              (supportCount, isSupported) {
+                backResult = QagDetailsBackResult(
+                  qagId: widget.arguments.qagId,
+                  supportCount: supportCount,
+                  isSupported: isSupported,
+                );
+              },
             );
           },
         ),
@@ -161,38 +155,36 @@ class _Success extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          _Header(viewModel, backResult),
-          Expanded(
-            child: CustomScrollView(
-              slivers: [
-                _TitreSliver(
-                  viewModel: viewModel,
-                  isQuestionGagnante: arguments.isQuestionGagnante,
+    return Column(
+      children: [
+        _Header(viewModel, backResult),
+        Expanded(
+          child: CustomScrollView(
+            slivers: [
+              _TitreSliver(
+                viewModel: viewModel,
+                isQuestionGagnante: arguments.isQuestionGagnante,
+              ),
+              _DescriptionSliver(
+                viewModel: viewModel,
+                isQuestionGagnante: arguments.isQuestionGagnante,
+                reload: arguments.reload,
+                qagSupportBloc: arguments.qagSupportBloc,
+                onSupportChange: onSupportChange,
+              ),
+              if (viewModel.response != null)
+                SliverToBoxAdapter(
+                  child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                 ),
-                _DescriptionSliver(
-                  viewModel: viewModel,
-                  isQuestionGagnante: arguments.isQuestionGagnante,
-                  reload: arguments.reload,
-                  qagSupportBloc: arguments.qagSupportBloc,
-                  onSupportChange: onSupportChange,
+              if (viewModel.textResponse != null)
+                SliverToBoxAdapter(
+                  child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
                 ),
-                if (viewModel.response != null)
-                  SliverToBoxAdapter(
-                    child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                  ),
-                if (viewModel.textResponse != null)
-                  SliverToBoxAdapter(
-                    child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
-                  ),
-                _FeedbackSliver(feedbackKey: feedbackKey),
-              ],
-            ),
+              _FeedbackSliver(feedbackKey: feedbackKey),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -233,7 +225,7 @@ class _ShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: AgoraSpacings.x0_5),
+      padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
       child: AgoraButton.withChildren(
         semanticLabel: "Partager la question",
         buttonStyle: AgoraButtonStyle.secondary,

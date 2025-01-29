@@ -1,6 +1,6 @@
 import 'package:agora/qag/domain/qag_similar.dart';
-import 'package:agora/thematique/domain/thematique.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
+import 'package:agora/thematique/domain/thematique.dart';
 
 class MockQagRepository extends QagDioRepository {
   MockQagRepository({required super.httpClient, required super.sentryWrapper});

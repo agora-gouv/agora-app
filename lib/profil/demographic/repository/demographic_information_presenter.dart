@@ -1,70 +1,59 @@
-import 'package:agora/profil/demographic/bloc/get/demographic_information_view_model.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
+import 'package:agora/profil/demographic/bloc/get/demographic_information_view_model.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
-import 'package:agora/profil/demographic/domain/department.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 
 class DemographicInformationPresenter {
-  static List<DemographicInformationViewModel> present(List<DemographicInformation> demographicInformations) {
+  static List<DemographicInformationViewModel> present(
+    List<DemographicInformation> demographicInformations,
+    List<Territoire> referentiel,
+  ) {
     return demographicInformations.map((demographicInformation) {
       return DemographicInformationViewModel(
         demographicType: _buildTypeString(demographicInformation.demographicType),
-        data: _buildData(demographicInformation.demographicType, demographicInformation.data),
+        data: _buildData(demographicInformation.demographicType, demographicInformation.data, referentiel),
       );
     }).toList();
   }
 
   static String _buildTypeString(DemographicQuestionType demographicType) {
-    switch (demographicType) {
-      case DemographicQuestionType.gender:
-        return DemographicStrings.gender;
-      case DemographicQuestionType.yearOfBirth:
-        return DemographicStrings.yearOfBirth;
-      case DemographicQuestionType.department:
-        return DemographicStrings.department;
-      case DemographicQuestionType.cityType:
-        return DemographicStrings.cityType;
-      case DemographicQuestionType.jobCategory:
-        return DemographicStrings.jobCategory;
-      case DemographicQuestionType.voteFrequency:
-        return DemographicStrings.voteFrequency;
-      case DemographicQuestionType.publicMeetingFrequency:
-        return DemographicStrings.publicMeetingFrequency;
-      case DemographicQuestionType.consultationFrequency:
-        return DemographicStrings.consultationFrequency;
-    }
+    return switch (demographicType) {
+      DemographicQuestionType.gender => DemographicStrings.gender,
+      DemographicQuestionType.yearOfBirth => DemographicStrings.yearOfBirth,
+      DemographicQuestionType.department => DemographicStrings.department,
+      DemographicQuestionType.cityType => DemographicStrings.cityType,
+      DemographicQuestionType.jobCategory => DemographicStrings.jobCategory,
+      DemographicQuestionType.voteFrequency => DemographicStrings.voteFrequency,
+      DemographicQuestionType.publicMeetingFrequency => DemographicStrings.publicMeetingFrequency,
+      DemographicQuestionType.consultationFrequency => DemographicStrings.consultationFrequency,
+      DemographicQuestionType.primaryDepartment || DemographicQuestionType.secondaryDepartment => "",
+    };
   }
 
-  static String _buildData(DemographicQuestionType demographicType, String? data) {
-    switch (demographicType) {
-      case DemographicQuestionType.gender:
-        return _buildGenderData(data);
-      case DemographicQuestionType.yearOfBirth:
-        return _buildYearOfBirthData(data);
-      case DemographicQuestionType.department:
-        return _buildDepartmentData(data);
-      case DemographicQuestionType.cityType:
-        return _buildCityTypeData(data);
-      case DemographicQuestionType.jobCategory:
-        return _buildJobCategoryData(data);
-      case DemographicQuestionType.voteFrequency:
-      case DemographicQuestionType.publicMeetingFrequency:
-      case DemographicQuestionType.consultationFrequency:
-        return _buildFrequencyData(data);
-    }
+  static String _buildData(DemographicQuestionType demographicType, String? data, List<Territoire> referentiel) {
+    return switch (demographicType) {
+      DemographicQuestionType.gender => _buildGenderData(data),
+      DemographicQuestionType.yearOfBirth => _buildYearOfBirthData(data),
+      DemographicQuestionType.department => _buildDepartmentData(data, referentiel),
+      DemographicQuestionType.cityType => _buildCityTypeData(data),
+      DemographicQuestionType.jobCategory => _buildJobCategoryData(data),
+      DemographicQuestionType.voteFrequency ||
+      DemographicQuestionType.publicMeetingFrequency ||
+      DemographicQuestionType.consultationFrequency =>
+        _buildFrequencyData(data),
+      DemographicQuestionType.primaryDepartment || DemographicQuestionType.secondaryDepartment => ""
+    };
   }
 
   static String _buildGenderData(String? data) {
-    switch (data) {
-      case "M":
-        return DemographicStrings.man;
-      case "F":
-        return DemographicStrings.woman;
-      case "A":
-        return DemographicStrings.other;
-      default:
-        return DemographicStrings.notSpecified;
-    }
+    return switch (data) {
+      "M" => DemographicStrings.man,
+      "F" => DemographicStrings.woman,
+      "A" => DemographicStrings.other,
+      _ => DemographicStrings.notSpecified
+    };
   }
 
   static String _buildYearOfBirthData(String? data) {
@@ -75,65 +64,46 @@ class DemographicInformationPresenter {
     }
   }
 
-  static String _buildDepartmentData(String? data) {
+  static String _buildDepartmentData(String? data, List<Territoire> referentiel) {
     if (data != null) {
-      final department = DepartmentHelper.getDepartment().firstWhere((department) => department.code == data);
-      return "${department.name} (${department.code})";
+      final department = getDepartementByCodePostal(data, referentiel);
+      return department != null ? "${department.label} (${department.codePostal})" : DemographicStrings.notSpecified;
     } else {
       return DemographicStrings.notSpecified;
     }
   }
 
   static String _buildCityTypeData(String? data) {
-    switch (data) {
-      case "R":
-        return DemographicStrings.ruralArea;
-      case "U":
-        return DemographicStrings.urbanArea;
-      case "A":
-        return DemographicStrings.otherOrUnknown;
-      default:
-        return DemographicStrings.notSpecified;
-    }
+    return switch (data) {
+      "R" => DemographicStrings.ruralArea,
+      "U" => DemographicStrings.urbanArea,
+      "A" => DemographicStrings.otherOrUnknown,
+      _ => DemographicStrings.notSpecified
+    };
   }
 
   static String _buildJobCategoryData(String? data) {
-    switch (data) {
-      case "AG":
-        return DemographicStrings.farmer;
-      case "AR":
-        return DemographicStrings.craftsmen;
-      case "CA":
-        return DemographicStrings.managerialStaff;
-      case "PI":
-        return DemographicStrings.intermediateProfessions;
-      case "EM":
-        return DemographicStrings.employees;
-      case "OU":
-        return DemographicStrings.workers;
-      case "ET":
-        return DemographicStrings.student;
-      case "RE":
-        return DemographicStrings.retired;
-      case "AU":
-        return DemographicStrings.otherOrNonWorking;
-      case "UN":
-        return DemographicStrings.unknown;
-      default:
-        return DemographicStrings.notSpecified;
-    }
+    return switch (data) {
+      "AG" => DemographicStrings.farmer,
+      "AR" => DemographicStrings.craftsmen,
+      "CA" => DemographicStrings.managerialStaff,
+      "PI" => DemographicStrings.intermediateProfessions,
+      "EM" => DemographicStrings.employees,
+      "OU" => DemographicStrings.workers,
+      "ET" => DemographicStrings.student,
+      "RE" => DemographicStrings.retired,
+      "AU" => DemographicStrings.otherOrNonWorking,
+      "UN" => DemographicStrings.unknown,
+      _ => DemographicStrings.notSpecified
+    };
   }
 
   static String _buildFrequencyData(String? data) {
-    switch (data) {
-      case "S":
-        return DemographicStrings.often;
-      case "P":
-        return DemographicStrings.sometime;
-      case "J":
-        return DemographicStrings.never;
-      default:
-        return DemographicStrings.notSpecified;
-    }
+    return switch (data) {
+      "S" => DemographicStrings.often,
+      "P" => DemographicStrings.sometime,
+      "J" => DemographicStrings.never,
+      _ => DemographicStrings.notSpecified
+    };
   }
 }

@@ -13,6 +13,7 @@ class FakeNotificationSuccessRepository extends NotificationRepository {
         notifications: [
           Notification(
             title: "titre de la notification",
+            description: "description de la notification",
             type: "Consultations",
             date: DateTime(2023, 7, 27),
           ),

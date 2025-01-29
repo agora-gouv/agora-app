@@ -1,6 +1,5 @@
 import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
@@ -11,20 +10,22 @@ class AgoraSecondaryStyleViewButton {
   final String? icon;
   final String title;
   final String? accessibilityLabel;
-  final VoidCallback onClick;
+  final bool isLoading;
+  final void Function() onClick;
 
   AgoraSecondaryStyleViewButton({
     required this.icon,
     required this.title,
     required this.onClick,
+    this.isLoading = false,
     this.accessibilityLabel,
   });
 }
 
 class AgoraSecondaryStyleView extends StatelessWidget {
   final Widget title;
-  final AgoraSecondaryStyleViewButton? button;
-  final VoidCallback? onBackClick;
+  final Widget? button;
+  final void Function()? onBackClick;
   final Widget child;
   final AgoraSecondaryScrollType scrollType;
   final String semanticPageLabel;
@@ -60,13 +61,7 @@ class AgoraSecondaryStyleView extends StatelessWidget {
                   ),
                   if (button != null) ...[
                     SizedBox(width: AgoraSpacings.x0_75),
-                    AgoraButton.withLabel(
-                      prefixIcon: button!.icon,
-                      label: button!.title,
-                      semanticLabel: button!.accessibilityLabel,
-                      buttonStyle: AgoraButtonStyle.tertiary,
-                      onPressed: () => button!.onClick(),
-                    ),
+                    button!,
                   ],
                 ],
               ),

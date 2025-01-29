@@ -1,13 +1,16 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/reponse_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
-import 'package:agora/design/custom_view/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/card/agora_qag_reponse_a_venir_card.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/scroll/agora_horizontal_scroll_helper.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -18,6 +21,9 @@ import 'package:agora/reponse/bloc/qag_response_a_venir_view_model.dart';
 import 'package:agora/reponse/bloc/qag_response_bloc.dart';
 import 'package:agora/reponse/bloc/qag_response_event.dart';
 import 'package:agora/reponse/bloc/qag_response_state.dart';
+import 'package:agora/reponse/info/bloc/reponse_info_bloc.dart';
+import 'package:agora/reponse/info/bloc/reponse_info_event.dart';
+import 'package:agora/reponse/info/bloc/reponse_info_state.dart';
 import 'package:agora/reponse/widgets/qags_response_loading.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -79,33 +85,77 @@ class _ReponsesAVenirHeader extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
-                  child: AgoraMoreInformation(
-                    semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
-                    onClick: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: AgoraColors.transparent,
-                        builder: (context) => AgoraInformationBottomSheet(
-                          title: "Informations",
-                          description: Text(
-                            ReponseStrings.qagResponseInfoBubble,
-                            style: AgoraTextStyles.light16,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                _InfoBouton(),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class _InfoBouton extends StatelessWidget {
+  const _InfoBouton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
+      child: AgoraMoreInformation(
+        semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
+        onClick: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: AgoraColors.transparent,
+            builder: (context) => BlocProvider(
+              create: (context) => ReponseInfoBloc(
+                qagRepository: RepositoryManager.getQagRepository(),
+              )..add(FetchReponseInfoEvent()),
+              child: BlocBuilder<ReponseInfoBloc, ReponseInfoState>(
+                builder: (context, state) => AgoraInformationBottomSheet(
+                  titre: "Informations",
+                  description: _InfoBottomSheetContent(state: state),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _InfoBottomSheetContent extends StatelessWidget {
+  final ReponseInfoState state;
+
+  const _InfoBottomSheetContent({required this.state});
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (state.status) {
+      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: AgoraSpacings.x2),
+            SkeletonBox(height: 15, width: 200, radius: 15),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 15, width: 200, radius: 15),
+            SizedBox(height: AgoraSpacings.base),
+            SkeletonBox(height: 15, width: 200, radius: 15),
+            SizedBox(height: AgoraSpacings.x2),
+          ],
+        ),
+      AllPurposeStatus.error => AgoraErrorView(
+          onReload: () => context.read<ReponseInfoBloc>().add(FetchReponseInfoEvent()),
+        ),
+      AllPurposeStatus.success => Text(
+          state.infoText,
+          style: AgoraTextStyles.light16,
+          textAlign: TextAlign.center,
+        ),
+    };
   }
 }
 
@@ -213,14 +263,14 @@ class _ReponseAVenirCard extends StatelessWidget {
 
 sealed class _ViewModel extends Equatable {
   static _ViewModel fromState(QagResponseState state) {
-    return switch (state) {
-      QagResponseInitialLoadingState _ => _LoadingViewModel(),
-      QagResponseErrorState _ => _ErrorViewModel(),
-      final QagResponseFetchedState state => _ViewModel._fromFetchedState(state),
+    return switch (state.status) {
+      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => _LoadingViewModel(),
+      AllPurposeStatus.error => _ErrorViewModel(),
+      AllPurposeStatus.success => _ViewModel._fromFetchedState(state),
     };
   }
 
-  static _ViewModel _fromFetchedState(QagResponseFetchedState state) {
+  static _ViewModel _fromFetchedState(QagResponseState state) {
     final qagResponseViewModels = QagResponsePresenter.presentQagResponse(
       incomingQagResponses: state.incomingQagResponses,
       qagResponses: state.qagResponses,

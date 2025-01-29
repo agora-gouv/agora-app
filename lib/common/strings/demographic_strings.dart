@@ -64,6 +64,8 @@ class DemographicStrings {
   static const String voteFrequency = "Fréquence de vote";
   static const String publicMeetingFrequency = "Engagement sur le terrain";
   static const String consultationFrequency = "Engagement en ligne";
+  static const String primaryDepartment = "Département 1";
+  static const String secondaryDepartment = "Département 2";
 
   static const String man = "Homme";
   static const String woman = "Femme";

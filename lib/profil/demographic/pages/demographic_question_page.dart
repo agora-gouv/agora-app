@@ -1,19 +1,24 @@
-import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_bloc.dart';
-import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_event.dart';
-import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_state.dart';
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
+import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
+import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
-import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
+import 'package:agora/design/custom_view/scroll/agora_single_scroll_view.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_bloc.dart';
+import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_event.dart';
+import 'package:agora/profil/demographic/bloc/stock/demographic_responses_stock_state.dart';
 import 'package:agora/profil/demographic/domain/demographic_information.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
 import 'package:agora/profil/demographic/domain/demographic_response.dart';
@@ -24,6 +29,9 @@ import 'package:agora/profil/demographic/pages/question_view/demographic_birth_v
 import 'package:agora/profil/demographic/pages/question_view/demographic_common_view.dart';
 import 'package:agora/profil/demographic/pages/question_view/demographic_department_view.dart';
 import 'package:agora/profil/demographic/pages/question_view/demographic_vote_view.dart';
+import 'package:agora/referentiel/bloc/referentiel_bloc.dart';
+import 'package:agora/referentiel/bloc/referentiel_event.dart';
+import 'package:agora/referentiel/bloc/referentiel_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -102,13 +110,15 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
                                 ),
                               ),
                               SizedBox(height: AgoraSpacings.base),
-                              Semantics(
-                                header: true,
-                                child: Text(
-                                  DemographicHelper.getQuestionTitle(currentStep),
-                                  style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
-                                ),
-                              ),
+                              currentStep == 3 && isTerritorialisationEnabled()
+                                  ? Row(
+                                      children: [
+                                        Expanded(child: _QuestionTitle(currentStep: currentStep)),
+                                        SizedBox(width: AgoraSpacings.x0_25),
+                                        _InfoBouton(),
+                                      ],
+                                    )
+                                  : _QuestionTitle(currentStep: currentStep),
                               SizedBox(height: AgoraSpacings.x0_75),
                             ],
                           ),
@@ -181,21 +191,35 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           controller: oldResponse != null ? TextEditingController(text: oldResponse.response) : null,
         );
       case 3:
-        return DemographicDepartmentView(
-          step: currentStep,
-          totalStep: totalStep,
-          oldResponse: _getOldResponse(DemographicQuestionType.department, oldResponses),
-          onContinuePressed: (departmentCode) => setState(() {
-            _trackContinueClick(step);
-            _stockResponse(context, DemographicQuestionType.department, departmentCode);
-            _nextStep(context);
-          }),
-          onIgnorePressed: () => setState(() {
-            _trackIgnoreClick(step);
-            _deleteResponse(context, DemographicQuestionType.department);
-            _nextStep(context);
-          }),
-          onBackPressed: _onBackClick,
+        return BlocProvider(
+          create: (context) => ReferentielBloc(
+            referentielRepository: RepositoryManager.getReferentielRepository(),
+          )..add(FetchReferentielEvent()),
+          child: BlocBuilder<ReferentielBloc, ReferentielState>(
+            builder: (context, state) {
+              if (state.status == AllPurposeStatus.success) {
+                return DemographicDepartmentView(
+                  step: currentStep,
+                  totalStep: totalStep,
+                  oldResponse: _getOldResponse(DemographicQuestionType.department, oldResponses),
+                  onContinuePressed: (departmentCode) => setState(() {
+                    _trackContinueClick(step);
+                    _stockResponse(context, DemographicQuestionType.department, departmentCode);
+                    _nextStep(context);
+                  }),
+                  onIgnorePressed: () => setState(() {
+                    _trackIgnoreClick(step);
+                    _deleteResponse(context, DemographicQuestionType.department);
+                    _nextStep(context);
+                  }),
+                  onBackPressed: _onBackClick,
+                  territoires: state.referentiel,
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         );
       case 4:
         return DemographicCommonView(
@@ -318,7 +342,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
           demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
         ),
       ).then((value) {
-        if (consultationId != null) {
+        if (consultationId != null && context.mounted) {
           Navigator.pop(context);
         }
       });
@@ -353,5 +377,48 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
     } catch (e) {
       return null;
     }
+  }
+}
+
+class _InfoBouton extends StatelessWidget {
+  const _InfoBouton();
+
+  @override
+  Widget build(BuildContext context) {
+    return AgoraMoreInformation(
+      semanticsLabel: SemanticsStrings.moreInformationAboutGovernmentResponse,
+      onClick: () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: AgoraColors.transparent,
+          builder: (context) => AgoraInformationBottomSheet(
+            titre: "Précision",
+            description: Text(
+              "Votre réponse n'a pas impact sur votre choix de suivre tel ou tel département dans Agora (le choix des départements que vous souhaitez suivre dans Agora s'effectue dans la section \"Mes territoires\" de votre profil)",
+              style: AgoraTextStyles.light16,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _QuestionTitle extends StatelessWidget {
+  final int currentStep;
+
+  const _QuestionTitle({required this.currentStep});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      header: true,
+      child: Text(
+        DemographicHelper.getQuestionTitle(currentStep),
+        style: AgoraTextStyles.medium20.copyWith(color: AgoraColors.primaryBlue),
+      ),
+    );
   }
 }

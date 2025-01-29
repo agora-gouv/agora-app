@@ -5,11 +5,11 @@ class DynamicConsultationPresenter {
     return switch (state) {
       DynamicConsultationLoadingState() => _LoadingViewModel(),
       DynamicConsultationErrorState() => _ErrorViewModel(),
-      DynamicConsultationSuccessState() => _presentSuccess(state.consultation),
+      DynamicConsultationSuccessState() => _presentSuccess(state.consultation, state.referentiel),
     };
   }
 
-  static _SuccessViewModel _presentSuccess(DynamicConsultation consultation) {
+  static _SuccessViewModel _presentSuccess(DynamicConsultation consultation, List<Territoire> referentiel) {
     final questionsInfos = consultation.questionsInfos;
     final responsesInfos = consultation.responseInfos;
     final consultationHeaderInfo = consultation.infoHeader;
@@ -18,18 +18,20 @@ class DynamicConsultationPresenter {
     final download = consultation.downloadInfo;
     final history = consultation.history;
     final participationInfo = consultation.participationInfo;
+
     return _SuccessViewModel(
-      consultationId: consultation.id,
       shareText: consultation.shareText,
+      consultationId: consultation.id,
       sections: [
-        HeaderSection(
+        _HeaderSection(
           coverUrl: consultation.coverUrl,
           thematicLabel: consultation.thematicLabel,
           thematicLogo: consultation.thematicLogo,
           title: consultation.title,
+          territoire: getTerritoireFromReferentiel(referentiel, consultation.territoire),
         ),
-        if (questionsInfos != null)
-          QuestionsInfoSection(
+        if (consultation.isOnGoingAndNotAnsweredByUser())
+          _QuestionsInfoSection(
             endDate: ConsultationStrings.endDate.format(questionsInfos.endDate.formatToDayLongMonth()),
             questionCount: questionsInfos.questionCount,
             estimatedTime: questionsInfos.estimatedTime,
@@ -58,7 +60,7 @@ class DynamicConsultationPresenter {
               consultation.expandedSections.map((section) => presentSection(consultation.id, section)).toList(),
         ),
         if (download != null) DownloadSection(url: download.url),
-        if (participationInfo != null)
+        if (consultation.isOnGoingAndAnsweredByUser())
           ParticipantInfoSection(
             participantCountGoal: participationInfo.participantCountGoal,
             participantCount: participationInfo.participantCount,
@@ -90,10 +92,10 @@ class DynamicConsultationPresenter {
             consultationId: consultation.id,
             userResponse: feedbackQuestion.userResponse,
           ),
-        if (consultation.questionsInfos != null)
+        if (consultation.isOnGoingAndNotAnsweredByUser())
           StartButtonTextSection(consultationId: consultation.id, title: consultation.title),
-        if (consultation.questionsInfos == null) HistorySection(consultation.id, history),
-        if (consultation.questionsInfos == null) NotificationSection(),
+        if (!consultation.isOnGoingAndNotAnsweredByUser()) HistorySection(consultation.id, history),
+        if (!consultation.isOnGoingAndNotAnsweredByUser()) NotificationSection(),
       ],
     );
   }

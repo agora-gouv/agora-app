@@ -16,6 +16,8 @@ class FakeDemographicSuccessRepository extends DemographicRepository {
         DemographicInformation(demographicType: DemographicQuestionType.voteFrequency, data: "J"),
         DemographicInformation(demographicType: DemographicQuestionType.publicMeetingFrequency, data: "S"),
         DemographicInformation(demographicType: DemographicQuestionType.consultationFrequency, data: "P"),
+        DemographicInformation(demographicType: DemographicQuestionType.primaryDepartment, data: "Paris"),
+        DemographicInformation(demographicType: DemographicQuestionType.secondaryDepartment, data: null),
       ],
     );
   }
@@ -25,6 +27,11 @@ class FakeDemographicSuccessRepository extends DemographicRepository {
     required List<DemographicResponse> demographicResponses,
   }) async {
     return SendDemographicResponsesSucceedResponse();
+  }
+
+  @override
+  Future<SendTerritoireInfoRepositoryResponse> sendTerritoireInfo({required List<String> departementsSuivis}) async {
+    return SendTerritoireInfoRepositoryResponseSuccess();
   }
 }
 
@@ -39,5 +46,10 @@ class FakeDemographicFailureRepository extends DemographicRepository {
     required List<DemographicResponse> demographicResponses,
   }) async {
     return SendDemographicResponsesFailureResponse();
+  }
+
+  @override
+  Future<SendTerritoireInfoRepositoryResponse> sendTerritoireInfo({required List<String> departementsSuivis}) async {
+    return SendTerritoireInfoRepositoryResponseError();
   }
 }

@@ -2,23 +2,26 @@ import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/consultation/domain/consultation.dart';
+import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 
 abstract class ConcertationRepository {
-  Future<List<Concertation>> getConcertations();
+  Future<List<Concertation>> fetchConcertations();
 }
 
 class ConcertationDioRepository extends ConcertationRepository {
   final AgoraDioHttpClient httpClient;
   final SentryWrapper sentryWrapper;
+  final ConsultationMapper mapper;
 
   ConcertationDioRepository({
     required this.httpClient,
     required this.sentryWrapper,
+    required this.mapper,
   });
 
   @override
-  Future<List<Concertation>> getConcertations() async {
+  Future<List<Concertation>> fetchConcertations() async {
     const uri = '/concertations';
     try {
       final response = await httpClient.get(uri);
@@ -37,6 +40,7 @@ class ConcertationDioRepository extends ConcertationRepository {
             ),
             label: concertation['updateLabel'] as String?,
             updateDate: (concertation['updateDate'] as String).parseToDateTime(),
+            territoire: concertation["territory"] as String? ?? "",
           );
         },
       ).toList();

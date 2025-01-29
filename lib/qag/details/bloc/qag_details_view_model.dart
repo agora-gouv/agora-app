@@ -1,5 +1,5 @@
-import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:agora/qag/domain/qag_details.dart';
+import 'package:agora/thematique/bloc/thematique_view_model.dart';
 import 'package:equatable/equatable.dart';
 
 class QagDetailsViewModel extends Equatable {
@@ -93,6 +93,7 @@ class QagDetailsResponseViewModel extends Equatable {
   final String author;
   final String authorDescription;
   final String responseDate;
+  final String videoTitle;
   final String videoUrl;
   final int videoWidth;
   final int videoHeight;
@@ -103,6 +104,7 @@ class QagDetailsResponseViewModel extends Equatable {
     required this.author,
     required this.authorDescription,
     required this.responseDate,
+    required this.videoTitle,
     required this.videoUrl,
     required this.videoWidth,
     required this.videoHeight,
@@ -115,6 +117,7 @@ class QagDetailsResponseViewModel extends Equatable {
         author,
         authorDescription,
         responseDate,
+        videoTitle,
         videoUrl,
         videoWidth,
         videoHeight,

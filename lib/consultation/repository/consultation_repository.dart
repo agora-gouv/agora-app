@@ -3,23 +3,24 @@ import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/thematique_extension.dart';
 import 'package:agora/common/log/sentry_wrapper.dart';
 import 'package:agora/consultation/domain/consultation.dart';
-import 'package:agora/consultation/domain/consultation_summary_results.dart';
 import 'package:agora/consultation/domain/consultations_error_type.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
 import 'package:agora/consultation/dynamic/repository/dynamic_consultation_mapper.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 import 'package:agora/consultation/question/domain/consultation_questions.dart';
 import 'package:agora/consultation/question/repository/consultation_question_storage_client.dart';
+import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/consultation/repository/consultation_questions_builder.dart';
-import 'package:agora/consultation/repository/consultation_responses_builder.dart';
+import 'package:agora/consultation/repository/consultation_responses.dart';
+import 'package:agora/referentiel/territoire.dart';
 import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
 
 abstract class ConsultationRepository {
   Future<GetConsultationsRepositoryResponse> fetchConsultations();
 
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
+    Territoire? territoire,
   });
 
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsAnsweredPaginated({
@@ -56,12 +57,14 @@ class ConsultationDioRepository extends ConsultationRepository {
   final SentryWrapper sentryWrapper;
   final Duration minimalSendingTime;
   final ConsultationQuestionStorageClient storageClient;
+  final ConsultationMapper mapper;
 
   ConsultationDioRepository({
     required this.httpClient,
     required this.sentryWrapper,
     this.minimalSendingTime = const Duration(seconds: 2),
     required this.storageClient,
+    required this.mapper,
   });
 
   @override
@@ -82,6 +85,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             thematique: (ongoingConsultation["thematique"] as Map).toThematique(),
             endDate: (ongoingConsultation["endDate"] as String).parseToDateTime(),
             label: ongoingConsultation["highlightLabel"] as String?,
+            territoire: ongoingConsultation["territory"] as String? ?? "",
           );
         }).toList(),
         finishedConsultations: finishedConsultations.map((finishedConsultation) {
@@ -93,6 +97,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
             updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
+            territoire: finishedConsultation["territory"] as String? ?? "",
           );
         }).toList(),
         answeredConsultations: answeredConsultations.map((answeredConsultation) {
@@ -103,6 +108,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: answeredConsultation["coverUrl"] as String,
             thematique: (answeredConsultation["thematique"] as Map).toThematique(),
             label: answeredConsultation["updateLabel"] as String?,
+            territoire: answeredConsultation["territory"] as String? ?? "",
           );
         }).toList(),
       );
@@ -134,6 +140,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             coverUrl: consultation["coverUrl"] as String,
             thematique: (consultation["thematique"] as Map).toThematique(),
             label: consultation["label"] as String?,
+            territoire: consultation["territory"] as String? ?? "",
           );
         }).toList(),
       );
@@ -146,8 +153,12 @@ class ConsultationDioRepository extends ConsultationRepository {
   @override
   Future<GetConsultationsFinishedPaginatedRepositoryResponse> fetchConsultationsFinishedPaginated({
     required int pageNumber,
+    Territoire? territoire,
   }) async {
-    final uri = "/consultations/finished/$pageNumber";
+    String uri = "/consultations/finished/$pageNumber";
+    if (territoire != null) {
+      uri = "$uri?territory=${territoire.label}";
+    }
     try {
       final response = await httpClient.get(uri);
       return GetConsultationsPaginatedSucceedResponse(
@@ -161,6 +172,7 @@ class ConsultationDioRepository extends ConsultationRepository {
             thematique: (finishedConsultation["thematique"] as Map).toThematique(),
             label: finishedConsultation["updateLabel"] as String?,
             updateDate: (finishedConsultation["updateDate"] as String).parseToDateTime(),
+            territoire: finishedConsultation["territory"] as String? ?? "",
           );
         }).toList(),
       );
@@ -239,7 +251,7 @@ class ConsultationDioRepository extends ConsultationRepository {
         participantCount: response.data["participantCount"] as int,
         title: response.data["title"] as String,
         coverUrl: response.data["coverUrl"] as String,
-        results: ConsultationResponsesMapper.toConsultationSummaryResults(
+        results: mapper.toConsultationSummaryResults(
           uniqueChoiceResults: response.data["resultsUniqueChoice"] as List,
           multipleChoicesResults: response.data["resultsMultipleChoice"] as List,
           questionWithOpenChoiceResults: response.data["resultsOpen"] as List,
@@ -280,6 +292,8 @@ class ConsultationDioRepository extends ConsultationRepository {
         history: toHistory(data["history"], consultationId),
         footer: toFooter(data["footer"]),
         goals: toGoals(data["goals"]),
+        territoire: data["territory"] as String,
+        isAnsweredByUser: data["isAnsweredByUser"] as bool,
       );
       return DynamicConsultationSuccessResponse(consultation);
     } catch (exception, stacktrace) {
@@ -350,145 +364,4 @@ class ConsultationDioRepository extends ConsultationRepository {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
     }
   }
-}
-
-abstract class GetConsultationsRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class GetConsultationsSucceedResponse extends GetConsultationsRepositoryResponse {
-  final List<ConsultationOngoing> ongoingConsultations;
-  final List<ConsultationFinished> finishedConsultations;
-  final List<ConsultationAnswered> answeredConsultations;
-
-  GetConsultationsSucceedResponse({
-    required this.ongoingConsultations,
-    required this.finishedConsultations,
-    required this.answeredConsultations,
-  });
-
-  @override
-  List<Object> get props => [
-        ongoingConsultations,
-        finishedConsultations,
-        answeredConsultations,
-      ];
-}
-
-class GetConsultationsFailedResponse extends GetConsultationsRepositoryResponse {
-  final ConsultationsErrorType errorType;
-
-  GetConsultationsFailedResponse({this.errorType = ConsultationsErrorType.generic});
-
-  @override
-  List<Object> get props => [errorType];
-}
-
-abstract class GetConsultationsFinishedPaginatedRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class GetConsultationsPaginatedSucceedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {
-  final int maxPage;
-  final List<ConsultationFinished> consultationsPaginated;
-
-  GetConsultationsPaginatedSucceedResponse({
-    required this.maxPage,
-    required this.consultationsPaginated,
-  });
-
-  @override
-  List<Object> get props => [maxPage, consultationsPaginated];
-}
-
-class GetConsultationsFinishedPaginatedFailedResponse extends GetConsultationsFinishedPaginatedRepositoryResponse {}
-
-abstract class GetConsultationQuestionsRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class GetConsultationQuestionsSucceedResponse extends GetConsultationQuestionsRepositoryResponse {
-  final ConsultationQuestions consultationQuestions;
-
-  GetConsultationQuestionsSucceedResponse({required this.consultationQuestions});
-
-  @override
-  List<Object> get props => [consultationQuestions];
-}
-
-class GetConsultationQuestionsFailedResponse extends GetConsultationQuestionsRepositoryResponse {}
-
-abstract class SendConsultationResponsesRepositoryResponse extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class SendConsultationResponsesSucceedResponse extends SendConsultationResponsesRepositoryResponse {
-  final bool shouldDisplayDemographicInformation;
-
-  SendConsultationResponsesSucceedResponse({required this.shouldDisplayDemographicInformation});
-
-  @override
-  List<Object> get props => [shouldDisplayDemographicInformation];
-}
-
-class SendConsultationResponsesFailureResponse extends SendConsultationResponsesRepositoryResponse {}
-
-sealed class DynamicConsultationResponse extends Equatable {}
-
-class DynamicConsultationSuccessResponse extends DynamicConsultationResponse {
-  final DynamicConsultation consultation;
-
-  DynamicConsultationSuccessResponse(this.consultation);
-
-  @override
-  List<Object?> get props => [consultation];
-}
-
-class DynamicConsultationErrorResponse extends DynamicConsultationResponse {
-  @override
-  List<Object?> get props => [];
-}
-
-sealed class DynamicConsultationResultsResponse extends Equatable {}
-
-class DynamicConsultationsResultsErrorResponse extends DynamicConsultationResultsResponse {
-  @override
-  List<Object?> get props => [];
-}
-
-class DynamicConsultationsResultsSuccessResponse extends DynamicConsultationResultsResponse {
-  final int participantCount;
-  final String title;
-  final String coverUrl;
-  final List<ConsultationSummaryResults> results;
-
-  DynamicConsultationsResultsSuccessResponse({
-    required this.participantCount,
-    required this.results,
-    required this.title,
-    required this.coverUrl,
-  });
-
-  @override
-  List<Object?> get props => [participantCount, results, title, coverUrl];
-}
-
-sealed class DynamicConsultationUpdateResponse extends Equatable {}
-
-class DynamicConsultationUpdateErrorResponse extends DynamicConsultationUpdateResponse {
-  @override
-  List<Object?> get props => [];
-}
-
-class DynamicConsultationUpdateSuccessResponse extends DynamicConsultationUpdateResponse {
-  final DynamicConsultationUpdate update;
-
-  DynamicConsultationUpdateSuccessResponse(this.update);
-
-  @override
-  List<Object?> get props => [update];
 }

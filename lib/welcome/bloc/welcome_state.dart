@@ -1,11 +1,6 @@
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/welcome/domain/welcome_a_la_une.dart';
 import 'package:equatable/equatable.dart';
-
-enum AllPurposeStatus {
-  error,
-  loading,
-  success;
-}
 
 class WelcomeState extends Equatable {
   final AllPurposeStatus status;

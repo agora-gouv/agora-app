@@ -8,15 +8,17 @@ class FetchQagsListEvent extends QagListEvent {
   final String? thematiqueId;
   final String? thematiqueLabel;
   final QagListFilter qagFilter;
+  final bool forceRefresh;
 
   FetchQagsListEvent({
     required this.thematiqueId,
     required this.thematiqueLabel,
     required this.qagFilter,
+    this.forceRefresh = false,
   });
 
   @override
-  List<Object?> get props => [thematiqueId, thematiqueLabel, qagFilter];
+  List<Object?> get props => [thematiqueId, thematiqueLabel, qagFilter, forceRefresh];
 }
 
 class UpdateQagListSupportEvent extends QagListEvent {

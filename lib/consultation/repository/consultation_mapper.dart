@@ -1,8 +1,8 @@
-import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 import 'package:agora/consultation/domain/consultation_summary_results.dart';
+import 'package:agora/consultation/question/domain/consultation_question_response.dart';
 
-class ConsultationResponsesMapper {
-  static List<ConsultationSummaryResults> toConsultationSummaryResults({
+class ConsultationMapper {
+  List<ConsultationSummaryResults> toConsultationSummaryResults({
     required List<dynamic> uniqueChoiceResults,
     required List<dynamic> multipleChoicesResults,
     required List<ConsultationQuestionResponses> userResponses,
@@ -16,7 +16,7 @@ class ConsultationResponsesMapper {
           questionTitle: uniqueChoiceResult["questionTitle"] as String,
           order: uniqueChoiceResult["order"] as int,
           seenRatio: uniqueChoiceResult["seenRatio"] as int,
-          responses: _buildSummaryResponses(uniqueChoiceResult, userResponses, questionId),
+          responses: _toConsultationSummaryResponses(uniqueChoiceResult, userResponses, questionId),
         ),
       );
     }
@@ -29,7 +29,7 @@ class ConsultationResponsesMapper {
           questionTitle: multipleChoicesResult["questionTitle"] as String,
           order: multipleChoicesResult["order"] as int,
           seenRatio: multipleChoicesResult["seenRatio"] as int,
-          responses: _buildSummaryResponses(multipleChoicesResult, userResponses, questionId),
+          responses: _toConsultationSummaryResponses(multipleChoicesResult, userResponses, questionId),
         ),
       );
     }
@@ -48,7 +48,7 @@ class ConsultationResponsesMapper {
     return summaryResults;
   }
 
-  static List<ConsultationSummaryResponse> _buildSummaryResponses(
+  List<ConsultationSummaryResponse> _toConsultationSummaryResponses(
     multipleChoicesResult,
     List<ConsultationQuestionResponses> userResponses,
     String questionId,

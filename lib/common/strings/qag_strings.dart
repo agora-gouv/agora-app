@@ -8,7 +8,7 @@ class QagStrings {
   static const String allQagPart1 = "Toutes les";
   static const String allQagPart2 = "questions";
   static const String trending = "Tendances";
-  static const String popular = "Le top";
+  static const String top = "Le top";
   static const String latest = "Récentes";
   static const String supporting = "Suivies";
   static const String askQuestion = "Poser ma question";
@@ -51,7 +51,6 @@ class QagStrings {
   static const String supportQuestion = "Soutenir cette question";
   static const String questionSupported = "Question soutenue";
 
-  static const String governmentResponseTitle = "Réponse du Gouvernement";
   static const String answerTo = "En réponse à";
   static const String transcription = "Transcription";
   static const String utils = "Oui\u{00A0}!";
@@ -96,7 +95,6 @@ class QagStrings {
       "Votre question ne sera plus accessible aux utilisateurs d’Agora et ne pourra recevoir de réponse de la part des membres du gouvernement.";
   static const String yourQuestion = "Votre question";
   static const String suppressSucceed = "La suppression a été prise en compte.";
-  static const String searchQuestion = "Rechercher un mot-clef";
   static const String astuceQuestionTitre = "🔎 Astuce";
   static const String astuceQuestionDescription =
       "Si votre question a déjà été posée par un autre utilisateur, il vaut mieux la soutenir qu’en poser une nouvelle\u{00A0}! ";

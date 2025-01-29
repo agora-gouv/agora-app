@@ -6,12 +6,14 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class AgoraNotificationCard extends StatelessWidget {
-  final String title;
+  final String titre;
+  final String description;
   final String type;
   final String date;
 
   AgoraNotificationCard({
-    required this.title,
+    required this.titre,
+    required this.description,
     required this.type,
     required this.date,
   });
@@ -25,8 +27,12 @@ class AgoraNotificationCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(width: double.infinity),
-          Text(title, style: AgoraTextStyles.light15),
-          SizedBox(height: AgoraSpacings.base),
+          Text(titre, style: description.isNotEmpty ? AgoraTextStyles.medium15 : AgoraTextStyles.light14),
+          SizedBox(height: AgoraSpacings.x0_5),
+          if (description.isNotEmpty) ...[
+            Text(description, style: AgoraTextStyles.light14),
+            SizedBox(height: AgoraSpacings.base),
+          ],
           RichText(
             textScaler: MediaQuery.textScalerOf(context),
             text: TextSpan(

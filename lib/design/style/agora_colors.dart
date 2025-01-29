@@ -10,6 +10,7 @@ class AgoraColors {
   static const Color border = Color(0x30000000);
   static const Color rhineCastle = Color(0xFF5F5F5F);
   static const Color overlay = Color(0x80D6D6D6);
+  static const Color greySeeMore = Color(0xFF7B7B7B);
   static const Color stoicWhite = Color(0x80DFE6FF);
   static const Color brilliantWhite = Color(0xFFE8EDFF);
   static const Color gravelFint = Color(0xFFBBBBBB);
@@ -20,6 +21,7 @@ class AgoraColors {
   static const Color neutral200 = Color(0xFFE7ECFA);
   static const Color neutral300 = Color(0xFFBDCCF8);
   static const Color neutral400 = Color(0xFFA0B2EC);
+  static const Color unselectedFiltre = Color(0xFFE3E3FD);
   static const Color doctor = Color(0xFFF9F9F9);
   static const Color cascadingWhite = Color(0xFFF6F6F6);
   static const Color superSilver = Color(0xFFEEEEEE);
@@ -44,6 +46,16 @@ class AgoraColors {
   static const Color lightBrun = Color(0xFFFEECC2);
   static const Color blur = Color(0x123D3C49);
   static const Color gold = Color(0xFFFFD700);
+
+  // couleur de badge
+  static const Color badgeDepartemental = Color(0xFFFEE7FC);
+  static const Color badgeDepartementalTexte = Color(0xFF6E445A);
+
+  static const Color badgeRegional = Color(0xFFBAFAEE);
+  static const Color badgeRegionalTexte = Color(0xFF364B47);
+
+  static const Color badgeNational = Color(0xFFE8EDFF);
+  static const Color badgeNationalTexte = Color(0xFF0063CB);
 
   // couleur de pastille
   static const Color mintZest = Color(0xFFCFFCD9);

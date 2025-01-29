@@ -32,6 +32,7 @@ void main() {
           notificationViewModels: [
             NotificationViewModel(
               title: "titre de la notification",
+              description: "description de la notification",
               type: "Consultations",
               date: "27 juillet",
             ),
@@ -52,6 +53,7 @@ void main() {
         notificationViewModels: [
           NotificationViewModel(
             title: "titre de la notification blabla",
+            description: "description de la notification",
             type: "Questions Citoyennes",
             date: "28 juillet",
           ),
@@ -65,6 +67,7 @@ void main() {
           notificationViewModels: [
             NotificationViewModel(
               title: "titre de la notification blabla",
+              description: "description de la notification",
               type: "Questions Citoyennes",
               date: "28 juillet",
             ),
@@ -76,11 +79,13 @@ void main() {
           notificationViewModels: [
             NotificationViewModel(
               title: "titre de la notification blabla",
+              description: "description de la notification",
               type: "Questions Citoyennes",
               date: "28 juillet",
             ),
             NotificationViewModel(
               title: "titre de la notification",
+              description: "description de la notification",
               type: "Consultations",
               date: "27 juillet",
             ),
@@ -123,6 +128,7 @@ void main() {
       notificationViewModels: [
         NotificationViewModel(
           title: "titre de la notification blabla",
+          description: "description de la notification",
           type: "Questions Citoyennes",
           date: "28 juillet",
         ),
@@ -136,6 +142,7 @@ void main() {
         notificationViewModels: [
           NotificationViewModel(
             title: "titre de la notification blabla",
+            description: "description de la notification",
             type: "Questions Citoyennes",
             date: "28 juillet",
           ),
@@ -147,6 +154,7 @@ void main() {
         notificationViewModels: [
           NotificationViewModel(
             title: "titre de la notification blabla",
+            description: "description de la notification",
             type: "Questions Citoyennes",
             date: "28 juillet",
           ),

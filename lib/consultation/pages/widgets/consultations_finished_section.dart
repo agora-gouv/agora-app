@@ -137,12 +137,12 @@ class ConsultationsFinishedSection extends StatelessWidget {
           return AgoraConsultationFinishedCard(
             key: index == 0 ? firstFocusableElementKey : null,
             id: finishedViewModel.id,
-            title: finishedViewModel.title,
+            titre: finishedViewModel.title,
             thematique: finishedViewModel.thematique,
             imageUrl: finishedViewModel.coverUrl,
-            label: finishedViewModel.label,
+            flammeLabel: finishedViewModel.label,
             style: AgoraConsultationFinishedStyle.carrousel,
-            onClick: () {
+            onTap: () {
               TrackerHelper.trackClick(
                 clickName: "${AnalyticsEventNames.finishedConsultation} ${finishedViewModel.id}",
                 widgetName: AnalyticsScreenNames.consultationsPage,
@@ -164,6 +164,9 @@ class ConsultationsFinishedSection extends StatelessWidget {
             isExternalLink: finishedViewModel is ConcertationViewModel,
             index: finishedViewModels.indexOf(finishedViewModel) + 1,
             maxIndex: finishedViewModels.length + 1,
+            badgeLabel: finishedViewModel.badgeLabel,
+            badgeColor: finishedViewModel.badgeColor,
+            badgeTextColor: finishedViewModel.badgeTextColor,
           );
         })
         .plus(_ViewAllCard(finishedViewModels.length + 1))

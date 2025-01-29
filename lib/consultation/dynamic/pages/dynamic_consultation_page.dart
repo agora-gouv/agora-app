@@ -4,6 +4,7 @@ import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/date_extension.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/notification_helper.dart';
 import 'package:agora/common/helper/share_helper.dart';
@@ -23,6 +24,7 @@ import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.d
 import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
 import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
 import 'package:agora/consultation/question/pages/consultation_question_page.dart';
+import 'package:agora/design/custom_view/agora_badge.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
@@ -37,6 +39,8 @@ import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/design/video/agora_video_view.dart';
+import 'package:agora/referentiel/territoire.dart';
+import 'package:agora/referentiel/territoire_helper.dart';
 import 'package:collection/collection.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:equatable/equatable.dart';
@@ -52,7 +56,7 @@ part 'dynamic_consultation_view_model.dart';
 
 class DynamicConsultationPageArguments {
   final String consultationIdOrSlug;
-  final String consultationTitle;
+  final String? consultationTitle;
   final bool shouldReloadConsultationsWhenPop;
   final String? notificationTitle;
   final String? notificationDescription;
@@ -60,7 +64,7 @@ class DynamicConsultationPageArguments {
 
   DynamicConsultationPageArguments({
     required this.consultationIdOrSlug,
-    required this.consultationTitle,
+    this.consultationTitle,
     this.shouldReloadConsultationsWhenPop = true,
     this.notificationTitle,
     this.notificationDescription,
@@ -80,8 +84,9 @@ class DynamicConsultationPage extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) {
         return DynamicConsultationBloc(
-          RepositoryManager.getConsultationRepository(),
-          StorageManager.getConsultationQuestionStorageClient(),
+          consultationRepository: RepositoryManager.getConsultationRepository(),
+          referentielRepository: RepositoryManager.getReferentielRepository(),
+          storageClient: StorageManager.getConsultationQuestionStorageClient(),
         )..add(FetchDynamicConsultationEvent(arguments.consultationIdOrSlug));
       },
       child: BlocSelector<DynamicConsultationBloc, DynamicConsultationState, DynamicConsultationViewModel>(
@@ -89,10 +94,13 @@ class DynamicConsultationPage extends StatelessWidget {
         builder: (BuildContext context, DynamicConsultationViewModel viewModel) {
           return switch (viewModel) {
             _LoadingViewModel() => _LoadingPage(),
-            _ErrorViewModel() => _ErrorPage(consultationTitle: arguments.consultationTitle),
+            _ErrorViewModel() => _ErrorPage(
+                consultationTitle: arguments.consultationTitle != null
+                    ? "Consultation : ${arguments.consultationTitle}"
+                    : "Détail de la consultation",
+              ),
             _SuccessViewModel() => _SuccessPage(
                 viewModel,
-                arguments.consultationTitle,
                 arguments.notificationTitle,
                 arguments.notificationDescription,
                 arguments.shouldLaunchCongratulationAnimation,
@@ -106,14 +114,12 @@ class DynamicConsultationPage extends StatelessWidget {
 
 class _SuccessPage extends StatelessWidget {
   final _SuccessViewModel viewModel;
-  final String consultationTitle;
   final String? notificationTitle;
   final String? notificationDescription;
   final bool shouldLaunchCongratulationAnimation;
 
   _SuccessPage(
     this.viewModel,
-    this.consultationTitle,
     this.notificationTitle,
     this.notificationDescription,
     this.shouldLaunchCongratulationAnimation,
@@ -133,7 +139,11 @@ class _SuccessPage extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Expanded(child: AgoraToolbar(semanticPageLabel: "Consultation : $consultationTitle")),
+            Expanded(
+              child: AgoraToolbar(
+                semanticPageLabel: "Consultation : ${viewModel.sections.whereType<_HeaderSection>().first.title}",
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
               child: _ShareButton(viewModel.shareText),

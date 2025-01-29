@@ -1,5 +1,3 @@
-import 'package:agora/profil/app_feedback/repository/app_feedback_repository.dart';
-import 'package:agora/profil/app_feedback/repository/mocks_app_feedback_repository.dart';
 import 'package:agora/common/client/agora_http_client.dart';
 import 'package:agora/common/client/agora_http_client_adapter.dart';
 import 'package:agora/common/client/auth_interceptor.dart';
@@ -8,21 +6,30 @@ import 'package:agora/common/helper/flavor_helper.dart';
 import 'package:agora/common/manager/helper_manager.dart';
 import 'package:agora/common/manager/service_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/concertation/repository/concertation_cache_repository.dart';
 import 'package:agora/concertation/repository/concertation_repository.dart';
+import 'package:agora/consultation/repository/consultation_cache_repository.dart';
+import 'package:agora/consultation/repository/consultation_mapper.dart';
 import 'package:agora/consultation/repository/consultation_repository.dart';
 import 'package:agora/consultation/repository/mock_consultation_repository.dart';
+import 'package:agora/login/repository/login_repository.dart';
+import 'package:agora/login/repository/mocks_login_repository.dart';
+import 'package:agora/profil/app_feedback/repository/app_feedback_repository.dart';
+import 'package:agora/profil/app_feedback/repository/mocks_app_feedback_repository.dart';
 import 'package:agora/profil/demographic/repository/demographic_repository.dart';
 import 'package:agora/profil/demographic/repository/mocks_demographic_repository.dart';
 import 'package:agora/profil/notification/repository/mocks_notification_repository.dart';
 import 'package:agora/profil/notification/repository/notification_repository.dart';
 import 'package:agora/profil/participation_charter/repository/mocks_participation_charter_repository.dart';
 import 'package:agora/qag/repository/mocks_qag_repository.dart';
+import 'package:agora/qag/repository/qag_cache_repository.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
+import 'package:agora/referentiel/repository/referentiel_cache_repository.dart';
+import 'package:agora/referentiel/repository/referentiel_repository.dart';
 import 'package:agora/thematique/repository/thematique_repository.dart';
-import 'package:agora/login/repository/login_repository.dart';
-import 'package:agora/login/repository/mocks_login_repository.dart';
 import 'package:agora/welcome/repository/mocks_welcome_repository.dart';
 import 'package:agora/welcome/repository/welcome_repository.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter/foundation.dart';
@@ -43,7 +50,13 @@ class RepositoryManager {
     deviceInfoHelper: HelperManager.getDeviceInfoHelper(),
   );
 
-  static void initRepositoryManager({required String baseUrl, required Uint8List rootCertificate}) {
+  static final CacheOptions cacheOptions = CacheOptions(
+    store: MemCacheStore(),
+    policy: CachePolicy.request,
+    maxStale: const Duration(hours: 1),
+  );
+
+  static void initRepositoryManager({required String baseUrl, required List<X509CertificateData> rootCertificate}) {
     GetIt.instance.registerSingleton(baseUrl, instanceName: _baseUrl);
     GetIt.instance.registerSingleton(rootCertificate, instanceName: _rootCertificate);
   }
@@ -69,7 +82,7 @@ class RepositoryManager {
     if (!kIsWeb && FlavorHelper.getFlavor() == AgoraFlavor.prod) {
       dio.httpClientAdapter = AgoraHttpClientAdapter(
         baseUrl: GetIt.instance.get<String>(instanceName: _baseUrl),
-        rootCertificate: GetIt.instance.get<Uint8List>(instanceName: _rootCertificate),
+        rootCertificate: GetIt.instance.get<List<X509CertificateData>>(instanceName: _rootCertificate),
       );
     }
     GetIt.instance.registerSingleton(dio, instanceName: _authenticatedDio);
@@ -102,13 +115,7 @@ class RepositoryManager {
       responseHeader: true,
       responseBody: true,
     );
-    final dioCacheInterceptor = DioCacheInterceptor(
-      options: CacheOptions(
-        store: MemCacheStore(),
-        policy: CachePolicy.request,
-        maxStale: const Duration(days: 14),
-      ),
-    );
+    final dioCacheInterceptor = DioCacheInterceptor(options: cacheOptions);
     dio.interceptors
       ..add(dioLoggerInterceptor)
       ..add(dioCacheInterceptor);
@@ -122,6 +129,7 @@ class RepositoryManager {
     final agoraDioHttpClient = AgoraDioHttpClient(
       dio: _getDioWithoutAuth(),
       userAgentBuilder: userAgentBuilder,
+      cacheOptions: cacheOptions,
     );
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _noAuthenticationHttpClient);
     return agoraDioHttpClient;
@@ -135,6 +143,7 @@ class RepositoryManager {
       dio: _getDio(sharedPref: sharedPref),
       jwtHelper: HelperManager.getJwtHelper(),
       userAgentBuilder: userAgentBuilder,
+      cacheOptions: cacheOptions,
     );
     GetIt.instance.registerSingleton(agoraDioHttpClient, instanceName: _authenticatedHttpClient);
     return agoraDioHttpClient;
@@ -160,7 +169,18 @@ class RepositoryManager {
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
       storageClient: StorageManager.getConsultationQuestionStorageClient(),
+      mapper: ConsultationMapper(),
     );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static ConsultationCacheRepository getConsultationCacheRepository() {
+    if (GetIt.instance.isRegistered<ConsultationCacheRepository>()) {
+      return GetIt.instance.get<ConsultationCacheRepository>();
+    }
+    final repository =
+        ConsultationCacheRepository(consultationRepository: RepositoryManager.getConsultationRepository());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
@@ -185,6 +205,15 @@ class RepositoryManager {
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
     );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static QagCacheRepository getQagCacheRepository() {
+    if (GetIt.instance.isRegistered<QagCacheRepository>()) {
+      return GetIt.instance.get<QagCacheRepository>();
+    }
+    final repository = QagCacheRepository(qagRepository: getQagRepository());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }
@@ -256,7 +285,38 @@ class RepositoryManager {
     final repository = ConcertationDioRepository(
       httpClient: _getAgoraDioHttpClient(),
       sentryWrapper: HelperManager.getSentryWrapper(),
+      mapper: ConsultationMapper(),
     );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static ConcertationCacheRepository getConcertationCacheRepository() {
+    if (GetIt.instance.isRegistered<ConcertationCacheRepository>()) {
+      return GetIt.instance.get<ConcertationCacheRepository>();
+    }
+    final repository = ConcertationCacheRepository(concertationRepository: getConcertationRepository());
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static ReferentielDioRepository getReferentielRepository() {
+    if (GetIt.instance.isRegistered<ReferentielDioRepository>()) {
+      return GetIt.instance.get<ReferentielDioRepository>();
+    }
+    final repository = ReferentielDioRepository(
+      httpClient: _getAgoraDioHttpClient(),
+      sentryWrapper: HelperManager.getSentryWrapper(),
+    );
+    GetIt.instance.registerSingleton(repository);
+    return repository;
+  }
+
+  static ReferentielCacheRepository getReferentielCacheRepository() {
+    if (GetIt.instance.isRegistered<ReferentielCacheRepository>()) {
+      return GetIt.instance.get<ReferentielCacheRepository>();
+    }
+    final repository = ReferentielCacheRepository(referentielRepository: getReferentielRepository());
     GetIt.instance.registerSingleton(repository);
     return repository;
   }

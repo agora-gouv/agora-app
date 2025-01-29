@@ -17,6 +17,7 @@ import 'package:agora/profil/notification/pages/notification_page.dart';
 import 'package:agora/push_notification/notification_message_type.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
+import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -27,14 +28,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: ConfigManager.getFirebaseOptions());
 
-  Log.d("notification : handling a background message ${message.messageId}");
+  Log.debug("notification : handling a background message ${message.messageId}");
   final pushNotificationService = ServiceManager.getPushNotificationService();
   await pushNotificationService.setupNotifications();
   saveNotificationMessage(message);
 }
 
 void saveNotificationMessage(RemoteMessage message) async {
-  Log.d("notification : save ${jsonEncode(message.toMap())}");
+  Log.debug("notification : save ${jsonEncode(message.toMap())}");
   StorageManager.getPushNotificationStorageClient().saveMessage(jsonEncode(message.toMap()));
 }
 
@@ -66,7 +67,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      Log.d(
+      Log.debug(
         "FirebaseMessaging - New notification while app is in foreground: ${message.notification?.title} ${message.notification?.body}",
       );
       TrackerHelper.trackScreen(screenName: AnalyticsScreenNames.notificationInApp);
@@ -74,7 +75,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      Log.d(
+      Log.debug(
         "FirebaseMessaging - New notification while app is in background: ${message.notification?.title} ${message.notification?.body}",
       );
       saveNotificationMessage(message);
@@ -82,7 +83,7 @@ class FirebasePushNotificationService extends PushNotificationService {
 
     FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        Log.d(
+        Log.debug(
           "FirebaseMessaging - New notification while app is terminated: ${message.notification?.title} ${message.notification?.body}",
         );
         saveNotificationMessage(message);
@@ -122,7 +123,7 @@ class FirebasePushNotificationService extends PushNotificationService {
 
   Future<String?> _redirect(String logMessage) async {
     final String? savedNotificationMessage = await StorageManager.getPushNotificationStorageClient().getMessage();
-    Log.d("$logMessage $savedNotificationMessage");
+    Log.debug("$logMessage $savedNotificationMessage");
     if (savedNotificationMessage != null) {
       TrackerHelper.trackClick(
         widgetName: AnalyticsScreenNames.notificationSystemWidget,
@@ -160,7 +161,7 @@ class FirebasePushNotificationService extends PushNotificationService {
     final messageType = (message.data["type"] as String?).toNotificationMessageType();
     switch (messageType) {
       case NotificationMessageType.qagDetails:
-        final qagId = message.data["qagId"] as String?;
+        final qagId = message.data["pageArgument"] as String?;
         if (qagId == null) return;
         navigatorKey.currentState?.pushNamed(
           QagDetailsPage.routeName,
@@ -176,7 +177,7 @@ class FirebasePushNotificationService extends PushNotificationService {
         navigatorKey.currentState?.pushNamed(
           DynamicConsultationPage.routeName,
           arguments: DynamicConsultationPageArguments(
-            consultationIdOrSlug: message.data["consultationId"] as String,
+            consultationIdOrSlug: message.data["pageArgument"] as String,
             consultationTitle: '${ConsultationStrings.toolbarPart1} ${ConsultationStrings.toolbarPart2}',
             shouldReloadConsultationsWhenPop: false,
             notificationTitle: shouldDisplayMessage ? message.notification?.title : null,
@@ -197,6 +198,8 @@ class FirebasePushNotificationService extends PushNotificationService {
           navigatorKey.currentState?.pushNamed(NotificationPage.routeName);
         }
         break;
+      case NotificationMessageType.qagReponses:
+        navigatorKey.currentState?.pushReplacementNamed(ReponsesPage.routeName);
       default:
         break;
     }
@@ -208,11 +211,13 @@ class FirebasePushNotificationService extends PushNotificationService {
   }
 
   Future<String> _fetchMessagingToken() async {
-    final token = await _messaging.getToken();
+    final token =
+        defaultTargetPlatform == TargetPlatform.iOS ? await _messaging.getAPNSToken() : await _messaging.getToken();
+
     if (token == null) {
       throw Exception("No firebase messaging token found error");
     }
-    Log.d("\nFirebase messaging token : $token\n");
+    Log.debug("\nFirebase messaging token : $token\n");
     return token;
   }
 

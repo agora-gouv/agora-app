@@ -3,8 +3,6 @@ import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/helper/timer_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
-import 'package:agora/common/manager/repository_manager.dart';
-import 'package:agora/common/manager/storage_manager.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/design/custom_view/agora_search_bar.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -18,23 +16,28 @@ import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/list/bloc/qag_list_bloc.dart';
 import 'package:agora/qag/list/bloc/qag_list_event.dart';
 import 'package:agora/qag/list/pages/qag_list_section.dart';
+import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/qag/widgets/qags_thematique_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum QagTab { search, trending, top, latest, supporting }
-
 class QagsSection extends StatefulWidget {
-  final QagTab defaultSelected;
-  final String? selectedThematiqueId;
   final GlobalKey firstThematiqueKey;
+  final String? currentThematiqueId;
+  final String? currentThematiqueLabel;
+  final QagTab currentSelectedTab;
+  final Function(String? id, String? label) onThematiqueSelected;
+  final Function(QagTab tab) onSelectedTab;
   final Function(bool) onSearchBarOpen;
 
   const QagsSection({
     super.key,
-    required this.defaultSelected,
-    required this.selectedThematiqueId,
+    required this.currentThematiqueId,
+    required this.currentThematiqueLabel,
+    required this.currentSelectedTab,
     required this.firstThematiqueKey,
+    required this.onThematiqueSelected,
+    required this.onSelectedTab,
     required this.onSearchBarOpen,
   });
 
@@ -43,9 +46,6 @@ class QagsSection extends StatefulWidget {
 }
 
 class _QagsSectionState extends State<QagsSection> {
-  late QagTab currentSelected;
-  String? currentThematiqueId;
-  String? currentThematiqueLabel;
   String previousSearchKeywords = '';
   String previousSearchKeywordsSanitized = '';
   bool isActiveSearchBar = false;
@@ -56,93 +56,10 @@ class _QagsSectionState extends State<QagsSection> {
   @override
   void initState() {
     super.initState();
-    currentSelected = widget.defaultSelected;
   }
 
   @override
   Widget build(BuildContext context) {
-    final isThematiquesVisible = !isActiveSearchBar && currentSelected != QagTab.trending;
-    return BlocProvider(
-      create: (context) => QagListBloc(
-        qagRepository: RepositoryManager.getQagRepository(),
-        headerQagStorageClient: StorageManager.getHeaderQagStorageClient(),
-      )..add(
-          FetchQagsListEvent(
-            thematiqueId: currentThematiqueId,
-            thematiqueLabel: currentThematiqueLabel,
-            qagFilter: QagListFilter.trending,
-          ),
-        ),
-      child: Column(
-        children: [
-          _buildTabBar(),
-          Visibility(
-            visible: isThematiquesVisible,
-            child: QagsThematiqueSection(
-              firstThematiqueKey: widget.firstThematiqueKey,
-              currentThematiqueId: currentThematiqueId,
-              onThematiqueIdSelected: (String? thematiqueId, String? thematicLabel) {
-                if (currentThematiqueId != null || thematiqueId != null) {
-                  setState(() {
-                    if (thematiqueId == currentThematiqueId) {
-                      currentThematiqueId = null;
-                      currentThematiqueLabel = null;
-                    } else {
-                      currentThematiqueId = thematiqueId;
-                      currentThematiqueLabel = thematicLabel;
-                    }
-                    TrackerHelper.trackClick(
-                      clickName: "${AnalyticsEventNames.thematique} $currentThematiqueId",
-                      widgetName: AnalyticsScreenNames.qagsPage,
-                    );
-                  });
-                }
-              },
-            ),
-          ),
-          Padding(
-            padding: isThematiquesVisible
-                ? const EdgeInsets.symmetric(vertical: AgoraSpacings.base)
-                : const EdgeInsets.only(bottom: AgoraSpacings.base),
-            child: _buildQags(context),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildQags(BuildContext context) {
-    switch (currentSelected) {
-      case QagTab.search:
-        return QagSearch();
-      case QagTab.trending:
-        return QagListSection(
-          qagFilter: QagListFilter.trending,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-      case QagTab.top:
-        return QagListSection(
-          qagFilter: QagListFilter.top,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-      case QagTab.latest:
-        return QagListSection(
-          qagFilter: QagListFilter.latest,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-      case QagTab.supporting:
-        return QagListSection(
-          qagFilter: QagListFilter.supporting,
-          thematiqueId: currentThematiqueId,
-          thematiqueLabel: currentThematiqueLabel,
-        );
-    }
-  }
-
-  Widget _buildTabBar() {
     final TextEditingController textController = TextEditingController(text: previousSearchKeywords);
 
     textController.addListener(() {
@@ -155,6 +72,136 @@ class _QagsSectionState extends State<QagsSection> {
       );
     });
 
+    final isThematiquesVisible = !isActiveSearchBar && widget.currentSelectedTab != QagTab.trending;
+
+    return _Content(
+      currentThematiqueId: widget.currentThematiqueId,
+      currentThematiqueLabel: widget.currentThematiqueLabel,
+      textController: textController,
+      isThematiquesVisible: isThematiquesVisible,
+      firstThematiqueKey: widget.firstThematiqueKey,
+      isActiveSearchBar: isActiveSearchBar,
+      currentSelectedTab: widget.currentSelectedTab,
+      onSearchBarOpen: (bool isSearchOpen) {
+        setState(() => isActiveSearchBar = isSearchOpen);
+        widget.onSelectedTab(isSearchOpen ? QagTab.search : QagTab.trending);
+        widget.onSearchBarOpen(isActiveSearchBar);
+      },
+      onSearchBarClose: () {
+        setState(() {
+          textController.clear();
+          isActiveSearchBar = false;
+        });
+        widget.onSelectedTab(QagTab.trending);
+        widget.onSearchBarOpen(isActiveSearchBar);
+      },
+      onSelectedTab: widget.onSelectedTab,
+      onThematiqueSelected: (String? thematiqueId, String? thematicLabel) {
+        if (thematiqueId == widget.currentThematiqueId) {
+          widget.onThematiqueSelected(null, null);
+        } else {
+          widget.onThematiqueSelected(thematiqueId, thematicLabel);
+          TrackerHelper.trackClick(
+            clickName: "${AnalyticsEventNames.thematique} $widget.currentThematiqueId",
+            widgetName: AnalyticsScreenNames.qagsPage,
+          );
+        }
+      },
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  final String? currentThematiqueId;
+  final String? currentThematiqueLabel;
+  final TextEditingController textController;
+  final bool isThematiquesVisible;
+  final GlobalKey firstThematiqueKey;
+  final Function(bool) onSearchBarOpen;
+  final void Function() onSearchBarClose;
+  final bool isActiveSearchBar;
+  final QagTab currentSelectedTab;
+  final void Function(QagTab) onSelectedTab;
+  final void Function(String? thematiqueId, String? thematicLabel) onThematiqueSelected;
+
+  const _Content({
+    required this.currentThematiqueId,
+    required this.currentThematiqueLabel,
+    required this.textController,
+    required this.isThematiquesVisible,
+    required this.firstThematiqueKey,
+    required this.onSearchBarOpen,
+    required this.onSearchBarClose,
+    required this.isActiveSearchBar,
+    required this.currentSelectedTab,
+    required this.onSelectedTab,
+    required this.onThematiqueSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        _TabBar(
+          textController,
+          onSearchBarOpen,
+          () {
+            onSearchBarClose();
+            context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
+          },
+          isActiveSearchBar,
+          currentSelectedTab,
+          (QagTab tab) {
+            onSelectedTab(tab);
+            context.read<QagListBloc>().add(
+                  FetchQagsListEvent(
+                    thematiqueId: currentThematiqueId,
+                    thematiqueLabel: currentThematiqueLabel,
+                    qagFilter: toQagListFilter(tab),
+                  ),
+                );
+          },
+        ),
+        _ThematiqueFilter(
+          isThematiquesVisible: isThematiquesVisible,
+          firstThematiqueKey: firstThematiqueKey,
+          currentThematiqueId: currentThematiqueId,
+          currentThematiqueLabel: currentThematiqueLabel,
+          currentSelectedTab: currentSelectedTab,
+          onThematiqueSelected: onThematiqueSelected,
+        ),
+        Padding(
+          padding: isThematiquesVisible
+              ? const EdgeInsets.symmetric(vertical: AgoraSpacings.base)
+              : const EdgeInsets.only(bottom: AgoraSpacings.base),
+          child: _Qags(currentSelectedTab, currentThematiqueId, currentThematiqueLabel),
+        ),
+      ],
+    );
+  }
+}
+
+class _TabBar extends StatelessWidget {
+  final TextEditingController textController;
+  final void Function(bool) onSearchBarOpen;
+  final void Function() onSearchBarClose;
+  final bool isActiveSearchBar;
+  final QagTab currentSelectedTab;
+  final void Function(QagTab) onSelectedTab;
+
+  _TabBar(
+    this.textController,
+    this.onSearchBarOpen,
+    this.onSearchBarClose,
+    this.isActiveSearchBar,
+    this.currentSelectedTab,
+    this.onSelectedTab,
+  );
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: AgoraSpacings.x0_5, top: AgoraSpacings.x0_75, bottom: AgoraSpacings.base),
       child: Scrollbar(
@@ -175,28 +222,14 @@ class _QagsSectionState extends State<QagsSection> {
                         textController: textController,
                         textFieldColor: AgoraColors.doctor,
                         color: AgoraColors.transparent,
-                        onClose: () {
-                          setState(() {
-                            textController.clear();
-                            isActiveSearchBar = false;
-                            currentSelected = QagTab.trending;
-                          });
-                          widget.onSearchBarOpen(isActiveSearchBar);
-                          context.read<QagSearchBloc>().add(FetchQagsInitialEvent());
-                        },
+                        onClose: onSearchBarClose,
                         helpText: QagStrings.searchQagHint,
                         textInputAction: TextInputAction.search,
                         onClearText: () {},
                         onSubmitted: (String e) {},
                         autoFocus: true,
                         isSearchBarDisplayed: isActiveSearchBar,
-                        searchBarOpen: (bool isSearchOpen) => {
-                          setState(() {
-                            isActiveSearchBar = isSearchOpen;
-                            currentSelected = isSearchOpen ? QagTab.search : QagTab.trending;
-                          }),
-                          widget.onSearchBarOpen(isActiveSearchBar),
-                        },
+                        searchBarOpen: (bool isSearchOpen) => onSearchBarOpen(isSearchOpen),
                       ),
                       Expanded(
                         child: Visibility(
@@ -206,125 +239,29 @@ class _QagsSectionState extends State<QagsSection> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Semantics(
-                                  header: true,
-                                  button: true,
-                                  selected: currentSelected == QagTab.trending,
-                                  tooltip: 'Élément 1 sur 4',
-                                  child: _TabButton(
-                                    label: QagStrings.trending,
-                                    isSelected: currentSelected == QagTab.trending,
-                                    onTap: () {
-                                      TrackerHelper.trackClick(
-                                        clickName: AnalyticsEventNames.qagTrending,
-                                        widgetName: AnalyticsScreenNames.qagsPage,
-                                      );
-                                      if (currentSelected != QagTab.trending) {
-                                        Future.delayed(Duration(seconds: 1))
-                                            .then((value) => SemanticsHelper.announceNewQagsInList());
-                                        setState(() {
-                                          currentSelected = QagTab.trending;
-                                          context.read<QagListBloc>().add(
-                                                FetchQagsListEvent(
-                                                  thematiqueId: currentThematiqueId,
-                                                  thematiqueLabel: currentThematiqueLabel,
-                                                  qagFilter: QagListFilter.trending,
-                                                ),
-                                              );
-                                        });
-                                      }
-                                    },
-                                  ),
+                                _QagFilterTabButton(
+                                  tabLabel: QagStrings.trending,
+                                  isSelectedTab: currentSelectedTab == QagTab.trending,
+                                  semanticTooltip: 'Élément 1 sur 4',
+                                  onSelectedTab: () => onSelectedTab(QagTab.trending),
                                 ),
-                                Semantics(
-                                  header: true,
-                                  button: true,
-                                  selected: currentSelected == QagTab.top,
-                                  tooltip: 'Élément 2 sur 4',
-                                  child: _TabButton(
-                                    label: QagStrings.popular,
-                                    isSelected: currentSelected == QagTab.top,
-                                    onTap: () {
-                                      TrackerHelper.trackClick(
-                                        clickName: AnalyticsEventNames.qagPopular,
-                                        widgetName: AnalyticsScreenNames.qagsPage,
-                                      );
-                                      if (currentSelected != QagTab.top) {
-                                        Future.delayed(Duration(seconds: 1))
-                                            .then((value) => SemanticsHelper.announceNewQagsInList());
-                                        setState(() {
-                                          currentSelected = QagTab.top;
-                                          context.read<QagListBloc>().add(
-                                                FetchQagsListEvent(
-                                                  thematiqueId: currentThematiqueId,
-                                                  thematiqueLabel: currentThematiqueLabel,
-                                                  qagFilter: QagListFilter.top,
-                                                ),
-                                              );
-                                        });
-                                      }
-                                    },
-                                  ),
+                                _QagFilterTabButton(
+                                  tabLabel: QagStrings.top,
+                                  isSelectedTab: currentSelectedTab == QagTab.top,
+                                  semanticTooltip: 'Élément 2 sur 4',
+                                  onSelectedTab: () => onSelectedTab(QagTab.top),
                                 ),
-                                Semantics(
-                                  header: true,
-                                  button: true,
-                                  selected: currentSelected == QagTab.latest,
-                                  tooltip: 'Élément 3 sur 4',
-                                  child: _TabButton(
-                                    label: QagStrings.latest,
-                                    isSelected: currentSelected == QagTab.latest,
-                                    onTap: () {
-                                      TrackerHelper.trackClick(
-                                        clickName: AnalyticsEventNames.qagLatest,
-                                        widgetName: AnalyticsScreenNames.qagsPage,
-                                      );
-                                      if (currentSelected != QagTab.latest) {
-                                        Future.delayed(Duration(seconds: 1))
-                                            .then((value) => SemanticsHelper.announceNewQagsInList());
-                                        setState(() {
-                                          currentSelected = QagTab.latest;
-                                          context.read<QagListBloc>().add(
-                                                FetchQagsListEvent(
-                                                  thematiqueId: currentThematiqueId,
-                                                  thematiqueLabel: currentThematiqueLabel,
-                                                  qagFilter: QagListFilter.latest,
-                                                ),
-                                              );
-                                        });
-                                      }
-                                    },
-                                  ),
+                                _QagFilterTabButton(
+                                  tabLabel: QagStrings.latest,
+                                  isSelectedTab: currentSelectedTab == QagTab.latest,
+                                  semanticTooltip: 'Élément 3 sur 4',
+                                  onSelectedTab: () => onSelectedTab(QagTab.latest),
                                 ),
-                                Semantics(
-                                  header: true,
-                                  button: true,
-                                  selected: currentSelected == QagTab.supporting,
-                                  tooltip: 'Élément 4 sur 4',
-                                  child: _TabButton(
-                                    label: QagStrings.supporting,
-                                    isSelected: currentSelected == QagTab.supporting,
-                                    onTap: () {
-                                      TrackerHelper.trackClick(
-                                        clickName: AnalyticsEventNames.qagSupporting,
-                                        widgetName: AnalyticsScreenNames.qagsPage,
-                                      );
-                                      if (currentSelected != QagTab.supporting) {
-                                        Future.delayed(Duration(seconds: 1))
-                                            .then((value) => SemanticsHelper.announceNewQagsInList());
-                                        setState(() {
-                                          currentSelected = QagTab.supporting;
-                                          context.read<QagListBloc>().add(
-                                                FetchQagsListEvent(
-                                                  thematiqueId: currentThematiqueId,
-                                                  thematiqueLabel: currentThematiqueLabel,
-                                                  qagFilter: QagListFilter.supporting,
-                                                ),
-                                              );
-                                        });
-                                      }
-                                    },
-                                  ),
+                                _QagFilterTabButton(
+                                  tabLabel: QagStrings.supporting,
+                                  isSelectedTab: currentSelectedTab == QagTab.supporting,
+                                  semanticTooltip: 'Élément 4 sur 4',
+                                  onSelectedTab: () => onSelectedTab(QagTab.supporting),
                                 ),
                               ],
                             ),
@@ -338,6 +275,85 @@ class _QagsSectionState extends State<QagsSection> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _ThematiqueFilter extends StatelessWidget {
+  final bool isThematiquesVisible;
+  final GlobalKey firstThematiqueKey;
+  final String? currentThematiqueId;
+  final String? currentThematiqueLabel;
+  final QagTab currentSelectedTab;
+  final void Function(String?, String?) onThematiqueSelected;
+
+  const _ThematiqueFilter({
+    required this.isThematiquesVisible,
+    required this.firstThematiqueKey,
+    required this.currentSelectedTab,
+    required this.onThematiqueSelected,
+    this.currentThematiqueId,
+    this.currentThematiqueLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: isThematiquesVisible,
+      child: QagsThematiqueSection(
+        firstThematiqueKey: firstThematiqueKey,
+        currentThematiqueId: currentThematiqueId,
+        onThematiqueSelected: (String? thematiqueId, String? thematicLabel) {
+          if (currentThematiqueId != null || thematiqueId != null) {
+            onThematiqueSelected(thematiqueId, thematicLabel);
+            context.read<QagListBloc>().add(
+                  FetchQagsListEvent(
+                    thematiqueId: thematiqueId,
+                    thematiqueLabel: thematicLabel,
+                    qagFilter: toQagListFilter(currentSelectedTab),
+                  ),
+                );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _QagFilterTabButton extends StatelessWidget {
+  final String tabLabel;
+  final bool isSelectedTab;
+  final String semanticTooltip;
+  final void Function() onSelectedTab;
+
+  const _QagFilterTabButton({
+    required this.tabLabel,
+    required this.isSelectedTab,
+    required this.semanticTooltip,
+    required this.onSelectedTab,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      header: true,
+      button: true,
+      selected: isSelectedTab,
+      tooltip: semanticTooltip,
+      child: _TabButton(
+        label: tabLabel,
+        isSelected: isSelectedTab,
+        onTap: () {
+          TrackerHelper.trackClick(
+            clickName: AnalyticsEventNames.qagSupporting,
+            widgetName: AnalyticsScreenNames.qagsPage,
+          );
+          if (!isSelectedTab) {
+            Future.delayed(Duration(seconds: 1)).then((value) => SemanticsHelper.announceNewQagsInList());
+            onSelectedTab();
+          }
+        },
       ),
     );
   }
@@ -370,5 +386,45 @@ class _TabButton extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _Qags extends StatelessWidget {
+  final QagTab currentSelected;
+  final String? currentThematiqueId;
+  final String? currentThematiqueLabel;
+
+  const _Qags(this.currentSelected, this.currentThematiqueId, this.currentThematiqueLabel);
+
+  @override
+  Widget build(BuildContext context) {
+    switch (currentSelected) {
+      case QagTab.search:
+        return QagSearch();
+      case QagTab.trending:
+        return QagListSection(
+          qagFilter: QagListFilter.trending,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+      case QagTab.top:
+        return QagListSection(
+          qagFilter: QagListFilter.top,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+      case QagTab.latest:
+        return QagListSection(
+          qagFilter: QagListFilter.latest,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+      case QagTab.supporting:
+        return QagListSection(
+          qagFilter: QagListFilter.supporting,
+          thematiqueId: currentThematiqueId,
+          thematiqueLabel: currentThematiqueLabel,
+        );
+    }
   }
 }

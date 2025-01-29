@@ -1,6 +1,7 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/extension/string_extension.dart';
+import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/helper/emoji_helper.dart';
 import 'package:agora/common/helper/launch_url_helper.dart';
 import 'package:agora/common/helper/semantics_helper.dart';
@@ -10,14 +11,15 @@ import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_checkbox.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
+import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
@@ -29,6 +31,9 @@ import 'package:agora/profil/participation_charter/pages/participation_charter_p
 import 'package:agora/qag/ask/bloc/create/qag_create_bloc.dart';
 import 'package:agora/qag/ask/bloc/create/qag_create_event.dart';
 import 'package:agora/qag/ask/bloc/create/qag_create_state.dart';
+import 'package:agora/qag/ask/bloc/info/ask_qag_info_bloc.dart';
+import 'package:agora/qag/ask/bloc/info/ask_qag_info_event.dart';
+import 'package:agora/qag/ask/bloc/info/ask_qag_info_state.dart';
 import 'package:agora/qag/ask/pages/ask_question_qag_search.dart';
 import 'package:agora/qag/ask/pages/qag_thematiques_drop_down.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
@@ -42,6 +47,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class QagAskQuestionPage extends StatefulWidget {
   static const routeName = "/qagAskQuestionPage";
@@ -56,7 +62,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   String firstname = "";
   ThematiqueWithIdViewModel? thematique;
   bool isCheck = false;
-  bool shouldReloadQags = false;
 
   static const _questionMinLength = 10;
   static const _questionMaxLength = 200;
@@ -80,7 +85,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
       ],
       child: AgoraScaffold(
         popAction: () {
-          _backAction(context);
+          Navigator.pop(context);
           return false;
         },
         child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
@@ -101,7 +106,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                 ],
               ),
               onBackClick: () {
-                _backAction(context);
+                Navigator.pop(context);
               },
               child: errorCase == null ? _buildState(context, state) : _buildErrorCase(context, errorCase),
             );
@@ -109,18 +114,6 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
         ),
       ),
     );
-  }
-
-  void _backAction(BuildContext context) {
-    if (shouldReloadQags) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        QagsPage.routeName,
-        ModalRoute.withName(SplashPage.routeName),
-      );
-    } else {
-      Navigator.pop(context);
-    }
   }
 
   Widget _buildState(BuildContext context, ThematiqueState state) {
@@ -158,25 +151,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AgoraRichText(
-                policeStyle: AgoraRichTextPoliceStyle.police14,
-                semantic: AgoraRichTextSemantic(header: false),
-                items: [
-                  AgoraRichTextItem(
-                    text: QagStrings.askQuestionDescription1,
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                  AgoraRichTextItem(
-                    text: QagStrings.askQuestionDescription2,
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                ],
-              ),
-              AgoraHtml(
-                data: QagStrings.askQuestionDescription3,
-                fontSize: 14.0,
-                textAlign: TextAlign.start,
-              ),
+              _AskQagInfo(),
               SizedBox(height: AgoraSpacings.base),
               Text(QagStrings.askQagObligatoireSaufContraire, style: AgoraTextStyles.light14),
               SizedBox(height: AgoraSpacings.base),
@@ -262,7 +237,7 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
               ),
               SizedBox(height: AgoraSpacings.x1_5),
               BlocConsumer<CreateQagBloc, CreateQagState>(
-                listener: (context, createQagState) {
+                listener: (context, createQagState) async {
                   if (createQagState is CreateQagSuccessState) {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
@@ -274,6 +249,10 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
                       QagDetailsPage.routeName,
                       arguments: QagDetailsArguments(qagId: createQagState.qagId, reload: QagReload.qagsPage),
                     );
+                    final InAppReview inAppReview = InAppReview.instance;
+                    if (await inAppReview.isAvailable()) {
+                      inAppReview.requestReview();
+                    }
                   }
                 },
                 builder: (context, createQagState) {
@@ -371,6 +350,37 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
   }
 }
 
+class _AskQagInfo extends StatelessWidget {
+  const _AskQagInfo();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          AskQagInfoBloc(qagRepository: RepositoryManager.getQagRepository())..add(FetchInfoAskQagEvent()),
+      child: BlocBuilder<AskQagInfoBloc, AskQagInfoState>(
+        builder: (context, state) {
+          return switch (state.status) {
+            AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Column(
+                children: [
+                  SkeletonItem(padding: EdgeInsets.zero),
+                  SkeletonItem(padding: EdgeInsets.zero),
+                  SkeletonItem(padding: EdgeInsets.zero),
+                ],
+              ),
+            AllPurposeStatus.error => AgoraErrorView(),
+            AllPurposeStatus.success => AgoraHtml(
+                data: state.regles,
+                fontSize: 14.0,
+                textAlign: TextAlign.start,
+              ),
+          };
+        },
+      ),
+    );
+  }
+}
+
 class _InfoBouton extends StatelessWidget {
   const _InfoBouton();
 
@@ -380,10 +390,13 @@ class _InfoBouton extends StatelessWidget {
       padding: const EdgeInsets.only(top: 4),
       child: AgoraMoreInformation(
         onClick: () {
-          showAgoraDialog(
+          showModalBottomSheet(
             context: context,
-            columnChildren: [
-              RichText(
+            isScrollControlled: true,
+            backgroundColor: AgoraColors.transparent,
+            builder: (context) => AgoraInformationBottomSheet(
+              titre: "Informations",
+              description: RichText(
                 textScaler: MediaQuery.textScalerOf(context),
                 text: TextSpan(
                   style: AgoraTextStyles.light16,
@@ -411,13 +424,7 @@ class _InfoBouton extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: AgoraSpacings.x0_75),
-              AgoraButton.withLabel(
-                label: GenericStrings.close,
-                buttonStyle: AgoraButtonStyle.primary,
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
+            ),
           );
         },
       ),
