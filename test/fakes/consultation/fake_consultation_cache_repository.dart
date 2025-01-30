@@ -18,7 +18,7 @@ class FakeConsultationCacheFailureRepository extends ConsultationCacheRepository
   FakeConsultationCacheFailureRepository({required super.consultationRepository});
 
   @override
-  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations(bool forceFetch) async {
     return GetConsultationsFailedResponse();
   }
 }
@@ -27,7 +27,7 @@ class FakeConsultationCacheTimeoutFailureRepository extends FakeConsultationCach
   FakeConsultationCacheTimeoutFailureRepository({required super.consultationRepository});
 
   @override
-  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations(bool forceFetch) async {
     return GetConsultationsFailedResponse(errorType: ConsultationsErrorType.timeout);
   }
 }
