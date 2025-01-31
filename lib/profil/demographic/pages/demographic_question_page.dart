@@ -323,32 +323,37 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
   }
 
   void _nextStep(BuildContext context) {
-    if (currentStep == totalStep) {
-      TrackerHelper.trackClick(
-        clickName: AnalyticsEventNames.sendDemographic,
-        widgetName: AnalyticsScreenNames.demographicQuestionPage,
-      );
-      final consultationId = arguments is DemographicQuestionArgumentsFromQuestion
-          ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId
-          : null;
-      Navigator.pushNamed(
+    if (currentStep != totalStep) {
+      currentStep++;
+      return;
+    }
+
+    TrackerHelper.trackClick(
+      clickName: AnalyticsEventNames.sendDemographic,
+      widgetName: AnalyticsScreenNames.demographicQuestionPage,
+    );
+
+    if (arguments is DemographicQuestionArgumentsFromQuestion) {
+      final consultationId = (arguments as DemographicQuestionArgumentsFromQuestion).consultationId;
+      final consultationTitle = (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle;
+
+      Navigator.pushNamedAndRemoveUntil(
         context,
         DemographicConfirmationPage.routeName,
+        ModalRoute.withName("/consultationsPage"),
         arguments: DemographicConfirmationArguments(
           consultationId: consultationId,
-          consultationTitle: arguments is DemographicQuestionArgumentsFromQuestion
-              ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle
-              : null,
+          consultationTitle: consultationTitle,
           demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
         ),
-      ).then((value) {
-        if (consultationId != null && context.mounted) {
-          Navigator.pop(context);
-        }
-      });
-    } else {
-      currentStep++;
+      );
+
+      return;
     }
+
+    Navigator.pop(context);
+
+    return;
   }
 
   void _stockResponse(BuildContext context, DemographicQuestionType demographicType, String responseCode) {
