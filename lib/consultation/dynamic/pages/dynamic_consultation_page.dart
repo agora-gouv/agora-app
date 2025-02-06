@@ -163,15 +163,17 @@ class _SuccessPage extends StatelessWidget {
 
     return AgoraScaffold(
       appBarType: AppBarColorType.primaryColor,
-      child: switch (shouldLaunchCongratulationAnimation) {
-        false => content,
-        true => FullscreenAnimationView(
-            animationName: "assets/animations/confetti.json",
-            startDelayMillis: 250,
-            animationSpeed: 1.25,
-            child: content,
-          )
-      },
+      child: SafeArea(
+        child: switch (shouldLaunchCongratulationAnimation) {
+          false => content,
+          true => FullscreenAnimationView(
+              animationName: "assets/animations/confetti.json",
+              startDelayMillis: 250,
+              animationSpeed: 1.25,
+              child: content,
+            )
+        },
+      ),
     );
   }
 }

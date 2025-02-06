@@ -63,7 +63,8 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
                 toolbarHeight: 0,
                 elevation: 0,
               ),
-              bottomNavigationBar: AgoraBottomNavigationBar(
+              bottomNavigationBar: SafeArea(
+                  child: AgoraBottomNavigationBar(
                 currentIndex: _currentIndex,
                 onTap: (newIndex) => setState(() => _currentIndex = newIndex),
                 items: pages
@@ -75,7 +76,7 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
                       ),
                     )
                     .toList(),
-              ),
+              )),
               body: _Content(pages[_currentIndex]),
             );
           },
