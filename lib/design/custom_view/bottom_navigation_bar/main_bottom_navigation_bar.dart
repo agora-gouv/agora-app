@@ -63,18 +63,20 @@ class _MainBottomNavigationBarState extends State<MainBottomNavigationBar> {
                 toolbarHeight: 0,
                 elevation: 0,
               ),
-              bottomNavigationBar: AgoraBottomNavigationBar(
-                currentIndex: _currentIndex,
-                onTap: (newIndex) => setState(() => _currentIndex = newIndex),
-                items: pages
-                    .map(
-                      (page) => _getBottomNavigationBarItem(
-                        page,
-                        hasProfilUnreadCheck:
-                            state.status == AllPurposeStatus.success && premierDepartement?.data == null,
-                      ),
-                    )
-                    .toList(),
+              bottomNavigationBar: SafeArea(
+                child: AgoraBottomNavigationBar(
+                  currentIndex: _currentIndex,
+                  onTap: (newIndex) => setState(() => _currentIndex = newIndex),
+                  items: pages
+                      .map(
+                        (page) => _getBottomNavigationBarItem(
+                          page,
+                          hasProfilUnreadCheck:
+                              state.status == AllPurposeStatus.success && premierDepartement?.data == null,
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
               body: _Content(pages[_currentIndex]),
             );
