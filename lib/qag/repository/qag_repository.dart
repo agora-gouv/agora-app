@@ -185,9 +185,9 @@ class QagDioRepository extends QagRepository {
           "filterType": filter.toFilterString(),
         },
         headers: {
-          "cache-control": forceRefresh ? "no-cache" : "",
+          "cache-control": "no-cache",
         },
-        policy: forceRefresh ? CachePolicy.noCache : CachePolicy.request,
+        policy: CachePolicy.noCache,
       );
       final headerQag = response.data["header"];
 

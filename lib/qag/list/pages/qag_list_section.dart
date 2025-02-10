@@ -230,28 +230,30 @@ abstract class _ViewModel extends Equatable {
   static _ViewModel fromState(QagListState state) {
     if (state.status == AllPurposeStatus.notLoaded || state.status == AllPurposeStatus.loading) {
       return _QagListLoadingViewModel();
-    } else if (state.status == AllPurposeStatus.success) {
-      final header = state.header != null
-          ? _QagListHeaderViewModel(
-              id: state.header!.id,
-              title: state.header!.title,
-              message: state.header!.message,
-            )
-          : null;
+    }
 
-      if (state.qags.isNotEmpty) {
-        return _QagListWithResultViewModel(
-          qags: QagPresenter.presentQag(state.qags),
-          header: header,
-          hasFooter: state.currentPage < state.maxPage,
-          footerType: state.footerType,
-        );
-      } else {
-        return _QagListNoResultViewModel(header: header);
-      }
-    } else {
+    if (state.status != AllPurposeStatus.success) {
       return _QagListErrorViewModel();
     }
+
+    final header = state.header != null
+        ? _QagListHeaderViewModel(
+            id: state.header!.id,
+            title: state.header!.title,
+            message: state.header!.message,
+          )
+        : null;
+
+    if (state.qags.isEmpty) {
+      return _QagListNoResultViewModel(header: header);
+    }
+
+    return _QagListWithResultViewModel(
+      qags: QagPresenter.presentQag(state.qags),
+      header: header,
+      hasFooter: state.currentPage < state.maxPage,
+      footerType: state.footerType,
+    );
   }
 }
 
