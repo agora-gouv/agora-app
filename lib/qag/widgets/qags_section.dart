@@ -160,6 +160,7 @@ class _Content extends StatelessWidget {
                     thematiqueId: currentThematiqueId,
                     thematiqueLabel: currentThematiqueLabel,
                     qagFilter: toQagListFilter(tab),
+                    forceRefresh: true,
                   ),
                 );
           },
@@ -312,6 +313,7 @@ class _ThematiqueFilter extends StatelessWidget {
                     thematiqueId: thematiqueId,
                     thematiqueLabel: thematicLabel,
                     qagFilter: toQagListFilter(currentSelectedTab),
+                    forceRefresh: true,
                   ),
                 );
           }

@@ -117,6 +117,7 @@ class _QagsPageState extends State<QagsPage> {
                   thematiqueId: currentThematiqueId,
                   thematiqueLabel: currentThematiqueLabel,
                   qagFilter: toQagListFilter(currentSelectedTab),
+                  forceRefresh: true,
                 ),
               ),
           ),
