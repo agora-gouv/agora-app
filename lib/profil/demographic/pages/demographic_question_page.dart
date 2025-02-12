@@ -351,7 +351,16 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
       return;
     }
 
-    Navigator.pop(context);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      DemographicConfirmationPage.routeName,
+      ModalRoute.withName("/consultationsPage"),
+      arguments: DemographicConfirmationArguments(
+        consultationId: null,
+        consultationTitle: null,
+        demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
+      ),
+    );
 
     return;
   }
