@@ -8,6 +8,7 @@ import 'package:agora/common/strings/profile_strings.dart';
 import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_little_separator.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
@@ -201,32 +202,28 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
   }
 
   void _modificationError(BuildContext context) {
-    showAgoraDialog(
+    showModalBottomSheet(
       context: context,
-      columnChildren: [
-        Text(GenericStrings.errorMessage, style: AgoraTextStyles.medium16),
-        SizedBox(height: AgoraSpacings.x0_75),
-        AgoraButton.withLabel(
-          label: GenericStrings.close,
-          buttonStyle: AgoraButtonStyle.primary,
-          onPressed: () => Navigator.pop(context),
-        ),
-      ],
+      isScrollControlled: true,
+      backgroundColor: AgoraColors.transparent,
+      builder: (context) => AgoraInformationBottomSheet(
+        titre: GenericStrings.errorMessage,
+        description: null,
+        boutonLabel: GenericStrings.close,
+      ),
     );
   }
 
   void _modificationSuccess(BuildContext context) {
-    showAgoraDialog(
+    showModalBottomSheet(
       context: context,
-      columnChildren: [
-        Text(GenericStrings.modificationSuccess, style: AgoraTextStyles.medium16),
-        SizedBox(height: AgoraSpacings.x0_75),
-        AgoraButton.withLabel(
-          label: GenericStrings.close,
-          buttonStyle: AgoraButtonStyle.primary,
-          onPressed: () => Navigator.pop(context),
-        ),
-      ],
+      isScrollControlled: true,
+      backgroundColor: AgoraColors.transparent,
+      builder: (context) => AgoraInformationBottomSheet(
+        titre: GenericStrings.modificationSuccess,
+        description: null,
+        boutonLabel: GenericStrings.close,
+      ),
     );
   }
 

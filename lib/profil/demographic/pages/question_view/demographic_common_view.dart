@@ -1,10 +1,9 @@
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/demographic_strings.dart';
-import 'package:agora/common/strings/generic_strings.dart';
-import 'package:agora/design/custom_view/agora_alert_dialog.dart';
 import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
+import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/text/agora_link_text.dart';
+import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
@@ -65,17 +64,14 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
           label: DemographicStrings.whatAbout,
           textPadding: EdgeInsets.zero,
           onTap: () {
-            showAgoraDialog(
+            showModalBottomSheet(
               context: context,
-              columnChildren: [
-                Text(widget.whatAboutText!, style: AgoraTextStyles.light16),
-                SizedBox(height: AgoraSpacings.x0_75),
-                AgoraButton.withLabel(
-                  label: GenericStrings.close,
-                  buttonStyle: AgoraButtonStyle.primary,
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
+              isScrollControlled: true,
+              backgroundColor: AgoraColors.transparent,
+              builder: (context) => AgoraInformationBottomSheet(
+                titre: DemographicStrings.whatAbout,
+                description: Text(widget.whatAboutText!, textAlign: TextAlign.center, style: AgoraTextStyles.light16),
+              ),
             );
           },
         ),
