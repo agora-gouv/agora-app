@@ -333,31 +333,20 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
       widgetName: AnalyticsScreenNames.demographicQuestionPage,
     );
 
-    if (arguments is DemographicQuestionArgumentsFromQuestion) {
-      final consultationId = (arguments as DemographicQuestionArgumentsFromQuestion).consultationId;
-      final consultationTitle = (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle;
-
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        DemographicConfirmationPage.routeName,
-        ModalRoute.withName("/consultationsPage"),
-        arguments: DemographicConfirmationArguments(
-          consultationId: consultationId,
-          consultationTitle: consultationTitle,
-          demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
-        ),
-      );
-
-      return;
-    }
+    final consultationId = arguments is DemographicQuestionArgumentsFromQuestion
+        ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationId
+        : null;
+    final consultationTitle = arguments is DemographicQuestionArgumentsFromQuestion
+        ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle
+        : null;
 
     Navigator.pushNamedAndRemoveUntil(
       context,
       DemographicConfirmationPage.routeName,
       ModalRoute.withName("/consultationsPage"),
       arguments: DemographicConfirmationArguments(
-        consultationId: null,
-        consultationTitle: null,
+        consultationId: consultationId,
+        consultationTitle: consultationTitle,
         demographicResponsesStockBloc: context.read<DemographicResponsesStockBloc>(),
       ),
     );
