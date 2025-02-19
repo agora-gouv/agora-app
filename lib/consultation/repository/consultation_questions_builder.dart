@@ -122,6 +122,7 @@ class ConsultationQuestionsBuilder {
           description: chapter["description"] as String,
           nextQuestionId: chapter["nextQuestionId"] as String?,
           imageUrl: chapter["imageUrl"] as String?,
+          imageTranscription: chapter["imageTranscription"] as String?,
         ),
       );
     }

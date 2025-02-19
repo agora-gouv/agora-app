@@ -51,6 +51,7 @@ class ConsultationQuestionsPresenter {
             description: consultationQuestion.description,
             nextQuestionId: consultationQuestion.nextQuestionId,
             imageUrl: consultationQuestion.imageUrl,
+            imageTranscription: consultationQuestion.imageTranscription,
           );
         } else {
           throw Exception(

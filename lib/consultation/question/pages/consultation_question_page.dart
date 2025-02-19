@@ -149,12 +149,14 @@ class _ConsultationQuestionPageState extends State<ConsultationQuestionPage> {
         _removeAndGoToPreviousQuestion(context);
         return false;
       },
-      child: _buildContent(
-        context,
-        currentQuestion,
-        totalQuestions,
-        questionAlreadyAnswered,
-        responsesStockState,
+      child: SafeArea(
+        child: _buildContent(
+          context,
+          currentQuestion,
+          totalQuestions,
+          questionAlreadyAnswered,
+          responsesStockState,
+        ),
       ),
     );
   }

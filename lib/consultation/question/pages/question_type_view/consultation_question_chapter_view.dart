@@ -1,6 +1,7 @@
 import 'package:agora/common/parser/string_parser.dart';
 import 'package:agora/consultation/question/bloc/consultation_questions_view_model.dart';
 import 'package:agora/consultation/question/pages/consultation_question_helper.dart';
+import 'package:agora/design/custom_view/agora_collapse_view.dart';
 import 'package:agora/design/custom_view/agora_questions_progress_bar.dart';
 import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/text/agora_html.dart';
@@ -53,7 +54,21 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                 AgoraHtml(data: chapter.description),
                 SizedBox(height: AgoraSpacings.base),
                 if (chapter.imageUrl != null) _Image(imageUrl: chapter.imageUrl!),
-                SizedBox(height: AgoraSpacings.x1_5),
+                SizedBox(height: AgoraSpacings.x0_5),
+                if (chapter.imageTranscription != null)
+                  AgoraCollapseView(
+                    title: "Description de l'image",
+                    paddingHorizontalStyle: AgoraSpacings.x0_25,
+                    collapseContent: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [Text(chapter.imageTranscription!, style: AgoraTextStyles.light16)],
+                      ),
+                    ),
+                  ),
+                SizedBox(height: AgoraSpacings.base),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,

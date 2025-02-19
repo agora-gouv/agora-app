@@ -130,6 +130,7 @@ class ConsultationQuestionChapterViewModel extends ConsultationQuestionViewModel
   final String description;
   final String? nextQuestionId;
   final String? imageUrl;
+  final String? imageTranscription;
 
   ConsultationQuestionChapterViewModel({
     required super.id,
@@ -138,10 +139,11 @@ class ConsultationQuestionChapterViewModel extends ConsultationQuestionViewModel
     required this.description,
     required this.nextQuestionId,
     required this.imageUrl,
+    required this.imageTranscription,
   });
 
   @override
-  List<Object?> get props => [id, title, order, description, nextQuestionId, imageUrl];
+  List<Object?> get props => [id, title, order, description, nextQuestionId, imageUrl, imageTranscription];
 }
 
 class ConsultationQuestionResponseChoiceViewModel extends Equatable {
