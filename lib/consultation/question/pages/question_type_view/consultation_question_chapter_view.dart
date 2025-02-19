@@ -52,7 +52,6 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                 ExcludeSemantics(child: _Title(texte: chapter.title)),
                 SizedBox(height: AgoraSpacings.base),
                 AgoraHtml(data: chapter.description),
-                SizedBox(height: AgoraSpacings.base),
                 if (chapter.imageUrl != null) _Image(imageUrl: chapter.imageUrl!),
                 SizedBox(height: AgoraSpacings.x0_5),
                 if (chapter.imageTranscription != null)
