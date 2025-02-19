@@ -475,6 +475,7 @@ void main() {
                 "description": "texte riche",
                 "nextQuestionId": "question2",
                 "imageUrl": "https://url.com/image.jpg",
+                "imageTranscription": "Cette image représente le Petit Cheval de Manège",
               },
             ],
           },
