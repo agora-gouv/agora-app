@@ -1,13 +1,10 @@
-import 'dart:io';
 import 'dart:ui' show lerpDouble;
 
 import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/design/custom_view/bottom_navigation_bar/agora_bottom_navigation_bar_item.dart';
 import 'package:agora/design/custom_view/unread_check.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -143,7 +140,6 @@ class _AgoraBottomNavigationBarState extends State<AgoraBottomNavigationBar> {
                   ? AgoraTextStyles.medium12.copyWith(color: _activeLabelColor)
                   : AgoraTextStyles.light12.copyWith(color: _inactiveLabelColor),
             ),
-            if (!kIsWeb && Platform.isIOS) const SizedBox(height: AgoraSpacings.x0_75),
           ],
         ),
       ),
