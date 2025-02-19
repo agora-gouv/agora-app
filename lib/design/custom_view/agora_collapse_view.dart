@@ -11,13 +11,15 @@ enum AgoraCollapseStyle { noRadius, withRadius }
 class AgoraCollapseView extends StatefulWidget {
   final String title;
   final Widget collapseContent;
-  final AgoraCollapseStyle style;
+  final AgoraCollapseStyle radiusStyle;
+  final double paddingHorizontalStyle;
 
   const AgoraCollapseView({
     super.key,
     required this.title,
     required this.collapseContent,
-    this.style = AgoraCollapseStyle.noRadius,
+    this.radiusStyle = AgoraCollapseStyle.noRadius,
+    this.paddingHorizontalStyle = AgoraSpacings.horizontalPadding,
   });
 
   @override
@@ -30,7 +32,7 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: widget.style == AgoraCollapseStyle.noRadius
+      borderRadius: widget.radiusStyle == AgoraCollapseStyle.noRadius
           ? BorderRadius.all(AgoraCorners.noRound)
           : BorderRadius.all(AgoraCorners.rounded),
       child: Material(
@@ -38,7 +40,7 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: widget.style == AgoraCollapseStyle.noRadius
+              borderRadius: widget.radiusStyle == AgoraCollapseStyle.noRadius
                   ? BorderRadius.all(AgoraCorners.noRound)
                   : isCollapse
                       ? BorderRadius.vertical(top: AgoraCorners.rounded)
@@ -54,7 +56,7 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: AgoraSpacings.horizontalPadding,
+                        horizontal: widget.paddingHorizontalStyle,
                         vertical: AgoraSpacings.x0_5,
                       ),
                       child: _buildTitle(),

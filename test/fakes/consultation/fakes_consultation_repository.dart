@@ -179,6 +179,7 @@ class FakeConsultationSuccessRepository extends ConsultationRepository {
             description: "description du chapitre",
             nextQuestionId: "questionIdB",
             imageUrl: "https://url.com/image.jpg",
+            imageTranscription: "Cette image représente le Petit Cheval de Manège",
           ),
         ],
       ),
