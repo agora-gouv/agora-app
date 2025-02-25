@@ -56,7 +56,7 @@ class ConsultationQuestionChapterView extends StatelessWidget {
                 SizedBox(height: AgoraSpacings.x0_5),
                 if (chapter.imageTranscription != null)
                   AgoraCollapseView(
-                    title: "Description de l'image",
+                    title: "Transcription",
                     paddingHorizontalStyle: AgoraSpacings.x0_25,
                     collapseContent: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: AgoraSpacings.x0_5),
