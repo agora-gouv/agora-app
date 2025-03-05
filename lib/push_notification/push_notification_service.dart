@@ -211,8 +211,7 @@ class FirebasePushNotificationService extends PushNotificationService {
   }
 
   Future<String> _fetchMessagingToken() async {
-    final token =
-        defaultTargetPlatform == TargetPlatform.iOS ? await _messaging.getAPNSToken() : await _messaging.getToken();
+    final token = await _messaging.getToken();
 
     if (token == null) {
       throw Exception("No firebase messaging token found error");
