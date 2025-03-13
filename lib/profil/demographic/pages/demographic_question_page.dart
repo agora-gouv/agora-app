@@ -343,7 +343,7 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
     Navigator.pushNamedAndRemoveUntil(
       context,
       DemographicConfirmationPage.routeName,
-      ModalRoute.withName("/consultationsPage"),
+      (route) => route.isFirst,
       arguments: DemographicConfirmationArguments(
         consultationId: consultationId,
         consultationTitle: consultationTitle,
