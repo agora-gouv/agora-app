@@ -50,7 +50,7 @@ class DeeplinkHelper {
     _sub = appLinks.uriLinkStream.listen(
       (Uri uri) {
         final featurePath = uri.pathSegments.first;
-        final idOrSlug = uri.pathSegments.last;
+        final idOrSlug = uri.pathSegments[1];
         switch (featurePath) {
           case _consultationPath:
             onConsultationSuccessCallback(idOrSlug);
