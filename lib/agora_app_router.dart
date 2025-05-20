@@ -243,7 +243,6 @@ class AgoraAppRouter {
           onRedirect: onRedirect,
           agoraAppIcon: agoraAppIcon,
         );
-        break;
     }
     return MaterialPageRoute(
       settings: settings,
