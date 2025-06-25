@@ -1,11 +1,13 @@
 #!/bin/sh
 
 getBuildNumber () {
-  local FILE=${1:-"../pubspec.yaml"}
+  local ROOT=$(git rev-parse --show-toplevel)
+  local FILE=${1:-"$ROOT/pubspec.yaml"}
   sed -nE "s/version:[[:space:]][0-9]+\.[0-9]+\.[0-9]+\+(.+)/\1/p" $FILE
 }
 
 getVersion () {
-  local FILE=${1:-"../pubspec.yaml"}
+  local ROOT=$(git rev-parse --show-toplevel)
+  local FILE=${1:-"$ROOT/pubspec.yaml"}
   sed -nE "s/version:[[:space:]]([0-9]+\.[0-9]+\.[0-9]+)\+.+/\1/p" $FILE
 }
