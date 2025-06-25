@@ -1,8 +1,7 @@
 #!/bin/sh
 
 buildIPA () {
-  local ROOT=$(git rev-parse --show-toplevel)
-  local PUBSPEC="$ROOT/pubspec.yaml"
+  local ROOT=$(git rev-parse --show-toplevel);
 
   source "$ROOT/scripts/extractVersion.sh";
   local VERSION=$(getVersion);
