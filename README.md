@@ -86,8 +86,8 @@ The app's icon and status bar should change color depending on built environment
 #### ii. Using command line scripts
 
 Use either:
-- `agora/generateSandboxApk.sh` to have a build that targets Sandbox environment
-- `agora/generateDevApk.sh` to have a build that targets Dev environment
+- `agora/scripts/sandbox/generateApk.sh` to have a build that targets Sandbox environment
+- `agora/scripts/dev/generateApk.sh` to have a build that targets Dev environment
 - `agora/generateReleaseBundle.sh` to have a build that targets Prod environment
 
 ### b. iOS
