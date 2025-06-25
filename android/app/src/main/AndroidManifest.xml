@@ -59,8 +59,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https"/>
                 <data android:scheme="agora"/>
-                <data android:host="www.agora.gouv.fr"/>
-                <data android:host="agora.gouv.fr"/>
+                <!-- FIXME (GAFI 25-06-2025): WIP -->
+                <data android:host="www.agora.gouv.fr" android:query="app=force"/>
+                <data android:host="www.agora.gouv.fr" android:query="app=if-possible"/>
+                <data android:host="agora.gouv.fr" android:query="app=force"/>
+                <data android:host="agora.gouv.fr" android:query="app=if-possible"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
