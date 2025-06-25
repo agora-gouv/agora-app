@@ -94,7 +94,7 @@ Use either:
 
 Launch a command line script first to choose the target environment (an error will appear but no worries...)
 - `agora/generateSandboxIpa.sh`, to have a build that targets Sandbox environment
-- `agora/generateDevIpa.sh`, to have a build that targets Dev environment
+- `agora/scripts/dev/generateIpa.sh`, to have a build that targets Dev environment
 - `agora/generateReleaseIpa.sh`, to have a build that targets Prod environment
 - On `Xcode`, choose the scheme (middle top of the screen) that matches chosen target
 ![xcode_scheme](docs/image/xcode_scheme.png)
