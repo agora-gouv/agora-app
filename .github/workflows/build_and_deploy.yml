@@ -17,6 +17,12 @@ jobs:
         with:
           varFilePath: ./.github/variables/myvars.env
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'adopt'
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
