@@ -1,1 +1,0 @@
-flutter build web --dart-define=app.flavor=Sandbox -t lib/main_sandbox.dart --base-href "/"
