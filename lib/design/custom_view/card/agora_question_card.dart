@@ -71,6 +71,8 @@ class AgoraQuestionCard extends StatelessWidget {
                     isSupported: isSupported,
                     onSupportClick: onSupportClick,
                     likeViewKey: likeViewKey,
+                    questionId: id,
+                    questionTitre: titre,
                   ),
                 ],
               ),
@@ -149,6 +151,8 @@ class _Footer extends StatelessWidget {
   final String date;
   final int supportCount;
   final bool isSupported;
+  final String questionId;
+  final String questionTitre;
   final void Function(bool support) onSupportClick;
   final GlobalKey? likeViewKey;
 
@@ -159,6 +163,8 @@ class _Footer extends StatelessWidget {
     required this.isSupported,
     required this.onSupportClick,
     required this.likeViewKey,
+    required this.questionId,
+    required this.questionTitre,
   });
 
   @override
@@ -193,7 +199,7 @@ class _Footer extends StatelessWidget {
             icon: "ic_share.svg",
             semanticLabel: 'Partager',
             borderColor: AgoraColors.transparent,
-            onClick: () => ShareHelper.shareQag(context: context, title: "title", id: "id"),
+            onClick: () => ShareHelper.shareQag(context: context, title: questionTitre, id: questionId),
           ),
         ],
       ),
