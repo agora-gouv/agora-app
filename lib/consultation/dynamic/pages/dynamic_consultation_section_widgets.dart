@@ -1430,7 +1430,7 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                   Semantics(
                     header: true,
                     child: Text(
-                      'Partagez cette consultation',
+                      'Partagez cette initiative',
                       style: AgoraTextStyles.medium16.copyWith(
                         color: AgoraColors.primaryBlue,
                       ),
@@ -1438,7 +1438,7 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: AgoraSpacings.x0_25),
                   Text(
-                    'Plus les citoyens seront nombreux à répondre, plus cette consultation aura de l’impact. Invitez vos proches à participer\u{00A0}!',
+                    'Invitez vos proches à participer\u{00A0}!',
                     style: AgoraTextStyles.light16,
                   ),
                   const SizedBox(height: AgoraSpacings.base),
