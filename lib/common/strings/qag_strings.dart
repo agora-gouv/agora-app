@@ -10,7 +10,7 @@ class QagStrings {
   static const String trending = "Tendances";
   static const String top = "Le top";
   static const String latest = "Récentes";
-  static const String supporting = "Suivies";
+  static const String supporting = "Mes questions";
   static const String askQuestion = "Poser ma question";
   static const String searchQagEmptyList = "Pas de résultat.";
   static const String searchQagEnterSomeChar = "Explorez les questions existantes en saisissant au moins 3 caractères.";
