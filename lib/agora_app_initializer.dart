@@ -69,6 +69,7 @@ class AgoraInitializer {
       (await rootBundle.loadString("assets/certificates/letsencrypt-isrg-root-x2.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-e5.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-e6.pem")),
+      (await rootBundle.loadString("assets/certificates/letsencrypt-e8.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-r10.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-r11.pem")),
     ];
