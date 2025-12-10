@@ -1,6 +1,6 @@
 class QagStrings {
   static const String toolbarPart1 = "Questions";
-  static const String toolbarPart2 = "au Gouvernement";
+  static const String toolbarPart2 = "au Haut-commissaire à la Stratégie et au Plan";
   static const String qagResponsePart1 = "Les réponses ";
   static const String qagResponsePart2 = "aux questions";
   static const String mostPopularQuestion = "La question la plus populaire";
@@ -19,8 +19,8 @@ class QagStrings {
   static const String at = "le";
 
   static const String askQuestionTitle = "Poser ma question au Gouvernement";
-  static const String askQuestionTitle1 = "Poser ma\n";
-  static const String askQuestionTitle2 = "question au Gouvernement";
+  static const String askQuestionTitle1 = "Poser ma question\n";
+  static const String askQuestionTitle2 = "au Haut-commissaire à la Stratégie et au Plan";
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
   static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine. \n";
   static const String askQuestionDescription3 =
