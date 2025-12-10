@@ -340,10 +340,9 @@ class _DemographicQuestionPageState extends State<DemographicQuestionPage> {
         ? (arguments as DemographicQuestionArgumentsFromQuestion).consultationTitle
         : null;
 
-    Navigator.pushNamedAndRemoveUntil(
+    Navigator.pushNamed(
       context,
       DemographicConfirmationPage.routeName,
-      (route) => route.isFirst,
       arguments: DemographicConfirmationArguments(
         consultationId: consultationId,
         consultationTitle: consultationTitle,
