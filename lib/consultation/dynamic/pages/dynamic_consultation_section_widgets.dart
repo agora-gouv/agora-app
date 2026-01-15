@@ -336,10 +336,7 @@ class _InformationItem extends StatelessWidget {
           SvgPicture.asset("assets/$image", excludeFromSemantics: true),
           SizedBox(width: AgoraSpacings.x0_5),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: AgoraSpacings.textAlignment),
-              child: Text(text, style: style),
-            ),
+            child: Text(text, style: style),
           ),
         ],
       ),

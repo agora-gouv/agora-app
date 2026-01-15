@@ -153,7 +153,7 @@ class _QaGCard extends StatelessWidget {
             style: AgoraTextStyles.light16.copyWith(color: AgoraColors.white),
           ),
           TextSpan(
-            text: "question sur la France en 2035, en 2050",
+            text: "question au Gouvernement",
             style: AgoraTextStyles.bold16.copyWith(color: AgoraColors.white),
           ),
         ],
