@@ -61,7 +61,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--target=lib/main_prod.dart --dart-define=env=Debug --dart-define=app.flavor=Prod"
+            argument = "--target=lib/main_prod.dart --flavor=prod --dart-define=app.flavor=Prod"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
