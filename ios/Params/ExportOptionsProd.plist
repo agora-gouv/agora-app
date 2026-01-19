@@ -15,9 +15,9 @@
 	<key>stripSwiftSymbols</key>
 	<true/>
 	<key>signingStyle</key>
-	<string>manual</string>
+	<string>automatic</string>
 	<key>signingCertificate</key>
-	<string>iPhone Distribution</string>
+	<string>Apple Distribution</string>
 	<key>iCloudContainerEnvironment</key>
 	<string>Production</string>
 	<key>provisioningProfiles</key>
