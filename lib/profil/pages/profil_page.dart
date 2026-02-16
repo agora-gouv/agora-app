@@ -134,13 +134,14 @@ class _ProfilPageState extends State<ProfilPage> {
                     Navigator.pushNamed(context, NotificationPage.routeName);
                   },
                 ),
-                AgoraMenuItem(
-                  title: ProfileStrings.tutorial,
-                  onClick: () {
-                    _track(AnalyticsEventNames.tutorial);
-                    Navigator.pushNamed(context, OnboardingPage.routeName);
-                  },
-                ),
+                if (isOnboardingEnabled())
+                  AgoraMenuItem(
+                    title: ProfileStrings.tutorial,
+                    onClick: () {
+                      _track(AnalyticsEventNames.tutorial);
+                      Navigator.pushNamed(context, OnboardingPage.routeName);
+                    },
+                  ),
                 if (HelperManager.getRoleHelper().isModerator() == true)
                   AgoraMenuItem(
                     title: ProfileStrings.moderationCapitalize,
