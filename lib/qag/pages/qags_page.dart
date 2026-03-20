@@ -16,6 +16,7 @@ import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
+import 'package:agora/design/custom_view/text/agora_html.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
@@ -221,7 +222,7 @@ class _QagsPageState extends State<QagsPage> {
                                         AgoraSpacings.horizontalPadding,
                                         0,
                                       ),
-                                      child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
+                                      child: AgoraHtml(data: qagInfoState.texteTotalQuestions, fontSize: 14.0),
                                     )
                                   : SizedBox(),
                             },
