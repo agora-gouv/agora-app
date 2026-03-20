@@ -1,4 +1,5 @@
 import 'package:agora/agora_app.dart';
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/helper_manager.dart';
@@ -54,7 +55,7 @@ class AgoraInitializer {
       appRunner: () => runApp(
         AgoraApp(
           sharedPref: sharedPref,
-          shouldShowOnboarding: isFirstConnection,
+          shouldShowOnboarding: isOnboardingEnabled() && isFirstConnection,
           agoraAppIcon: appConfig.appIcon,
         ),
       ),
