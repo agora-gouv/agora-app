@@ -317,7 +317,7 @@ class _TuileSemaine extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text("Jean-Michel Maison,", style: TextStyle(fontWeight: FontWeight.bold) ),
+                  Text("Jean-Michel Maison,", style: TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
               Text("ministre des maisons"),
