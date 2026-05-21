@@ -18,6 +18,7 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
+import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
@@ -221,7 +222,7 @@ class _QagsPageState extends State<QagsPage> {
                                         AgoraSpacings.horizontalPadding,
                                         0,
                                       ),
-                                      child: Text(qagInfoState.texteTotalQuestions, style: AgoraTextStyles.light14),
+                                      child: _TuileSemaine(),
                                     )
                                   : SizedBox(),
                             },
@@ -265,6 +266,132 @@ class _QagsPageState extends State<QagsPage> {
       ),
     );
   }
+}
+
+class _TuileSemaine extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Material(
+        textStyle: TextStyle(color: AgoraColors.white),
+        color: AgoraColors.primaryBlue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(AgoraCorners.rounded12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Material(
+                    textStyle: TextStyle(color: AgoraColors.primaryBlue),
+                    color: AgoraColors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(AgoraCorners.rounded12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text("Cette semaine", style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                  Text("5 - 11 mai"),
+                ],
+              ),
+              SizedBox(height: 16),
+              Text("Cette semaine posez vos questions sur"),
+              Text(
+                "le logement",
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Text("à "),
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: ClipOval(
+                      child: Image.network(
+                        "https://media.licdn.com/dms/image/v2/C5603AQFFReOkFaOEFQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516229559615?e=1780531200&v=beta&t=cHqM_3DG5R6HTyxERfrVM40B4wqIPW6b97n244DXlpc",
+                      ),
+                    ),
+                  ),
+                  Text("Jean-Michel Maison,", style: TextStyle(fontWeight: FontWeight.bold) ),
+                ],
+              ),
+              Text("ministre des maisons"),
+              SizedBox(height: 16),
+              Material(
+                textStyle: TextStyle(color: AgoraColors.white),
+                color: AgoraColors.blue525,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(AgoraCorners.rounded12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/ic_timer.svg",
+                        colorFilter: ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
+                        width: 24,
+                        height: 24,
+                      ),
+                      SizedBox(width: 8),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("SELECTION DES QUESTIONS"),
+                          Text("dans 3j 46h - lundi 11 mai à 14h"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              Text("PROCHAINES SEMAINES"),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: AgoraColors.white),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: Text("Hantavirus"),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: AgoraColors.white),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: Text("Narcotrafic"),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: AgoraColors.white),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: Text("Libre"),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
 }
 
 class _PoserMaQuestionBouton extends StatelessWidget {
