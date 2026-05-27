@@ -557,6 +557,8 @@ class QagDioRepository extends QagRepository {
       return QagContentDto(
         info: response.data["info"] as String,
         texteTotalQuestions: response.data["texteTotalQuestions"] as String,
+        programmeDuMois: response.data["programmeDuMois"] as String,
+        commentCaMarche: response.data["commentCaMarche"] as String,
       );
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");

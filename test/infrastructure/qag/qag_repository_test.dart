@@ -1236,6 +1236,8 @@ void main() {
         (server) => server.reply(HttpStatus.ok, {
           "info": "qagsInfoText",
           "texteTotalQuestions": "Cette semaine, vous avez posé 22 questions.",
+          "programmeDuMois": "programmeDuMois",
+          "commentCaMarche": "commentCaMarche",
         }),
         headers: {
           "accept": "application/json",
@@ -1257,6 +1259,8 @@ void main() {
         QagContentDto(
           info: "qagsInfoText",
           texteTotalQuestions: "Cette semaine, vous avez posé 22 questions.",
+          programmeDuMois: "programmeDuMois",
+          commentCaMarche: "commentCaMarche",
         ),
       );
     });

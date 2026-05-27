@@ -11,9 +11,7 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
-import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -29,6 +27,7 @@ import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/info/bloc/qags_info_bloc.dart';
 import 'package:agora/qag/info/bloc/qags_info_event.dart';
 import 'package:agora/qag/info/bloc/qags_info_state.dart';
+import 'package:agora/qag/info/qags_info_bottom_sheet.dart';
 import 'package:agora/qag/list/bloc/qag_list_bloc.dart';
 import 'package:agora/qag/list/bloc/qag_list_event.dart';
 import 'package:agora/qag/theme/bloc/qags_theme_bloc.dart';
@@ -188,6 +187,7 @@ class _QagsPageState extends State<QagsPage> {
                 Expanded(
                   child: AgoraPullToRefresh(
                     onRefresh: () async {
+                      context.read<QagsThemeBloc>().add(FetchQagsThemeEvent());
                       context.read<QagListBloc>().add(
                             FetchQagsListEvent(
                               thematiqueId: currentThematiqueId,
@@ -295,6 +295,7 @@ class _TuileSemaine extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Material(
                     textStyle: TextStyle(color: AgoraColors.primaryBlue),
@@ -311,56 +312,71 @@ class _TuileSemaine extends StatelessWidget {
               ),
               SizedBox(height: AgoraSpacings.base),
               Text(theme.sousTitre),
+              SizedBox(height: AgoraSpacings.x0_5),
               Text(theme.theme, style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
               SizedBox(height: AgoraSpacings.base),
               Row(
                 children: [
                   SizedBox(
-                    width: 40,
-                    height: 40,
+                    width: 48,
+                    height: 48,
                     child: ClipOval(
                       child: Image.network(theme.avatarUrl),
                     ),
                   ),
                   SizedBox(width: AgoraSpacings.x0_5),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(theme.nom, style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text(theme.fonction),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(theme.nom, style: TextStyle(fontWeight: FontWeight.bold)),
+                        SizedBox(height: AgoraSpacings.x0_25),
+                        Text(theme.fonction),
+                      ],
+                    ),
                   ),
                 ],
               ),
               SizedBox(height: AgoraSpacings.base),
-              Material(
-                textStyle: TextStyle(color: AgoraColors.white),
-                color: AgoraColors.blue525,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(AgoraCorners.rounded12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/ic_timer.svg",
-                        colorFilter: ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
-                        width: 24,
-                        height: 24,
-                      ),
-                      SizedBox(width: AgoraSpacings.x0_5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(theme.titreCompteur),
-                          Text(theme.dateFinTheme),
-                        ],
-                      ),
-                    ],
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    "assets/ic_timer.svg",
+                    colorFilter: ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
+                    width: 16,
+                    height: 16,
                   ),
-                ),
+                  SizedBox(width: AgoraSpacings.x0_5),
+                  Text(theme.titreCompteur),
+                  SizedBox(width: AgoraSpacings.x0_5),
+                  Text(theme.dateFinTheme),
+                ],
               ),
+              SizedBox(height: AgoraSpacings.x1_5),
+              if (theme.prochainsThemes.isNotEmpty) ...[
+                Text("LES PROCHAINES SEMAINES"),
+                SizedBox(height: AgoraSpacings.base),
+                Row(
+                  children: theme.prochainsThemes
+                      .map(
+                        (prochainTheme) => Container(
+                          margin: EdgeInsetsGeometry.only(right: AgoraSpacings.x0_5),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: AgoraColors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AgoraSpacings.x0_25,
+                              horizontal: AgoraSpacings.x0_5,
+                            ),
+                            child: Text(prochainTheme),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
             ],
           ),
         ),
@@ -429,48 +445,10 @@ class _InfoBouton extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             backgroundColor: AgoraColors.transparent,
-            builder: (context) => AgoraInformationBottomSheet(
-              titre: "Informations",
-              description: _InfoBottomSheetContent(state: state),
-            ),
+            builder: (context) => QagsInformationBottomSheet(),
           );
         },
       ),
     );
-  }
-}
-
-class _InfoBottomSheetContent extends StatelessWidget {
-  final QagsInfoState state;
-
-  const _InfoBottomSheetContent({required this.state});
-
-  @override
-  Widget build(BuildContext context) {
-    return switch (state.status) {
-      AllPurposeStatus.notLoaded || AllPurposeStatus.loading => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: AgoraSpacings.x2),
-            SkeletonBox(height: 15, width: 200, radius: 15),
-            SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 15, width: 200, radius: 15),
-            SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 15, width: 200, radius: 15),
-            SizedBox(height: AgoraSpacings.x2),
-          ],
-        ),
-      AllPurposeStatus.error => AgoraErrorView(
-          onReload: () {
-            context.read<QagsInfoBloc>().add(FetchQagsInfoEvent());
-            context.read<QagsThemeBloc>().add(FetchQagsThemeEvent());
-          },
-        ),
-      AllPurposeStatus.success => Text(
-          state.infoText,
-          style: AgoraTextStyles.light16,
-          textAlign: TextAlign.center,
-        ),
-    };
   }
 }
