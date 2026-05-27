@@ -266,7 +266,14 @@ class FakeQagSuccessRepository extends QagRepository {
 
   @override
   Future<QagContentDto?> getContentQag() {
-    return Future.value(QagContentDto(info: "qagInfoText", texteTotalQuestions: "totalQuestionsText"));
+    return Future.value(
+      QagContentDto(
+        info: "qagInfoText",
+        texteTotalQuestions: "totalQuestionsText",
+        programmeDuMois: "programmeDuMois",
+        commentCaMarche: "commentCaMarche",
+      ),
+    );
   }
 
   @override
