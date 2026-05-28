@@ -1,3 +1,4 @@
+import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/parser/simple_html_parser.dart';
@@ -69,7 +70,7 @@ class QagsInformationBottomSheet extends StatelessWidget {
                     const SizedBox(height: AgoraSpacings.x0_5),
                     AgoraRichText(
                       policeStyle: AgoraRichTextPoliceStyle.sectionInterligne150,
-                      semantic: AgoraRichTextSemantic(label: state.programmeDuMois),
+                      semantic: AgoraRichTextSemantic(label: state.programmeDuMois.removeHtmlTags()),
                       items: [
                         ...parseSimpleHtml(state.programmeDuMois)
                             .map((data) => AgoraRichTextItem(text: data.text, style: data.style)),
