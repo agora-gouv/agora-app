@@ -284,7 +284,7 @@ class _TuileSemaine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-        textStyle: TextStyle(color: AgoraColors.white),
+        textStyle: AgoraTextStyles.regular14White,
         color: AgoraColors.primaryBlue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(AgoraCorners.rounded12),
@@ -294,27 +294,12 @@ class _TuileSemaine extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Material(
-                    textStyle: TextStyle(color: AgoraColors.primaryBlue),
-                    color: AgoraColors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(AgoraSpacings.x0_5),
-                      child: Text(theme.titre, style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  SizedBox(width: AgoraSpacings.base),
-                  Text(theme.periode),
-                ],
-              ),
+              Text("${theme.titre}  ·  ${theme.periode}", style: AgoraTextStyles.medium16White),
               SizedBox(height: AgoraSpacings.base),
               Text(theme.sousTitre),
+              SizedBox(height: AgoraSpacings.x0_25),
+              Text(theme.theme, style: AgoraTextStyles.medium32White),
               SizedBox(height: AgoraSpacings.x0_5),
-              Text(theme.theme, style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-              SizedBox(height: AgoraSpacings.base),
               Row(
                 children: [
                   SizedBox(
@@ -329,9 +314,9 @@ class _TuileSemaine extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(theme.nom, style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(theme.nom, style: AgoraTextStyles.medium16White),
                         SizedBox(height: AgoraSpacings.x0_25),
-                        Text(theme.fonction),
+                        Text(theme.fonction, style: AgoraTextStyles.light14White),
                       ],
                     ),
                   ),
@@ -352,8 +337,10 @@ class _TuileSemaine extends StatelessWidget {
                   Text(theme.dateFinTheme),
                 ],
               ),
-              SizedBox(height: AgoraSpacings.x1_5),
+              SizedBox(height: AgoraSpacings.x0_5),
               if (theme.prochainsThemes.isNotEmpty) ...[
+                Divider(thickness: 1, color: AgoraColors.invertedBlueFrance),
+                SizedBox(height: AgoraSpacings.x0_5),
                 Text("LES PROCHAINES SEMAINES"),
                 SizedBox(height: AgoraSpacings.base),
                 Row(
