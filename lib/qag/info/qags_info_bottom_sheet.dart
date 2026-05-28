@@ -52,7 +52,7 @@ class QagsInformationBottomSheet extends StatelessWidget {
                   children: [
                     Text(
                       "Le mois sur Agora",
-                      style: AgoraTextStyles.bold34,
+                      style: AgoraTextStyles.bold28,
                       textAlign: TextAlign.start,
                     ),
                     Text(
@@ -60,16 +60,11 @@ class QagsInformationBottomSheet extends StatelessWidget {
                       style: AgoraTextStyles.light16,
                       textAlign: TextAlign.start,
                     ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
                     const SizedBox(height: AgoraSpacings.x1_25),
-                    Text("PROGRAMME DU MOIS", style: AgoraTextStyles.bold18PrimaryBlue),
+                    Text("PROGRAMME DU MOIS", style: AgoraTextStyles.bold16PrimaryBlue),
                     const SizedBox(height: AgoraSpacings.x0_5),
                     AgoraRichText(
-                      policeStyle: AgoraRichTextPoliceStyle.sectionInterligne150,
+                      policeStyle: AgoraRichTextPoliceStyle.police14Interligne140,
                       semantic: AgoraRichTextSemantic(label: state.programmeDuMois.removeHtmlTags()),
                       items: [
                         ...parseSimpleHtml(state.programmeDuMois)
@@ -77,9 +72,9 @@ class QagsInformationBottomSheet extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: AgoraSpacings.x2),
-                    Text("COMMENT ÇA MARCHE", style: AgoraTextStyles.bold18PrimaryBlue),
+                    Text("COMMENT ÇA MARCHE", style: AgoraTextStyles.bold16PrimaryBlue),
                     const SizedBox(height: AgoraSpacings.x0_5),
-                    Text(state.commentCaMarche, style: AgoraTextStyles.light18),
+                    Text(state.commentCaMarche, style: AgoraTextStyles.light14),
                     const SizedBox(height: AgoraSpacings.x2),
                   ],
                 ),
