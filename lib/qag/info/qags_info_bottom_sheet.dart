@@ -51,12 +51,12 @@ class QagsInformationBottomSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Le mois sur Agora",
+                      "Ce mois-ci sur Agora",
                       style: AgoraTextStyles.bold28,
                       textAlign: TextAlign.start,
                     ),
                     Text(
-                      "Découvrez le programme et le fonctionnement",
+                      "Voici les thèmes à venir et les règles de fonctionnement.",
                       style: AgoraTextStyles.light16,
                       textAlign: TextAlign.start,
                     ),
