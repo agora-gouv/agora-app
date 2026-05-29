@@ -625,7 +625,11 @@ String _formatDateFinTheme(String dateFinTheme) {
     "EEEE d MMMM 'à' HH'h'",
     'fr_FR',
   );
-  return formatter.format(DateTime.parse(dateFinTheme));
+  var formatted = formatter.format(DateTime.parse(dateFinTheme).toLocal());
+  if (dateFinTheme.contains("01T")) {
+    formatted = formatted.replaceFirst("1", "1er");
+  }
+  return formatted;
 }
 
 abstract class CreateQagRepositoryResponse extends Equatable {

@@ -471,6 +471,13 @@ class AgoraTextStyles {
     foreground: Paint()..color = AgoraColors.invertedBlueFrance,
   );
 
+  static TextStyle medium14White = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 14.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
+  );
+
   static TextStyle regular14White = TextStyle(
     fontFamily: marianne,
     fontWeight: regular,
