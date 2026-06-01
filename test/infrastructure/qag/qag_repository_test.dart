@@ -8,6 +8,7 @@ import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
+import 'package:agora/qag/domain/qag_theme_hebdo.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/repository/dto/qag_content_dto.dart';
@@ -15,6 +16,8 @@ import 'package:agora/qag/repository/qag_repository.dart';
 import 'package:agora/thematique/domain/thematique.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 import '../../utils/dio_utils.dart';
 
@@ -25,6 +28,9 @@ void main() {
 
   const qagId = "qagId";
   const thematiqueId = "thematiqueId";
+
+  Intl.defaultLocale = "fr_FR";
+  initializeDateFormatting('fr_FR', null);
 
   group("Create qag", () {
     test("when success should return success", () async {
@@ -1336,6 +1342,83 @@ void main() {
 
       // Then
       expect(response, null);
+    });
+  });
+
+  group("getThemeHebdo", () {
+    test("when success should return response theme", () async {
+      // Given
+      dioAdapter.onGet(
+        "/theme_hebdo",
+        (server) => server.reply(HttpStatus.ok, {
+          "titre": "titre",
+          "sousTitre": "sousTitre",
+          "periode": "periode",
+          "theme": "theme",
+          "avatarUrl": "avatarUrl",
+          "nom": "nom",
+          "fonction": "fonction",
+          "prochainsThemes": [
+            "prochainTheme1",
+            "prochainTheme2",
+          ],
+          "titreCompteur": "titreCompteur",
+          "dateFinTheme": "2026-06-01T14:00:00+02:00",
+          "dateDebutTheme": "2026-05-25T14:00:00+02:00",
+        }),
+        headers: {
+          "accept": "application/json",
+          "Authorization": "Bearer jwtToken",
+        },
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getThemeHebdo();
+
+      // Then
+      expect(
+        response,
+        QagThemeHebdoSuccessResponse(
+          qagThemeHebdo: QagThemeHebdo(
+            titre: "titre",
+            sousTitre: "sousTitre",
+            periode: "periode",
+            theme: "theme",
+            avatarUrl: "avatarUrl",
+            nom: "nom",
+            fonction: "fonction",
+            prochainsThemes: ["prochainTheme1", "prochainTheme2"],
+            titreCompteur: "titreCompteur",
+            dateFinTheme: "lundi 1er juin à 14h",
+            dateDebutTheme: "2026-05-25T14:00:00+02:00",
+          ),
+        ),
+      );
+    });
+
+    test("when failure should return failed", () async {
+      // Given
+      dioAdapter.onGet(
+        "/theme_hebdo",
+        (server) => server.reply(HttpStatus.notFound, {}),
+        headers: {"accept": "application/json"},
+        data: null,
+      );
+
+      // When
+      final repository = QagDioRepository(
+        httpClient: httpClient,
+        sentryWrapper: sentryWrapper,
+      );
+      final response = await repository.getThemeHebdo();
+
+      // Then
+      expect(response, QagThemeHebdoFailedResponse());
     });
   });
 }
