@@ -1,6 +1,6 @@
 import 'package:agora/consultation/question/bloc/response/stock/consultation_question_response_hive.dart';
 import 'package:agora/consultation/question/domain/consultation_question_response.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
 abstract class ConsultationQuestionStorageClient {
   Future<void> save({

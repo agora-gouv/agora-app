@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:matomo_tracker/matomo_tracker.dart';
@@ -71,6 +71,12 @@ class AgoraInitializer {
       (await rootBundle.loadString("assets/certificates/letsencrypt-e6.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-r10.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-r11.pem")),
+      (await rootBundle.loadString("assets/certificates/int-ye1.pem")),
+      (await rootBundle.loadString("assets/certificates/int-ye2.pem")),
+      (await rootBundle.loadString("assets/certificates/int-yr1.pem")),
+      (await rootBundle.loadString("assets/certificates/int-yr2.pem")),
+      (await rootBundle.loadString("assets/certificates/root-ye-by-x2.pem")),
+      (await rootBundle.loadString("assets/certificates/root-yr-by-x1.pem")),
     ];
 
     final rawCertificates = [certignaCertificate, ...letsEncryptCertificates];
