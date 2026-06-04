@@ -76,6 +76,14 @@ class AgoraTextStyles {
     height: height,
   );
 
+  static const TextStyle bold16PrimaryBlue = TextStyle(
+    fontFamily: marianne,
+    fontWeight: bold,
+    fontSize: 16.0,
+    color: AgoraColors.primaryBlue,
+    height: height,
+  );
+
   static const TextStyle bold14 = TextStyle(
     fontFamily: marianne,
     fontWeight: bold,
@@ -447,6 +455,41 @@ class AgoraTextStyles {
     fontSize: 14.0,
     color: AgoraColors.primaryGrey,
     height: height,
+  );
+
+  static TextStyle medium32White = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 32.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
+  );
+
+  static TextStyle medium16White = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 16.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
+  );
+
+  static TextStyle medium14White = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 14.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
+  );
+
+  static TextStyle regular14White = TextStyle(
+    fontFamily: marianne,
+    fontWeight: regular,
+    fontSize: 14.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
+  );
+
+  static TextStyle light14White = TextStyle(
+    fontFamily: marianne,
+    fontWeight: light,
+    fontSize: 14.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
   );
 
   static TextStyle primaryButton = TextStyle(

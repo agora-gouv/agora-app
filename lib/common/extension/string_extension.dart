@@ -1,11 +1,7 @@
 extension StringExtension on String {
-  String format(String to) {
-    return replaceFirst("%s", to);
-  }
+  String format(String to) => replaceFirst("%s", to);
 
-  String format2(String to1, String to2) {
-    return replaceFirst("%1s", to1).replaceFirst("%2s", to2);
-  }
+  String format2(String to1, String to2) => replaceFirst("%1s", to1).replaceFirst("%2s", to2);
 
   String removeDiacritics() {
     var str = this;
@@ -29,6 +25,8 @@ extension StringExtension on String {
 
     return str;
   }
+
+  String removeHtmlTags() => replaceAll(RegExp(r'<[^>]*>'), "");
 }
 
 extension NullableStringExtensions on String? {

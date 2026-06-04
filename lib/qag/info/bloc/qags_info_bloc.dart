@@ -25,6 +25,8 @@ class QagsInfoBloc extends Bloc<QagsInfoEvent, QagsInfoState> {
           status: AllPurposeStatus.success,
           infoText: response.info,
           texteTotalQuestions: response.texteTotalQuestions,
+          programmeDuMois: response.programmeDuMois,
+          commentCaMarche: response.commentCaMarche,
         ),
       );
     } else {
