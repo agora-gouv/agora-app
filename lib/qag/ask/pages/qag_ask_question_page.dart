@@ -88,29 +88,31 @@ class _QagAskQuestionPageState extends State<QagAskQuestionPage> {
           Navigator.pop(context);
           return false;
         },
-        child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
-          builder: (context, state) {
-            return AgoraSecondaryStyleView(
-              semanticPageLabel: QagStrings.askQuestionTitle,
-              title: AgoraRichText(
-                policeStyle: AgoraRichTextPoliceStyle.toolbar,
-                items: [
-                  AgoraRichTextItem(
-                    text: QagStrings.askQuestionTitle1,
-                    style: AgoraRichTextItemStyle.regular,
-                  ),
-                  AgoraRichTextItem(
-                    text: QagStrings.askQuestionTitle2,
-                    style: AgoraRichTextItemStyle.bold,
-                  ),
-                ],
-              ),
-              onBackClick: () {
-                Navigator.pop(context);
-              },
-              child: errorCase == null ? _buildState(context, state) : _buildErrorCase(context, errorCase),
-            );
-          },
+        child: SafeArea(
+          child: BlocBuilder<ThematiqueBloc, ThematiqueState>(
+            builder: (context, state) {
+              return AgoraSecondaryStyleView(
+                semanticPageLabel: QagStrings.askQuestionTitle,
+                title: AgoraRichText(
+                  policeStyle: AgoraRichTextPoliceStyle.toolbar,
+                  items: [
+                    AgoraRichTextItem(
+                      text: QagStrings.askQuestionTitle1,
+                      style: AgoraRichTextItemStyle.regular,
+                    ),
+                    AgoraRichTextItem(
+                      text: QagStrings.askQuestionTitle2,
+                      style: AgoraRichTextItemStyle.bold,
+                    ),
+                  ],
+                ),
+                onBackClick: () {
+                  Navigator.pop(context);
+                },
+                child: errorCase == null ? _buildState(context, state) : _buildErrorCase(context, errorCase),
+              );
+            },
+          ),
         ),
       ),
     );

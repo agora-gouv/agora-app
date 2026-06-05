@@ -1,1 +1,0 @@
-flutter build apk --debug --flavor dev -t lib/main_dev.dart --dart-define=env=Debug --dart-define=app.flavor=Dev

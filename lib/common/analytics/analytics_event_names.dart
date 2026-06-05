@@ -20,7 +20,6 @@ class AnalyticsEventNames {
   static const String goToResult = "Voir les résultats";
   static const String shareConsultationResults = "Partager les résultats d'une consultation";
   static const String backToMenu = "Retour à l'accueil";
-  static const String back = "Retour";
 
   static const String readMore = "Lire la suite des données démographiques";
   static const String beginDemographic = "Commencer la saisie des données démographiques";

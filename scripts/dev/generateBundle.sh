@@ -1,0 +1,3 @@
+#!/bin/sh
+
+flutter build appbundle --flavor dev -t lib/main_dev.dart --dart-define=app.flavor=Dev

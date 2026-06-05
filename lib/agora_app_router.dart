@@ -1,5 +1,6 @@
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/deeplink_helper.dart';
+import 'package:agora/common/log/log.dart';
 import 'package:agora/consultation/dynamic/pages/dynamic_consultation_page.dart';
 import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
 import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
@@ -235,7 +236,13 @@ class AgoraAppRouter {
         );
         break;
       default:
-        throw Exception("Route doesn't exist: ${settings.name}");
+        Log.warning("Route doesn't exist: ${settings.name}");
+        currentPage = SplashPage(
+          sharedPref: sharedPref,
+          deepLinkHelper: deepLinkHelper,
+          onRedirect: onRedirect,
+          agoraAppIcon: agoraAppIcon,
+        );
     }
     return MaterialPageRoute(
       settings: settings,

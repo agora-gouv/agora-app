@@ -1,4 +1,5 @@
 import 'package:agora/agora_app.dart';
+import 'package:agora/common/helper/feature_flipping_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/config_manager.dart';
 import 'package:agora/common/manager/helper_manager.dart';
@@ -54,7 +55,7 @@ class AgoraInitializer {
       appRunner: () => runApp(
         AgoraApp(
           sharedPref: sharedPref,
-          shouldShowOnboarding: isFirstConnection,
+          shouldShowOnboarding: isOnboardingEnabled() && isFirstConnection,
           agoraAppIcon: appConfig.appIcon,
         ),
       ),
@@ -69,8 +70,12 @@ class AgoraInitializer {
       (await rootBundle.loadString("assets/certificates/letsencrypt-isrg-root-x2.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-e5.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-e6.pem")),
+      (await rootBundle.loadString("assets/certificates/letsencrypt-e7.pem")),
+      (await rootBundle.loadString("assets/certificates/letsencrypt-e8.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-r10.pem")),
       (await rootBundle.loadString("assets/certificates/letsencrypt-r11.pem")),
+      (await rootBundle.loadString("assets/certificates/letsencrypt-r12.pem")),
+      (await rootBundle.loadString("assets/certificates/letsencrypt-r13.pem")),
       (await rootBundle.loadString("assets/certificates/int-ye1.pem")),
       (await rootBundle.loadString("assets/certificates/int-ye2.pem")),
       (await rootBundle.loadString("assets/certificates/int-yr1.pem")),

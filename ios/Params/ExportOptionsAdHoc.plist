@@ -13,7 +13,7 @@
 	<key>uploadSymbols</key>
 	<false/>
 	<key>signingStyle</key>
-	<string>manual</string>
+	<string>automatic</string>
 	<key>signingCertificate</key>
 	<string>iPhone Distribution: Octo Technology Mobile</string>
 	<key>provisioningProfiles</key>

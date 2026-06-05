@@ -61,16 +61,15 @@ class AgoraHtml extends StatelessWidget {
   }
 
   bool isQagUrl(String url) {
-    return url.startsWith("https://agora.beta.gouv.fr/qags/") || url.startsWith("https://www.agora.gouv.fr/qags/");
+    return url.startsWith("https://www.agora.gouv.fr/qags/");
   }
 
   bool isConsultationUrl(String url) {
-    return url.startsWith("https://agora.beta.gouv.fr/consultations/") ||
-        url.startsWith("https://www.agora.gouv.fr/consultations/");
+    return url.startsWith("https://www.agora.gouv.fr/consultations/");
   }
 
   String extractIdFromUrl(String url) {
-    return url.split("/").last;
+    return Uri.parse(url).pathSegments[1];
   }
 }
 

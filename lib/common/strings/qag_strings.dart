@@ -10,7 +10,7 @@ class QagStrings {
   static const String trending = "Tendances";
   static const String top = "Le top";
   static const String latest = "Récentes";
-  static const String supporting = "Suivies";
+  static const String supporting = "Mes questions";
   static const String askQuestion = "Poser ma question";
   static const String searchQagEmptyList = "Pas de résultat.";
   static const String searchQagEnterSomeChar = "Explorez les questions existantes en saisissant au moins 3 caractères.";
@@ -19,8 +19,8 @@ class QagStrings {
   static const String at = "le";
 
   static const String askQuestionTitle = "Poser ma question au Gouvernement";
-  static const String askQuestionTitle1 = "Poser ma\n";
-  static const String askQuestionTitle2 = "question au Gouvernement";
+  static const String askQuestionTitle1 = "Poser ma question\n";
+  static const String askQuestionTitle2 = "au Gouvernement";
   static const String askQuestionDescription1 = "Vous pouvez poser ici votre question au Gouvernement. ";
   static const String askQuestionDescription2 = "Chaque utilisateur peut poser une question par semaine. \n";
   static const String askQuestionDescription3 =

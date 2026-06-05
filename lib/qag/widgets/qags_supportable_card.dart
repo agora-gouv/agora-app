@@ -31,6 +31,7 @@ class QagsSupportableCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final likeAnimationView = AgoraLikeAnimationView(animationControllerKey: GlobalKey(), likeViewKey: likeViewKey);
+
     return BlocProvider(
       create: (context) => QagSupportBloc(qagRepository: RepositoryManager.getQagRepository()),
       child: Stack(

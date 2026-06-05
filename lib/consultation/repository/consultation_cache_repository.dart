@@ -15,8 +15,8 @@ class ConsultationCacheRepository {
 
   bool get isCacheFresh => lastUpdate != null && DateTime.now().isBefore(lastUpdate!.add(CACHE_MAX_AGE));
 
-  Future<GetConsultationsRepositoryResponse> fetchConsultations() async {
-    if (isCacheSuccess) {
+  Future<GetConsultationsRepositoryResponse> fetchConsultations(bool forceFetch) async {
+    if (isCacheSuccess && !forceFetch) {
       return consultationsData!;
     }
     consultationsData = await consultationRepository.fetchConsultations();
