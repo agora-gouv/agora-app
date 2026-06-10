@@ -12,7 +12,6 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/scroll/agora_horizontal_scroll_helper.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';

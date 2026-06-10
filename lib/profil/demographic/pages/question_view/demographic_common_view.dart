@@ -3,7 +3,6 @@ import 'package:agora/common/strings/demographic_strings.dart';
 import 'package:agora/design/custom_view/agora_demographic_simple_view.dart';
 import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/text/agora_link_text.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/demographic/domain/demographic_question_type.dart';
