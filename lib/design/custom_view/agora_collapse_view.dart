@@ -30,36 +30,36 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
 
   @override
   Widget build(BuildContext context) => ClipRRect(
-      child: Material(
-        color: AgoraColors.transparent,
-        child: Column(
-          children: [
-            ClipRRect(
-              child: Material(
-                color: AgoraColors.transparent,
-                child: Semantics(
-                  tooltip: isCollapse ? ' Étendu' : 'Replié',
-                  child: InkWell(
-                    onTap: () {
-                      SemanticsHelper.announceCollapsing(!isCollapse);
-                      setState(() => isCollapse = !isCollapse);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: widget.paddingHorizontalStyle,
-                        vertical: AgoraSpacings.x0_5,
+        child: Material(
+          color: AgoraColors.transparent,
+          child: Column(
+            children: [
+              ClipRRect(
+                child: Material(
+                  color: AgoraColors.transparent,
+                  child: Semantics(
+                    tooltip: isCollapse ? ' Étendu' : 'Replié',
+                    child: InkWell(
+                      onTap: () {
+                        SemanticsHelper.announceCollapsing(!isCollapse);
+                        setState(() => isCollapse = !isCollapse);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: widget.paddingHorizontalStyle,
+                          vertical: AgoraSpacings.x0_5,
+                        ),
+                        child: _buildTitle(),
                       ),
-                      child: _buildTitle(),
                     ),
                   ),
                 ),
               ),
-            ),
-            if (isCollapse) widget.collapseContent,
-          ],
+              if (isCollapse) widget.collapseContent,
+            ],
+          ),
         ),
-      ),
-    );
+      );
 
   Widget _buildTitle() {
     return Row(

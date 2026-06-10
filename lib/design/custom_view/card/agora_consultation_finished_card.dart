@@ -157,37 +157,37 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ClipRRect(
-      child: Image.network(
-        imageUrl,
-        fit: BoxFit.fitWidth,
-        width: cardWidth,
-        height: cardHeight,
-        cacheWidth: 800,
-        excludeFromSemantics: true,
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          return Center(
-            child: loadingProgress == null
-                ? child
-                : SizedBox(
-                    width: cardWidth,
-                    height: cardHeight,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Spacer(),
-                        CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                        Spacer(),
-                      ],
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.fitWidth,
+          width: cardWidth,
+          height: cardHeight,
+          cacheWidth: 800,
+          excludeFromSemantics: true,
+          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+            return Center(
+              child: loadingProgress == null
+                  ? child
+                  : SizedBox(
+                      width: cardWidth,
+                      height: cardHeight,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                          Spacer(),
+                        ],
+                      ),
                     ),
-                  ),
-          );
-        },
-      ),
-    );
+            );
+          },
+        ),
+      );
 }
 
 class _Titre extends StatelessWidget {
