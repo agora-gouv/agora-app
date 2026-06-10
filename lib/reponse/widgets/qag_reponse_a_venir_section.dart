@@ -12,7 +12,6 @@ import 'package:agora/design/custom_view/error/agora_error_view.dart';
 import 'package:agora/design/custom_view/scroll/agora_horizontal_scroll_helper.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/details/pages/qag_details_page.dart';
@@ -108,7 +107,7 @@ class _InfoBouton extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            backgroundColor: AgoraColors.transparent,
+            shape: const RoundedRectangleBorder(),
             builder: (context) => BlocProvider(
               create: (context) => ReponseInfoBloc(
                 qagRepository: RepositoryManager.getQagRepository(),
@@ -139,11 +138,11 @@ class _InfoBottomSheetContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: AgoraSpacings.x2),
-            SkeletonBox(height: 15, width: 200, radius: 15),
+            SkeletonBox(height: 15, width: 200),
             SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 15, width: 200, radius: 15),
+            SkeletonBox(height: 15, width: 200),
             SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 15, width: 200, radius: 15),
+            SkeletonBox(height: 15, width: 200),
             SizedBox(height: AgoraSpacings.x2),
           ],
         ),

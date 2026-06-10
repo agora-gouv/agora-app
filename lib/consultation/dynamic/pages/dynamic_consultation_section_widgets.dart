@@ -82,7 +82,6 @@ class HeaderSectionUpdateWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(50),
             child: Image.network(
               section.coverUrl,
               excludeFromSemantics: true,
@@ -135,7 +134,6 @@ class _HeaderSectionWidget extends StatelessWidget {
                   child: Container(
                     width: MediaQuery.sizeOf(context).width - (AgoraSpacings.base),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(AgoraCorners.defaultRadius)),
                       gradient: LinearGradient(
                         colors: [Colors.white.withValues(alpha: 0.9), Colors.white],
                         begin: Alignment.topCenter,
@@ -607,7 +605,6 @@ class _ResponseInfoSectionWidget extends StatelessWidget {
         ),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(AgoraCorners.rounded12),
             border: Border.all(color: AgoraColors.consultationResponseInfoBorder),
             color: AgoraColors.consultationResponseInfo,
           ),
@@ -675,7 +672,6 @@ class _InfoHeaderSectionWidget extends StatelessWidget {
         ),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(AgoraCorners.rounded12),
             border: Border.all(color: AgoraColors.consultationResponseInfoBorder),
             color: AgoraColors.consultationResponseInfo,
           ),

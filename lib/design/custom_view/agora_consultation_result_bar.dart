@@ -2,7 +2,6 @@ import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/consultation_strings.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +96,6 @@ class _AgoraConsultationResultBarState extends State<AgoraConsultationResultBar>
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: AgoraColors.primaryBlue,
-                        borderRadius: BorderRadius.vertical(bottom: AgoraCorners.rounded),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(

@@ -15,7 +15,6 @@ import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
@@ -219,7 +218,7 @@ class _QagsPageState extends State<QagsPage> {
                                         AgoraSpacings.horizontalPadding,
                                         0,
                                       ),
-                                      child: SkeletonBox(height: 300, width: 300, radius: 15),
+                                      child: SkeletonBox(height: 300, width: 300),
                                     );
                                   case AllPurposeStatus.success:
                                     final QagThemeHebdo theme = qagThemeState.qagThemeHebdo!;
@@ -286,9 +285,6 @@ class _TuileSemaine extends StatelessWidget {
   Widget build(BuildContext context) => Material(
         textStyle: AgoraTextStyles.regular14White,
         color: AgoraColors.primaryBlue,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(AgoraCorners.rounded12),
-        ),
         child: Padding(
           padding: const EdgeInsets.all(AgoraSpacings.base),
           child: Column(
@@ -303,8 +299,8 @@ class _TuileSemaine extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 48,
-                    height: 48,
+                    width: 60,
+                    height: 60,
                     child: ClipOval(
                       child: Image.network(theme.avatarUrl),
                     ),
@@ -428,8 +424,8 @@ class _InfoBouton extends StatelessWidget {
         onClick: () {
           showModalBottomSheet(
             context: context,
+            shape: const RoundedRectangleBorder(),
             isScrollControlled: true,
-            backgroundColor: AgoraColors.transparent,
             builder: (context) => QagsInformationBottomSheet(),
           );
         },

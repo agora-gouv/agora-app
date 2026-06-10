@@ -50,7 +50,6 @@ class ConsultationsLoadingSkeleton extends StatelessWidget {
         SkeletonBox(
           width: 100,
           height: 30,
-          radius: 20,
         ),
       ],
     );

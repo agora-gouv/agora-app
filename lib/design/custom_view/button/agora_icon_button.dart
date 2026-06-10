@@ -1,6 +1,5 @@
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,7 +40,6 @@ class AgoraIconButton extends StatelessWidget {
         borderColor: borderColor ?? AgoraColors.steam,
         cardColor: backgroundColor ?? AgoraColors.transparent,
         borderWidth: 1,
-        cornerRadius: round ? AgoraCorners.round : AgoraCorners.rounded,
         onTap: onClick,
         child: SizedBox(
           width: iconSize,

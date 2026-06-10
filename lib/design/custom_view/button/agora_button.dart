@@ -59,7 +59,7 @@ class AgoraButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderShape =
-        RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded12), side: _getBorder(buttonStyle));
+        RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.noRound), side: _getBorder(buttonStyle));
     Widget child;
     if (isLoading) {
       child = Center(child: CircularProgressIndicator());
