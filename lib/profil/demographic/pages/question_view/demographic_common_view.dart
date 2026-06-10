@@ -67,7 +67,7 @@ class _DemographicCommonViewState extends State<DemographicCommonView> {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              backgroundColor: AgoraColors.transparent,
+              shape: const RoundedRectangleBorder(),
               builder: (context) => AgoraInformationBottomSheet(
                 titre: DemographicStrings.whatAbout,
                 description: Text(widget.whatAboutText!, textAlign: TextAlign.center, style: AgoraTextStyles.light16),

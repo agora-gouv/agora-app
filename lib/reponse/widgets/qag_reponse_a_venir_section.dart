@@ -108,7 +108,7 @@ class _InfoBouton extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            backgroundColor: AgoraColors.transparent,
+            shape: const RoundedRectangleBorder(),
             builder: (context) => BlocProvider(
               create: (context) => ReponseInfoBloc(
                 qagRepository: RepositoryManager.getQagRepository(),
@@ -139,11 +139,11 @@ class _InfoBottomSheetContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: AgoraSpacings.x2),
-            SkeletonBox(height: 15, width: 200, radius: 15),
+            SkeletonBox(height: 15, width: 200),
             SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 15, width: 200, radius: 15),
+            SkeletonBox(height: 15, width: 200),
             SizedBox(height: AgoraSpacings.base),
-            SkeletonBox(height: 15, width: 200, radius: 15),
+            SkeletonBox(height: 15, width: 200),
             SizedBox(height: AgoraSpacings.x2),
           ],
         ),

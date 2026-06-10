@@ -9,7 +9,6 @@ import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/agora_scaffold.dart';
 import 'package:agora/design/custom_view/button/agora_secondary_style_view_button.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -133,7 +132,6 @@ class DeleteAccountPage extends StatelessWidget {
       label: semanticsLabel,
       child: AgoraRoundedCard(
         cardColor: AgoraColors.transparent,
-        cornerRadius: AgoraCorners.rounded50,
         onTap: () => onTap(),
         padding: const EdgeInsets.all(AgoraSpacings.x0_5),
         child: SvgPicture.asset("assets/ic_copy.svg", excludeFromSemantics: true),

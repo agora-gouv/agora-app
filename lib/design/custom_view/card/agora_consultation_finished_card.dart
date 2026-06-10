@@ -5,7 +5,6 @@ import 'package:agora/design/custom_view/agora_badge.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
@@ -157,12 +156,7 @@ class _Image extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-        topLeft: AgoraCorners.rounded,
-        topRight: AgoraCorners.rounded,
-      ),
+  Widget build(BuildContext context) => ClipRRect(
       child: Image.network(
         imageUrl,
         fit: BoxFit.fitWidth,
@@ -194,7 +188,6 @@ class _Image extends StatelessWidget {
         },
       ),
     );
-  }
 }
 
 class _Titre extends StatelessWidget {

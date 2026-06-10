@@ -1,7 +1,6 @@
 import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:equatable/equatable.dart';
@@ -97,11 +96,9 @@ class _AgoraLikeViewCliquable extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: 44, minWidth: 44),
         child: InkWell(
-          borderRadius: BorderRadius.all(withContour ? AgoraCorners.rounded42 : AgoraCorners.rounded),
           onTap: onSupportClick != null ? () => onSupportClick!(!isSupported) : null,
           child: Ink(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(AgoraCorners.rounded42),
               border: Border.all(color: withContour ? AgoraColors.lightRedOpacity19 : AgoraColors.transparent),
               color: withContour ? AgoraColors.lightRedOpacity4 : AgoraColors.transparent,
             ),
@@ -213,7 +210,6 @@ class AgoraLike extends StatelessWidget {
   Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(AgoraCorners.rounded42),
         border: Border.all(color: AgoraColors.lightRedOpacity19),
         color: AgoraColors.lightRedOpacity4,
       ),

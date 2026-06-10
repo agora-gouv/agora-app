@@ -27,7 +27,6 @@ class AgoraQagHeader extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.all(AgoraCorners.rounded),
               color: AgoraColors.blue525opacity06,
             ),
             padding: const EdgeInsets.all(AgoraSpacings.base),
@@ -55,7 +54,6 @@ class AgoraQagHeader extends StatelessWidget {
             right: 0,
             child: InkWell(
               onTap: onClose,
-              borderRadius: BorderRadius.all(AgoraCorners.rounded42),
               child: Semantics(
                 button: true,
                 label: SemanticsStrings.close,

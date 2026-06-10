@@ -1,5 +1,4 @@
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,7 +16,6 @@ Future<T?> showAgoraDialog<T>({
         surfaceTintColor: AgoraColors.transparent,
         backgroundColor: AgoraColors.background,
         insetPadding: const EdgeInsets.all(AgoraSpacings.horizontalPadding),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(AgoraCorners.rounded12)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Stack(

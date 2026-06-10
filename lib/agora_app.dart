@@ -150,6 +150,38 @@ class _AgoraAppState extends State<AgoraApp> with WidgetsBindingObserver {
         agoraAppIcon: widget.agoraAppIcon,
       ),
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+        ),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        ),
+        fontFamily: 'Marianne',
         colorScheme: ColorScheme.light(
           primary: AgoraColors.primaryBlue,
           secondary: AgoraColors.primaryBlue,

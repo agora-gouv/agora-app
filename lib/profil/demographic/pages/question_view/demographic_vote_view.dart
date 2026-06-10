@@ -74,7 +74,7 @@ class _DemographicVoteViewState extends State<DemographicVoteView> {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              backgroundColor: AgoraColors.transparent,
+              shape: const RoundedRectangleBorder(),
               builder: (context) => AgoraInformationBottomSheet(
                 titre: DemographicStrings.whyAsk,
                 description: Text(

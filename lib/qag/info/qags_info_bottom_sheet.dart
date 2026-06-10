@@ -30,11 +30,11 @@ class QagsInformationBottomSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(height: AgoraSpacings.x2),
-                    SkeletonBox(height: 15, width: 200, radius: 15),
+                    SkeletonBox(height: 15, width: 200),
                     SizedBox(height: AgoraSpacings.base),
-                    SkeletonBox(height: 15, width: 200, radius: 15),
+                    SkeletonBox(height: 15, width: 200),
                     SizedBox(height: AgoraSpacings.base),
-                    SkeletonBox(height: 15, width: 200, radius: 15),
+                    SkeletonBox(height: 15, width: 200),
                     SizedBox(height: AgoraSpacings.x2),
                   ],
                 ),
@@ -56,7 +56,7 @@ class QagsInformationBottomSheet extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                     Text(
-                      "Voici les thèmes à venir et les règles de fonctionnement.",
+                      "Voici les règles de fonctionnement et les prochains thèmes.",
                       style: AgoraTextStyles.light16,
                       textAlign: TextAlign.start,
                     ),
@@ -65,7 +65,7 @@ class QagsInformationBottomSheet extends StatelessWidget {
                     const SizedBox(height: AgoraSpacings.x0_5),
                     Text(state.commentCaMarche, style: AgoraTextStyles.light14),
                     const SizedBox(height: AgoraSpacings.x1_25),
-                    Text("PROGRAMME DU MOIS", style: AgoraTextStyles.bold16PrimaryBlue),
+                    Text("PROGRAMME À VENIR", style: AgoraTextStyles.bold16PrimaryBlue),
                     const SizedBox(height: AgoraSpacings.x0_5),
                     AgoraRichText(
                       policeStyle: AgoraRichTextPoliceStyle.police14Interligne140,

@@ -24,7 +24,6 @@ class AgoraToggleButton extends StatelessWidget {
       color: AgoraColors.white,
       borderColor: AgoraColors.border,
       selectedBorderColor: AgoraColors.primaryBlue,
-      borderRadius: BorderRadius.all(AgoraCorners.rounded),
       children: [
         Ink(
           padding: EdgeInsets.symmetric(

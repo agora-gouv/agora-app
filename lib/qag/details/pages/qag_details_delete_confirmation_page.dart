@@ -54,7 +54,7 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: AgoraColors.transparent,
+                shape: const RoundedRectangleBorder(),
                 builder: (context) => AgoraInformationBottomSheet(
                   titre: QagStrings.suppressSucceed,
                   boutonLabel: GenericStrings.close,

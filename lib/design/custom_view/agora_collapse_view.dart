@@ -1,6 +1,5 @@
 import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -30,21 +29,12 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
   bool isCollapse = false;
 
   @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: widget.radiusStyle == AgoraCollapseStyle.noRadius
-          ? BorderRadius.all(AgoraCorners.noRound)
-          : BorderRadius.all(AgoraCorners.rounded),
+  Widget build(BuildContext context) => ClipRRect(
       child: Material(
         color: AgoraColors.transparent,
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: widget.radiusStyle == AgoraCollapseStyle.noRadius
-                  ? BorderRadius.all(AgoraCorners.noRound)
-                  : isCollapse
-                      ? BorderRadius.vertical(top: AgoraCorners.rounded)
-                      : BorderRadius.all(AgoraCorners.rounded),
               child: Material(
                 color: AgoraColors.transparent,
                 child: Semantics(
@@ -70,7 +60,6 @@ class _AgoraCollapseViewState extends State<AgoraCollapseView> {
         ),
       ),
     );
-  }
 
   Widget _buildTitle() {
     return Row(
