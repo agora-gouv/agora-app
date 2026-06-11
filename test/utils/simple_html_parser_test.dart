@@ -34,6 +34,17 @@ void main() {
     expect(parseSimpleHtml(toParse), expected);
   });
 
+  test('avec du boldItalic html', () {
+    const String toParse = "Je contiens <b><i>du boldItalic</i></b> dans mon HTML";
+
+    final expected = [
+      SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: 'Je contiens '),
+      SimpleHtmlData(style: AgoraRichTextItemStyle.boldItalic, text: "du boldItalic"),
+      SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: ' dans mon HTML'),
+    ];
+    expect(parseSimpleHtml(toParse), expected);
+  });
+
   test('avec <p> et </p>', () {
     const String toParse = "<p>Je suis un paragraphe</p>";
 
