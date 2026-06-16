@@ -11,6 +11,7 @@ import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
+import 'package:agora/qag/details/pages/qag_details_page.dart';
 import 'package:agora/qag/pages/qags_page.dart';
 import 'package:agora/reponse/pages/reponses_page.dart';
 import 'package:agora/welcome/bloc/welcome_bloc.dart';
@@ -265,7 +266,9 @@ class _ALaUne extends StatelessWidget {
                           aLaUne.routeName,
                           arguments: aLaUne.routeName == DynamicConsultationPage.routeName
                               ? DynamicConsultationPageArguments(consultationIdOrSlug: aLaUne.routeArgument!)
-                              : aLaUne.routeArgument,
+                              : aLaUne.routeName == QagDetailsPage.routeName
+                                  ? QagDetailsArguments(qagId: aLaUne.routeArgument!, reload: QagReload.qagsPage)
+                                  : aLaUne.routeArgument,
                         );
                       },
                       child: Padding(
