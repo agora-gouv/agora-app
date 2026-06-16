@@ -5,7 +5,6 @@ import 'package:agora/design/custom_view/agora_badge.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/thematique/bloc/thematique_view_model.dart';
@@ -157,44 +156,38 @@ class _Image extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-        topLeft: AgoraCorners.rounded,
-        topRight: AgoraCorners.rounded,
-      ),
-      child: Image.network(
-        imageUrl,
-        fit: BoxFit.fitWidth,
-        width: cardWidth,
-        height: cardHeight,
-        cacheWidth: 800,
-        excludeFromSemantics: true,
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          return Center(
-            child: loadingProgress == null
-                ? child
-                : SizedBox(
-                    width: cardWidth,
-                    height: cardHeight,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Spacer(),
-                        CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                              : null,
-                        ),
-                        Spacer(),
-                      ],
+  Widget build(BuildContext context) => ClipRRect(
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.fitWidth,
+          width: cardWidth,
+          height: cardHeight,
+          cacheWidth: 800,
+          excludeFromSemantics: true,
+          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+            return Center(
+              child: loadingProgress == null
+                  ? child
+                  : SizedBox(
+                      width: cardWidth,
+                      height: cardHeight,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                          Spacer(),
+                        ],
+                      ),
                     ),
-                  ),
-          );
-        },
-      ),
-    );
-  }
+            );
+          },
+        ),
+      );
 }
 
 class _Titre extends StatelessWidget {

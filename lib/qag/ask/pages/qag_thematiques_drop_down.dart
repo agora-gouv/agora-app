@@ -1,7 +1,6 @@
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/thematique/bloc/thematique_with_id_view_model.dart';
@@ -45,7 +44,6 @@ class _QagThematiquesDropDownState<T> extends State<QagThematiquesDropDown<T>> {
         icon: const Icon(Icons.arrow_downward),
         elevation: 16,
         isExpanded: true,
-        borderRadius: BorderRadius.all(AgoraCorners.rounded),
         underline: Container(),
         hint: Text(widget.hintText, style: AgoraTextStyles.light14.copyWith(color: AgoraColors.hintColor)),
         onChanged: (T? value) {

@@ -12,12 +12,14 @@ import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
+import 'package:agora/qag/domain/qag_theme_hebdo.dart';
 import 'package:agora/qag/domain/qags_error_type.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/repository/dto/qag_content_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 abstract class QagRepository {
   Future<CreateQagRepositoryResponse> createQag({
@@ -87,6 +89,8 @@ abstract class QagRepository {
   Future<String?> getContentReponseQag();
 
   Future<String?> getContentAskQag();
+
+  Future<QagThemeHebdoRepositoryResponse> getThemeHebdo();
 }
 
 class QagDioRepository extends QagRepository {
@@ -553,6 +557,8 @@ class QagDioRepository extends QagRepository {
       return QagContentDto(
         info: response.data["info"] as String,
         texteTotalQuestions: response.data["texteTotalQuestions"] as String,
+        programmeDuMois: response.data["programmeDuMois"] as String,
+        commentCaMarche: response.data["commentCaMarche"] as String,
       );
     } catch (exception, stacktrace) {
       sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
@@ -583,6 +589,47 @@ class QagDioRepository extends QagRepository {
       return null;
     }
   }
+
+  @override
+  Future<QagThemeHebdoRepositoryResponse> getThemeHebdo() async {
+    const uri = "/theme_hebdo";
+    try {
+      final response = await httpClient.get(uri);
+      return QagThemeHebdoSuccessResponse(
+        qagThemeHebdo: QagThemeHebdo(
+          titre: response.data["titre"] as String,
+          sousTitre: response.data["sousTitre"] as String,
+          periode: response.data["periode"] as String,
+          theme: response.data["theme"] as String,
+          avatarUrl: response.data["avatarUrl"] as String,
+          nom: response.data["nom"] as String,
+          fonction: response.data["fonction"] as String,
+          prochainsThemes: _getProchainsThemes(response.data["prochainsThemes"] as List),
+          titreCompteur: response.data["titreCompteur"] as String,
+          dateFinTheme: _formatDateFinTheme(response.data["dateFinTheme"] as String),
+          dateDebutTheme: response.data["dateDebutTheme"] as String,
+        ),
+      );
+    } catch (exception, stacktrace) {
+      sentryWrapper.captureException(exception, stacktrace, message: "Erreur lors de l'appel : $uri");
+      return QagThemeHebdoFailedResponse();
+    }
+  }
+}
+
+List<String> _getProchainsThemes(List<dynamic> prochainsThemeResponse) =>
+    prochainsThemeResponse.map((theme) => theme as String).toList();
+
+String _formatDateFinTheme(String dateFinTheme) {
+  final formatter = DateFormat(
+    "EEEE d MMMM 'à' HH'h'",
+    'fr_FR',
+  );
+  var formatted = formatter.format(DateTime.parse(dateFinTheme).toLocal());
+  if (dateFinTheme.contains("01T")) {
+    formatted = formatted.replaceFirst("1", "1er");
+  }
+  return formatted;
 }
 
 abstract class CreateQagRepositoryResponse extends Equatable {
@@ -854,4 +901,18 @@ class QagSimilarSuccessResponse extends QagSimilarRepositoryResponse {
 
 class QagSimilarFailedResponse extends QagSimilarRepositoryResponse {}
 
-enum TypeInfoText { qag, reponse }
+abstract class QagThemeHebdoRepositoryResponse extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class QagThemeHebdoSuccessResponse extends QagThemeHebdoRepositoryResponse {
+  final QagThemeHebdo qagThemeHebdo;
+
+  QagThemeHebdoSuccessResponse({required this.qagThemeHebdo});
+
+  @override
+  List<Object> get props => [qagThemeHebdo];
+}
+
+class QagThemeHebdoFailedResponse extends QagThemeHebdoRepositoryResponse {}

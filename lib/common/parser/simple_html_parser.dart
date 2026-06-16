@@ -1,5 +1,3 @@
-import 'package:agora/common/log/log.dart';
-import 'package:agora/common/strings/string_utils.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,33 +14,88 @@ class SimpleHtmlData extends Equatable {
   List<Object?> get props => [style, text];
 }
 
-List<SimpleHtmlData> parseSimpleHtml(String data) {
-  if (data.startsWith('<')) {
-    if (data.startsWith('<i>')) {
-      return [
-        SimpleHtmlData(
-          style: AgoraRichTextItemStyle.italic,
-          text: data.substring(3, data.length).substringBefore('</i>'),
-        ),
-        ...parseSimpleHtml(data.substringAfter('</i>', includePattern: false)),
-      ];
-    } else if (data.startsWith('<b>')) {
-      return [
-        SimpleHtmlData(
-          style: AgoraRichTextItemStyle.bold,
-          text: data.substring(3, data.length).substringBefore('</b>'),
-        ),
-        ...parseSimpleHtml(data.substringAfter('</b>', includePattern: false)),
-      ];
-    } else {
-      Log.warning("Erreur dans le HTML : $data");
-      return [SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: data.replaceAll(RegExp(r'<.*?>'), ""))];
-    }
-  } else if (data.contains('<')) {
+List<SimpleHtmlData> parseSimpleHtml(
+  String data, {
+  AgoraRichTextItemStyle currentStyle = AgoraRichTextItemStyle.regular,
+}) {
+  if (data.isEmpty) return [];
+
+  if (data.startsWith('<i>')) {
+    return parseSimpleHtml(
+      data.substring(3),
+      currentStyle: currentStyle == AgoraRichTextItemStyle.bold
+          ? AgoraRichTextItemStyle.boldItalic
+          : AgoraRichTextItemStyle.italic,
+    );
+  }
+
+  if (data.startsWith('</i>')) {
+    return parseSimpleHtml(
+      data.substring(4),
+      currentStyle: currentStyle == AgoraRichTextItemStyle.boldItalic
+          ? AgoraRichTextItemStyle.bold
+          : AgoraRichTextItemStyle.regular,
+    );
+  }
+
+  if (data.startsWith('<b>')) {
+    return parseSimpleHtml(
+      data.substring(3),
+      currentStyle: currentStyle == AgoraRichTextItemStyle.italic
+          ? AgoraRichTextItemStyle.boldItalic
+          : AgoraRichTextItemStyle.bold,
+    );
+  }
+
+  if (data.startsWith('</b>')) {
+    return parseSimpleHtml(
+      data.substring(4),
+      currentStyle: currentStyle == AgoraRichTextItemStyle.boldItalic
+          ? AgoraRichTextItemStyle.italic
+          : AgoraRichTextItemStyle.regular,
+    );
+  }
+
+  if (data.startsWith('<p>')) {
+    return parseSimpleHtml(
+      data.substring(3),
+      currentStyle: currentStyle,
+    );
+  }
+
+  if (data.startsWith('</p>')) {
     return [
-      SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: data.substringBefore('<')),
-      ...parseSimpleHtml(data.substringAfter('<', includePattern: true)),
+      SimpleHtmlData(
+        style: AgoraRichTextItemStyle.regular,
+        text: '\n',
+      ),
+      ...parseSimpleHtml(
+        data.substring(4),
+        currentStyle: currentStyle,
+      ),
     ];
   }
-  return [SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: data)];
+
+  final nextTag = data.indexOf('<');
+
+  if (nextTag == -1) {
+    return [
+      SimpleHtmlData(
+        style: currentStyle,
+        text: data,
+      ),
+    ];
+  }
+
+  return [
+    if (nextTag > 0)
+      SimpleHtmlData(
+        style: currentStyle,
+        text: data.substring(0, nextTag),
+      ),
+    ...parseSimpleHtml(
+      data.substring(nextTag),
+      currentStyle: currentStyle,
+    ),
+  ];
 }

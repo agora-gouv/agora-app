@@ -9,7 +9,6 @@ void main() {
     final expected = [
       SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: toParse),
     ];
-
     expect(parseSimpleHtml(toParse), expected);
   });
 
@@ -21,7 +20,6 @@ void main() {
       SimpleHtmlData(style: AgoraRichTextItemStyle.bold, text: 'du bold'),
       SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: ' dans mon HTML'),
     ];
-
     expect(parseSimpleHtml(toParse), expected);
   });
 
@@ -33,20 +31,27 @@ void main() {
       SimpleHtmlData(style: AgoraRichTextItemStyle.italic, text: "de l'italic"),
       SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: ' dans mon HTML'),
     ];
-
     expect(parseSimpleHtml(toParse), expected);
   });
 
-  test('une balise inconnue', () {
-    const String toParse = '<br>Je contiens une balise inconnue <b>du bold</b> dans mon HTML';
+  test('avec du boldItalic html', () {
+    const String toParse = "Je contiens <b><i>du boldItalic</i></b> dans mon HTML";
 
     final expected = [
-      SimpleHtmlData(
-        style: AgoraRichTextItemStyle.regular,
-        text: 'Je contiens une balise inconnue du bold dans mon HTML',
-      ),
+      SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: 'Je contiens '),
+      SimpleHtmlData(style: AgoraRichTextItemStyle.boldItalic, text: "du boldItalic"),
+      SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: ' dans mon HTML'),
     ];
+    expect(parseSimpleHtml(toParse), expected);
+  });
 
+  test('avec <p> et </p>', () {
+    const String toParse = "<p>Je suis un paragraphe</p>";
+
+    final expected = [
+      SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: 'Je suis un paragraphe'),
+      SimpleHtmlData(style: AgoraRichTextItemStyle.regular, text: '\n'),
+    ];
     expect(parseSimpleHtml(toParse), expected);
   });
 }

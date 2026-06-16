@@ -2,7 +2,6 @@ import 'package:agora/common/extension/string_extension.dart';
 import 'package:agora/common/helper/semantics_helper.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +75,6 @@ class _AgoraTextFieldState extends State<AgoraTextField> {
           clipBehavior: Clip.antiAlias,
           color: AgoraColors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(AgoraCorners.rounded),
             side: widget.error || _tooMuchInput
                 ? BorderSide(color: AgoraColors.fluorescentRed, width: 2)
                 : widget.check

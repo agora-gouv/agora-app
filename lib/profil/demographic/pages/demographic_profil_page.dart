@@ -205,7 +205,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AgoraColors.transparent,
+      shape: const RoundedRectangleBorder(),
       builder: (context) => AgoraInformationBottomSheet(
         titre: GenericStrings.errorMessage,
         description: null,
@@ -218,7 +218,7 @@ class _DemographicProfilPageState extends State<DemographicProfilPage> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AgoraColors.transparent,
+      shape: const RoundedRectangleBorder(),
       builder: (context) => AgoraInformationBottomSheet(
         titre: GenericStrings.modificationSuccess,
         description: null,

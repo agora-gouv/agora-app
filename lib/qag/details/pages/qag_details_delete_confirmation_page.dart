@@ -6,7 +6,6 @@ import 'package:agora/design/custom_view/agora_toolbar.dart';
 import 'package:agora/design/custom_view/bottom_sheet/agora_bottom_sheet.dart';
 import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/error/agora_error_text.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/details/bloc/delete/qag_delete_bloc.dart';
@@ -54,7 +53,7 @@ class QagDetailsDeleteConfirmationPage extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
-                backgroundColor: AgoraColors.transparent,
+                shape: const RoundedRectangleBorder(),
                 builder: (context) => AgoraInformationBottomSheet(
                   titre: QagStrings.suppressSucceed,
                   boutonLabel: GenericStrings.close,
