@@ -5,6 +5,7 @@ import 'package:agora/qag/domain/qag_moderation_list.dart';
 import 'package:agora/qag/domain/qag_response.dart';
 import 'package:agora/qag/domain/qag_response_paginated.dart';
 import 'package:agora/qag/domain/qag_similar.dart';
+import 'package:agora/qag/domain/qag_theme_hebdo.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/repository/dto/qag_content_dto.dart';
 import 'package:agora/qag/repository/qag_repository.dart';
@@ -265,7 +266,14 @@ class FakeQagSuccessRepository extends QagRepository {
 
   @override
   Future<QagContentDto?> getContentQag() {
-    return Future.value(QagContentDto(info: "qagInfoText", texteTotalQuestions: "totalQuestionsText"));
+    return Future.value(
+      QagContentDto(
+        info: "qagInfoText",
+        texteTotalQuestions: "totalQuestionsText",
+        programmeDuMois: "programmeDuMois",
+        commentCaMarche: "commentCaMarche",
+      ),
+    );
   }
 
   @override
@@ -276,6 +284,27 @@ class FakeQagSuccessRepository extends QagRepository {
   @override
   Future<String?> getContentAskQag() {
     return Future.value("askQagInfoText");
+  }
+
+  @override
+  Future<QagThemeHebdoRepositoryResponse> getThemeHebdo() {
+    return Future.value(
+      QagThemeHebdoSuccessResponse(
+        qagThemeHebdo: QagThemeHebdo(
+          titre: "titre",
+          sousTitre: "sousTitre",
+          periode: "periode",
+          theme: "theme",
+          avatarUrl: "avatarUrl",
+          nom: "nom",
+          fonction: "fonction",
+          prochainsThemes: ["prochainTheme", "prochainTheme2", "prochainTheme3"],
+          titreCompteur: "titreCompteur",
+          dateFinTheme: "2026-06-04T23:45:00+02:00",
+          dateDebutTheme: "2026-05-31T00:15:00+02:00",
+        ),
+      ),
+    );
   }
 }
 
@@ -722,6 +751,9 @@ class FakeQagFailureRepository extends QagRepository {
 
   @override
   Future<String?> getContentAskQag() => Future.value(null);
+
+  @override
+  Future<QagThemeHebdoRepositoryResponse> getThemeHebdo() async => QagThemeHebdoFailedResponse();
 }
 
 class FakeQagFailureUnauthorisedRepository extends FakeQagFailureRepository {

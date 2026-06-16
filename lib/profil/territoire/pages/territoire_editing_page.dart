@@ -12,7 +12,6 @@ import 'package:agora/design/custom_view/error/agora_error_text.dart';
 import 'package:agora/design/custom_view/shake_widget.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/custom_view/text/agora_text_field.dart';
-import 'package:agora/design/style/agora_colors.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/profil/territoire/bloc/territoire_info_bloc.dart';
@@ -284,7 +283,7 @@ class _InfoBouton extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            backgroundColor: AgoraColors.transparent,
+            shape: const RoundedRectangleBorder(),
             builder: (context) => AgoraInformationBottomSheet(
               titre: "Précisions",
               description: Text(

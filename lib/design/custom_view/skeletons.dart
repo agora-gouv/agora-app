@@ -1,5 +1,4 @@
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -29,13 +28,11 @@ class SkeletonItem extends StatelessWidget {
 class SkeletonBox extends StatelessWidget {
   final double? width;
   final double? height;
-  final double radius;
 
   const SkeletonBox({
     super.key,
     this.width,
     this.height = AgoraSpacings.x0_75,
-    this.radius = AgoraCorners.defaultRadius,
   });
 
   @override
@@ -46,7 +43,7 @@ class SkeletonBox extends StatelessWidget {
           baseColor: AgoraColors.orochimaru,
           highlightColor: AgoraColors.superSilver,
           child: Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(radius), color: AgoraColors.white),
+            decoration: BoxDecoration(color: AgoraColors.white),
             height: 12,
             width: width,
           ),

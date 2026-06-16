@@ -1,7 +1,6 @@
 import 'package:agora/common/helper/emoji_helper.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/style/agora_colors.dart';
-import 'package:agora/design/style/agora_corners.dart';
 import 'package:agora/design/style/agora_spacings.dart';
 import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,6 @@ class AgoraQagHeader extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.all(AgoraCorners.rounded),
               color: AgoraColors.blue525opacity06,
             ),
             padding: const EdgeInsets.all(AgoraSpacings.base),
@@ -55,7 +53,6 @@ class AgoraQagHeader extends StatelessWidget {
             right: 0,
             child: InkWell(
               onTap: onClose,
-              borderRadius: BorderRadius.all(AgoraCorners.rounded42),
               child: Semantics(
                 button: true,
                 label: SemanticsStrings.close,

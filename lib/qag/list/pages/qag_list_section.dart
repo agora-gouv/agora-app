@@ -15,6 +15,8 @@ import 'package:agora/qag/list/bloc/qag_list_state.dart';
 import 'package:agora/qag/list/pages/qags_list_loading.dart';
 import 'package:agora/qag/repository/presenter/qag_display_model.dart';
 import 'package:agora/qag/repository/presenter/qag_presenter.dart';
+import 'package:agora/qag/theme/bloc/qags_theme_bloc.dart';
+import 'package:agora/qag/theme/bloc/qags_theme_event.dart';
 import 'package:agora/qag/widgets/qags_supportable_card.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -174,13 +176,16 @@ class _Error extends StatelessWidget {
       children: [
         SizedBox(height: AgoraSpacings.base),
         AgoraErrorView(
-          onReload: () => context.read<QagListBloc>().add(
-                FetchQagsListEvent(
-                  thematiqueId: thematiqueId,
-                  thematiqueLabel: thematiqueLabel,
-                  qagFilter: qagFilter,
-                ),
-              ),
+          onReload: () {
+            context.read<QagsThemeBloc>().add(FetchQagsThemeEvent());
+            context.read<QagListBloc>().add(
+                  FetchQagsListEvent(
+                    thematiqueId: thematiqueId,
+                    thematiqueLabel: thematiqueLabel,
+                    qagFilter: qagFilter,
+                  ),
+                );
+          },
         ),
       ],
     );
