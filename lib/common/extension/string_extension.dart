@@ -3,6 +3,9 @@ extension StringExtension on String {
 
   String format2(String to1, String to2) => replaceFirst("%1s", to1).replaceFirst("%2s", to2);
 
+  String format3(String to1, String to2, String to3) =>
+      replaceFirst("%1s", to1).replaceFirst("%2s", to2).replaceFirst("%3s", to3);
+
   String removeDiacritics() {
     var str = this;
     const withDia = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';

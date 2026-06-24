@@ -85,6 +85,10 @@ class QagStrings {
       "👋 J'ai posé une question au gouvernement sur l'application Agora. Aide-moi en la soutenant pour qu'elle ait plus de chance d'être vue\u{00A0}!\n%1s\nhttps://www.agora.gouv.fr/qags/%2s";
   static const String shareQaGAnsweredDeeplink =
       "Je pense que la réponse du gouvernement peut t'intéresser 👉\u{00A0}%1s\nhttps://www.agora.gouv.fr/qags/%2s";
+  static const String shareThemeHebdo =
+      "Cette semaine sur Agora, on peut poser nos questions à %1s, %2s sur %3s. J'ai pensé que ça pourrait t'intéresser !";
+  static const String shareThemeHebdoSemaineLibre =
+      "Cette semaine sur Agora, on peut poser nos questions à n'importe quel ministre.  J'ai pensé que ça pourrait t'intéresser !";
 
   static const String returnToQuestion = "Retour à ma question";
   static const String goToAllQuestion = "Voir les questions";

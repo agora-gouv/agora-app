@@ -32,6 +32,7 @@ import 'package:agora/qag/details/pages/qag_details_text_response_view.dart';
 import 'package:agora/qag/details/pages/qags_moderated_error_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 enum QagReload { qagsPage, qagsPaginatedPage }
 
@@ -241,7 +242,12 @@ class _ShareButton extends StatelessWidget {
           }
         },
         children: [
-          Icon(Icons.ios_share, color: AgoraColors.primaryBlue, size: 20),
+          SvgPicture.asset(
+            "assets/ic_share.svg",
+            excludeFromSemantics: true,
+            width: 20,
+            height: 20,
+          ),
           SizedBox(width: AgoraSpacings.x0_5),
           Text(GenericStrings.share, style: AgoraTextStyles.secondaryButton, textAlign: TextAlign.center),
         ],

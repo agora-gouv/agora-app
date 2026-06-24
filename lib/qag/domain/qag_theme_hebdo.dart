@@ -12,20 +12,21 @@ class QagThemeHebdo extends Equatable {
   final String titreCompteur;
   final String dateFinTheme;
   final String dateDebutTheme;
+  final bool estThemeLibre;
 
-  QagThemeHebdo({
-    required this.titre,
-    required this.sousTitre,
-    required this.periode,
-    required this.theme,
-    required this.avatarUrl,
-    required this.nom,
-    required this.fonction,
-    required this.prochainsThemes,
-    required this.titreCompteur,
-    required this.dateFinTheme,
-    required this.dateDebutTheme,
-  });
+  QagThemeHebdo(
+      {required this.titre,
+      required this.sousTitre,
+      required this.periode,
+      required this.theme,
+      required this.avatarUrl,
+      required this.nom,
+      required this.fonction,
+      required this.prochainsThemes,
+      required this.titreCompteur,
+      required this.dateFinTheme,
+      required this.dateDebutTheme,
+      required this.estThemeLibre});
 
   @override
   List<Object?> get props => [
@@ -40,5 +41,6 @@ class QagThemeHebdo extends Equatable {
         titreCompteur,
         dateFinTheme,
         dateDebutTheme,
+        estThemeLibre,
       ];
 }

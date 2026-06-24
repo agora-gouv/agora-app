@@ -1,9 +1,11 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
+import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
+import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
@@ -331,9 +333,40 @@ class _TuileSemaine extends StatelessWidget {
                   Text("${theme.titreCompteur} ${theme.dateFinTheme}", style: AgoraTextStyles.medium14White),
                 ],
               ),
+              SizedBox(height: AgoraSpacings.base),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  AgoraButton.withChildren(
+                    buttonStyle: AgoraButtonStyle.whiteBorder,
+                    onPressed: () {
+                      if (theme.estThemeLibre) {
+                        ShareHelper.shareThemeLibre(context: context);
+                      } else {
+                        ShareHelper.shareTheme(
+                          context: context,
+                          nom: theme.nom,
+                          fonction: theme.fonction,
+                          theme: theme.theme,
+                        );
+                      }
+                    },
+                    children: [
+                      SvgPicture.asset(
+                        "assets/ic_share.svg",
+                        excludeFromSemantics: true,
+                        width: 20,
+                        height: 20,
+                        colorFilter: ColorFilter.mode(AgoraColors.invertedBlueFrance, BlendMode.srcIn),
+                      ),
+                      SizedBox(width: AgoraSpacings.x0_5),
+                      Text(GenericStrings.share, style: AgoraTextStyles.whiteTextButton, textAlign: TextAlign.center),
+                    ],
+                  ),
+                ],
+              ),
               SizedBox(height: AgoraSpacings.x0_5),
               if (theme.prochainsThemes.isNotEmpty) ...[
-                Divider(thickness: 1, color: AgoraColors.invertedBlueFrance),
                 SizedBox(height: AgoraSpacings.x0_5),
                 Text("LES PROCHAINES SEMAINES"),
                 SizedBox(height: AgoraSpacings.base),

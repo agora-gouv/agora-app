@@ -1396,6 +1396,7 @@ void main() {
             titreCompteur: "titreCompteur",
             dateFinTheme: "lundi 1er juin à 14h",
             dateDebutTheme: "2026-05-25T14:00:00+02:00",
+            estThemeLibre: false,
           ),
         ),
       );

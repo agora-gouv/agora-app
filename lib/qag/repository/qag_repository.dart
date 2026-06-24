@@ -608,6 +608,7 @@ class QagDioRepository extends QagRepository {
           titreCompteur: response.data["titreCompteur"] as String,
           dateFinTheme: _formatDateFinTheme(response.data["dateFinTheme"] as String),
           dateDebutTheme: response.data["dateDebutTheme"] as String,
+          estThemeLibre: response.data["estThemeLibre"] as bool,
         ),
       );
     } catch (exception, stacktrace) {
