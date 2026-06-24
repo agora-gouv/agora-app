@@ -35,6 +35,7 @@ void main() {
             titreCompteur: "titreCompteur",
             dateFinTheme: "2026-06-04T23:45:00+02:00",
             dateDebutTheme: "2026-05-31T00:15:00+02:00",
+            estThemeLibre: false,
           ),
         ),
       ],

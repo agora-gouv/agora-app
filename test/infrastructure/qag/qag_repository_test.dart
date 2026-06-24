@@ -1365,6 +1365,7 @@ void main() {
           "titreCompteur": "titreCompteur",
           "dateFinTheme": "2026-06-01T14:00:00+02:00",
           "dateDebutTheme": "2026-05-25T14:00:00+02:00",
+          "estThemeLibre": false,
         }),
         headers: {
           "accept": "application/json",
@@ -1396,6 +1397,7 @@ void main() {
             titreCompteur: "titreCompteur",
             dateFinTheme: "lundi 1er juin à 14h",
             dateDebutTheme: "2026-05-25T14:00:00+02:00",
+            estThemeLibre: false,
           ),
         ),
       );

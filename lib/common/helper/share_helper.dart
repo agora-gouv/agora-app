@@ -20,6 +20,19 @@ class ShareHelper {
     _share(context, shareText: QagStrings.shareQaGAnsweredDeeplink.format2(title, id));
   }
 
+  static void shareTheme({
+    required BuildContext context,
+    required String nom,
+    required String fonction,
+    required String theme,
+  }) {
+    _share(context, shareText: QagStrings.shareThemeHebdo.format3(nom, fonction, theme));
+  }
+
+  static void shareThemeLibre({required BuildContext context}) {
+    _share(context, shareText: QagStrings.shareThemeHebdoSemaineLibre);
+  }
+
   static void sharePreformatted({
     required BuildContext context,
     required String data,

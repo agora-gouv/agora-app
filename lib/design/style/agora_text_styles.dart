@@ -520,6 +520,13 @@ class AgoraTextStyles {
     foreground: Paint()..color = AgoraColors.red,
   );
 
+  static TextStyle whiteTextButton = TextStyle(
+    fontFamily: marianne,
+    fontWeight: medium,
+    fontSize: 16.0,
+    foreground: Paint()..color = AgoraColors.invertedBlueFrance,
+  );
+
   static TextStyle tertiaryButton = TextStyle(
     fontFamily: marianne,
     fontWeight: medium,

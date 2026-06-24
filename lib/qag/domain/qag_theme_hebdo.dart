@@ -12,6 +12,7 @@ class QagThemeHebdo extends Equatable {
   final String titreCompteur;
   final String dateFinTheme;
   final String dateDebutTheme;
+  final bool estThemeLibre;
 
   QagThemeHebdo({
     required this.titre,
@@ -25,6 +26,7 @@ class QagThemeHebdo extends Equatable {
     required this.titreCompteur,
     required this.dateFinTheme,
     required this.dateDebutTheme,
+    required this.estThemeLibre,
   });
 
   @override
@@ -40,5 +42,6 @@ class QagThemeHebdo extends Equatable {
         titreCompteur,
         dateFinTheme,
         dateDebutTheme,
+        estThemeLibre,
       ];
 }

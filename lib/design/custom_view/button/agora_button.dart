@@ -129,8 +129,7 @@ Color _getBackgroundColor(AgoraButtonStyle style, bool isDisabled) {
   } else {
     return switch (style) {
       AgoraButtonStyle.primary => AgoraColors.primaryBlue,
-      AgoraButtonStyle.secondary || AgoraButtonStyle.redBorder => AgoraColors.transparent,
-      AgoraButtonStyle.tertiary => AgoraColors.transparent,
+      _ => AgoraColors.transparent,
     };
   }
 }
@@ -142,15 +141,18 @@ TextStyle _getTextStyle(AgoraButtonStyle style, AgoraButtonSize size) {
     AgoraButtonStyle.secondary => AgoraTextStyles.secondaryButton.copyWith(fontSize: fontSize),
     AgoraButtonStyle.tertiary => AgoraTextStyles.tertiaryButton.copyWith(fontSize: fontSize),
     AgoraButtonStyle.redBorder => AgoraTextStyles.redTextButton.copyWith(fontSize: fontSize),
+    AgoraButtonStyle.whiteBorder => AgoraTextStyles.whiteTextButton.copyWith(fontSize: fontSize),
   };
 }
 
 BorderSide _getBorder(AgoraButtonStyle style) {
   return switch (style) {
     AgoraButtonStyle.primary => BorderSide.none,
-    AgoraButtonStyle.secondary => BorderSide(color: AgoraColors.primaryBlue, width: 1.0, style: BorderStyle.solid),
+    AgoraButtonStyle.secondary => BorderSide(color: AgoraColors.primaryBlue, width: 1, style: BorderStyle.solid),
     AgoraButtonStyle.tertiary => BorderSide(color: AgoraColors.border, width: 1, style: BorderStyle.solid),
-    AgoraButtonStyle.redBorder => BorderSide(color: AgoraColors.red, width: 1.0, style: BorderStyle.solid),
+    AgoraButtonStyle.redBorder => BorderSide(color: AgoraColors.red, width: 1, style: BorderStyle.solid),
+    AgoraButtonStyle.whiteBorder =>
+      BorderSide(color: AgoraColors.invertedBlueFrance, width: 1, style: BorderStyle.solid),
   };
 }
 
@@ -159,6 +161,7 @@ enum AgoraButtonStyle {
   secondary,
   tertiary,
   redBorder,
+  whiteBorder,
 }
 
 class _Content extends StatelessWidget {
