@@ -91,36 +91,34 @@ class _QagDetailsPageState extends State<QagDetailsPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => QagDetailsBloc(
-        qagRepository: RepositoryManager.getQagRepository(),
-      )..add(FetchQagDetailsEvent(qagId: widget.arguments.qagId)),
-      child: AgoraScaffold(
-        popAction: () {
-          Navigator.pop(context, backResult);
-          return false;
-        },
-        appBarType: AppBarColorType.primaryColor,
-        child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
-          builder: (context, detailsState) {
-            return _Content(
-              detailsState,
-              backResult,
-              widget.arguments,
-              (supportCount, isSupported) {
-                backResult = QagDetailsBackResult(
-                  qagId: widget.arguments.qagId,
-                  supportCount: supportCount,
-                  isSupported: isSupported,
-                );
-              },
-            );
+  Widget build(BuildContext context) => BlocProvider(
+        create: (BuildContext context) => QagDetailsBloc(
+          qagRepository: RepositoryManager.getQagRepository(),
+        )..add(FetchQagDetailsEvent(qagId: widget.arguments.qagId)),
+        child: AgoraScaffold(
+          popAction: () {
+            Navigator.pop(context, backResult);
+            return false;
           },
+          appBarType: AppBarColorType.primaryColor,
+          child: BlocBuilder<QagDetailsBloc, QagDetailsState>(
+            builder: (context, detailsState) {
+              return _Content(
+                detailsState,
+                backResult,
+                widget.arguments,
+                (supportCount, isSupported) {
+                  backResult = QagDetailsBackResult(
+                    qagId: widget.arguments.qagId,
+                    supportCount: supportCount,
+                    isSupported: isSupported,
+                  );
+                },
+              );
+            },
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _Content extends StatelessWidget {
@@ -134,15 +132,13 @@ class _Content extends StatelessWidget {
   _Content(this.detailsState, this.backResult, this.arguments, this.onSupportChange);
 
   @override
-  Widget build(BuildContext context) {
-    return switch (detailsState) {
-      QagDetailsInitialLoadingState _ => _Loading(),
-      QagDetailsModerateErrorState _ => QagsModeratedErrorContent(),
-      QagDetailsErrorState _ => _Error(),
-      final QagDetailsFetchedState successState =>
-        _Success(successState.viewModel, backResult, arguments, feedbackKey, onSupportChange)
-    };
-  }
+  Widget build(BuildContext context) => switch (detailsState) {
+        QagDetailsInitialLoadingState _ => _Loading(),
+        QagDetailsModerateErrorState _ => QagsModeratedErrorContent(),
+        QagDetailsErrorState _ => _Error(),
+        final QagDetailsFetchedState successState =>
+          _Success(successState.viewModel, backResult, arguments, feedbackKey, onSupportChange)
+      };
 }
 
 class _Success extends StatelessWidget {
@@ -155,39 +151,37 @@ class _Success extends StatelessWidget {
   const _Success(this.viewModel, this.backResult, this.arguments, this.feedbackKey, this.onSupportChange);
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _Header(viewModel, backResult),
-        Expanded(
-          child: CustomScrollView(
-            slivers: [
-              _TitreSliver(
-                viewModel: viewModel,
-                isQuestionGagnante: arguments.isQuestionGagnante,
-              ),
-              _DescriptionSliver(
-                viewModel: viewModel,
-                isQuestionGagnante: arguments.isQuestionGagnante,
-                reload: arguments.reload,
-                qagSupportBloc: arguments.qagSupportBloc,
-                onSupportChange: onSupportChange,
-              ),
-              if (viewModel.response != null)
-                SliverToBoxAdapter(
-                  child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+  Widget build(BuildContext context) => Column(
+        children: [
+          _Header(viewModel, backResult),
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                _TitreSliver(
+                  viewModel: viewModel,
+                  isQuestionGagnante: arguments.isQuestionGagnante,
                 ),
-              if (viewModel.textResponse != null)
-                SliverToBoxAdapter(
-                  child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                _DescriptionSliver(
+                  viewModel: viewModel,
+                  isQuestionGagnante: arguments.isQuestionGagnante,
+                  reload: arguments.reload,
+                  qagSupportBloc: arguments.qagSupportBloc,
+                  onSupportChange: onSupportChange,
                 ),
-              _FeedbackSliver(feedbackKey: feedbackKey),
-            ],
+                if (viewModel.response != null)
+                  SliverToBoxAdapter(
+                    child: QagDetailsResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                  ),
+                if (viewModel.textResponse != null)
+                  SliverToBoxAdapter(
+                    child: QagDetailsTextResponseView(qagId: viewModel.id, detailsViewModel: viewModel),
+                  ),
+                _FeedbackSliver(feedbackKey: feedbackKey),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
 }
 
 class _Header extends StatelessWidget {
@@ -197,25 +191,23 @@ class _Header extends StatelessWidget {
   const _Header(this.viewModel, this.backResult);
 
   @override
-  Widget build(BuildContext context) {
-    return viewModel.canShare
-        ? Row(
-            children: [
-              Expanded(
-                child: AgoraToolbar(
-                  onBackClick: () => Navigator.pop(context, backResult),
-                  semanticPageLabel: 'Détail de la question citoyenne ${viewModel.title}',
-                ),
+  Widget build(BuildContext context) => viewModel.canShare
+      ? Row(
+          children: [
+            Expanded(
+              child: AgoraToolbar(
+                onBackClick: () => Navigator.pop(context, backResult),
+                semanticPageLabel: 'Détail de la question citoyenne ${viewModel.title}',
               ),
-              _ShareButton(viewModel),
-              SizedBox(width: AgoraSpacings.horizontalPadding),
-            ],
-          )
-        : AgoraToolbar(
-            onBackClick: () => Navigator.pop(context, backResult),
-            semanticPageLabel: 'Détail question citoyenne',
-          );
-  }
+            ),
+            _ShareButton(viewModel),
+            SizedBox(width: AgoraSpacings.horizontalPadding),
+          ],
+        )
+      : AgoraToolbar(
+          onBackClick: () => Navigator.pop(context, backResult),
+          semanticPageLabel: 'Détail question citoyenne',
+        );
 }
 
 class _ShareButton extends StatelessWidget {
@@ -224,36 +216,34 @@ class _ShareButton extends StatelessWidget {
   const _ShareButton(this.viewModel);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
-      child: AgoraButton.withChildren(
-        semanticLabel: "Partager la question",
-        buttonStyle: AgoraButtonStyle.secondary,
-        onPressed: () {
-          TrackerHelper.trackClick(
-            clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
-            widgetName: AnalyticsScreenNames.qagDetailsPage,
-          );
-          if (viewModel.response == null && viewModel.textResponse == null) {
-            ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
-          } else {
-            ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
-          }
-        },
-        children: [
-          SvgPicture.asset(
-            "assets/ic_share.svg",
-            excludeFromSemantics: true,
-            width: 20,
-            height: 20,
-          ),
-          SizedBox(width: AgoraSpacings.x0_5),
-          Text(GenericStrings.share, style: AgoraTextStyles.secondaryButton, textAlign: TextAlign.center),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
+        child: AgoraButton.withChildren(
+          semanticLabel: "Partager la question",
+          buttonStyle: AgoraButtonStyle.secondary,
+          onPressed: () {
+            TrackerHelper.trackClick(
+              clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
+              widgetName: AnalyticsScreenNames.qagDetailsPage,
+            );
+            if (viewModel.response == null && viewModel.textResponse == null) {
+              ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
+            } else {
+              ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
+            }
+          },
+          children: [
+            SvgPicture.asset(
+              "assets/ic_share.svg",
+              excludeFromSemantics: true,
+              width: 20,
+              height: 20,
+            ),
+            SizedBox(width: AgoraSpacings.x0_5),
+            Text(GenericStrings.share, style: AgoraTextStyles.secondaryButton, textAlign: TextAlign.center),
+          ],
+        ),
+      );
 }
 
 class _TitreSliver extends StatelessWidget {
@@ -266,75 +256,73 @@ class _TitreSliver extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: EdgeInsets.only(
-        left: AgoraSpacings.base,
-        right: AgoraSpacings.base,
-        bottom: AgoraSpacings.base,
-      ),
-      sliver: SliverToBoxAdapter(
-        child: MergeSemantics(
-          child: Semantics(
-            header: true,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: AgoraSpacings.x0_5),
-                ThematiqueHelper.buildCard(context, viewModel.thematique),
-                SizedBox(height: AgoraSpacings.x0_5),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
-                    if ((viewModel.response != null || viewModel.textResponse != null) &&
-                        viewModel.support.count != 0) ...[
-                      Padding(
-                        padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
-                        child: AgoraLikeView(
-                          isSupported: viewModel.support.isSupported,
-                          supportCount: viewModel.support.count,
-                          shouldVocaliseSupport: false,
-                          isQuestionGagnante: isQuestionGagnante,
-                          onSupportClick: (bool support) {
-                            if (support) {
-                              TrackerHelper.trackClick(
-                                clickName: AnalyticsEventNames.likeQag,
-                                widgetName: AnalyticsScreenNames.qagDetailsPage,
-                              );
-                              context.read<QagSupportBloc>().add(
-                                    SupportQagEvent(
-                                      qagId: viewModel.id,
-                                      supportCount: viewModel.support.count,
-                                      isSupported: viewModel.support.isSupported,
-                                    ),
-                                  );
-                            } else {
-                              TrackerHelper.trackClick(
-                                clickName: AnalyticsEventNames.unlikeQag,
-                                widgetName: AnalyticsScreenNames.qagDetailsPage,
-                              );
-                              context.read<QagSupportBloc>().add(
-                                    DeleteSupportQagEvent(
-                                      qagId: viewModel.id,
-                                      supportCount: viewModel.support.count,
-                                      isSupported: viewModel.support.isSupported,
-                                    ),
-                                  );
-                            }
-                          },
+  Widget build(BuildContext context) => SliverPadding(
+        padding: EdgeInsets.only(
+          left: AgoraSpacings.base,
+          right: AgoraSpacings.base,
+          bottom: AgoraSpacings.base,
+        ),
+        sliver: SliverToBoxAdapter(
+          child: MergeSemantics(
+            child: Semantics(
+              header: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  ThematiqueHelper.buildCard(context, viewModel.thematique),
+                  SizedBox(height: AgoraSpacings.x0_5),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: Text(viewModel.title, style: AgoraTextStyles.medium18)),
+                      if ((viewModel.response != null || viewModel.textResponse != null) &&
+                          viewModel.support.count != 0) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(top: AgoraSpacings.x0_5),
+                          child: AgoraLikeView(
+                            isSupported: viewModel.support.isSupported,
+                            supportCount: viewModel.support.count,
+                            shouldVocaliseSupport: false,
+                            isQuestionGagnante: isQuestionGagnante,
+                            onSupportClick: (bool support) {
+                              if (support) {
+                                TrackerHelper.trackClick(
+                                  clickName: AnalyticsEventNames.likeQag,
+                                  widgetName: AnalyticsScreenNames.qagDetailsPage,
+                                );
+                                context.read<QagSupportBloc>().add(
+                                      SupportQagEvent(
+                                        qagId: viewModel.id,
+                                        supportCount: viewModel.support.count,
+                                        isSupported: viewModel.support.isSupported,
+                                      ),
+                                    );
+                              } else {
+                                TrackerHelper.trackClick(
+                                  clickName: AnalyticsEventNames.unlikeQag,
+                                  widgetName: AnalyticsScreenNames.qagDetailsPage,
+                                );
+                                context.read<QagSupportBloc>().add(
+                                      DeleteSupportQagEvent(
+                                        qagId: viewModel.id,
+                                        supportCount: viewModel.support.count,
+                                        isSupported: viewModel.support.isSupported,
+                                      ),
+                                    );
+                              }
+                            },
+                          ),
                         ),
-                      ),
+                      ],
                     ],
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _DescriptionSliver extends StatelessWidget {
@@ -353,53 +341,52 @@ class _DescriptionSliver extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: EdgeInsets.only(
-        left: AgoraSpacings.base,
-        right: AgoraSpacings.base,
-        bottom: AgoraSpacings.base,
-      ),
-      sliver: SliverToBoxAdapter(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (viewModel.response == null && viewModel.textResponse == null) ...[
-              if (viewModel.description.isNotEmpty) ...[
-                Text(viewModel.description, style: AgoraTextStyles.light14),
-                SizedBox(height: AgoraSpacings.base),
-              ],
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
-                      style: AgoraTextStyles.medium14,
-                    ),
-                  ),
-                  SizedBox(width: AgoraSpacings.base),
-                  QagDetailsSupportView(
-                    qagId: viewModel.id,
-                    canSupport: viewModel.canSupport,
-                    isQuestionGagnante: isQuestionGagnante,
-                    supportViewModel: viewModel.support,
-                    qagSupportBloc: qagSupportBloc,
-                    onSupportChange: onSupportChange,
-                  ),
-                ],
-              ),
-              if (viewModel.canDelete) _DeleteQaG(viewModel.id, reload),
-            ] else
-              AgoraReadMoreText(
-                data: viewModel.description,
-                isTalkbackEnabled: MediaQuery.accessibleNavigationOf(context),
-                trimLines: 3,
-              ),
-          ],
+  Widget build(BuildContext context) => SliverPadding(
+        padding: EdgeInsets.only(
+          left: AgoraSpacings.base,
+          right: AgoraSpacings.base,
+          bottom: AgoraSpacings.base,
         ),
-      ),
-    );
-  }
+        sliver: SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (viewModel.response == null && viewModel.textResponse == null) ...[
+                if (viewModel.description.isNotEmpty) ...[
+                  Text(viewModel.description, style: AgoraTextStyles.light14),
+                  SizedBox(height: AgoraSpacings.base),
+                ],
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        StringUtils.authorAndDate.format2(viewModel.username, viewModel.date),
+                        style: AgoraTextStyles.medium14,
+                      ),
+                    ),
+                    SizedBox(width: AgoraSpacings.base),
+                    QagDetailsSupportView(
+                      qagId: viewModel.id,
+                      canSupport: viewModel.canSupport,
+                      isQuestionGagnante: isQuestionGagnante,
+                      supportViewModel: viewModel.support,
+                      qagSupportBloc: qagSupportBloc,
+                      onSupportChange: onSupportChange,
+                    ),
+                  ],
+                ),
+                if (viewModel.canShare && viewModel.isAuthor) _ShareMyQaG(viewModel),
+                if (viewModel.canDelete) _DeleteQaG(viewModel.id, reload),
+              ] else
+                AgoraReadMoreText(
+                  data: viewModel.description,
+                  isTalkbackEnabled: MediaQuery.accessibleNavigationOf(context),
+                  trimLines: 3,
+                ),
+            ],
+          ),
+        ),
+      );
 }
 
 class _FeedbackSliver extends StatelessWidget {
@@ -408,20 +395,43 @@ class _FeedbackSliver extends StatelessWidget {
   const _FeedbackSliver({required this.feedbackKey});
 
   @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: QagDetailsFeedbackWidget(
-        key: feedbackKey,
-        onFeedbackSent: () {
-          Scrollable.ensureVisible(
-            feedbackKey.currentContext!,
-            duration: Duration(milliseconds: 200),
-            curve: Curves.fastOutSlowIn,
-          );
-        },
-      ),
-    );
-  }
+  Widget build(BuildContext context) => SliverToBoxAdapter(
+        child: QagDetailsFeedbackWidget(
+          key: feedbackKey,
+          onFeedbackSent: () {
+            Scrollable.ensureVisible(
+              feedbackKey.currentContext!,
+              duration: Duration(milliseconds: 200),
+              curve: Curves.fastOutSlowIn,
+            );
+          },
+        ),
+      );
+}
+
+class _ShareMyQaG extends StatelessWidget {
+  final QagDetailsViewModel viewModel;
+
+  const _ShareMyQaG(this.viewModel);
+
+  @override
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: AgoraSpacings.base),
+          Divider(color: AgoraColors.divider, thickness: 1),
+          SizedBox(height: AgoraSpacings.base),
+          Text(QagStrings.shareMyQagTitle, style: AgoraTextStyles.medium18),
+          SizedBox(height: AgoraSpacings.base),
+          Text(QagStrings.shareMyQagDetails, style: AgoraTextStyles.light14),
+          SizedBox(height: AgoraSpacings.base),
+          AgoraButton.withLabel(
+            label: GenericStrings.share,
+            buttonStyle: AgoraButtonStyle.primary,
+            onPressed: () => ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id),
+          ),
+        ],
+      );
 }
 
 class _DeleteQaG extends StatelessWidget {
@@ -431,60 +441,54 @@ class _DeleteQaG extends StatelessWidget {
   const _DeleteQaG(this.qagId, this.reload);
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: AgoraSpacings.base),
-        Divider(color: AgoraColors.divider, thickness: 1),
-        SizedBox(height: AgoraSpacings.base),
-        Text(QagStrings.deleteQagTitle, style: AgoraTextStyles.medium18),
-        SizedBox(height: AgoraSpacings.base),
-        Text(QagStrings.deleteQagDetails, style: AgoraTextStyles.light14),
-        SizedBox(height: AgoraSpacings.base),
-        AgoraButton.withLabel(
-          label: GenericStrings.delete,
-          buttonStyle: AgoraButtonStyle.redBorder,
-          onPressed: () => Navigator.pushNamed(
-            context,
-            QagDetailsDeleteConfirmationPage.routeName,
-            arguments: QagDetailsDeleteConfirmationArguments(
-              qagId: qagId,
-              reload: reload,
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: AgoraSpacings.base),
+          Divider(color: AgoraColors.divider, thickness: 1),
+          SizedBox(height: AgoraSpacings.base),
+          Text(QagStrings.deleteQagTitle, style: AgoraTextStyles.medium18),
+          SizedBox(height: AgoraSpacings.base),
+          Text(QagStrings.deleteQagDetails, style: AgoraTextStyles.light14),
+          SizedBox(height: AgoraSpacings.base),
+          AgoraButton.withLabel(
+            label: GenericStrings.delete,
+            buttonStyle: AgoraButtonStyle.redBorder,
+            onPressed: () => Navigator.pushNamed(
+              context,
+              QagDetailsDeleteConfirmationPage.routeName,
+              arguments: QagDetailsDeleteConfirmationArguments(
+                qagId: qagId,
+                reload: reload,
+              ),
             ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
 }
 
 class _Error extends StatelessWidget {
   const _Error();
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AgoraToolbar(semanticPageLabel: 'Détail question citoyenne'),
-        SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
-        Center(child: AgoraErrorText()),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Column(
+        children: [
+          AgoraToolbar(semanticPageLabel: 'Détail question citoyenne'),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 4),
+          Center(child: AgoraErrorText()),
+        ],
+      );
 }
 
 class _Loading extends StatelessWidget {
   const _Loading();
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AgoraToolbar(semanticPageLabel: ""),
-        SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
-        Center(child: CircularProgressIndicator()),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Column(
+        children: [
+          AgoraToolbar(semanticPageLabel: ""),
+          SizedBox(height: MediaQuery.of(context).size.height / 10 * 3.5),
+          Center(child: CircularProgressIndicator()),
+        ],
+      );
 }

@@ -89,6 +89,8 @@ class QagStrings {
       "Cette semaine sur Agora, on peut poser nos questions à %1s, %2s sur %3s. J'ai pensé que ça pourrait t'intéresser !";
   static const String shareThemeHebdoSemaineLibre =
       "Cette semaine sur Agora, on peut poser nos questions à n'importe quel ministre.  J'ai pensé que ça pourrait t'intéresser !";
+  static const String shareMyQagTitle = "Partager ma question";
+  static const String shareMyQagDetails = "Invitez vos réseaux à voter pour votre question !";
 
   static const String returnToQuestion = "Retour à ma question";
   static const String goToAllQuestion = "Voir les questions";
