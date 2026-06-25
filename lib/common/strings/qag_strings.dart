@@ -86,9 +86,9 @@ class QagStrings {
   static const String shareQaGAnsweredDeeplink =
       "Je pense que la réponse du gouvernement peut t'intéresser 👉\u{00A0}%1s\nhttps://www.agora.gouv.fr/qags/%2s";
   static const String shareThemeHebdo =
-      "Cette semaine sur Agora, on peut poser nos questions à %1s, %2s sur %3s. J'ai pensé que ça pourrait t'intéresser !";
+      "Cette semaine sur Agora, on peut poser nos questions à %1s, %2s sur %3s. J'ai pensé que ça pourrait t'intéresser !\nhttps://www.agora.gouv.fr/qags/";
   static const String shareThemeHebdoSemaineLibre =
-      "Cette semaine sur Agora, on peut poser nos questions à n'importe quel ministre.  J'ai pensé que ça pourrait t'intéresser !";
+      "Cette semaine sur Agora, on peut poser nos questions à n'importe quel ministre.  J'ai pensé que ça pourrait t'intéresser !\nhttps://www.agora.gouv.fr/qags/";
   static const String shareMyQagTitle = "Partager ma question";
   static const String shareMyQagDetails = "Invitez vos réseaux à voter pour votre question !";
 
