@@ -377,14 +377,19 @@ class _TabButton extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(AgoraSpacings.base),
-            child: Text(label, style: isSelected ? AgoraTextStyles.medium14 : AgoraTextStyles.light14),
+            child: Text(label, style: isSelected ? AgoraTextStyles.medium14PrimaryBlue : AgoraTextStyles.light14),
           ),
-          if (isSelected)
-            Container(
-              color: AgoraColors.blue525,
-              height: 3,
-              width: MediaQuery.of(context).size.width * 0.3,
-            ),
+          isSelected
+              ? Container(
+                  color: AgoraColors.primaryBlue,
+                  height: 3,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                )
+              : Container(
+                  color: AgoraColors.superSilver,
+                  height: 3,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                ),
         ],
       ),
     );
