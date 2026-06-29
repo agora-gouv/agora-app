@@ -531,6 +531,7 @@ class QagDioRepository extends QagRepository {
         supportCount: support["count"] as int,
         isSupported: support["isSupported"] as bool,
         isAuthor: qag["isAuthor"] as bool,
+        canShare: qag["canShare"] as bool,
       );
     }).toList();
   }

@@ -4,8 +4,7 @@ import 'package:agora/qag/domain/qag.dart';
 import 'package:agora/qag/repository/presenter/qag_display_model.dart';
 
 class QagPresenter {
-  static List<QagDisplayModel> presentQag(List<Qag> qags) {
-    return qags
+  static List<QagDisplayModel> presentQag(List<Qag> qags) => qags
         .map(
           (qag) => QagDisplayModel(
             id: qag.id,
@@ -17,8 +16,8 @@ class QagPresenter {
             supportCount: qag.supportCount,
             isSupported: qag.isSupported,
             isAuthor: qag.isAuthor,
+            canShare: qag.canShare,
           ),
         )
         .toList();
-  }
 }

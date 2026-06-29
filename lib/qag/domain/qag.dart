@@ -11,6 +11,7 @@ class Qag extends Equatable {
   final int supportCount;
   final bool isSupported;
   final bool isAuthor;
+  final bool canShare;
 
   Qag({
     required this.id,
@@ -22,6 +23,7 @@ class Qag extends Equatable {
     required this.supportCount,
     required this.isSupported,
     required this.isAuthor,
+    required this.canShare,
   });
 
   @override
@@ -35,5 +37,6 @@ class Qag extends Equatable {
         supportCount,
         isSupported,
         isAuthor,
+        canShare,
       ];
 }
