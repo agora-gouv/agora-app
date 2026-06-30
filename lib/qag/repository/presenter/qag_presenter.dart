@@ -5,19 +5,19 @@ import 'package:agora/qag/repository/presenter/qag_display_model.dart';
 
 class QagPresenter {
   static List<QagDisplayModel> presentQag(List<Qag> qags) => qags
-        .map(
-          (qag) => QagDisplayModel(
-            id: qag.id,
-            thematique: qag.thematique.toThematiqueViewModel(),
-            title: qag.title,
-            description: qag.description,
-            username: qag.username,
-            date: qag.date.formatToDayLongMonth(),
-            supportCount: qag.supportCount,
-            isSupported: qag.isSupported,
-            isAuthor: qag.isAuthor,
-            canShare: qag.canShare,
-          ),
-        )
-        .toList();
+      .map(
+        (qag) => QagDisplayModel(
+          id: qag.id,
+          thematique: qag.thematique.toThematiqueViewModel(),
+          title: qag.title,
+          description: qag.description,
+          username: qag.username,
+          date: qag.date.formatToDayLongMonth(),
+          supportCount: qag.supportCount,
+          isSupported: qag.isSupported,
+          isAuthor: qag.isAuthor,
+          canShare: qag.canShare,
+        ),
+      )
+      .toList();
 }
