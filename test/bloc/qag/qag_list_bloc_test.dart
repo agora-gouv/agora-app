@@ -34,6 +34,7 @@ void main() {
         supportCount: 8,
         isSupported: false,
         isAuthor: false,
+        canShare: true,
       ),
     ],
     header: HeaderQag(
@@ -166,6 +167,7 @@ void main() {
               supportCount: 8,
               isSupported: false,
               isAuthor: false,
+              canShare: true,
             ),
             Qag(
               id: "id2",
@@ -177,6 +179,7 @@ void main() {
               supportCount: 8,
               isSupported: true,
               isAuthor: false,
+              canShare: true,
             ),
           ],
           currentPage: 2,
@@ -301,6 +304,7 @@ void main() {
               supportCount: 9,
               isSupported: true,
               isAuthor: false,
+              canShare: true,
             ),
           ],
         ),

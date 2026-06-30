@@ -49,6 +49,7 @@ class QagsSupportableCard extends StatelessWidget {
                 supportCount: viewModel.supportCount,
                 isSupported: viewModel.isSupported,
                 isAuthor: qagViewModel.isAuthor,
+                canShare: qagViewModel.canShare,
                 likeViewKey: likeViewKey,
                 onSupportClick: (bool support) {
                   if (support) {

@@ -16,6 +16,7 @@ extension QagListExtension on List<Qag> {
             supportCount: qagSupport.supportCount,
             isSupported: qagSupport.isSupported,
             isAuthor: qag.isAuthor,
+            canShare: qag.canShare,
           );
         } else {
           return qag;

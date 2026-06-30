@@ -21,6 +21,7 @@ class AgoraQuestionCard extends StatelessWidget {
   final int supportCount;
   final bool isSupported;
   final bool isAuthor;
+  final bool canShare;
   final Function(bool support) onSupportClick;
   final void Function() onCardClick;
   final GlobalKey? likeViewKey;
@@ -35,6 +36,7 @@ class AgoraQuestionCard extends StatelessWidget {
     required this.supportCount,
     required this.isSupported,
     required this.isAuthor,
+    required this.canShare,
     required this.onSupportClick,
     required this.onCardClick,
     this.likeViewKey,
@@ -73,6 +75,7 @@ class AgoraQuestionCard extends StatelessWidget {
                     likeViewKey: likeViewKey,
                     questionId: id,
                     questionTitre: titre,
+                    canShare: canShare,
                   ),
                 ],
               ),
@@ -153,6 +156,7 @@ class _Footer extends StatelessWidget {
   final bool isSupported;
   final String questionId;
   final String questionTitre;
+  final bool canShare;
   final void Function(bool support) onSupportClick;
   final GlobalKey? likeViewKey;
 
@@ -165,6 +169,7 @@ class _Footer extends StatelessWidget {
     required this.likeViewKey,
     required this.questionId,
     required this.questionTitre,
+    required this.canShare,
   });
 
   @override
@@ -195,12 +200,13 @@ class _Footer extends StatelessWidget {
             likeViewKey: likeViewKey,
             withContour: false,
           ),
-          AgoraIconButton(
-            icon: "ic_share.svg",
-            semanticLabel: 'Partager',
-            borderColor: AgoraColors.transparent,
-            onClick: () => ShareHelper.shareQag(context: context, title: questionTitre, id: questionId),
-          ),
+          if (canShare)
+            AgoraIconButton(
+              icon: "ic_share.svg",
+              semanticLabel: 'Partager',
+              borderColor: AgoraColors.transparent,
+              onClick: () => ShareHelper.shareQag(context: context, title: questionTitre, id: questionId),
+            ),
         ],
       ),
     );
