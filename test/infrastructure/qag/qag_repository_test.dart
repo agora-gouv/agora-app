@@ -243,6 +243,7 @@ void main() {
                   "isSupported": true,
                 },
                 "isAuthor": true,
+                "canShare": true,
               },
             ],
             "header": {
@@ -285,6 +286,7 @@ void main() {
               supportCount: 116,
               isSupported: true,
               isAuthor: true,
+              canShare: true,
             ),
           ],
           header: HeaderQag(

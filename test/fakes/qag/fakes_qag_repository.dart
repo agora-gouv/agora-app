@@ -49,6 +49,7 @@ class FakeQagSuccessRepository extends QagRepository {
               supportCount: 8,
               isSupported: false,
               isAuthor: false,
+              canShare: true,
             ),
           ],
           header: HeaderQag(
@@ -71,6 +72,7 @@ class FakeQagSuccessRepository extends QagRepository {
               supportCount: 9,
               isSupported: true,
               isAuthor: false,
+              canShare: true,
             ),
             Qag(
               id: "id2",
@@ -82,6 +84,7 @@ class FakeQagSuccessRepository extends QagRepository {
               supportCount: 8,
               isSupported: true,
               isAuthor: false,
+              canShare: true,
             ),
           ],
           header: HeaderQag(
@@ -259,6 +262,7 @@ class FakeQagSuccessRepository extends QagRepository {
           supportCount: 8,
           isSupported: true,
           isAuthor: false,
+          canShare: true,
         ),
       ],
     );
@@ -357,6 +361,7 @@ class FakeQagDetailsSuccessRepository extends FakeQagSuccessRepository {
           supportCount: 9,
           isSupported: true,
           isAuthor: false,
+          canShare: true,
         ),
       ],
     );
@@ -399,6 +404,7 @@ class FakeQagDetailsSuccessAndFeedbackFailureRepository extends FakeQagSuccessRe
           supportCount: 9,
           isSupported: true,
           isAuthor: false,
+          canShare: true,
         ),
       ],
     );
@@ -463,6 +469,7 @@ class FakeQagSuccessWithResponseAndFeedbackGivenRepository extends FakeQagSucces
           supportCount: 9,
           isSupported: true,
           isAuthor: false,
+          canShare: true,
         ),
       ],
     );
@@ -617,6 +624,7 @@ class FakeQagSuccessWithVideoAndTextResponse extends FakeQagSuccessRepository {
           supportCount: 9,
           isSupported: true,
           isAuthor: false,
+          canShare: true,
         ),
       ],
     );
@@ -638,6 +646,7 @@ class FakeQagSuccessWithAskQuestionErrorMessageRepository extends FakeQagSuccess
           supportCount: 9,
           isSupported: true,
           isAuthor: false,
+          canShare: true,
         ),
       ],
     );
