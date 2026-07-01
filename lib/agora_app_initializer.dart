@@ -84,7 +84,23 @@ class AgoraInitializer {
       (await rootBundle.loadString("assets/certificates/root-yr-by-x1.pem")),
     ];
 
-    final rawCertificates = [certignaCertificate, ...letsEncryptCertificates];
+    final sectigoCertificates = [
+      (await rootBundle.loadString("assets/certificates/sectigo-aaa-root.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-usertrustRSA-root.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-usertrustECC-root.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-comodo-rsa-root.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-comodo-ecc-root.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-root-r46.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-root-e46.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-rsa-dv.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-ecc-dv.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-rsa-ov.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-ecc-ov.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-int-r36.pem")),
+      (await rootBundle.loadString("assets/certificates/sectigo-int-e36.pem")),
+    ];
+
+    final rawCertificates = [certignaCertificate, ...letsEncryptCertificates, ...sectigoCertificates];
     final certificates =
         rawCertificates.map((rawCertificate) => X509Utils.x509CertificateFromPem(rawCertificate)).toList();
 
