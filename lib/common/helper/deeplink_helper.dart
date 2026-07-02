@@ -16,7 +16,7 @@ class DeeplinkHelper {
     required Function(String qagId) onQagSuccessCallback,
   }) async {
     final appLinks = AppLinks();
-    final uri = await appLinks.getInitialLink();
+    final uri = await appLinks.getLatestLink();
     if (uri != null) {
       Log.debug("deeplink initiate uri : $uri");
       final featurePath = uri.pathSegments.first;
