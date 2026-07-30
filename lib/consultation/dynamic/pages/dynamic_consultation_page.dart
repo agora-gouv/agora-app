@@ -23,6 +23,7 @@ import 'package:agora/consultation/dynamic/domain/dynamic_consultation.dart';
 import 'package:agora/consultation/dynamic/domain/dynamic_consultation_section.dart';
 import 'package:agora/consultation/dynamic/pages/results/dynamic_consultation_results_page.dart';
 import 'package:agora/consultation/dynamic/pages/updates/dynamic_consultation_update_page.dart';
+import 'package:agora/consultation/pages/consultations_page.dart';
 import 'package:agora/consultation/question/pages/consultation_question_page.dart';
 import 'package:agora/design/custom_view/agora_badge.dart';
 import 'package:agora/design/custom_view/agora_collapse_view.dart';
@@ -51,7 +52,9 @@ import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 part 'dynamic_consultation_presenter.dart';
+
 part 'dynamic_consultation_section_widgets.dart';
+
 part 'dynamic_consultation_view_model.dart';
 
 class DynamicConsultationPageArguments {
@@ -61,6 +64,7 @@ class DynamicConsultationPageArguments {
   final String? notificationTitle;
   final String? notificationDescription;
   final bool shouldLaunchCongratulationAnimation;
+  final bool fromDemographicsPage;
 
   DynamicConsultationPageArguments({
     required this.consultationIdOrSlug,
@@ -69,6 +73,7 @@ class DynamicConsultationPageArguments {
     this.notificationTitle,
     this.notificationDescription,
     this.shouldLaunchCongratulationAnimation = false,
+    this.fromDemographicsPage = false,
   });
 }
 
@@ -104,6 +109,7 @@ class DynamicConsultationPage extends StatelessWidget {
                 arguments.notificationTitle,
                 arguments.notificationDescription,
                 arguments.shouldLaunchCongratulationAnimation,
+                arguments.fromDemographicsPage,
               ),
           };
         },
@@ -117,12 +123,14 @@ class _SuccessPage extends StatelessWidget {
   final String? notificationTitle;
   final String? notificationDescription;
   final bool shouldLaunchCongratulationAnimation;
+  final bool fromDemographicsPage;
 
   _SuccessPage(
     this.viewModel,
     this.notificationTitle,
     this.notificationDescription,
     this.shouldLaunchCongratulationAnimation,
+    this.fromDemographicsPage,
   );
 
   @override
@@ -141,6 +149,13 @@ class _SuccessPage extends StatelessWidget {
           children: [
             Expanded(
               child: AgoraToolbar(
+                onBackClick: () {
+                  if (fromDemographicsPage) {
+                    Navigator.pushReplacementNamed(context, ConsultationsPage.routeName);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
                 semanticPageLabel: "Consultation : ${viewModel.sections.whereType<_HeaderSection>().first.title}",
               ),
             ),
