@@ -478,7 +478,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -566,7 +566,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_sandbox.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -650,7 +650,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_sandbox.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -736,7 +736,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_sandbox.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -825,7 +825,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_prod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -911,7 +911,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_prod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -995,7 +995,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_prod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1138,7 +1138,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1169,7 +1169,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

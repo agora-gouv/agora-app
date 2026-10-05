@@ -1440,21 +1440,22 @@ class _ParticipantInfoSectionWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: AgoraSpacings.base),
                   Text('${section.participantCount} participants', style: AgoraTextStyles.regular14),
-                  const SizedBox(height: AgoraSpacings.x0_5),
-                  ExcludeSemantics(
-                    child: LinearProgressIndicator(
-                      minHeight: AgoraSpacings.x0_5,
-                      backgroundColor: AgoraColors.orochimaru,
-                      valueColor: AlwaysStoppedAnimation<Color>(AgoraColors.mountainLakeAzure),
-                      value: section.participantCount / section.participantCountGoal,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                  const SizedBox(height: AgoraSpacings.x0_5),
-                  Text(
-                    ConsultationStrings.participantCountGoal.format(section.participantCountGoal.toString()),
-                    style: AgoraTextStyles.regular14,
-                  ),
+                  // TODO: Retrait de la barre d'objectif pour la consultation lycéenne
+                  // const SizedBox(height: AgoraSpacings.x0_5),
+                  // ExcludeSemantics(
+                  //   child: LinearProgressIndicator(
+                  //     minHeight: AgoraSpacings.x0_5,
+                  //     backgroundColor: AgoraColors.orochimaru,
+                  //     valueColor: AlwaysStoppedAnimation<Color>(AgoraColors.mountainLakeAzure),
+                  //     value: section.participantCount / section.participantCountGoal,
+                  //     borderRadius: BorderRadius.circular(5),
+                  //   ),
+                  // ),
+                  // const SizedBox(height: AgoraSpacings.x0_5),
+                  // Text(
+                  //   ConsultationStrings.participantCountGoal.format(section.participantCountGoal.toString()),
+                  //   style: AgoraTextStyles.regular14,
+                  // ),
                   const SizedBox(height: AgoraSpacings.base),
                   Align(
                     alignment: Alignment.topLeft,
