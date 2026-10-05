@@ -109,6 +109,8 @@ class _ConsultationQuestionOpenedViewState extends State<ConsultationQuestionOpe
         controller: textEditingController,
         contentDescription: semanticTitle,
         showCounterText: true,
+        // TODO Passage du nombre de caracteres max à 5000 pour la consultation lycéenne
+        maxLength: 5000,
         blockToMaxLength: true,
         onChanged: (openedResponseInput) {
           setState(() => openedResponse = openedResponseInput);

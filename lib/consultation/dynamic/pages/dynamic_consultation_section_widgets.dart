@@ -240,21 +240,22 @@ class _QuestionsInfoWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('${section.participantCount} participants', style: AgoraTextStyles.light14),
-                      SizedBox(height: AgoraSpacings.x0_5),
-                      ExcludeSemantics(
-                        child: LinearProgressIndicator(
-                          minHeight: AgoraSpacings.x0_5,
-                          backgroundColor: AgoraColors.orochimaru,
-                          valueColor: AlwaysStoppedAnimation<Color>(AgoraColors.mountainLakeAzure),
-                          value: section.goalProgress,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      SizedBox(height: AgoraSpacings.x0_5),
-                      Text(
-                        'Prochain objectif : ${section.participantCountGoal} !',
-                        style: AgoraTextStyles.light14,
-                      ),
+                      // TODO: Retrait de la barre d'objectif pour la consultation lycéenne
+                      // SizedBox(height: AgoraSpacings.x0_5),
+                      // ExcludeSemantics(
+                      //   child: LinearProgressIndicator(
+                      //     minHeight: AgoraSpacings.x0_5,
+                      //     backgroundColor: AgoraColors.orochimaru,
+                      //     valueColor: AlwaysStoppedAnimation<Color>(AgoraColors.mountainLakeAzure),
+                      //     value: section.goalProgress,
+                      //     borderRadius: BorderRadius.circular(5),
+                      //   ),
+                      // ),
+                      // SizedBox(height: AgoraSpacings.x0_5),
+                      // Text(
+                      //   'Prochain objectif : ${section.participantCountGoal} !',
+                      //   style: AgoraTextStyles.light14,
+                      // ),
                       SizedBox(height: AgoraSpacings.x0_5),
                     ],
                   ),
