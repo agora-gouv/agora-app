@@ -43,7 +43,7 @@ post_install do |installer|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
         '$(inherited)',
-        'PERMISSION_NOTIFICATIONS=1'
+        'PERMISSION_NOTIFICATIONS=1',
         'AUDIO_SESSION_MICROPHONE=0'
       ]
       
