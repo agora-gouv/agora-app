@@ -1,11 +1,9 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
-import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
@@ -13,7 +11,6 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -39,7 +36,6 @@ import 'package:agora/thematique/bloc/thematique_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 enum QagTab { search, trending, top, latest, supporting }
 
@@ -294,7 +290,10 @@ class _TuileSemaine extends StatelessWidget {
             children: [
               Text(theme.periode, style: AgoraTextStyles.medium16White),
               SizedBox(height: AgoraSpacings.base),
-              Text("À compter du 1er octobre, le Gouvernement est soumis à une réserve en application de l’article 52-1 du code électoral : il ne peut pas s’exprimer sur des sujets qui relèvent du débat de la campagne présidentielle ou mettre en avant son bilan.\nLes questions sont de ce fait suspendues jusqu’aux élections présidentielles.", style: AgoraTextStyles.regular14White),
+              Text(
+                "À compter du 1er octobre, le Gouvernement est soumis à une réserve en application de l’article 52-1 du code électoral : il ne peut pas s’exprimer sur des sujets qui relèvent du débat de la campagne présidentielle ou mettre en avant son bilan.\nLes questions sont de ce fait suspendues jusqu’aux élections présidentielles.",
+                style: AgoraTextStyles.regular14White,
+              ),
               // TODO decommenter apres la periode electorale
               // Text("${theme.titre}  ·  ${theme.periode}", style: AgoraTextStyles.medium16White),
               // SizedBox(height: AgoraSpacings.base),
