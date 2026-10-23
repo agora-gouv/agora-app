@@ -1,7 +1,4 @@
-import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/strings/qag_strings.dart';
-import 'package:agora/design/custom_view/agora_like_view.dart';
-import 'package:agora/design/custom_view/button/agora_icon_button.dart';
 import 'package:agora/design/custom_view/card/agora_highlight_card.dart';
 import 'package:agora/design/custom_view/card/agora_rounded_card.dart';
 import 'package:agora/design/custom_view/card/agora_thematique_card.dart';
@@ -187,26 +184,28 @@ class _Footer extends StatelessWidget {
               children: [
                 Text(semanticsLabel: "question posée par $nom", nom.trim(), style: AgoraTextStyles.medium12),
                 Text('le $date', style: AgoraTextStyles.medium12.copyWith(color: AgoraColors.blue525)),
+                SizedBox(height: AgoraSpacings.x0_5),
               ],
             ),
           ),
-          AgoraLikeView(
-            shouldHaveHorizontalPadding: false,
-            style: AgoraLikeStyle.police16,
-            isSupported: isSupported,
-            supportCount: supportCount,
-            shouldHaveVerticalPadding: true,
-            onSupportClick: (support) => onSupportClick(support),
-            likeViewKey: likeViewKey,
-            withContour: false,
-          ),
-          if (canShare)
-            AgoraIconButton(
-              icon: "ic_share.svg",
-              semanticLabel: 'Partager',
-              borderColor: AgoraColors.transparent,
-              onClick: () => ShareHelper.shareQag(context: context, title: questionTitre, id: questionId),
-            ),
+          // TODO decommenter apres la periode electorale
+          // AgoraLikeView(
+          //   shouldHaveHorizontalPadding: false,
+          //   style: AgoraLikeStyle.police16,
+          //   isSupported: isSupported,
+          //   supportCount: supportCount,
+          //   shouldHaveVerticalPadding: true,
+          //   onSupportClick: (support) => onSupportClick(support),
+          //   likeViewKey: likeViewKey,
+          //   withContour: false,
+          // ),
+          // if (canShare)
+          //   AgoraIconButton(
+          //     icon: "ic_share.svg",
+          //     semanticLabel: 'Partager',
+          //     borderColor: AgoraColors.transparent,
+          //     onClick: () => ShareHelper.shareQag(context: context, title: questionTitre, id: questionId),
+          //   ),
         ],
       ),
     );

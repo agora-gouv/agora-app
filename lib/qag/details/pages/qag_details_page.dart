@@ -27,12 +27,10 @@ import 'package:agora/qag/details/bloc/support/qag_support_event.dart';
 import 'package:agora/qag/details/pages/qag_details_delete_confirmation_page.dart';
 import 'package:agora/qag/details/pages/qag_details_feedback_widget.dart';
 import 'package:agora/qag/details/pages/qag_details_response_view.dart';
-import 'package:agora/qag/details/pages/qag_details_support_view.dart';
 import 'package:agora/qag/details/pages/qag_details_text_response_view.dart';
 import 'package:agora/qag/details/pages/qags_moderated_error_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 enum QagReload { qagsPage, qagsPaginatedPage }
 
@@ -200,7 +198,8 @@ class _Header extends StatelessWidget {
                 semanticPageLabel: 'Détail de la question citoyenne ${viewModel.title}',
               ),
             ),
-            _ShareButton(viewModel),
+            // TODO decommenter apres la periode electorale
+            // _ShareButton(viewModel),
             SizedBox(width: AgoraSpacings.horizontalPadding),
           ],
         )
@@ -210,41 +209,42 @@ class _Header extends StatelessWidget {
         );
 }
 
-class _ShareButton extends StatelessWidget {
-  final QagDetailsViewModel viewModel;
-
-  const _ShareButton(this.viewModel);
-
-  @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
-        child: AgoraButton.withChildren(
-          semanticLabel: "Partager la question",
-          buttonStyle: AgoraButtonStyle.secondary,
-          onPressed: () {
-            TrackerHelper.trackClick(
-              clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
-              widgetName: AnalyticsScreenNames.qagDetailsPage,
-            );
-            if (viewModel.response == null && viewModel.textResponse == null) {
-              ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
-            } else {
-              ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
-            }
-          },
-          children: [
-            SvgPicture.asset(
-              "assets/ic_share.svg",
-              excludeFromSemantics: true,
-              width: 20,
-              height: 20,
-            ),
-            SizedBox(width: AgoraSpacings.x0_5),
-            Text(GenericStrings.share, style: AgoraTextStyles.secondaryButton, textAlign: TextAlign.center),
-          ],
-        ),
-      );
-}
+// TODO decommenter apres la periode electorale
+// class _ShareButton extends StatelessWidget {
+//   final QagDetailsViewModel viewModel;
+//
+//   const _ShareButton(this.viewModel);
+//
+//   @override
+//   Widget build(BuildContext context) => Padding(
+//         padding: const EdgeInsets.symmetric(vertical: AgoraSpacings.x0_5),
+//         child: AgoraButton.withChildren(
+//           semanticLabel: "Partager la question",
+//           buttonStyle: AgoraButtonStyle.secondary,
+//           onPressed: () {
+//             TrackerHelper.trackClick(
+//               clickName: "${AnalyticsEventNames.shareQag} ${viewModel.id}",
+//               widgetName: AnalyticsScreenNames.qagDetailsPage,
+//             );
+//             if (viewModel.response == null && viewModel.textResponse == null) {
+//               ShareHelper.shareQag(context: context, title: viewModel.title, id: viewModel.id);
+//             } else {
+//               ShareHelper.shareQagAnswered(context: context, title: viewModel.title, id: viewModel.id);
+//             }
+//           },
+//           children: [
+//             SvgPicture.asset(
+//               "assets/ic_share.svg",
+//               excludeFromSemantics: true,
+//               width: 20,
+//               height: 20,
+//             ),
+//             SizedBox(width: AgoraSpacings.x0_5),
+//             Text(GenericStrings.share, style: AgoraTextStyles.secondaryButton, textAlign: TextAlign.center),
+//           ],
+//         ),
+//       );
+// }
 
 class _TitreSliver extends StatelessWidget {
   final QagDetailsViewModel viewModel;
@@ -365,14 +365,15 @@ class _DescriptionSliver extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: AgoraSpacings.base),
-                    QagDetailsSupportView(
-                      qagId: viewModel.id,
-                      canSupport: viewModel.canSupport,
-                      isQuestionGagnante: isQuestionGagnante,
-                      supportViewModel: viewModel.support,
-                      qagSupportBloc: qagSupportBloc,
-                      onSupportChange: onSupportChange,
-                    ),
+                    // TODO decommenter apres la periode electorale
+                    // QagDetailsSupportView(
+                    //   qagId: viewModel.id,
+                    //   canSupport: viewModel.canSupport,
+                    //   isQuestionGagnante: isQuestionGagnante,
+                    //   supportViewModel: viewModel.support,
+                    //   qagSupportBloc: qagSupportBloc,
+                    //   onSupportChange: onSupportChange,
+                    // ),
                   ],
                 ),
                 if (viewModel.canShare && viewModel.isAuthor) _ShareMyQaG(viewModel),

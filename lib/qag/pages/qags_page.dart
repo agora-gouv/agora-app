@@ -1,11 +1,9 @@
 import 'package:agora/common/analytics/analytics_event_names.dart';
 import 'package:agora/common/analytics/analytics_screen_names.dart';
 import 'package:agora/common/helper/all_purpose_status.dart';
-import 'package:agora/common/helper/share_helper.dart';
 import 'package:agora/common/helper/tracker_helper.dart';
 import 'package:agora/common/manager/repository_manager.dart';
 import 'package:agora/common/manager/storage_manager.dart';
-import 'package:agora/common/strings/generic_strings.dart';
 import 'package:agora/common/strings/qag_strings.dart';
 import 'package:agora/common/strings/semantics_strings.dart';
 import 'package:agora/design/custom_view/agora_focus_helper.dart';
@@ -13,7 +11,6 @@ import 'package:agora/design/custom_view/agora_main_toolbar.dart';
 import 'package:agora/design/custom_view/agora_more_information.dart';
 import 'package:agora/design/custom_view/agora_pull_to_refresh.dart';
 import 'package:agora/design/custom_view/agora_tracker.dart';
-import 'package:agora/design/custom_view/button/agora_button.dart';
 import 'package:agora/design/custom_view/skeletons.dart';
 import 'package:agora/design/custom_view/text/agora_rich_text.dart';
 import 'package:agora/design/style/agora_colors.dart';
@@ -22,7 +19,6 @@ import 'package:agora/design/style/agora_text_styles.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_bloc.dart';
 import 'package:agora/qag/ask/bloc/ask_qag_status_event.dart';
 import 'package:agora/qag/ask/bloc/search/qag_search_bloc.dart';
-import 'package:agora/qag/ask/pages/qag_ask_question_page.dart';
 import 'package:agora/qag/domain/qag_theme_hebdo.dart';
 import 'package:agora/qag/domain/qas_list_filter.dart';
 import 'package:agora/qag/info/bloc/qags_info_bloc.dart';
@@ -40,7 +36,6 @@ import 'package:agora/thematique/bloc/thematique_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 enum QagTab { search, trending, top, latest, supporting }
 
@@ -132,28 +127,29 @@ class _QagsPageState extends State<QagsPage> {
           ),
         ],
         child: Scaffold(
-          floatingActionButton: ListenableBuilder(
-            listenable: showLabelFloatingButton,
-            builder: (context, __) => _PoserMaQuestionBouton(
-              showLabelFloatingButton: showLabelFloatingButton.value,
-              onTap: () {
-                final askQagStatusState = BlocProvider.of<AskQagStatusBloc>(context).state;
-                String? errorLabel;
-                if (askQagStatusState.status == AllPurposeStatus.success) {
-                  errorLabel = askQagStatusState.askQagError;
-                }
-                TrackerHelper.trackClick(
-                  clickName: AnalyticsEventNames.askQuestion,
-                  widgetName: AnalyticsScreenNames.qagsPage,
-                );
-                Navigator.pushNamed(
-                  context,
-                  QagAskQuestionPage.routeName,
-                  arguments: errorLabel,
-                );
-              },
-            ),
-          ),
+          // TODO decommenter apres la periode electorale
+          // floatingActionButton: ListenableBuilder(
+          //   listenable: showLabelFloatingButton,
+          //   builder: (context, __) => _PoserMaQuestionBouton(
+          //     showLabelFloatingButton: showLabelFloatingButton.value,
+          //     onTap: () {
+          //       final askQagStatusState = BlocProvider.of<AskQagStatusBloc>(context).state;
+          //       String? errorLabel;
+          //       if (askQagStatusState.status == AllPurposeStatus.success) {
+          //         errorLabel = askQagStatusState.askQagError;
+          //       }
+          //       TrackerHelper.trackClick(
+          //         clickName: AnalyticsEventNames.askQuestion,
+          //         widgetName: AnalyticsScreenNames.qagsPage,
+          //       );
+          //       Navigator.pushNamed(
+          //         context,
+          //         QagAskQuestionPage.routeName,
+          //         arguments: errorLabel,
+          //       );
+          //     },
+          //   ),
+          // ),
           body: BlocBuilder<QagsInfoBloc, QagsInfoState>(
             builder: (context, qagInfoState) => Column(
               children: [
@@ -292,79 +288,86 @@ class _TuileSemaine extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("${theme.titre}  ·  ${theme.periode}", style: AgoraTextStyles.medium16White),
+              Text(theme.periode, style: AgoraTextStyles.medium16White),
               SizedBox(height: AgoraSpacings.base),
-              Text(theme.sousTitre),
-              SizedBox(height: AgoraSpacings.x0_25),
-              Text(theme.theme, style: AgoraTextStyles.medium32White),
-              SizedBox(height: AgoraSpacings.x0_5),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: ClipOval(
-                      child: Image.network(theme.avatarUrl),
-                    ),
-                  ),
-                  SizedBox(width: AgoraSpacings.x0_5),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(theme.nom, style: AgoraTextStyles.medium16White),
-                        SizedBox(height: AgoraSpacings.x0_25),
-                        Text(theme.fonction, style: AgoraTextStyles.light14White),
-                      ],
-                    ),
-                  ),
-                ],
+              Text(
+                "À compter du 1er octobre, le Gouvernement est soumis à une réserve en application de l’article 52-1 du code électoral : il ne peut pas s’exprimer sur des sujets qui relèvent du débat de la campagne présidentielle ou mettre en avant son bilan.\nLes questions sont de ce fait suspendues jusqu’aux élections présidentielles.",
+                style: AgoraTextStyles.regular14White,
               ),
-              SizedBox(height: AgoraSpacings.base),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/ic_timer.svg",
-                    colorFilter: ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
-                    width: 16,
-                    height: 16,
-                  ),
-                  SizedBox(width: AgoraSpacings.x0_5),
-                  Text("${theme.titreCompteur} ${theme.dateFinTheme}", style: AgoraTextStyles.medium14White),
-                ],
-              ),
-              SizedBox(height: AgoraSpacings.base),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  AgoraButton.withChildren(
-                    buttonStyle: AgoraButtonStyle.whiteBorder,
-                    onPressed: () {
-                      if (theme.estThemeLibre) {
-                        ShareHelper.shareThemeLibre(context: context);
-                      } else {
-                        ShareHelper.shareTheme(
-                          context: context,
-                          nom: theme.nom,
-                          fonction: theme.fonction,
-                          theme: theme.theme,
-                        );
-                      }
-                    },
-                    children: [
-                      SvgPicture.asset(
-                        "assets/ic_share.svg",
-                        excludeFromSemantics: true,
-                        width: 20,
-                        height: 20,
-                        colorFilter: ColorFilter.mode(AgoraColors.invertedBlueFrance, BlendMode.srcIn),
-                      ),
-                      SizedBox(width: AgoraSpacings.x0_5),
-                      Text(GenericStrings.share, style: AgoraTextStyles.whiteTextButton, textAlign: TextAlign.center),
-                    ],
-                  ),
-                ],
-              ),
+              // TODO decommenter apres la periode electorale
+              // Text("${theme.titre}  ·  ${theme.periode}", style: AgoraTextStyles.medium16White),
+              // SizedBox(height: AgoraSpacings.base),
+              // Text(theme.sousTitre),
+              // SizedBox(height: AgoraSpacings.x0_25),
+              // Text(theme.theme, style: AgoraTextStyles.medium32White),
+              // SizedBox(height: AgoraSpacings.x0_5),
+              // Row(
+              //   children: [
+              //     SizedBox(
+              //       width: 60,
+              //       height: 60,
+              //       child: ClipOval(
+              //         child: Image.network(theme.avatarUrl),
+              //       ),
+              //     ),
+              //     SizedBox(width: AgoraSpacings.x0_5),
+              //     Expanded(
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(theme.nom, style: AgoraTextStyles.medium16White),
+              //           SizedBox(height: AgoraSpacings.x0_25),
+              //           Text(theme.fonction, style: AgoraTextStyles.light14White),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: AgoraSpacings.base),
+              // Row(
+              //   children: [
+              //     SvgPicture.asset(
+              //       "assets/ic_timer.svg",
+              //       colorFilter: ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
+              //       width: 16,
+              //       height: 16,
+              //     ),
+              //     SizedBox(width: AgoraSpacings.x0_5),
+              //     Text("${theme.titreCompteur} ${theme.dateFinTheme}", style: AgoraTextStyles.medium14White),
+              //   ],
+              // ),
+              // SizedBox(height: AgoraSpacings.base),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     AgoraButton.withChildren(
+              //       buttonStyle: AgoraButtonStyle.whiteBorder,
+              //       onPressed: () {
+              //         if (theme.estThemeLibre) {
+              //           ShareHelper.shareThemeLibre(context: context);
+              //         } else {
+              //           ShareHelper.shareTheme(
+              //             context: context,
+              //             nom: theme.nom,
+              //             fonction: theme.fonction,
+              //             theme: theme.theme,
+              //           );
+              //         }
+              //       },
+              //       children: [
+              //         SvgPicture.asset(
+              //           "assets/ic_share.svg",
+              //           excludeFromSemantics: true,
+              //           width: 20,
+              //           height: 20,
+              //           colorFilter: ColorFilter.mode(AgoraColors.invertedBlueFrance, BlendMode.srcIn),
+              //         ),
+              //         SizedBox(width: AgoraSpacings.x0_5),
+              //         Text(GenericStrings.share, style: AgoraTextStyles.whiteTextButton, textAlign: TextAlign.center),
+              //       ],
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: AgoraSpacings.x0_5),
               if (theme.prochainsThemes.isNotEmpty) ...[
                 SizedBox(height: AgoraSpacings.x0_5),
@@ -397,49 +400,50 @@ class _TuileSemaine extends StatelessWidget {
       );
 }
 
-class _PoserMaQuestionBouton extends StatelessWidget {
-  final bool showLabelFloatingButton;
-  final void Function() onTap;
-
-  const _PoserMaQuestionBouton({required this.showLabelFloatingButton, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return AgoraButton.withChildren(
-      buttonStyle: AgoraButtonStyle.primary,
-      semanticLabel: QagStrings.askQuestion,
-      onPressed: onTap,
-      children: [
-        SvgPicture.asset(
-          "assets/ic_question.svg",
-          colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
-          excludeFromSemantics: true,
-        ),
-        AnimatedSwitcher(
-          duration: Duration(milliseconds: 300),
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return SizeTransition(
-              axis: Axis.horizontal,
-              axisAlignment: 1.0,
-              sizeFactor: animation,
-              child: child,
-            );
-          },
-          child: showLabelFloatingButton
-              ? Padding(
-                  padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
-                  child: Text(
-                    QagStrings.askQuestion,
-                    key: ValueKey(1),
-                    style: AgoraTextStyles.primaryButton,
-                  ),
-                )
-              : SizedBox(key: ValueKey(2)),
-        ),
-      ],
-    );
-  }
-}
+// TODO decommenter apres la periode electorale
+// class _PoserMaQuestionBouton extends StatelessWidget {
+//   final bool showLabelFloatingButton;
+//   final void Function() onTap;
+//
+//   const _PoserMaQuestionBouton({required this.showLabelFloatingButton, required this.onTap});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return AgoraButton.withChildren(
+//       buttonStyle: AgoraButtonStyle.primary,
+//       semanticLabel: QagStrings.askQuestion,
+//       onPressed: onTap,
+//       children: [
+//         SvgPicture.asset(
+//           "assets/ic_question.svg",
+//           colorFilter: const ColorFilter.mode(AgoraColors.white, BlendMode.srcIn),
+//           excludeFromSemantics: true,
+//         ),
+//         AnimatedSwitcher(
+//           duration: Duration(milliseconds: 300),
+//           transitionBuilder: (Widget child, Animation<double> animation) {
+//             return SizeTransition(
+//               axis: Axis.horizontal,
+//               axisAlignment: 1.0,
+//               sizeFactor: animation,
+//               child: child,
+//             );
+//           },
+//           child: showLabelFloatingButton
+//               ? Padding(
+//                   padding: const EdgeInsets.only(left: AgoraSpacings.x0_5),
+//                   child: Text(
+//                     QagStrings.askQuestion,
+//                     key: ValueKey(1),
+//                     style: AgoraTextStyles.primaryButton,
+//                   ),
+//                 )
+//               : SizedBox(key: ValueKey(2)),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class _InfoBouton extends StatelessWidget {
   final GlobalKey focusKey;
