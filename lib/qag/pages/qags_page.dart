@@ -291,7 +291,7 @@ class _TuileSemaine extends StatelessWidget {
               Text(theme.periode, style: AgoraTextStyles.medium16White),
               SizedBox(height: AgoraSpacings.base),
               Text(
-                "À compter du 1er octobre, le Gouvernement est soumis à une réserve en application de l’article 52-1 du code électoral : il ne peut pas s’exprimer sur des sujets qui relèvent du débat de la campagne présidentielle ou mettre en avant son bilan.\nLes questions sont de ce fait suspendues jusqu’aux élections présidentielles.",
+                "A partir du 1er octobre 2026 s’ouvre pour 6 mois la période préélectorale en vue de l’élection présidentielle durant laquelle le Gouvernement est tenu de respecter les dispositions de l’article 52-1 du code électoral.\n\nPar conséquent, les questions sont suspendues jusqu’à cette échéance.",
                 style: AgoraTextStyles.regular14White,
               ),
               // TODO decommenter apres la periode electorale
