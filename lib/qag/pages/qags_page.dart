@@ -288,10 +288,10 @@ class _TuileSemaine extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(theme.periode, style: AgoraTextStyles.medium16White),
+              Text("RÉSERVE PRÉ-ÉLECTORALE", style: AgoraTextStyles.medium16White),
               SizedBox(height: AgoraSpacings.base),
               Text(
-                "A partir du 1er octobre 2026 s’ouvre pour 6 mois la période préélectorale en vue de l’élection présidentielle durant laquelle le Gouvernement est tenu de respecter les dispositions de l’article 52-1 du code électoral.\n\nPar conséquent, les questions sont suspendues jusqu’à cette échéance.",
+                "À partir du 1er octobre 2026 s’ouvre pour 6 mois la période pré-électorale en vue de l’élection présidentielle durant laquelle le Gouvernement est tenu de respecter les dispositions de l’article 52-1 du code électoral.\n\nPar conséquent, les questions sont suspendues jusqu’à cette échéance.",
                 style: AgoraTextStyles.regular14White,
               ),
               // TODO decommenter apres la periode electorale
